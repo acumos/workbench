@@ -1,0 +1,31 @@
+// @nebular theming framework
+@import '~@nebular/theme/styles/theming';
+// @nebular out of the box themes
+@import '~@nebular/theme/styles/themes';
+
+// which themes you what to enable (empty to enable all)
+$nb-enabled-themes: (default);
+
+$nb-themes: nb-register-theme(
+  (
+    font-secondary: Verdana,
+    sidebar-bg: #651c76,
+    color-fg-text: #007bff,
+    header-fg: #007bff,
+    header-shadow: 0 2px 12px 0 #00000038,
+    menu-bg: #651c76,
+    menu-active-bg: #512063,
+    menu-active-fg: #e1ffff,
+    menu-active-font-weight: 500,
+    menu-icon-active-color: #e1ffff,
+    menu-fg: #e1ffff,
+    menu-submenu-bg: #651c76,
+    menu-submenu-hover-bg: #512063,
+    menu-submenu-hover-fg: #e1ffff,
+    menu-submenu-fg: #e1ffff,
+    menu-submenu-item-container-padding: 0,
+    menu-submenu-item-padding: 10px 0 10px 16px
+  ),
+  default,
+  default
+);

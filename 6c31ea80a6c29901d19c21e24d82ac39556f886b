@@ -1,0 +1,267 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d84b8140_2d3ef0cb",
+        "filename": "LICENSE.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-08T21:21:25Z",
+      "side": 1,
+      "message": "Maybe 2019 is most appropriate",
+      "range": {
+        "startLine": 4,
+        "startChar": 15,
+        "endLine": 4,
+        "endChar": 16
+      },
+      "revId": "6c31ea80a6c29901d19c21e24d82ac39556f886b",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bd23dcfd_71df20e7",
+        "filename": "dashboard-webcomponent/application.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-08T21:21:25Z",
+      "side": 1,
+      "message": "Please choose to publish either an application.properties OR an application.properties.template, not both.  Ideally just publish the template.",
+      "revId": "6c31ea80a6c29901d19c21e24d82ac39556f886b",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e8708ff_66ba84c5",
+        "filename": "dashboard-webcomponent/pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-08T21:21:25Z",
+      "side": 1,
+      "message": "Probably 1.0.0-SNAPSHOT ?",
+      "range": {
+        "startLine": 29,
+        "startChar": 10,
+        "endLine": 29,
+        "endChar": 23
+      },
+      "revId": "6c31ea80a6c29901d19c21e24d82ac39556f886b",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed8fbe10_134db6bb",
+        "filename": "dashboard-webcomponent/pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-08T21:21:25Z",
+      "side": 1,
+      "message": "Must upgrade to something recent. Latest is 2.1.3.RELEASE",
+      "range": {
+        "startLine": 35,
+        "startChar": 11,
+        "endLine": 35,
+        "endChar": 18
+      },
+      "revId": "6c31ea80a6c29901d19c21e24d82ac39556f886b",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0cb9732a_20d2ed65",
+        "filename": "dashboard-webcomponent/src/main/java/org/acumos/workbench/dashboard/DashboardApplication.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-08T21:21:25Z",
+      "side": 1,
+      "message": "Abandon EELF, don\u0027t build it into new code",
+      "range": {
+        "startLine": 41,
+        "startChar": 22,
+        "endLine": 41,
+        "endChar": 41
+      },
+      "revId": "6c31ea80a6c29901d19c21e24d82ac39556f886b",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e37f0aa7_1574e430",
+        "filename": "dashboard-webcomponent/src/main/java/org/acumos/workbench/dashboard/config/EELFLoggerDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-08T21:21:25Z",
+      "side": 1,
+      "message": "Discard",
+      "revId": "6c31ea80a6c29901d19c21e24d82ac39556f886b",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "89178959_4c4bb93b",
+        "filename": "dashboard-webcomponent/src/main/resources/index.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-08T21:21:25Z",
+      "side": 1,
+      "message": "Is this a workbench or a dashboard?",
+      "range": {
+        "startLine": 41,
+        "startChar": 14,
+        "endLine": 41,
+        "endChar": 23
+      },
+      "revId": "6c31ea80a6c29901d19c21e24d82ac39556f886b",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7e3aa85a_a6a063f3",
+        "filename": "dashboard-webcomponent/src/main/resources/logback.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-08T21:21:25Z",
+      "side": 1,
+      "message": "Please use the Boreas logback.xml config, which I can supply if you like\n\nAbandon EELF",
+      "revId": "6c31ea80a6c29901d19c21e24d82ac39556f886b",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2513a688_91e08dfd",
+        "filename": "home-webcomponent/application.properties.template",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-08T21:21:25Z",
+      "side": 1,
+      "message": "Please choose to publish either an application.properties OR an application.properties.template, not both.  Ideally just publish the template.",
+      "revId": "6c31ea80a6c29901d19c21e24d82ac39556f886b",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "10ade64a_fa44604d",
+        "filename": "home-webcomponent/pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-08T21:21:25Z",
+      "side": 1,
+      "message": "Probably 1.0.0-SNAPSHOT ?",
+      "range": {
+        "startLine": 27,
+        "startChar": 10,
+        "endLine": 27,
+        "endChar": 18
+      },
+      "revId": "6c31ea80a6c29901d19c21e24d82ac39556f886b",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ab769cce_123bd3c4",
+        "filename": "home-webcomponent/pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-08T21:21:25Z",
+      "side": 1,
+      "message": "Must use a recent version, latest is 2.1.3.RELEASE",
+      "range": {
+        "startLine": 35,
+        "startChar": 11,
+        "endLine": 35,
+        "endChar": 26
+      },
+      "revId": "6c31ea80a6c29901d19c21e24d82ac39556f886b",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "37ae1f9f_713fde02",
+        "filename": "home-webcomponent/src/main/java/org/acumos/workbench/home/config/EELFLoggerDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-08T21:21:25Z",
+      "side": 1,
+      "message": "Discard",
+      "revId": "6c31ea80a6c29901d19c21e24d82ac39556f886b",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "50346ef9_5a5c459b",
+        "filename": "project-webcomponent/src/main/java/org/acumos/workbench/project/config/EELFLoggerDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-08T21:21:25Z",
+      "side": 1,
+      "message": "Abandon",
+      "revId": "6c31ea80a6c29901d19c21e24d82ac39556f886b",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}

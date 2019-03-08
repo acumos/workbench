@@ -203,6 +203,23 @@
     },
     {
       "key": {
+        "uuid": "0d57a534_53abe2e3",
+        "filename": "project-service/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-03-08T22:39:28Z",
+      "side": 1,
+      "message": "Need to add logic \u003csource\u003eapplication.properties\u003c/source\u003e copied to destination \u003cdestName\u003eapplication.properties\u003c/destName\u003e",
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed4915ab_4ac4ebbf",
         "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/ProjectServiceApplication.java",
         "patchSetId": 1

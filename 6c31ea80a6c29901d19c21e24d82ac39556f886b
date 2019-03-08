@@ -231,6 +231,29 @@
     },
     {
       "key": {
+        "uuid": "9e1d18b0_f0bed25d",
+        "filename": "home-webcomponent/src/main/java/org/acumos/workbench/home/HomeApplication.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-08T21:28:28Z",
+      "side": 1,
+      "message": "Abandon EELF, use SLF4J directly",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 102
+      },
+      "revId": "6c31ea80a6c29901d19c21e24d82ac39556f886b",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37ae1f9f_713fde02",
         "filename": "home-webcomponent/src/main/java/org/acumos/workbench/home/config/EELFLoggerDelegate.java",
         "patchSetId": 3
@@ -248,6 +271,212 @@
     },
     {
       "key": {
+        "uuid": "710a9bbc_b89e31c6",
+        "filename": "home-webcomponent/src/main/java/org/acumos/workbench/home/controller/MainController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-08T21:28:28Z",
+      "side": 1,
+      "message": "Pls use logger, not system.out",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 53
+      },
+      "revId": "6c31ea80a6c29901d19c21e24d82ac39556f886b",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4889890d_6c1add5d",
+        "filename": "home-webcomponent/src/main/resources/logback.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-08T21:28:28Z",
+      "side": 1,
+      "message": "Pls use Boreas-release logback.xml config\n\nAbandon EELF",
+      "revId": "6c31ea80a6c29901d19c21e24d82ac39556f886b",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7dec2b1_328e720b",
+        "filename": "home-webcomponent/src/main/resources/src/app/@core/core.module.ts",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-08T21:28:28Z",
+      "side": 1,
+      "message": "Is this a generated directory or did Node bring it in? Do you really want the @ sign in the path to these files?  This looks kind of strange.",
+      "revId": "6c31ea80a6c29901d19c21e24d82ac39556f886b",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1d3ccb91_dc320b13",
+        "filename": "pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-08T21:28:28Z",
+      "side": 1,
+      "message": "probably 1.0.0-SNAPSHOT ?",
+      "range": {
+        "startLine": 28,
+        "startChar": 10,
+        "endLine": 28,
+        "endChar": 23
+      },
+      "revId": "6c31ea80a6c29901d19c21e24d82ac39556f886b",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b7a90994_d8d08a7f",
+        "filename": "project-catalog-webcomponent/application.properties.template",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-08T21:28:28Z",
+      "side": 1,
+      "message": "Please choose to publish either an application.properties OR an application.properties.template, not both. Ideally just publish the template.",
+      "revId": "6c31ea80a6c29901d19c21e24d82ac39556f886b",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c1a8ad5b_08585d0d",
+        "filename": "project-webcomponent/Dockerfile",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-08T21:28:28Z",
+      "side": 1,
+      "message": "Please remove all AT\u0026T internal URLs.  Useless at LF, and everywhere else public.",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 76
+      },
+      "revId": "6c31ea80a6c29901d19c21e24d82ac39556f886b",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ce0a31cf_822c5bdd",
+        "filename": "project-webcomponent/application.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-08T21:28:28Z",
+      "side": 1,
+      "message": "Please choose to publish either an application.properties OR an application.properties.template, not both. Ideally just publish the template.",
+      "revId": "6c31ea80a6c29901d19c21e24d82ac39556f886b",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "22f01491_5be3b597",
+        "filename": "project-webcomponent/pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-08T21:28:28Z",
+      "side": 1,
+      "message": "1.0.0-SNAPSHOT ?",
+      "range": {
+        "startLine": 27,
+        "startChar": 10,
+        "endLine": 27,
+        "endChar": 24
+      },
+      "revId": "6c31ea80a6c29901d19c21e24d82ac39556f886b",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a9b97c5_3ca1eb68",
+        "filename": "project-webcomponent/pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-08T21:28:28Z",
+      "side": 1,
+      "message": "Upgrade to 2.1.3.RELEASE",
+      "range": {
+        "startLine": 35,
+        "startChar": 11,
+        "endLine": 35,
+        "endChar": 25
+      },
+      "revId": "6c31ea80a6c29901d19c21e24d82ac39556f886b",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "136b9ba5_591cfd3c",
+        "filename": "project-webcomponent/src/main/java/org/acumos/workbench/project/ProjectApplication.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-08T21:28:28Z",
+      "side": 1,
+      "message": "Abandon EELF, use slf4j",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 106
+      },
+      "revId": "6c31ea80a6c29901d19c21e24d82ac39556f886b",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50346ef9_5a5c459b",
         "filename": "project-webcomponent/src/main/java/org/acumos/workbench/project/config/EELFLoggerDelegate.java",
         "patchSetId": 3
@@ -259,6 +488,23 @@
       "writtenOn": "2019-03-08T21:21:25Z",
       "side": 1,
       "message": "Abandon",
+      "revId": "6c31ea80a6c29901d19c21e24d82ac39556f886b",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a8649375_c08fb03a",
+        "filename": "project-webcomponent/src/main/resources/logback.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-08T21:28:28Z",
+      "side": 1,
+      "message": "Please use Boreas-specified formats in logback.xml file",
       "revId": "6c31ea80a6c29901d19c21e24d82ac39556f886b",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false

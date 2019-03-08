@@ -1,0 +1,89 @@
+/*
+===============LICENSE_START=======================================================
+Acumos Apache-2.0
+===================================================================================
+Copyright (C) 2019 AT&T Intellectual Property & Tech Mahindra. All rights reserved.
+===================================================================================
+This Acumos software file is distributed by AT&T and Tech Mahindra
+under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+     http://www.apache.org/licenses/LICENSE-2.0
+This file is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+===============LICENSE_END=========================================================
+*/
+
+@import '../../styles/themes';
+@import '~bootstrap/scss/mixins/breakpoints';
+@import '~@nebular/theme/styles/global/breakpoints';
+
+@include nb-install-component() {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  .logo-containter {
+    display: flex;
+    align-items: center;
+    width: calc(#{nb-theme(sidebar-width)} - #{nb-theme(header-padding)});
+  }
+
+  .header-container {
+    display: flex;
+    align-items: center;
+    width: auto;
+
+    .navigation {
+      @include nb-ltr(padding-right, nb-theme(padding));
+      @include nb-rtl(padding-left, nb-theme(padding));
+      font-size: 2.5rem;
+      text-decoration: none;
+
+      i {
+        display: block;
+      }
+    }
+
+    .logo {
+      padding: 0 nb-theme(padding);
+      font-size: 1.75rem;
+      font-weight: nb-theme(font-weight-bolder);
+      @include nb-ltr(border-left, 1px solid nb-theme(separator));
+      @include nb-rtl(border-right, 1px solid nb-theme(separator));
+      white-space: nowrap;
+
+      span {
+        font-weight: nb-theme(font-weight-normal);
+      }
+    }
+  }
+
+  @include nb-for-theme(corporate) {
+    $menu-action-separator-color: #3f4550;
+
+    .header-container .logo {
+      @include nb-ltr(border, none);
+      @include nb-rtl(border, none);
+    }
+
+    .header-container /deep/ ngx-theme-switcher .dropdown-toggle {
+      color: nb-theme(color-white);
+      background: transparent;
+    }
+  }
+
+  @include media-breakpoint-down(is) {
+    .header-container {
+      .logo {
+        font-size: 1.25rem;
+      }
+    }
+
+    .toggle-layout {
+      display: none;
+    }
+  }
+}

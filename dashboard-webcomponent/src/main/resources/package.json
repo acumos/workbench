@@ -1,0 +1,19 @@
+{
+  "name": "DashboardWebComponent",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@webcomponents/webcomponentsjs": "2.2.7",
+    "bootstrap": "^4.0.0",
+    "lit-element": "^2.0.1",
+    "@material/mwc-icon": "^0.3.6",
+    "@polymer/polymer": "^3.1.0"
+  },
+  "devDependencies": {
+    "polymer-cli": "^1.9.6"
+  },
+  "scripts": {
+    "start:dev": "polymer serve  --port=8091",
+    "build": "polymer build"
+  }
+}

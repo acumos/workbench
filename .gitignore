@@ -1,0 +1,9 @@
+.classpath
+.project
+/.settings/
+/bin/
+/logs/
+/target/
+.gitattributes
+.pydevproject
+**/desktop.ini

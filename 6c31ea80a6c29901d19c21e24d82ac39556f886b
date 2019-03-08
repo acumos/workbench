@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "5197c644_1b90e962",
+        "filename": "LICENSE.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2019-03-08T22:05:58Z",
+      "side": 1,
+      "message": "2019",
+      "range": {
+        "startLine": 4,
+        "startChar": 12,
+        "endLine": 4,
+        "endChar": 16
+      },
+      "revId": "6c31ea80a6c29901d19c21e24d82ac39556f886b",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd23dcfd_71df20e7",
         "filename": "dashboard-webcomponent/application.properties",
         "patchSetId": 3
@@ -36,6 +59,46 @@
       "writtenOn": "2019-03-08T21:21:25Z",
       "side": 1,
       "message": "Please choose to publish either an application.properties OR an application.properties.template, not both.  Ideally just publish the template.",
+      "revId": "6c31ea80a6c29901d19c21e24d82ac39556f886b",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1015ba87_543354e4",
+        "filename": "dashboard-webcomponent/pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2019-03-08T22:05:58Z",
+      "side": 1,
+      "message": "Please add a root level readme file for a developer to understand basics of this project like how to compile/build, how to setup in local and run for development purpose.",
+      "revId": "6c31ea80a6c29901d19c21e24d82ac39556f886b",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f450e861_361128c6",
+        "filename": "dashboard-webcomponent/pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2019-03-08T22:05:58Z",
+      "side": 1,
+      "message": "2019 on all files.",
+      "range": {
+        "startLine": 5,
+        "startChar": 14,
+        "endLine": 5,
+        "endChar": 18
+      },
       "revId": "6c31ea80a6c29901d19c21e24d82ac39556f886b",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false
@@ -88,6 +151,98 @@
     },
     {
       "key": {
+        "uuid": "dc488004_be6a5eab",
+        "filename": "dashboard-webcomponent/pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2019-03-08T22:05:58Z",
+      "side": 1,
+      "message": "Please use 2.1.3 latest stable version, unless you have specific reason not to use latest. If so, please explain why.",
+      "range": {
+        "startLine": 35,
+        "startChar": 11,
+        "endLine": 35,
+        "endChar": 17
+      },
+      "revId": "6c31ea80a6c29901d19c21e24d82ac39556f886b",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dcd2beb1_e53805c3",
+        "filename": "dashboard-webcomponent/pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2019-03-08T22:05:58Z",
+      "side": 1,
+      "message": "2019 change here should fix every file I believe",
+      "range": {
+        "startLine": 144,
+        "startChar": 20,
+        "endLine": 144,
+        "endChar": 24
+      },
+      "revId": "6c31ea80a6c29901d19c21e24d82ac39556f886b",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a05c37b_de1c935a",
+        "filename": "dashboard-webcomponent/pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2019-03-08T22:05:58Z",
+      "side": 1,
+      "message": "There is higher chance that copy paste issues when reusing any code snippets of older poms, but please double check on all the versions used in pom to keep them latest.",
+      "range": {
+        "startLine": 161,
+        "startChar": 13,
+        "endLine": 161,
+        "endChar": 31
+      },
+      "revId": "6c31ea80a6c29901d19c21e24d82ac39556f886b",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ff50354f_713f9314",
+        "filename": "dashboard-webcomponent/pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2019-03-08T22:05:58Z",
+      "side": 1,
+      "message": "remove commented code, if not needed, otherwise will end up in lot of dead code.",
+      "range": {
+        "startLine": 277,
+        "startChar": 3,
+        "endLine": 282,
+        "endChar": 12
+      },
+      "revId": "6c31ea80a6c29901d19c21e24d82ac39556f886b",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0cb9732a_20d2ed65",
         "filename": "dashboard-webcomponent/src/main/java/org/acumos/workbench/dashboard/DashboardApplication.java",
         "patchSetId": 3
@@ -122,6 +277,29 @@
       "writtenOn": "2019-03-08T21:21:25Z",
       "side": 1,
       "message": "Discard",
+      "revId": "6c31ea80a6c29901d19c21e24d82ac39556f886b",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "46a2ae2f_7faf2e62",
+        "filename": "dashboard-webcomponent/src/main/resources/dashboard-element.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2019-03-08T22:05:58Z",
+      "side": 1,
+      "message": "Custom",
+      "range": {
+        "startLine": 32,
+        "startChar": 20,
+        "endLine": 32,
+        "endChar": 25
+      },
       "revId": "6c31ea80a6c29901d19c21e24d82ac39556f886b",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false
@@ -294,6 +472,29 @@
     },
     {
       "key": {
+        "uuid": "11c014cc_6bed1335",
+        "filename": "home-webcomponent/src/main/resources/angular.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2019-03-08T22:05:58Z",
+      "side": 1,
+      "message": "By any chance if this is from \"https://github.com/akveo/ngx-admin\", then should we clean it up to name it to the project we want, rather than leaving it as demo.",
+      "range": {
+        "startLine": 6,
+        "startChar": 5,
+        "endLine": 6,
+        "endChar": 19
+      },
+      "revId": "6c31ea80a6c29901d19c21e24d82ac39556f886b",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4889890d_6c1add5d",
         "filename": "home-webcomponent/src/main/resources/logback.xml",
         "patchSetId": 3
@@ -311,6 +512,75 @@
     },
     {
       "key": {
+        "uuid": "5925d610_4022f7e7",
+        "filename": "home-webcomponent/src/main/resources/package.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2019-03-08T22:05:58Z",
+      "side": 1,
+      "message": "should we clean this?",
+      "range": {
+        "startLine": 2,
+        "startChar": 2,
+        "endLine": 11,
+        "endChar": 4
+      },
+      "revId": "6c31ea80a6c29901d19c21e24d82ac39556f886b",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ec90b902_b19c7c25",
+        "filename": "home-webcomponent/src/main/resources/package.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2019-03-08T22:05:58Z",
+      "side": 1,
+      "message": "I recommend to go for latest version. At least I am able to work on 7.2.0 without much issues.",
+      "range": {
+        "startLine": 38,
+        "startChar": 29,
+        "endLine": 38,
+        "endChar": 34
+      },
+      "revId": "6c31ea80a6c29901d19c21e24d82ac39556f886b",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87cd7d9d_a74838e5",
+        "filename": "home-webcomponent/src/main/resources/package.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2019-03-08T22:05:58Z",
+      "side": 1,
+      "message": "may be better to match the version",
+      "range": {
+        "startLine": 76,
+        "startChar": 34,
+        "endLine": 76,
+        "endChar": 39
+      },
+      "revId": "6c31ea80a6c29901d19c21e24d82ac39556f886b",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7dec2b1_328e720b",
         "filename": "home-webcomponent/src/main/resources/src/app/@core/core.module.ts",
         "patchSetId": 3
@@ -322,6 +592,23 @@
       "writtenOn": "2019-03-08T21:28:28Z",
       "side": 1,
       "message": "Is this a generated directory or did Node bring it in? Do you really want the @ sign in the path to these files?  This looks kind of strange.",
+      "revId": "6c31ea80a6c29901d19c21e24d82ac39556f886b",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cd7686fa_fc386868",
+        "filename": "home-webcomponent/src/main/resources/src/app/app.module.ts",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2019-03-08T22:05:58Z",
+      "side": 1,
+      "message": "I would add exports, based on the below reason. \n\nAn export what you put is the exports property of the @NgModule decorator. It enables an Angular module to expose some of its components/directives/pipes to the other modules in the applications. Without it, the components/directives/pipes defined in a module could only be used in that module.",
       "revId": "6c31ea80a6c29901d19c21e24d82ac39556f886b",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false

@@ -1,0 +1,29 @@
+{
+	"name": "CreateProjectWebComponent",
+	"version": "0.0.1",
+	"private": true,
+	"scripts": {
+		"install:app": "cd component && npm install",
+		"install:api": "cd api && npm install",
+		"run:api": "echo Running api...",
+		"run:component": "cd component && npm run start:dev",
+		"docker:build": "docker build -t dockercentral.it.att.com:5100/com.att.cmlp/project-catalog-component:0.0.1 .",
+		"docker:run": "docker run -it -p 8080:7003 dockercentral.it.att.com:5100/com.att.cmlp/project-catalog-component:0.0.1",
+		"docker:push": "docker push dockercentral.it.att.com:5100/com.att.cmlp/project-catalog-component:0.0.1",
+		"deploy:stage": "run-s docker:build docker:run",
+		"start:dev": "run-p run:*",
+		"build": "polymer build",
+		"deploy": "run-s docker:build docker:push"
+	},
+	"dependencies": {
+		"@webcomponents/webcomponentsjs": "2.2.7",
+		"bootstrap": "^4.0.0",
+		"jquery": "^3.3.1",
+		"lit-element": "^2.0.1",
+		"@polymer/polymer": "^3.1.0",
+		"@material/mwc-icon": "^0.3.6"
+	},
+	"devDependencies": {
+		"polymer-cli": "^1.9.6"
+	}
+}

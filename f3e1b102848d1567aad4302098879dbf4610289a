@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eecf4938_aa75e9ed",
+        "filename": "README.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-03-11T01:06:19Z",
+      "side": 1,
+      "message": "Please add all the correct instructions for all packages",
+      "revId": "f3e1b102848d1567aad4302098879dbf4610289a",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "13289b32_aaa7ba2d",
+        "filename": "home-webcomponent/src/main/resources/protractor.conf.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-03-11T01:06:19Z",
+      "side": 1,
+      "message": "why only chrome and not other browser.\nAre we planning to write tests using jasmine and cucumber?",
+      "revId": "f3e1b102848d1567aad4302098879dbf4610289a",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}

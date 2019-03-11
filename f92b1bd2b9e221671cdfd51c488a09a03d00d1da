@@ -345,6 +345,24 @@
       "revId": "f92b1bd2b9e221671cdfd51c488a09a03d00d1da",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "201978a9_485c60ec",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/exception/CustomizedResponseEntityExceptionHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T14:30:53Z",
+      "side": 1,
+      "message": "All gets handle, method defined in this class handles base exceptions.  The exception which are thrown extends the base exception\u0027s adding required error message.",
+      "parentUuid": "0185ff34_0cc712c4",
+      "revId": "f92b1bd2b9e221671cdfd51c488a09a03d00d1da",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
     }
   ]
 }

@@ -33,6 +33,57 @@
       "revId": "f3e1b102848d1567aad4302098879dbf4610289a",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d67e7ed1_3887dc4b",
+        "filename": "home-webcomponent/src/main/resources/src/app/@core/core.module.ts",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-03-11T01:29:57Z",
+      "side": 1,
+      "message": "Used for auth setup when backend is not available. Why do we need this?",
+      "revId": "f3e1b102848d1567aad4302098879dbf4610289a",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aaab3e2_6e55985c",
+        "filename": "home-webcomponent/src/main/resources/src/app/@core/core.module.ts",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-03-11T01:29:57Z",
+      "side": 1,
+      "message": "Why ACL (access control list) is defined as hard coded in UI ?\nThis might interfere with CDS Roles",
+      "revId": "f3e1b102848d1567aad4302098879dbf4610289a",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "57c08961_d5b1e0dc",
+        "filename": "home-webcomponent/src/main/resources/src/app/@core/utils/script.service.ts",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-03-11T01:29:57Z",
+      "side": 1,
+      "message": "Probably better to use\nlet promises: any[] \u003d []\n        scripts.forEach(script \u003d\u003e promises.push(this.loadScript(script)))\n        return Promise.all(promises)\n\nMatching loadScript() is also using Promise",
+      "revId": "f3e1b102848d1567aad4302098879dbf4610289a",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
     }
   ]
 }

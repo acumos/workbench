@@ -19,6 +19,75 @@
     },
     {
       "key": {
+        "uuid": "7d6a7561_96f6a675",
+        "filename": "dashboard-webcomponent/pom.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-11T12:53:05Z",
+      "side": 1,
+      "message": "Please upgrade to 2.1.3.RELEASE",
+      "range": {
+        "startLine": 35,
+        "startChar": 11,
+        "endLine": 35,
+        "endChar": 25
+      },
+      "revId": "f3e1b102848d1567aad4302098879dbf4610289a",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a4a87c9_ad0b3f62",
+        "filename": "home-webcomponent/pom.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-11T12:53:05Z",
+      "side": 1,
+      "message": "Please upgrade to 2.1.3.RELEASE",
+      "range": {
+        "startLine": 35,
+        "startChar": 11,
+        "endLine": 35,
+        "endChar": 25
+      },
+      "revId": "f3e1b102848d1567aad4302098879dbf4610289a",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eeca5eed_88271e00",
+        "filename": "home-webcomponent/pom.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-11T12:53:05Z",
+      "side": 1,
+      "message": "Please upgrade to 0.28.0",
+      "range": {
+        "startLine": 213,
+        "startChar": 13,
+        "endLine": 213,
+        "endChar": 19
+      },
+      "revId": "f3e1b102848d1567aad4302098879dbf4610289a",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13289b32_aaa7ba2d",
         "filename": "home-webcomponent/src/main/resources/protractor.conf.js",
         "patchSetId": 8
@@ -81,6 +150,75 @@
       "writtenOn": "2019-03-11T01:29:57Z",
       "side": 1,
       "message": "Probably better to use\nlet promises: any[] \u003d []\n        scripts.forEach(script \u003d\u003e promises.push(this.loadScript(script)))\n        return Promise.all(promises)\n\nMatching loadScript() is also using Promise",
+      "revId": "f3e1b102848d1567aad4302098879dbf4610289a",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4952128b_099525e4",
+        "filename": "pom.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-11T12:53:05Z",
+      "side": 1,
+      "message": "Probably you want 1.0.0-SNAPSHOT?",
+      "range": {
+        "startLine": 28,
+        "startChar": 10,
+        "endLine": 28,
+        "endChar": 24
+      },
+      "revId": "f3e1b102848d1567aad4302098879dbf4610289a",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63114f12_ea0fe58a",
+        "filename": "project-catalog-webcomponent/pom.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-11T12:53:05Z",
+      "side": 1,
+      "message": "Please upgrade to 2.1.3.RELEASE",
+      "range": {
+        "startLine": 35,
+        "startChar": 11,
+        "endLine": 35,
+        "endChar": 26
+      },
+      "revId": "f3e1b102848d1567aad4302098879dbf4610289a",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da66d67a_db108b09",
+        "filename": "project-webcomponent/pom.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-11T12:53:05Z",
+      "side": 1,
+      "message": "Please upgrade to 2.1.3.RELEASE",
+      "range": {
+        "startLine": 35,
+        "startChar": 11,
+        "endLine": 35,
+        "endChar": 25
+      },
       "revId": "f3e1b102848d1567aad4302098879dbf4610289a",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false

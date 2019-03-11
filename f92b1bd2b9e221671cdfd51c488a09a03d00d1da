@@ -328,6 +328,23 @@
       "revId": "f92b1bd2b9e221671cdfd51c488a09a03d00d1da",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0185ff34_0cc712c4",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/exception/CustomizedResponseEntityExceptionHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-11T14:16:35Z",
+      "side": 1,
+      "message": "What about DuplicateProjectException?  InvalidResponseJSONException?\n\nIt\u0027s tedious trying to discover if every exception is trapped here.",
+      "revId": "f92b1bd2b9e221671cdfd51c488a09a03d00d1da",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
     }
   ]
 }

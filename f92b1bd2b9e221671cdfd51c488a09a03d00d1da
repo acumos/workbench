@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3847631d_ba1d8bb3",
+        "filename": "project-service/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-11T13:48:17Z",
+      "side": 1,
+      "message": "Outdated, please upgrade to 2.9.2",
+      "range": {
+        "startLine": 82,
+        "startChar": 11,
+        "endLine": 82,
+        "endChar": 17
+      },
+      "revId": "f92b1bd2b9e221671cdfd51c488a09a03d00d1da",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "38d3f624_fd297f3f",
+        "filename": "project-service/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-11T13:48:17Z",
+      "side": 1,
+      "message": "Ditto, please put version in a property above",
+      "range": {
+        "startLine": 88,
+        "startChar": 11,
+        "endLine": 88,
+        "endChar": 16
+      },
+      "revId": "f92b1bd2b9e221671cdfd51c488a09a03d00d1da",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "09bc7b05_3c2a8d4b",
+        "filename": "project-service/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-11T13:48:17Z",
+      "side": 1,
+      "message": "Why is this necessary?  I think this is the default, src/main/resources gets packaged by default.",
+      "range": {
+        "startLine": 125,
+        "startChar": 3,
+        "endLine": 127,
+        "endChar": 14
+      },
+      "revId": "f92b1bd2b9e221671cdfd51c488a09a03d00d1da",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "efe2af12_131af11b",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/ProjectServiceApplication.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-11T13:48:17Z",
+      "side": 1,
+      "message": "This code lingers from a CDS example where the content of the JSON is validated.  Either restore the validation or remove this System.getenv.  Hint: it\u0027s better to validate :)",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 74
+      },
+      "revId": "f92b1bd2b9e221671cdfd51c488a09a03d00d1da",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "96695e08_614d739d",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/config/AppConfiguration.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-11T13:48:17Z",
+      "side": 1,
+      "message": "My concern about open access remains.  The sole controller checks the submitted user ID for validity, but I believe this means that anyone who has the user ID string gains full access; i.e., can impersonate another user.  The usual defense mechanism is that a user name AND password are required to establish a session.  So I don\u0027t think this passes the red-face test for security.",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 60
+      },
+      "revId": "f92b1bd2b9e221671cdfd51c488a09a03d00d1da",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6815570f_d851825c",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/controller/ProjectServiceController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-11T13:48:17Z",
+      "side": 1,
+      "message": "Please add a logger using SLF4J.  All controller methods should log entry/exit",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 1
+      },
+      "revId": "f92b1bd2b9e221671cdfd51c488a09a03d00d1da",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d1b42a35_0cbcd845",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/controller/ProjectServiceController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-11T13:48:17Z",
+      "side": 1,
+      "message": "I believe this method throws an exception on invalid input.  I don\u0027t see a try-catch pattern in the controller, which would allow it to provide a meaningful error back to the caller.  If any controller method takes an uncaught exception the caller  gets a Spring-generated exception which tends to be rather general and uninformative.  Please consider.",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 71
+      },
+      "revId": "f92b1bd2b9e221671cdfd51c488a09a03d00d1da",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}

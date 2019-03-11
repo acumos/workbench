@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2bf54f59_f26eab59",
+        "filename": "project-service/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T14:11:53Z",
+      "side": 1,
+      "message": "will be done in subsequent commit",
+      "parentUuid": "3847631d_ba1d8bb3",
+      "range": {
+        "startLine": 82,
+        "startChar": 11,
+        "endLine": 82,
+        "endChar": 17
+      },
+      "revId": "f92b1bd2b9e221671cdfd51c488a09a03d00d1da",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38d3f624_fd297f3f",
         "filename": "project-service/pom.xml",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2019-03-11T13:48:17Z",
       "side": 1,
       "message": "Ditto, please put version in a property above",
+      "range": {
+        "startLine": 88,
+        "startChar": 11,
+        "endLine": 88,
+        "endChar": 16
+      },
+      "revId": "f92b1bd2b9e221671cdfd51c488a09a03d00d1da",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "175bb84e_79738065",
+        "filename": "project-service/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T14:11:53Z",
+      "side": 1,
+      "message": "will be done in subsequent commit",
+      "parentUuid": "38d3f624_fd297f3f",
       "range": {
         "startLine": 88,
         "startChar": 11,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ee814e28_1005aba6",
+        "filename": "project-service/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T14:11:53Z",
+      "side": 1,
+      "message": "this works too",
+      "parentUuid": "09bc7b05_3c2a8d4b",
+      "range": {
+        "startLine": 125,
+        "startChar": 3,
+        "endLine": 127,
+        "endChar": 14
+      },
+      "revId": "f92b1bd2b9e221671cdfd51c488a09a03d00d1da",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efe2af12_131af11b",
         "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/ProjectServiceApplication.java",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2019-03-11T13:48:17Z",
       "side": 1,
       "message": "This code lingers from a CDS example where the content of the JSON is validated.  Either restore the validation or remove this System.getenv.  Hint: it\u0027s better to validate :)",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 74
+      },
+      "revId": "f92b1bd2b9e221671cdfd51c488a09a03d00d1da",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "25f9aba1_5a96af16",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/ProjectServiceApplication.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T14:11:53Z",
+      "side": 1,
+      "message": "validation code was there but comment, and you mentioned to remove the commented code so its been removed.  Validation will be done along with logging implementation.  Adding TODO for it.",
+      "parentUuid": "efe2af12_131af11b",
       "range": {
         "startLine": 44,
         "startChar": 0,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "0f9c8965_082dc2a9",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/config/AppConfiguration.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T14:11:53Z",
+      "side": 1,
+      "message": "I see the point, can we ask UI to pass in the auth Token or user credentials to validate?",
+      "parentUuid": "96695e08_614d739d",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 60
+      },
+      "revId": "f92b1bd2b9e221671cdfd51c488a09a03d00d1da",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6815570f_d851825c",
         "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/controller/ProjectServiceController.java",
         "patchSetId": 2
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "617fc0a6_dfd69967",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/controller/ProjectServiceController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T14:11:53Z",
+      "side": 1,
+      "message": "Will be done in subsequent commit.",
+      "parentUuid": "6815570f_d851825c",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 1
+      },
+      "revId": "f92b1bd2b9e221671cdfd51c488a09a03d00d1da",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1b42a35_0cbcd845",
         "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/controller/ProjectServiceController.java",
         "patchSetId": 2
@@ -151,6 +295,30 @@
       "writtenOn": "2019-03-11T13:48:17Z",
       "side": 1,
       "message": "I believe this method throws an exception on invalid input.  I don\u0027t see a try-catch pattern in the controller, which would allow it to provide a meaningful error back to the caller.  If any controller method takes an uncaught exception the caller  gets a Spring-generated exception which tends to be rather general and uninformative.  Please consider.",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 71
+      },
+      "revId": "f92b1bd2b9e221671cdfd51c488a09a03d00d1da",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4011cd8a_deda803e",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/controller/ProjectServiceController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T14:11:53Z",
+      "side": 1,
+      "message": "I have common handler for all exception, that\u0027s how I have defined Exception handler framework.  For more details please refer CustomizedResponseEntityExceptionHandler class.",
+      "parentUuid": "d1b42a35_0cbcd845",
       "range": {
         "startLine": 74,
         "startChar": 0,

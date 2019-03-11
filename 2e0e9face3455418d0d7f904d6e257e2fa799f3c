@@ -65,6 +65,24 @@
     },
     {
       "key": {
+        "uuid": "c20746ac_410ef2cb",
+        "filename": "project-service/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f77972fb_c83099e1",
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b01e2dfa_96aafca0",
         "filename": "project-service/pom.xml",
         "patchSetId": 1
@@ -76,6 +94,30 @@
       "writtenOn": "2019-03-08T18:53:07Z",
       "side": 1,
       "message": "Latest is 2.1.3, why not start with that?",
+      "range": {
+        "startLine": 16,
+        "startChar": 14,
+        "endLine": 16,
+        "endChar": 15
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c30dc783_6fe69899",
+        "filename": "project-service/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b01e2dfa_96aafca0",
       "range": {
         "startLine": 16,
         "startChar": 14,
@@ -111,6 +153,30 @@
     },
     {
       "key": {
+        "uuid": "62ef2ef7_0f430699",
+        "filename": "project-service/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "should use 2.2.0-SNAPSHOT?",
+      "parentUuid": "2b02c556_61bf51ef",
+      "range": {
+        "startLine": 45,
+        "startChar": 12,
+        "endLine": 45,
+        "endChar": 16
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e5bd44f_d9a1f636",
         "filename": "project-service/pom.xml",
         "patchSetId": 1
@@ -122,6 +188,30 @@
       "writtenOn": "2019-03-08T18:53:07Z",
       "side": 1,
       "message": "Outdated, use 2.9.2 and move hardcoded values to a property",
+      "range": {
+        "startLine": 63,
+        "startChar": 11,
+        "endLine": 63,
+        "endChar": 16
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8bad7acb_063c856c",
+        "filename": "project-service/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "will it be ok if upgrade latter, after initial version is available for integration",
+      "parentUuid": "9e5bd44f_d9a1f636",
       "range": {
         "startLine": 63,
         "startChar": 11,
@@ -157,6 +247,30 @@
     },
     {
       "key": {
+        "uuid": "2ad89870_ae0907be",
+        "filename": "project-service/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae23db4d_fc7167ba",
+      "range": {
+        "startLine": 122,
+        "startChar": 20,
+        "endLine": 122,
+        "endChar": 24
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db5e427b_d359a513",
         "filename": "project-service/pom.xml",
         "patchSetId": 1
@@ -180,6 +294,30 @@
     },
     {
       "key": {
+        "uuid": "f1959b83_d564c990",
+        "filename": "project-service/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db5e427b_d359a513",
+      "range": {
+        "startLine": 180,
+        "startChar": 13,
+        "endLine": 180,
+        "endChar": 31
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a56a1ae9_530aa8e0",
         "filename": "project-service/pom.xml",
         "patchSetId": 1
@@ -191,6 +329,30 @@
       "writtenOn": "2019-03-08T18:53:07Z",
       "side": 1,
       "message": "Outdated, use 0.28.0",
+      "range": {
+        "startLine": 200,
+        "startChar": 13,
+        "endLine": 200,
+        "endChar": 19
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "43da3ab4_d7f3411a",
+        "filename": "project-service/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a56a1ae9_530aa8e0",
       "range": {
         "startLine": 200,
         "startChar": 13,
@@ -238,6 +400,24 @@
     },
     {
       "key": {
+        "uuid": "eac6779e_831e5608",
+        "filename": "project-service/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "application.properties is already included in jar.",
+      "parentUuid": "0d57a534_53abe2e3",
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed4915ab_4ac4ebbf",
         "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/ProjectServiceApplication.java",
         "patchSetId": 1
@@ -249,6 +429,30 @@
       "writtenOn": "2019-03-08T18:53:07Z",
       "side": 1,
       "message": "I very VERY much doubt you are using Hibernate or JPA, remove",
+      "range": {
+        "startLine": 30,
+        "startChar": 72,
+        "endLine": 30,
+        "endChar": 101
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0aadfe45_1baa075f",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/ProjectServiceApplication.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed4915ab_4ac4ebbf",
       "range": {
         "startLine": 30,
         "startChar": 72,
@@ -284,6 +488,30 @@
     },
     {
       "key": {
+        "uuid": "825a8e3b_7259e51c",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/ProjectServiceApplication.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d260c7a7_1b39a342",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 5
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d41a5b80_b91f84af",
         "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/config/AppConfiguration.java",
         "patchSetId": 1
@@ -295,6 +523,30 @@
       "writtenOn": "2019-03-08T21:02:59Z",
       "side": 1,
       "message": "may be remove this annotation, so that developers would know the deprecations that need to be handled before they start failing.",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 32
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6a2eac3a_d98c261d",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/config/AppConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d41a5b80_b91f84af",
       "range": {
         "startLine": 33,
         "startChar": 0,
@@ -330,6 +582,30 @@
     },
     {
       "key": {
+        "uuid": "c72af0e8_40609d62",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/config/AppConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "Authorization is done at controller level, this is to enable Cross-Origin Resource Sharing (CORS) at global level.  If you have any other better way to do, please let us know.",
+      "parentUuid": "68e1fc83_b8146c5b",
+      "range": {
+        "startLine": 53,
+        "startChar": 16,
+        "endLine": 54,
+        "endChar": 60
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3dd7daf_3af1b390",
         "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/config/SwaggerConfiguration.java",
         "patchSetId": 1
@@ -341,6 +617,30 @@
       "writtenOn": "2019-03-08T21:02:59Z",
       "side": 1,
       "message": "may be good idea to define in the string constants file at one, so that these can be reused and changes can be done at one place in future if the wordings change.",
+      "range": {
+        "startLine": 54,
+        "startChar": 16,
+        "endLine": 56,
+        "endChar": 30
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "76072e0b_1b55b6f2",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/config/SwaggerConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "No other reference in project, only used once so why not created constants.",
+      "parentUuid": "b3dd7daf_3af1b390",
       "range": {
         "startLine": 54,
         "startChar": 16,
@@ -376,6 +676,30 @@
     },
     {
       "key": {
+        "uuid": "de3da3d3_180f6446",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/controller/ProjectServiceController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "why not mlProject? : just followed the API documentation.  As designing call were too late for me, so could not put suggestion in design phase.   \nI usually follow convention of specifying request mapping at class level, yes in this case its repeated.",
+      "parentUuid": "f796fa36_21b1a410",
+      "range": {
+        "startLine": 43,
+        "startChar": 26,
+        "endLine": 43,
+        "endChar": 37
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48a0e463_49c86939",
         "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/controller/ProjectServiceController.java",
         "patchSetId": 1
@@ -387,6 +711,30 @@
       "writtenOn": "2019-03-08T18:53:07Z",
       "side": 1,
       "message": "Why is this qualifier required?  If there is only one candidate implementation, Spring should supply it just fine, right? This seems like it would break mockito-based testing, is that right?",
+      "range": {
+        "startLine": 47,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 11
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "72d147cb_c7a943d2",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/controller/ProjectServiceController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "You are correct, for mockito testing and also helps new developer to link the concrete implementation of interface while understanding the code.",
+      "parentUuid": "48a0e463_49c86939",
       "range": {
         "startLine": 47,
         "startChar": 2,
@@ -416,6 +764,24 @@
     },
     {
       "key": {
+        "uuid": "fa0d6302_5dffeeba",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/controller/ProjectServiceController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "Error condition is handle by Exception framework used. I will put in the low level architecture in WIKI, which will revel the flow, in case of Exception or validation failure or any other error.",
+      "parentUuid": "026ec65c_ca25ba20",
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb606175_f9fed0d4",
         "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/controller/ProjectServiceController.java",
         "patchSetId": 1
@@ -427,6 +793,30 @@
       "writtenOn": "2019-03-08T21:02:59Z",
       "side": 1,
       "message": "from security aspect, how will project service endpoints verify that authenticated service is making the calls to these endpoints? or anyone with known userID and projectId can retrieve the information?",
+      "range": {
+        "startLine": 101,
+        "startChar": 26,
+        "endLine": 101,
+        "endChar": 75
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d20500e1_0c40fbde",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/controller/ProjectServiceController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "API are implemented as per the API design.  Could you please discuss this with Kazi or Sayee. Mean while I will check how to restrict the access.",
+      "parentUuid": "cb606175_f9fed0d4",
       "range": {
         "startLine": 101,
         "startChar": 26,
@@ -456,6 +846,24 @@
     },
     {
       "key": {
+        "uuid": "bbcbe737_7ff710a4",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/controller/ProjectServiceController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "handled by Exception handling framework.",
+      "parentUuid": "064e6e8a_eec24f8d",
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11ac32f1_382200f0",
         "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/exception/CustomizedResponseEntityExceptionHandler.java",
         "patchSetId": 1
@@ -467,6 +875,30 @@
       "writtenOn": "2019-03-08T21:02:59Z",
       "side": 1,
       "message": "Error messages defined in string constant file like ErrorConstants or ExceptionConstants may be good idea.",
+      "range": {
+        "startLine": 110,
+        "startChar": 32,
+        "endLine": 110,
+        "endChar": 66
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d98b0cc2_2cc9f5d6",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/exception/CustomizedResponseEntityExceptionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "Need to be fixed at multiple places as part of code hardening in subsequent sprint.",
+      "parentUuid": "11ac32f1_382200f0",
       "range": {
         "startLine": 110,
         "startChar": 32,
@@ -525,6 +957,30 @@
     },
     {
       "key": {
+        "uuid": "e224670b_b196d547",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/service/InputValidationService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "For incorrect input JSON, Project mandatory/required fields will not populated reveling incorrect JSON.  Also Project POJO is marked to ignore Unknown fields.",
+      "parentUuid": "6dfb19d8_3c4a2db1",
+      "range": {
+        "startLine": 37,
+        "startChar": 33,
+        "endLine": 37,
+        "endChar": 37
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12f0ba0f_c8e4d48d",
         "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/service/InputValidationServiceImpl.java",
         "patchSetId": 1
@@ -536,6 +992,30 @@
       "writtenOn": "2019-03-08T21:02:59Z",
       "side": 1,
       "message": "Are these input field data validations performed in the frontend form as well? If not, they should be.",
+      "range": {
+        "startLine": 36,
+        "startChar": 13,
+        "endLine": 36,
+        "endChar": 39
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b77a3cc3_5a460d87",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/service/InputValidationServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "They are validated at UI, but in case of request tampering we need to double check the input at some level at back end too.",
+      "parentUuid": "12f0ba0f_c8e4d48d",
       "range": {
         "startLine": 36,
         "startChar": 13,
@@ -571,6 +1051,30 @@
     },
     {
       "key": {
+        "uuid": "60004ad6_79327dfc",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/service/InputValidationServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "JSON was not correct that\u0027s why required values could not be found or populated.  Once app is up and running I can demonstrate it.",
+      "parentUuid": "a44d3ef2_17d2b2ec",
+      "range": {
+        "startLine": 56,
+        "startChar": 25,
+        "endLine": 56,
+        "endChar": 29
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bffbbd57_fd09a178",
         "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/service/ProjectServiceImpl.java",
         "patchSetId": 1
@@ -582,6 +1086,30 @@
       "writtenOn": "2019-03-08T18:53:07Z",
       "side": 1,
       "message": "This is a classic pattern where you return boolean true if yes, false if no.  Why throw an exception if it exists?",
+      "range": {
+        "startLine": 64,
+        "startChar": 8,
+        "endLine": 64,
+        "endChar": 12
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a5daee2_b754c763",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/service/ProjectServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "That how framework is been designed to handle validation, checks, Exception and any other error.  Only one class owner the responsibility to construct invalid response.  This method should have been part of Validation Service, but as it invokes CDS method so have to move it to ProjectService.",
+      "parentUuid": "bffbbd57_fd09a178",
       "range": {
         "startLine": 64,
         "startChar": 8,
@@ -617,6 +1145,30 @@
     },
     {
       "key": {
+        "uuid": "590701e9_f279d9c2",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/service/ProjectServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "trying to implement as per the API Specification, otherwise will get bug for it :). We can discuss it with Kazi if required.",
+      "parentUuid": "e50efd53_d90563e7",
+      "range": {
+        "startLine": 97,
+        "startChar": 4,
+        "endLine": 97,
+        "endChar": 20
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d48b5cf_60b7f5b5",
         "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/service/ProjectServiceImpl.java",
         "patchSetId": 1
@@ -628,6 +1180,30 @@
       "writtenOn": "2019-03-08T18:53:07Z",
       "side": 1,
       "message": "Why throw an exception?  Why not just return false?",
+      "range": {
+        "startLine": 113,
+        "startChar": 13,
+        "endLine": 113,
+        "endChar": 30
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0f85b13c_3615b8ee",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/service/ProjectServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "Exception handling will take care of, instead of having more if and else in all classes.  I will document low level architecture in WIKI to show how it work to reduce complex code.",
+      "parentUuid": "1d48b5cf_60b7f5b5",
       "range": {
         "startLine": 113,
         "startChar": 13,
@@ -663,6 +1239,30 @@
     },
     {
       "key": {
+        "uuid": "86bcdc3a_8835190a",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/service/ProjectServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ade95d21_5bbb1d2c",
+      "range": {
+        "startLine": 127,
+        "startChar": 52,
+        "endLine": 127,
+        "endChar": 66
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "245ae720_aa46d7c9",
         "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/service/ProjectServiceImpl.java",
         "patchSetId": 1
@@ -674,6 +1274,30 @@
       "writtenOn": "2019-03-08T18:53:07Z",
       "side": 1,
       "message": "See above. You have the project ID.  why do this awkward search?",
+      "range": {
+        "startLine": 153,
+        "startChar": 53,
+        "endLine": 153,
+        "endChar": 67
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d5630c2_b645f1f3",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/service/ProjectServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "to search if user already have project with name and version matching the input (new values for name and version respectively).",
+      "parentUuid": "245ae720_aa46d7c9",
       "range": {
         "startLine": 153,
         "startChar": 53,
@@ -709,6 +1333,30 @@
     },
     {
       "key": {
+        "uuid": "883517ef_219de955",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/service/ProjectServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "We need to discuss with Kazi to change the API Specification/behavior.",
+      "parentUuid": "21375499_58c274c8",
+      "range": {
+        "startLine": 171,
+        "startChar": 2,
+        "endLine": 171,
+        "endChar": 18
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21018e13_86509a2a",
         "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/service/ProjectServiceImpl.java",
         "patchSetId": 1
@@ -720,6 +1368,30 @@
       "writtenOn": "2019-03-08T18:53:07Z",
       "side": 1,
       "message": "See above.  If you have the project ID then don\u0027t call search, call getProject",
+      "range": {
+        "startLine": 186,
+        "startChar": 52,
+        "endLine": 186,
+        "endChar": 66
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e753eef_42f6ddc5",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/service/ProjectServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "Earlier we didn\u0027t had validation in controller to check if user the owner of the project, so included search for the project Id and input user Id combination to get the project.  Which make sure that owner only can view the project.",
+      "parentUuid": "21018e13_86509a2a",
       "range": {
         "startLine": 186,
         "startChar": 52,
@@ -778,6 +1450,30 @@
     },
     {
       "key": {
+        "uuid": "de9b9ee9_8756824d",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/service/ProjectValidationService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c008b609_351b7e54",
+      "range": {
+        "startLine": 28,
+        "startChar": 7,
+        "endLine": 28,
+        "endChar": 15
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77a2a7ed_2275c8a4",
         "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/util/ConfigurationProperties.java",
         "patchSetId": 1
@@ -789,6 +1485,30 @@
       "writtenOn": "2019-03-08T18:53:07Z",
       "side": 1,
       "message": "If you\u0027re starting fresh, would you PLEASE use a value without typographical errors?  how about cmndatasvcendpoinTurl ?",
+      "range": {
+        "startLine": 29,
+        "startChar": 22,
+        "endLine": 29,
+        "endChar": 42
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4fa67334_d489619d",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/util/ConfigurationProperties.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "really thanks for this.  Your review always help me to correct things.",
+      "parentUuid": "77a2a7ed_2275c8a4",
       "range": {
         "startLine": 29,
         "startChar": 22,
@@ -818,6 +1538,24 @@
     },
     {
       "key": {
+        "uuid": "4929c930_f8f494a3",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/util/ValidationRule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0597a90d_7cb57ba5",
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d779bd1b_d53cf36f",
         "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/vo/DataSets.java",
         "patchSetId": 1
@@ -829,6 +1567,30 @@
       "writtenOn": "2019-03-08T18:53:07Z",
       "side": 1,
       "message": "Singular/plural confusion",
+      "range": {
+        "startLine": 29,
+        "startChar": 13,
+        "endLine": 29,
+        "endChar": 21
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6b4c9ebb_2fd12a1b",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/vo/DataSets.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "Generated code for ML Workbench Protobuf shared.  I will check and fix.",
+      "parentUuid": "d779bd1b_d53cf36f",
       "range": {
         "startLine": 29,
         "startChar": 13,
@@ -864,6 +1626,30 @@
     },
     {
       "key": {
+        "uuid": "69bcc1a4_8d5843d3",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/vo/DataSources.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "Auto generated code for ML Workbench Protobuf shared.  I will check and fix it.",
+      "parentUuid": "033cf9e1_6b976de7",
+      "range": {
+        "startLine": 29,
+        "startChar": 13,
+        "endLine": 29,
+        "endChar": 24
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "838971e0_6b0029fd",
         "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/vo/KVPair.java",
         "patchSetId": 1
@@ -875,6 +1661,30 @@
       "writtenOn": "2019-03-08T18:53:07Z",
       "side": 1,
       "message": "A value probably should be a byte[] array (application/octet-stream)",
+      "range": {
+        "startLine": 35,
+        "startChar": 9,
+        "endLine": 35,
+        "endChar": 15
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0f7c925e_e9c0f51f",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/vo/KVPair.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "Its as per the MLWorkbench API Protobuf definition.",
+      "parentUuid": "838971e0_6b0029fd",
       "range": {
         "startLine": 35,
         "startChar": 9,
@@ -910,6 +1720,30 @@
     },
     {
       "key": {
+        "uuid": "9a14efa2_b5ba3ff9",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/vo/KVPairs.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "Auto generated code for ML Workbench API Protobuf definition shared.  I will check and fix it.",
+      "parentUuid": "2623da96_521f3462",
+      "range": {
+        "startLine": 29,
+        "startChar": 13,
+        "endLine": 29,
+        "endChar": 20
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74e3280e_b90ddf1b",
         "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/vo/Model.java",
         "patchSetId": 1
@@ -921,6 +1755,30 @@
       "writtenOn": "2019-03-08T18:53:07Z",
       "side": 1,
       "message": "This name is very very generic and likely to cause confusion.  Maybe you should find a more specific one.",
+      "range": {
+        "startLine": 29,
+        "startChar": 13,
+        "endLine": 29,
+        "endChar": 18
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2b1f57e2_84bc6365",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/vo/Model.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "Auto generated code for ML Workbench API Protobuf definition shared.  Need to check with Kazi and update the ML Workbench API Protobuf definition.",
+      "parentUuid": "74e3280e_b90ddf1b",
       "range": {
         "startLine": 29,
         "startChar": 13,
@@ -956,6 +1814,30 @@
     },
     {
       "key": {
+        "uuid": "72546d9a_af44c122",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/vo/Models.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "Auto generated code for ML Workbench API Protobuf definition shared.  I will check and fix it.",
+      "parentUuid": "6728d8b1_567235bf",
+      "range": {
+        "startLine": 29,
+        "startChar": 13,
+        "endLine": 29,
+        "endChar": 19
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe287df4_60ca3329",
         "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/vo/NoteBooks.java",
         "patchSetId": 1
@@ -967,6 +1849,30 @@
       "writtenOn": "2019-03-08T18:53:07Z",
       "side": 1,
       "message": "Singular/plural confusion",
+      "range": {
+        "startLine": 29,
+        "startChar": 13,
+        "endLine": 29,
+        "endChar": 22
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4407e953_bbc8064f",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/vo/NoteBooks.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "Auto generated code for ML Workbench API Protobuf definition shared.  I will check and fix it.",
+      "parentUuid": "fe287df4_60ca3329",
       "range": {
         "startLine": 29,
         "startChar": 13,
@@ -1002,6 +1908,30 @@
     },
     {
       "key": {
+        "uuid": "212c5637_8b999169",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/vo/Pipelines.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "Auto generated code for ML Workbench API Protobuf definition shared.  I will check and fix it.",
+      "parentUuid": "7b5d1c55_0068a079",
+      "range": {
+        "startLine": 29,
+        "startChar": 13,
+        "endLine": 29,
+        "endChar": 22
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3fd86fc4_50125c3a",
         "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/vo/Project.java",
         "patchSetId": 1
@@ -1013,6 +1943,30 @@
       "writtenOn": "2019-03-08T18:53:07Z",
       "side": 1,
       "message": "Interesting that you would completely reinvent the data model within this project, ignoring the common data model domain objects",
+      "range": {
+        "startLine": 31,
+        "startChar": 13,
+        "endLine": 31,
+        "endChar": 20
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bc08eda5_5863935b",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/vo/Project.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "Auto generated code for ML Workbench API Protobuf definition shared.  This definition is to match the ML Workbench API Specification input and output.  So project-service code has to transfer the values between mlpXYZ object and VOXYZ object.",
+      "parentUuid": "3fd86fc4_50125c3a",
       "range": {
         "startLine": 31,
         "startChar": 13,
@@ -1042,6 +1996,24 @@
     },
     {
       "key": {
+        "uuid": "0ae1fdca_aec6801b",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/vo/Project.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63e55d58_e108e3a9",
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c376c09_3b276737",
         "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/vo/Projects.java",
         "patchSetId": 1
@@ -1053,6 +2025,30 @@
       "writtenOn": "2019-03-08T18:53:07Z",
       "side": 1,
       "message": "singular/plural confusion, a \"Projects\" instance has exactly one Project",
+      "range": {
+        "startLine": 29,
+        "startChar": 13,
+        "endLine": 29,
+        "endChar": 21
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f35b6427_51ac43f2",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/vo/Projects.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "Auto generated code for ML Workbench API Protobuf definition shared.  I will check and fix it.",
+      "parentUuid": "7c376c09_3b276737",
       "range": {
         "startLine": 29,
         "startChar": 13,
@@ -1088,6 +2084,30 @@
     },
     {
       "key": {
+        "uuid": "12df62ce_efdd53e0",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/vo/Queue.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "Auto generated code for ML Workbench API Protobuf definition shared.",
+      "parentUuid": "20482975_22e04e2d",
+      "range": {
+        "startLine": 29,
+        "startChar": 13,
+        "endLine": 29,
+        "endChar": 18
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6182c29_95df4ae0",
         "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/vo/Queues.java",
         "patchSetId": 1
@@ -1099,6 +2119,30 @@
       "writtenOn": "2019-03-08T18:53:07Z",
       "side": 1,
       "message": "Singular/plural confusion",
+      "range": {
+        "startLine": 29,
+        "startChar": 13,
+        "endLine": 29,
+        "endChar": 19
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0bd6891c_0e4424ba",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/vo/Queues.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "Auto generated code for ML Workbench API Protobuf definition shared.  I will check and fix it.",
+      "parentUuid": "a6182c29_95df4ae0",
       "range": {
         "startLine": 29,
         "startChar": 13,
@@ -1134,6 +2178,30 @@
     },
     {
       "key": {
+        "uuid": "86ffd1e6_a5bcb36b",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/vo/Solution.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "Not sure, but its Auto generated code for ML Workbench API Protobuf definition shared.",
+      "parentUuid": "963fad95_d956df33",
+      "range": {
+        "startLine": 29,
+        "startChar": 13,
+        "endLine": 29,
+        "endChar": 21
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01ea2e98_4fe539f1",
         "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/vo/Subscriber.java",
         "patchSetId": 1
@@ -1145,6 +2213,30 @@
       "writtenOn": "2019-03-08T18:53:07Z",
       "side": 1,
       "message": "Why does a subscriber have datasets, projects, service state and more?",
+      "range": {
+        "startLine": 29,
+        "startChar": 13,
+        "endLine": 29,
+        "endChar": 23
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba7303a3_af56660d",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/vo/Subscriber.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "Auto generated code for ML Workbench API Protobuf definition shared.",
+      "parentUuid": "01ea2e98_4fe539f1",
       "range": {
         "startLine": 29,
         "startChar": 13,
@@ -1180,6 +2272,30 @@
     },
     {
       "key": {
+        "uuid": "31f43f4c_b1caa788",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/vo/Topics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "Auto generated code for ML Workbench API Protobuf definition shared. Even if we are not using now, no harm in having them defined in advance.",
+      "parentUuid": "01e3b829_85cb5ad3",
+      "range": {
+        "startLine": 29,
+        "startChar": 13,
+        "endLine": 29,
+        "endChar": 19
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c7973c9_8de154f4",
         "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/vo/Users.java",
         "patchSetId": 1
@@ -1191,6 +2307,24 @@
       "writtenOn": "2019-03-08T18:53:07Z",
       "side": 1,
       "message": "Singular vs plural confusion, getUsers() returns a single object, this is kind of strange",
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ab3edec0_95ea8bff",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/vo/Users.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "Auto generated code for ML Workbench API Protobuf definition shared.  I will check and fix it.",
+      "parentUuid": "9c7973c9_8de154f4",
       "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false
@@ -1220,6 +2354,30 @@
     },
     {
       "key": {
+        "uuid": "ef50ea70_71868c30",
+        "filename": "project-service/src/main/resources/application.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "As per API Specification, we need to discuss it with Kazi and get it changed.",
+      "parentUuid": "2cff1ee4_347723ef",
+      "range": {
+        "startLine": 22,
+        "startChar": 20,
+        "endLine": 22,
+        "endChar": 31
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0243a764_d1365413",
         "filename": "project-service/src/test/java/org/acumos/workbench/projectservice/controller/ProjectServiceControllerTest.java",
         "patchSetId": 1
@@ -1231,6 +2389,24 @@
       "writtenOn": "2019-03-08T18:53:07Z",
       "side": 1,
       "message": "Add lic hdr\n\nwhy no tests?",
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e018f831_9e9d1266",
+        "filename": "project-service/src/test/java/org/acumos/workbench/projectservice/controller/ProjectServiceControllerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-11T13:08:51Z",
+      "side": 1,
+      "message": "I checked in code, so as to get project-service available for UI integration asap.  As I am expecting lot of changes in input and output of project-service API\u0027s.",
+      "parentUuid": "0243a764_d1365413",
       "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false

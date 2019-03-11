@@ -220,6 +220,24 @@
     },
     {
       "key": {
+        "uuid": "0e400299_b14806a8",
+        "filename": "project-service/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-11T13:00:15Z",
+      "side": 1,
+      "message": "What about just maintaining the application.properties file in src/main/resources, is that a poor choice?",
+      "parentUuid": "0d57a534_53abe2e3",
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed4915ab_4ac4ebbf",
         "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/ProjectServiceApplication.java",
         "patchSetId": 1

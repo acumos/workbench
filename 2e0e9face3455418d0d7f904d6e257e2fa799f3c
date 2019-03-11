@@ -1169,6 +1169,30 @@
     },
     {
       "key": {
+        "uuid": "4a4b6095_f5503987",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/service/ProjectServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-11T13:48:17Z",
+      "side": 1,
+      "message": "Remove, don\u0027t comment out",
+      "parentUuid": "590701e9_f279d9c2",
+      "range": {
+        "startLine": 97,
+        "startChar": 4,
+        "endLine": 97,
+        "endChar": 20
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d48b5cf_60b7f5b5",
         "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/service/ProjectServiceImpl.java",
         "patchSetId": 1
@@ -2378,6 +2402,30 @@
     },
     {
       "key": {
+        "uuid": "e962d8ed_465ed015",
+        "filename": "project-service/src/main/resources/application.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-11T13:48:17Z",
+      "side": 1,
+      "message": "Possibly you will use paths /mlWorkbench/v1/project and that\u0027s not reflected here?  That would also address my concern",
+      "parentUuid": "ef50ea70_71868c30",
+      "range": {
+        "startLine": 22,
+        "startChar": 20,
+        "endLine": 22,
+        "endChar": 31
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0243a764_d1365413",
         "filename": "project-service/src/test/java/org/acumos/workbench/projectservice/controller/ProjectServiceControllerTest.java",
         "patchSetId": 1
@@ -2407,6 +2455,24 @@
       "side": 1,
       "message": "I checked in code, so as to get project-service available for UI integration asap.  As I am expecting lot of changes in input and output of project-service API\u0027s.",
       "parentUuid": "0243a764_d1365413",
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3624000d_b73b0b34",
+        "filename": "project-service/src/test/java/org/acumos/workbench/projectservice/controller/ProjectServiceControllerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-11T13:48:17Z",
+      "side": 1,
+      "message": "Given the large number of POJO data transfer objects you have defined you should at the very least have tests for those, that would start the initiative.",
+      "parentUuid": "e018f831_9e9d1266",
       "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false

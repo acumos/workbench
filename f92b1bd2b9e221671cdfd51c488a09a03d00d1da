@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "0b77edaa_29751309",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/config/AppConfiguration.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2019-03-13T18:47:42Z",
+      "side": 1,
+      "message": "Why are you even relying upon any user-provided information? The Portal as front-door will authenticate the user and provide a session cookie which should be all you need to identify an authenticated user.",
+      "parentUuid": "0f9c8965_082dc2a9",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 60
+      },
+      "revId": "f92b1bd2b9e221671cdfd51c488a09a03d00d1da",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6815570f_d851825c",
         "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/controller/ProjectServiceController.java",
         "patchSetId": 2

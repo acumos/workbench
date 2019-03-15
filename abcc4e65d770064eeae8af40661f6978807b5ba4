@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34d60c09_c7eeb6f2",
+        "filename": "README.md",
+        "patchSetId": 14
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2019-03-15T18:13:41Z",
+      "side": 1,
+      "message": "Please see, if you can add how to run the application in developers local. If it is simple springboot run command or ng serve commands, then please add so.",
+      "revId": "abcc4e65d770064eeae8af40661f6978807b5ba4",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}

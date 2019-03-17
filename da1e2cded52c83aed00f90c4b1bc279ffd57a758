@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8da898da_94547cbe",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/service/ProjectServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-03-17T20:35:34Z",
+      "side": 1,
+      "message": "Need to probably implement  ProjectService . This is pattern followed for all Services.",
+      "revId": "da1e2cded52c83aed00f90c4b1bc279ffd57a758",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "daf77957_745a447c",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/service/ProjectValidationServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-03-17T20:35:34Z",
+      "side": 1,
+      "message": "Need to implement ProjectValidationService . This pattern is used all over services",
+      "revId": "da1e2cded52c83aed00f90c4b1bc279ffd57a758",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}

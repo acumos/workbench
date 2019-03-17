@@ -782,6 +782,24 @@
     },
     {
       "key": {
+        "uuid": "b481aa7c_3df4bc90",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/controller/ProjectServiceController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-03-17T20:35:34Z",
+      "side": 1,
+      "message": "Looks like this logic is coded in exception handler so that should be good as long as we have 1 place.",
+      "parentUuid": "026ec65c_ca25ba20",
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb606175_f9fed0d4",
         "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/controller/ProjectServiceController.java",
         "patchSetId": 1
@@ -857,6 +875,24 @@
       "writtenOn": "2019-03-11T13:08:51Z",
       "side": 1,
       "message": "handled by Exception handling framework.",
+      "parentUuid": "064e6e8a_eec24f8d",
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "45bd8e02_c8d1d52b",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/controller/ProjectServiceController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-03-17T20:35:34Z",
+      "side": 1,
+      "message": "Looks like this logic is coded in exception handler so that should be good as long as we have 1 place.",
       "parentUuid": "064e6e8a_eec24f8d",
       "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",

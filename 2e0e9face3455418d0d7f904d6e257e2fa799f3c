@@ -1229,6 +1229,30 @@
     },
     {
       "key": {
+        "uuid": "e6e91e96_e435015f",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/service/ProjectServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 213
+      },
+      "writtenOn": "2019-03-18T14:14:28Z",
+      "side": 1,
+      "message": "It is a requirement added by Bryan",
+      "parentUuid": "e50efd53_d90563e7",
+      "range": {
+        "startLine": 97,
+        "startChar": 4,
+        "endLine": 97,
+        "endChar": 20
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d48b5cf_60b7f5b5",
         "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/service/ProjectServiceImpl.java",
         "patchSetId": 1
@@ -1804,6 +1828,30 @@
     },
     {
       "key": {
+        "uuid": "1662ea78_7fb3977f",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/vo/KVPairs.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 213
+      },
+      "writtenOn": "2019-03-18T14:14:28Z",
+      "side": 1,
+      "message": "KVPairs is multiple",
+      "parentUuid": "2623da96_521f3462",
+      "range": {
+        "startLine": 29,
+        "startChar": 13,
+        "endLine": 29,
+        "endChar": 20
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74e3280e_b90ddf1b",
         "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/vo/Model.java",
         "patchSetId": 1
@@ -1945,6 +1993,30 @@
     },
     {
       "key": {
+        "uuid": "29143c0b_92347273",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/vo/NoteBooks.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 213
+      },
+      "writtenOn": "2019-03-18T14:14:28Z",
+      "side": 1,
+      "message": "Notebooks, Pipelines are all multiple - list of artifacts",
+      "parentUuid": "fe287df4_60ca3329",
+      "range": {
+        "startLine": 29,
+        "startChar": 13,
+        "endLine": 29,
+        "endChar": 22
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b5d1c55_0068a079",
         "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/vo/Pipelines.java",
         "patchSetId": 1
@@ -2026,6 +2098,30 @@
       "writtenOn": "2019-03-11T13:08:51Z",
       "side": 1,
       "message": "Auto generated code for ML Workbench API Protobuf definition shared.  This definition is to match the ML Workbench API Specification input and output.  So project-service code has to transfer the values between mlpXYZ object and VOXYZ object.",
+      "parentUuid": "3fd86fc4_50125c3a",
+      "range": {
+        "startLine": 31,
+        "startChar": 13,
+        "endLine": 31,
+        "endChar": 20
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "13d23a0f_88691bae",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/vo/Project.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 213
+      },
+      "writtenOn": "2019-03-18T14:14:28Z",
+      "side": 1,
+      "message": "MODEL aka Common data model objects are different from VIEW objects in MVC Arch.\n\nVIEW Objects exists between UI Layer and Services Layer\n\nMODEL objects between Services Layer and CDS Layer.",
       "parentUuid": "3fd86fc4_50125c3a",
       "range": {
         "startLine": 31,
@@ -2155,6 +2251,30 @@
       "writtenOn": "2019-03-11T13:08:51Z",
       "side": 1,
       "message": "Auto generated code for ML Workbench API Protobuf definition shared.",
+      "parentUuid": "20482975_22e04e2d",
+      "range": {
+        "startLine": 29,
+        "startChar": 13,
+        "endLine": 29,
+        "endChar": 18
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "976bb84b_988df6f7",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/vo/Queue.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 213
+      },
+      "writtenOn": "2019-03-18T14:14:28Z",
+      "side": 1,
+      "message": "Ignore those. They do NOT affect CDS Layer. They will  be part of Services Layer in future.",
       "parentUuid": "20482975_22e04e2d",
       "range": {
         "startLine": 29,
@@ -2309,6 +2429,30 @@
     },
     {
       "key": {
+        "uuid": "de48b85e_59974102",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/vo/Subscriber.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 213
+      },
+      "writtenOn": "2019-03-18T14:14:28Z",
+      "side": 1,
+      "message": "Again these are NOT part of Boreas. Ignore them they are not passed to CDS Layer.",
+      "parentUuid": "01ea2e98_4fe539f1",
+      "range": {
+        "startLine": 29,
+        "startChar": 13,
+        "endLine": 29,
+        "endChar": 23
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01e3b829_85cb5ad3",
         "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/vo/Topics.java",
         "patchSetId": 1
@@ -2343,6 +2487,30 @@
       "writtenOn": "2019-03-11T13:08:51Z",
       "side": 1,
       "message": "Auto generated code for ML Workbench API Protobuf definition shared. Even if we are not using now, no harm in having them defined in advance.",
+      "parentUuid": "01e3b829_85cb5ad3",
+      "range": {
+        "startLine": 29,
+        "startChar": 13,
+        "endLine": 29,
+        "endChar": 19
+      },
+      "revId": "2e0e9face3455418d0d7f904d6e257e2fa799f3c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6ee39b03_ed4b5238",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/vo/Topics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 213
+      },
+      "writtenOn": "2019-03-18T14:14:28Z",
+      "side": 1,
+      "message": "Yes, they are not part of Boreas. ANd most important they are not sent to CDS in Boreas. It is a placeholder for future objects in C Releases. Bottom line they do not afftect CDS.",
       "parentUuid": "01e3b829_85cb5ad3",
       "range": {
         "startLine": 29,

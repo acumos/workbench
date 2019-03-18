@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "599d1f42_a6a734dc",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/vo/Notebook.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2019-03-18T16:23:41Z",
+      "side": 1,
+      "message": "Please try to avoid any recursive part to child and child to parent references, so that the unmarshaling by Jackson libraries will not break at runtime.",
+      "range": {
+        "startLine": 39,
+        "startChar": 18,
+        "endLine": 39,
+        "endChar": 26
+      },
+      "revId": "d4f243afd9e7f40f6470496685485f89461f3b8f",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}

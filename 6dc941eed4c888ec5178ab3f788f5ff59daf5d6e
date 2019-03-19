@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3411cf18_45f377b5",
+        "filename": "project-service/pom.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-19T12:43:56Z",
+      "side": 1,
+      "message": "for now please use 2.2.0-SNAPSHOT",
+      "range": {
+        "startLine": 64,
+        "startChar": 11,
+        "endLine": 64,
+        "endChar": 16
+      },
+      "revId": "6dc941eed4c888ec5178ab3f788f5ff59daf5d6e",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}

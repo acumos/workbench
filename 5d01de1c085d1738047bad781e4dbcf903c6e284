@@ -1,0 +1,634 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a3753a5_e69b5444",
+        "filename": "README.md",
+        "patchSetId": 17
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-19T01:38:19Z",
+      "side": 1,
+      "message": "Please mention the license T\u0026C as the last section here",
+      "revId": "5d01de1c085d1738047bad781e4dbcf903c6e284",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fd0c5785_3f76c14f",
+        "filename": "dashboard-webcomponent/src/main/java/org/acumos/workbench/dashboard/DashboardApplication.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-19T01:38:19Z",
+      "side": 1,
+      "message": "Ideally you can drop ALL java classes for this FE project and serve with nodejs or ng",
+      "range": {
+        "startLine": 41,
+        "startChar": 13,
+        "endLine": 41,
+        "endChar": 33
+      },
+      "revId": "5d01de1c085d1738047bad781e4dbcf903c6e284",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "421f8cda_b90f2a38",
+        "filename": "dashboard-webcomponent/src/main/resources/dashboard-element.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-19T01:38:19Z",
+      "side": 1,
+      "message": "Why is content imported from a third-party website? The minimized bootstrap resources should be cached by npm during the build and served out from your own server.",
+      "range": {
+        "startLine": 50,
+        "startChar": 21,
+        "endLine": 50,
+        "endChar": 65
+      },
+      "revId": "5d01de1c085d1738047bad781e4dbcf903c6e284",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "256e5144_5365f910",
+        "filename": "dashboard-webcomponent/src/main/resources/dashboard-element.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-19T01:38:19Z",
+      "side": 1,
+      "message": "Why are you using inline styles?  Move to a CSS file to allow reuse",
+      "range": {
+        "startLine": 52,
+        "startChar": 6,
+        "endLine": 72,
+        "endChar": 14
+      },
+      "revId": "5d01de1c085d1738047bad781e4dbcf903c6e284",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "850c53a9_c8d065ac",
+        "filename": "home-webcomponent/pom.xml",
+        "patchSetId": 17
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-19T01:38:19Z",
+      "side": 1,
+      "message": "Is this just a shell?",
+      "range": {
+        "startLine": 28,
+        "startChar": 17,
+        "endLine": 28,
+        "endChar": 42
+      },
+      "revId": "5d01de1c085d1738047bad781e4dbcf903c6e284",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "383fcc4f_6c80d6b3",
+        "filename": "home-webcomponent/src/main/resources/src/app/@core/utils/.gitkeep",
+        "patchSetId": 17
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-19T01:38:19Z",
+      "side": 1,
+      "message": "Don\u0027t need this file if the dir is not empty",
+      "revId": "5d01de1c085d1738047bad781e4dbcf903c6e284",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d58bd4f8_721a0c3a",
+        "filename": "home-webcomponent/src/main/resources/src/app/@theme/components/footer/footer.component.ts",
+        "patchSetId": 17
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-19T01:38:19Z",
+      "side": 1,
+      "message": "Beware asserting sole AT\u0026T copyright in a co-created project",
+      "range": {
+        "startLine": 25,
+        "startChar": 29,
+        "endLine": 25,
+        "endChar": 45
+      },
+      "revId": "5d01de1c085d1738047bad781e4dbcf903c6e284",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e68f2bc9_6f434a80",
+        "filename": "home-webcomponent/src/main/resources/src/app/@theme/components/header/header.component.html",
+        "patchSetId": 17
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-19T01:38:19Z",
+      "side": 1,
+      "message": "Home or workbench? or is that the same thing?",
+      "range": {
+        "startLine": 28,
+        "startChar": 49,
+        "endLine": 28,
+        "endChar": 58
+      },
+      "revId": "5d01de1c085d1738047bad781e4dbcf903c6e284",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "15428b92_f6d00d9c",
+        "filename": "home-webcomponent/src/main/resources/src/app/@theme/components/header/header.component.scss",
+        "patchSetId": 17
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-19T01:38:19Z",
+      "side": 1,
+      "message": "Please add license header",
+      "revId": "5d01de1c085d1738047bad781e4dbcf903c6e284",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "380d5714_be5f36da",
+        "filename": "home-webcomponent/src/main/resources/src/app/@theme/layouts/main/main.layout.scss",
+        "patchSetId": 17
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-19T01:38:19Z",
+      "side": 1,
+      "message": "Please add license header",
+      "revId": "5d01de1c085d1738047bad781e4dbcf903c6e284",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5f7759a1_eec59a4d",
+        "filename": "home-webcomponent/src/main/resources/src/app/@theme/styles/bootstrap-rtl.scss",
+        "patchSetId": 17
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-19T01:38:19Z",
+      "side": 1,
+      "message": "Please add license header",
+      "revId": "5d01de1c085d1738047bad781e4dbcf903c6e284",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "18ecf273_d5cdf914",
+        "filename": "home-webcomponent/src/main/resources/src/app/@theme/styles/font-size.scss",
+        "patchSetId": 17
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-19T01:38:19Z",
+      "side": 1,
+      "message": "Please add license header",
+      "revId": "5d01de1c085d1738047bad781e4dbcf903c6e284",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a97641ac_4fcf158e",
+        "filename": "home-webcomponent/src/main/resources/src/app/@theme/styles/pace.theme.scss",
+        "patchSetId": 17
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-19T01:38:19Z",
+      "side": 1,
+      "message": "Uh oh.  For real?  Is this someone else\u0027s file?  Why is it copied in to here?  Who or what is Akveo?",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 95
+      },
+      "revId": "5d01de1c085d1738047bad781e4dbcf903c6e284",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3bf77b16_a0f64a3b",
+        "filename": "home-webcomponent/src/main/resources/src/app/@theme/styles/pace.theme.scss",
+        "patchSetId": 17
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-19T01:38:19Z",
+      "side": 1,
+      "message": "Please remove, don\u0027t comment out",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 3
+      },
+      "revId": "5d01de1c085d1738047bad781e4dbcf903c6e284",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2d06cd78_693d1bef",
+        "filename": "home-webcomponent/src/main/resources/src/app/@theme/styles/styles.scss",
+        "patchSetId": 17
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-19T01:38:19Z",
+      "side": 1,
+      "message": "Missing license header",
+      "revId": "5d01de1c085d1738047bad781e4dbcf903c6e284",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "19453040_39f0b781",
+        "filename": "home-webcomponent/src/main/resources/src/app/@theme/styles/styles.scss",
+        "patchSetId": 17
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-19T01:38:19Z",
+      "side": 1,
+      "message": "What is akveo??",
+      "range": {
+        "startLine": 31,
+        "startChar": 21,
+        "endLine": 31,
+        "endChar": 23
+      },
+      "revId": "5d01de1c085d1738047bad781e4dbcf903c6e284",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9eaf41f2_0232cb3f",
+        "filename": "home-webcomponent/src/main/resources/src/app/@theme/styles/themes.scss",
+        "patchSetId": 17
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-19T01:38:19Z",
+      "side": 1,
+      "message": "Please add license header",
+      "revId": "5d01de1c085d1738047bad781e4dbcf903c6e284",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "822840e2_dccb054e",
+        "filename": "home-webcomponent/src/main/resources/src/app/pages/miscellaneous/not-found/not-found.component.scss",
+        "patchSetId": 17
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-19T01:38:19Z",
+      "side": 1,
+      "message": "Please add license header",
+      "revId": "5d01de1c085d1738047bad781e4dbcf903c6e284",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8e439141_6ec37fce",
+        "filename": "home-webcomponent/src/main/resources/src/favicon.ico",
+        "patchSetId": 17
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-19T01:38:19Z",
+      "side": 1,
+      "message": "What is this little icon of a circle of stars in a box?  Did your team design it?",
+      "revId": "5d01de1c085d1738047bad781e4dbcf903c6e284",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27ae0a4a_62ed22f0",
+        "filename": "home-webcomponent/src/main/resources/src/index.html",
+        "patchSetId": 17
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-19T01:38:19Z",
+      "side": 1,
+      "message": "Is there a good reason for using inline styles instead of a separate CSS file?",
+      "range": {
+        "startLine": 34,
+        "startChar": 4,
+        "endLine": 37,
+        "endChar": 25
+      },
+      "revId": "5d01de1c085d1738047bad781e4dbcf903c6e284",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6dc35597_0280a76d",
+        "filename": "home-webcomponent/src/main/resources/src/polyfills.ts",
+        "patchSetId": 17
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-19T01:38:19Z",
+      "side": 1,
+      "message": "Why do you need to replicate and version control this licensed file? Can it be fetched by npm at build time instead?",
+      "range": {
+        "startLine": 1,
+        "startChar": 1,
+        "endLine": 6,
+        "endChar": 1
+      },
+      "revId": "5d01de1c085d1738047bad781e4dbcf903c6e284",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5f29e83a_7fe8c2ef",
+        "filename": "project-catalog-webcomponent/src/main/resources/catalog-project-element.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-19T01:38:19Z",
+      "side": 1,
+      "message": "what are these entries? They look like testing data (?)",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 59,
+        "endChar": 5
+      },
+      "revId": "5d01de1c085d1738047bad781e4dbcf903c6e284",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "605b7394_d7ce0528",
+        "filename": "project-webcomponent/src/main/resources/index.html",
+        "patchSetId": 17
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-19T01:38:19Z",
+      "side": 1,
+      "message": "Remove don\u0027t comment out",
+      "range": {
+        "startLine": 30,
+        "startChar": 1,
+        "endLine": 34,
+        "endChar": 4
+      },
+      "revId": "5d01de1c085d1738047bad781e4dbcf903c6e284",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0591e0a9_45d65689",
+        "filename": "project-webcomponent/src/main/resources/notebook-element.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-19T01:38:19Z",
+      "side": 1,
+      "message": "Is this actually used, or can it be dropped?",
+      "range": {
+        "startLine": 44,
+        "startChar": 18,
+        "endLine": 44,
+        "endChar": 43
+      },
+      "revId": "5d01de1c085d1738047bad781e4dbcf903c6e284",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "58307ea0_b2bdcbcd",
+        "filename": "project-webcomponent/src/main/resources/notebook-element.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-19T01:38:19Z",
+      "side": 1,
+      "message": "What are all these little projects?",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 63,
+        "endChar": 5
+      },
+      "revId": "5d01de1c085d1738047bad781e4dbcf903c6e284",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "12057cac_004290a8",
+        "filename": "project-webcomponent/src/main/resources/pipeline-element.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-19T01:38:19Z",
+      "side": 1,
+      "message": "Pls fix",
+      "range": {
+        "startLine": 44,
+        "startChar": 18,
+        "endLine": 44,
+        "endChar": 43
+      },
+      "revId": "5d01de1c085d1738047bad781e4dbcf903c6e284",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7536190_439c2122",
+        "filename": "project-webcomponent/src/main/resources/pipeline-element.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-19T01:38:19Z",
+      "side": 1,
+      "message": "pls don\u0027t tell browsers to load content from other websites",
+      "range": {
+        "startLine": 286,
+        "startChar": 16,
+        "endLine": 286,
+        "endChar": 60
+      },
+      "revId": "5d01de1c085d1738047bad781e4dbcf903c6e284",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2e7f1328_968e7753",
+        "filename": "project-webcomponent/src/main/resources/project-element.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-19T01:38:19Z",
+      "side": 1,
+      "message": "Maybe a real message instead of a placeholder?",
+      "range": {
+        "startLine": 44,
+        "startChar": 19,
+        "endLine": 44,
+        "endChar": 44
+      },
+      "revId": "5d01de1c085d1738047bad781e4dbcf903c6e284",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e533f24c_981361cc",
+        "filename": "project-webcomponent/src/main/resources/project-element.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-19T01:38:19Z",
+      "side": 1,
+      "message": "Remove don\u0027t comment out",
+      "range": {
+        "startLine": 108,
+        "startChar": 7,
+        "endLine": 114,
+        "endChar": 47
+      },
+      "revId": "5d01de1c085d1738047bad781e4dbcf903c6e284",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "64ced0b7_378e85ac",
+        "filename": "project-webcomponent/src/main/resources/project-element.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-19T01:38:19Z",
+      "side": 1,
+      "message": "I feel strongly that no page should load content from a third-party website",
+      "range": {
+        "startLine": 158,
+        "startChar": 17,
+        "endLine": 158,
+        "endChar": 51
+      },
+      "revId": "5d01de1c085d1738047bad781e4dbcf903c6e284",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}

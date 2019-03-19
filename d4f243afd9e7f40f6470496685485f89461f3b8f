@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "1afc2373_e2650100",
+        "filename": "project-service/pom.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-19T01:10:22Z",
+      "side": 1,
+      "message": "please use 2.2.0-SNAPSHOT",
+      "range": {
+        "startLine": 64,
+        "startChar": 11,
+        "endLine": 64,
+        "endChar": 16
+      },
+      "revId": "d4f243afd9e7f40f6470496685485f89461f3b8f",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "599d1f42_a6a734dc",
         "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/vo/Notebook.java",
         "patchSetId": 4

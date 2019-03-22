@@ -1,0 +1,14 @@
+{
+  "name": "component",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@webcomponents/webcomponentsjs": "2.2.7",
+    "@material/mwc-icon": "^0.3.6",
+    "lit-element": "^2.0.1"
+  },
+  "scripts": {
+    "start:dev": "polymer serve  --port=9083",
+    "build": "polymer build"
+  }
+}

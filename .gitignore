@@ -7,3 +7,10 @@
 .gitattributes
 .pydevproject
 **/desktop.ini
+/**/node_modules
+/**/dist
+/**/.DS_Store
+/**/target
+/**/build/
+/**/.git/
+/**/.idea

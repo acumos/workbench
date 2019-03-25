@@ -20,6 +20,7 @@
 
 package org.acumos.workbench.projectservice.util;
 
+import java.lang.invoke.MethodHandles;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -32,9 +33,11 @@ import org.acumos.workbench.projectservice.vo.Identifier;
 import org.acumos.workbench.projectservice.vo.Project;
 import org.acumos.workbench.projectservice.vo.User;
 import org.acumos.workbench.projectservice.vo.Version;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ProjectServiceUtil {
-
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 	
 	/**
 	 * Converts Project View Object input to MLPProject CDS Domain Object.
@@ -47,6 +50,7 @@ public class ProjectServiceUtil {
 	 * 
 	 */
 	public static MLPProject getMLPProject(String userId, Project project) {
+		logger.debug("getMLPProject() Begin");
 		//TODO : To implement Null check for each field. 
 		MLPProject mlpProject = null;
 		if(null != project) {
@@ -75,7 +79,7 @@ public class ProjectServiceUtil {
 			mlpProject.setUserId(userId);
 			mlpProject.setVersion(project.getProjectId().getVersionId().getLabel());
 		}
-		
+		logger.debug("getMLPProject() End");
 		return mlpProject;
 	}
 	
@@ -88,6 +92,7 @@ public class ProjectServiceUtil {
 	 * 		returns Project view object.
 	 */
 	public static Project getProjectVO(MLPProject mlpProject, MLPUser mlpUser) {
+		logger.debug("getProjectVO() Begin");
 		//TODO : Include null checks
 		Project result = new Project(); 
 		
@@ -126,7 +131,7 @@ public class ProjectServiceUtil {
 			artifactStatus.setStatus(ArtifactStatus.ARCHIVED);
 		}
 		result.setArtifactStatus(artifactStatus);
-		
+		logger.debug("getProjectVO() End");
 		return result;
 	}
 
@@ -138,16 +143,18 @@ public class ProjectServiceUtil {
 	 * 		return list of Projects.
 	 */
 	public static List<Project> getMLPProjects(List<MLPProject> mlpProjects, MLPUser mlpUser) {
+		logger.debug("getMLPProjects() Begin");
 		List<Project> result = new ArrayList<Project>();
 		
 		for(MLPProject mlpProject : mlpProjects) {
 			result.add(getProjectVO(mlpProject, mlpUser));
 		}
-		
+		logger.debug("getMLPProjects() End");
 		return result;
 	}
 
 	public static MLPProject updateMLPProject(MLPProject mlpProject, Project project) {
+		logger.debug("updateMLPProject() Begin");
 		MLPProject result = mlpProject;
 		if(null != project) {
 			ArtifactState artifactStatus =  project.getArtifactStatus();
@@ -169,6 +176,7 @@ public class ProjectServiceUtil {
 			//mlpProject.setServiceStatusCode("");
 			mlpProject.setModified(Instant.now());
 		}
+		logger.debug("updateMLPProject() End");
 		return result;
 	}
 }

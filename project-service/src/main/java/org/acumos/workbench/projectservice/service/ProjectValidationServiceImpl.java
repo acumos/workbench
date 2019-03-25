@@ -20,14 +20,18 @@
 
 package org.acumos.workbench.projectservice.service;
 
+import java.lang.invoke.MethodHandles;
+
 import org.acumos.workbench.projectservice.vo.Project;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service("ProjectValidationServiceImpl")
 public class ProjectValidationServiceImpl implements ProjectValidationService {
-	
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 	
 	@Autowired
 	@Qualifier("InputValidationServiceImpl")
@@ -35,7 +39,7 @@ public class ProjectValidationServiceImpl implements ProjectValidationService {
 	
 	@Override
 	public void validateInput(String authenticatedUserId, Project project ) { 
-		
+		logger.debug("validateInput() Begin");
 		//1. Validation service to validate the input: only Name, version, and description should be the input values rest should be empty.
 		inputValidationServiceImpl.validateProjectInputJson(project);
 		
@@ -49,7 +53,7 @@ public class ProjectValidationServiceImpl implements ProjectValidationService {
 		// 4. Validate Project Name & Version (for allowed special character)
 		inputValidationServiceImpl.validateProjectName(project.getProjectId().getName());
 		inputValidationServiceImpl.validateVersion(project.getProjectId().getVersionId().getLabel());
-		
+		logger.debug("validateInput() End");
 	}
 	
 	

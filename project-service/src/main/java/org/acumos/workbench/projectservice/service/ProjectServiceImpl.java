@@ -20,6 +20,7 @@
 
 package org.acumos.workbench.projectservice.service;
 
+import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -40,6 +41,7 @@ import org.acumos.workbench.projectservice.exception.ProjectNotFoundException;
 import org.acumos.workbench.projectservice.exception.UserNotFoundException;
 import org.acumos.workbench.projectservice.util.ArtifactStatus;
 import org.acumos.workbench.projectservice.util.ConfigurationProperties;
+import org.acumos.workbench.projectservice.util.PSLogConstants;
 import org.acumos.workbench.projectservice.util.ProjectServiceUtil;
 import org.acumos.workbench.projectservice.util.ServiceStatus;
 import org.acumos.workbench.projectservice.vo.ArtifactState;
@@ -47,12 +49,15 @@ import org.acumos.workbench.projectservice.vo.Identifier;
 import org.acumos.workbench.projectservice.vo.Project;
 import org.acumos.workbench.projectservice.vo.ServiceState;
 import org.acumos.workbench.projectservice.vo.Version;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service("ProjectServiceImpl")
 public class ProjectServiceImpl implements ProjectService {
-
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 	
 	@Autowired
 	CommonDataServiceRestClientImpl cdsClient;
@@ -61,7 +66,8 @@ public class ProjectServiceImpl implements ProjectService {
 	ConfigurationProperties confprops;
 	
 	@Override
-	public void projectExists(String authenticatedUserId,Project project) throws DuplicateProjectException { 
+	public void projectExists(String authenticatedUserId,Project project) throws DuplicateProjectException {
+		logger.debug("projectExists() Begin");
 		MLPUser mlpUser = getUserDetails(authenticatedUserId);
 		String userId = mlpUser.getUserId();
 		//  CDS call to check if project-version already exists for the authenticated UserId 
@@ -70,15 +76,19 @@ public class ProjectServiceImpl implements ProjectService {
 		queryParameters.put("version",project.getProjectId().getVersionId().getLabel());
 		queryParameters.put("userId",userId);
 		RestPageRequest pageRequest = new RestPageRequest(0, 1);
+		cdsClient.setRequestId(MDC.get(PSLogConstants.MDCs.REQUEST_ID));
 		RestPageResponse<MLPProject> response = cdsClient.searchProjects(queryParameters, false, pageRequest);
 		List<MLPProject> projects = response.getContent();
 		if(null != projects && projects.size() > 0 ) { 
+			logger.error("DuplicateProjectException occured in projectExists() method");
 			throw new DuplicateProjectException();
 		}
+		logger.debug("projectExists() End");
 	}
 
 	@Override
 	public Project createProject(String authenticatedUserId, Project project) {
+		logger.debug("createProject() Begin");
 		Project result = null; 
 		MLPUser mlpUser = getUserDetails(authenticatedUserId);
 		String userId = mlpUser.getUserId();
@@ -86,6 +96,7 @@ public class ProjectServiceImpl implements ProjectService {
 		MLPProject mlpProject = ProjectServiceUtil.getMLPProject(userId, project);
 		
 		// Call to CDS to create new Project
+		cdsClient.setRequestId(MDC.get(PSLogConstants.MDCs.REQUEST_ID));
 		MLPProject responseMLPProject = cdsClient.createProject(mlpProject);
 		
 		result = ProjectServiceUtil.getProjectVO(responseMLPProject, mlpUser);
@@ -95,12 +106,13 @@ public class ProjectServiceImpl implements ProjectService {
 		String taskName = "Create Project";
 		String resultMsg = result.getProjectId().getName() + " created successfully";
 		//saveNotification(authenticatedUserId, statusCode, taskName, resultMsg);
-		
+		logger.debug("createProject() End");
 		return result;
 	}
 
 	@Override
-	public boolean isOwnerOfProject(String authenticatedUserId, String projectId) throws NotOwnerException { 
+	public boolean isOwnerOfProject(String authenticatedUserId, String projectId) throws NotOwnerException {
+		logger.debug("isOwnerOfProject() Begin");
 		// Call to CDS to check if user is the owner of the project.
 		MLPUser mlpUser = getUserDetails(authenticatedUserId);
 		String userId = mlpUser.getUserId();
@@ -108,27 +120,35 @@ public class ProjectServiceImpl implements ProjectService {
 		queryParameters.put("projectId",projectId);
 		queryParameters.put("userId",userId);
 		RestPageRequest pageRequest = new RestPageRequest(0, 1);
+		cdsClient.setRequestId(MDC.get(PSLogConstants.MDCs.REQUEST_ID));
 		RestPageResponse<MLPProject> response = cdsClient.searchProjects(queryParameters, false, pageRequest);
 		
-		if((null == response) || (null != response && response.getContent().size() == 0 )) { 
+		if((null == response) || (null != response && response.getContent().size() == 0 )) {
+			logger.error("NotOwnerException occured in isOwnerOfProject() method");
 			throw new NotOwnerException();
 		}
+		logger.debug("isOwnerOfProject() End");
 		return true;
 	}
 	
 	@Override
 	public boolean isProjectArchived(String projectId) throws ArchivedException { 
+		logger.debug("isProjectArchived() Begin");
 		boolean result = false;
 		// CDS call to check if project is archived 
+		cdsClient.setRequestId(MDC.get(PSLogConstants.MDCs.REQUEST_ID));
 		MLPProject mlpProject = cdsClient.getProject(projectId);
 		if(null != mlpProject && mlpProject.isActive()){
+			logger.error("ArchivedException occured in isProjectArchived() method");
 			throw new ArchivedException("Update not allowed – project is archived");
 		}
+		logger.debug("isProjectArchived() End");
 		return result;
 	}
 	
 	@Override
 	public Project updateProject(String authenticatedUserId, Project project) throws DuplicateProjectException {
+		logger.debug("updateProject() Begin");
 		Project result = new Project(); 
 		Identifier projectId  = project.getProjectId();
 		String newName = projectId.getName();
@@ -136,7 +156,8 @@ public class ProjectServiceImpl implements ProjectService {
 		String newversion = projectVersion.getLabel();
 		MLPUser mlpUser = getUserDetails(authenticatedUserId);
 		String userId = mlpUser.getUserId();
-		 
+		
+		cdsClient.setRequestId(MDC.get(PSLogConstants.MDCs.REQUEST_ID));
 		MLPProject old_mlpProject = cdsClient.getProject(project.getProjectId().getUuid());
 		if(!newName.equals(old_mlpProject.getName()) || !newversion.equals(old_mlpProject.getVersion())){
 			// Check if new project name and version is not same as previous, then it should not already exists in the DB. (Call to CDS).
@@ -148,6 +169,7 @@ public class ProjectServiceImpl implements ProjectService {
 			RestPageResponse<MLPProject> response = cdsClient.searchProjects(queryParameters, false, pageRequest);
 			List<MLPProject> projects = response.getContent();
 			if(null != projects && projects.size() > 0 ) { 
+				logger.error("DuplicateProjectException occured in updateProject() method");
 				throw new DuplicateProjectException();
 			}
 		}
@@ -164,29 +186,34 @@ public class ProjectServiceImpl implements ProjectService {
 		String taskName = "Update Project";
 		String resultMsg = result.getProjectId().getName() + " updated successfully";
 		saveNotification(authenticatedUserId, statusCode, taskName, resultMsg);
-		  		
+		logger.debug("updateProject() End");  		
 		return result;
 	}
 	
 	@Override
 	public Project getProject(String authenticatedUserId, String projectId) throws ProjectNotFoundException {
+		logger.debug("getProject() Begin");
 		Project result = null;
 		MLPUser mlpUser = getUserDetails(authenticatedUserId);
 		String userId = mlpUser.getUserId();
 		//CDS call to get the project details. 
+		cdsClient.setRequestId(MDC.get(PSLogConstants.MDCs.REQUEST_ID));
 		MLPProject mlpProject = cdsClient.getProject(projectId);
 		if(null != mlpProject) { 
 			result = ProjectServiceUtil.getProjectVO(mlpProject, mlpUser);
 		}
 		
 		if(null == result) { 
+			logger.error("ProjectNotFoundException occured in getProject() method");
 			throw new ProjectNotFoundException();
 		}
+		logger.debug("getProject() End");
 		return result;
 	}
 	
 	@Override
 	public List<Project> getProjects(String authenticatedUserId) {
+		logger.debug("getProjects() Begin");
 		List<Project> result = new ArrayList<Project>();
 		MLPUser mlpUser = getUserDetails(authenticatedUserId);
 		String userId = mlpUser.getUserId();
@@ -194,19 +221,23 @@ public class ProjectServiceImpl implements ProjectService {
 		Map<String, Object> queryParameters = new HashMap<String, Object>();
 		queryParameters.put("userId", userId);
 		RestPageRequest pageRequest = new RestPageRequest(0, 1);
+		cdsClient.setRequestId(MDC.get(PSLogConstants.MDCs.REQUEST_ID));
 		RestPageResponse<MLPProject> response = cdsClient.searchProjects(queryParameters, false, pageRequest);
 		List<MLPProject> mlpProjects = response.getContent();
 		if(null != mlpProjects && mlpProjects.size() > 0 ){
 			result = ProjectServiceUtil.getMLPProjects(mlpProjects, mlpUser);
 		}
+		logger.debug("getProjects() End");
 		return result;
 	}
 	
 	@Override
 	public ServiceState deleteProject(String projectId) { 
+		logger.debug("deleteProject() Begin");
 		ServiceState result = new ServiceState(); 
 		
 		//4.Delete the association between the project and its child artifacts (call to CDS).
+		cdsClient.setRequestId(MDC.get(PSLogConstants.MDCs.REQUEST_ID));
 		List<MLPPipeline> mlpPipelines = cdsClient.getProjectPipelines(projectId);
 		List<MLPNotebook> mlpNotebooks = cdsClient.getProjectNotebooks(projectId);
 		
@@ -231,15 +262,17 @@ public class ProjectServiceImpl implements ProjectService {
 		
 		result.setStatus(ServiceStatus.COMPLETED);
 		result.setStatusMessage("Project Deleted successfully.");
-		
+		logger.debug("deleteProject() End");
 		return result;
 	}
 	
 	@Override
 	public Project archiveProject(String authenticatedUserId, String projectId) { 
+		logger.debug("archiveProject() Begin");
 		Project result = null;
 		MLPUser mlpUser = getUserDetails(authenticatedUserId);
 		// Call to CDS to mark project as archived. 
+		cdsClient.setRequestId(MDC.get(PSLogConstants.MDCs.REQUEST_ID));
 		MLPProject mlpProject = cdsClient.getProject(projectId);
 		mlpProject.setActive(false);
 		cdsClient.updateProject(mlpProject);
@@ -252,15 +285,17 @@ public class ProjectServiceImpl implements ProjectService {
 		ArtifactState artifactStatus = new ArtifactState();
 		artifactStatus.setStatus(ArtifactStatus.ARCHIVED);
 		result.setArtifactStatus(artifactStatus);
-		
+		logger.debug("archiveProject() End");
 		return result;
 	}
 	
 	@Override
 	public MLPUser getUserDetails(String authenticatedUserId) throws UserNotFoundException {
+		logger.debug("getUserDetails() Begin");
 		Map<String, Object> queryParameters = new HashMap<String, Object>();
 		queryParameters.put("loginName", authenticatedUserId);
 		RestPageRequest pageRequest = new RestPageRequest(0, 1);
+		cdsClient.setRequestId(MDC.get(PSLogConstants.MDCs.REQUEST_ID));
 		RestPageResponse<MLPUser> response = cdsClient.searchUsers(queryParameters, false, pageRequest);
 		
 		List<MLPUser> mlpUsers = response.getContent();
@@ -270,17 +305,19 @@ public class ProjectServiceImpl implements ProjectService {
 			mlpUser = mlpUsers.get(0);
 			
 		} else {
+			logger.error("UserNotFoundException occured in getUserDetails() method, UserId : " + authenticatedUserId);
 			throw new UserNotFoundException(authenticatedUserId);
 		}
+		logger.debug("getUserDetails() End");
 		return mlpUser;
 	}
 	
 	private void saveNotification(String authenticatedUserId,
 			String statusCode, String taskName, String resultMsg) {
-		
+		logger.debug("saveNotification() Begin");
 		
 		MLPNotification mlpNotification = new MLPNotification();
-		
+		logger.debug("saveNotification() End");
 		//TODO : Set Notification
 	}
 

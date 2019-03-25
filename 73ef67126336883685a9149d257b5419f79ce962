@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "b37d7981_7883008a",
+        "filename": "pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-03-25T20:00:45Z",
+      "side": 1,
+      "message": "Need to remove submodules for UI components",
+      "revId": "73ef67126336883685a9149d257b5419f79ce962",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25af9669_d9ed6235",
         "filename": "project-webcomponent/Dockerfile",
         "patchSetId": 3

@@ -20,21 +20,24 @@
 
 package org.acumos.workbench.projectservice;
 
+import java.lang.invoke.MethodHandles;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 
 @SpringBootApplication
-@EnableAutoConfiguration(exclude = { DataSourceAutoConfiguration.class})
+@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})
 public class ProjectServiceApplication {
-
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 	
 	public static final String CONFIG_ENV_VAR_NAME = "SPRING_APPLICATION_JSON";
 	
 	/**
-	 * Starting point of ML Workbench ProjectService Application
+	 * Starting point of Project Service Application
 	 * @param args
 	 *            Command-line arguments
 	 * @throws Exception
@@ -42,7 +45,11 @@ public class ProjectServiceApplication {
 	 */
 	public static void main(String[] args) throws Exception {
 		final String springApplicationJson = System.getenv(CONFIG_ENV_VAR_NAME);
-		//TODO : Add springApplicationJson validation code and log the error if any. 
+		if (springApplicationJson != null && springApplicationJson.contains("{")) {
+			logger.debug("main: successfully parsed configuration from environment {}", CONFIG_ENV_VAR_NAME);
+		} else {
+			logger.error("main: no configuration found in environment {}", CONFIG_ENV_VAR_NAME);
+		}
 		SpringApplication.run(ProjectServiceApplication.class, args);
 	}
 }

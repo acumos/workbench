@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7f45970_897aa390",
+        "filename": "dashboard-webcomponent/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-25T13:14:32Z",
+      "side": 1,
+      "message": "Please add license header",
+      "revId": "59d36cacb4bb17645a766cb6aab6c50af68256d0",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c384d52e_fc467138",
+        "filename": "dashboard-webcomponent/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-25T13:14:32Z",
+      "side": 1,
+      "message": "You might want to do chmod 777 on this new directory so that the container can be run as non-root user and write any log files without privileges.  This is essential in K8S as I understand.",
+      "revId": "59d36cacb4bb17645a766cb6aab6c50af68256d0",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d9e05f24_0dedc4e9",
+        "filename": "dashboard-webcomponent/api/.gitignore",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-25T13:14:32Z",
+      "side": 1,
+      "message": "This is handled by the root-level .gitignore, right?",
+      "revId": "59d36cacb4bb17645a766cb6aab6c50af68256d0",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cc109972_87cb1a35",
+        "filename": "dashboard-webcomponent/api/src/routes_services.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-25T13:14:32Z",
+      "side": 1,
+      "message": "Logit or Login ?",
+      "range": {
+        "startLine": 30,
+        "startChar": 20,
+        "endLine": 30,
+        "endChar": 25
+      },
+      "revId": "59d36cacb4bb17645a766cb6aab6c50af68256d0",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "add708f1_441097ed",
+        "filename": "dashboard-webcomponent/component/.gitignore",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-25T13:14:32Z",
+      "side": 1,
+      "message": "Same comment, think you don\u0027t need this file",
+      "revId": "59d36cacb4bb17645a766cb6aab6c50af68256d0",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ee4348b_ccac1745",
+        "filename": "dashboard-webcomponent/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-25T13:14:32Z",
+      "side": 1,
+      "message": "I think this pom file can be discarded, right?",
+      "revId": "59d36cacb4bb17645a766cb6aab6c50af68256d0",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}

@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "36d14130_3da3454b",
+        "filename": "dashboard-webcomponent/api/.gitignore",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2019-03-25T16:38:02Z",
+      "side": 1,
+      "message": "removing .gitignore.Thanks",
+      "parentUuid": "d9e05f24_0dedc4e9",
+      "revId": "59d36cacb4bb17645a766cb6aab6c50af68256d0",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc109972_87cb1a35",
         "filename": "dashboard-webcomponent/api/src/routes_services.js",
         "patchSetId": 1
@@ -64,6 +82,30 @@
       "writtenOn": "2019-03-25T13:14:32Z",
       "side": 1,
       "message": "Logit or Login ?",
+      "range": {
+        "startLine": 30,
+        "startChar": 20,
+        "endLine": 30,
+        "endChar": 25
+      },
+      "revId": "59d36cacb4bb17645a766cb6aab6c50af68256d0",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "02992f4e_f12178e8",
+        "filename": "dashboard-webcomponent/api/src/routes_services.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2019-03-25T16:38:02Z",
+      "side": 1,
+      "message": "we are actually talking about logging.",
+      "parentUuid": "cc109972_87cb1a35",
       "range": {
         "startLine": 30,
         "startChar": 20,
@@ -104,6 +146,24 @@
       "writtenOn": "2019-03-25T13:14:32Z",
       "side": 1,
       "message": "I think this pom file can be discarded, right?",
+      "revId": "59d36cacb4bb17645a766cb6aab6c50af68256d0",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c8602bc3_fef5ee52",
+        "filename": "dashboard-webcomponent/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2019-03-25T16:38:02Z",
+      "side": 1,
+      "message": "We need the pom file as we are using it for the docker plugin which will use the dockerFile and also for the versioning.",
+      "parentUuid": "9ee4348b_ccac1745",
       "revId": "59d36cacb4bb17645a766cb6aab6c50af68256d0",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false

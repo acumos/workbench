@@ -1,7 +1,7 @@
 /*-
  * ===============LICENSE_START=======================================================
  * Acumos
-  * ===================================================================================
+ * ===================================================================================
  * Copyright (C) 2019 AT&T Intellectual Property & Tech Mahindra. All rights reserved.
  * ===================================================================================
  * This Acumos software file is distributed by AT&T and Tech Mahindra
@@ -18,8 +18,27 @@
  * ===============LICENSE_END=========================================================
  */
 
-package org.acumos.workbench.projectservice.service;
+package org.acumos.workbench.projectservice.config;
 
-public class InputValidationServiceImplTest {
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+/**
+ * Interceptor Configuration
+ * 
+ * Interceptor is capable of informing message tracing test listener on the request and response messages.
+ * 
+ */
+@Configuration
+public class HandlerInterceptorConfiguration extends WebMvcConfigurerAdapter {
+
+	@Autowired
+	private LoggingHandlerInterceptor loggingHandlerInterceptor;
+	
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(loggingHandlerInterceptor);
+	}
 }

@@ -24,6 +24,7 @@ import org.acumos.workbench.projectservice.ProjectServiceApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -36,26 +37,20 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class SwaggerConfiguration {
 	@Bean
-    public Docket api() { 
-        return new Docket(DocumentationType.SWAGGER_2)  
-          .select()                                  
-          .apis(RequestHandlerSelectors.basePackage("org.acumos.workbench.projectservice.controller"))            
-          .paths(PathSelectors.any())                          
-          .build()
-          .apiInfo(apiInfo());                                           
-    }
-	
+	public Docket api() {
+		return new Docket(DocumentationType.SWAGGER_2).select()
+				.apis(RequestHandlerSelectors.basePackage("org.acumos.workbench.projectservice.controller"))
+				.paths(PathSelectors.any()).build().apiInfo(apiInfo());
+	}
+
 	private ApiInfo apiInfo() {
 		final String version = ProjectServiceApplication.class.getPackage().getImplementationVersion();
-		ApiInfo apiInfo = new ApiInfo("ML Workbench Project Service REST API", // title
-				"Methods supporting all Project Service APIs", // description
-				version == null ? "version not available" : version, // version
-				"Terms of service", // TOS
-				new Contact("Acumos Design Studio Team",
-						"http://acumos.org",
-						"DCE.someday@acumos.org"), // Contact
-				"Apache 2.0", // License
-				"API license URL"); // License URL
+		ApiInfo apiInfo = new ApiInfoBuilder().title("ML Workbench Project Service REST API")
+				.description("Methods supporting all Project Service APIs")
+				.version(version == null ? "version not available" : version).termsOfServiceUrl("Terms of service")
+				.contact(new Contact("Acumos Design Studio Dev Team", "https://acumos.readthedocs.io/",
+						"noreply@acumos.org"))
+				.license("Apache 2.0").licenseUrl("http://www.apache.org/licenses/LICENSE-2.0").build();
 		return apiInfo;
 	}
 }

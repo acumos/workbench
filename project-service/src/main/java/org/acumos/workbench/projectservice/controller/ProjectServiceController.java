@@ -20,8 +20,7 @@
 
 package org.acumos.workbench.projectservice.controller;
 
-import io.swagger.annotations.ApiOperation;
-
+import java.lang.invoke.MethodHandles;
 import java.util.List;
 
 import org.acumos.workbench.projectservice.service.InputValidationService;
@@ -29,6 +28,8 @@ import org.acumos.workbench.projectservice.service.ProjectService;
 import org.acumos.workbench.projectservice.service.ProjectValidationService;
 import org.acumos.workbench.projectservice.vo.Project;
 import org.acumos.workbench.projectservice.vo.ServiceState;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -39,21 +40,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+
 @RestController
 @RequestMapping(value = "/mlWorkbench/v1/")
 public class ProjectServiceController {
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 	
 	@Autowired
 	@Qualifier("InputValidationServiceImpl")
-	InputValidationService inputValidationService;
+	private InputValidationService inputValidationService;
 	
 	@Autowired
 	@Qualifier("ProjectValidationServiceImpl")
-	ProjectValidationService projectValidationService;
+	private ProjectValidationService projectValidationService;
 	
 	@Autowired
 	@Qualifier("ProjectServiceImpl")
-	ProjectService projectService;
+	private ProjectService projectService;
 	
 	/**
 	 * The method to create new Project for a user.
@@ -68,8 +73,8 @@ public class ProjectServiceController {
 	 */
 	@ApiOperation(value = "To create new  Project in ML Workbench")
 	@RequestMapping(value = "/users/{authenticatedUserId}/projects/", method = RequestMethod.POST)
-    public ResponseEntity<Project> createProject(@PathVariable("authenticatedUserId") String authenticatedUserId, @RequestBody Project project) {
-        
+    public ResponseEntity<Project> createProject(@ApiParam(value = "The Authenticated User Id",allowableValues = "")@PathVariable("authenticatedUserId") String authenticatedUserId,@ApiParam(value = "Project") @RequestBody Project project) {
+		logger.debug("createProject() Begin");
 		//Validation 
 		projectValidationService.validateInput(authenticatedUserId, project);
 		
@@ -81,6 +86,7 @@ public class ProjectServiceController {
 		// 7. Service call to create new project (Call to CDS)
 		Project result = projectService.createProject(authenticatedUserId, project);
 		
+		logger.debug("createProject() End");
         return new ResponseEntity<Project>(result, HttpStatus.CREATED);
         
     }
@@ -99,7 +105,8 @@ public class ProjectServiceController {
 	 */
 	@ApiOperation(value = "To update existing project")
 	@RequestMapping(value = "/users/{authenticatedUserId}/projects/{projectId}", method = RequestMethod.PUT)
-    public ResponseEntity<?> updateProject(@PathVariable("authenticatedUserId") String authenticatedUserId, @PathVariable("projectId") String projectId, @RequestBody Project project) {
+    public ResponseEntity<?> updateProject(@ApiParam(value = "The Authenticated User Id",allowableValues="")@PathVariable("authenticatedUserId") String authenticatedUserId,@ApiParam(value = "ProjectId",allowableValues = "") @PathVariable("projectId") String projectId,@ApiParam(value ="Project") @RequestBody Project project) {
+		logger.debug("updateProject() Begin");
 		Project result = null;
 		//Validation 
 		projectValidationService.validateInput(authenticatedUserId, project);
@@ -112,7 +119,7 @@ public class ProjectServiceController {
 		projectService.isProjectArchived(projectId);
 		
 		result = projectService.updateProject(authenticatedUserId, project);
-		
+		logger.debug("updateProject() End");
       	return new ResponseEntity<Project>(result, HttpStatus.OK);
     }
 	
@@ -130,8 +137,8 @@ public class ProjectServiceController {
 	 */
 	@ApiOperation(value = "To get the existing project details for a user")
 	@RequestMapping(value = "/users/{authenticatedUserId}/projects/{projectId}", method = RequestMethod.GET)
-    public ResponseEntity<?> getProject(@PathVariable("authenticatedUserId") String authenticatedUserId, @PathVariable("projectId") String projectId) {
-		
+    public ResponseEntity<?> getProject(@ApiParam(value = "The Authenticated User Id",allowableValues = "")@PathVariable("authenticatedUserId") String authenticatedUserId,@ApiParam(value ="ProjectId", allowableValues = "") @PathVariable("projectId") String projectId) {
+		logger.debug("getProject() Begin");
 		// 1. Validate the input
 		
 		// 2. Check authenticatedUserId should be present
@@ -145,7 +152,7 @@ public class ProjectServiceController {
 		
 		// 5. Service call to get existing project (Call to CDS)
 		Project result = projectService.getProject(authenticatedUserId, projectId);
-		
+		logger.debug("getProject() End");
         return new ResponseEntity<Project>(result, HttpStatus.OK);
     }
 	
@@ -160,8 +167,8 @@ public class ProjectServiceController {
 	 */
 	@ApiOperation(value = "To get list of project for a user")
 	@RequestMapping(value = "/users/{authenticatedUserId}/projects/", method = RequestMethod.GET)
-    public ResponseEntity<?> getProjects(@PathVariable("authenticatedUserId") String authenticatedUserId) {
-		
+    public ResponseEntity<?> getProjects(@ApiParam(value = "The Authenticated User Id",allowableValues = "")@PathVariable("authenticatedUserId") String authenticatedUserId) {
+		logger.debug("getProjects() Begin");
 		// 1. Validate the input
 
 		// 2. Check authenticatedUserId should be present
@@ -170,7 +177,7 @@ public class ProjectServiceController {
 		
 		// 3. Service call to get existing project (active and archive both). (Call to CDS)
 		List<Project> result = projectService.getProjects(authenticatedUserId);
-		
+		logger.debug("getProjects() End");
         return new ResponseEntity<List<Project>>(result, HttpStatus.OK);
     }
 	
@@ -188,8 +195,8 @@ public class ProjectServiceController {
 	 */
 	@ApiOperation(value = "To delete existing project")
 	@RequestMapping(value = "/users/{authenticatedUserId}/projects/{projectId}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteProject(@PathVariable("authenticatedUserId") String authenticatedUserId, @PathVariable("projectId") String projectId) {
-		
+    public ResponseEntity<?> deleteProject(@ApiParam(value = "The Authenticated User Id",allowableValues = "")@PathVariable("authenticatedUserId") String authenticatedUserId,@ApiParam(value ="ProjectId", allowableValues = "") @PathVariable("projectId") String projectId) {
+		logger.debug("deleteProject() Begin");
 		ServiceState result = null;
 		
 		// 1. Validate the input
@@ -202,7 +209,7 @@ public class ProjectServiceController {
 		
 		// 4. Delete Project 
 		result = projectService.deleteProject(projectId);
-		
+		logger.debug("deleteProject() End");
         return new ResponseEntity<ServiceState>(result, HttpStatus.OK);
     }
 	
@@ -211,7 +218,7 @@ public class ProjectServiceController {
 	 * To archive the project. 
 	 * 
 	 * @param authenticatedUserId
-	 * 		the authenticated user Id. 
+	 * 		the authenticated user Id.
 	 * @param projectId
 	 * 		the project Id of project to be archived. 
 	 * @return ResponseEntity<Project> 
@@ -220,8 +227,8 @@ public class ProjectServiceController {
 	 */
 	//@ApiOperation(value = "To archive existing project")
 	//@RequestMapping(value = "/users/{authenticatedUserId}/projects/{projectId}/", method = RequestMethod.PUT)
-    public ResponseEntity<Project> archiveProject(@PathVariable("authenticatedUserId") String authenticatedUserId, @PathVariable("projectId") String projectId) {
-		
+    public ResponseEntity<Project> archiveProject(@ApiParam(value = "The Authenticated User Id",allowableValues = "")@PathVariable("authenticatedUserId") String authenticatedUserId,@ApiParam(value ="ProjectId", allowableValues = "") @PathVariable("projectId") String projectId) {
+    	logger.debug("archiveProject() Begin");
 		// 1. Validate the input
 
 		// 2. Check authenticatedUserId should be present
@@ -232,7 +239,7 @@ public class ProjectServiceController {
     	
 		// 4. Mark the project as archived (call to CDS).
 		Project result = projectService.archiveProject(authenticatedUserId, projectId);
-		
+		logger.debug("archiveProject() End");
         return new ResponseEntity<Project>(result, HttpStatus.OK);
         
     }

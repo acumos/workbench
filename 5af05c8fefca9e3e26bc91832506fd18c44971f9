@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "974a362e_bc979861",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/ProjectServiceApplication.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-25T15:59:26Z",
+      "side": 1,
+      "message": "Include validation logic and accordingly put logger.debug or logger.error.",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 8
+      },
+      "revId": "5af05c8fefca9e3e26bc91832506fd18c44971f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6690678a_c3f38209",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/config/HandlerInterceptorConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-25T15:59:26Z",
+      "side": 1,
+      "message": "2019",
+      "range": {
+        "startLine": 5,
+        "startChar": 17,
+        "endLine": 5,
+        "endChar": 21
+      },
+      "revId": "5af05c8fefca9e3e26bc91832506fd18c44971f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "17d280db_dfdba802",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/config/LoggingHandlerInterceptor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-25T15:59:26Z",
+      "side": 1,
+      "message": "2019",
+      "range": {
+        "startLine": 5,
+        "startChar": 17,
+        "endLine": 5,
+        "endChar": 21
+      },
+      "revId": "5af05c8fefca9e3e26bc91832506fd18c44971f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "adb1c404_e588997f",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/util/PSLoggingAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-25T15:59:26Z",
+      "side": 1,
+      "message": "2019",
+      "range": {
+        "startLine": 5,
+        "startChar": 17,
+        "endLine": 5,
+        "endChar": 21
+      },
+      "revId": "5af05c8fefca9e3e26bc91832506fd18c44971f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}

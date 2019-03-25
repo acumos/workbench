@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "ac647a75_de4d9f03",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/ProjectServiceApplication.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-25T17:58:28Z",
+      "side": 1,
+      "message": "Here\u0027s the right way to fetch a logger:\n\n    \tprivate static final Logger logger \u003d LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());\n\nPlease use this EVERYWHERE",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 95
+      },
+      "revId": "5af05c8fefca9e3e26bc91832506fd18c44971f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "974a362e_bc979861",
         "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/ProjectServiceApplication.java",
         "patchSetId": 1
@@ -48,6 +71,23 @@
     },
     {
       "key": {
+        "uuid": "2fb615cf_91b305ec",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/config/HandlerInterceptorConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-25T17:58:28Z",
+      "side": 1,
+      "message": "private",
+      "revId": "5af05c8fefca9e3e26bc91832506fd18c44971f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17d280db_dfdba802",
         "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/config/LoggingHandlerInterceptor.java",
         "patchSetId": 1
@@ -64,6 +104,206 @@
         "startChar": 17,
         "endLine": 5,
         "endChar": 21
+      },
+      "revId": "5af05c8fefca9e3e26bc91832506fd18c44971f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87bf8270_a9099f1d",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/config/LoggingHandlerInterceptor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-25T17:58:28Z",
+      "side": 1,
+      "message": "be consistent with names",
+      "range": {
+        "startLine": 54,
+        "startChar": 19,
+        "endLine": 54,
+        "endChar": 29
+      },
+      "revId": "5af05c8fefca9e3e26bc91832506fd18c44971f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1697f8be_316402bb",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/config/LoggingHandlerInterceptor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-25T17:58:28Z",
+      "side": 1,
+      "message": "see above",
+      "range": {
+        "startLine": 71,
+        "startChar": 25,
+        "endLine": 71,
+        "endChar": 32
+      },
+      "revId": "5af05c8fefca9e3e26bc91832506fd18c44971f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aa07901_a9a037bf",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/controller/ProjectServiceController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-25T17:58:28Z",
+      "side": 1,
+      "message": "private",
+      "revId": "5af05c8fefca9e3e26bc91832506fd18c44971f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0cfed3dc_43ebe325",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/controller/ProjectServiceController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-25T17:58:28Z",
+      "side": 1,
+      "message": "private",
+      "revId": "5af05c8fefca9e3e26bc91832506fd18c44971f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e39b05fd_6de69f7d",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/controller/ProjectServiceController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-25T17:58:28Z",
+      "side": 1,
+      "message": "Don\u0027t waste effort on javadoc.  Put the effort into Swagger doc on controller methods.",
+      "range": {
+        "startLine": 66,
+        "startChar": 1,
+        "endLine": 72,
+        "endChar": 4
+      },
+      "revId": "5af05c8fefca9e3e26bc91832506fd18c44971f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4eb2ce64_a21bcd3f",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/controller/ProjectServiceController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-25T17:58:28Z",
+      "side": 1,
+      "message": "See above",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 104,
+        "endChar": 4
+      },
+      "revId": "5af05c8fefca9e3e26bc91832506fd18c44971f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "027fb5a5_e04e7767",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/service/ProjectServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-25T17:58:28Z",
+      "side": 1,
+      "message": "Private",
+      "revId": "5af05c8fefca9e3e26bc91832506fd18c44971f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "540e7d3e_92dc5111",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/service/ProjectServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-25T17:58:28Z",
+      "side": 1,
+      "message": "private",
+      "revId": "5af05c8fefca9e3e26bc91832506fd18c44971f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6fbb3390_a0cc6264",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/service/ProjectValidationServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-25T17:58:28Z",
+      "side": 1,
+      "message": "private",
+      "revId": "5af05c8fefca9e3e26bc91832506fd18c44971f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b58b4569_7f37c741",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/util/PSLogConstants.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-25T17:58:28Z",
+      "side": 1,
+      "message": "We still don\u0027t have a library that defines these?  The OA\u0026M team is not providing acceptable support :(",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 32
       },
       "revId": "5af05c8fefca9e3e26bc91832506fd18c44971f9",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",

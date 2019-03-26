@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1463d52c_6efb3785",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/ProjectServiceApplication.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-03-26T08:22:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac647a75_de4d9f03",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 95
+      },
+      "revId": "5af05c8fefca9e3e26bc91832506fd18c44971f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "974a362e_bc979861",
         "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/ProjectServiceApplication.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2019-03-25T15:59:26Z",
       "side": 1,
       "message": "Include validation logic and accordingly put logger.debug or logger.error.",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 8
+      },
+      "revId": "5af05c8fefca9e3e26bc91832506fd18c44971f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7cfe5efa_43a98895",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/ProjectServiceApplication.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-03-26T08:22:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "974a362e_bc979861",
       "range": {
         "startLine": 46,
         "startChar": 2,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "eeb56f76_89fef4c9",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/config/HandlerInterceptorConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-03-26T08:22:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6690678a_c3f38209",
+      "range": {
+        "startLine": 5,
+        "startChar": 17,
+        "endLine": 5,
+        "endChar": 21
+      },
+      "revId": "5af05c8fefca9e3e26bc91832506fd18c44971f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2fb615cf_91b305ec",
         "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/config/HandlerInterceptorConfiguration.java",
         "patchSetId": 1
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "c22993be_12cfbf1e",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/config/HandlerInterceptorConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-03-26T08:22:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fb615cf_91b305ec",
+      "revId": "5af05c8fefca9e3e26bc91832506fd18c44971f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17d280db_dfdba802",
         "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/config/LoggingHandlerInterceptor.java",
         "patchSetId": 1
@@ -99,6 +189,30 @@
       "writtenOn": "2019-03-25T15:59:26Z",
       "side": 1,
       "message": "2019",
+      "range": {
+        "startLine": 5,
+        "startChar": 17,
+        "endLine": 5,
+        "endChar": 21
+      },
+      "revId": "5af05c8fefca9e3e26bc91832506fd18c44971f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6cee95a3_18f432bb",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/config/LoggingHandlerInterceptor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-03-26T08:22:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17d280db_dfdba802",
       "range": {
         "startLine": 5,
         "startChar": 17,
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "be8f36f7_449b5481",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/config/LoggingHandlerInterceptor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-03-26T08:22:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87bf8270_a9099f1d",
+      "range": {
+        "startLine": 54,
+        "startChar": 19,
+        "endLine": 54,
+        "endChar": 29
+      },
+      "revId": "5af05c8fefca9e3e26bc91832506fd18c44971f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1697f8be_316402bb",
         "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/config/LoggingHandlerInterceptor.java",
         "patchSetId": 1
@@ -145,6 +283,30 @@
       "writtenOn": "2019-03-25T17:58:28Z",
       "side": 1,
       "message": "see above",
+      "range": {
+        "startLine": 71,
+        "startChar": 25,
+        "endLine": 71,
+        "endChar": 32
+      },
+      "revId": "5af05c8fefca9e3e26bc91832506fd18c44971f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "401aab05_052831f6",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/config/LoggingHandlerInterceptor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-03-26T08:22:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1697f8be_316402bb",
       "range": {
         "startLine": 71,
         "startChar": 25,
@@ -174,6 +336,24 @@
     },
     {
       "key": {
+        "uuid": "1350993d_729c38ca",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/controller/ProjectServiceController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-03-26T08:22:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5aa07901_a9a037bf",
+      "revId": "5af05c8fefca9e3e26bc91832506fd18c44971f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0cfed3dc_43ebe325",
         "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/controller/ProjectServiceController.java",
         "patchSetId": 1
@@ -191,6 +371,24 @@
     },
     {
       "key": {
+        "uuid": "1d522364_4b134942",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/controller/ProjectServiceController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-03-26T08:22:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0cfed3dc_43ebe325",
+      "revId": "5af05c8fefca9e3e26bc91832506fd18c44971f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e39b05fd_6de69f7d",
         "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/controller/ProjectServiceController.java",
         "patchSetId": 1
@@ -202,6 +400,30 @@
       "writtenOn": "2019-03-25T17:58:28Z",
       "side": 1,
       "message": "Don\u0027t waste effort on javadoc.  Put the effort into Swagger doc on controller methods.",
+      "range": {
+        "startLine": 66,
+        "startChar": 1,
+        "endLine": 72,
+        "endChar": 4
+      },
+      "revId": "5af05c8fefca9e3e26bc91832506fd18c44971f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2381865d_8aa452a4",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/controller/ProjectServiceController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-03-26T08:22:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e39b05fd_6de69f7d",
       "range": {
         "startLine": 66,
         "startChar": 1,
@@ -237,6 +459,30 @@
     },
     {
       "key": {
+        "uuid": "d3ed2269_029f6c52",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/controller/ProjectServiceController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-03-26T08:22:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4eb2ce64_a21bcd3f",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 104,
+        "endChar": 4
+      },
+      "revId": "5af05c8fefca9e3e26bc91832506fd18c44971f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "027fb5a5_e04e7767",
         "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/service/ProjectServiceImpl.java",
         "patchSetId": 1
@@ -248,6 +494,24 @@
       "writtenOn": "2019-03-25T17:58:28Z",
       "side": 1,
       "message": "Private",
+      "revId": "5af05c8fefca9e3e26bc91832506fd18c44971f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2b196f99_12032310",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/service/ProjectServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-03-26T08:22:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "027fb5a5_e04e7767",
       "revId": "5af05c8fefca9e3e26bc91832506fd18c44971f9",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false
@@ -271,6 +535,24 @@
     },
     {
       "key": {
+        "uuid": "3dd499c4_5f3cb7e3",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/service/ProjectServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-03-26T08:22:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "540e7d3e_92dc5111",
+      "revId": "5af05c8fefca9e3e26bc91832506fd18c44971f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6fbb3390_a0cc6264",
         "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/service/ProjectValidationServiceImpl.java",
         "patchSetId": 1
@@ -282,6 +564,24 @@
       "writtenOn": "2019-03-25T17:58:28Z",
       "side": 1,
       "message": "private",
+      "revId": "5af05c8fefca9e3e26bc91832506fd18c44971f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "202b0f91_79f4c0ed",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/service/ProjectValidationServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-03-26T08:22:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fbb3390_a0cc6264",
       "revId": "5af05c8fefca9e3e26bc91832506fd18c44971f9",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false
@@ -311,6 +611,30 @@
     },
     {
       "key": {
+        "uuid": "c54829c3_075430ac",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/util/PSLogConstants.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-03-26T08:22:55Z",
+      "side": 1,
+      "message": "Chris: The OAM latest jar is available in nexus(https://nexus.acumos.org/content/repositories/staging/org/acumos/platform-oam/logging-demo/2.0.8/), which having all these constants.",
+      "parentUuid": "b58b4569_7f37c741",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 32
+      },
+      "revId": "5af05c8fefca9e3e26bc91832506fd18c44971f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "adb1c404_e588997f",
         "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/util/PSLoggingAdapter.java",
         "patchSetId": 1
@@ -322,6 +646,30 @@
       "writtenOn": "2019-03-25T15:59:26Z",
       "side": 1,
       "message": "2019",
+      "range": {
+        "startLine": 5,
+        "startChar": 17,
+        "endLine": 5,
+        "endChar": 21
+      },
+      "revId": "5af05c8fefca9e3e26bc91832506fd18c44971f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2803f0f4_4fa3b8a5",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/util/PSLoggingAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-03-26T08:22:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "adb1c404_e588997f",
       "range": {
         "startLine": 5,
         "startChar": 17,

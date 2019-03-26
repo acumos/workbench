@@ -107,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "3f77ee1d_34613a93",
+        "filename": "notebook-service/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-26T16:36:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb75652e_34f1382b",
+      "range": {
+        "startLine": 64,
+        "startChar": 11,
+        "endLine": 64,
+        "endChar": 16
+      },
+      "revId": "c2c8ae39e00793cc55db366842e53e9efe85dcfb",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb6bedc1_4d2a4770",
         "filename": "notebook-service/pom.xml",
         "patchSetId": 1
@@ -118,6 +142,30 @@
       "writtenOn": "2019-03-25T17:38:41Z",
       "side": 1,
       "message": "Please upgrade to 2.9.2 and put the version in a property",
+      "range": {
+        "startLine": 82,
+        "startChar": 11,
+        "endLine": 82,
+        "endChar": 16
+      },
+      "revId": "c2c8ae39e00793cc55db366842e53e9efe85dcfb",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "780eb862_96da4152",
+        "filename": "notebook-service/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-26T16:36:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb6bedc1_4d2a4770",
       "range": {
         "startLine": 82,
         "startChar": 11,

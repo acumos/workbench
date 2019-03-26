@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5984f7f8_7f5431d8",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-26T10:30:22Z",
+      "side": 1,
+      "message": "I don\u0027t understand why a NotebookService provides services for Project objects.  This is unfortunate code duplication, because I believe you will have a full Project microservice running in parallel.  Use that one.",
+      "range": {
+        "startLine": 48,
+        "startChar": 13,
+        "endLine": 48,
+        "endChar": 26
+      },
+      "revId": "0c9c6806f94874d06f2c8e7c63f163af06472f13",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}

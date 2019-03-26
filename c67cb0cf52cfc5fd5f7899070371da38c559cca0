@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1054f4e0_67c8b762",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/ProjectServiceApplication.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-03-26T16:05:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95c52593_69cdce7e",
+      "range": {
+        "startLine": 51,
+        "startChar": 10,
+        "endLine": 51,
+        "endChar": 15
+      },
+      "revId": "c67cb0cf52cfc5fd5f7899070371da38c559cca0",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96b5f89e_ee610c5f",
         "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/controller/ProjectServiceController.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2019-03-26T13:32:17Z",
       "side": 1,
       "message": "I don\u0027t understand your \"Done\" comment here.  You have not added documentation for Swagger of the parameters.  Do something like this:\n\n    @ApiParam(value \u003d \"ParameterName\", allowableValues \u003d \"a,o\") //",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 64
+      },
+      "revId": "c67cb0cf52cfc5fd5f7899070371da38c559cca0",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "acfcc082_91ca94a7",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/controller/ProjectServiceController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-03-26T16:05:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96b5f89e_ee610c5f",
       "range": {
         "startLine": 73,
         "startChar": 0,

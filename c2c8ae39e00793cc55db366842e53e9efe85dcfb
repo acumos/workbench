@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d604f96f_1895e20d",
+        "filename": "notebook-service/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-26T09:52:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b162c314_58a9a375",
+      "range": {
+        "startLine": 1,
+        "startChar": 15,
+        "endLine": 1,
+        "endChar": 22
+      },
+      "revId": "c2c8ae39e00793cc55db366842e53e9efe85dcfb",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "febf0a54_bf7ca571",
         "filename": "notebook-service/application.properties",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2019-03-25T17:38:41Z",
       "side": 1,
       "message": "I believe you must have a servlet context path that includes \"notebook\"",
+      "revId": "c2c8ae39e00793cc55db366842e53e9efe85dcfb",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "704b3ee0_c6a91700",
+        "filename": "notebook-service/application.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-26T09:52:19Z",
+      "side": 1,
+      "message": "Nope, Kazi have specified /mlworkbench/v1/ as context path for all the three service : Project, Notebook and Pipeline.",
+      "parentUuid": "febf0a54_bf7ca571",
       "revId": "c2c8ae39e00793cc55db366842e53e9efe85dcfb",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false
@@ -111,6 +153,30 @@
     },
     {
       "key": {
+        "uuid": "f410c66a_78cf9a14",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/NotebookServiceApplication.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-26T09:52:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d28ffff9_bdfa16c4",
+      "range": {
+        "startLine": 29,
+        "startChar": 37,
+        "endLine": 29,
+        "endChar": 64
+      },
+      "revId": "c2c8ae39e00793cc55db366842e53e9efe85dcfb",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e582993d_15a1e51d",
         "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/config/AppConfiguration.java",
         "patchSetId": 1
@@ -128,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "60ebda7c_5a515b1a",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/config/AppConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-26T09:52:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e582993d_15a1e51d",
+      "revId": "c2c8ae39e00793cc55db366842e53e9efe85dcfb",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b267cbd5_6cf03d5e",
         "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/config/AppConfiguration.java",
         "patchSetId": 1
@@ -139,6 +223,30 @@
       "writtenOn": "2019-03-25T17:38:41Z",
       "side": 1,
       "message": "where is the \"notebook\" portion of the context path?",
+      "range": {
+        "startLine": 51,
+        "startChar": 38,
+        "endLine": 51,
+        "endChar": 49
+      },
+      "revId": "c2c8ae39e00793cc55db366842e53e9efe85dcfb",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c082cb5e_4b4308da",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/config/AppConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-26T09:52:19Z",
+      "side": 1,
+      "message": "Defined as per the specification from Kazi.  Need to discuss with Kazi on this.",
+      "parentUuid": "b267cbd5_6cf03d5e",
       "range": {
         "startLine": 51,
         "startChar": 38,
@@ -174,6 +282,30 @@
     },
     {
       "key": {
+        "uuid": "e7478c23_12e85b0e",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/controller/NotebookServiceController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-26T09:52:19Z",
+      "side": 1,
+      "message": "As per API specification.  Need to discuss with kazi.",
+      "parentUuid": "5ec48094_cdb9408f",
+      "range": {
+        "startLine": 44,
+        "startChar": 26,
+        "endLine": 44,
+        "endChar": 37
+      },
+      "revId": "c2c8ae39e00793cc55db366842e53e9efe85dcfb",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "757a47b0_81e64fa1",
         "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/controller/NotebookServiceController.java",
         "patchSetId": 1
@@ -185,6 +317,24 @@
       "writtenOn": "2019-03-25T17:38:41Z",
       "side": 1,
       "message": "should be private",
+      "revId": "c2c8ae39e00793cc55db366842e53e9efe85dcfb",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b412e2b0_19bff48b",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/controller/NotebookServiceController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-26T09:52:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "757a47b0_81e64fa1",
       "revId": "c2c8ae39e00793cc55db366842e53e9efe85dcfb",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false
@@ -208,6 +358,24 @@
     },
     {
       "key": {
+        "uuid": "3fc82b45_7620abd0",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/controller/NotebookServiceController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-26T09:52:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3af0ccc_1bf283dd",
+      "revId": "c2c8ae39e00793cc55db366842e53e9efe85dcfb",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1d135e2_609f56e7",
         "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/controller/NotebookServiceController.java",
         "patchSetId": 1
@@ -225,6 +393,24 @@
     },
     {
       "key": {
+        "uuid": "0228800d_ec75a28d",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/controller/NotebookServiceController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-26T09:52:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1d135e2_609f56e7",
+      "revId": "c2c8ae39e00793cc55db366842e53e9efe85dcfb",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d09e84f_fc3ca368",
         "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/controller/NotebookServiceController.java",
         "patchSetId": 1
@@ -236,6 +422,30 @@
       "writtenOn": "2019-03-25T17:38:41Z",
       "side": 1,
       "message": "There is no need for javadoc on controller methods. Instead focus your effort on the Swagger documentation, especially the parameters, which are totally undocumented here.",
+      "range": {
+        "startLine": 59,
+        "startChar": 1,
+        "endLine": 72,
+        "endChar": 4
+      },
+      "revId": "c2c8ae39e00793cc55db366842e53e9efe85dcfb",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f58ef9d1_52f2e6eb",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/controller/NotebookServiceController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-26T09:52:19Z",
+      "side": 1,
+      "message": "As already done, let it be as is.  Let\u0027s do swagger documentation when we update to latest swagger version.",
+      "parentUuid": "7d09e84f_fc3ca368",
       "range": {
         "startLine": 59,
         "startChar": 1,
@@ -271,6 +481,30 @@
     },
     {
       "key": {
+        "uuid": "63b1466d_79300cd1",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/controller/NotebookServiceController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-26T09:52:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c9b9b66_cba09e9d",
+      "range": {
+        "startLine": 75,
+        "startChar": 4,
+        "endLine": 76,
+        "endChar": 4
+      },
+      "revId": "c2c8ae39e00793cc55db366842e53e9efe85dcfb",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2169d9a_5d2cb8e1",
         "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/controller/NotebookServiceController.java",
         "patchSetId": 1
@@ -282,6 +516,30 @@
       "writtenOn": "2019-03-25T17:38:41Z",
       "side": 1,
       "message": "See above",
+      "range": {
+        "startLine": 83,
+        "startChar": 1,
+        "endLine": 92,
+        "endChar": 4
+      },
+      "revId": "c2c8ae39e00793cc55db366842e53e9efe85dcfb",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "916dacde_1f3a3e07",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/controller/NotebookServiceController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-26T09:52:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2169d9a_5d2cb8e1",
       "range": {
         "startLine": 83,
         "startChar": 1,
@@ -340,6 +598,30 @@
     },
     {
       "key": {
+        "uuid": "9d0cff1f_007f56c4",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/controller/NotebookServiceController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-26T09:52:19Z",
+      "side": 1,
+      "message": "No harm to have steps lined up.  Latter we just need to provide implementation for each steps.",
+      "parentUuid": "b28e546a_76415eb2",
+      "range": {
+        "startLine": 120,
+        "startChar": 2,
+        "endLine": 120,
+        "endChar": 29
+      },
+      "revId": "c2c8ae39e00793cc55db366842e53e9efe85dcfb",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80b8407f_2ceea1b9",
         "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/exception/ArchivedException.java",
         "patchSetId": 1
@@ -368,6 +650,30 @@
       "writtenOn": "2019-03-25T17:38:41Z",
       "side": 1,
       "message": "getProject returns a Notebook?  How confusing",
+      "range": {
+        "startLine": 124,
+        "startChar": 18,
+        "endLine": 124,
+        "endChar": 28
+      },
+      "revId": "c2c8ae39e00793cc55db366842e53e9efe85dcfb",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "26044e0d_a16a7179",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/exception/CustomizedResponseEntityExceptionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-26T09:52:19Z",
+      "side": 1,
+      "message": "Copy-Paste :), fixed.",
+      "parentUuid": "7f92d2e0_e59e9a2f",
       "range": {
         "startLine": 124,
         "startChar": 18,
@@ -488,6 +794,30 @@
     },
     {
       "key": {
+        "uuid": "3c21cb50_d06dee02",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/InputValidationService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-26T09:52:19Z",
+      "side": 1,
+      "message": "Agreed, but will break consistency of having all validation related method in one service.",
+      "parentUuid": "cb024603_858907e8",
+      "range": {
+        "startLine": 49,
+        "startChar": 13,
+        "endLine": 49,
+        "endChar": 27
+      },
+      "revId": "c2c8ae39e00793cc55db366842e53e9efe85dcfb",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73222bc8_276b3270",
         "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookService.java",
         "patchSetId": 1
@@ -499,6 +829,30 @@
       "writtenOn": "2019-03-25T17:38:41Z",
       "side": 1,
       "message": "Why does the Notebook Service provide a projectExists method?  You should be calling to the Project Service, right?",
+      "range": {
+        "startLine": 48,
+        "startChar": 13,
+        "endLine": 48,
+        "endChar": 26
+      },
+      "revId": "c2c8ae39e00793cc55db366842e53e9efe85dcfb",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "add016fb_2d732ab2",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-26T09:52:19Z",
+      "side": 1,
+      "message": "Not an api but support method in both the micro service (viz., Project and Notebook).",
+      "parentUuid": "73222bc8_276b3270",
       "range": {
         "startLine": 48,
         "startChar": 13,
@@ -534,6 +888,30 @@
     },
     {
       "key": {
+        "uuid": "3060285a_c3d8bf6e",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-26T09:52:19Z",
+      "side": 1,
+      "message": "ditto",
+      "parentUuid": "904d21e3_af949392",
+      "range": {
+        "startLine": 93,
+        "startChar": 16,
+        "endLine": 93,
+        "endChar": 32
+      },
+      "revId": "c2c8ae39e00793cc55db366842e53e9efe85dcfb",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0746302b_46b8f49d",
         "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookService.java",
         "patchSetId": 1
@@ -545,6 +923,30 @@
       "writtenOn": "2019-03-25T17:38:41Z",
       "side": 1,
       "message": "Ditto",
+      "range": {
+        "startLine": 121,
+        "startChar": 16,
+        "endLine": 121,
+        "endChar": 33
+      },
+      "revId": "c2c8ae39e00793cc55db366842e53e9efe85dcfb",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "216d5338_2ea86d3c",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-26T09:52:19Z",
+      "side": 1,
+      "message": "ditto",
+      "parentUuid": "0746302b_46b8f49d",
       "range": {
         "startLine": 121,
         "startChar": 16,
@@ -580,6 +982,30 @@
     },
     {
       "key": {
+        "uuid": "6935bcb4_ebccea26",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-26T09:52:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fd6ed81_69e34b83",
+      "range": {
+        "startLine": 212,
+        "startChar": 17,
+        "endLine": 212,
+        "endChar": 31
+      },
+      "revId": "c2c8ae39e00793cc55db366842e53e9efe85dcfb",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c41ba10_44849459",
         "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookServiceImpl.java",
         "patchSetId": 1
@@ -591,6 +1017,24 @@
       "writtenOn": "2019-03-25T17:38:41Z",
       "side": 1,
       "message": "Should be private",
+      "revId": "c2c8ae39e00793cc55db366842e53e9efe85dcfb",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2fdb26e9_a4f16455",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-26T09:52:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c41ba10_44849459",
       "revId": "c2c8ae39e00793cc55db366842e53e9efe85dcfb",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false
@@ -614,6 +1058,24 @@
     },
     {
       "key": {
+        "uuid": "ada43567_f15425db",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-26T09:52:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ca85807_24c6756b",
+      "revId": "c2c8ae39e00793cc55db366842e53e9efe85dcfb",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1213fbd8_ec3cc505",
         "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/vo/Project.java",
         "patchSetId": 1
@@ -625,6 +1087,24 @@
       "writtenOn": "2019-03-25T17:38:41Z",
       "side": 1,
       "message": "Why is this class here? Why isn\u0027t there a common models library?",
+      "revId": "c2c8ae39e00793cc55db366842e53e9efe85dcfb",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0662feb2_c80f2b01",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/vo/Project.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-26T09:52:19Z",
+      "side": 1,
+      "message": "On hold, as we need Jenkins Job ready to make common model library available in repository, so as to include in micro services.  Let\u0027s not put every thing in first release.",
+      "parentUuid": "1213fbd8_ec3cc505",
       "revId": "c2c8ae39e00793cc55db366842e53e9efe85dcfb",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false
@@ -648,6 +1128,24 @@
     },
     {
       "key": {
+        "uuid": "a68b842b_4c3f0441",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/vo/Projects.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-26T09:52:19Z",
+      "side": 1,
+      "message": "On hold, as we need Jenkins Job ready to make common model library available in repository, so as to include in micro services.  Let\u0027s not put every thing in first release.",
+      "parentUuid": "232a458a_2342ce55",
+      "revId": "c2c8ae39e00793cc55db366842e53e9efe85dcfb",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c3ef2cf_a392cceb",
         "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/vo/User.java",
         "patchSetId": 1
@@ -665,6 +1163,24 @@
     },
     {
       "key": {
+        "uuid": "4d84ecae_93836e9f",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/vo/User.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-26T09:52:19Z",
+      "side": 1,
+      "message": "ditto",
+      "parentUuid": "5c3ef2cf_a392cceb",
+      "revId": "c2c8ae39e00793cc55db366842e53e9efe85dcfb",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5dc8a5cc_2256992b",
         "filename": "notebook-service/src/main/resources/application.properties",
         "patchSetId": 1
@@ -676,6 +1192,30 @@
       "writtenOn": "2019-03-25T17:38:41Z",
       "side": 1,
       "message": "Should have \"notebook\" right?",
+      "range": {
+        "startLine": 22,
+        "startChar": 20,
+        "endLine": 22,
+        "endChar": 31
+      },
+      "revId": "c2c8ae39e00793cc55db366842e53e9efe85dcfb",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04c921b2_681a398b",
+        "filename": "notebook-service/src/main/resources/application.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-03-26T09:52:19Z",
+      "side": 1,
+      "message": "its as per the specification. Need to discuss with Kazi on this.",
+      "parentUuid": "5dc8a5cc_2256992b",
       "range": {
         "startLine": 22,
         "startChar": 20,

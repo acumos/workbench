@@ -22,6 +22,30 @@
       "revId": "0c9c6806f94874d06f2c8e7c63f163af06472f13",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cd252e70_e06c8e5d",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-03-27T19:20:11Z",
+      "side": 1,
+      "message": "This need to be resolved  as we need to reuse the running services as much as possible",
+      "parentUuid": "5984f7f8_7f5431d8",
+      "range": {
+        "startLine": 48,
+        "startChar": 13,
+        "endLine": 48,
+        "endChar": 26
+      },
+      "revId": "0c9c6806f94874d06f2c8e7c63f163af06472f13",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
     }
   ]
 }

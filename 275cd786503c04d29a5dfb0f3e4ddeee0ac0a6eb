@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e97492a3_03bab2b1",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/controller/ProjectServiceController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-27T14:44:36Z",
+      "side": 1,
+      "message": "I hope Parichay will advise.  It seems to me that the OA\u0026M Team has requested that each controller log a message \"entering\" and \"exiting\".  This does something like that but at first glance it does not seem to comply with the OA\u0026M requirement. They have demonstrated how to use a log adapter class that provides methods entering() and exiting().  I am not too clear on all the details, but this use of debug does not seem to meet that expectation. \n\nIn other words, you claim that this meets logging standardization, but it appears to me that it does not.",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 40
+      },
+      "revId": "275cd786503c04d29a5dfb0f3e4ddeee0ac0a6eb",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}

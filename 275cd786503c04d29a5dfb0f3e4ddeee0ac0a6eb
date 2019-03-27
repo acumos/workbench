@@ -22,6 +22,30 @@
       "revId": "275cd786503c04d29a5dfb0f3e4ddeee0ac0a6eb",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d48dd6c0_54e446c1",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/controller/ProjectServiceController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 191
+      },
+      "writtenOn": "2019-03-27T15:14:09Z",
+      "side": 1,
+      "message": "I think there is slight confusion.. OA\u0026M team has never requested that each controller log a message \"entering\" and \"exiting\". Moreover OA\u0026M team has not provided any adapter class as part of it\u0027s POC. This was done by ONAP team as part of there library implementation and using Marker.",
+      "parentUuid": "e97492a3_03bab2b1",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 40
+      },
+      "revId": "275cd786503c04d29a5dfb0f3e4ddeee0ac0a6eb",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
     }
   ]
 }

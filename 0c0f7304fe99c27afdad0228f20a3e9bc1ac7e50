@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "118ccd0e_d12e8183",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/vo/KVPairs.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-03-27T19:22:51Z",
+      "side": 1,
+      "message": "Please move to common library",
+      "revId": "0c0f7304fe99c27afdad0228f20a3e9bc1ac7e50",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}

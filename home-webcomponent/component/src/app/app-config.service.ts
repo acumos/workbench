@@ -28,7 +28,7 @@ export class AppConfigService {
 
   loadAppConfig() {
     return this.http
-      .get('/config')
+      .get('config')
       .pipe(retry(2))
       .toPromise()
       .then(config => {

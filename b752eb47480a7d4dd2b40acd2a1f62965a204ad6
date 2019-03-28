@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9dc6e94_04be437a",
+        "filename": "home-webcomponent/component/src/app/app-config.service.ts",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-03-28T02:29:31Z",
+      "side": 1,
+      "message": "Probably we need to console.error(error) \ninstead of alert.",
+      "revId": "b752eb47480a7d4dd2b40acd2a1f62965a204ad6",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}

@@ -16,6 +16,24 @@
       "revId": "b752eb47480a7d4dd2b40acd2a1f62965a204ad6",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2121c1df_e4a43168",
+        "filename": "home-webcomponent/component/src/app/app-config.service.ts",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2019-03-28T03:23:56Z",
+      "side": 1,
+      "message": "If in case, we run into this error, then we might need a dialogue box to let user know that there is a config issue. So for temporary purpose, alert was used.",
+      "parentUuid": "c9dc6e94_04be437a",
+      "revId": "b752eb47480a7d4dd2b40acd2a1f62965a204ad6",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
     }
   ]
 }

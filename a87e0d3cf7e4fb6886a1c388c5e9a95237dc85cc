@@ -1,0 +1,527 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c777b96c_95479f1a",
+        "filename": "workbench-common/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-29T10:21:37Z",
+      "side": 1,
+      "message": "plural",
+      "range": {
+        "startLine": 2,
+        "startChar": 55,
+        "endLine": 2,
+        "endChar": 62
+      },
+      "revId": "a87e0d3cf7e4fb6886a1c388c5e9a95237dc85cc",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f23cfb61_a6b1b559",
+        "filename": "workbench-common/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-29T10:21:37Z",
+      "side": 1,
+      "message": "Please add a stub workbench-common.rst file in the docs folder that at least says \"doc coming soon\"",
+      "range": {
+        "startLine": 4,
+        "startChar": 37,
+        "endLine": 4,
+        "endChar": 41
+      },
+      "revId": "a87e0d3cf7e4fb6886a1c388c5e9a95237dc85cc",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d4e8ceea_9a10ffe1",
+        "filename": "workbench-common/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-29T10:21:37Z",
+      "side": 1,
+      "message": "I would use 1.0.0-SNAPSHOT",
+      "range": {
+        "startLine": 27,
+        "startChar": 11,
+        "endLine": 27,
+        "endChar": 16
+      },
+      "revId": "a87e0d3cf7e4fb6886a1c388c5e9a95237dc85cc",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "403a425c_12a5c637",
+        "filename": "workbench-common/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-29T10:21:37Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 63
+      },
+      "revId": "a87e0d3cf7e4fb6886a1c388c5e9a95237dc85cc",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8e0c629d_16f63341",
+        "filename": "workbench-common/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-29T10:21:37Z",
+      "side": 1,
+      "message": "this should be 2017",
+      "range": {
+        "startLine": 62,
+        "startChar": 20,
+        "endLine": 62,
+        "endChar": 24
+      },
+      "revId": "a87e0d3cf7e4fb6886a1c388c5e9a95237dc85cc",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7d2f0d22_2aed7bb3",
+        "filename": "workbench-common/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-29T10:21:37Z",
+      "side": 1,
+      "message": "You can remove the entire distMgt section",
+      "range": {
+        "startLine": 118,
+        "startChar": 2,
+        "endLine": 133,
+        "endChar": 26
+      },
+      "revId": "a87e0d3cf7e4fb6886a1c388c5e9a95237dc85cc",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3642cc09_647b6cc0",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/customserializer/CustomProjectsSerializer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-29T10:21:37Z",
+      "side": 1,
+      "message": "Please document why a custom serializer is needed",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 6
+      },
+      "revId": "a87e0d3cf7e4fb6886a1c388c5e9a95237dc85cc",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b6fb938a_708ea268",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/util/ArtifactStatus.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-29T10:21:37Z",
+      "side": 1,
+      "message": "Maybe, possibly, you would like to use org.acumos.workbench.common as the base package, to clearly identify which classes come from the common jar?",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 34
+      },
+      "revId": "a87e0d3cf7e4fb6886a1c388c5e9a95237dc85cc",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "193ded2e_291e1acd",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/util/ArtifactStatus.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-29T10:21:37Z",
+      "side": 1,
+      "message": "Why do you make a complicated constructor with integer values?   Did you know that every Java enum exposes the .ordinal() method that lets you get EXACTLY this?  Why do extra work manually?",
+      "range": {
+        "startLine": 24,
+        "startChar": 1,
+        "endLine": 25,
+        "endChar": 12
+      },
+      "revId": "a87e0d3cf7e4fb6886a1c388c5e9a95237dc85cc",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1113c5ae_ffc25074",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/util/IdentifierType.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-29T10:21:37Z",
+      "side": 1,
+      "message": "Drop constructor and integers, use .ordinal() if you need it",
+      "range": {
+        "startLine": 24,
+        "startChar": 13,
+        "endLine": 24,
+        "endChar": 14
+      },
+      "revId": "a87e0d3cf7e4fb6886a1c388c5e9a95237dc85cc",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "11ebbf84_505f11c2",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/util/PersistenceType.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-29T10:21:37Z",
+      "side": 1,
+      "message": "Drop constructor and integers, use .ordinal() if you need it",
+      "range": {
+        "startLine": 24,
+        "startChar": 10,
+        "endLine": 24,
+        "endChar": 11
+      },
+      "revId": "a87e0d3cf7e4fb6886a1c388c5e9a95237dc85cc",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df90b5a4_2436cf08",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/util/ServiceStatus.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-29T10:21:37Z",
+      "side": 1,
+      "message": "Drop constructor and integers, use .ordinal() if you need it",
+      "range": {
+        "startLine": 24,
+        "startChar": 8,
+        "endLine": 24,
+        "endChar": 9
+      },
+      "revId": "a87e0d3cf7e4fb6886a1c388c5e9a95237dc85cc",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4c07b26f_88010274",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/vo/ArtifactState.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-29T10:21:37Z",
+      "side": 1,
+      "message": "So this artifact state just wraps a single enum value?",
+      "range": {
+        "startLine": 31,
+        "startChar": 13,
+        "endLine": 31,
+        "endChar": 26
+      },
+      "revId": "a87e0d3cf7e4fb6886a1c388c5e9a95237dc85cc",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c05e3d4_83427037",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/vo/CompositeModel.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-29T10:21:37Z",
+      "side": 1,
+      "message": "I\u0027m pretty certain that this is the default behavior, and you don\u0027t need the annotation.  Maybe save yourself work here?",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 30
+      },
+      "revId": "a87e0d3cf7e4fb6886a1c388c5e9a95237dc85cc",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4c50b182_1dd959ad",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/vo/KVPairs.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-29T10:21:37Z",
+      "side": 1,
+      "message": "probably want to initialize as empty list",
+      "range": {
+        "startLine": 33,
+        "startChar": 22,
+        "endLine": 33,
+        "endChar": 24
+      },
+      "revId": "a87e0d3cf7e4fb6886a1c388c5e9a95237dc85cc",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "33e49068_4850f865",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/vo/Pipelines.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-29T10:21:37Z",
+      "side": 1,
+      "message": "Maybe initialize to empty list",
+      "range": {
+        "startLine": 33,
+        "startChar": 24,
+        "endLine": 33,
+        "endChar": 33
+      },
+      "revId": "a87e0d3cf7e4fb6886a1c388c5e9a95237dc85cc",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ef2d650b_4611312f",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/vo/Projects.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-29T10:21:37Z",
+      "side": 1,
+      "message": "Why is a custom serializer needed?",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 15
+      },
+      "revId": "a87e0d3cf7e4fb6886a1c388c5e9a95237dc85cc",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2024ab4f_082dc156",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/vo/Projects.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-29T10:21:37Z",
+      "side": 1,
+      "message": "Probably want to initialize this to an empty list",
+      "range": {
+        "startLine": 37,
+        "startChar": 23,
+        "endLine": 37,
+        "endChar": 31
+      },
+      "revId": "a87e0d3cf7e4fb6886a1c388c5e9a95237dc85cc",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0c4f4a02_11f6b53d",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/vo/Publisher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-29T10:21:37Z",
+      "side": 1,
+      "message": "This seems kind of odd - what is a publisher really? It has a single data set, a single topic, a single Service state, but multiple Projects.",
+      "range": {
+        "startLine": 29,
+        "startChar": 13,
+        "endLine": 29,
+        "endChar": 22
+      },
+      "revId": "a87e0d3cf7e4fb6886a1c388c5e9a95237dc85cc",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a11397e6_9da79374",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/vo/Publisher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-29T10:21:37Z",
+      "side": 1,
+      "message": "Why is a single datset associated with a publisher?",
+      "range": {
+        "startLine": 57,
+        "startChar": 8,
+        "endLine": 57,
+        "endChar": 15
+      },
+      "revId": "a87e0d3cf7e4fb6886a1c388c5e9a95237dc85cc",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "de08a6df_1547e485",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/vo/Queue.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-29T10:21:37Z",
+      "side": 1,
+      "message": "If this is not in scope for Boreas, why add it?",
+      "revId": "a87e0d3cf7e4fb6886a1c388c5e9a95237dc85cc",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3fea4aa5_37159b5d",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/vo/User.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-29T10:21:37Z",
+      "side": 1,
+      "message": "This is misleading.  If I call getRoles() I expect a collection, but you return a single instance.  Please fix to getRole() OR change the data type to a collection",
+      "range": {
+        "startLine": 72,
+        "startChar": 8,
+        "endLine": 72,
+        "endChar": 12
+      },
+      "revId": "a87e0d3cf7e4fb6886a1c388c5e9a95237dc85cc",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "731520cf_f85d422d",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/vo/Users.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-29T10:21:37Z",
+      "side": 1,
+      "message": "It\u0027s good practice to create an empty list here so clients can do getUsers().add(user);",
+      "range": {
+        "startLine": 33,
+        "startChar": 20,
+        "endLine": 33,
+        "endChar": 25
+      },
+      "revId": "a87e0d3cf7e4fb6886a1c388c5e9a95237dc85cc",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}

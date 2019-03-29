@@ -267,14 +267,22 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 	
 	@Override
-	public Project archiveProject(String authenticatedUserId, String projectId) { 
+	public Project archiveProject(String authenticatedUserId, String projectId, String actionType) { 
 		logger.debug("archiveProject() Begin");
 		Project result = null;
 		MLPUser mlpUser = getUserDetails(authenticatedUserId);
 		// Call to CDS to mark project as archived. 
 		cdsClient.setRequestId(MDC.get(PSLogConstants.MDCs.REQUEST_ID));
 		MLPProject mlpProject = cdsClient.getProject(projectId);
-		mlpProject.setActive(false);
+		switch(actionType) { 
+		case("UA") : 
+			mlpProject.setActive(true);
+			break;
+		case("A"):
+		default : 
+			mlpProject.setActive(false);
+		}
+		
 		cdsClient.updateProject(mlpProject);
 		
 		result = ProjectServiceUtil.getProjectVO(mlpProject, mlpUser);

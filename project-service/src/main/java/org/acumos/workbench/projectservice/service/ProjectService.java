@@ -140,10 +140,13 @@ public interface ProjectService {
 	 * 		the authenticated User Id. 
 	 * @param projectId
 	 * 		the project Id to be archived. 
+	 * @param actionType
+	 * 		to Archive project actionType = A
+	 * 		to un Archive project actionType = UA
 	 * @return Project
 	 * 		the Project object with ServiceState indication project is been archived. 
 	 */
-	public Project archiveProject(String authenticatedUserId, String projectId);
+	public Project archiveProject(String authenticatedUserId, String projectId, String actionType);
 	
 	/**
 	 * To get the user details based on authenticationUserId which is the Acumos User LoginId. 

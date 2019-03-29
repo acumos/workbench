@@ -59,6 +59,10 @@ import org.springframework.stereotype.Service;
 public class ProjectServiceImpl implements ProjectService {
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 	
+	private static final String statusCode = "SU";
+	private static final String UNARCHIVE = "UA";
+	private static final String ACTIVE = "A";
+	
 	@Autowired
 	private CommonDataServiceRestClientImpl cdsClient;
 	
@@ -102,7 +106,7 @@ public class ProjectServiceImpl implements ProjectService {
 		result = ProjectServiceUtil.getProjectVO(responseMLPProject, mlpUser);
 		
 		// 8. Add success or error message to Notification. (Call to CDS)
-		String statusCode = "SU";
+		//String statusCode = "SU";
 		String taskName = "Create Project";
 		String resultMsg = result.getProjectId().getName() + " created successfully";
 		//saveNotification(authenticatedUserId, statusCode, taskName, resultMsg);
@@ -182,7 +186,7 @@ public class ProjectServiceImpl implements ProjectService {
 		result = ProjectServiceUtil.getProjectVO(newMLPProject, mlpUser);
 		
 		// 10. Add success or error message to Notification. (Call to CDS)
-		String statusCode = "SU";
+		//String statusCode = "SU";
 		String taskName = "Update Project";
 		String resultMsg = result.getProjectId().getName() + " updated successfully";
 		saveNotification(authenticatedUserId, statusCode, taskName, resultMsg);
@@ -267,14 +271,22 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 	
 	@Override
-	public Project archiveProject(String authenticatedUserId, String projectId) { 
+	public Project archiveProject(String authenticatedUserId, String projectId, String actionType) { 
 		logger.debug("archiveProject() Begin");
 		Project result = null;
 		MLPUser mlpUser = getUserDetails(authenticatedUserId);
 		// Call to CDS to mark project as archived. 
 		cdsClient.setRequestId(MDC.get(PSLogConstants.MDCs.REQUEST_ID));
 		MLPProject mlpProject = cdsClient.getProject(projectId);
-		mlpProject.setActive(false);
+		switch(actionType) { 
+		case(UNARCHIVE) : 
+			mlpProject.setActive(true);
+			break;
+		case(ACTIVE):
+		default : 
+			mlpProject.setActive(false);
+		}
+		
 		cdsClient.updateProject(mlpProject);
 		
 		result = ProjectServiceUtil.getProjectVO(mlpProject, mlpUser);

@@ -20,6 +20,9 @@
 
 package org.acumos.workbench.projectservice.controller;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 
@@ -40,11 +43,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-
 @RestController
-@RequestMapping(value = "/mlWorkbench/v1/")
+@RequestMapping(value = "/")
 public class ProjectServiceController {
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 	
@@ -220,14 +220,20 @@ public class ProjectServiceController {
 	 * @param authenticatedUserId
 	 * 		the authenticated user Id.
 	 * @param projectId
-	 * 		the project Id of project to be archived. 
+	 * 		the project Id of project to be archived.
+	 * @param actionType
+	 * 		to Archive project actionType = A
+	 * 		to un Archive project actionType = UA 
 	 * @return ResponseEntity<Project> 
 	 * 		returns the Project Object with additional details indication project is been archived. 
 	 * 
 	 */
-	//@ApiOperation(value = "To archive existing project")
-	//@RequestMapping(value = "/users/{authenticatedUserId}/projects/{projectId}/", method = RequestMethod.PUT)
-    public ResponseEntity<Project> archiveProject(@ApiParam(value = "The Acumos Login Id",allowableValues = "")@PathVariable("authenticatedUserId") String authenticatedUserId,@ApiParam(value ="ProjectId", allowableValues = "") @PathVariable("The ProjectId of the Project to be Archived") String projectId) {
+	@ApiOperation(value = "To archive existing project")
+	@RequestMapping(value = "/users/{authenticatedUserId}/projects/{projectId}/actionType/{actionType}", method = RequestMethod.PUT)
+	public ResponseEntity<Project> archiveProject(
+			@ApiParam(value = "The Acumos Login Id", allowableValues = "") @PathVariable("authenticatedUserId") String authenticatedUserId,
+			@ApiParam(value = "ProjectId", allowableValues = "") @PathVariable("The ProjectId of the Project to be Archived") String projectId,
+			@ApiParam(value = "Whether to Archive or un Archive Project", allowableValues ="A,UA") @PathVariable("actionType") String actionType) {
     	logger.debug("archiveProject() Begin");
 		// 1. Validate the input
 
@@ -238,7 +244,7 @@ public class ProjectServiceController {
     	projectService.isOwnerOfProject(authenticatedUserId, projectId);
     	
 		// 4. Mark the project as archived (call to CDS).
-		Project result = projectService.archiveProject(authenticatedUserId, projectId);
+		Project result = projectService.archiveProject(authenticatedUserId, projectId, actionType);
 		logger.debug("archiveProject() End");
         return new ResponseEntity<Project>(result, HttpStatus.OK);
         

@@ -29,4 +29,23 @@ import org.springframework.stereotype.Component;
 @PropertySource("classpath:application.properties")
 public class Properties implements Serializable {
 
+	private static final long serialVersionUID = -6513487895845271163L;
+
+	private int resultsetSize;
+
+	/**
+	 * @return the resultsetSize
+	 */
+	public int getResultsetSize() {
+		return resultsetSize;
+	}
+
+	/**
+	 * @param resultsetSize
+	 *            the resultsetSize to set
+	 */
+	public void setResultsetSize(int resultsetSize) {
+		this.resultsetSize = resultsetSize;
+	}
+
 }

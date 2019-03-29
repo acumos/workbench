@@ -15,18 +15,18 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ * 
  * ===============LICENSE_END=========================================================
  */
 
 package org.acumos.workbench.projectservice.service;
 
+import static org.mockito.Mockito.doNothing;
+
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.acumos.workbench.projectservice.exception.IncorrectValueException;
-import org.acumos.workbench.projectservice.exception.InvalidInputJSONException;
-import org.acumos.workbench.projectservice.exception.ValueNotFoundException;
 import org.acumos.workbench.projectservice.util.ArtifactStatus;
 import org.acumos.workbench.projectservice.util.IdentifierType;
 import org.acumos.workbench.projectservice.vo.ArtifactState;
@@ -45,6 +45,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
@@ -53,49 +54,39 @@ import org.slf4j.LoggerFactory;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
-public class InputValidationServiceImplTest {
+public class ProjectValidationServiceImplTest {
+	
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-
-	String authenticatedUserId = "123";
-
+	
+	String authenticatedUserId = "123"; 
+	
 	@Rule
 	public MockitoRule mockitoRule = MockitoJUnit.rule();
 	
 	@InjectMocks
+	private ProjectValidationServiceImpl projectValidationServiceImpl;
+	
+	@Mock
 	InputValidationServiceImpl inputValidationServiceImpl;
+	
 	
 	@Before
 	public void setUp() {
-		MockitoAnnotations.initMocks(this);
+		 MockitoAnnotations.initMocks(this);
 	}
-
-	@Test(expected = InvalidInputJSONException.class)
-	public void validateInputTest() throws InvalidInputJSONException {
+	
+	@Test
+	public void validateInputTest(){
 		Project project = getProject();
-		inputValidationServiceImpl.validateProjectInputJson(project);
-		project.getProjectId().getVersionId().setLabel(null);
-		inputValidationServiceImpl.validateProjectInputJson(project);
-
-	}
-	@Test(expected = ValueNotFoundException.class)
-	public void isValuePresentTest() throws ValueNotFoundException{
-		inputValidationServiceImpl.isValuePresent("Acumos User Id",authenticatedUserId);
-		authenticatedUserId = null;
-		inputValidationServiceImpl.isValuePresent("Acumos User Id",authenticatedUserId);
+		doNothing().when(inputValidationServiceImpl).validateProjectInputJson(project);
+		doNothing().when(inputValidationServiceImpl).isValuePresent("Acumos User Id",authenticatedUserId);
+		doNothing().when(inputValidationServiceImpl).isValuePresent("Project Name", project.getProjectId().getName());
+		doNothing().when(inputValidationServiceImpl).isValuePresent("Project Version", project.getProjectId().getVersionId().getLabel());
+		doNothing().when(inputValidationServiceImpl).validateProjectName(project.getProjectId().getName());
+		doNothing().when(inputValidationServiceImpl).validateVersion(project.getProjectId().getVersionId().getLabel());
+		projectValidationServiceImpl.validateInput(authenticatedUserId, project);
 	}
 	
-	@Test(expected = IncorrectValueException.class)
-	public void validateProjectNameTest() throws IncorrectValueException{
-		inputValidationServiceImpl.validateProjectName("ProjectService");
-		inputValidationServiceImpl.validateProjectName("#$%ProjectService");
-	}
-	
-	@Test(expected = IncorrectValueException.class)
-	public void validateVersion() throws IncorrectValueException{
-		inputValidationServiceImpl.validateVersion("1.0.0");
-		inputValidationServiceImpl.validateVersion("@#$1.0.0");
-	}
-
 	private Project getProject() {
 		Project project = new Project();
 		ArtifactState artifactState = new ArtifactState();
@@ -120,7 +111,7 @@ public class InputValidationServiceImplTest {
 		userId.setUuid("123");
 		userId.setName("TechMDev");
 		userId.setServiceUrl("https://acumos.org");
-		userId.setIdentifierType(IdentifierType.PIPELINE);
+		userId.setIdentifierType(IdentifierType.PROJECT);
 		owner.setUserId(userId);
 		List<Project> projectList = new ArrayList<Project>();
 		projectList.add(project);
@@ -143,4 +134,6 @@ public class InputValidationServiceImplTest {
 		project.setProjectId(identifier);
 		return project;
 	}
+
+
 }

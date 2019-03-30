@@ -1,0 +1,427 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d9f81b2_d3d7a77f",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/service/ProjectServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-30T10:00:26Z",
+      "side": 1,
+      "message": "Please avoid hardcoding strings like this. Maybe you can define an enum, or define these as constants somewhere?",
+      "range": {
+        "startLine": 278,
+        "startChar": 7,
+        "endLine": 278,
+        "endChar": 10
+      },
+      "revId": "215bc7169f8383a08e5ea5bd8bc25f7148753f4c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f4ee4a83_1a2b3ec2",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/util/Properties.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-30T10:00:26Z",
+      "side": 1,
+      "message": "Please PLEASE do NOT name a class \"Properties\" that name is heavily used/overloaded.  Use ProjectProperties or WBServiceProperties, something to make it less ambiguous, more specific.",
+      "range": {
+        "startLine": 30,
+        "startChar": 13,
+        "endLine": 30,
+        "endChar": 23
+      },
+      "revId": "215bc7169f8383a08e5ea5bd8bc25f7148753f4c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dca72059_d2d30e37",
+        "filename": "project-service/src/test/java/org/acumos/workbench/projectservice/controller/ProjectServiceControllerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-30T10:00:26Z",
+      "side": 1,
+      "message": "probably should be private?",
+      "range": {
+        "startLine": 67,
+        "startChar": 1,
+        "endLine": 67,
+        "endChar": 7
+      },
+      "revId": "215bc7169f8383a08e5ea5bd8bc25f7148753f4c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9bd71448_fc689a57",
+        "filename": "project-service/src/test/java/org/acumos/workbench/projectservice/controller/ProjectServiceControllerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-30T10:00:26Z",
+      "side": 1,
+      "message": "private",
+      "revId": "215bc7169f8383a08e5ea5bd8bc25f7148753f4c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "563818f6_73dbf74d",
+        "filename": "project-service/src/test/java/org/acumos/workbench/projectservice/controller/ProjectServiceControllerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-30T10:00:26Z",
+      "side": 1,
+      "message": "private",
+      "revId": "215bc7169f8383a08e5ea5bd8bc25f7148753f4c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7d255d0_d433920b",
+        "filename": "project-service/src/test/java/org/acumos/workbench/projectservice/controller/ProjectServiceControllerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-30T10:00:26Z",
+      "side": 1,
+      "message": "private",
+      "revId": "215bc7169f8383a08e5ea5bd8bc25f7148753f4c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "99d1ecdc_91d1c237",
+        "filename": "project-service/src/test/java/org/acumos/workbench/projectservice/controller/ProjectServiceControllerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-30T10:00:26Z",
+      "side": 1,
+      "message": "private",
+      "revId": "215bc7169f8383a08e5ea5bd8bc25f7148753f4c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "249fdbef_16765f3a",
+        "filename": "project-service/src/test/java/org/acumos/workbench/projectservice/controller/ProjectServiceControllerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-30T10:00:26Z",
+      "side": 1,
+      "message": "maybe call this buildProject ?",
+      "range": {
+        "startLine": 158,
+        "startChar": 17,
+        "endLine": 158,
+        "endChar": 27
+      },
+      "revId": "215bc7169f8383a08e5ea5bd8bc25f7148753f4c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "173b0cc4_0f7f5e3a",
+        "filename": "project-service/src/test/java/org/acumos/workbench/projectservice/service/InputValidationServiceImplTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-30T10:00:26Z",
+      "side": 1,
+      "message": "private static final",
+      "revId": "215bc7169f8383a08e5ea5bd8bc25f7148753f4c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dc6b18e5_74b94683",
+        "filename": "project-service/src/test/java/org/acumos/workbench/projectservice/service/InputValidationServiceImplTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-30T10:00:26Z",
+      "side": 1,
+      "message": "Probably private?",
+      "range": {
+        "startLine": 62,
+        "startChar": 1,
+        "endLine": 62,
+        "endChar": 7
+      },
+      "revId": "215bc7169f8383a08e5ea5bd8bc25f7148753f4c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7fb392d5_e34462c6",
+        "filename": "project-service/src/test/java/org/acumos/workbench/projectservice/service/InputValidationServiceImplTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-30T10:00:26Z",
+      "side": 1,
+      "message": "private",
+      "revId": "215bc7169f8383a08e5ea5bd8bc25f7148753f4c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d8213f09_ae4ce6af",
+        "filename": "project-service/src/test/java/org/acumos/workbench/projectservice/service/InputValidationServiceImplTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-30T10:00:26Z",
+      "side": 1,
+      "message": "why is this duplicated?  Put it in a superclass and reuse!",
+      "range": {
+        "startLine": 99,
+        "startChar": 17,
+        "endLine": 99,
+        "endChar": 27
+      },
+      "revId": "215bc7169f8383a08e5ea5bd8bc25f7148753f4c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "089615af_79957286",
+        "filename": "project-service/src/test/java/org/acumos/workbench/projectservice/service/ProjectServiceImplTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-30T10:00:26Z",
+      "side": 1,
+      "message": "private static final",
+      "range": {
+        "startLine": 85,
+        "startChar": 1,
+        "endLine": 85,
+        "endChar": 7
+      },
+      "revId": "215bc7169f8383a08e5ea5bd8bc25f7148753f4c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "db5880a9_8f7645ff",
+        "filename": "project-service/src/test/java/org/acumos/workbench/projectservice/service/ProjectServiceImplTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-30T10:00:26Z",
+      "side": 1,
+      "message": "private static final",
+      "range": {
+        "startLine": 88,
+        "startChar": 1,
+        "endLine": 88,
+        "endChar": 7
+      },
+      "revId": "215bc7169f8383a08e5ea5bd8bc25f7148753f4c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "048fe4ce_8e1b1164",
+        "filename": "project-service/src/test/java/org/acumos/workbench/projectservice/service/ProjectServiceImplTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-30T10:00:26Z",
+      "side": 1,
+      "message": "private",
+      "revId": "215bc7169f8383a08e5ea5bd8bc25f7148753f4c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7ba8d809_fbd45d8c",
+        "filename": "project-service/src/test/java/org/acumos/workbench/projectservice/service/ProjectServiceImplTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-30T10:00:26Z",
+      "side": 1,
+      "message": "private",
+      "revId": "215bc7169f8383a08e5ea5bd8bc25f7148753f4c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "55c3ec10_b9fb85b9",
+        "filename": "project-service/src/test/java/org/acumos/workbench/projectservice/service/ProjectServiceImplTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-30T10:00:26Z",
+      "side": 1,
+      "message": "Why do you repeat so SO much code?  Factor out and reuse, you are working too hard here.",
+      "range": {
+        "startLine": 180,
+        "startChar": 2,
+        "endLine": 188,
+        "endChar": 33
+      },
+      "revId": "215bc7169f8383a08e5ea5bd8bc25f7148753f4c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ce509f64_69055f03",
+        "filename": "project-service/src/test/java/org/acumos/workbench/projectservice/service/ProjectValidationServiceImplTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-30T10:00:26Z",
+      "side": 1,
+      "message": "private static final",
+      "revId": "215bc7169f8383a08e5ea5bd8bc25f7148753f4c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0fe1e5c1_ab8d6ab7",
+        "filename": "project-service/src/test/java/org/acumos/workbench/projectservice/service/ProjectValidationServiceImplTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-30T10:00:26Z",
+      "side": 1,
+      "message": "private ?",
+      "range": {
+        "startLine": 64,
+        "startChar": 1,
+        "endLine": 64,
+        "endChar": 7
+      },
+      "revId": "215bc7169f8383a08e5ea5bd8bc25f7148753f4c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39f3a603_713a82b2",
+        "filename": "project-service/src/test/java/org/acumos/workbench/projectservice/service/ProjectValidationServiceImplTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-30T10:00:26Z",
+      "side": 1,
+      "message": "private",
+      "revId": "215bc7169f8383a08e5ea5bd8bc25f7148753f4c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "57905565_7e67007a",
+        "filename": "project-service/src/test/java/org/acumos/workbench/projectservice/service/ProjectValidationServiceImplTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-03-30T10:00:26Z",
+      "side": 1,
+      "message": "Yet AGAIN you have repeated this entire code block from another test.  Refactor and reuse.  All duplicated code drifts apart, costs you time and effort to debug and update, ugh.",
+      "range": {
+        "startLine": 90,
+        "startChar": 17,
+        "endLine": 90,
+        "endChar": 27
+      },
+      "revId": "215bc7169f8383a08e5ea5bd8bc25f7148753f4c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}

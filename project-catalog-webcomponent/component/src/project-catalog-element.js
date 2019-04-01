@@ -34,9 +34,11 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(LitEleme
       isOpenModal: { type: Boolean },
       projects: [],
       activeFilter: {},
-      activeSort: "",
+      activeSort: {type: String},
       currentPage: 0,
-      totalPages: 0
+      totalPages: 0,
+      mSurl: {type: String},
+      view: {type: String},
     };
   }
 
@@ -48,11 +50,16 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(LitEleme
     super();
 
     this.data = {
-      newProject: {
-        name: "",
-        description: "",
-        version: ""
-      }
+    		newProject:{
+		  	  projectId : {    
+		  		  name : "",    
+		  		  versionId : {      
+		  			  comment : "",      
+		  			  label : ""    
+		  			}  
+		  	  },  
+		  	  description : ""
+		    }
     };
 
     this.$validations.init({
@@ -71,159 +78,146 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(LitEleme
       { value: "id", label: "Sort By ID" },
       { value: "created", label: "Sort By Created Date" }
     ];
-    this.projectLists = [
-      {
-        name: "ABProject1",
-        id: 1,
-        description: "Project1 desc1234",
-        tempalte: "proj1 temoplate1",
-        status: "active"
-      },
-      {
-        name: "AAProject2",
-        id: 11,
-        description: "Project2 desc1234",
-        tempalte: "proj2 temoplate1",
-        status: "active"
-      },
-      {
-        name: "CAProject3",
-        id: 2,
-        description: "Project3 desc1234",
-        tempalte: "proj3 temoplate1",
-        status: "active"
-      },
-      {
-        name: "ZZAProject4",
-        id: 104,
-        description: "4Project1 desc1234",
-        tempalte: "proj4 temoplate1",
-        status: "archived"
-      },
-      {
-        name: "Project5",
-        id: 105,
-        description: "5Project1 desc1234",
-        tempalte: "proj5 temoplate1",
-        status: "active"
-      },
-      {
-        name: "Project6",
-        id: 106,
-        description: "6Project1 desc1234",
-        tempalte: "proj6 temoplate1",
-        status: "active"
-      },
-      {
-        name: "Project7",
-        id: 107,
-        description: "P7roject1 desc1234",
-        tempalte: "proj7 temoplate1",
-        status: "archived"
-      },
-      {
-        name: "Project8",
-        id: 108,
-        description: "P8roject1 desc1234",
-        tempalte: "proj8 temoplate1",
-        status: "active"
-      },
-      {
-        name: "Project9",
-        id: 109,
-        description: "P9roject1 desc1234",
-        tempalte: "proj9 temoplate1",
-        status: "active"
-      },
-      {
-        name: "Project10",
-        id: 110,
-        description: "Pr10oject1 desc1234",
-        tempalte: "proj10 temoplate1",
-        status: "active"
-      },
-      {
-        name: "Project11",
-        id: 110,
-        description: "Pr11oject1 desc1234",
-        tempalte: "proj11 temoplate1",
-        status: "archived"
-      },
-      {
-        name: "Project12",
-        id: 110,
-        description: "Pr12oject1 desc1234",
-        tempalte: "proj12 temoplate1",
-        status: "active"
-      },
-      {
-        name: "Project4",
-        id: 110,
-        description: "4Project1 desc1234",
-        tempalte: "proj4 temoplate1",
-        status: "active"
-      },
-      {
-        name: "Project5",
-        id: 110,
-        description: "5Project1 desc",
-        tempalte: "proj5 temoplate1",
-        status: "archived"
-      },
-      {
-        name: "Project6",
-        id: 110,
-        description: "6Project1 desc",
-        tempalte: "proj6 temoplate1",
-        status: "active"
-      },
-      {
-        name: "Project7",
-        id: 110,
-        description: "P7roject1 desc",
-        tempalte: "proj7 temoplate1",
-        status: "archived"
-      },
-      {
-        name: "Project8",
-        id: 110,
-        description: "P8roject1 desc",
-        tempalte: "proj8 temoplate1",
-        status: "active"
-      },
-      {
-        name: "Project9",
-        id: 110,
-        description: "P9roject1 desc",
-        tempalte: "proj9 temoplate1",
-        status: "active"
-      },
-      {
-        name: "Project10",
-        id: 110,
-        description: "Pr10oject1 desc",
-        tempalte: "proj10 temoplate1",
-        status: "archived"
-      },
-      {
-        name: "Project11",
-        id: 110,
-        description: "Pr11oject1 desc",
-        tempalte: "proj11 temoplate1",
-        status: "active"
-      },
-      {
-        name: "Project12",
-        id: 110,
-        description: "Pr12oject1 desc",
-        tempalte: "proj12 temoplate1",
-        status: "active"
-      }
-    ];
+    
+    this.projectLists = [];
 
-    this.getProjects();
   }
+  
+  connectedCallback() {
+	    super.connectedCallback();
+	    console.info('inside the connected call back method');
+	    this.getConfig();
+	    
+	    window.addEventListener('hashchange', this._boundListener);
+	  }
 
+	  disconnectedCallback() {
+	    super.disconnectedCallback();
+	    window.removeEventListener('hashchange', this._boundListener);
+	  }
+	
+  getConfig(){
+	  fetch('/api/config', {
+		  method: 'GET',
+          mode: 'cors',
+          cache: 'default'
+        }).then(res => res.json())
+          .then((envVar) => {
+              this.mSurl = envVar.msconfig.projectmSURL;
+              this.getProjectsList();
+        }).catch(function (error) {
+          console.info('Request failed', error);
+        });
+
+  }
+  
+
+  getProjectsList(){
+	  //auth will be changed once the authentication code is committed
+	  fetch('/api/projects', {
+		  method: 'POST',
+          mode: 'cors',
+          cache: 'default',
+          headers: {
+              "Content-Type": "application/json",
+              "auth": "techmdev"
+          },
+          body: JSON.stringify({
+          "url": this.mSurl
+          })
+        }).then(res => res.json())
+          .then((n) => {
+        	  this.projectLists = [];
+        	  this.projects = [];
+        	  var projectsInfo = n.data;
+        	  for(var i=0; i < projectsInfo.length; i++){
+        		  this.projectLists[i] = {
+        				  "projectId": projectsInfo[i].projectId.uuid,
+        				  "name": projectsInfo[i].projectId.name,
+        				  "version": projectsInfo[i].projectId.versionId.label,
+        				  "createdTimestamp": projectsInfo[i].projectId.versionId.timeStamp,
+        				  "createdBy": projectsInfo[i].owner.authenticatedUserId,
+        				  "description": projectsInfo[i].description,
+        				  "status":projectsInfo[i].artifactStatus.status,
+
+        		  }
+        	  }
+        	  this.getProjects();
+              console.info('Get Projects list Request successful here.');
+              
+        }).catch(function (error) {
+          console.info('Request failed', error);
+        });
+  }
+  
+  createProject(){
+	  fetch('/api/createProject', {
+		  method: 'POST',
+          mode: 'cors',
+          cache: 'default',
+          headers: {
+              "Content-Type": "application/json",
+              "auth": "techmdev"
+          },
+          body: JSON.stringify({
+        	  "url": this.mSurl,
+        	  "newProjectDetails": this.data.newProject 
+        	  })
+        }).then(res => res.json())
+          .then((n) => {
+        	  this.getProjectsList();
+              console.info('create project Request successful here.');
+              
+        }).catch(function (error) {
+          console.info('Request failed', error);
+        });
+  }
+  
+  deleteProject(projectId) {
+	  fetch('/api/deleteProject', {
+		  method: 'DELETE',
+          mode: 'cors',
+          cache: 'default',
+          headers: {
+              "Content-Type": "application/json",
+              "auth": "techmdev"
+          },
+          body: JSON.stringify({
+        	  "url": this.mSurl,
+        	  "projectId" : projectId        		  
+          })
+        }).then(res => res.json())
+          .then((n) => {
+        	  this.getProjectsList();
+              console.info('delete project Request successful here.');
+              
+        }).catch(function (error) {
+          console.info('Request failed', error);
+        });
+  }
+  
+  getProjectDetails(projectId) {
+	  fetch('/api/getProjectDetails', {
+		  method: 'POST',
+          mode: 'cors',
+          cache: 'default',
+          headers: {
+              "Content-Type": "application/json",
+              "auth": "techmdev"
+          },
+          body: JSON.stringify({
+        	  "url": this.mSurl,
+        	  "projectId" : projectId        		  
+          })
+        }).then(res => res.json())
+          .then((n) => {
+        	  this.getProjectsList();
+              console.info('delete project Request successful here.');
+              
+        }).catch(function (error) {
+          console.info('Request failed', error);
+        });
+  }
   filterProjects(criteria) {
     this.activeFilter = criteria;
     this.dataSource.filter(criteria);
@@ -336,7 +330,10 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(LitEleme
 
   modalClosed() {
     this.$validations.validate("newProject");
+    
     this.isOpenModal = false;
+    this.createProject();
+   
   }
 
   onDataCommit(data) {
@@ -347,7 +344,7 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(LitEleme
   }
 
   getProjects() {
-    this.activeFilter = { status: "active" };
+    this.activeFilter = { status: "ACTIVE" };
     this.activeSort = "name";
 
     this.dataSource = new DataSource({
@@ -358,19 +355,20 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(LitEleme
 
     this.currentPage = this.dataSource.page() + 1;
     this.totalPages = this.dataSource.totalPages();
-    this.projects = this.dataSource.data();
+    this.projects = this.dataSource._rawData;
+    if(this.projects.length > 0){
+        this.view = 'view';
+      }else {
+        this.view = 'add';
+      }
   }
-
-  createProject() {}
-
-  deleteProject(projectId) {}
 
   archiveProject(projectId) {}
 
   restoreProject(projectId) {}
 
   viewProject(projectId) {
-    console.log("inside the viewProject methodf");
+    console.info("inside the viewProject methodf");
   }
 
   redirectWikiPage() {}
@@ -396,8 +394,8 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(LitEleme
                   type="text"
                   class="form-control"
                   placeholder="Enter Project Name"
-                  value="${this.data.newProject.name}"
-                  @blur="${ e => this.$data.$set('newProject.name', e.target.value)}"
+                  value="${this.data.newProject.projectId.name}"
+                  @blur="${ e => this.$data.$set('newProject.projectId.name', e.target.value)}"
                 />
               </div>
               <div class="form-group">
@@ -416,8 +414,8 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(LitEleme
                   type="text"
                   class="form-control"
                   placeholder="Enter Project Version"
-                  value="${this.data.newProject.version}"
-                  @blur="${ e => this.$data.$set('newProject.version', e.target.value)}"
+                  value="${this.data.newProject.projectId.versionId.label}"
+                  @blur="${ e => this.$data.$set('newProject.projectId.versionId.label', e.target.value)}"
                 />
               </div>
             </div>
@@ -425,7 +423,7 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(LitEleme
         </form>
       </omni-modal>
 
-      ${this.projects.length > 0
+      ${this.view === 'view'
         ? html`
             <div class="row" style="margin:5px 0;">
               <div class="col-lg-12">
@@ -569,18 +567,18 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(LitEleme
                           >
                             <a
                               href="javascript:void"
-                              @click=${e => this.userAction("view-project", item.id)}
+                              @click=${e => this.userAction("view-project", item.projectId)}
                             >
                               <div class="card-body">
                                 <h4 class="project-name">${item.name}</h4>
-                                <span><strong>Project ID</strong>: &nbsp; ${item.id}</span
+                                <span><strong>Project ID</strong>: &nbsp; ${item.projectId}</span
                                 ><br />
                                 <span
                                   ><strong>Project Version</strong>: &nbsp;
-                                  ${item.id}</span
+                                  ${item.version}</span
                                 ><br />
                                 <strong>Project Status</strong>: &nbsp;
-                                ${item.status === "active"
+                                ${item.status === "ACTIVE"
                                   ? html`
                                       <span class="active-status">${item.status}</span>
                                     `
@@ -589,10 +587,10 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(LitEleme
                                     `}
                                 <br />
                                 <span
-                                  ><strong>Creation Date</strong>: &nbsp; ${item.id}</span
+                                  ><strong>Creation Date</strong>: &nbsp; ${item.createdTimestamp}</span
                                 ><br />
                                 <span
-                                  ><strong>Modified Date</strong>: &nbsp; ${item.id}</span
+                                  ><strong>Modified Date</strong>: &nbsp; ${item.createdTimestamp}</span
                                 ><br />
                                 <br />
 
@@ -601,18 +599,18 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(LitEleme
                                     class="d-flex justify-content-between  align-middle"
                                   >
                                     <div style="margin-top:8px;">
-                                      <span title="${item.id}"
+                                      <span title="${item.projectId}"
                                         ><mwc-icon class="mwc-icon-gray"
                                           >account_circle</mwc-icon
                                         >
                                       </span>
                                     </div>
                                     <div>
-                                      ${item.status === "active"
+                                      ${item.status === "ACTIVE"
                                         ? html`
                                             <a
                                               href="javascript:void"
-                                              @click=${e => this.archiveProject(item.id)}
+                                              @click=${e => this.archiveProject(item.projectId)}
                                               class="btnIcon btn btn-sm my-1 mr-1"
                                               data-toggle="tooltip"
                                               data-placement="top"
@@ -626,7 +624,7 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(LitEleme
                                         : html`
                                             <a
                                               href="javascript:void"
-                                              @click=${e => this.restoreProject(item.id)}
+                                              @click=${e => this.restoreProject(item.projectId)}
                                               class="btnIcon btn btn-sm my-1 mr-1"
                                               data-toggle="tooltip"
                                               data-placement="top"
@@ -638,7 +636,7 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(LitEleme
                                             </a>
                                             <a
                                               href="javascript:void"
-                                              @click=${e => this.deleteProject(item.id)}
+                                              @click=${e => this.deleteProject(item.projectId)}
                                               class="btnIcon btn btn-sm my-1 mr-1"
                                               data-toggle="tooltip"
                                               data-placement="top"
@@ -706,7 +704,12 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(LitEleme
               </div>
             </div>
           `
-        : html`
+    	: html`
+    
+  			`}
+
+  		${this.view === 'add'
+  			? html`
             <div class="row" style="margin:15px 0;">
               <div class="btn-toolbar mb-2 mb-md-0" style="position: absolute; right:0;">
                 <div class="btn-group mr-2">
@@ -759,8 +762,12 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(LitEleme
                 </div>
               </div>
             </div>
-          `}
-    `;
+          `   
+    		  : html`
+          
+    		  	`}
+  		`;
+
   }
 }
 

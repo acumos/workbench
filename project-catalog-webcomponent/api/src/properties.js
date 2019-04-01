@@ -21,7 +21,7 @@ limitations under the License.
 var config = {
 	local : {
 		ENVIRONMENT : "dev",
-		projectmSURL : "http://localhost:9081",
+		projectmSURL : "http://localhost:9088",
 	},
 	deploy : {
 		ENVIRONMENT : process.env.ENVIRONMENT,

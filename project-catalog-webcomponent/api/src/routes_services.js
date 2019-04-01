@@ -24,8 +24,155 @@ module.exports = function(app) {
 	/*
 	 * Here all APIs will be written to integrate with back end mS.
 	 */
-	
-	
+	var urlAdd = "/users/";
+	var auth = "";
+	var serviceUrl = "";
+
+    app.post('/api/projects', function(req, res) {
+           auth = req.headers.auth;
+           serviceUrl = req.body.url+urlAdd;
+           getDataSourcesCatalog(auth, serviceUrl).then(function(result) {
+                  res.send(result);
+           });
+    });
+
+    app.post('/api/createProject', function (req, res){
+    	auth = req.headers.auth;
+    	serviceUrl = req.body.url+urlAdd;
+    	var body = req.body.createDetails;
+    	postCreateProject(auth, serviceUrl, body).then(function(result){
+    		res.send(result);
+    	});
+    });
+    
+    app.delete('/api/deleteProject', function (req, res){
+    	auth = req.headers.auth;
+    	serviceUrl = req.body.url+urlAdd;
+    	var body = req.body.projectId;
+    	deleteProject(auth, serviceUrl, body).then(function(result){
+    		res.send(result);
+    	});
+    });
+    
+    app.post('/api/getProjectDetails', function (req, res){
+    	auth = req.headers.auth;
+    	serviceUrl = req.body.url+urlAdd;
+    	var body = req.body.projectId;
+    	getSelectedProjectDetails(auth, serviceUrl, body).then(function(result){
+    		res.send(result);
+    	});
+    });
+    
+    var getDataSourcesCatalog = function(auth, url) {
+           return new Promise(function(resolve, reject) {
+                  var options = {
+                        method : "GET",
+                        url : url + "/"+auth+"/projects/",
+                        headers : {
+                               'Content-Type' : 'application/json',
+                               'Authorization' : auth,
+                        },
+                  };
+
+                  request.get(options, function(error, response, body) {
+                        try {
+                               if (!error && response.statusCode == 200) {
+                                      resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Projects retrieved successfully."));
+                               } else if (!error) {
+                                      resolve(prepRespJsonAndLogit(response, response.body, "Unable to retrieve Projects."));
+                               } else {
+                                      resolve(prepRespJsonAndLogit(null, null, null, error));
+                               }
+                        } catch (e) {
+                               resolve(prepRespJsonAndLogit(null, null, null, e));
+                        }
+                  });
+           });
+    };
+
+    var postCreateProject = function(auth, srvcUrl, createBody){
+    	return new Promise(function(resolve, reject) {
+            var options = {
+                    method : "POST",
+                    url : srvcUrl+auth+"/projects/",
+                    headers : {
+                           'Content-Type' : 'application/json',
+                           'Authorization' : auth,
+                    },
+                    body: createBody,
+                    json: true
+              };
+
+              request.post(options, function(error, response, body) {
+                    try {
+                           if (!error && response.statusCode == 201) {
+                                  resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Project created successfully."));
+                           } else if (!error) {
+                                  resolve(prepRespJsonAndLogit(response, response.body, "Unable to create Project."));
+                           } else {
+                                  resolve(prepRespJsonAndLogit(null, null, null, error));
+                           }
+                    } catch (e) {
+                           resolve(prepRespJsonAndLogit(null, null, null, e));
+                    }
+              });
+       });
+    };
+    
+    var deleteProject = function(auth, srvcUrl, projectId){
+    	return new Promise(function(resolve, reject) {
+            var options = {
+                    method : "DELETE",
+                    url : srvcUrl+auth+"/projects/"+projectId,
+                    headers : {
+                           'Content-Type' : 'application/json',
+                           'Authorization' : auth,
+                    },
+              };
+
+              request.delete(options, function(error, response, body) {
+                    try {
+                           if (!error && response.statusCode == 200) {
+                                  resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Project Deleted successfully."));
+                           } else if (!error) {
+                                  resolve(prepRespJsonAndLogit(response, response.body, "Unable to delete Project."));
+                           } else {
+                                  resolve(prepRespJsonAndLogit(null, null, null, error));
+                           }
+                    } catch (e) {
+                           resolve(prepRespJsonAndLogit(null, null, null, e));
+                    }
+              });
+       });
+    };
+    
+    var getSelectedProjectDetails = function(auth, srvcUrl, projectId){
+    	return new Promise(function(resolve, reject) {
+            var options = {
+                    method : "GET",
+                    url : srvcUrl+auth+"/projects/"+projectId,
+                    headers : {
+                           'Content-Type' : 'application/json',
+                           'Authorization' : auth,
+                    },
+              };
+
+              request.get(options, function(error, response, body) {
+                    try {
+                           if (!error && response.statusCode == 200) {
+                                  resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Project details retrieved successfully."));
+                           } else if (!error) {
+                                  resolve(prepRespJsonAndLogit(response, response.body, "Unable to retrieve Project."));
+                           } else {
+                                  resolve(prepRespJsonAndLogit(null, null, null, error));
+                           }
+                    } catch (e) {
+                           resolve(prepRespJsonAndLogit(null, null, null, e));
+                    }
+              });
+       });
+    };
+    
 	/* Utility functions */
 	var prepRespJsonAndLogit = function(httpResponse, responseData, message, error) {
 		var r = {};

@@ -20,28 +20,56 @@
 
 package org.acumos.workbench.projectservice.util;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public enum ServiceStatus {
-	ACTIVE(0), // READY FOR USE
-    INACTIVE(1), // Can be Made Active
-    FAILED(2), // FAILED TO START SERVICE
-    EXCEPTION(3), // GETTING EXCEPTION FROM DEPENDENCIES
-    INPROGRESS(4), // IN PROCESS OF STARTING
-	COMPLETED(5), //REUESTED OPERATION WAS SUCCESSFULLY COMPLETED
-	ERROR(6); //Service API returned an error
+	ACTIVE("AC"), // READY FOR USE
+    INACTIVE("IN"), // Can be Made Active
+    FAILED("FA"), // FAILED TO START SERVICE
+    EXCEPTION("EX"), // GETTING EXCEPTION FROM DEPENDENCIES
+    INPROGRESS("IP"), // IN PROCESS OF STARTING
+	COMPLETED("CO"), //REUESTED OPERATION WAS SUCCESSFULLY COMPLETED
+	ERROR("ER"); //Service API returned an error
 	
-	private final int serviceStatusCode;
+	private final String serviceStatusCode;
 	
-	private ServiceStatus(int serviceStatusCode) {
+	private ServiceStatus(String serviceStatusCode) {
 		this.serviceStatusCode = serviceStatusCode;
 	}
 	
 	
 	/**
-	 * To return int value for ServiceStatusCode. 
+	 * To return String value for ServiceStatusCode. 
 	 * @return int
 	 * 		return int value for ServiceStatusCode.
 	 */
-	public int getServiceStatusCode() { 
+	public String getServiceStatusCode() { 
 		return this.serviceStatusCode;
 	}
+	
+	
+	//Create reverse lookup hash map 
+	private static final Map<String, ServiceStatus> lookup = new HashMap<String, ServiceStatus>();
+	
+	static {
+        for(ServiceStatus ss : ServiceStatus.values()) {
+            lookup.put(ss.getServiceStatusCode(), ss);
+        }
+    }
+	
+	/**
+	 * Returns ServiceStatus Enum for the input code value else null.
+	 * @param serviceStatusCode
+	 * 		the service status code
+	 * @return ServiceStatus
+	 */
+	public static ServiceStatus get(String serviceStatusCode) { 
+        //the reverse lookup by simply getting the value from the lookup HsahMap.
+		if(lookup.containsKey(serviceStatusCode)) {
+			return lookup.get(serviceStatusCode);
+		} else { 
+			return null;
+		}
+    }
 }

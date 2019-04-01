@@ -31,6 +31,7 @@ import org.acumos.cds.domain.MLPUser;
 import org.acumos.workbench.projectservice.vo.ArtifactState;
 import org.acumos.workbench.projectservice.vo.Identifier;
 import org.acumos.workbench.projectservice.vo.Project;
+import org.acumos.workbench.projectservice.vo.ServiceState;
 import org.acumos.workbench.projectservice.vo.User;
 import org.acumos.workbench.projectservice.vo.Version;
 import org.slf4j.Logger;
@@ -55,27 +56,14 @@ public class ProjectServiceUtil {
 		MLPProject mlpProject = null;
 		if(null != project) {
 			mlpProject = new MLPProject();
-			
-			ArtifactState artifactStatus =  project.getArtifactStatus();
-			if(null != artifactStatus) { 
-				if(artifactStatus.getStatus().equals(ArtifactStatus.ARCHIVED)) {
-					mlpProject.setActive(false);
-				} else {
-					mlpProject.setActive(true);
-				}
-			}
-			
+			mlpProject.setActive(true);
 			Identifier projectIdentifier = project.getProjectId();
 			if(null != projectIdentifier) { 
 				mlpProject.setName(projectIdentifier.getName());
-				mlpProject.setRepositoryUrl(projectIdentifier.getServiceUrl());
-				if(null != projectIdentifier.getUuid()) {
-					mlpProject.setProjectId(projectIdentifier.getUuid());
-				}
 			}
 			
 			mlpProject.setDescription(project.getDescription());
-			//mlpProject.setServiceStatusCode("");
+			mlpProject.setServiceStatusCode(ServiceStatus.COMPLETED.getServiceStatusCode());
 			mlpProject.setUserId(userId);
 			mlpProject.setVersion(project.getProjectId().getVersionId().getLabel());
 		}
@@ -131,6 +119,9 @@ public class ProjectServiceUtil {
 			artifactStatus.setStatus(ArtifactStatus.ARCHIVED);
 		}
 		result.setArtifactStatus(artifactStatus);
+		ServiceState serviceStatus = new ServiceState();
+		serviceStatus.setStatus(ServiceStatus.get(mlpProject.getServiceStatusCode()));
+		result.setServiceStatus(serviceStatus);
 		logger.debug("getProjectVO() End");
 		return result;
 	}

@@ -55,27 +55,14 @@ public class ProjectServiceUtil {
 		MLPProject mlpProject = null;
 		if(null != project) {
 			mlpProject = new MLPProject();
-			
-			ArtifactState artifactStatus =  project.getArtifactStatus();
-			if(null != artifactStatus) { 
-				if(artifactStatus.getStatus().equals(ArtifactStatus.ARCHIVED)) {
-					mlpProject.setActive(false);
-				} else {
-					mlpProject.setActive(true);
-				}
-			}
-			
+			mlpProject.setActive(true);
 			Identifier projectIdentifier = project.getProjectId();
 			if(null != projectIdentifier) { 
 				mlpProject.setName(projectIdentifier.getName());
-				mlpProject.setRepositoryUrl(projectIdentifier.getServiceUrl());
-				if(null != projectIdentifier.getUuid()) {
-					mlpProject.setProjectId(projectIdentifier.getUuid());
-				}
 			}
 			
 			mlpProject.setDescription(project.getDescription());
-			//mlpProject.setServiceStatusCode("");
+			mlpProject.setServiceStatusCode(ServiceStatus.COMPLETED.getServiceStatusCode());
 			mlpProject.setUserId(userId);
 			mlpProject.setVersion(project.getProjectId().getVersionId().getLabel());
 		}

@@ -224,7 +224,7 @@ public class ProjectServiceImpl implements ProjectService {
 		//CDS call to get all the projects for a user
 		Map<String, Object> queryParameters = new HashMap<String, Object>();
 		queryParameters.put("userId", userId);
-		RestPageRequest pageRequest = new RestPageRequest(0, 1);
+		RestPageRequest pageRequest = new RestPageRequest(0, confprops.getResultsetSize());
 		cdsClient.setRequestId(MDC.get(PSLogConstants.MDCs.REQUEST_ID));
 		RestPageResponse<MLPProject> response = cdsClient.searchProjects(queryParameters, false, pageRequest);
 		List<MLPProject> mlpProjects = response.getContent();

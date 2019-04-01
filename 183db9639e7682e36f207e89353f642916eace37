@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cba2ac5b_0ced8e8a",
+        "filename": "workbench-common/pom.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-01T08:48:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9eba199_eadf0b25",
+      "range": {
+        "startLine": 27,
+        "startChar": 11,
+        "endLine": 27,
+        "endChar": 16
+      },
+      "revId": "183db9639e7682e36f207e89353f642916eace37",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b42e1f58_cbc67934",
         "filename": "workbench-common/pom.xml",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2019-03-30T09:53:16Z",
       "side": 1,
       "message": "Maybe fix indentation?",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 2
+      },
+      "revId": "183db9639e7682e36f207e89353f642916eace37",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "15391285_28981017",
+        "filename": "workbench-common/pom.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-01T08:48:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b42e1f58_cbc67934",
       "range": {
         "startLine": 34,
         "startChar": 0,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "265734f2_b20e990f",
+        "filename": "workbench-common/pom.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-01T08:48:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cfd2923_29e29ff1",
+      "revId": "183db9639e7682e36f207e89353f642916eace37",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5fc75dc2_6f70f870",
         "filename": "workbench-common/src/main/java/org/acumos/workbench/common/util/Environment.java",
         "patchSetId": 4
@@ -76,6 +142,30 @@
       "writtenOn": "2019-03-30T09:53:16Z",
       "side": 1,
       "message": "Please remove ints, use ordinal()",
+      "range": {
+        "startLine": 24,
+        "startChar": 16,
+        "endLine": 24,
+        "endChar": 17
+      },
+      "revId": "183db9639e7682e36f207e89353f642916eace37",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e1926aa1_a1b8545a",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/common/util/Environment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-01T08:48:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fc75dc2_6f70f870",
       "range": {
         "startLine": 24,
         "startChar": 16,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "a57e409e_407afaaa",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/common/vo/CompositeModel.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-01T08:48:51Z",
+      "side": 1,
+      "message": "Next time onward will follow it.  Will null check create any issue ?",
+      "parentUuid": "396721f7_ba3b73a8",
+      "range": {
+        "startLine": 183,
+        "startChar": 12,
+        "endLine": 183,
+        "endChar": 20
+      },
+      "revId": "183db9639e7682e36f207e89353f642916eace37",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0740f176_71f0399a",
         "filename": "workbench-common/src/main/java/org/acumos/workbench/common/vo/CompositeModel.java",
         "patchSetId": 4
@@ -122,6 +236,30 @@
       "writtenOn": "2019-03-30T09:53:16Z",
       "side": 1,
       "message": "Why are you working so hard? There is nice support in the Java 8 Objects class for comparing methods, I sent you the code to save you time, don\u0027t have to check every field for null with Objects.equals(). Instead here you used the old-school way that\u0027s SO much work.  I don\u0027t understand.  \n\n\t\treturn Objects.equals(artifactId, thatObj.artifactId);",
+      "range": {
+        "startLine": 197,
+        "startChar": 1,
+        "endLine": 197,
+        "endChar": 35
+      },
+      "revId": "183db9639e7682e36f207e89353f642916eace37",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba9550ad_46f40c7b",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/common/vo/CompositeModel.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-01T08:48:51Z",
+      "side": 1,
+      "message": "Eclipse helps me to write the code.  I have already done changes for all the POJOs.   Thanks for the details, I didn\u0027t knew Java 8 Objects class has support for comparing methods, will use same in future.",
+      "parentUuid": "0740f176_71f0399a",
       "range": {
         "startLine": 197,
         "startChar": 1,
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "11fcd45a_9dc40c24",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/common/vo/DataSets.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-01T08:48:51Z",
+      "side": 1,
+      "message": "just an miss out. I will recheck for any other occurrence",
+      "parentUuid": "1023bd87_77660616",
+      "range": {
+        "startLine": 33,
+        "startChar": 23,
+        "endLine": 33,
+        "endChar": 31
+      },
+      "revId": "183db9639e7682e36f207e89353f642916eace37",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3028f26_cd6d275d",
         "filename": "workbench-common/src/main/java/org/acumos/workbench/common/vo/DataSources.java",
         "patchSetId": 4
@@ -168,6 +330,30 @@
       "writtenOn": "2019-03-30T09:53:16Z",
       "side": 1,
       "message": "Not initialized",
+      "range": {
+        "startLine": 33,
+        "startChar": 26,
+        "endLine": 33,
+        "endChar": 37
+      },
+      "revId": "183db9639e7682e36f207e89353f642916eace37",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1124d43d_b04d8f4d",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/common/vo/DataSources.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-01T08:48:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3028f26_cd6d275d",
       "range": {
         "startLine": 33,
         "startChar": 26,
@@ -203,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "5cee851e_d99d3531",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/common/vo/Identifier.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-01T08:48:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ac7cc43_dd1eff26",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 21
+      },
+      "revId": "183db9639e7682e36f207e89353f642916eace37",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f18d70a6_70fe7c0e",
         "filename": "workbench-common/src/main/java/org/acumos/workbench/common/vo/Projects.java",
         "patchSetId": 4
@@ -214,6 +424,30 @@
       "writtenOn": "2019-03-30T09:53:16Z",
       "side": 1,
       "message": "Not initialized",
+      "range": {
+        "startLine": 38,
+        "startChar": 23,
+        "endLine": 38,
+        "endChar": 31
+      },
+      "revId": "183db9639e7682e36f207e89353f642916eace37",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c584dd65_335a910a",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/common/vo/Projects.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-01T08:48:51Z",
+      "side": 1,
+      "message": "Constructor initializes to new ArrayList",
+      "parentUuid": "f18d70a6_70fe7c0e",
       "range": {
         "startLine": 38,
         "startChar": 23,

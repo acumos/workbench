@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae83e649_771f21eb",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/common/vo/KVPair.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-01T13:24:23Z",
+      "side": 1,
+      "message": "I don\u0027t see a no-arg constructor. But Jackson usually requires that. A unit test would catch this :(",
+      "revId": "c01abceae9f05a17161b4e6c28dd6e23932913ed",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}

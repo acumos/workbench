@@ -22,7 +22,7 @@ package org.acumos.workbench.projectservice.service;
 
 import java.lang.invoke.MethodHandles;
 
-import org.acumos.workbench.projectservice.vo.Project;
+import org.acumos.workbench.common.vo.Project;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

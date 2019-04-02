@@ -20,7 +20,12 @@
 Project Service Release Notes
 ===============================
 
-Version 0.0.1, 2019-03-29
+Version 1.0.0, 2019-04-02
 ---------------------------
 * Initial Code commit
-* [More details coming soon]
+* ACUMOS-2480 : Create Project
+* ACUMOS-2481 : Update Project
+* ACUMOS-2482 : List Projects
+* ACUMOS-2483 : View (Get) Project
+* ACUMOS-2484 : Delete project
+* ACUMOS-2690 : Update project-service to include dependency for workbench-common

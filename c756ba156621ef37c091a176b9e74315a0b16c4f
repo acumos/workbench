@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01ca1bdb_4b293c6a",
+        "filename": "project-catalog-webcomponent/api/src/routes_services.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 236
+      },
+      "writtenOn": "2019-04-02T13:50:34Z",
+      "side": 1,
+      "message": "Pls change datasource catalog to project catalog.. check for other places too.",
+      "range": {
+        "startLine": 34,
+        "startChar": 11,
+        "endLine": 34,
+        "endChar": 32
+      },
+      "revId": "c756ba156621ef37c091a176b9e74315a0b16c4f",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07a76af3_fcb0f711",
+        "filename": "project-catalog-webcomponent/api/src/routes_services.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 236
+      },
+      "writtenOn": "2019-04-02T13:50:34Z",
+      "side": 1,
+      "message": "why to use \u0027postCreatewProject\u0027 keyword - can we use only \u0027createProject\u0027?",
+      "range": {
+        "startLine": 43,
+        "startChar": 5,
+        "endLine": 43,
+        "endChar": 22
+      },
+      "revId": "c756ba156621ef37c091a176b9e74315a0b16c4f",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d2abc42e_230b9b4a",
+        "filename": "project-catalog-webcomponent/component/src/project-catalog-element.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 236
+      },
+      "writtenOn": "2019-04-02T13:50:34Z",
+      "side": 1,
+      "message": "Define it as a string pls.",
+      "range": {
+        "startLine": 40,
+        "startChar": 6,
+        "endLine": 40,
+        "endChar": 11
+      },
+      "revId": "c756ba156621ef37c091a176b9e74315a0b16c4f",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5f055732_b8ba87b9",
+        "filename": "project-catalog-webcomponent/component/src/project-catalog-element.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 236
+      },
+      "writtenOn": "2019-04-02T13:50:34Z",
+      "side": 1,
+      "message": "I think to create this payload - instead of doing this way, we can create Project object class where we can set every values and then sent it to back end. this seems to be more error-prone.",
+      "range": {
+        "startLine": 135,
+        "startChar": 7,
+        "endLine": 135,
+        "endChar": 14
+      },
+      "revId": "c756ba156621ef37c091a176b9e74315a0b16c4f",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}

@@ -25,8 +25,8 @@ import static org.mockito.Mockito.doNothing;
 
 import java.lang.invoke.MethodHandles;
 
+import org.acumos.workbench.common.vo.Project;
 import org.acumos.workbench.projectservice.controller.UnitTestCommons;
-import org.acumos.workbench.projectservice.vo.Project;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;

@@ -26,11 +26,11 @@ import io.swagger.annotations.ApiParam;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 
+import org.acumos.workbench.common.vo.Project;
+import org.acumos.workbench.common.vo.ServiceState;
 import org.acumos.workbench.projectservice.service.InputValidationService;
 import org.acumos.workbench.projectservice.service.ProjectService;
 import org.acumos.workbench.projectservice.service.ProjectValidationService;
-import org.acumos.workbench.projectservice.vo.Project;
-import org.acumos.workbench.projectservice.vo.ServiceState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

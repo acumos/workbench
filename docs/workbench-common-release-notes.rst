@@ -20,6 +20,6 @@
 Workbench Common Release Notes
 ================================
 
-Version 1.0.0, 2019-04-01
+Version 1.0.0, 2019-04-02
 ---------------------------
-* [More details coming soon]
+* ACUMOS-2675 : Create Common Module for ML Workbench

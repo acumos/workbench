@@ -20,7 +20,7 @@
 
 package org.acumos.workbench.projectservice.service;
 
-import org.acumos.workbench.projectservice.vo.Project;
+import org.acumos.workbench.common.vo.Project;
 
 public interface ProjectValidationService {
 

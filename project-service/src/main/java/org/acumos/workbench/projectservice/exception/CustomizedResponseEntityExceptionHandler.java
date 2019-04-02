@@ -20,9 +20,9 @@
 
 package org.acumos.workbench.projectservice.exception;
 
-import org.acumos.workbench.projectservice.util.ServiceStatus;
-import org.acumos.workbench.projectservice.vo.Project;
-import org.acumos.workbench.projectservice.vo.ServiceState;
+import org.acumos.workbench.common.util.ServiceStatus;
+import org.acumos.workbench.common.vo.Project;
+import org.acumos.workbench.common.vo.ServiceState;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

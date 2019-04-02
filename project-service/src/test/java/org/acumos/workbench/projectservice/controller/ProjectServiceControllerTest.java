@@ -27,10 +27,10 @@ import static org.mockito.Mockito.when;
 
 import java.lang.invoke.MethodHandles;
 
+import org.acumos.workbench.common.vo.Project;
 import org.acumos.workbench.projectservice.service.InputValidationService;
 import org.acumos.workbench.projectservice.service.ProjectService;
 import org.acumos.workbench.projectservice.service.ProjectValidationService;
-import org.acumos.workbench.projectservice.vo.Project;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;

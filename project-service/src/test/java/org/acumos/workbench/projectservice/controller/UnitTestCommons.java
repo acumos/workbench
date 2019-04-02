@@ -23,19 +23,19 @@ package org.acumos.workbench.projectservice.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.acumos.workbench.projectservice.util.ArtifactStatus;
-import org.acumos.workbench.projectservice.util.IdentifierType;
-import org.acumos.workbench.projectservice.vo.ArtifactState;
-import org.acumos.workbench.projectservice.vo.Identifier;
-import org.acumos.workbench.projectservice.vo.Models;
-import org.acumos.workbench.projectservice.vo.Notebooks;
-import org.acumos.workbench.projectservice.vo.Organization;
-import org.acumos.workbench.projectservice.vo.Pipelines;
-import org.acumos.workbench.projectservice.vo.Project;
-import org.acumos.workbench.projectservice.vo.Projects;
-import org.acumos.workbench.projectservice.vo.Role;
-import org.acumos.workbench.projectservice.vo.User;
-import org.acumos.workbench.projectservice.vo.Version;
+import org.acumos.workbench.common.util.ArtifactStatus;
+import org.acumos.workbench.common.util.IdentifierType;
+import org.acumos.workbench.common.vo.ArtifactState;
+import org.acumos.workbench.common.vo.Identifier;
+import org.acumos.workbench.common.vo.Models;
+import org.acumos.workbench.common.vo.Notebooks;
+import org.acumos.workbench.common.vo.Organization;
+import org.acumos.workbench.common.vo.Pipelines;
+import org.acumos.workbench.common.vo.Project;
+import org.acumos.workbench.common.vo.Projects;
+import org.acumos.workbench.common.vo.Role;
+import org.acumos.workbench.common.vo.User;
+import org.acumos.workbench.common.vo.Version;
 
 public abstract class UnitTestCommons {
 
@@ -57,7 +57,7 @@ public abstract class UnitTestCommons {
 		owner.setOrganization(organization);
 		Pipelines pipelines = new Pipelines();
 		owner.setPipelines(pipelines);
-		Role roles = new Role();
+		List<Role> roles = new ArrayList<Role>();
 		owner.setRoles(roles);
 		Identifier userId = new Identifier();
 		userId.setUuid("123");

@@ -28,12 +28,15 @@ import java.util.List;
 
 import org.acumos.cds.domain.MLPProject;
 import org.acumos.cds.domain.MLPUser;
-import org.acumos.workbench.projectservice.vo.ArtifactState;
-import org.acumos.workbench.projectservice.vo.Identifier;
-import org.acumos.workbench.projectservice.vo.Project;
-import org.acumos.workbench.projectservice.vo.ServiceState;
-import org.acumos.workbench.projectservice.vo.User;
-import org.acumos.workbench.projectservice.vo.Version;
+import org.acumos.workbench.common.util.ArtifactStatus;
+import org.acumos.workbench.common.util.IdentifierType;
+import org.acumos.workbench.common.util.ServiceStatus;
+import org.acumos.workbench.common.vo.ArtifactState;
+import org.acumos.workbench.common.vo.Identifier;
+import org.acumos.workbench.common.vo.Project;
+import org.acumos.workbench.common.vo.ServiceState;
+import org.acumos.workbench.common.vo.User;
+import org.acumos.workbench.common.vo.Version;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

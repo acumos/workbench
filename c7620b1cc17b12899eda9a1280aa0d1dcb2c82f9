@@ -1,0 +1,641 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f00b2da_3bdef413",
+        "filename": "notebook-service/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-03T12:49:33Z",
+      "side": 1,
+      "message": "answer requests for data about Notebooks ... (this does not render anything)",
+      "revId": "c7620b1cc17b12899eda9a1280aa0d1dcb2c82f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a4e621b8_c4d76b0b",
+        "filename": "notebook-service/pom.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-03T12:49:33Z",
+      "side": 1,
+      "message": "You should use the name field for a descriptive value, it\u0027s only printed by maven, not used to name artifacts",
+      "range": {
+        "startLine": 30,
+        "startChar": 8,
+        "endLine": 30,
+        "endChar": 24
+      },
+      "revId": "c7620b1cc17b12899eda9a1280aa0d1dcb2c82f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "74659817_7ba255fa",
+        "filename": "notebook-service/pom.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-03T12:49:33Z",
+      "side": 1,
+      "message": "Has this been released yet??",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 35
+      },
+      "revId": "c7620b1cc17b12899eda9a1280aa0d1dcb2c82f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "85fa849a_6814de2b",
+        "filename": "notebook-service/pom.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-03T12:49:33Z",
+      "side": 1,
+      "message": "Use the SAME version for springfox, don\u0027t mix and match",
+      "range": {
+        "startLine": 88,
+        "startChar": 3,
+        "endLine": 94,
+        "endChar": 18
+      },
+      "revId": "c7620b1cc17b12899eda9a1280aa0d1dcb2c82f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "02250b2e_c7799641",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/NotebookServiceApplication.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-03T12:49:33Z",
+      "side": 1,
+      "message": "validate the result, or drop the code",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 74
+      },
+      "revId": "c7620b1cc17b12899eda9a1280aa0d1dcb2c82f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5006776f_1e29a024",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/config/AppConfiguration.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-03T12:49:33Z",
+      "side": 1,
+      "message": "I like this pattern, you should teach it to other projects",
+      "range": {
+        "startLine": 39,
+        "startChar": 1,
+        "endLine": 44,
+        "endChar": 2
+      },
+      "revId": "c7620b1cc17b12899eda9a1280aa0d1dcb2c82f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "096967d1_f6e8d32b",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/config/AppConfiguration.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-03T12:49:33Z",
+      "side": 1,
+      "message": "This is wrong.  Should not disable CORS.  Should use proxies.",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 46
+      },
+      "revId": "c7620b1cc17b12899eda9a1280aa0d1dcb2c82f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "45bcf888_d85b22c3",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/controller/NotebookServiceController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-03T12:49:33Z",
+      "side": 1,
+      "message": "My concern remains that this does ZERO authentication/authorization checks.  It appears to me that any REST client that presents a valid Acumos user ID known to CDS can take any action on any notebook at all.",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 40
+      },
+      "revId": "c7620b1cc17b12899eda9a1280aa0d1dcb2c82f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d26eada3_4bf23e1e",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/controller/NotebookServiceController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-03T12:49:33Z",
+      "side": 1,
+      "message": "Add logger and use it in each method with debug of invocation arguments",
+      "revId": "c7620b1cc17b12899eda9a1280aa0d1dcb2c82f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a8a6f149_51381dc5",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/controller/NotebookServiceController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-03T12:49:33Z",
+      "side": 1,
+      "message": "Weird that you put the userId in the request path.  This exposes credentials for the world to see in logs.",
+      "range": {
+        "startLine": 74,
+        "startChar": 26,
+        "endLine": 74,
+        "endChar": 54
+      },
+      "revId": "c7620b1cc17b12899eda9a1280aa0d1dcb2c82f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "364fb3ab_302f9b8c",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/InputValidationService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-03T12:49:33Z",
+      "side": 1,
+      "message": "Since this accepts an object, not JSON, the name is misleading.",
+      "range": {
+        "startLine": 37,
+        "startChar": 34,
+        "endLine": 37,
+        "endChar": 38
+      },
+      "revId": "c7620b1cc17b12899eda9a1280aa0d1dcb2c82f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3be0c450_e8d233af",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/InputValidationServiceImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-03T12:49:33Z",
+      "side": 1,
+      "message": "Should make this an enum, or at least two separate values.",
+      "range": {
+        "startLine": 37,
+        "startChar": 46,
+        "endLine": 37,
+        "endChar": 53
+      },
+      "revId": "c7620b1cc17b12899eda9a1280aa0d1dcb2c82f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "adb660b1_364291fb",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-03T12:49:33Z",
+      "side": 1,
+      "message": "No apostrophe.  This is tiny but it really bugs me (not bug\u0027s me :)",
+      "range": {
+        "startLine": 38,
+        "startChar": 9,
+        "endLine": 38,
+        "endChar": 10
+      },
+      "revId": "c7620b1cc17b12899eda9a1280aa0d1dcb2c82f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "75599b0f_334038f4",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-03T12:49:33Z",
+      "side": 1,
+      "message": "remove all occurrences of \"public\".  Not needed on interfaces, public is implied.",
+      "range": {
+        "startLine": 50,
+        "startChar": 1,
+        "endLine": 50,
+        "endChar": 7
+      },
+      "revId": "c7620b1cc17b12899eda9a1280aa0d1dcb2c82f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0f46ae18_c44174c3",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookServiceImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-03T12:49:33Z",
+      "side": 1,
+      "message": "My goodness I truly hope you revisit this and do NOT send a notification on every action taken by the workbench.",
+      "range": {
+        "startLine": 115,
+        "startChar": 19,
+        "endLine": 115,
+        "endChar": 24
+      },
+      "revId": "c7620b1cc17b12899eda9a1280aa0d1dcb2c82f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e11b19bf_5a26d2fc",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookServiceImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-03T12:49:33Z",
+      "side": 1,
+      "message": "This needs to check a token!!!!!!!!!!!!!!!",
+      "range": {
+        "startLine": 247,
+        "startChar": 16,
+        "endLine": 247,
+        "endChar": 30
+      },
+      "revId": "c7620b1cc17b12899eda9a1280aa0d1dcb2c82f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "85c2f7d9_3e3ecfeb",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookValidationService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-03T12:49:33Z",
+      "side": 1,
+      "message": "maybe call this validateNotebook ?",
+      "range": {
+        "startLine": 45,
+        "startChar": 13,
+        "endLine": 45,
+        "endChar": 26
+      },
+      "revId": "c7620b1cc17b12899eda9a1280aa0d1dcb2c82f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87661d6e_da8538fc",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookValidationServiceImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-03T12:49:33Z",
+      "side": 1,
+      "message": "private",
+      "revId": "c7620b1cc17b12899eda9a1280aa0d1dcb2c82f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6edaccb1_37fe7139",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookValidationServiceImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-03T12:49:33Z",
+      "side": 1,
+      "message": "I have several objections to merging this class:  \n\n1) The name \"Notebook validation service\" suggests it only works on notebooks, but here you have it working on projects, confusing.\n\n2) This method could use the ProjectServiceRestClient to call that back-end right?  Why does it not?\n\n3) Alternately maybe you can move this code to workbench-common so that every service can validate a project without duplicating code?  \n\nPlease revisit.",
+      "range": {
+        "startLine": 74,
+        "startChar": 13,
+        "endLine": 74,
+        "endChar": 28
+      },
+      "revId": "c7620b1cc17b12899eda9a1280aa0d1dcb2c82f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27cec6bd_1fbed0aa",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/util/ConfigurationProperties.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-03T12:49:33Z",
+      "side": 1,
+      "message": "Possibly, maybe, call this ProjSvcConfigProperties?  Every one of your projects will have one of these, and it\u0027s helpful to use unambiguous names.",
+      "revId": "c7620b1cc17b12899eda9a1280aa0d1dcb2c82f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2d1f225a_e56c3fa7",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/util/ConfigurationProperties.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-03T12:49:33Z",
+      "side": 1,
+      "message": "It\u0027s difficult for people to type such long strings and get them right.  how about cmn.data.svc.endpoint.url ?  that\u0027s easy to get right. \n\nSimilarly for the remaining properties.",
+      "range": {
+        "startLine": 29,
+        "startChar": 22,
+        "endLine": 29,
+        "endChar": 43
+      },
+      "revId": "c7620b1cc17b12899eda9a1280aa0d1dcb2c82f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0aafb92b_33b14284",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/util/NotebookServiceUtil.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-03T12:49:33Z",
+      "side": 1,
+      "message": "Pls add javadoc",
+      "range": {
+        "startLine": 47,
+        "startChar": 15,
+        "endLine": 47,
+        "endChar": 26
+      },
+      "revId": "c7620b1cc17b12899eda9a1280aa0d1dcb2c82f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "93d0c3e2_a0cdc9e4",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/util/NotebookServiceUtil.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-03T12:49:33Z",
+      "side": 1,
+      "message": "Don\u0027t hardwire in a method, use an enum and valueOf() method.",
+      "range": {
+        "startLine": 200,
+        "startChar": 0,
+        "endLine": 200,
+        "endChar": 28
+      },
+      "revId": "c7620b1cc17b12899eda9a1280aa0d1dcb2c82f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4147bdc0_123e0733",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/util/NotebookServiceUtil.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-03T12:49:33Z",
+      "side": 1,
+      "message": "Here you have again hardwired the strings, please revisit.  JB vs JP??",
+      "range": {
+        "startLine": 215,
+        "startChar": 0,
+        "endLine": 215,
+        "endChar": 27
+      },
+      "revId": "c7620b1cc17b12899eda9a1280aa0d1dcb2c82f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e8b15e3_f4b592e8",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/util/Properties.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-03T12:49:33Z",
+      "side": 1,
+      "message": "I don\u0027t think you want to use this annotation.  Let Spring do what is necessary.  It will use SPRING_APPLICATION_JSON when launched from docker, right?",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 51
+      },
+      "revId": "c7620b1cc17b12899eda9a1280aa0d1dcb2c82f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "61a7686e_357081a8",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/util/ValidationRule.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-03T12:49:33Z",
+      "side": 1,
+      "message": "Maybe you should have a carat at the front like NAME?",
+      "range": {
+        "startLine": 28,
+        "startChar": 9,
+        "endLine": 28,
+        "endChar": 11
+      },
+      "revId": "c7620b1cc17b12899eda9a1280aa0d1dcb2c82f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2aae2305_5a6adb9a",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/util/ValidationRule.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-03T12:49:33Z",
+      "side": 1,
+      "message": "Maybe add the method validate(String) which does this:\n\n    return this.pattern.matcher(theValue).matches();\n\nAnd use that in your validation service, instead of repeating that code each time you need to validate.",
+      "revId": "c7620b1cc17b12899eda9a1280aa0d1dcb2c82f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6c229268_c01359e8",
+        "filename": "notebook-service/src/main/resources/application.properties",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-03T12:49:33Z",
+      "side": 1,
+      "message": "I think the guidance we have received is to leave all URL, user and password fields totally empty, not even with a nominal value like \"test\"",
+      "range": {
+        "startLine": 28,
+        "startChar": 25,
+        "endLine": 28,
+        "endChar": 29
+      },
+      "revId": "c7620b1cc17b12899eda9a1280aa0d1dcb2c82f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e4987b99_5ea2aceb",
+        "filename": "notebook-service/src/main/resources/application.properties",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-03T12:49:33Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 32,
+        "startChar": 26,
+        "endLine": 32,
+        "endChar": 35
+      },
+      "revId": "c7620b1cc17b12899eda9a1280aa0d1dcb2c82f9",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}

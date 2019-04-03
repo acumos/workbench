@@ -64,7 +64,7 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 	 * 		returns Project with ServiceStatus indicating error 
 	 */
 	@ExceptionHandler(ForbiddenException.class)
-	public final ResponseEntity<?> handleBadRequestException(ForbiddenException ex, WebRequest request) {
+	public final ResponseEntity<?> handleForbiddenException(ForbiddenException ex, WebRequest request) {
 		Project project = getProject(ex);
 		return new ResponseEntity<Project>(project, HttpStatus.FORBIDDEN);
 	}

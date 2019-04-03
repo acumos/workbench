@@ -84,7 +84,7 @@ public class ProjectServiceImpl implements ProjectService {
 		RestPageResponse<MLPProject> response = cdsClient.searchProjects(queryParameters, false, pageRequest);
 		List<MLPProject> projects = response.getContent();
 		if(null != projects && projects.size() > 0 ) { 
-			logger.error("DuplicateProjectException occured in projectExists() method");
+			logger.warn("Project name and version already exists");
 			throw new DuplicateProjectException();
 		}
 		logger.debug("projectExists() End");
@@ -128,7 +128,7 @@ public class ProjectServiceImpl implements ProjectService {
 		RestPageResponse<MLPProject> response = cdsClient.searchProjects(queryParameters, false, pageRequest);
 		
 		if((null == response) || (null != response && response.getContent().size() == 0 )) {
-			logger.error("NotOwnerException occured in isOwnerOfProject() method");
+			logger.warn("Permission denied");
 			throw new NotOwnerException();
 		}
 		logger.debug("isOwnerOfProject() End");
@@ -142,8 +142,8 @@ public class ProjectServiceImpl implements ProjectService {
 		// CDS call to check if project is archived 
 		cdsClient.setRequestId(MDC.get(PSLogConstants.MDCs.REQUEST_ID));
 		MLPProject mlpProject = cdsClient.getProject(projectId);
-		if(null != mlpProject && mlpProject.isActive()){
-			logger.error("ArchivedException occured in isProjectArchived() method");
+		if(null != mlpProject && !mlpProject.isActive()){
+			logger.warn("Update not allowed – project is archived");
 			throw new ArchivedException("Update not allowed – project is archived");
 		}
 		logger.debug("isProjectArchived() End");
@@ -173,7 +173,7 @@ public class ProjectServiceImpl implements ProjectService {
 			RestPageResponse<MLPProject> response = cdsClient.searchProjects(queryParameters, false, pageRequest);
 			List<MLPProject> projects = response.getContent();
 			if(null != projects && projects.size() > 0 ) { 
-				logger.error("DuplicateProjectException occured in updateProject() method");
+				logger.warn("Project name and version already exists");
 				throw new DuplicateProjectException();
 			}
 		}
@@ -208,7 +208,7 @@ public class ProjectServiceImpl implements ProjectService {
 		}
 		
 		if(null == result) { 
-			logger.error("ProjectNotFoundException occured in getProject() method");
+			logger.warn("Requested Project Not found");
 			throw new ProjectNotFoundException();
 		}
 		logger.debug("getProject() End");
@@ -317,7 +317,7 @@ public class ProjectServiceImpl implements ProjectService {
 			mlpUser = mlpUsers.get(0);
 			
 		} else {
-			logger.error("UserNotFoundException occured in getUserDetails() method, UserId : " + authenticatedUserId);
+			logger.warn(authenticatedUserId + " : User not found");
 			throw new UserNotFoundException(authenticatedUserId);
 		}
 		logger.debug("getUserDetails() End");

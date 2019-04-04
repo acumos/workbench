@@ -22,6 +22,29 @@
       "revId": "32f4d608f94b16d20a9e91d237522f28f09de4b0",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0cc018eb_0e9499da",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/util/Properties.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-04T13:23:33Z",
+      "side": 1,
+      "message": "Also please don\u0027t use such a generic name, this hides the java.util.Properties class also, name it NotebookServiceProperties or MySuperProperties or KaziKaziKaziProperties, I don\u0027t care",
+      "range": {
+        "startLine": 31,
+        "startChar": 13,
+        "endLine": 31,
+        "endChar": 23
+      },
+      "revId": "32f4d608f94b16d20a9e91d237522f28f09de4b0",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
     }
   ]
 }

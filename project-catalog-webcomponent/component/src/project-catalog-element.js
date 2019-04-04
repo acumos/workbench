@@ -20,25 +20,39 @@ limitations under the License.
 
 import { LitElement, html } from "lit-element";
 import { filter, get } from "lodash-es";
-import { OmniModal } from "./@omni/components";
-import { RegisterComponent, Forms, DataSource } from "./@omni/core";
+import { OmniModal, OmniDialog } from "./@omni/components";
+import { Forms, DataSource } from "./@omni/core";
 
-import { ValidationMixin, DataMixin } from "./@omni/mixins";
+import { ValidationMixin, DataMixin, BaseElementMixin } from "./@omni/mixins";
 import { style } from "./project-catalog-styles.js";
 
-RegisterComponent(OmniModal);
+export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElementMixin(LitElement))) {
+  get dependencies() {
+    return [OmniModal, OmniDialog];
+  }
 
-export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(LitElement)) {
   static get properties() {
     return {
       isOpenModal: { type: Boolean },
+      isOpenArchiveDialog: { type: Boolean },
+      isOpenDeleteDialog: { type: Boolean },
+      isOpenRestoreDialog: { type: Boolean },
       projects: [],
       activeFilter: {},
-      activeSort: {type: String},
+      activeSort: "",
       currentPage: 0,
       totalPages: 0,
-      mSurl: {type: String},
-      view: {type: String},
+      mSurl: { type: String },
+      view: { type: String },
+      successMessage: { type: String },
+      errorMessage: { type: String },
+      createerrorMessage: { type: String },
+      activeProjectCount: { type: Number },
+      archiveProjectCount: { type: Number },
+      allProjectCount: { type: Number },
+      componenturl: { type: String, notify: true },
+      user_name: { type: String },
+      alertOpen: { type: Boolean }
     };
   }
 
@@ -48,180 +62,309 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(LitEleme
 
   constructor() {
     super();
-
-    this.data = {
-    		newProject:{
-		  	  projectId : {    
-		  		  name : "",    
-		  		  versionId : {      
-		  			  comment : "",      
-		  			  label : ""    
-		  			}  
-		  	  },  
-		  	  description : ""
-		    }
-    };
-
+    this.view = '';
+    this.initializeCreateProjectForm();
     this.$validations.init({
       validations: {
         newProject: {
-          name: {
-            isNotEmpty: Forms.validators.isNotEmpty,
-            minValue: Forms.validators.minValue(5)
+          projectId: {
+            name: {
+              isNotEmpty: Forms.validators.isNotEmpty,
+              pattern: Forms.validators.pattern('^[a-zA-Z][a-zA-Z0-9_ ]{6,30}$')
+            },
+            versionId : {
+              label: {
+                isNotEmpty: Forms.validators.isNotEmpty,
+                pattern: Forms.validators.pattern('[a-zA-Z0-9_.]{1,14}$')
+              }
+            }
           }
         }
       }
     });
-
+    this.alertOpen = false;
     this.sortOptions = [
+      { value: "created", label: "Sort By Created Date" },
       { value: "name", label: "Sort By Name" },
-      { value: "id", label: "Sort By ID" },
-      { value: "created", label: "Sort By Created Date" }
+      { value: "id", label: "Sort By ID" }
     ];
-    
+
     this.projectLists = [];
 
+    this.requestUpdate().then(() => {
+      console.info('update componenturl : ' + this.componenturl);
+      this.componenturl = (this.componenturl === undefined || this.componenturl === null) ? '' : this.componenturl;
+      this.getConfig();
+    })
   }
-  
+
+  initializeCreateProjectForm() {
+    this.data = {
+      createErrorMessage: "",
+      newProject: {
+        projectId: {
+          name: "",
+          versionId: {
+            comment: "",
+            label: ""
+          }
+        },
+        description: ""
+      }
+    };
+
+    this.$data.set('createErrorMessage', '');
+    this.$data.set('newProject.projectId.name', '');
+    this.$data.set('newProject.projectId.versionId.label', '');
+    this.$data.set('newProject.description', '');
+  }
+
   connectedCallback() {
-	    super.connectedCallback();
-	    console.info('inside the connected call back method');
-	    this.getConfig();
-	    
-	    window.addEventListener('hashchange', this._boundListener);
-	  }
+    super.connectedCallback();
+    window.addEventListener('hashchange', this._boundListener);
+  }
 
-	  disconnectedCallback() {
-	    super.disconnectedCallback();
-	    window.removeEventListener('hashchange', this._boundListener);
-	  }
-	
-  getConfig(){
-	  fetch('/api/config', {
-		  method: 'GET',
-          mode: 'cors',
-          cache: 'default'
-        }).then(res => res.json())
-          .then((envVar) => {
-              this.mSurl = envVar.msconfig.projectmSURL;
-              this.getProjectsList();
-        }).catch(function (error) {
-          console.info('Request failed', error);
-        });
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    window.removeEventListener('hashchange', this._boundListener);
+  }
 
+  getConfig() {
+    const url = this.componenturl + '/api/config';
+    this.resetMessage();
+    fetch(url, {
+      method: 'GET',
+      mode: 'cors',
+      cache: 'default'
+    }).then(res => res.json())
+      .then((envVar) => {
+        this.mSurl = envVar.msconfig.projectmSURL;
+        this.user_name = envVar.user_name;
+        if (this.user_name === undefined || this.user_name === null || this.user_name === '') {
+          this.errorMessage = 'Unable to retrieve User ID from Session Cookie. Pls login to Acumos portal and come back here..';
+          this.alertOpen = true;
+          this.view = 'error';
+        } else {
+          this.getProjectsList();
+        }
+      }).catch(function (error) {
+        console.info('Request failed', error);
+        this.errorMessage = 'Unable to retrive configuration information. Error is: ' + error;
+        this.alertOpen = true;
+        this.view = 'error';
+      });
   }
-  
 
-  getProjectsList(){
-	  //auth will be changed once the authentication code is committed
-	  fetch('/api/projects', {
-		  method: 'POST',
-          mode: 'cors',
-          cache: 'default',
-          headers: {
-              "Content-Type": "application/json",
-              "auth": "techmdev"
-          },
-          body: JSON.stringify({
-          "url": this.mSurl
-          })
-        }).then(res => res.json())
-          .then((n) => {
-        	  this.projectLists = [];
-        	  this.projects = [];
-        	  var projectsInfo = n.data;
-        	  for(var i=0; i < projectsInfo.length; i++){
-        		  this.projectLists[i] = {
-        				  "projectId": projectsInfo[i].projectId.uuid,
-        				  "name": projectsInfo[i].projectId.name,
-        				  "version": projectsInfo[i].projectId.versionId.label,
-        				  "createdTimestamp": projectsInfo[i].projectId.versionId.timeStamp,
-        				  "createdBy": projectsInfo[i].owner.authenticatedUserId,
-        				  "description": projectsInfo[i].description,
-        				  "status":projectsInfo[i].artifactStatus.status,
+  resetMessage() {
+    this.successMessage = '';
+    this.errorMessage = '';
+  }
 
-        		  }
-        	  }
-        	  this.getProjects();
-              console.info('Get Projects list Request successful here.');
-              
-        }).catch(function (error) {
-          console.info('Request failed', error);
-        });
+  getProjectsList() {
+    const url = this.componenturl + '/api/projects';
+    fetch(url, {
+      method: 'POST',
+      mode: 'cors',
+      cache: 'default',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        "url": this.mSurl,
+        "user_name": this.user_name
+      })
+    }).then(res => res.json())
+      .then((n) => {
+        if (n.status === 'Error') {
+          this.errorMessage = n.message;
+          this.alertOpen = true;
+          this.view = 'error';
+        } else {
+          this.projectLists = [];
+          this.projects = [];
+          this.convertProjectObject(n.data);
+        }
+      }).catch(function (error) {
+        console.info('Request failed', error);
+        this.errorMessage = 'Project fetch request failed with error: ' + error;
+        this.view = 'error';
+      });
   }
-  
-  createProject(){
-	  fetch('/api/createProject', {
-		  method: 'POST',
-          mode: 'cors',
-          cache: 'default',
-          headers: {
-              "Content-Type": "application/json",
-              "auth": "techmdev"
-          },
-          body: JSON.stringify({
-        	  "url": this.mSurl,
-        	  "newProjectDetails": this.data.newProject 
-        	  })
-        }).then(res => res.json())
-          .then((n) => {
-        	  this.getProjectsList();
-              console.info('create project Request successful here.');
-              
-        }).catch(function (error) {
-          console.info('Request failed', error);
-        });
+
+  convertProjectObject(projectsInfo) {
+    let tempProject;
+    projectsInfo.forEach(item => {
+      tempProject = {};
+      tempProject.projectId = item.projectId.uuid;
+      tempProject.name = item.projectId.name;
+      tempProject.version = item.projectId.versionId.label;
+      tempProject.createdTimestamp = item.projectId.versionId.timeStamp;
+      tempProject.createdBy = item.owner.authenticatedUserId;
+      tempProject.description = item.description;
+      tempProject.status = item.artifactStatus.status;
+      this.projectLists.push(tempProject);
+    });
+    this.displayProjects();
   }
-  
-  deleteProject(projectId) {
-	  fetch('/api/deleteProject', {
-		  method: 'DELETE',
-          mode: 'cors',
-          cache: 'default',
-          headers: {
-              "Content-Type": "application/json",
-              "auth": "techmdev"
-          },
-          body: JSON.stringify({
-        	  "url": this.mSurl,
-        	  "projectId" : projectId        		  
-          })
-        }).then(res => res.json())
-          .then((n) => {
-        	  this.getProjectsList();
-              console.info('delete project Request successful here.');
-              
-        }).catch(function (error) {
-          console.info('Request failed', error);
-        });
+
+  displayProjects() {
+    this.activeFilter = { status: "ACTIVE" };
+    this.activeSort = "created";
+
+    this.dataSource = new DataSource({
+      data: this.projectLists,
+      filter: this.activeFilter,
+      sort: this.activeSort,
+      pageSize: 8
+    });
+    this.sortProjects(this.activeSort);
+    this.projects = this.dataSource.data;
+    this.currentPage = this.dataSource.page + 1;
+    this.totalPages = this.dataSource.totalPages;
+    this.totalProjects = this.projectLists.length;
+    this.allProjectCount = this.getFilteredCount();
+    this.activeProjectCount = this.getFilteredCount({ status: "ACTIVE" });
+    this.archiveProjectCount = this.getFilteredCount({ status: "ARCHIVED" });
+
+    if (this.totalProjects > 0) {
+      this.view = 'view';
+    } else {
+      this.view = 'add';
+    }
   }
-  
-  getProjectDetails(projectId) {
-	  fetch('/api/getProjectDetails', {
-		  method: 'POST',
-          mode: 'cors',
-          cache: 'default',
-          headers: {
-              "Content-Type": "application/json",
-              "auth": "techmdev"
-          },
-          body: JSON.stringify({
-        	  "url": this.mSurl,
-        	  "projectId" : projectId        		  
-          })
-        }).then(res => res.json())
-          .then((n) => {
-        	  this.getProjectsList();
-              console.info('delete project Request successful here.');
-              
-        }).catch(function (error) {
-          console.info('Request failed', error);
-        });
+
+  createProject() {
+    const url = this.componenturl + '/api/project/create';
+    this.resetMessage();
+    fetch(url, {
+      method: 'POST',
+      mode: 'cors',
+      cache: 'default',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        "url": this.mSurl,
+        "newProjectDetails": this.data.newProject,
+        "user_name": this.user_name
+      })
+    }).then(res => res.json())
+      .then((n) => {
+        if (n.status === 'Success') {
+          this.successMessage = n.message;
+          this.alertOpen = true;
+          this.initializeCreateProjectForm();
+          this.getProjectsList();
+          this.isOpenModal = false;
+        } else {
+          this.$data.set('createErrorMessage', n.message);
+        }
+      }).catch(function (error) {
+        console.error('Request failed', error);
+        this.$data.set('createErrorMessage', 'Project create request failed with error: ' + error);
+      });
   }
+
+  deleteProject() {
+    const url = this.componenturl + '/api/project/delete';
+    this.resetMessage();
+    fetch(url, {
+      method: 'DELETE',
+      mode: 'cors',
+      cache: 'default',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        "url": this.mSurl,
+        "projectId": this.selectedProjectId,
+        "user_name": this.user_name
+      })
+    }).then(res => res.json())
+      .then((n) => {
+        if (n.status === 'Success') {
+          this.successMessage = n.message;
+          this.getProjectsList();
+        } else {
+          this.errorMessage = n.message;
+        }
+        this.alertOpen = true;
+        this.isOpenDeleteDialog = false;
+      }).catch(function (error) {
+        console.error('Request failed', error);
+        this.errorMessage = 'Project delete request failed with error: ' + error;
+      });
+  }
+
+  archiveProject() {
+    const url = this.componenturl + '/api/project/archive';
+    this.resetMessage();
+    fetch(url, {
+      method: 'PUT',
+      mode: 'cors',
+      cache: 'default',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        "url": this.mSurl,
+        "projectId": this.selectedProjectId,
+        "user_name": this.user_name
+      })
+    }).then(res => res.json())
+      .then((n) => {
+        if (n.status === 'Success') {
+          this.successMessage = n.message;
+          this.getProjectsList();
+        } else {
+          this.errorMessage = n.message;
+        }
+        this.alertOpen = true;
+        this.isOpenArchiveDialog = false;
+      }).catch(function (error) {
+        console.error('Request failed', error);
+        this.errorMessage = 'Project archive request failed with error: ' + error;
+      });
+  }
+
+  restoreProject() {
+    const url = this.componenturl + '/api/project/restore';
+    this.resetMessage();
+    fetch(url, {
+      method: 'PUT',
+      mode: 'cors',
+      cache: 'default',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        "url": this.mSurl,
+        "projectId": this.selectedProjectId,
+        "user_name": this.user_name
+      })
+    }).then(res => res.json())
+      .then((n) => {
+        if (n.status === 'Success') {
+          this.successMessage = n.message;
+          this.getProjectsList();
+        } else {
+          this.errorMessage = n.message;
+        }
+        this.alertOpen = true;
+        this.isOpenRestoreDialog = false;
+      }).catch(function (error) {
+        console.error('Request failed', error);
+        this.errorMessage = 'Project restore request failed with error: ' + error;
+      });
+  }
+
   filterProjects(criteria) {
     this.activeFilter = criteria;
+    this.dataSource.page = 0;
+    this.currentPage = this.dataSource.page + 1;
     this.dataSource.filter(criteria);
-    this.projects = this.dataSource.data();
+    this.projects = this.dataSource.data;
+    this.totalPages = this.dataSource.totalPages;
   }
 
   sortProjects(key) {
@@ -239,85 +382,38 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(LitEleme
       this.dataSource.sort(key);
     }
 
-    this.projects = this.dataSource.data();
+    this.dataSource.page = 0;
+    this.currentPage = this.dataSource.page + 1;
+    this.projects = this.dataSource.data;
   }
 
   navigatePage(direction) {
     this.dataSource.navigatePage(direction);
 
-    this.currentPage = this.dataSource.page() + 1;
-    this.projects = this.dataSource.data();
+    this.currentPage = this.dataSource.page + 1;
+    this.projects = this.dataSource.data;
   }
 
   getFilteredCount(criteria) {
     return filter(this.dataSource._rawData, criteria).length;
   }
 
-  searchProjects(query) {
-    this.dataSource.filter(query, true);
-
-    this.projects = this.dataSource.data();
+  searchProjects(searchCriteria) {
+    this.dataSource.search(searchCriteria);
+    this.projects = this.dataSource.data;
+    this.dataSource.page = 0;
+    this.currentPage = this.dataSource.page + 1;
+    this.totalPages = this.dataSource.totalPages;
   }
 
-  tempMethod() {
-    //https://randomuser.me/api/?results=10
-
-    fetch("/config", {
-      mode: "cors",
-      redirect: "follow",
-      headers: new Headers({
-        "Content-Type": "text/plain",
-        Authorization: "Basic azsedcd"
-      })
-    })
-      .then(res => res.json())
-      .then(function(text) {
-        console.log("Request successful here for config call");
-        console.log(text.results);
-      })
-      .catch(function(error) {
-        console.log("Request failed", error);
-      });
-
-    fetch("/api1/config", {
-      mode: "cors",
-      redirect: "follow",
-      headers: new Headers({
-        "Content-Type": "text/plain",
-        Authorization: "Basic authorization"
-      })
-    })
-      .then(res => res.json())
-      .then(function(text) {
-        console.log("Request successful here.");
-        console.log(text.results);
-      })
-      .catch(function(error) {
-        console.log("Request failed", error);
-      });
-
-    console.log("after first Request successful here");
-
-    const Http = new XMLHttpRequest();
-    const url = "https://jsonplaceholder.typicode.com/posts";
-    Http.open("GET", url);
-    Http.send();
-    Http.onreadystatechange = e => {
-      console.log("second Request successful here.");
-      console.log(Http.responseText);
-    };
-    console.log("after second Request successful here");
-  }
-
-  userAction(action, projectId) {
-    console.log("action");
-    console.log(action);
+  userAction(action, projectId, projectName) {
     this.dispatchEvent(
       new CustomEvent("catalog-project-event", {
         detail: {
           data: {
             action: action,
-            projectId: projectId
+            projectId: projectId,
+            projectName: projectName
           }
         }
       })
@@ -330,93 +426,129 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(LitEleme
 
   modalClosed() {
     this.$validations.validate("newProject");
-    
-    this.isOpenModal = false;
+    this.requestUpdate();
     this.createProject();
-   
   }
 
   onDataCommit(data) {
     console.log(data);
   }
+
   openModal() {
     this.isOpenModal = true;
   }
 
-  getProjects() {
-    this.activeFilter = { status: "ACTIVE" };
-    this.activeSort = "name";
+  redirectWikiPage() { }
 
-    this.dataSource = new DataSource({
-      data: this.projectLists,
-      filter: this.activeFilter,
-      sort: this.activeSort
-    });
-
-    this.currentPage = this.dataSource.page() + 1;
-    this.totalPages = this.dataSource.totalPages();
-    this.projects = this.dataSource._rawData;
-    if(this.projects.length > 0){
-        this.view = 'view';
-      }else {
-        this.view = 'add';
-      }
+  archiveDialogDismissed() {
+    this.isOpenArchiveDialog = false;
   }
 
-  archiveProject(projectId) {}
-
-  restoreProject(projectId) {}
-
-  viewProject(projectId) {
-    console.info("inside the viewProject methodf");
+  restoreDialogDismissed() {
+    this.isOpenRestoreDialog = false;
   }
 
-  redirectWikiPage() {}
+  deleteDialogDismissed() {
+    this.isOpenDeleteDialog = false;
+  }
+
+  openArchiveDialog(projectId, projectName) {
+    this.selectedProjectId = projectId;
+    this.selectedProjectName = projectName;
+    this.isOpenArchiveDialog = true;
+  }
+
+  openRestoreDialog(projectId, projectName) {
+    this.selectedProjectId = projectId;
+    this.selectedProjectName = projectName;
+    this.isOpenRestoreDialog = true;
+  }
+
+  openDeleteDialog(projectId, projectName) {
+    this.selectedProjectId = projectId;
+    this.selectedProjectName = projectName;
+    this.isOpenDeleteDialog = true;
+  }
 
   render() {
     return html`
       <style>
         @import url("https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css");
+        .alertmessage {
+          display: ${this.alertOpen ? "block" : "none"};
+        }
       </style>
-      <omni-modal
-        title="Create Project"
-        close-string="Save"
-        is-open="${this.isOpenModal}"
-        @omni-modal-dimissed="${this.modalDismissed}"
-        @omni-modal-closed="${this.modalClosed}"
-      >
-        <form>
+      <omni-dialog is-open="${this.isOpenArchiveDialog}" @omni-dialog-dimissed="${this.archiveDialogDismissed}"
+        @omni-dialog-closed="${this.archiveProject}" type="warning">
+        <form><P>Are you sure want to archive project: ${this.selectedProjectName}?</p></form>
+      </omni-dialog>
+
+      <omni-dialog is-open="${this.isOpenRestoreDialog}" @omni-dialog-dimissed="${this.restoreDialogDismissed}"
+        @omni-dialog-closed="${this.restoreProject}" type="warning">
+        <form><P>Are you sure want to restore project: ${this.selectedProjectName}?</p></form>
+      </omni-dialog>
+
+      <omni-dialog is-open="${this.isOpenDeleteDialog}" @omni-dialog-dimissed="${this.deleteDialogDismissed}"
+        @omni-dialog-closed="${this.deleteProject}" type="warning">
+        <form><P>Are you sure want to delete project: ${this.selectedProjectName}?</p></form>
+      </omni-dialog>
+
+      <omni-modal title="Create Project" close-string="Create Project" dismiss-string="Cancel"
+        is-open="${this.isOpenModal}" @omni-modal-dimissed="${this.modalDismissed}" @omni-modal-closed="${this.modalClosed}"
+        canClose="${this.$validations.$valid && this.$validations.$dirty}">
+        <form novalidate>
+          <p class="text-danger">${this.data.createErrorMessage} </p>
           <div class="row">
             <div class="col">
               <div class="form-group">
-                <label>Project Name</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter Project Name"
-                  value="${this.data.newProject.projectId.name}"
-                  @blur="${ e => this.$data.$set('newProject.projectId.name', e.target.value)}"
+                <label>Project Name <small class="text-danger">*</small></label>
+                <input type="text" class="form-control" placeholder="Enter Project Name" value="${this.data.newProject.projectId.name}"
+                  @blur="${ e => {
+                    this.$data.set('newProject.projectId.name', e.target.value); 
+                    this.$validations.validate('newProject.projectId.name');
+                  }}"
                 />
-              </div>
-              <div class="form-group">
-                <label>Project Description</label>
-                <textarea class="form-control"
-                  @blur="${ e => this.$data.$set('newProject.description', e.target.value)}"
-                >
-                  ${this.data.newProject.description}</textarea
-                >
+                ${
+                  this.$validations.getValidationErrors('newProject.projectId.name').map(error => {
+                    switch (error) {
+                      case 'isNotEmpty':
+                        return html`<div class="invalid-feedback d-block">Project name is required</div>`
+                      case 'pattern':
+                        return html`<div class="invalid-feedback d-block">Project Name is not valid. </div>`
+                    }
+                  })
+                }
               </div>
             </div>
             <div class="col">
               <div class="form-group">
-                <label>Project Version</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter Project Version"
-                  value="${this.data.newProject.projectId.versionId.label}"
-                  @blur="${ e => this.$data.$set('newProject.projectId.versionId.label', e.target.value)}"
+                <label>Project Version <small class="text-danger">*</small></label>
+                <input type="text" class="form-control" placeholder="Enter Project Version" value="${this.data.newProject.projectId.versionId.label}"
+                  @blur="${ e => {
+                      this.$data.set('newProject.projectId.versionId.label', e.target.value);
+                      this.$validations.validate('newProject.projectId.versionId.label');
+                    }
+                  }"
                 />
+                ${
+                  this.$validations.getValidationErrors('newProject.projectId.versionId.label').map(error => {
+                    switch (error) {
+                      case 'isNotEmpty':
+                        return html`<div class="invalid-feedback d-block">Project version is required</div>`
+                      case 'pattern':
+                        return html`<div class="invalid-feedback d-block">Project version is not valid. </div>`
+                    }
+                  })
+                }
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label>Project Description</label>
+                <textarea class="form-control" placeholder="Enter Project Description"
+                  @blur="${e => this.$data.set('newProject.description', e.target.value)}">${this.data.newProject.description}</textarea>
               </div>
             </div>
           </div>
@@ -425,22 +557,40 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(LitEleme
 
       ${this.view === 'view'
         ? html`
-            <div class="row" style="margin:5px 0;">
+            <div class="row" style="margin:5px 0">
               <div class="col-lg-12">
-                <div class="row" style="margin:15px 0;">
-                  <div
-                    class="btn-toolbar mb-2 mb-md-0"
-                    style="position: absolute; right:0;"
-                  >
+                <div class="row">
+                  <div class="col-lg-12">
+                    ${this.successMessage !== ''
+                      ? html`
+                        <div class="alertmessage alert alert-success">
+                          <a  class="close" @click=${e => this.alertOpen = false}>
+                            <span aria-hidden="true">&nbsp;&times;</span>
+                          </a>
+                          ${this.successMessage}
+                        </div>
+                      `
+                    : ``
+                    }
+                    ${this.errorMessage !== ''
+                      ? html`
+                        <div class="alertmessage alert alert-danger">
+                          <a class="close" @click=${e => this.alertOpen = false}>
+                              <span aria-hidden="true">&nbsp;&times;</span>
+                          </a>
+                          ${this.errorMessage}
+                        </div>
+                      `
+                      : ``
+                    }
+                  </div>
+                </div>
+                <div class="row" style="margin:15px 0; margin-bottom:45px;">
+                  <div class="btn-toolbar mb-2 mb-md-0" style="position: absolute; right:0;">
                     <div class="btn-group mr-2">
-                      <button
-                        type="button"
-                        class="btn btn-primary"
-                        style="border-top-right-radius:3px; border-bottom-right-radius: 3px"
-                        @click="${this.openModal}"
-                      >
-                        Create Project</button
-                      >&nbsp;&nbsp;
+                      <button type="button" class="btn btn-primary" style="border-top-right-radius:3px; border-bottom-right-radius: 3px"
+                        @click="${this.openModal}">
+                        Create Project</button>&nbsp;&nbsp;
 
                       <div class="input-group-append">
                         <a
@@ -449,106 +599,58 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(LitEleme
                           class="btnIconTop btn btn-sm btn-secondary mr-1"
                           data-toggle="tooltip"
                           data-placement="top"
-                          title="Click here for wiki help"
-                        >
+                          title="Click here for wiki help">
                           <mwc-icon>help</mwc-icon>
                         </a>
                       </div>
                     </div>
                   </div>
                 </div>
-                <br />
+                
                 <div class="row" style="margin:5px 0; margin-top:20px;">
                   <div class="btn-toolbar mb-2 mb-md-0">
                     <ul class="nav nav-pills mb-3">
                       <li class="nav-item mr-2">
-                        <a
-                          href="#"
-                          @click=${e => this.filterProjects({ status: "active" })}
-                          class="nav-link ${get(this.activeFilter, "status", "") ===
-                          "active"
-                            ? "active"
-                            : ""}"
-                          >Active Projects&nbsp;&nbsp;<span class="badge badge-light"
-                            >${this.getFilteredCount({ status: "active" })}</span
-                          ></a
-                        >
+                        <a href="javascript:void" @click=${e => this.filterProjects({ status: "ACTIVE" })}
+                          class="nav-link ${get(this.activeFilter, "status", "") === "ACTIVE"? "active" : ""}">
+                          Active Projects&nbsp;&nbsp;
+                          <span class="badge badge-light">${this.activeProjectCount}</span>
+                        </a>
                       </li>
                       <li class="nav-item mr-2">
-                        <a
-                          href="#"
-                          @click=${e => this.filterProjects({ status: "archived" })}
-                          class="nav-link btn-outline-secondary ${get(
-                            this.activeFilter,
-                            "status",
-                            ""
-                          ) === "archived"
-                            ? "active"
-                            : ""}"
-                          >Archived Projects&nbsp;&nbsp;<span
-                            class="badge badge-secondary"
-                            >${this.getFilteredCount({ status: "archived" })}</span
-                          ></a
-                        >
+                        <a href="javascript:void"  @click=${e => this.filterProjects({ status: "ARCHIVED" })}
+                          class="nav-link btn-outline-secondary ${get(this.activeFilter,"status", "") === "ARCHIVED"? "active": ""}">
+                          Archived Projects&nbsp;&nbsp;
+                          <span class="badge badge-secondary">${this.archiveProjectCount}</span>
+                        </a>
                       </li>
                       <li class="nav-item mr-2">
-                        <a
-                          href="#"
-                          @click=${e => this.filterProjects()}
-                          class="nav-link btn-outline-secondary  ${get(
-                            this.activeFilter,
-                            "status",
-                            ""
-                          ) === ""
-                            ? "active"
-                            : ""}"
-                          >All Projects&nbsp;&nbsp;<span class="badge badge-secondary"
-                            >${this.getFilteredCount()}</span
-                          ></a
-                        >
+                        <a href="javascript:void" @click=${e => this.filterProjects()}
+                          class="nav-link btn-outline-secondary  ${get(this.activeFilter, "status","") === ""? "active": ""}">
+                          All Projects&nbsp;&nbsp;
+                          <span class="badge badge-secondary">${this.allProjectCount}</span>
+                        </a>
                       </li>
                     </ul>
-
-                    <div
-                      class="btn-toolbar mb-2 mb-md-0"
-                      style="position: absolute; right:0;"
-                    >
+                    <div class="btn-toolbar mb-2 mb-md-0" style="position: absolute; right:0;">
                       <div class="dropdown">
-                        <select
-                          class="custom-select mr-sm-2"
-                          id="template"
-                          @change=${e => this.sortProjects(e.target.value)}
-                        >
-                          ${this.sortOptions.map(item =>
-                            item.value === this.activeSort
-                              ? html`
-                                  <option value="${item.value}" selected
-                                    >${item.label}</option
-                                  >
-                                `
-                              : html`
-                                  <option value="${item.value}">${item.label}</option>
-                                `
+                        <select class="custom-select mr-sm-2" id="template" @change=${e => this.sortProjects(e.target.value)}>
+                          ${this.sortOptions.map(item => item.value === this.activeSort
+                            ? html`
+                              <option value="${item.value}" selected>${item.label}</option>
+                            `
+                            : html`
+                              <option value="${item.value}">${item.label}</option>
+                            `
                           )}
                         </select>
                       </div>
                       <div class="btn-group mr-2">
                         &nbsp;
-                        <input
-                          type="text"
-                          style="height: 30px"
-                          class="form-control w-100"
-                          @input=${e => this.searchProjects({ name: e.target.value })}
-                          placeholder="Search Project"
-                        />
-
+                        <input type="text" style="height: 30px" class="form-control w-100" placeholder="Search Project"
+                          @input=${e => this.searchProjects(e.target.value)}/>
                         <div class="input-group-append">
-                          <a
-                            class="btnIcon btn btn-sm btn-primary  mr-1"
-                            data-toggle="tooltip"
-                            data-placement="top"
-                            title="Search Project"
-                          >
+                          <a class="btnIcon btn btn-sm btn-primary  mr-1" data-toggle="tooltip" data-placement="top" title="Search Project">
                             <mwc-icon class="mwc-icon">search</mwc-icon>
                           </a>
                         </div>
@@ -558,216 +660,183 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(LitEleme
                 </div>
 
                 <div class="row" style="margin-top:10px;">
-                  ${this.projects.map(
-                    item =>
-                      html`
-                        <div class="col-md-3">
-                          <div
-                            class="card-shadow card card-link mb-3 mb-5 bg-white rounded"
-                          >
-                            <a
-                              href="javascript:void"
-                              @click=${e => this.userAction("view-project", item.projectId)}
-                            >
-                              <div class="card-body">
+                  ${this.projects.map(item =>
+                    html`
+                      <div class="col-md-3">
+                        <div class="card-shadow card card-link mb-3 mb-5 bg-white rounded">
+                          <div class="card-body">
+                            <div>
+                              <a href="javascript:void" @click=${e => this.userAction("view-project", item.projectId, item.name)}>
                                 <h4 class="project-name">${item.name}</h4>
-                                <span><strong>Project ID</strong>: &nbsp; ${item.projectId}</span
-                                ><br />
-                                <span
-                                  ><strong>Project Version</strong>: &nbsp;
-                                  ${item.version}</span
-                                ><br />
+                                <span><strong>Project ID</strong>: &nbsp; ${item.projectId}</span>
+                                <br />
+                                <span><strong>Project Version</strong>: &nbsp;
+                                  ${item.version}</span>
+                                <br />
                                 <strong>Project Status</strong>: &nbsp;
                                 ${item.status === "ACTIVE"
                                   ? html`
-                                      <span class="active-status">${item.status}</span>
-                                    `
+                                    <span class="active-status">${item.status}</span>
+                                  `
                                   : html`
-                                      <span class="inactive-status">${item.status}</span>
-                                    `}
+                                    <span class="inactive-status">${item.status}</span>
+                                  `}
                                 <br />
-                                <span
-                                  ><strong>Creation Date</strong>: &nbsp; ${item.createdTimestamp}</span
-                                ><br />
-                                <span
-                                  ><strong>Modified Date</strong>: &nbsp; ${item.createdTimestamp}</span
-                                ><br />
+                                <span><strong>Creation Date</strong>: &nbsp; ${item.createdTimestamp}</span>
                                 <br />
+                                <span><strong>Modified Date</strong>: &nbsp; ${item.createdTimestamp}</span>
+                                <br />
+                                <br />
+                              </a>
+                            </div>
 
-                                <div class="gray-light pt-2 pb-2 pl-2 pr-2">
-                                  <div
-                                    class="d-flex justify-content-between  align-middle"
-                                  >
-                                    <div style="margin-top:8px;">
-                                      <span title="${item.projectId}"
-                                        ><mwc-icon class="mwc-icon-gray"
-                                          >account_circle</mwc-icon
-                                        >
-                                      </span>
-                                    </div>
-                                    <div>
-                                      ${item.status === "ACTIVE"
-                                        ? html`
-                                            <a
-                                              href="javascript:void"
-                                              @click=${e => this.archiveProject(item.projectId)}
-                                              class="btnIcon btn btn-sm my-1 mr-1"
-                                              data-toggle="tooltip"
-                                              data-placement="top"
-                                              title="Archive Project"
-                                            >
-                                              <mwc-icon class="mwc-icon-gray"
-                                                >archive</mwc-icon
-                                              >
-                                            </a>
-                                          `
-                                        : html`
-                                            <a
-                                              href="javascript:void"
-                                              @click=${e => this.restoreProject(item.projectId)}
-                                              class="btnIcon btn btn-sm my-1 mr-1"
-                                              data-toggle="tooltip"
-                                              data-placement="top"
-                                              title="Restore Project"
-                                            >
-                                              <mwc-icon class="mwc-icon-gray"
-                                                >restore</mwc-icon
-                                              >
-                                            </a>
-                                            <a
-                                              href="javascript:void"
-                                              @click=${e => this.deleteProject(item.projectId)}
-                                              class="btnIcon btn btn-sm my-1 mr-1"
-                                              data-toggle="tooltip"
-                                              data-placement="top"
-                                              title="Delete Project"
-                                            >
-                                              <mwc-icon class="mwc-icon-gray"
-                                                >delete</mwc-icon
-                                              >
-                                            </a>
-                                          `}
-                                    </div>
-                                  </div>
+                            <div class="gray-light pt-2 pb-2 pl-2 pr-2">
+                              <div class="d-flex justify-content-between align-middle">
+                                <div style="margin-top:8px;">
+                                  <span title="${item.createdBy}"><mwc-icon class="mwc-icon-gray">account_circle</mwc-icon>
+                                  </span>
                                 </div>
-                              </div></a
-                            >
+                              <div>
+                              ${item.status === "ACTIVE"
+                                ? html`
+                                  <a href="javascript:void" @click="${e => this.openArchiveDialog(item.projectId, item.name)}"
+                                    class="btnIcon btn btn-sm my-1 mr-1" data-toggle="tooltip" data-placement="top" title="Archive Project" >
+                                    <mwc-icon class="mwc-icon-gray">archive</mwc-icon>
+                                  </a>
+                                `
+                                : html`
+                                  <a href="javascript:void" @click="${e => this.openRestoreDialog(item.projectId, item.name)}"
+                                    class="btnIcon btn btn-sm my-1 mr-1" data-toggle="tooltip" data-placement="top" title="Restore Project">
+                                    <mwc-icon class="mwc-icon-gray">restore</mwc-icon>
+                                  </a>
+                                  <a href="javascript:void" @click="${e => this.openDeleteDialog(item.projectId, item.name)}"
+                                    class="btnIcon btn btn-sm my-1 mr-1" data-toggle="tooltip" data-placement="top" title="Delete Project">
+                                    <mwc-icon class="mwc-icon-gray">delete</mwc-icon>
+                                  </a>
+                              `}
+                            </div>
                           </div>
                         </div>
-                      `
+                      </div>
+                    `
                   )}
                 </div>
 
                 <div class="row">
-                  <h7>Showing ${this.currentPage} of ${this.totalPages} pages</h7>
+                  <h7>&nbsp;&nbsp;&nbsp;&nbsp;Showing ${this.currentPage} of ${this.totalPages === 0 ? 1 : this.totalPages} pages</h7>
                   <div style="position: absolute; right:0;">
                     <nav aria-label="Page navigation example">
                       <ul class="pagination justify-content-end">
                         <li class="page-item">
-                          <a
-                            class="page-link"
-                            href="javascript:void"
-                            @click=${e => this.navigatePage("first")}
-                            >First</a
-                          >
+                          <a class="page-link" href="javascript:void" @click=${e => this.navigatePage("first")}>First</a>
                         </li>
                         <li class="page-item">
-                          <a
-                            class="page-link"
-                            href="javascript:void"
-                            @click=${e => this.navigatePage("previous")}
-                            >Previous</a
-                          >
+                          <a class="page-link" href="javascript:void" @click=${e => this.navigatePage("previous")} >Previous</a>
                         </li>
                         <li class="page-item">
-                          <a
-                            class="page-link"
-                            href="javascript:void"
-                            @click=${e => this.navigatePage("next")}
-                            >Next</a
-                          >
+                          <a class="page-link" href="javascript:void" @click=${e => this.navigatePage("next")} >Next</a>
                         </li>
                         <li class="page-item">
-                          <a
-                            class="page-link"
-                            href="javascript:void"
-                            @click=${e => this.navigatePage("last")}
-                            >Last</a
-                          >
+                          <a class="page-link" href="javascript:void" @click=${e => this.navigatePage("last")} >Last</a>
                         </li>
                         &nbsp;&nbsp;&nbsp;&nbsp;
                       </ul>
                     </nav>
                   </div>
                 </div>
-                <br />
+                <br/>
               </div>
             </div>
           `
-    	: html`
-    
+        : html`
   			`}
 
   		${this.view === 'add'
-  			? html`
-            <div class="row" style="margin:15px 0;">
-              <div class="btn-toolbar mb-2 mb-md-0" style="position: absolute; right:0;">
-                <div class="btn-group mr-2">
-                  <div class="input-group-append">
-                    <a
-                      href="javascript:void"
-                      @click=${e => this.redirectWikiPage()}
-                      class="btnIconTop btn btn-sm btn-secondary  mr-1"
-                      data-toggle="tooltip"
-                      data-placement="top"
-                      title="Click here for wiki help"
-                    >
-                      <mwc-icon>help</mwc-icon>
-                    </a>
+        ? html`
+          <div class="row">
+            <div class="col-lg-12">
+              ${this.successMessage !== ''
+                ? html`
+                  <div class="alertmessage alert alert-success">
+                    <a class="close" @click=${e => this.alertOpen = false}>
+                      <span aria-hidden="true">&nbsp;&times;</span>
+                    </a> ${this.successMessage}
+                  </div>
+                `: ``
+              }
+              ${this.errorMessage !== ''
+                ? html`
+                  <div class="alertmessage alert alert-danger">
+                    <a class="close" @click=${e => this.alertOpen = false}>
+                        <span aria-hidden="true">&nbsp;&times;</span>
+                    </a>  ${this.errorMessage}
+                  </div>
+                `: ``
+              }
+            </div>
+          </div>
+          <div class="row" style="margin:5px 0">
+            <div class="btn-toolbar mb-2 mb-md-0" style="position: absolute; right:0;">
+              <div class="btn-group mr-2">
+                <div class="input-group-append">
+                  <a href="javascript:void" @click=${e => this.redirectWikiPage()} class="btnIconTop btn btn-sm btn-secondary mr-1" 
+                    data-toggle="tooltip" data-placement="top" title="Click here for wiki help">
+                    <mwc-icon>help</mwc-icon>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br/>
+          <div class="row">
+            <div class="col-md-12 py-3">
+              <div class="card mb-124  shadow mb-5 bg-white rounded">
+                <div class="card-header">
+                  <div class="row" style="margin:5px 0; margin-top: 0px;">
+                    <mwc-icon class="textColor">share</mwc-icon>&nbsp;&nbsp;&nbsp;
+                    <h4 class="textColor card-title">Projects</h4>
+                    <div style="position: absolute; right:0">
+                      <a class="btn btn-sm btn-secondary my-2">-</a>
+                      &nbsp;&nbsp;&nbsp;&nbsp;
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="row" style="margin:10px 0;margin-bottom:20px;">
+                    <h7>No Projects, get started with ML Workbench by creating your first project.</h7>
+                  </div>
+                  <div class="row" style="margin:10px 0">
+                    <button type="button" class="btn btn-primary" @click="${this.openModal}">
+                      Create Project
+                    </button>
                   </div>
                 </div>
               </div>
             </div>
-            <br />
-            <div class="row">
-              <div class="col-md-12 py-3">
-                <div class="card mb-124  shadow mb-5 bg-white rounded">
-                  <div class="card-header">
-                    <div class="row" style="margin:5px 0; margin-top: 0px;">
-                      <mwc-icon class="textColor">share</mwc-icon>&nbsp;&nbsp;&nbsp;
-                      <h4 class="textColor card-title">Projects</h4>
-                      <div style="position: absolute; right:0">
-                        <a class="btn btn-sm btn-secondary my-2">-</a>
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                      </div>
-                    </div>
-                  </div>
-                  <div class="card-body">
-                    <div class="row" style="margin:10px 0;margin-bottom:20px;">
-                      <h7
-                        >No Projects, get started with ML Workbench by creating your first
-                        project.</h7
-                      >
-                    </div>
-                    <div class="row" style="margin:10px 0">
-                      <button
-                        type="button"
-                        class="btn btn-primary"
-                        @click="${this.openModal}"
-                      >
-                        Create Project
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          `   
-    		  : html`
+          </div>
+        `
+        : html`
+      `}
           
-    		  	`}
-  		`;
+      ${this.view === 'error'
+        ? html`
+          <div class="alertmessage alert alert-danger">
+            <a class="close" @click=${e => this.alertOpen = false}>
+                <span aria-hidden="true">&nbsp;&times;</span>
+            </a>
+            ${this.errorMessage}
+          </div>
+        `
+        : html`
+      `}
 
+      ${this.view === ''
+        ? html`
+          <p class="success-status"> Loading ..</p>
+        `
+        : html`
+      `}
+  	`;
   }
 }
 

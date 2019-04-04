@@ -19,10 +19,11 @@ limitations under the License.
 -->
 <nav>
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a routerLink="/pages/dashboard">Dashboard</a></li>
-    <li class="breadcrumb-item"><a>Projects</a></li>
-    <li class="breadcrumb-item active">Catalog</li>
+    <li class="breadcrumb-item"><a routerLink="/pages/dashboard">ML Workbench</a></li>
+    <li class="breadcrumb-item active"><a>Projects</a></li>
   </ol>
 </nav>
-<project-catalog-element (catalog-project-event)="this.OnCatalogProjectEvent($event)">
+<project-catalog-element (catalog-project-event)="this.OnCatalogProjectEvent($event)" [attr.componenturl]="projectCatalogComponentURL">
 </project-catalog-element>
+
+

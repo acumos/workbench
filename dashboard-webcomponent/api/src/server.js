@@ -31,6 +31,7 @@ var port = process.env.PORT || 9083;
 app.use(function(req, res, next) {
 	res.setHeader("Access-Control-Allow-Methods", "POST, PUT, OPTIONS, DELETE, GET");
 	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	res.header("Access-Control-Allow-Origin", "*");
 	next();
 });
 
@@ -55,10 +56,7 @@ app.use(bodyParser.text({
 	limit : '500mb'
 }));
 
-
-require('./routes_config.js')(app);
 require('./routes_services.js')(app);
-
 
 var server = app.listen(port, function() {
 	console.info('running on ...'+ port);

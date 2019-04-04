@@ -17,213 +17,251 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ===============LICENSE_END=========================================================
 */
+var env = process.env.ENVIRONMENT || "local";
+
+var properties = require('./properties.js').get(env);
+var https = require("https");
+
 var request = require('request');
 
 module.exports = function(app) {
 	
-	/*
-	 * Here all APIs will be written to integrate with back end mS.
-	 */
-	var urlAdd = "/users/";
-	var auth = "";
-	var serviceUrl = "";
+	const uripath = "/users/";
 
-    app.post('/api/projects', function(req, res) {
-           auth = req.headers.auth;
-           serviceUrl = req.body.url+urlAdd;
-           getProjectsCatalog(auth, serviceUrl).then(function(result) {
-                  res.send(result);
-           });
-    });
+	var getJWTToken = function(req){
+		return req.cookies.auth_token;
+	}
 
-    app.post('/api/createProject', function (req, res){
-    	auth = req.headers.auth;
-    	serviceUrl = req.body.url+urlAdd;
-    	var newPrReq = req.body.newProjectDetails;
-    	createProject(auth, serviceUrl, newPrReq).then(function(result){
-    		res.send(result);
-    	});
-    });
-    
-    app.delete('/api/deleteProject', function (req, res){
-    	auth = req.headers.auth;
-    	serviceUrl = req.body.url+urlAdd;
-    	var deletePrReq = req.body.projectId;
-    	deleteProject(auth, serviceUrl, deletePrReq).then(function(result){
-    		res.send(result);
-    	});
-    });
-    
-    app.post('/api/getProjectDetails', function (req, res){
-    	auth = req.headers.auth;
-    	serviceUrl = req.body.url+urlAdd;
-    	var body = req.body.projectId;
-    	getSelectedProjectDetails(auth, serviceUrl, body).then(function(result){
-    		res.send(result);
-    	});
-    });
-    
-    var getProjectsCatalog = function(auth, url) {
-           return new Promise(function(resolve, reject) {
-                  var options = {
-                        method : "GET",
-                        url : url + "/"+auth+"/projects/",
-                        headers : {
-                               'Content-Type' : 'application/json',
-                               'Authorization' : auth,
-                        },
-                  };
+	var configENV = properties.ENVIRONMENT;
+	var ms_urls = {
+		projectmSURL : properties.projectmSURL,
+		pipelinemSURL : properties.pipelinemSURL,
+		notebookmSURL : properties.notebookmSURL
+	};
+	
+	app.get('/api/config', function(req, res) {
+		try {
+			let user_name = (req.cookies.userDetail !== undefined && req.cookies.userDetail !== null && req.cookies.userDetail.length > 0) ? 
+				req.cookies.userDetail[0]: "techmdev";
+			console.info('user name: '+ user_name);
+			res.configInfo = {
+				configENV : configENV,
+				msconfig : ms_urls,
+				user_name:  user_name
+			};
+			res.send(res.configInfo);
+		} catch (err) {
+			reject("error");
+		}
+	});
 
-                  request.get(options, function(error, response, body) {
-                        try {
-                               if (!error && response.statusCode == 200) {
-                                      resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Projects retrieved successfully."));
-                               } else if (!error) {
-                                      resolve(prepRespJsonAndLogit(response, response.body, "Unable to retrieve Projects."));
-                               } else {
-                                      resolve(prepRespJsonAndLogit(null, null, null, error));
-                               }
-                        } catch (e) {
-                               resolve(prepRespJsonAndLogit(null, null, null, e));
-                        }
-                  });
-           });
-    };
+	app.post('/api/projects', function(req, res) {
+		let serviceUrl = req.body.url + uripath;
+		let user_name = req.body.user_name;
+		getProjectsCatalog(user_name, serviceUrl, getJWTToken(req)).then(function(result) {
+					res.send(result);
+		});
+	});
 
-    var createProject = function(auth, srvcUrl, newProjectReq){
-    	return new Promise(function(resolve, reject) {
-            var options = {
-                    method : "POST",
-                    url : srvcUrl+auth+"/projects/",
-                    headers : {
-                           'Content-Type' : 'application/json',
-                           'Authorization' : auth,
-                    },
-                    body: newProjectReq,
-                    json: true
-              };
-            
-              request.post(options, function(error, response, body) {
-            	  
-                    try {
-                           if (!error && response.statusCode == 201) {
-                                  resolve(prepRespJsonAndLogit(response, response.body, "Project created successfully."));
-                           } else if (!error) {
-                                  resolve(prepRespJsonAndLogit(response, response.body, "Unable to create Project."));
-                           } else {
-                                  resolve(prepRespJsonAndLogit(null, null, null, error));
-                           }
-                    } catch (e) {
-                           resolve(prepRespJsonAndLogit(null, null, null, e));
-                    }
-              });
-       });
-    };
-    
-    var deleteProject = function(auth, srvcUrl, projectId){
-    	return new Promise(function(resolve, reject) {
-            var options = {
-                    method : "DELETE",
-                    url : srvcUrl+auth+"/projects/"+projectId,
-                    headers : {
-                           'Content-Type' : 'application/json',
-                           'Authorization' : auth,
-                    },
-              };
+	app.post('/api/project/create', function (req, res){
+		let serviceUrl = req.body.url + uripath;
+		let user_name = req.body.user_name;
+		let newPrReq = req.body.newProjectDetails;
+		createProject(user_name, serviceUrl, newPrReq, getJWTToken(req)).then(function(result){
+			res.send(result);
+		});
+	});
+	
+	app.put('/api/project/archive', function (req, res){
+		let serviceUrl = req.body.url + uripath;
+		let user_name = req.body.user_name;
+		let projectId = req.body.projectId;
+		archiveProject(user_name, serviceUrl, projectId, getJWTToken(req)).then(function(result){
+			res.send(result);
+		});
+	});
 
-              request.delete(options, function(error, response, body) {
-                    try {
-                           if (!error && response.statusCode == 200) {
-                                  resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Project Deleted successfully."));
-                           } else if (!error) {
-                                  resolve(prepRespJsonAndLogit(response, response.body, "Unable to delete Project."));
-                           } else {
-                                  resolve(prepRespJsonAndLogit(null, null, null, error));
-                           }
-                    } catch (e) {
-                           resolve(prepRespJsonAndLogit(null, null, null, e));
-                    }
-              });
-       });
-    };
-    
-    var getSelectedProjectDetails = function(auth, srvcUrl, projectId){
-    	return new Promise(function(resolve, reject) {
-            var options = {
-                    method : "GET",
-                    url : srvcUrl+auth+"/projects/"+projectId,
-                    headers : {
-                           'Content-Type' : 'application/json',
-                           'Authorization' : auth,
-                    },
-              };
+	app.put('/api/project/restore', function (req, res){
+		let serviceUrl = req.body.url + uripath;
+		let user_name = req.body.user_name;
+		let projectId = req.body.projectId;
+		restoreProject(user_name, serviceUrl, projectId, getJWTToken(req)).then(function(result){
+			res.send(result);
+		});
+	});
+	
+	app.delete('/api/project/delete', function (req, res){
+		let serviceUrl = req.body.url + uripath;
+		let user_name = req.body.user_name;
+		let projectId = req.body.projectId;
+		deleteProject(user_name, serviceUrl, projectId, getJWTToken(req)).then(function(result){
+			res.send(result);
+		});
+	});
 
-              request.get(options, function(error, response, body) {
-                    try {
-                           if (!error && response.statusCode == 200) {
-                                  resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Project details retrieved successfully."));
-                           } else if (!error) {
-                                  resolve(prepRespJsonAndLogit(response, response.body, "Unable to retrieve Project."));
-                           } else {
-                                  resolve(prepRespJsonAndLogit(null, null, null, error));
-                           }
-                    } catch (e) {
-                           resolve(prepRespJsonAndLogit(null, null, null, e));
-                    }
-              });
-       });
-    };
-    
+	var getProjectsCatalog = function(user_name, url, jwtToken) {
+		return new Promise(function(resolve, reject) {
+			var options = {
+				method : "GET",
+				url : url + user_name + "/projects/",
+				headers : {
+					'Content-Type' : 'application/json',
+					'Authorization' : jwtToken,
+				},
+			};
+
+			request.get(options, function(error, response) {
+				if (!error && response.statusCode == 200) {
+					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Projects retrieved successfully."));
+				} else if (!error) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to retrieve Projects."));
+				} else {
+					resolve(prepRespJsonAndLogit(null, null, null, error));
+				}
+			});
+		});
+	};
+		
+	var createProject = function(user_name, srvcUrl, newProjectReq, jwtToken){
+		return new Promise(function(resolve, reject) {
+			var options = {
+				method : "POST",
+				url : srvcUrl + user_name + "/projects/",
+				headers : {
+					'Content-Type' : 'application/json',
+					'Authorization' : jwtToken,
+				},
+				body: newProjectReq,
+				json: true
+			};
+				
+		request.post(options, function(error, response, body) {
+				if (!error && response.statusCode == 201) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Project created successfully."));
+				} else if (!error) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to create Project."));
+				} else {
+					resolve(prepRespJsonAndLogit(null, null, null, error));
+				}
+		});
+		});
+	};
+		
+	var deleteProject = function(user_name, srvcUrl, projectId, jwtToken){
+		return new Promise(function(resolve, reject) {
+			var options = {
+				method : "DELETE",
+				url : srvcUrl + user_name + "/projects/" + projectId,
+				headers : {
+					'Content-Type' : 'application/json',
+					'Authorization' : jwtToken,
+				},
+			};
+			request.delete(options, function(error, response, body) {
+				if (!error && response.statusCode == 200) {
+					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Project Deleted successfully."));
+				} else if (!error) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to delete Project."));
+				} else {
+					resolve(prepRespJsonAndLogit(null, null, null, error));
+				}
+			});
+		});
+	};
+	
+	var archiveProject = function(user_name, srvcUrl, projectId, jwtToken){
+		return new Promise(function(resolve, reject) {
+			var options = {
+				method : "PUT",
+				url : srvcUrl + user_name + "/projects/" + projectId + "/actionType/A",
+				headers : {
+					'Content-Type' : 'application/json',
+					'Authorization' : jwtToken,
+				},
+			};
+			request.put(options, function(error, response, body) {
+				if (!error && response.statusCode == 200) {
+					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Project archived successfully."));
+				} else if (!error) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to archive Project."));
+				} else {
+					resolve(prepRespJsonAndLogit(null, null, null, error));
+				}
+			});
+		});
+	};
+
+	var restoreProject = function(user_name, srvcUrl, projectId, jwtToken){
+		return new Promise(function(resolve, reject) {
+			var options = {
+				method : "PUT",
+				url : srvcUrl + user_name + "/projects/" + projectId + "/actionType/UA",
+				headers : {
+					'Content-Type' : 'application/json',
+					'Authorization' : jwtToken,
+				},
+			};
+			request.put(options, function(error, response, body) {
+				if (!error && response.statusCode == 200) {
+					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Project restored successfully."));
+				} else if (!error) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to restore Project."));
+				} else {
+					resolve(prepRespJsonAndLogit(null, null, null, error));
+				}
+			});
+		});
+	};
+
 	/* Utility functions */
 	var prepRespJsonAndLogit = function(httpResponse, responseData, message, error) {
-		var r = {};
+		let r = {};
+		let errorFlag = true;
+		let code = 0;
+		let status = '';
 		try {
 			if (!isNull(httpResponse)) {
-				var code = httpResponse.statusCode;
-				var body = httpResponse.body;
-				
-				if (code == 200) {
-					console.info(message);
-				} else if (code == 401) {
-					message = "Unauthorized access! " + message;
-					console.error(message);
-				} else if (code == 500) {
-					
+				code = httpResponse.statusCode;
+				if (code === 200 || code === 201) {
+					errorFlag = false;
+				} else if (code === 500){
 					if (typeof responseData == 'string'){
 						responseData = JSON.parse(responseData);
 					}
-					console.info ('responseData');
-					console.info (responseData);
-					console.error(message + " Server response code: " + code + " and response body : " + body);
-					message = responseData.message;
-				} else if (code != 200) {
-					console.error(message + " Server response code: " + code + " and response body : " + body);
+					message = "Unknown server Error: " + message;
+				} else {
+					if(responseData.serviceStatus !== undefined && responseData.serviceStatus.statusMessage !== undefined){
+						message = responseData.serviceStatus.statusMessage;
+					}else{ 
+						message = responseData;
+					}
 				}
-
-				r = {
-					code : code,
-					data : responseData,
-					message : message
-				};
 			} else {
-				r = {
-					code : null,
-					data : null,
-					message : "NODE JS Server Error : " + error.message
-				};
-				console.error(r.message);
+				message = "Server is not available." + error;
 			}
+
+			if(errorFlag) {
+				status = 'Error';
+			} else {
+				status = 'Success';
+			}
+
+			r = {
+				status: status,
+				code : code,
+				data : responseData,
+				message : message
+			};
+			return r;
 		} catch (e) {
 			return {
+				status: 'Error',
 				code : null,
-				data : null,
-				message : "NODE JS Server Internal Error : " + e.message
+				message : 'NODE JS Server Internal Error : ' + e.message
 			};
-		}
-
-		return r;
+		}		
 	};
-	
+
 	function serviceStartedLog(serviceName) {
 		console.info(new Date() + " - " + serviceName + " service is started");
 	}

@@ -18,13 +18,45 @@ limitations under the License.
 ===============LICENSE_END=========================================================
 */
 
-import { LitElement, html } from "lit-element";
+import { LitElement, html, css, unsafeCSS } from "lit-element";
 
-export  class OmniModal extends LitElement {
+const primaryColor = unsafeCSS`#591887`;
+const secondaryColor = unsafeCSS`#FFFFFF`;
+
+export class OmniModal extends LitElement {
   static get name() {
-    return 'omni-modal'
+    return "omni-modal";
   }
-  
+
+  static get styles() {
+    return css`
+      .btn-primary {
+        background-color: ${primaryColor};
+      }
+      .btn-secondary {
+        background-color: ${secondaryColor};
+        color: #000000;
+      }
+      .modal-dialog {
+        max-width: 700px;
+      }
+      .modal-header {
+        background-color: ${primaryColor};
+        color: #ffffff;
+      }
+      .close {
+        color: #ffffff;
+        text-shadow: none;
+        font-size: 2rem;
+        opacity: 1;
+      }
+
+      .close:hover {
+        color: #ffffff;
+      }
+    `;
+  }
+
   static get properties() {
     return {
       title: { type: String },
@@ -41,26 +73,32 @@ export  class OmniModal extends LitElement {
         }
       },
       closeString: { type: String, attribute: "close-string" },
-      dismissString: { type: String }
+      dismissString: { type: String, attribute: "dismiss-string" },
+      variant: { type: String }
     };
   }
   constructor() {
     super();
-    this.acceptString = "Ok";
+    this.closeString = "Ok";
     this.dismissString = "Cancel";
     this.isOpen = false;
   }
 
   dismiss() {
-    this.isOpen = false;
-
     this.dispatchEvent(new CustomEvent("omni-modal-dimissed"));
   }
 
   close() {
-    this.isOpen = false;
-
     this.dispatchEvent(new CustomEvent("omni-modal-closed"));
+  }
+
+  getVariant(variant) {
+    switch (variant) {
+      case "warning":
+        return "rgb(213, 169, 31)";
+      default:
+        return "rgb(89, 24, 135);";
+    }
   }
 
   render() {
@@ -78,12 +116,15 @@ export  class OmniModal extends LitElement {
           display: ${this.isOpen ? "block" : "none"};
           opacity: 0.4;
         }
+        .variant {
+          background-color: ${this.getVariant(this.variant)} !important;
+        }
       </style>
       <div class="modal-backdrop isOpen"></div>
       <div class="modal">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header variant">
               <h5 class="modal-title">${this.title}</h5>
               <button type="button" class="close" @click="${this.dismiss}">
                 <span aria-hidden="true">&times;</span>
@@ -92,12 +133,20 @@ export  class OmniModal extends LitElement {
             <div class="modal-body">
               <slot></slot>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" @click="${this.dismiss}">
+            <div class="modal-footer d-block">
+              <button
+                type="button"
+                class="btn btn-secondary float-left"
+                @click="${this.dismiss}"
+              >
                 ${this.dismissString}
               </button>
-              <button type="button" class="btn btn-primary" @click="${this.close}">
-                ${this.acceptString}
+              <button
+                type="button"
+                class="btn btn-primary float-right"
+                @click="${this.close}"
+              >
+                ${this.closeString}
               </button>
             </div>
           </div>

@@ -1,4 +1,4 @@
-<!--  
+/*
 ===============LICENSE_START=======================================================
 Acumos Apache-2.0
 ===================================================================================
@@ -16,35 +16,30 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ===============LICENSE_END=========================================================
--->
+*/
 
-<!DOCTYPE html>
-<html lang="en">
+import { RegisterComponent } from "../core";
+import { each, camelCase } from "lodash-es";
 
-<head>
-    <script
-        src="node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"
-        defer></script>
-
-    <script type="module">
-        window.WebComponents = window.WebComponents || {
-            waitFor(cb) { addEventListener('WebComponentsReady', cb) }
+export default LitElementBase =>
+  class extends LitElementBase {
+    static get properties() {
+      return {
+        $services: {
+          type: Object
         }
-        WebComponents.waitFor(async () => {
-            import("./src/independent-runtime.js");
-            import('./src/project-element.js');
-        });
-    </script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Workbench - Project</title>
-</head>
+      };
+    }
 
-<body>
-	<independent-runtime>
-		<project-element componenturl='http://localhost:9084' projectId='9b2454c2-7bdb-41ab-aea9-9916cf3af83e'> </project-element>
-	</independent-runtime>
-</body>
+    constructor() {
+      super();
 
-</html>
+      let dependencies;
+
+      dependencies = this.dependencies || [];
+
+      each(dependencies, dependency => {
+        RegisterComponent(dependency.name, dependency);
+      });
+    }
+  };

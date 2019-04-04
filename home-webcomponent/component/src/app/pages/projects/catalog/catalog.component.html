@@ -24,5 +24,7 @@ limitations under the License.
     <li class="breadcrumb-item active">Catalog</li>
   </ol>
 </nav>
-<project-catalog-element (catalog-project-event)="this.OnCatalogProjectEvent($event)">
+<project-catalog-element (catalog-project-event)="this.OnCatalogProjectEvent($event)" [attr.componenturl]="projectCatalogComponentURL">
 </project-catalog-element>
+
+

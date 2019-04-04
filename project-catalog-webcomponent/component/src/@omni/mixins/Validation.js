@@ -18,9 +18,7 @@ limitations under the License.
 ===============LICENSE_END=========================================================
 */
 
-import { each, isUndefined, concat } from "lodash-es";
-
-
+import { each, isUndefined, } from "lodash-es";
 export default LitElementBase =>
   class extends LitElementBase {
     static get properties() {
@@ -40,42 +38,52 @@ export default LitElementBase =>
         $invalid: {},
         validations: {},
         config: {},
-        
+
         /**
-         * 
+         *
          * @param {Object} options.validations Validations
          * @param {Object} options.config Validator configuration
          */
         init({ validations, config }) {
+         
           this.validations = validations;
           this.config = config;
         },
-
+        
         /**
          * Validates a form against any validations configured for the form
-         * 
+         *
          * @param {String} formName The name of the form to validate
          */
         validate(formName) {
-          this.$invalid = {}
+          this.$invalid = {};
 
           each(this.validations[formName], (validations, field) => {
             let model_value = _this.data[formName][field];
 
-            if (!isUndefined(model_value)) {
-              let failedValidations = [];
+            let failedValidations = [];
 
-              each(validations, (validation_fn, validation) => {
-                if (!validation_fn(model_value)) {
-                  failedValidations.push(validation);
-                }
-              });
-
-              if(failedValidations.length > 0){
-                this.$invalid[field] = failedValidations
+            each(validations, (validation_fn, validation) => {
+              if (!validation_fn(model_value)) {
+                failedValidations.push(validation);
               }
+            });
+
+            if (failedValidations.length > 0) {
+              this.$invalid[field] = failedValidations;
             }
           });
+        },
+
+        validateField(fieldName) {
+          let failedValidations = [];
+          
+          each(validations, (validation_fn, validation) => {
+            if (!validation_fn(model_value)) {
+              failedValidations.push(validation);
+            }
+          });
+
         }
       };
     }

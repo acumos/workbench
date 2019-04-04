@@ -21,7 +21,7 @@ limitations under the License.
 var config = {
 	local : {
 		ENVIRONMENT : "dev",
-		projectmSURL : "http://localhost:9081",
+		projectmSURL : "http://localhost:9080/mlWorkbench/v1/project",
 	},
 	deploy : {
 		ENVIRONMENT : process.env.ENVIRONMENT,

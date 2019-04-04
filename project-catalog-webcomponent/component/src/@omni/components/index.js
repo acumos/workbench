@@ -19,3 +19,4 @@ limitations under the License.
 */
 
 export { OmniModal } from "./modal";
+export { OmniDialog } from "./dialog";

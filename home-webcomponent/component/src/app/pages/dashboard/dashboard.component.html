@@ -23,6 +23,6 @@ limitations under the License.
     <li class="breadcrumb-item"><a routerLink="/pages/dashboard">Dashboard</a></li>
   </ol>
 </nav>
-<dashboard-element (dashboard-event)="this.OnDashboardEvent($event)"></dashboard-element>
+<dashboard-element (dashboard-event)="this.OnDashboardEvent($event)" [attr.componenturl]="dashboardComponentURL"></dashboard-element>
 
  

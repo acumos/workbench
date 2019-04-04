@@ -85,10 +85,14 @@ export class OmniModal extends LitElement {
   }
 
   dismiss() {
+    this.isOpen = false;
+
     this.dispatchEvent(new CustomEvent("omni-modal-dimissed"));
   }
 
   close() {
+    this.isOpen = false;
+
     this.dispatchEvent(new CustomEvent("omni-modal-closed"));
   }
 

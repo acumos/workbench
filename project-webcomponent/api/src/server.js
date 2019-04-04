@@ -56,7 +56,6 @@ app.use(bodyParser.text({
 }));
 
 
-require('./routes_config.js')(app);
 require('./routes_services.js')(app);
 
 

@@ -26,6 +26,7 @@ import { ScriptService } from '../../../@core/utils/script.service';
 export class CatalogComponent implements OnInit {
   router: Router;
   script: ScriptService;
+  public projectCatalogComponentURL: string;
 
   constructor(router: Router, script: ScriptService) {
     this.router = router;
@@ -39,6 +40,7 @@ export class CatalogComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.script.load('projectCatalogComponent');
+    this.projectCatalogComponentURL = this.script.getConfig('projectCatalogComponent');
+    this.script.load('projectCatalogComponent', '/src/project-catalog-element.js');
   }
 }

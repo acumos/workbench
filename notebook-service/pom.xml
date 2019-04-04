@@ -43,7 +43,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<!-- Stand-alone RESTFul application -->
 		<!-- FixMe Values are for template -->
-		<start-class>org.acumos.workbench.projectservice.ProjectServiceApplication</start-class>
+		<start-class>org.acumos.workbench.notebookservice.NotebookServiceApplication</start-class>
 		<!-- Jenkins invokes mvn with argument -Dbuild.number=${BUILD_NUMBER} -->
 		<build.number>0</build.number>
 		<!-- Not supplied to all jobs; e.g., Javadoc -->

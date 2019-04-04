@@ -20,9 +20,6 @@
 
 package org.acumos.workbench.projectservice.controller;
 
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 
@@ -42,6 +39,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 @RestController
 @RequestMapping(value = "/")
@@ -73,7 +73,7 @@ public class ProjectServiceController {
 	 */
 	@ApiOperation(value = "To create new  Project in ML Workbench")
 	@RequestMapping(value = "/users/{authenticatedUserId}/projects/", method = RequestMethod.POST)
-    public ResponseEntity<Project> createProject(@ApiParam(value = "The Acumos Login Id",allowableValues = "")@PathVariable("authenticatedUserId") String authenticatedUserId,@ApiParam(value = "Project Details") @RequestBody Project project) {
+    public ResponseEntity<Project> createProject(@ApiParam(value = "The Acumos Login Id", required = true)@PathVariable("authenticatedUserId") String authenticatedUserId,@ApiParam(value = "Project Details") @RequestBody Project project) {
 		logger.debug("createProject() Begin");
 		//Validation 
 		projectValidationService.validateInput(authenticatedUserId, project);
@@ -105,7 +105,7 @@ public class ProjectServiceController {
 	 */
 	@ApiOperation(value = "To update existing project")
 	@RequestMapping(value = "/users/{authenticatedUserId}/projects/{projectId}", method = RequestMethod.PUT)
-    public ResponseEntity<?> updateProject(@ApiParam(value = "The Acumos Login Id",allowableValues="")@PathVariable("authenticatedUserId") String authenticatedUserId,@ApiParam(value = "The ProjectId to be updated",allowableValues = "") @PathVariable("projectId") String projectId,@ApiParam(value ="Project Details") @RequestBody Project project) {
+    public ResponseEntity<?> updateProject(@ApiParam(value = "The Acumos Login Id", required = true)@PathVariable("authenticatedUserId") String authenticatedUserId,@ApiParam(value = "The ProjectId to be updated", required = true) @PathVariable("projectId") String projectId,@ApiParam(value ="Project Details") @RequestBody Project project) {
 		logger.debug("updateProject() Begin");
 		Project result = null;
 		//Validation 
@@ -137,7 +137,7 @@ public class ProjectServiceController {
 	 */
 	@ApiOperation(value = "To get the existing project details for a user")
 	@RequestMapping(value = "/users/{authenticatedUserId}/projects/{projectId}", method = RequestMethod.GET)
-    public ResponseEntity<?> getProject(@ApiParam(value = "The Acumos Login Id",allowableValues = "")@PathVariable("authenticatedUserId") String authenticatedUserId,@ApiParam(value ="The ProjectId to be updated", allowableValues = "") @PathVariable("projectId") String projectId) {
+    public ResponseEntity<?> getProject(@ApiParam(value = "The Acumos Login Id", required = true)@PathVariable("authenticatedUserId") String authenticatedUserId,@ApiParam(value ="The ProjectId to be updated", required = true) @PathVariable("projectId") String projectId) {
 		logger.debug("getProject() Begin");
 		// 1. Validate the input
 		
@@ -167,7 +167,7 @@ public class ProjectServiceController {
 	 */
 	@ApiOperation(value = "To get list of project for a user")
 	@RequestMapping(value = "/users/{authenticatedUserId}/projects/", method = RequestMethod.GET)
-    public ResponseEntity<?> getProjects(@ApiParam(value = "The Acumos Login Id",allowableValues = "")@PathVariable("authenticatedUserId") String authenticatedUserId) {
+    public ResponseEntity<?> getProjects(@ApiParam(value = "The Acumos Login Id", required = true)@PathVariable("authenticatedUserId") String authenticatedUserId) {
 		logger.debug("getProjects() Begin");
 		// 1. Validate the input
 
@@ -195,7 +195,7 @@ public class ProjectServiceController {
 	 */
 	@ApiOperation(value = "To delete existing project")
 	@RequestMapping(value = "/users/{authenticatedUserId}/projects/{projectId}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteProject(@ApiParam(value = "The Acumos Login Id",allowableValues = "")@PathVariable("authenticatedUserId") String authenticatedUserId,@ApiParam(value ="The ProjectId of the Project to be deleted", allowableValues = "") @PathVariable("projectId") String projectId) {
+    public ResponseEntity<?> deleteProject(@ApiParam(value = "The Acumos Login Id", required = true)@PathVariable("authenticatedUserId") String authenticatedUserId,@ApiParam(value ="The ProjectId of the Project to be deleted", required = true) @PathVariable("projectId") String projectId) {
 		logger.debug("deleteProject() Begin");
 		ServiceState result = null;
 		
@@ -231,9 +231,9 @@ public class ProjectServiceController {
 	@ApiOperation(value = "To archive existing project")
 	@RequestMapping(value = "/users/{authenticatedUserId}/projects/{projectId}/actionType/{actionType}", method = RequestMethod.PUT)
 	public ResponseEntity<Project> archiveProject(
-			@ApiParam(value = "The Acumos Login Id", allowableValues = "") @PathVariable("authenticatedUserId") String authenticatedUserId,
-			@ApiParam(value = "ProjectId", allowableValues = "") @PathVariable("The ProjectId of the Project to be Archived") String projectId,
-			@ApiParam(value = "Whether to Archive or un Archive Project", allowableValues ="A,UA") @PathVariable("actionType") String actionType) {
+			@ApiParam(value = "The Acumos Login Id", required = true) @PathVariable("authenticatedUserId") String authenticatedUserId,
+			@ApiParam(value = "The ProjectId of the Project to be Archived", required = true) @PathVariable("projectId") String projectId,
+			@ApiParam(value = "Whether to Archive or un Archive Project", allowableValues ="A,UA", required = true) @PathVariable("actionType") String actionType) {
     	logger.debug("archiveProject() Begin");
 		// 1. Validate the input
 

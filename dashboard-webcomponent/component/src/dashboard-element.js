@@ -24,7 +24,14 @@ import {style} from './dashboard-styles.js';
 export class DashboardLitElement extends LitElement {
   static get properties() {
     return {
-      message: { type: String, notify: true }
+      message: { type: String, notify: true },
+      componenturl: {type: String, notify: true},
+      successMessge: {type: String},
+      errorMessge: {type: String},
+      user_name : {type: String},
+      projectCount: {type: Number},
+      pipelineCount: {type: Number},
+      notebookCount: {type: Number}
     };
   }
 
@@ -36,6 +43,134 @@ export class DashboardLitElement extends LitElement {
     super();
 
     this.message = "Custom message placeholder";
+    this.projectCount = 0;
+    this.pipelineCount = 0;
+    this.notebookCount = 0;
+
+    this.requestUpdate().then(() => {
+      console.log('update componenturl : ' + this.componenturl);
+      this.componenturl = (this.componenturl === undefined || this.componenturl === null)? '' : this.componenturl;
+      this.getConfig();
+    })
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    window.addEventListener('hashchange', this._boundListener);
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    window.removeEventListener('hashchange', this._boundListener);
+  }
+
+  getConfig(){
+    const url = this.componenturl + '/api/config';
+    this.resetMessage();
+	  fetch(url, {
+		  method: 'GET',
+      mode: 'cors',
+      cache: 'default'
+    }).then(res => res.json())
+      .then((envVar) => {
+        this.msconfig = envVar.msconfig;
+        this.user_name = envVar.user_name;
+        if(this.user_name === undefined || this.user_name === null || this.user_name === ''){
+          this.errorMessge = 'Unable to retrieve User ID from Session Cookie. Pls login to Acumos portal and come back here..';
+          this.view = 'error';
+        } else {
+          this.getProjectsCount();
+          this.getPipelineCount();
+          this.getNotebookCount();
+        }
+    }).catch(function (error) {
+      console.info('Request failed', error);
+      this.errorMessge = 'Unable to retrive configuration information. Error is: '+ error;
+      this.view = 'error';
+    });
+  }
+
+  resetMessage(){
+    this.successMessge = '';
+    this.errorMessge = '';
+  }
+
+  getProjectsCount(){
+    const url = this.componenturl + '/api/project/count';
+	  fetch(url, {
+		  method: 'POST',
+      mode: 'cors',
+      cache: 'default',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        "url": this.msconfig.projectmSURL,
+        "user_name": this.user_name
+      })
+    }).then(res => res.json())
+      .then((n) => {
+        if(n.status === 'Error'){
+          this.errorMessge = n.message;
+        } else {
+          this.projectCount = n.data;
+        }
+    }).catch(function (error) {
+      console.error('Request failed', error);
+      this.errorMessge = 'Project count fetch request failed with error: '+ error;
+    });
+  }
+
+  getNotebookCount(){
+    const url = this.componenturl + '/api/notebook/count';
+	  fetch(url, {
+		  method: 'POST',
+      mode: 'cors',
+      cache: 'default',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        "url": this.msconfig.notebookmSURL,
+        "user_name": this.user_name
+      })
+    }).then(res => res.json())
+      .then((n) => {
+        if(n.status === 'Error'){
+          this.errorMessge = n.message;
+        } else {
+          this.notebookCount = n.data;
+        }
+    }).catch(function (error) {
+      console.error('Request failed', error);
+      this.errorMessge = 'Notebook count fetch request failed with error: '+ error;
+    });
+  }
+
+  getPipelineCount(){
+    const url = this.componenturl + '/api/pipeline/count';
+	  fetch(url, {
+		  method: 'POST',
+      mode: 'cors',
+      cache: 'default',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        "url": this.msconfig.pipelinemSURL,
+        "user_name": this.user_name
+      })
+    }).then(res => res.json())
+      .then((n) => {
+        if(n.status === 'Error'){
+          this.errorMessge = n.message;
+        } else {
+          this.pipelineCount = n.data;
+        }
+    }).catch(function (error) {
+      console.error('Request failed', error);
+      this.errorMessge = 'Pipeline count fetch request failed with error: '+ error;
+    });
   }
 
   userAction(action) {
@@ -58,188 +193,155 @@ export class DashboardLitElement extends LitElement {
           <div class="col-lg-12">
             <div class="row">
               <div class="col-md-2">
-                <div class="card shadow-sm">
-                  <div class="card-body text-center">
-                    <div class="text-primary mb-4">
-                      <mwc-icon>developer_board</mwc-icon>
-                      <h3 class="font-weight-normal mt-2">Projects</h3>
+                <div class="card-shadow card card-link mb-3 mb-5 bg-white rounded">
+                  <a href="javascript:void" @click=${e => this.userAction("project")}>
+                    <div class="card-body text-center">
+                      <div class="div-color mb-4">
+                          <button class="btnIcon btn-primary">
+                            <mwc-icon class="mwc-icon">share</mwc-icon>
+                          </button>
+                        <h4 class="font-weight-normal mt-2">Projects</h4>
+                      </div>
+                      <h6 class="font-weight-normal">${this.projectCount}</h6>
                     </div>
-                    <h2 class="font-weight-normal">67</h2>
-                    <div class="d-flex justify-content-between">
-                      <button
-                        class="btn btn-primary btn-sm mt-3 mb-4"
-                        @click=${e => this.userAction("catalog-project")}
-                      >
-                        Catalog
+                  </a>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="card-shadow card card-link mb-3 mb-5 bg-white rounded">
+                  <a href="javascript:void" @click=${e => this.userAction("notebook")}>
+                    <div class="card-body text-center">
+                      <div class="div-color mb-4">
+                        <button class="btnIcon btn-primary">
+                          <mwc-icon class="mwc-icon">library_books</mwc-icon>
+                        </button>
+                        <h4 class="font-weight-normal mt-2">Notebooks</h4>
+                      </div>
+                      <h6 class="font-weight-normal">${this.notebookCount}</h6>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="card-shadow card card-link mb-3 mb-5 bg-white rounded">
+                  <a href="javascript:void" @click=${e => this.userAction("pipeline")}>
+                    <div class="card-body text-center">
+                      <div class="div-color mb-4">
+                        <button class="btnIcon btn-primary">
+                          <mwc-icon class="mwc-icon">device_hub</mwc-icon>
+                        </button>
+                        <h4 class="font-weight-normal mt-2">Data Pipelines</h4>
+                      </div>
+                      <h6 class="font-weight-normal">${this.pipelineCount}</h6>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="card-shadow card card-link mb-3 mb-5 bg-white rounded">
+                  <div class="card-body text-center">
+                    <div class="div-color mb-4">
+                      <button class="btnIcon btn-primary">
+                        <mwc-icon class="mwc-icon">dns</mwc-icon>
                       </button>
-                      <button
-                        class="btn btn-primary btn-sm mt-3 mb-4"
-                        @click=${e => this.userAction("create-project")}
-                      >
-                        create
+                      <h4 class="font-weight-normal mt-2">Datasets</h4>
+                    </div>
+                    <h6 class="font-weight-normal">Coming soon...</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="card-shadow card card-link mb-3 mb-5 bg-white rounded">
+                  <div class="card-body text-center">
+                    <div class="div-color mb-4">
+                      <button class="btnIcon btn-primary">
+                        <mwc-icon class="mwc-icon">view_quilt</mwc-icon>
                       </button>
+                      <h4 class="font-weight-normal mt-2">Predictors</h4>
                     </div>
+                    <h6 class="font-weight-normal">Coming soon...</h6>
                   </div>
                 </div>
               </div>
               <div class="col-md-2">
-                <div class="card shadow-sm">
+                <div class="card-shadow card card-link mb-3 mb-5 bg-white rounded">
                   <div class="card-body text-center">
-                    <div class="text-danger mb-4">
-                      <mwc-icon>pie_chart</mwc-icon>
-                      <h3 class="font-weight-normal mt-2">Models</h3>
+                    <div class="div-color mb-4">
+                      <button class="btnIcon btn-primary">
+                        <mwc-icon class="mwc-icon">perm_data_setting</mwc-icon>
+                      </button>
+                      <h4 class="font-weight-normal mt-2">Models</h4>
                     </div>
-                    <h2 class="font-weight-normal">89</h2>
-                    <div class="d-flex justify-content-between">
-                      <button class="btn btn-primary btn-sm mt-3 mb-4">Catalog</button>
-                      <button class="btn btn-primary btn-sm mt-3 mb-4">Create</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-2">
-                <div class="card shadow-sm">
-                  <div class="card-body text-center">
-                    <div class="text-info mb-4">
-                      <mwc-icon>gavel</mwc-icon>
-                      <h3 class="font-weight-normal mt-2">Pipelines</h3>
-                    </div>
-                    <h2 class="font-weight-normal">23</h2>
-                    <div class="d-flex justify-content-between">
-                      <a
-                        class="btn btn-primary btn-sm mt-3 mb-4"
-                        href="pipelines/pipelines-catalog.html"
-                        >Catalog</a
-                      >
-                      <a
-                        class="btn btn-primary btn-sm mt-3 mb-4"
-                        href="pipelines/create-pipeline.html"
-                        >Create</a
-                      >
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-2">
-                <div class="card shadow-sm">
-                  <div class="card-body text-center">
-                    <div class="text-success mb-4">
-                      <mwc-icon>supervised_user_circle</mwc-icon>
-                      <h3 class="font-weight-normal mt-2">Users</h3>
-                    </div>
-                    <h2 class="font-weight-normal">14</h2>
-                    <div class="d-flex justify-content-between">
-                      <button class="btn btn-primary btn-sm mt-3 mb-4">Catalog</button>
-                      <button class="btn btn-primary btn-sm mt-3 mb-4">Create</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-2">
-                <div class="card shadow-sm">
-                  <div class="card-body text-center">
-                    <div class="text-primary mb-4">
-                      <mwc-icon>collections</mwc-icon>
-                      <h3 class="font-weight-normal mt-2">Predictors</h3>
-                    </div>
-                    <h2 class="font-weight-normal">34</h2>
-                    <div class="d-flex justify-content-between">
-                      <button class="btn btn-primary btn-sm mt-3 mb-4">Catalog</button>
-                      <button class="btn btn-primary btn-sm mt-3 mb-4">Create</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-2">
-                <div class="card shadow-sm">
-                  <div class="card-body text-center">
-                    <div class="text-danger mb-4">
-                      <mwc-icon>perm_data_setting</mwc-icon>
-                      <h3 class="font-weight-normal mt-2">DataSets</h3>
-                    </div>
-                    <h2 class="font-weight-normal">56</h2>
-                    <div class="d-flex justify-content-between">
-                      <button class="btn btn-primary btn-sm mt-3 mb-4">Catalog</button>
-                      <button class="btn btn-primary btn-sm mt-3 mb-4">Create</button>
-                    </div>
+                    <h6 class="font-weight-normal">Coming soon...</h6>
                   </div>
                 </div>
               </div>
             </div>
             <div class="row  mt-4">
               <div class="col-md-3">
-                <div class="card shadow-sm">
-                  <div class="card-body text-center">
+                <div class="card-shadow card card-link mb-3 mb-5 bg-white rounded">
+                  <div class="card-body div-color text-center">
                     <div class="mb-4">
-                      <img
-                        src="https://via.placeholder.com/92x92"
-                        class="img-lg rounded-circle mb-2"
-                        alt="profile image"
-                      />
-                      <h4>CMLP Studio</h4>
+                      <button class="btnIcon btn-primary">
+                        <mwc-icon class="mwc-icon">donut_small</mwc-icon>
+                      </button>
+                      <h4 class="font-weight-normal mt-2">CMLP Studio</h4>
                     </div>
-                    <p class="mt-4 card-text">
-                      Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
-                      commodo ligula eget dolor. Lorem
-                    </p>
-                    <button class="btn btn-primary btn-sm mt-3 mb-4">Launch</button>
+                    <h6 class="font-weight-normal card-text">
+                      Lorem Ipsum is simply dummy text of the printing and type setting industry...
+                    </h6>
+                    <button class="btn btn-primary btn-sm mt-3 mb-4">Download&nbsp;<mwc-icon>get_app</button>
                   </div>
                 </div>
               </div>
               <div class="col-md-3">
-                <div class="card shadow-sm">
-                  <div class="card-body text-center">
+                <div class="card-shadow card card-link mb-3 mb-5 bg-white rounded">
+                  <div class="card-body div-color text-center">
                     <div class="mb-4">
-                      <img
-                        src="https://via.placeholder.com/92x92"
-                        class="img-lg rounded-circle mb-2"
-                        alt="profile image"
-                      />
-                      <h4>AcuCompose</h4>
+                      <button class="btnIcon btn-primary">
+                        <mwc-icon class="mwc-icon">games</mwc-icon>
+                      </button>
+                      <h4 class="font-weight-normal mt-2">AcuCompose</h4>
                     </div>
-                    <p class="mt-4 card-text">
+                    <h6 class="font-weight-normal card-text">
                       Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
                       commodo ligula eget dolor. Lorem
-                    </p>
-                    <button class="btn btn-primary btn-sm mt-3 mb-4">Launch</button>
+                    </h6>
+                    <button class="btn btn-primary btn-sm mt-3 mb-4">Launch&nbsp;<mwc-icon>launch</button>
                   </div>
                 </div>
               </div>
               <div class="col-md-3">
-                <div class="card shadow-sm">
-                  <div class="card-body text-center">
+                <div class="card-shadow card card-link mb-3 mb-5 bg-white rounded">
+                  <div class="card-body div-color text-center">
                     <div class="mb-4">
-                      <img
-                        src="https://via.placeholder.com/92x92"
-                        class="img-lg rounded-circle mb-2"
-                        alt="profile image"
-                      />
-                      <h4>Zeppelin Notebook</h4>
+                      <button class="btnIcon btn-primary">
+                        <mwc-icon class="mwc-icon">library_books</mwc-icon>
+                      </button>
+                      <h4 class="font-weight-normal mt-2">Zeppelin Notebook</h4>
                     </div>
-                    <p class="mt-4 card-text">
+                    <h6 class="font-weight-normal card-text">
                       Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
                       commodo ligula eget dolor. Lorem
-                    </p>
-                    <button class="btn btn-primary btn-sm mt-3 mb-4">Launch</button>
+                    </h6>
+                    <button class="btn btn-primary btn-sm mt-3 mb-4">Launch &nbsp;<mwc-icon>launch</mwc-icon></button>
                   </div>
                 </div>
               </div>
               <div class="col-md-3">
-                <div class="card shadow-sm">
-                  <div class="card-body text-center">
+                <div class="card-shadow card card-link mb-3 mb-5 bg-white rounded">
+                  <div class="card-body div-color text-center">
                     <div class="mb-4">
-                      <img
-                        src="https://via.placeholder.com/92x92"
-                        class="img-lg rounded-circle mb-2"
-                        alt="profile image"
-                      />
-                      <h4>Jupyter Notebook</h4>
+                      <button class="btnIcon btn-primary">
+                        <mwc-icon class="mwc-icon">library_books</mwc-icon>
+                      </button>
+                      <h4 class="font-weight-normal mt-2">Jupyter Notebook</h4>
                     </div>
-                    <p class="mt-4 card-text">
+                    <h6 class="font-weight-normal card-text">
                       Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
                       commodo ligula eget dolor. Lorem
-                    </p>
-                    <button class="btn btn-primary btn-sm mt-3 mb-4">Launch</button>
+                    </h6>
+                    <button class="btn btn-primary btn-sm mt-3 mb-4">Launch&nbsp;&nbsp;<mwc-icon>launch</button>
                   </div>
                 </div>
               </div>

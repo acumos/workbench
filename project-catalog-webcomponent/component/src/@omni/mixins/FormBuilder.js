@@ -34,15 +34,6 @@ export default LitElementBase =>
     }
 
     /**
-     * Pseudo-private properties
-     */
-    _FormBuilderData = {}
-    _FormBuilderFormConfig = {}
-    _FormBuilderFormState = {
-        invalid: {}
-    }
-
-    /**
      * Initializes the data
      *
      * @param {Object} data The form data

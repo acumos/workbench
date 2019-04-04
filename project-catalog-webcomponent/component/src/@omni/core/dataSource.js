@@ -18,8 +18,7 @@ limitations under the License.
 ===============LICENSE_END=========================================================
 */
 
-import { filter, sortBy, isFunction, each, lowerCase } from "lodash-es";
-
+import { filter, sortBy, isFunction, each, lowerCase, cloneDeep, toLower } from "lodash-es";
 
 export class DataSource {
   constructor({ data, page, pageSize, filter, sort }) {
@@ -27,61 +26,92 @@ export class DataSource {
     this._page = page || 0;
     this._pageSize = pageSize || 10;
     this._filter = filter;
+    this._searchCriteria;
     this._sort = sort;
+    this._cachedData;
   }
 
-  /**
-   * Gets the data applying paging and filtering
-   * 
-   * @return {Object[]} Sorted, paged, and filtered data
-   */
-  data() {
-    let sortedData, pagedData, filteredData;
-
-    if (isFunction(this._sort)) {
-      sortedData = sortBy(this._rawData, this._sort);
-    } else {
-      sortedData = sortBy(this._rawData, [this._sort]);
-    }
-
-    pagedData = sortedData.slice(
-      this._pageSize * this._page,
-      this._pageSize * this._page + this._pageSize
-    );
-
+  get filtered() {
     if (this._fuzzyFilter) {
       let results = [];
-
-      each(this._rawData, item => {
+      each(this._cachedData, item => {
         let key = Object.keys(this._filter)[0];
-
         if (lowerCase(item[key]).includes(this._filter[key])) {
           results.push(item);
         }
       });
-
-      filteredData = results;
+      return results;
     } else {
-      filteredData = filter(pagedData, this._filter);
+      return filter(this._cachedData, this._filter);
     }
+  }
 
-    return filteredData;
+  get sorted() {
+    if (isFunction(this._sort)) {
+      return this._cachedData.sort(this._sort);
+    } else {
+      return sortBy(this._cachedData, [this._sort]);
+    }
+  }
+
+  get paged() {
+    return this._cachedData.slice(
+      this._pageSize * this.page,
+      this._pageSize * this.page + this._pageSize
+    );
+  }
+  /**
+   * Gets the data applying paging and filtering
+   *
+   * @return {Object[]} Sorted, paged, and filtered data
+   */
+  get data() {
+    this._cachedData = this._rawData;
+    this._cachedData = this.searched;
+    this._cachedData = this.filtered;
+    this._cachedData = this.sorted;
+    this._cachedData = this.paged;
+
+    return this._cachedData;
   }
 
   /**
    * Set a filter for the data
-   * 
+   *
    * @param {Object} filter A `{key: value} ` to filter by
    * @param {Boolean} fuzzy Perform a fuzzy filter rather than exact
    */
   filter(filter, fuzzy) {
     this._filter = filter;
+    //this._filter = toLower(filter);
     this._fuzzyFilter = fuzzy || false;
+  }
+
+  search(searchCriteria){
+    this._searchCriteria = searchCriteria;
+  }
+
+  /**
+   * Set a filter for the data
+   *
+   * @param {String} filter A `valye ` to filter by
+   */
+  get searched() {
+    let results = [];
+    if (this._searchCriteria) {
+      results = this._cachedData.filter(item => {
+        const filterTextLower = this._searchCriteria.toLowerCase();
+        return JSON.stringify(item).toLowerCase().includes(filterTextLower);
+      });
+    } else {
+      results  = [...this._cachedData];
+    }
+    return results;
   }
 
   /**
    * Sets the sort strategy
-   * 
+   *
    * @param {String|Function} sort A key to sort by or sort function
    */
   sort(sort) {
@@ -89,26 +119,24 @@ export class DataSource {
   }
 
   /**
-   * Gets or sets the current page
-   * 
+   * sets the current page
+   *
    * @param {Number} page A page number
    */
-  page(page) {
-    if (typeof page !== "undefined") {
-      // Bounds check
-      if (page < 0 || page > this.totalPages() - 1) {
-        return;
-      }
+  set page(page) {
+    if (page >= 0 || page < this.totalPages) {
       this._page = page;
-      return;
-    }
 
+    }
+  }
+
+  get page() {
     return this._page;
   }
 
   /**
    * The number of records in the dataset
-   * 
+   *
    * @return {Number} The number of records in the dataset
    */
   total() {
@@ -117,33 +145,33 @@ export class DataSource {
 
   /**
    * The total number of pages
-   * 
+   *
    * @return {Number} The to total number of pages
    */
-  totalPages() {
-    return Math.floor(this._rawData.length / this._pageSize);
+  get totalPages() {
+    this._cachedData = this._rawData;
+
+    return Math.ceil(this.filtered.length / this._pageSize);
   }
 
   /**
    * Navigates the dataset
-   * 
+   *
    * @param {String} direction Available Options "first", "next", "previous", "last"
    */
   navigatePage(direction) {
-    let currentPageIndex = this._page;
-
     switch (direction) {
       case "first":
-        this.page(0);
+        this.page = 0;
         break;
       case "next":
-        this.page(currentPageIndex + 1);
+        this.page = this.page + 1;
         break;
       case "previous":
-        this.page(currentPageIndex - 1);
+        this.page = this.page - 1;
         break;
       case "last":
-        this.page(this.totalPages() - 1);
+        this.page = this.totalPages - 1;
         break;
     }
   }

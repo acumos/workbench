@@ -17,6 +17,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ===============LICENSE_END=========================================================
 */
-
-export {default as ValidationMixin} from './Validation'
-export {default as DataMixin} from './Data'
+export { default as BaseElementMixin } from "./BaseElement";
+export { default as ValidationMixin } from "./Validation";
+export { default as DataMixin } from "./Data";

@@ -17,11 +17,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ===============LICENSE_END=========================================================
 -->
+<nav>
+     <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a routerLink="/pages/dashboard">ML Workbench</a></li>
+          <li class="breadcrumb-item"><a routerLink="/pages/projects/catalog">Projects</a></li>
+          <li class="breadcrumb-item active">{{name}}</li>
+     </ol>
+</nav>
 
-<!-- <view-project-element
-  (view-project-event)="this.OnViewProjectEvent($event)"
-  projectId="{{ id }}"
->
-</view-project-element> -->
-
-<project-element view='view' projectId="{{ id }}" (project-event)="this.OnViewProjectEvent($event)"> </project-element>
+<project-element attr.projectId="{{ id }}" [attr.componenturl]="projectComponentURL" (project-event)="this.OnViewProjectEvent($event)"> </project-element>

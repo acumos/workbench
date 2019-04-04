@@ -33,12 +33,16 @@ export class ScriptService {
 
   }
 
-  load(script: string) {
-    this.scripts[script] = { src: script };
-    return this.loadScript(script);
+  getConfig(name: string) {
+    return this.config[name];
   }
 
-  loadScript(name: string) {
+  load(script: string, uri: string) {
+    this.scripts[script] = { src: script };
+    return this.loadScript(script, uri);
+  }
+
+  loadScript(name: string, uri: string) {
     return new Promise((resolve, reject) => {
       // resolve if already loaded
       if (this.scripts[name].loaded) {
@@ -46,7 +50,7 @@ export class ScriptService {
       } else {
         const script = document.createElement('script');
         script.type = 'module';
-        script.src = this.config[name];
+        script.src = this.config[name] + uri;
         if (script.readyState) {
           // IE
           script.onreadystatechange = () => {

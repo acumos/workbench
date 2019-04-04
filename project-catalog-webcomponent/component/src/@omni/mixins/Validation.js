@@ -18,9 +18,7 @@ limitations under the License.
 ===============LICENSE_END=========================================================
 */
 
-import { each, isUndefined, concat } from "lodash-es";
-
-
+import { each, set, get, isUndefined, isEmpty } from "lodash-es";
 export default LitElementBase =>
   class extends LitElementBase {
     static get properties() {
@@ -34,15 +32,12 @@ export default LitElementBase =>
       const _this = this;
 
       this.$validations = {
-        $form: {
-          $valid: false
-        },
-        $invalid: {},
+        $fields: {},
         validations: {},
         config: {},
-        
+
         /**
-         * 
+         *
          * @param {Object} options.validations Validations
          * @param {Object} options.config Validator configuration
          */
@@ -53,29 +48,69 @@ export default LitElementBase =>
 
         /**
          * Validates a form against any validations configured for the form
-         * 
-         * @param {String} formName The name of the form to validate
+         *
+         * @param {String} path The path of the field to validate
          */
-        validate(formName) {
-          this.$invalid = {}
+        validate(path) {
+          let fieldValidations, fieldModel, failedValidations;
 
-          each(this.validations[formName], (validations, field) => {
-            let model_value = _this.data[formName][field];
+          fieldValidations = get(this.validations, path, {});
+          fieldModel = get(_this.data, path, '');
+          failedValidations = [];
 
-            if (!isUndefined(model_value)) {
-              let failedValidations = [];
+          each(fieldValidations, (validationFn, validationName) => {
+            // if(!validationFn(fieldModel)) {
+            //   failedValidations.push(validationName);
+            // }
+          })
 
-              each(validations, (validation_fn, validation) => {
-                if (!validation_fn(model_value)) {
-                  failedValidations.push(validation);
-                }
-              });
+          // Set field validation state
+          set(this.$fields, `${path}.$touch`, true);
+          set(this.$fields, `${path}.$dirty`, true);
+          set(this.$fields, `${path}.$invalid`, failedValidations.length > 0);
+          set(this.$fields, `${path}.failedValidations`, failedValidations);
+        },
 
-              if(failedValidations.length > 0){
-                this.$invalid[field] = failedValidations
-              }
+        /**
+         * Checks the give path and returns the valiation state
+         * @param {String} path The path of the field to check validation
+         */
+
+        getValidationErrors(path) {
+          return get(this.$fields, `${path}.failedValidations`, []);
+        },
+
+        get $valid() {          
+          return this.countDeepTruthy('$invalid', this.$fields) === 0;
+        },
+
+        get $dirty() {
+          return this.countDeepTruthy('$dirty', this.$fields) !== 0;
+        },
+
+        /**
+         * Does a DFS and counts how many times a property is truthy
+         * 
+         * @param {String} property The property to search for
+         * @param {Object} root The starting object
+         * @returns {Number} Number of times {property} is truthy
+         */
+        countDeepTruthy(property, root) {
+          function searchDeep(root, acc) {
+            acc = isUndefined(acc) ? 0 : acc;
+            let invalid = 0;
+            if (!isUndefined(root[property]) && root[property]) {
+              return 1;
             }
-          });
+
+            each(root, (value) => {
+              acc += searchDeep(value, invalid);
+            })
+
+            return acc
+          }
+
+          return searchDeep(root, 0);
         }
       };
     }

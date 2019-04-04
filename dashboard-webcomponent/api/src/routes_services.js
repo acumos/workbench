@@ -17,63 +17,162 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ===============LICENSE_END=========================================================
 */
+var env = process.env.ENVIRONMENT || "local";
+
+var properties = require('./properties.js').get(env);
+var https = require("https");
 var request = require('request');
 
 module.exports = function(app) {
+	const uripath = "/users/";
+	var configENV = properties.ENVIRONMENT;
+	var userName = properties.userName;
+	var ms_urls = {
+		projectmSURL : properties.projectmSURL,
+		pipelinemSURL : properties.pipelinemSURL,
+		notebookmSURL : properties.notebookmSURL
+	};
 	
-	/*
-	 * Here all APIs will be written to integrate with back end mS.
-	 */
+	app.get('/api/config', function(req, res) {
+		try {
+			let user_name = (req.cookies.userDetail !== undefined && req.cookies.userDetail !== null && req.cookies.userDetail.length > 0) ? 
+				req.cookies.userDetail[0]: userName;
+			res.configInfo = {
+				configENV : configENV,
+				msconfig : ms_urls,
+				user_name:  user_name
+			};
+			res.send(res.configInfo);
+		} catch (err) {
+			reject("error");
+		}
+	});
 	
-	
+	var getJWTToken = function(req){
+		return req.cookies.auth_token;
+	}
+
+	app.post('/api/project/count', function(req, res) {
+		let serviceUrl = req.body.url + uripath;
+		let user_name = req.body.user_name;
+		getProjectsCount(user_name, serviceUrl, getJWTToken(req)).then(function(result) {
+					res.send(result);
+		});
+	});
+
+	app.post('/api/pipeline/count', function(req, res) {
+		// let serviceUrl = req.body.url + uripath;
+		// let user_name = req.body.user_name;
+		var r = {
+			status: 'Success',
+			code : 200,
+			data : 10,
+			message : 'Success'
+		};
+		res.send(r);
+		// getProjectsCount(user_name, serviceUrl, getJWTToken(req)).then(function(result) {					
+		// });
+	});
+
+	app.post('/api/notebook/count', function(req, res) {
+		let serviceUrl = req.body.url + uripath;
+		let user_name = req.body.user_name;
+		getNotebookCount(user_name, serviceUrl, getJWTToken(req)).then(function(result) {
+			res.send(result);
+		});
+	});
+
+	var getProjectsCount = function(user_name, url, jwtToken) {
+		return new Promise(function(resolve, reject) {
+			var options = {
+				method : "GET",
+				url : url + user_name + "/projects/",
+				headers : {
+					'Content-Type' : 'application/json',
+					'Authorization' : jwtToken,
+				},
+			};
+
+			request.get(options, function(error, response) {
+				if (!error && response.statusCode == 200) {
+					let projectCount = JSON.parse(response.body).length;
+					resolve(prepRespJsonAndLogit(response, projectCount, "Projects count retrieved successfully."));
+				} else if (!error) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to retrieve Projects."));
+				} else {
+					resolve(prepRespJsonAndLogit(null, null, null, error));
+				}
+			});
+		});
+	};
+
+	var getNotebookCount = function(user_name, url, jwtToken) {
+		return new Promise(function(resolve, reject) {
+			var options = {
+				method : "GET",
+				url : url + user_name + "/notebooks/",
+				headers : {
+					'Content-Type' : 'application/json',
+					'Authorization' : jwtToken,
+				},
+			};
+
+			request.get(options, function(error, response) {
+				if (!error && response.statusCode == 200) {
+					let notebookCount = JSON.parse(response.body).length;
+					resolve(prepRespJsonAndLogit(response, notebookCount, "Notebook count retrieved successfully."));
+				} else if (!error) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to retrieve Notebook count."));
+				} else {
+					resolve(prepRespJsonAndLogit(null, null, null, error));
+				}
+			});
+		});
+	};
+
 	/* Utility functions */
 	var prepRespJsonAndLogit = function(httpResponse, responseData, message, error) {
-		var r = {};
+		let r = {};
+		let errorFlag = true;
+		let code = 0;
+		let status = '';
 		try {
 			if (!isNull(httpResponse)) {
-				var code = httpResponse.statusCode;
-				var body = httpResponse.body;
-				
-				if (code == 200) {
-					console.info(message);
-				} else if (code == 401) {
-					message = "Unauthorized access! " + message;
-					console.error(message);
-				} else if (code == 500) {
-					
+				code = httpResponse.statusCode;
+				if (code === 200 || code === 201) {
+					errorFlag = false;
+				} else if (code === 500){
+					message = "Unknown server Error: " + message;
+				} else {
 					if (typeof responseData == 'string'){
 						responseData = JSON.parse(responseData);
 					}
-					console.info ('responseData');
-					console.info (responseData);
-					console.error(message + " Server response code: " + code + " and response body : " + body);
-					message = responseData.message;
-				} else if (code != 200) {
-					console.error(message + " Server response code: " + code + " and response body : " + body);
+					message = responseData.serviceStatus.statusMessage;
 				}
-
-				r = {
-					code : code,
-					data : responseData,
-					message : message
-				};
 			} else {
-				r = {
-					code : null,
-					data : null,
-					message : "NODE JS Server Error : " + error.message
-				};
-				console.error(r.message);
+				message = "Server is not available." + error;
 			}
+
+			if(errorFlag) {
+				status = 'Error';
+			} else {
+				status = 'Success';
+			}
+
+			r = {
+				status: status,
+				code : code,
+				data : responseData,
+				message : message
+			};
+			return r;
 		} catch (e) {
 			return {
+				status: 'Error',
 				code : null,
-				data : null,
-				message : "NODE JS Server Internal Error : " + e.message
+				message : 'NODE JS Server Internal Error : ' + e.message
 			};
-		}
-
-		return r;
+		}		
 	};
 	
 	function serviceStartedLog(serviceName) {

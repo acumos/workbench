@@ -1,4 +1,4 @@
-<!--  
+/*
 ===============LICENSE_START=======================================================
 Acumos Apache-2.0
 ===================================================================================
@@ -16,15 +16,30 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ===============LICENSE_END=========================================================
--->
-<nav>
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a routerLink="/pages/dashboard">Dashboard</a></li>
-    <li class="breadcrumb-item"><a>Projects</a></li>
-    <li class="breadcrumb-item active">Catalog</li>
-  </ol>
-</nav>
-<project-catalog-element (catalog-project-event)="this.OnCatalogProjectEvent($event)" [attr.componenturl]="projectCatalogComponentURL">
-</project-catalog-element>
+*/
 
+import { RegisterComponent } from "../core";
+import { each, camelCase } from "lodash-es";
 
+export default LitElementBase =>
+  class extends LitElementBase {
+    static get properties() {
+      return {
+        $services: {
+          type: Object
+        }
+      };
+    }
+
+    constructor() {
+      super();
+
+      let dependencies;
+
+      dependencies = this.dependencies || [];
+
+      each(dependencies, dependency => {
+        RegisterComponent(dependency.name, dependency);
+      });
+    }
+  };

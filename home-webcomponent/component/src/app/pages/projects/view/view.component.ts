@@ -28,6 +28,7 @@ export class ViewComponent implements OnInit {
   public id: string;
   public router: Router;
   script: ScriptService;
+  public projectComponentURL: string;
 
   constructor(private route: ActivatedRoute, router: Router, script: ScriptService) {
     this.script = script;
@@ -42,6 +43,7 @@ export class ViewComponent implements OnInit {
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
-    this.script.load('projectComponent');
+    this.projectComponentURL = this.script.getConfig('projectComponent');
+    this.script.load('projectComponent', '/src/project-element.js');
   }
 }

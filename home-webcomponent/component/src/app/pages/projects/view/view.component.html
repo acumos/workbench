@@ -18,10 +18,5 @@ limitations under the License.
 ===============LICENSE_END=========================================================
 -->
 
-<!-- <view-project-element
-  (view-project-event)="this.OnViewProjectEvent($event)"
-  projectId="{{ id }}"
->
-</view-project-element> -->
 
-<project-element view='view' projectId="{{ id }}" (project-event)="this.OnViewProjectEvent($event)"> </project-element>
+<project-element attr.projectId="{{ id }}" [attr.componenturl]="projectComponentURL" (project-event)="this.OnViewProjectEvent($event)"> </project-element>

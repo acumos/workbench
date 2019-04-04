@@ -27,5 +27,7 @@ limitations under the License.
     <li class="breadcrumb-item active">Create</li>
   </ol>
 </nav>
-<project-element view='add' (project-event)="this.OnProjectEvent($event)"> </project-element>
+<project-element [attr.projectId]="id" [attr.componenturl]="projectComponentURL" (project-event)="this.OnProjectEvent($event)"> 
+  
+</project-element>
 

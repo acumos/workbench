@@ -20,7 +20,6 @@ limitations under the License.
 
 import { set } from "lodash-es";
 
-
 export default LitElementBase =>
   class extends LitElementBase {
     static get properties() {
@@ -33,10 +32,10 @@ export default LitElementBase =>
 
     constructor() {
       super();
-      const _this = this;
+      const _this = this;      
 
       this.$data = {
-        $set(fieldPath, value) {
+        set(fieldPath, value) {
           set(_this, `data.${fieldPath}`, value);
 
           _this.requestUpdate();

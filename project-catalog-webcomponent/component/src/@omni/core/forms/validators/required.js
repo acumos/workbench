@@ -19,5 +19,4 @@ limitations under the License.
 */
 
 export default (field) => {
-    debugger;
 }

@@ -24,6 +24,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { CreateComponent } from './projects/create/create.component';
 import { CatalogComponent } from './projects/catalog/catalog.component';
 import { ViewComponent } from './projects/view/view.component';
+import { NotebookCatalogComponent } from './notebook/catalog/catalog.component';
+import { NotebookViewComponent } from './notebook/view/view.component';
 
 const routes: Routes = [
   {
@@ -43,8 +45,16 @@ const routes: Routes = [
         component: CatalogComponent,
       },
       {
-        path: 'projects/view/:id',
+        path: 'projects/view/:id/:name',
         component: ViewComponent,
+      },
+      {
+        path: 'notebook/catalog',
+        component: NotebookCatalogComponent,
+      },
+      {
+        path: 'notebook/view/:id/:name',
+        component: NotebookViewComponent,
       },
       {
         path: '',

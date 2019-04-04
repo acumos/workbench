@@ -21,11 +21,15 @@ limitations under the License.
 var config = {
 	local : {
 		ENVIRONMENT : "dev",
-		projectmSURL : "http://localhost:9081",
+		userName : "sample",
+		projectmSURL : "http://localhost:9088/mlWorkbench/v1/project",
+		notebookmSURL : "http://localhost:9089/mlWorkbench/v1/notebook",
 	},
 	deploy : {
 		ENVIRONMENT : process.env.ENVIRONMENT,
+		userName : process.env.userName,
 		projectmSURL : process.env.projectmSURL,
+		notebookmSURL : process.env.notebookmSURL,
 	}
 };
 

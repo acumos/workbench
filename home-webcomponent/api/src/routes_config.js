@@ -26,17 +26,21 @@ var request = require('request');
 
 module.exports = function(app) {
 
-	var ms_urls = {
+	var ms_wc_urls = {
 		dashboardComponent : properties.dashboardComponent,
 		projectComponent : properties.projectComponent,
 		projectCatalogComponent : properties.projectCatalogComponent,
+		notebookCatalogComponent : properties.notebookCatalogComponent,
+		notebookComponent: properties.notebookComponent
 	};
 	
 	app.get('/config', function(req, res) {
 		try {
-			res.send(ms_urls);
+			res.send(ms_wc_urls);
 		} catch (err) {
-			reject("error");
+			console.log(err);
 		}
 	});
+
+	
 };

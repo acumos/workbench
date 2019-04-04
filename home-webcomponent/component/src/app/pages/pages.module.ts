@@ -21,6 +21,8 @@ import { NgModule } from '@angular/core';
 import { PagesComponent } from './pages.component';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { ProjectsModule } from './projects/projects.module';
+import { NotebookModule } from './notebook/notebook.module';
+
 
 import { PagesRoutingModule } from './pages-routing.module';
 import { ThemeModule } from '../@theme/theme.module';
@@ -34,6 +36,7 @@ const PAGES_COMPONENTS = [PagesComponent];
     ThemeModule,
     DashboardModule,
     ProjectsModule,
+    NotebookModule,
     MiscellaneousModule,
   ],
   declarations: [...PAGES_COMPONENTS],

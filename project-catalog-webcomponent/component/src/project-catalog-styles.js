@@ -133,4 +133,16 @@ hr {
 .inactive-status {
   color: red;
 }
+
+.error-status {
+  color: red;
+}
+
+.success-status {
+  color: green;
+}
+
+.card-body {
+  padding-right: 1.00rem;
+}
 `;

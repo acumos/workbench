@@ -51,6 +51,10 @@ width: 300px;
 padding-left: 15px;
 }
 
+.table-sm td, .table-sm th {
+    padding: 0.5rem;
+}
+
 .btnIcon {
 padding: 0.1rem 0.1rem;
 font-size: .075rem;

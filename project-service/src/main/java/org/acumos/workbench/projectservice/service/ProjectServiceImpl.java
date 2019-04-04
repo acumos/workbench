@@ -271,31 +271,33 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 	
 	@Override
-	public Project archiveProject(String authenticatedUserId, String projectId, String actionType) { 
+	public Project archiveProject(String authenticatedUserId, String projectId, String actionType) {
 		logger.debug("archiveProject() Begin");
 		Project result = null;
 		MLPUser mlpUser = getUserDetails(authenticatedUserId);
-		// Call to CDS to mark project as archived. 
+		// Call to CDS to mark project as archived.
 		cdsClient.setRequestId(MDC.get(PSLogConstants.MDCs.REQUEST_ID));
 		MLPProject mlpProject = cdsClient.getProject(projectId);
-		switch(actionType) { 
-		case(UNARCHIVE) : 
+		ArtifactState artifactStatus = new ArtifactState();
+
+		switch (actionType) {
+		case (UNARCHIVE):
 			mlpProject.setActive(true);
+			artifactStatus.setStatus(ArtifactStatus.ACTIVE);
 			break;
-		case(ACTIVE):
-		default : 
+		case (ACTIVE):
+		default:
 			mlpProject.setActive(false);
+			artifactStatus.setStatus(ArtifactStatus.ARCHIVED);
 		}
-		
+
 		cdsClient.updateProject(mlpProject);
-		
+
 		result = ProjectServiceUtil.getProjectVO(mlpProject, mlpUser);
-		
+
 		ServiceState serviceStatus = new ServiceState();
 		serviceStatus.setStatus(ServiceStatus.COMPLETED);
 		result.setServiceStatus(serviceStatus);
-		ArtifactState artifactStatus = new ArtifactState();
-		artifactStatus.setStatus(ArtifactStatus.ARCHIVED);
 		result.setArtifactStatus(artifactStatus);
 		logger.debug("archiveProject() End");
 		return result;

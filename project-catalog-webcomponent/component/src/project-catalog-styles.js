@@ -133,4 +133,12 @@ hr {
 .inactive-status {
   color: red;
 }
+
+.error-status {
+  color: red;
+}
+
+.success-status {
+  color: green;
+}
 `;

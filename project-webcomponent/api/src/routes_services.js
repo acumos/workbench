@@ -20,60 +20,125 @@ limitations under the License.
 var request = require('request');
 
 module.exports = function(app) {
+	let uripath = "/users/";
+	let auth = "";
+	let serviceUrl = "";
+
+	app.post('/api/project/details', function (req, res){
+    	auth = req.headers.auth;
+    	serviceUrl = req.body.url + uripath;
+    	let projectId = req.body.projectId;
+    	getSelectedProjectDetails(auth, serviceUrl, projectId).then(function(result){
+    		res.send(result);
+    	});
+	});
+
+	app.put('/api/project/update', function (req, res){
+    	auth = req.headers.auth;
+    	serviceUrl = req.body.url + uripath;
+		let projectPayload = req.body.projectPayload;
+		let projectId = req.body.projectId;
+    	updateProjectDetails(auth, serviceUrl, projectId, projectPayload).then(function(result){
+    		res.send(result);
+    	});
+	});
 	
-	/*
-	 * Here all APIs will be written to integrate with back end mS.
-	 */
+	var getSelectedProjectDetails = function(auth, srvcUrl, projectId){
+    	return new Promise(function(resolve, reject) {
+            var options = {
+				method : "GET",
+				url : srvcUrl + auth + "/projects/" + projectId,
+				headers : {
+					'Content-Type' : 'application/json',
+					'Authorization' : auth,
+				}
+            };
+			
+			
+            request.get(options, function(error, response) {
+				if (!error && response.statusCode == 200) {
+					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Project details retrieved successfully."));
+				} else if (!error) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to retrieve Project."));
+				} else {
+					resolve(prepRespJsonAndLogit(null, null, null, error));
+				}
+            });
+       });
+    };
 	
+	var updateProjectDetails = function(auth, srvcUrl, projectId, projectPayload){
+    	return new Promise(function(resolve, reject) {
+            var options = {
+				method : "PUT",
+				url : srvcUrl + auth + "/projects/" + projectId,
+				headers : {
+					'Content-Type' : 'application/json',
+					'Authorization' : auth,
+				},
+				body: projectPayload,
+				json: true
+            };
+			console.log(srvcUrl);
+			console.log(projectId);
+
+            request.put(options, function(error, response) {
+				console.log(error);
+				console.log(response);
+
+				if (!error && response.statusCode == 200) {
+					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Project details updated successfully."));
+				} else if (!error) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to update Project."));
+				} else {
+					resolve(prepRespJsonAndLogit(null, null, null, error));
+				}
+            });
+       });
+    };
 	
-	/* Utility functions */
 	var prepRespJsonAndLogit = function(httpResponse, responseData, message, error) {
-		var r = {};
+		let r = {};
+		let errorFlag = true;
+		let code = 0;
+		let status = '';
 		try {
 			if (!isNull(httpResponse)) {
-				var code = httpResponse.statusCode;
-				var body = httpResponse.body;
-				
-				if (code == 200) {
-					console.info(message);
-				} else if (code == 401) {
-					message = "Unauthorized access! " + message;
-					console.error(message);
-				} else if (code == 500) {
-					
+				code = httpResponse.statusCode;
+				if (code === 200 || code === 201) {
+					errorFlag = false;
+				} else if (code === 500){
 					if (typeof responseData == 'string'){
 						responseData = JSON.parse(responseData);
 					}
-					console.info ('responseData');
-					console.info (responseData);
-					console.error(message + " Server response code: " + code + " and response body : " + body);
-					message = responseData.message;
-				} else if (code != 200) {
-					console.error(message + " Server response code: " + code + " and response body : " + body);
+					message = "Unknown server Error: " + message;
+				} else {
+					message = responseData.serviceStatus.statusMessage;
 				}
-
-				r = {
-					code : code,
-					data : responseData,
-					message : message
-				};
 			} else {
-				r = {
-					code : null,
-					data : null,
-					message : "NODE JS Server Error : " + error.message
-				};
-				console.error(r.message);
+				message = "Server is not available." + error;
 			}
+
+			if(errorFlag) {
+				status = 'Error';
+			} else {
+				status = 'Success';
+			}
+
+			r = {
+				status: status,
+				code : code,
+				data : responseData,
+				message : message
+			};
+			return r;
 		} catch (e) {
 			return {
+				status: 'Error',
 				code : null,
-				data : null,
-				message : "NODE JS Server Internal Error : " + e.message
+				message : 'NODE JS Server Internal Error : ' + e.message
 			};
-		}
-
-		return r;
+		}		
 	};
 	
 	function serviceStartedLog(serviceName) {

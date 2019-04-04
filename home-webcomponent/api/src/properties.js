@@ -20,14 +20,16 @@ limitations under the License.
 
 var config = {
 	local : {
-		dashboardComponent : "http://localhost:9083/src/dashboard-element.js",
-		projectComponent: "http://localhost:9084/src/project-element.js",
-		projectCatalogComponent: "http://localhost:9085/src/project-catalog-element.js"
+		dashboardComponent : "http://localhost:9083",
+		projectComponent: "http://localhost:9084",
+		projectCatalogComponent: "http://localhost:9085",
+		projectmSURL : "http://localhost:9080",
 	},
 	deploy : {
 		dashboardComponent : process.env.dashboardComponent,
 		projectComponent : process.env.projectComponent,
-		projectCatalogComponent: process.env.projectCatalogComponent
+		projectCatalogComponent: process.env.projectCatalogComponent,
+		projectmSURL : process.env.projectmSURL,
 	}
 };
 

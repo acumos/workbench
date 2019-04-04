@@ -26,6 +26,7 @@ import { ScriptService } from '../../@core/utils/script.service';
 export class DashboardComponent implements OnInit {
   router: Router;
   script: ScriptService;
+  public dashboardComponentURL: string;
 
   constructor(router: Router, script: ScriptService) {
     this.router = router;
@@ -41,6 +42,7 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.script.load('dashboardComponent');
+    this.dashboardComponentURL = this.script.getConfig('dashboardComponent');
+    this.script.load('dashboardComponent', '/src/dashboard-element.js');
   }
 }

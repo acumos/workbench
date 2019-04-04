@@ -55,10 +55,7 @@ app.use(bodyParser.text({
 	limit : '500mb'
 }));
 
-
-require('./routes_config.js')(app);
 require('./routes_services.js')(app);
-
 
 var server = app.listen(port, function() {
 	console.info('running on ...'+ port);

@@ -17,7 +17,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ===============LICENSE_END=========================================================
 */
+import { isUndefined } from "lodash-es";
 
-export const RegisterComponent = (component) => {
-    customElements.define('omni-modal', component);
-}
+
+export const RegisterComponent = (name, _class) => {
+   if(isUndefined(customElements.get(name))){
+      customElements.define(name, _class);
+    }
+    
+};

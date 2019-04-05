@@ -80,7 +80,7 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 	 * 		returns Project with ServiceStatus indicating error 
 	 */
 	@ExceptionHandler(ArchivedException.class)
-	public final ResponseEntity<?> handleArchivedException(ForbiddenException ex, WebRequest request) {
+	public final ResponseEntity<?> handleArchivedException(ArchivedException ex, WebRequest request) {
 		Project project = getProject(ex);
 		return new ResponseEntity<Project>(project, HttpStatus.LOCKED);
 	}

@@ -112,13 +112,16 @@ public class ProjectServiceController {
 		projectValidationService.validateInput(authenticatedUserId, project);
 		inputValidationService.isValuePresent("ProjectId", projectId);
 		
+		// Check if project exists
+		projectService.projectExists(projectId);
 		// 5. Check if authenticated user is the owner of the Project. (Call to CDS)
 		projectService.isOwnerOfProject(authenticatedUserId, projectId);
+		
 		
 		// 6. Check if Project is Archived, it should not be. (Call to CDS)
 		projectService.isProjectArchived(projectId);
 		
-		result = projectService.updateProject(authenticatedUserId, project);
+		result = projectService.updateProject(authenticatedUserId, projectId, project);
 		logger.debug("updateProject() End");
       	return new ResponseEntity<Project>(result, HttpStatus.OK);
     }
@@ -147,6 +150,9 @@ public class ProjectServiceController {
 		// 3. Project Id should be present
 		inputValidationService.isValuePresent("ProjectId", projectId);
 		
+		// Check if project exists
+		projectService.projectExists(projectId);
+				
 		// 4. Check if authenticated user is the owner of the Project. (Call to CDS)
 		projectService.isOwnerOfProject(authenticatedUserId, projectId);
 		
@@ -203,7 +209,11 @@ public class ProjectServiceController {
 
 		// 2. Check authenticatedUserId should be present
 		inputValidationService.isValuePresent("AuthenticatedUserId", authenticatedUserId);
+		inputValidationService.isValuePresent("Proejct Id", projectId);
 		
+		// Check if project exists
+		projectService.projectExists(projectId);
+				
 		// 3. Check if the user is the owner of the project or has the permission to archive the project.(call to CDS).  
 		projectService.isOwnerOfProject(authenticatedUserId, projectId);
 		
@@ -239,7 +249,11 @@ public class ProjectServiceController {
 
 		// 2. Check authenticatedUserId should be present
     	inputValidationService.isValuePresent("AuthenticatedUserId", authenticatedUserId);
+    	inputValidationService.isValuePresent("Proejct Id", projectId);
     	
+    	// Check if project exists
+    	projectService.projectExists(projectId);
+    			
 		// 3. Check if the user is the owner of the project or has the permission to archive the project.(call to CDS).  
     	projectService.isOwnerOfProject(authenticatedUserId, projectId);
     	

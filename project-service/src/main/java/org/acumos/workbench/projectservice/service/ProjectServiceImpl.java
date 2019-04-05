@@ -69,9 +69,20 @@ public class ProjectServiceImpl implements ProjectService {
 	@Autowired
 	private ConfigurationProperties confprops;
 	
+	
+	@Override 
+	public void projectExists(String projectId) throws ProjectNotFoundException  { 
+		logger.debug("projectExists(String) Begin");
+		MLPProject mlpProject = cdsClient.getProject(projectId);
+		if(null == mlpProject) { 
+			throw new ProjectNotFoundException();
+		}
+		logger.debug("projectExists(String) End");
+	}
+	
 	@Override
 	public void projectExists(String authenticatedUserId,Project project) throws DuplicateProjectException {
-		logger.debug("projectExists() Begin");
+		logger.debug("projectExists(String, String) Begin");
 		MLPUser mlpUser = getUserDetails(authenticatedUserId);
 		String userId = mlpUser.getUserId();
 		//  CDS call to check if project-version already exists for the authenticated UserId 
@@ -87,7 +98,7 @@ public class ProjectServiceImpl implements ProjectService {
 			logger.warn("Project name and version already exists");
 			throw new DuplicateProjectException();
 		}
-		logger.debug("projectExists() End");
+		logger.debug("projectExists(String,String) End");
 	}
 
 	@Override
@@ -151,18 +162,18 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 	
 	@Override
-	public Project updateProject(String authenticatedUserId, Project project) throws DuplicateProjectException {
+	public Project updateProject(String authenticatedUserId, String projectId, Project project) throws DuplicateProjectException {
 		logger.debug("updateProject() Begin");
 		Project result = new Project(); 
-		Identifier projectId  = project.getProjectId();
-		String newName = projectId.getName();
-		Version projectVersion = projectId.getVersionId();
+		Identifier projectIdentifier  = project.getProjectId();
+		String newName = projectIdentifier.getName();
+		Version projectVersion = projectIdentifier.getVersionId();
 		String newversion = projectVersion.getLabel();
 		MLPUser mlpUser = getUserDetails(authenticatedUserId);
 		String userId = mlpUser.getUserId();
 		
 		cdsClient.setRequestId(MDC.get(PSLogConstants.MDCs.REQUEST_ID));
-		MLPProject old_mlpProject = cdsClient.getProject(project.getProjectId().getUuid());
+		MLPProject old_mlpProject = cdsClient.getProject(projectId);
 		if(!newName.equals(old_mlpProject.getName()) || !newversion.equals(old_mlpProject.getVersion())){
 			// Check if new project name and version is not same as previous, then it should not already exists in the DB. (Call to CDS).
 			Map<String, Object> queryParameters = new HashMap<String, Object>();

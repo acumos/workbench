@@ -207,7 +207,7 @@ private static final Logger logger = LoggerFactory.getLogger(MethodHandles.looku
 		doNothing().when(cmnDataService).updateProject(mlpProject);
 		PowerMockito.when(ProjectServiceUtil.getProjectVO(mlpProject,mlpUser)).thenReturn(project);
 		//when(projectServiceUtil.getProjectVO(mlpProject, mlpUser)).thenReturn(project);
-		projectServiceImpl.updateProject(authenticatedUserId, project);
+		projectServiceImpl.updateProject(authenticatedUserId, project.getProjectId().getUuid(), project);
 		
 	}
 	

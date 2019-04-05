@@ -33,8 +33,19 @@ import org.acumos.workbench.projectservice.exception.UserNotFoundException;
 
 public interface ProjectService {
 
+	
 	/**
-	 * This method check if Project already exists in DB. 
+	 * This method check if Project exists for input projectId. 
+	 * 
+	 * @param projectId
+	 * 		projectId of project
+	 * @throws ProjectNotFoundException
+	 * 		throws ProjectNotFoundException if project not found. 
+	 */
+	public void projectExists(String projectId) throws ProjectNotFoundException;
+	
+	/**
+	 * This method check if Project already exists with same name and version in DB. 
 	 * 
 	 * @param authenticatedUserId
 	 * 		the authenticated User Id. 
@@ -93,13 +104,16 @@ public interface ProjectService {
 	 * @param authenticatedUserId
 	 * 		the authenticated User Id. 
 	 * 
+	 * @param projectId
+	 * 		projectId to be updated
+	 * 
 	 * @param project
-	 * 		the Project object.
+	 * 		Project details to be updated
 	 * 
 	 * @return Project
 	 * 		the Project object with additional details. 
 	 */
-	public Project updateProject(String authenticatedUserId, Project project) throws DuplicateProjectException;
+	public Project updateProject(String authenticatedUserId, String projectId, Project project) throws DuplicateProjectException;
 	
 	/**
 	 * To get the Project details for input projectId. 

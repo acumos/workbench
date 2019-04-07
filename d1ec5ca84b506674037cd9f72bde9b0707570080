@@ -169,6 +169,193 @@
       "revId": "d1ec5ca84b506674037cd9f72bde9b0707570080",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2f6244fd_aef6cf4a",
+        "filename": "notebook-catalog-webcomponent/component/index.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-04-07T16:25:25Z",
+      "side": 1,
+      "message": "Can we remove dependency on localhost",
+      "revId": "d1ec5ca84b506674037cd9f72bde9b0707570080",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a8d97e14_36f1eb84",
+        "filename": "notebook-catalog-webcomponent/component/src/@omni/core/forms/validators/maxLenth.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-04-07T16:25:25Z",
+      "side": 1,
+      "message": "why use debugger here?",
+      "revId": "d1ec5ca84b506674037cd9f72bde9b0707570080",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a9c3785_ae4267b4",
+        "filename": "notebook-catalog-webcomponent/component/src/@omni/core/forms/validators/minValue.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-04-07T16:25:25Z",
+      "side": 1,
+      "message": "Need to add a radix so it always a decimal number",
+      "revId": "d1ec5ca84b506674037cd9f72bde9b0707570080",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5bea199d_82959c1b",
+        "filename": "notebook-catalog-webcomponent/component/src/@omni/core/forms/validators/required.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-04-07T16:25:25Z",
+      "side": 1,
+      "message": "Why do we have debugger here",
+      "revId": "d1ec5ca84b506674037cd9f72bde9b0707570080",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a36b9e5_bb9d8a56",
+        "filename": "notebook-catalog-webcomponent/component/src/@omni/core/utils/isUndefined.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-04-07T16:25:25Z",
+      "side": 1,
+      "message": "Why need debuuger here",
+      "revId": "d1ec5ca84b506674037cd9f72bde9b0707570080",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "29dc531a_be305809",
+        "filename": "notebook-catalog-webcomponent/component/src/@omni/mixins/Validation.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-04-07T16:25:25Z",
+      "side": 1,
+      "message": "Please explain where is this used?",
+      "revId": "d1ec5ca84b506674037cd9f72bde9b0707570080",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c0a51c1a_bbd8ac1f",
+        "filename": "notebook-catalog-webcomponent/component/src/independent-runtime.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-04-07T16:25:25Z",
+      "side": 1,
+      "message": "what is purpose of slot here without any values",
+      "revId": "d1ec5ca84b506674037cd9f72bde9b0707570080",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c764c4c0_87bdb1af",
+        "filename": "notebook-catalog-webcomponent/component/src/notebook-catalog-element.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-04-07T16:25:25Z",
+      "side": 1,
+      "message": "It is Zeppelin . Please correct spelling",
+      "revId": "d1ec5ca84b506674037cd9f72bde9b0707570080",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ef227af7_09d85c0a",
+        "filename": "notebook-catalog-webcomponent/component/src/notebook-catalog-element.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-04-07T16:25:25Z",
+      "side": 1,
+      "message": "Zeppelin is the ideal name.",
+      "revId": "d1ec5ca84b506674037cd9f72bde9b0707570080",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "133de236_d8ff6f92",
+        "filename": "notebook-catalog-webcomponent/component/src/notebook-catalog-element.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-04-07T16:25:25Z",
+      "side": 1,
+      "message": "Do we need keepalive here?",
+      "revId": "d1ec5ca84b506674037cd9f72bde9b0707570080",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4c20f6d3_d31f8903",
+        "filename": "notebook-catalog-webcomponent/component/src/notebook-catalog-element.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-04-07T16:25:25Z",
+      "side": 1,
+      "message": "Can this very long string be refactored into multiple units",
+      "revId": "d1ec5ca84b506674037cd9f72bde9b0707570080",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
     }
   ]
 }

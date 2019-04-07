@@ -118,6 +118,57 @@
       "revId": "d1ec5ca84b506674037cd9f72bde9b0707570080",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "367fb447_5d29c16e",
+        "filename": "notebook-catalog-webcomponent/api/src/routes_services.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-04-07T15:49:52Z",
+      "side": 1,
+      "message": "where is this used?",
+      "revId": "d1ec5ca84b506674037cd9f72bde9b0707570080",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "090eb806_9a2696c2",
+        "filename": "notebook-catalog-webcomponent/api/src/routes_services.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-04-07T15:49:52Z",
+      "side": 1,
+      "message": "This can be substituted as \nif (!pString || pString.length \u003d\u003d 0) {\n        return true;\n    }\n    // checks for a non-white space character \n    // than removing all the whitespace and checking \n    // against an empty string\n    return !/[^\\s]+/.test(pString);",
+      "revId": "d1ec5ca84b506674037cd9f72bde9b0707570080",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ea70357e_4f622196",
+        "filename": "notebook-catalog-webcomponent/api/src/server.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-04-07T15:49:52Z",
+      "side": 1,
+      "message": "Probably externalise the values. please check my last comments",
+      "revId": "d1ec5ca84b506674037cd9f72bde9b0707570080",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
     }
   ]
 }

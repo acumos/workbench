@@ -84,6 +84,40 @@
       "revId": "d1ec5ca84b506674037cd9f72bde9b0707570080",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e44af96c_eb27ae94",
+        "filename": "dashboard-webcomponent/component/src/dashboard-element.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-04-07T15:14:55Z",
+      "side": 1,
+      "message": "May be we can have keepalive: true . keepalive option tells the browser to perform the request in background, even after it leaves the page. So it’s essential for our request to succeed.",
+      "revId": "d1ec5ca84b506674037cd9f72bde9b0707570080",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "46a841c5_769b252d",
+        "filename": "home-webcomponent/component/src/app/pages/notebook/catalog/catalog.component.ts",
+        "patchSetId": 12
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-04-07T15:14:55Z",
+      "side": 1,
+      "message": "Do we need ngOnDestroy() to clean Up. Used to clean up any necessary code when a component is removed from the DOM.",
+      "revId": "d1ec5ca84b506674037cd9f72bde9b0707570080",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
     }
   ]
 }

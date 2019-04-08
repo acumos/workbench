@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7484d196_38fbbf1d",
+        "filename": "dashboard-webcomponent/api/src/routes_services.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2019-04-08T06:30:48Z",
+      "side": 1,
+      "message": "Once the backend is ready, we can get the details from cookies. (Also Need to discuss with vaibhav to change from username to user id)",
+      "parentUuid": "73b41cf0_65932242",
+      "revId": "d1ec5ca84b506674037cd9f72bde9b0707570080",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ced247a5_d4fca670",
         "filename": "dashboard-webcomponent/api/src/server.js",
         "patchSetId": 12
@@ -70,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "533e55c3_a03afc97",
+        "filename": "dashboard-webcomponent/api/src/server.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2019-04-08T06:30:48Z",
+      "side": 1,
+      "message": "Can we do these changes in later commits, once the demo is done.",
+      "parentUuid": "2d141ffc_af4a4479",
+      "revId": "d1ec5ca84b506674037cd9f72bde9b0707570080",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d86c0f8_84cce63d",
         "filename": "dashboard-webcomponent/component/index.html",
         "patchSetId": 12
@@ -81,6 +117,24 @@
       "writtenOn": "2019-04-07T14:37:55Z",
       "side": 1,
       "message": "This need to be externalised or have context root instead of hardcoding",
+      "revId": "d1ec5ca84b506674037cd9f72bde9b0707570080",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2fc58411_eb614ed3",
+        "filename": "dashboard-webcomponent/component/index.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2019-04-08T06:30:48Z",
+      "side": 1,
+      "message": "removed.",
+      "parentUuid": "4d86c0f8_84cce63d",
       "revId": "d1ec5ca84b506674037cd9f72bde9b0707570080",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false
@@ -274,6 +328,24 @@
     },
     {
       "key": {
+        "uuid": "eed62d0f_9be6bd98",
+        "filename": "notebook-catalog-webcomponent/component/src/@omni/mixins/Validation.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2019-04-08T06:30:48Z",
+      "side": 1,
+      "message": "this is the validations for forms where we create a project or notebook.",
+      "parentUuid": "29dc531a_be305809",
+      "revId": "d1ec5ca84b506674037cd9f72bde9b0707570080",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0a51c1a_bbd8ac1f",
         "filename": "notebook-catalog-webcomponent/component/src/independent-runtime.js",
         "patchSetId": 12
@@ -291,6 +363,24 @@
     },
     {
       "key": {
+        "uuid": "ad5d5d51_19930b93",
+        "filename": "notebook-catalog-webcomponent/component/src/independent-runtime.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2019-04-08T06:30:48Z",
+      "side": 1,
+      "message": "This acts as default slot for child elements without any slot name or attributes.",
+      "parentUuid": "c0a51c1a_bbd8ac1f",
+      "revId": "d1ec5ca84b506674037cd9f72bde9b0707570080",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c764c4c0_87bdb1af",
         "filename": "notebook-catalog-webcomponent/component/src/notebook-catalog-element.js",
         "patchSetId": 12
@@ -302,6 +392,24 @@
       "writtenOn": "2019-04-07T16:25:25Z",
       "side": 1,
       "message": "It is Zeppelin . Please correct spelling",
+      "revId": "d1ec5ca84b506674037cd9f72bde9b0707570080",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bc501cde_4893c6f1",
+        "filename": "notebook-catalog-webcomponent/component/src/notebook-catalog-element.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2019-04-08T06:30:48Z",
+      "side": 1,
+      "message": "Actually, in backend it is spelled as Zeppeline. To match that, we have written the same way. Once the backend fix is done, we will update this.",
+      "parentUuid": "c764c4c0_87bdb1af",
       "revId": "d1ec5ca84b506674037cd9f72bde9b0707570080",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false

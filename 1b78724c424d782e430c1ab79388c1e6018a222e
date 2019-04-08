@@ -2,6 +2,229 @@
   "comments": [
     {
       "key": {
+        "uuid": "619e5890_d3494090",
+        "filename": "home-webcomponent/component/src/app/pages/pages-menu.ts",
+        "patchSetId": 13
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2019-04-08T15:09:58Z",
+      "side": 1,
+      "message": "Please make this configurable to add new menu items. So that when a new tool needs to be integrated, then it is matter of deploying the new tool and configuring the link into Acumos platform.",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 4
+      },
+      "revId": "1b78724c424d782e430c1ab79388c1e6018a222e",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b3189844_82e3fd9f",
+        "filename": "notebook-catalog-webcomponent/Dockerfile",
+        "patchSetId": 13
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2019-04-08T15:09:58Z",
+      "side": 1,
+      "message": "please change to 755.",
+      "range": {
+        "startLine": 31,
+        "startChar": 10,
+        "endLine": 31,
+        "endChar": 13
+      },
+      "revId": "1b78724c424d782e430c1ab79388c1e6018a222e",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b9e89b00_c1b442d1",
+        "filename": "notebook-catalog-webcomponent/api/src/server.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2019-04-08T15:09:58Z",
+      "side": 1,
+      "message": "Nice to have: Better to make this configurable at one place. Please keep this as TODO, if cannot make it now.",
+      "range": {
+        "startLine": 43,
+        "startChar": 10,
+        "endLine": 43,
+        "endChar": 15
+      },
+      "revId": "1b78724c424d782e430c1ab79388c1e6018a222e",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a66d938_029de961",
+        "filename": "notebook-catalog-webcomponent/component/src/@omni/components/dialog.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2019-04-08T15:09:58Z",
+      "side": 1,
+      "message": "Is Omni open sourced. If not I do not think it is a good idea to refer it. If these are just names, is there any way you can use any better names as this will confuse developers assuming that the code is dependent on OMNI. This is similar to me giving name as MatLabDialog where i do not depend on MatLab or has nothing to do with it.",
+      "range": {
+        "startLine": 25,
+        "startChar": 13,
+        "endLine": 25,
+        "endChar": 23
+      },
+      "revId": "1b78724c424d782e430c1ab79388c1e6018a222e",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ffe4941_68fd6385",
+        "filename": "notebook-catalog-webcomponent/component/src/@omni/core/forms/validators/maxLenth.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2019-04-08T15:09:58Z",
+      "side": 1,
+      "message": "Please change \"maxLenth\" to \"maxLength\"",
+      "revId": "1b78724c424d782e430c1ab79388c1e6018a222e",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5045773f_e9d3d24d",
+        "filename": "notebook-catalog-webcomponent/component/src/@omni/core/forms/validators/maxLenth.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2019-04-08T15:09:58Z",
+      "side": 1,
+      "message": "Please add the maxLength check implementation.",
+      "revId": "1b78724c424d782e430c1ab79388c1e6018a222e",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb90f1f1_5930878c",
+        "filename": "notebook-catalog-webcomponent/component/src/@omni/core/forms/validators/required.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2019-04-08T15:09:58Z",
+      "side": 1,
+      "message": "Please add implementation.",
+      "revId": "1b78724c424d782e430c1ab79388c1e6018a222e",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a9f2d4c1_8b0866dc",
+        "filename": "notebook-catalog-webcomponent/component/src/@omni/core/utils/isUndefined.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2019-04-08T15:09:58Z",
+      "side": 1,
+      "message": "Please add implementation or remove these empty utils.",
+      "revId": "1b78724c424d782e430c1ab79388c1e6018a222e",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "83cb6343_a7f01888",
+        "filename": "notebook-webcomponent/Dockerfile",
+        "patchSetId": 13
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2019-04-08T15:09:58Z",
+      "side": 1,
+      "message": "change to 755",
+      "range": {
+        "startLine": 31,
+        "startChar": 10,
+        "endLine": 31,
+        "endChar": 13
+      },
+      "revId": "1b78724c424d782e430c1ab79388c1e6018a222e",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e84b24b9_d39dff2f",
+        "filename": "notebook-webcomponent/api/src/properties.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2019-04-08T15:09:58Z",
+      "side": 1,
+      "message": "This path is decided to be placed in a different central config file definitely not here. Please check with Mukesh for the exact location. But, if this is just for local and cannot reuse the configuration from suhc central place, then it is OK and acceptable. But, Please double check.",
+      "range": {
+        "startLine": 25,
+        "startChar": 41,
+        "endLine": 25,
+        "endChar": 64
+      },
+      "revId": "1b78724c424d782e430c1ab79388c1e6018a222e",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eb17aeaa_b83c469d",
+        "filename": "notebook-webcomponent/component/src/@omni/core/forms/validators/maxLenth.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2019-04-08T15:09:58Z",
+      "side": 1,
+      "message": "Please address the similar issues on all webcomponents rather than just fixing them at on component where the comment is posted.",
+      "revId": "1b78724c424d782e430c1ab79388c1e6018a222e",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8cd2ab70_4740bc3e",
         "filename": "project-catalog-webcomponent/component/src/@omni/core/forms/validators/maxLenth.js",
         "patchSetId": 13
@@ -65,6 +288,23 @@
         "endLine": 21,
         "endChar": 14
       },
+      "revId": "1b78724c424d782e430c1ab79388c1e6018a222e",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2b61c71b_c2686e61",
+        "filename": "project-webcomponent/component/src/@omni/core/forms/validators/maxLenth.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2019-04-08T15:09:58Z",
+      "side": 1,
+      "message": "Please address the similar issues on all webcomponents rather than just fixing them at on component where the comment is posted.",
       "revId": "1b78724c424d782e430c1ab79388c1e6018a222e",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false

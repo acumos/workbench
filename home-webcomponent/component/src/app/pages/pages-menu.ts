@@ -27,16 +27,32 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'Projects',
+    icon: 'nb-share',
+    link: '/pages/projects/catalog',
+  },
+  {
+    title: 'Notebooks',
+    icon: 'nb-book-open-outline',
+    link: '/pages/notebook/catalog',
+  },
+  {
+    title: 'Models',
     icon: 'nb-locked',
-    children: [
-      {
-        title: 'Create',
-        link: '/pages/projects/create',
-      },
-      {
-        title: 'Catalog',
-        link: '/pages/projects/catalog',
-      },
-    ],
+    link: '/pages/projects/catalog',
+  },
+  {
+    title: 'Data Pipelines',
+    icon: 'nb-locked',
+    link: '/pages/projects/catalog',
+  },
+  {
+    title: 'CMLP Studio',
+    icon: 'nb-locked',
+    link: '/pages/projects/catalog',
+  },
+  {
+    title: 'AcuCompose',
+    icon: 'nb-locked',
+    link: '/pages/projects/catalog',
   },
 ];

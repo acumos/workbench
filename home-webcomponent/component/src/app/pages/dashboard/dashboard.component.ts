@@ -26,6 +26,7 @@ import { ScriptService } from '../../@core/utils/script.service';
 export class DashboardComponent implements OnInit {
   router: Router;
   script: ScriptService;
+  public dashboardComponentURL: string;
 
   constructor(router: Router, script: ScriptService) {
     this.router = router;
@@ -33,14 +34,17 @@ export class DashboardComponent implements OnInit {
   }
 
   OnDashboardEvent(e) {
-    if (e.detail.data === 'create-project') {
-      this.router.navigateByUrl('/pages/projects/create');
-    } else if (e.detail.data === 'catalog-project') {
+    if (e.detail.data === 'notebook') {
+      this.router.navigateByUrl('/pages/notebook/catalog');
+    } else if (e.detail.data === 'project') {
       this.router.navigateByUrl('/pages/projects/catalog');
+    } else if (e.detail.data === 'pipeline') {
+      this.router.navigateByUrl('/pages/pipeline/catalog');
     }
   }
 
   ngOnInit() {
-    this.script.load('dashboardComponent');
+    this.dashboardComponentURL = this.script.getConfig('dashboardComponent');
+    this.script.load('dashboardComponent', '/src/dashboard-element.js');
   }
 }

@@ -26,6 +26,7 @@ import { ScriptService } from '../../../@core/utils/script.service';
 export class CatalogComponent implements OnInit {
   router: Router;
   script: ScriptService;
+  public projectCatalogComponentURL: string;
 
   constructor(router: Router, script: ScriptService) {
     this.router = router;
@@ -34,11 +35,12 @@ export class CatalogComponent implements OnInit {
 
   OnCatalogProjectEvent(e) {
     if (e.detail.data.action === 'view-project') {
-      this.router.navigateByUrl('/pages/projects/view/' + e.detail.data.projectId);
+      this.router.navigateByUrl('/pages/projects/view/' + e.detail.data.projectId + '/' + e.detail.data.projectName);
     }
   }
 
   ngOnInit() {
-    this.script.load('projectCatalogComponent');
+    this.projectCatalogComponentURL = this.script.getConfig('projectCatalogComponent');
+    this.script.load('projectCatalogComponent', '/src/project-catalog-element.js');
   }
 }

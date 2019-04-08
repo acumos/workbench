@@ -354,7 +354,7 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
         this.isOpenRestoreDialog = false;
       }).catch((error) => {
         console.error('Request failed', error);
-        this.errorMessage = 'Project restore request failed with error: ' + error;
+        this.errorMessage = 'Project unarchive request failed with error: ' + error;
       });
   }
 
@@ -425,7 +425,6 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
   }
 
   modalClosed() {
-    this.$validations.validate("newProject");
     this.requestUpdate();
     this.createProject();
   }
@@ -478,19 +477,22 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
           display: ${this.alertOpen ? "block" : "none"};
         }
       </style>
-      <omni-dialog is-open="${this.isOpenArchiveDialog}" @omni-dialog-dimissed="${this.archiveDialogDismissed}"
+      <omni-dialog title="Archive ${this.selectedProjectName}" close-string="Archive Project" dismiss-string="Cancel"
+        is-open="${this.isOpenArchiveDialog}" @omni-dialog-dimissed="${this.archiveDialogDismissed}"
         @omni-dialog-closed="${this.archiveProject}" type="warning">
-        <form><P>Are you sure want to archive project: ${this.selectedProjectName}?</p></form>
+        <form><P>Are you sure want to archive ${this.selectedProjectName}?</p></form>
       </omni-dialog>
 
-      <omni-dialog is-open="${this.isOpenRestoreDialog}" @omni-dialog-dimissed="${this.restoreDialogDismissed}"
+      <omni-dialog title="Unarchive ${this.selectedProjectName}" close-string="Unarchive Project" dismiss-string="Cancel"
+        is-open="${this.isOpenRestoreDialog}" @omni-dialog-dimissed="${this.restoreDialogDismissed}"
         @omni-dialog-closed="${this.restoreProject}" type="warning">
-        <form><P>Are you sure want to restore project: ${this.selectedProjectName}?</p></form>
+        <form><P>Are you sure want to unarchive ${this.selectedProjectName}?</p></form>
       </omni-dialog>
 
-      <omni-dialog is-open="${this.isOpenDeleteDialog}" @omni-dialog-dimissed="${this.deleteDialogDismissed}"
+      <omni-dialog title="Delete ${this.selectedProjectName}" close-string="Delete Project" dismiss-string="Cancel"
+        is-open="${this.isOpenDeleteDialog}" @omni-dialog-dimissed="${this.deleteDialogDismissed}"
         @omni-dialog-closed="${this.deleteProject}" type="warning">
-        <form><P>Are you sure want to delete project: ${this.selectedProjectName}?</p></form>
+        <form><P>Are you sure want to delete ${this.selectedProjectName}?</p></form>
       </omni-dialog>
 
       <omni-modal title="Create Project" close-string="Create Project" dismiss-string="Cancel"
@@ -614,21 +616,22 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
                         <a href="javascript:void" @click=${e => this.filterProjects({ status: "ACTIVE" })}
                           class="nav-link ${get(this.activeFilter, "status", "") === "ACTIVE"? "active" : ""}">
                           Active Projects&nbsp;&nbsp;
-                          <span class="badge badge-light">${this.activeProjectCount}</span>
+                          <span class="badge ${get(this.activeFilter, "status", "") === "ACTIVE"? "badge-light" : "badge-secondary"}"">${this.activeProjectCount}</span>
                         </a>
                       </li>
                       <li class="nav-item mr-2">
                         <a href="javascript:void"  @click=${e => this.filterProjects({ status: "ARCHIVED" })}
-                          class="nav-link btn-outline-secondary ${get(this.activeFilter,"status", "") === "ARCHIVED"? "active": ""}">
+                          class="nav-link ${get(this.activeFilter,"status", "") === "ARCHIVED"? "active": ""}">
                           Archived Projects&nbsp;&nbsp;
-                          <span class="badge badge-secondary">${this.archiveProjectCount}</span>
+                          <span class="badge ${get(this.activeFilter, "status", "") === "ARCHIVED"? "badge-light" : "badge-secondary"}"">${this.archiveProjectCount}</span>
+
                         </a>
                       </li>
                       <li class="nav-item mr-2">
                         <a href="javascript:void" @click=${e => this.filterProjects()}
-                          class="nav-link btn-outline-secondary  ${get(this.activeFilter, "status","") === ""? "active": ""}">
+                          class="nav-link ${get(this.activeFilter, "status","") === ""? "active": ""}">
                           All Projects&nbsp;&nbsp;
-                          <span class="badge badge-secondary">${this.allProjectCount}</span>
+                          <span class="badge ${get(this.activeFilter, "status", "") === ""? "badge-light" : "badge-secondary"}"">${this.allProjectCount}</span>
                         </a>
                       </li>
                     </ul>
@@ -706,7 +709,7 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
                                 `
                                 : html`
                                   <a href="javascript:void" @click="${e => this.openRestoreDialog(item.projectId, item.name)}"
-                                    class="btnIcon btn btn-sm my-1 mr-1" data-toggle="tooltip" data-placement="top" title="Restore Project">
+                                    class="btnIcon btn btn-sm my-1 mr-1" data-toggle="tooltip" data-placement="top" title="Unarchive Project">
                                     <mwc-icon class="mwc-icon-gray">restore</mwc-icon>
                                   </a>
                                   <a href="javascript:void" @click="${e => this.openDeleteDialog(item.projectId, item.name)}"

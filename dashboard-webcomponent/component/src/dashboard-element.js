@@ -288,9 +288,9 @@ export class DashboardLitElement extends LitElement {
                       <h4 class="font-weight-normal mt-2">CMLP Studio</h4>
                     </div>
                     <h6 class="font-weight-normal card-text">
-                      Lorem Ipsum is simply dummy text of the printing and type setting industry...
+                      CMLP Studio
                     </h6>
-                    <button class="btn btn-primary btn-sm mt-3 mb-4">Download&nbsp;<mwc-icon>get_app</button>
+                    <button class="btn btn-primary card-button btn-md mt-3 mb-4">Download&nbsp;&nbsp;<mwc-icon>get_app</button>
                   </div>
                 </div>
               </div>
@@ -299,15 +299,14 @@ export class DashboardLitElement extends LitElement {
                   <div class="card-body div-color text-center">
                     <div class="mb-4">
                       <button class="btnIcon btn-primary">
-                        <mwc-icon class="mwc-icon">games</mwc-icon>
+                        <mwc-icon class="mwc-icon">crop</mwc-icon>
                       </button>
                       <h4 class="font-weight-normal mt-2">AcuCompose</h4>
                     </div>
                     <h6 class="font-weight-normal card-text">
-                      Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
-                      commodo ligula eget dolor. Lorem
+                      AcuCompose
                     </h6>
-                    <button class="btn btn-primary btn-sm mt-3 mb-4">Launch&nbsp;<mwc-icon>launch</button>
+                    <button class="btn btn-primary card-button btn-md mt-3 mb-4">Launch&nbsp;&nbsp;<mwc-icon>launch</button>
                   </div>
                 </div>
               </div>
@@ -321,10 +320,9 @@ export class DashboardLitElement extends LitElement {
                       <h4 class="font-weight-normal mt-2">Zeppelin Notebook</h4>
                     </div>
                     <h6 class="font-weight-normal card-text">
-                      Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
-                      commodo ligula eget dolor. Lorem
+                      Zeppelin Notebook
                     </h6>
-                    <button class="btn btn-primary btn-sm mt-3 mb-4">Launch &nbsp;<mwc-icon>launch</mwc-icon></button>
+                    <button class="btn btn-primary card-button btn-md mt-3 mb-4">Launch&nbsp;&nbsp;<mwc-icon>launch</mwc-icon></button>
                   </div>
                 </div>
               </div>
@@ -338,10 +336,9 @@ export class DashboardLitElement extends LitElement {
                       <h4 class="font-weight-normal mt-2">Jupyter Notebook</h4>
                     </div>
                     <h6 class="font-weight-normal card-text">
-                      Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
-                      commodo ligula eget dolor. Lorem
+                      Jupyter Notebook
                     </h6>
-                    <button class="btn btn-primary btn-sm mt-3 mb-4">Launch&nbsp;&nbsp;<mwc-icon>launch</button>
+                    <button class="btn btn-primary card-button btn-md mt-3 mb-4">Launch&nbsp;&nbsp;<mwc-icon>launch</button>
                   </div>
                 </div>
               </div>

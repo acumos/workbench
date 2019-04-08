@@ -59,9 +59,9 @@ export default LitElementBase =>
           failedValidations = [];
 
           each(fieldValidations, (validationFn, validationName) => {
-            // if (!validationFn(fieldModel)) {
-            //   failedValidations.push(validationName);
-            // }
+            if (!validationFn(fieldModel)) {
+               failedValidations.push(validationName);
+            }
           })
 
           // Set field validation state

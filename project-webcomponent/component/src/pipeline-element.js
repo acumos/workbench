@@ -21,7 +21,7 @@ limitations under the License.
 import { LitElement, html } from 'lit-element';
 import {style} from './pipeline-styles.js';
 
-class PipelineLitElement extends LitElement {
+class ProjectPipelineLitElement extends LitElement {
 	static get properties() {
 		return {
 			message: { type: String, notify: true },
@@ -468,4 +468,4 @@ class PipelineLitElement extends LitElement {
     `;
   }
 }
-customElements.define('pipeline-element', PipelineLitElement);
+customElements.define('project-pipeline-element', ProjectPipelineLitElement);

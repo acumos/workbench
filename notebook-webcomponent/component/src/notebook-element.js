@@ -316,7 +316,7 @@ export class NotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 					this.isOpenRestoreDialog = false;        
 			}).catch((error) => {
 				console.info('Request failed', error);
-				this.errorMessage = 'Notebook restore request failed with error: '+ error;
+				this.errorMessage = 'Notebook unarchive request failed with error: '+ error;
 			});
 		}
 
@@ -352,19 +352,22 @@ export class NotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 						display: ${this.alertOpen ? "block" : "none"};
 					}
 				</style>
-        <omni-dialog is-open="${this.isOpenArchiveDialog}" @omni-dialog-dimissed="${this.archiveDialogDismissed}"
+				<omni-dialog title="Archive ${this.notebookName}" close-string="Archive Notebook" dismiss-string="Cancel"
+					is-open="${this.isOpenArchiveDialog}" @omni-dialog-dimissed="${this.archiveDialogDismissed}"
 	        @omni-dialog-closed="${this.archiveNotebook}" type="warning">
-	        <form><P>Are you sure want to archive notebook: ${this.notebookName}?</p></form>
+	        <form><P>Are you sure want to archive ${this.notebookName}?</p></form>
 	      </omni-dialog>
 	
-	      <omni-dialog is-open="${this.isOpenRestoreDialog}" @omni-dialog-dimissed="${this.restoreDialogDismissed}"
+				<omni-dialog title="Unarchive ${this.notebookName}" close-string="Unarchive Notebook" dismiss-string="Cancel"
+					is-open="${this.isOpenRestoreDialog}" @omni-dialog-dimissed="${this.restoreDialogDismissed}"
 	        @omni-dialog-closed="${this.restoreNotebook}" type="warning">
-	        <form><P>Are you sure want to restore notebook: ${this.notebookName}?</p></form>
+	        <form><P>Are you sure want to unarchive ${this.notebookName}?</p></form>
 	      </omni-dialog>
 	
-	      <omni-dialog is-open="${this.isOpenDeleteDialog}" @omni-dialog-dimissed="${this.deleteDialogDismissed}"
+				<omni-dialog title="Delete ${this.notebookName}" close-string="Delete Notebook" dismiss-string="Cancel"
+					is-open="${this.isOpenDeleteDialog}" @omni-dialog-dimissed="${this.deleteDialogDismissed}"
 	        @omni-dialog-closed="${this.deleteNotebook}" type="warning">
-	        <form><P>Are you sure want to delete notebook: ${this.notebookName}?</p></form>
+	        <form><P>Are you sure want to delete ${this.notebookName}?</p></form>
 	      </omni-dialog>
 		
 
@@ -418,7 +421,7 @@ export class NotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 											`
 										: html`
 											<a href="javascript:void" @click="${e => this.openRestoreDialog()}" class="btnIcon btn btn-sm btn-secondary mr-1"
-												data-toggle="tooltip" data-placement="top" title="Restore Notebook">
+												data-toggle="tooltip" data-placement="top" title="Unarchive Notebook">
 												<mwc-icon class="mwc-icon-gray">
 													restore
 												</mwc-icon>

@@ -105,7 +105,7 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
           }  
         },  
         description : "",
-        notebookType : "ZEPPELINE"
+        notebookType : "ZEPPELIN"
       }
     };
 
@@ -113,7 +113,7 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
     this.$data.set('newNotebook.noteBookId.name', '');
     this.$data.set('newNotebook.noteBookId.versionId.label', '');
     this.$data.set('newNotebook.description', '');
-    this.$data.set('newNotebook.notebookType', 'ZEPPELINE');
+    this.$data.set('newNotebook.notebookType', 'ZEPPELIN');
   }
 
   connectedCallback() {
@@ -205,7 +205,7 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
   }
 
   displayNotebooks() {
-    this.activeFilter = { notebookType: "ZEPPELINE" };
+    this.activeFilter = { notebookType: "ZEPPELIN" };
     this.activeSort = "created";
 
     this.dataSource = new DataSource({
@@ -220,7 +220,7 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
     this.totalPages = this.dataSource.totalPages;
     this.totalNotebooks = this.notebookLists.length;
     this.allNotebookCount = this.getFilteredCount();
-    this.zeppelinNotebookCount = this.getFilteredCount({ notebookType: "ZEPPELINE" });
+    this.zeppelinNotebookCount = this.getFilteredCount({ notebookType: "ZEPPELIN" });
     this.jupyterNotebookCount = this.getFilteredCount({ notebookType: "JUPYTER" });
 
     if(this.totalNotebooks > 0){
@@ -351,7 +351,7 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
         this.isOpenRestoreDialog = false;        
     }).catch((error) => {
       console.error('Request failed', error);
-      this.errorMessage = 'Notebook restore request failed with error: '+ error;
+      this.errorMessage = 'Notebook unarchive request failed with error: '+ error;
     });
   }
 
@@ -408,7 +408,6 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
   }
 
   modalClosed() {
-    this.$validations.validate("newNotebook");
     this.requestUpdate();
     this.createNotebook();
   }
@@ -478,19 +477,22 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
           display: ${this.alertOpen ? "block" : "none"};
         }
       </style>
-      <omni-dialog is-open="${this.isOpenArchiveDialog}" @omni-dialog-dimissed="${this.archiveDialogDismissed}"
+      <omni-dialog title="Archive ${this.selectedNotebookName}" close-string="Archive Notebook" dismiss-string="Cancel"
+        is-open="${this.isOpenArchiveDialog}" @omni-dialog-dimissed="${this.archiveDialogDismissed}"
         @omni-dialog-closed="${this.archiveNotebook}" type="warning">
-        <form><P>Are you sure want to archive notebook: ${this.selectedNotebookName}?</p></form>
+        <form><P>Are you sure want to archive ${this.selectedNotebookName}?</p></form>
       </omni-dialog>
 
-      <omni-dialog is-open="${this.isOpenRestoreDialog}" @omni-dialog-dimissed="${this.restoreDialogDismissed}"
+      <omni-dialog title="Unarchive ${this.selectedNotebookName}" close-string="Unarchive Notebook" dismiss-string="Cancel"
+        is-open="${this.isOpenRestoreDialog}" @omni-dialog-dimissed="${this.restoreDialogDismissed}"
         @omni-dialog-closed="${this.restoreNotebook}" type="warning">
-        <form><P>Are you sure want to restore notebook: ${this.selectedNotebookName}?</p></form>
+        <form><P>Are you sure want to unarchive ${this.selectedNotebookName}?</p></form>
       </omni-dialog>
 
-      <omni-dialog is-open="${this.isOpenDeleteDialog}" @omni-dialog-dimissed="${this.deleteDialogDismissed}"
+      <omni-dialog title="Delete ${this.selectedNotebookName}" close-string="Delete Notebook" dismiss-string="Cancel"
+        is-open="${this.isOpenDeleteDialog}" @omni-dialog-dimissed="${this.deleteDialogDismissed}"
         @omni-dialog-closed="${this.deleteNotebook}" type="warning">
-        <form><P>Are you sure want to delete notebook: ${this.selectedNotebookName}?</p></form>
+        <form><P>Are you sure want to delete ${this.selectedNotebookName}?</p></form>
       </omni-dialog>
 
       <omni-modal title="Create Notebook" close-string="Create Notebook" dismiss-string="Cancel"
@@ -550,7 +552,7 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
                 <label>Notebook Type</label>
                 <select class="form-control" id="mySelect"
                   @change="${e => this.$data.set('newNotebook.notebookType', e.target.value)}">
-                  <option value="ZEPPELINE">Zeppelin Notebook</option>
+                  <option value="ZEPPELIN">Zeppelin Notebook</option>
                   <option value="JUPYTER">Jupyter Notebook</option>
                 </select>
               </div>
@@ -620,24 +622,25 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
                 <div class="btn-toolbar mb-2 mb-md-0">
                   <ul class="nav nav-pills mb-3">
                     <li class="nav-item mr-2">
-                      <a href="javascript:void" @click=${e => this.filterNotebooks({ notebookType: "ZEPPELINE" })}
-                        class="nav-link ${get(this.activeFilter, "notebookType", "") === "ZEPPELINE"? "active" : ""}">
+                      <a href="javascript:void" @click=${e => this.filterNotebooks({ notebookType: "ZEPPELIN" })}
+                        class="nav-link ${get(this.activeFilter, "notebookType", "") === "ZEPPELIN"? "active" : ""}">
                         Zeppelin Notebooks&nbsp;&nbsp;
-                        <span class="badge badge-light">${this.zeppelinNotebookCount}</span>
+                        <span class="badge ${get(this.activeFilter, "notebookType", "") === "ZEPPELIN"? "badge-light" : "badge-secondary"}"">${this.zeppelinNotebookCount}</span>
                       </a>
                     </li>
                     <li class="nav-item mr-2">
                       <a href="javascript:void"  @click=${e => this.filterNotebooks({ notebookType: "JUPYTER" })}
-                        class="nav-link btn-outline-secondary ${get(this.activeFilter,"notebookType", "") === "JUPYTER"? "active": ""}">
+                        class="nav-link ${get(this.activeFilter,"notebookType", "") === "JUPYTER"? "active": ""}">
                         Jupyter Notebooks&nbsp;&nbsp;
-                        <span class="badge badge-secondary">${this.jupyterNotebookCount}</span>
+                        
+                        <span class="badge ${get(this.activeFilter, "notebookType", "") === "JUPYTER"? "badge-light" : "badge-secondary"}"">${this.jupyterNotebookCount}</span>
                       </a>
                     </li>
                     <li class="nav-item mr-2">
                       <a href="javascript:void" @click=${e => this.filterNotebooks()}
-                        class="nav-link btn-outline-secondary  ${get(this.activeFilter, "notebookType","") === ""? "active": ""}">
+                        class="nav-link ${get(this.activeFilter, "notebookType","") === ""? "active": ""}">
                         All Notebooks&nbsp;&nbsp;
-                        <span class="badge badge-secondary">${this.allNotebookCount}</span>
+                        <span class="badge ${get(this.activeFilter, "notebookType", "") === ""? "badge-light" : "badge-secondary"}"">${this.allNotebookCount}</span>
                       </a>
                     </li>
                   </ul>
@@ -719,7 +722,7 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
                               `
                               : html`
                                 <a href="javascript:void" @click="${e => this.openRestoreDialog(item.notebookId, item.name)}"
-                                  class="btnIcon btn btn-sm my-1 mr-1" data-toggle="tooltip" data-placement="top" title="Restore Notebook">
+                                  class="btnIcon btn btn-sm my-1 mr-1" data-toggle="tooltip" data-placement="top" title="Unarchive Notebook">
                                   <mwc-icon class="mwc-icon-gray">restore</mwc-icon>
                                 </a>
                             `}

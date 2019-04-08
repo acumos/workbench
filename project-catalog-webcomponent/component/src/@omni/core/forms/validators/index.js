@@ -21,3 +21,4 @@ limitations under the License.
 export { default as isNotEmpty } from "./isNotEmpty";
 export { default as minValue } from "./minValue";
 export { default as pattern } from "./pattern";
+export { default as maxLength } from "./maxLength";

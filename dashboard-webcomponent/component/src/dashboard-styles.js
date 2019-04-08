@@ -76,4 +76,8 @@ export const style = css`
     text-decoration: none;
   }
   
+  .card-button {
+    display: inline-flex;  
+  }
+  
 `;

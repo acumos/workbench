@@ -18,10 +18,6 @@ limitations under the License.
 ===============LICENSE_END=========================================================
 */
 
-import { parseInt } from "lodash-es";
-
 export default minValue => field => {
-  const value = parseInt(field);
-
-  return value > minValue
+  return parseFloat(field) >= minValue
 };

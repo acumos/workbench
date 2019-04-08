@@ -230,7 +230,11 @@ module.exports = function(app) {
 					if (typeof responseData == 'string'){
 						responseData = JSON.parse(responseData);
 					}
-					message = responseData.serviceStatus.statusMessage;
+					if(responseData.serviceStatus !== undefined && responseData.serviceStatus.statusMessage !== undefined){
+						message = responseData.serviceStatus.statusMessage;
+					}else{ 
+						message = responseData;
+					}
 				}
 			} else {
 				message = "Server is not available." + error;

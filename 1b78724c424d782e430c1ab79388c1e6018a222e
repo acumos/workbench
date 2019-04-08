@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8cd2ab70_4740bc3e",
+        "filename": "project-catalog-webcomponent/component/src/@omni/core/forms/validators/maxLenth.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-04-08T13:59:32Z",
+      "side": 1,
+      "message": "why is this empty",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 1
+      },
+      "revId": "1b78724c424d782e430c1ab79388c1e6018a222e",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ef6d05f9_f8199965",
+        "filename": "project-catalog-webcomponent/component/src/@omni/core/forms/validators/required.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-04-08T13:59:32Z",
+      "side": 1,
+      "message": "why is this empty",
+      "range": {
+        "startLine": 21,
+        "startChar": 7,
+        "endLine": 21,
+        "endChar": 14
+      },
+      "revId": "1b78724c424d782e430c1ab79388c1e6018a222e",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "068643a7_9a4a45ed",
+        "filename": "project-catalog-webcomponent/component/src/@omni/core/utils/isUndefined.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-04-08T13:59:32Z",
+      "side": 1,
+      "message": "Does something need to be added here",
+      "range": {
+        "startLine": 21,
+        "startChar": 7,
+        "endLine": 21,
+        "endChar": 14
+      },
+      "revId": "1b78724c424d782e430c1ab79388c1e6018a222e",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}

@@ -18,5 +18,6 @@ limitations under the License.
 ===============LICENSE_END=========================================================
 */
 
-export default (field) => {
-}
+export default maxLength => field => {
+    return field.length <= maxLength
+};

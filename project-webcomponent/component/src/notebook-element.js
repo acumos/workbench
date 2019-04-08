@@ -354,7 +354,7 @@ class NotebookLitElement extends DataMixin(ValidationMixin(BaseElementMixin(LitE
         this.isOpenRestoreDialog = false;        
     }).catch((error) => {
 	      console.error('Request failed', error);
-	      this.errorMessage = 'Notebook restore request failed with error: '+ error;
+	      this.errorMessage = 'Notebook unarchive request failed with error: '+ error;
 	      this.alertOpen = true;
     });
   }
@@ -371,7 +371,7 @@ class NotebookLitElement extends DataMixin(ValidationMixin(BaseElementMixin(LitE
 	}
 
  displayNotebooks() {
-    this.activeFilter = { notebookType: "ZEPPELINE" };
+    this.activeFilter = { notebookType: "ZEPPELIN" };
     this.activeSort = "created";
 
     this.dataSource = new DataSource({
@@ -386,7 +386,7 @@ class NotebookLitElement extends DataMixin(ValidationMixin(BaseElementMixin(LitE
     this.totalPages = this.dataSource.totalPages;
     this.totalNotebooks = this.notebooksList.length;
     this.allNotebookCount = this.getFilteredCount();
-    this.zeppelinNotebookCount = this.getFilteredCount({ notebookType: "ZEPPELINE" });
+    this.zeppelinNotebookCount = this.getFilteredCount({ notebookType: "ZEPPELIN" });
     this.jupyterNotebookCount = this.getFilteredCount({ notebookType: "JUPYTER" });
 
     if(this.totalNotebooks > 0){
@@ -510,17 +510,20 @@ class NotebookLitElement extends DataMixin(ValidationMixin(BaseElementMixin(LitE
 				display: ${this.alertOpen ? "block" : "none"};
 			}
 		</style>
-		 <omni-dialog is-open="${this.isOpenArchiveDialog}" @omni-dialog-dimissed="${this.archiveDialogDismissed}"
+		 <omni-dialog  title="Archive ${this.selectedNotebookName}" close-string="Archive Notebook" dismiss-string="Cancel"
+		 		is-open="${this.isOpenArchiveDialog}" @omni-dialog-dimissed="${this.archiveDialogDismissed}"
         @omni-dialog-closed="${this.archiveNotebook}" type="warning">
         <form><P>Are you sure want to archive notebook: ${this.selectedNotebookName}?</p></form>
       </omni-dialog>
 
-      <omni-dialog is-open="${this.isOpenRestoreDialog}" @omni-dialog-dimissed="${this.restoreDialogDismissed}"
+			<omni-dialog title="Unarchive ${this.selectedNotebookName}" close-string="Unarchive Notebook" dismiss-string="Cancel"
+				is-open="${this.isOpenRestoreDialog}" @omni-dialog-dimissed="${this.restoreDialogDismissed}"
         @omni-dialog-closed="${this.restoreNotebook}" type="warning">
-        <form><P>Are you sure want to restore notebook: ${this.selectedNotebookName}?</p></form>
+        <form><P>Are you sure want to unarchive notebook: ${this.selectedNotebookName}?</p></form>
       </omni-dialog>
 
-      <omni-dialog is-open="${this.isOpenDeleteDialog}" @omni-dialog-dimissed="${this.deleteDialogDismissed}"
+			<omni-dialog title="Delete ${this.selectedNotebookName}" close-string="Delete Notebook" dismiss-string="Cancel"
+				is-open="${this.isOpenDeleteDialog}" @omni-dialog-dimissed="${this.deleteDialogDismissed}"
         @omni-dialog-closed="${this.deleteNotebook}" type="warning">
         <form><P>Are you sure want to delete notebook: ${this.selectedNotebookName}?</p></form>
       </omni-dialog>
@@ -582,7 +585,7 @@ class NotebookLitElement extends DataMixin(ValidationMixin(BaseElementMixin(LitE
                 <label>Notebook Type</label>
                 <select class="form-control" id="mySelect"
                   @change="${e => this.$data.set('newNotebook.notebookType', e.target.value)}">
-                  <option value="ZEPPELINE">Zeppelin Notebook</option>
+                  <option value="ZEPPELIN">Zeppelin Notebook</option>
                   <option value="JUPYTER">Jupyter Notebook</option>
                 </select>
               </div>
@@ -608,7 +611,7 @@ class NotebookLitElement extends DataMixin(ValidationMixin(BaseElementMixin(LitE
 	                <label>Notebook Type</label>
 	                <select class="form-control" id="mySelect"
 	                  @change="${e => this.$data.set('newNotebook.notebookType', e.target.value)}">
-	                  <option value="ZEPPELINE">Zeppelin Notebook</option>
+	                  <option value="ZEPPELIN">Zeppelin Notebook</option>
 	                  <option value="JUPYTER">Jupyter Notebook</option>
 	                </select>
 	            </div>
@@ -751,7 +754,7 @@ class NotebookLitElement extends DataMixin(ValidationMixin(BaseElementMixin(LitE
 														`
 														: html`
 															<a href="javascript:void" @click="${e => this.openRestoreDialog(item.notebookId, item.name)}"
-							                                  class="btnIcon btn btn-sm btn-secondary my-1 mr-1" data-toggle="tooltip" data-placement="top" title="Restore Notebook">
+							                                  class="btnIcon btn btn-sm btn-secondary my-1 mr-1" data-toggle="tooltip" data-placement="top" title="Unarchive Notebook">
 							                                  <mwc-icon class="mwc-icon-gray">restore</mwc-icon>
 							                                </a>
 														`}
@@ -832,16 +835,16 @@ class NotebookLitElement extends DataMixin(ValidationMixin(BaseElementMixin(LitE
 				                    </a>  ${this.errorMessage}
 				                  </div>
 				                `: ``
-				              }
-										<div style="position: absolute; right:0">		
+											}
+										</div>
+										<div class="row" style="margin:5px 0; margin-top: 0px;margin-bottom:20px;">
 											<h7 >No Notebooks, get started by creating your first Notebook</h7>
 										</div>
 										<div class="row" style="margin:10px 0">
 											<button type="button" class="btn btn-primary" @click=${(e) => this.openModal()}>Create Notebook</button>&nbsp;&nbsp;&nbsp;
-											<button type="button" class="btn btn-secondary-button" @click=${(e) => this.openModalLink()}>Associate Existing Notebook</button>
+											<button type="button" class="btn btn-secondary-button" @click=${(e) => this.openModalLink()}>Associate Existing Notebook</button>											
 										</div>
 									</div>
-								</div>
 							</div>
 						</div>
 					</div>

@@ -108,7 +108,7 @@ export class OmniModal extends LitElement {
   getVariant(variant) {
     switch (variant) {
       case "warning":
-        return "rgb(213, 169, 31)";
+        return "#591887";
       default:
         return "rgb(89, 24, 135);";
     }

@@ -66,7 +66,10 @@
     "systemjs": "^3.0.0",
     "typeface-exo": "0.0.22",
     "web-animations-js": "2.2.5",
-    "zone.js": "^0.8.26"
+    "zone.js": "^0.8.26",
+    "sass-google-fonts": "^1.0.1",
+    "sass-web-fonts": "^2.1.0",
+    "@fortawesome/fontawesome-free": "^5.8.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "0.10.2",

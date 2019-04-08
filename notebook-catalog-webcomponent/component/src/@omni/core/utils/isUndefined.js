@@ -19,4 +19,5 @@ limitations under the License.
 */
 
 export default (object) => {
+    return (!object); 
 }

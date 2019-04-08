@@ -21,7 +21,8 @@ limitations under the License.
 import { isNotEmpty as _isNotEmpty } from "./validators";
 import { minValue as _minValue } from "./validators";
 import { pattern as _pattern } from "./validators";
+import { maxLength as _maxLength } from "./validators";
 
 export const Forms = {
-  validators: { isNotEmpty: _isNotEmpty, minValue: _minValue, pattern: _pattern }
+  validators: { isNotEmpty: _isNotEmpty, minValue: _minValue, pattern: _pattern, maxLength: _maxLength }
 };

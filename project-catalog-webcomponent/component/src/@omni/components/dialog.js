@@ -34,6 +34,9 @@ export class OmniDialog extends BaseElementMixin(LitElement) {
   static get properties() {
     return {
       type: { type: String },
+      title: { type: String },
+      closeString: { type: String, attribute: "close-string" },
+      dismissString: { type: String, attribute: "dismiss-string" },
       isOpen: {
         attribute: "is-open",
         type: Boolean,
@@ -51,6 +54,8 @@ export class OmniDialog extends BaseElementMixin(LitElement) {
 
   constructor() {
     super();
+    this.closeString = "Ok";
+    this.dismissString = "Cancel";
   }
 
   dialogClosed() {
@@ -66,10 +71,11 @@ export class OmniDialog extends BaseElementMixin(LitElement) {
   render() {
     return html`
       <omni-modal
-        title="Warning"
+        title="${this.title}"
         is-open="${this.isOpen}" canClose="true"
         @omni-modal-dimissed="${this.dialogDismissed}"
         @omni-modal-closed="${this.dialogClosed}"
+        close-string="${this.closeString}" dismiss-string="${this.dismissString}"
         variant="${this.type}"
       >
         <slot></slot>

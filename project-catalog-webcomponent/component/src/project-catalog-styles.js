@@ -20,6 +20,22 @@ limitations under the License.
 
 import {css} from 'lit-element/lit-element.js';
 export const style = css`
+.nav-pills .nav-link {
+  border-radius: 1px;
+}
+
+.nav-item a {
+  color: black;
+}
+.nav-pills .nav-link.active {
+  background-color: rgb(89, 24, 135);
+}
+
+.nav-pills .nav-link {
+  background-color: white;
+  border: 2px solid #dee2e6;
+}
+
 #divid {
   border: thin solid darkblue;
   padding: 25px;
@@ -144,5 +160,6 @@ hr {
 
 .card-body {
   padding-right: 1.00rem;
+  line-height: 23px;
 }
 `;

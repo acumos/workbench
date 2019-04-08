@@ -21,38 +21,34 @@ import { NbMenuItem } from '@nebular/theme';
 export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Dashboard',
-    icon: 'nb-home',
+    icon: 'fa fa-tachometer-alt',
     link: '/pages/dashboard',
     home: true,
   },
   {
     title: 'Projects',
-    icon: 'nb-share',
+    icon: 'fa fa-project-diagram',
     link: '/pages/projects/catalog',
   },
   {
     title: 'Notebooks',
-    icon: 'nb-book-open-outline',
+    icon: 'fa fa-book',
     link: '/pages/notebook/catalog',
   },
   {
     title: 'Models',
-    icon: 'nb-locked',
-    link: '/pages/projects/catalog',
+    icon: 'fas fa-cogs',
   },
   {
     title: 'Data Pipelines',
-    icon: 'nb-locked',
-    link: '/pages/projects/catalog',
+    icon: 'fa fa-code-branch',
   },
   {
     title: 'CMLP Studio',
-    icon: 'nb-locked',
-    link: '/pages/projects/catalog',
+    icon: 'fa fa-brain',
   },
   {
     title: 'AcuCompose',
-    icon: 'nb-locked',
-    link: '/pages/projects/catalog',
+    icon: 'fas fa-crop-alt',
   },
 ];

@@ -318,7 +318,7 @@ export class ProjectLitElement extends DataMixin(ValidationMixin(BaseElementMixi
 	        this.isOpenRestoreDialog = false;        
 	    }).catch((error) => {
 	      console.info('Request failed', error);
-	      this.errorMessage = 'Project restore request failed with error: '+ error;
+	      this.errorMessage = 'Project unarchive request failed with error: '+ error;
 	    });
 	  }
 	
@@ -354,19 +354,22 @@ export class ProjectLitElement extends DataMixin(ValidationMixin(BaseElementMixi
 						display: ${this.alertOpen ? "block" : "none"};
 					}
 				</style>
-	      <omni-dialog is-open="${this.isOpenArchiveDialog}" @omni-dialog-dimissed="${this.archiveDialogDismissed}"
+				<omni-dialog title="Archive ${this.projectName}" close-string="Archive Project" dismiss-string="Cancel"
+					is-open="${this.isOpenArchiveDialog}" @omni-dialog-dimissed="${this.archiveDialogDismissed}"
 	        @omni-dialog-closed="${this.archiveProject}" type="warning">
-	        <form><P>Are you sure want to archive project: ${this.projectName}?</p></form>
+	        <form><P>Are you sure want to archive ${this.projectName}?</p></form>
 	      </omni-dialog>
 	
-	      <omni-dialog is-open="${this.isOpenRestoreDialog}" @omni-dialog-dimissed="${this.restoreDialogDismissed}"
+				<omni-dialog title="Unarchive ${this.projectName}" close-string="Unarchive Project" dismiss-string="Cancel"
+					is-open="${this.isOpenRestoreDialog}" @omni-dialog-dimissed="${this.restoreDialogDismissed}"
 	        @omni-dialog-closed="${this.restoreProject}" type="warning">
-	        <form><P>Are you sure want to restore project: ${this.projectName}?</p></form>
+	        <form><P>Are you sure want to unarchive ${this.projectName}?</p></form>
 	      </omni-dialog>
 	
-	      <omni-dialog is-open="${this.isOpenDeleteDialog}" @omni-dialog-dimissed="${this.deleteDialogDismissed}"
+				<omni-dialog title="Delete ${this.projectName}" close-string="Delete Project" dismiss-string="Cancel"
+					is-open="${this.isOpenDeleteDialog}" @omni-dialog-dimissed="${this.deleteDialogDismissed}"
 	        @omni-dialog-closed="${this.deleteProject}" type="warning">
-	        <form><P>Are you sure want to delete project: ${this.projectName}?</p></form>
+	        <form><P>Are you sure want to delete ${this.projectName}?</p></form>
 	      </omni-dialog>
 
 				${this.view === 'view'
@@ -415,7 +418,7 @@ export class ProjectLitElement extends DataMixin(ValidationMixin(BaseElementMixi
 											`
 										: html`
 											<a href="javascript:void" @click="${e => this.openRestoreDialog()}" class="btnIcon btn btn-sm btn-secondary mr-1"
-												data-toggle="tooltip" data-placement="top" title="Restore Project">
+												data-toggle="tooltip" data-placement="top" title="Unarchive Project">
 												<mwc-icon class="mwc-icon-gray">
 													restore
 												</mwc-icon>
@@ -535,8 +538,7 @@ export class ProjectLitElement extends DataMixin(ValidationMixin(BaseElementMixi
 							</div>
 						</div>
 					</div>
-					<notebook-element componenturl=${this.componenturl} projectId=${this.projectId}></notebook-element>
-					<pipeline-element message='this is pipeline message'></pipeline-element>
+					<project-notebook-element componenturl=${this.componenturl} projectId=${this.projectId}></project-notebook-element>
 					
 				`
 				: html``

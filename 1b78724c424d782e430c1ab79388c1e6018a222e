@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "5821f053_6469f210",
+        "filename": "notebook-catalog-webcomponent/Dockerfile",
+        "patchSetId": 13
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-08T17:35:33Z",
+      "side": 1,
+      "message": "Manoop, 777 was correct.  This allows use of unprivileged users to run the container.",
+      "parentUuid": "b3189844_82e3fd9f",
+      "range": {
+        "startLine": 31,
+        "startChar": 10,
+        "endLine": 31,
+        "endChar": 13
+      },
+      "revId": "1b78724c424d782e430c1ab79388c1e6018a222e",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9e89b00_c1b442d1",
         "filename": "notebook-catalog-webcomponent/api/src/server.js",
         "patchSetId": 13
@@ -219,6 +243,23 @@
       "writtenOn": "2019-04-08T15:09:58Z",
       "side": 1,
       "message": "Please address the similar issues on all webcomponents rather than just fixing them at on component where the comment is posted.",
+      "revId": "1b78724c424d782e430c1ab79388c1e6018a222e",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "707c066c_37efe707",
+        "filename": "notebook-webcomponent/package-lock.json",
+        "patchSetId": 13
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-08T17:35:33Z",
+      "side": 1,
+      "message": "why are there so many package-lock json files, in so many different subdirectories?  Are some outdated or unnecessary?",
       "revId": "1b78724c424d782e430c1ab79388c1e6018a222e",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false

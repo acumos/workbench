@@ -19,6 +19,7 @@ limitations under the License.
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ScriptService } from '../../../@core/utils/script.service';
+import { BreadcrumbsService } from '../../../@core/utils/breadcrumbs.service';
 
 @Component({
   templateUrl: './create.component.html',
@@ -27,8 +28,13 @@ export class CreateComponent implements OnInit {
   public router: Router;
   script: ScriptService;
   public projectComponentURL: string;
+  public userName: any;
+  public authToken: any;
+  public sessionError: any;
+  public alertOpen: any;
+  public loadHtml: any;
 
-  constructor(router: Router, script: ScriptService) {
+  constructor(router: Router, script: ScriptService, private breadcrumbsService: BreadcrumbsService) {
     this.router = router;
     this.script = script;
   }
@@ -40,8 +46,27 @@ export class CreateComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loadHtml = false;
+    this.loadComponent();
+  }
+
+  private loadComponent() {
     this.projectComponentURL = this.script.getConfig('projectComponent');
-    this.script.load('projectComponent', '/src/project-element.js');
+    this.script.getUserSession().subscribe((res: any) => {
+      if (res.userName !== '' && res.authToken !== '') {
+        this.breadcrumbsService.setBreadcrumbs(['Home', 'Design Studio', 'ML Workbench', 'Create']);
+        this.userName = res.userName;
+        this.authToken = res.authToken;
+        this.alertOpen = false;
+        this.script.load('projectComponent', '/src/project-element.js');
+        this.loadHtml = true;
+      } else {
+        this.sessionError = 'Acumos session details are unavailable in browser cookies. Pls login to Acumos portal and come back here..';
+        this.alertOpen = true;
+      }
+    }, (error) => {
+      console.error('Unable to get the user session :' + error);
+    });
   }
 
 }

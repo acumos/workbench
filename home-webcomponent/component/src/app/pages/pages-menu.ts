@@ -35,20 +35,18 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'fa fa-book',
     link: '/pages/notebook/catalog',
   },
-  {
-    title: 'Models',
-    icon: 'fas fa-cogs',
-  },
-  {
+  /*{
     title: 'Data Pipelines',
     icon: 'fa fa-code-branch',
+    link: '/pages/pipeline/catalog',
   },
   {
     title: 'CMLP Studio',
     icon: 'fa fa-brain',
-  },
+  },*/
   {
     title: 'AcuCompose',
     icon: 'fas fa-crop-alt',
+    link: '/pages/acuCompose',
   },
 ];

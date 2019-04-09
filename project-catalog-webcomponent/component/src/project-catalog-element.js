@@ -52,7 +52,8 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
       allProjectCount: { type: Number },
       componenturl: { type: String, notify: true },
       user_name: { type: String },
-      alertOpen: { type: Boolean }
+      alertOpen: { type: Boolean },
+      cardShow: { type: Boolean }
     };
   }
 
@@ -83,6 +84,7 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
       }
     });
     this.alertOpen = false;
+    this.cardShow = false;
     this.sortOptions = [
       { value: "created", label: "Sort By Created Date" },
       { value: "name", label: "Sort By Name" },
@@ -182,6 +184,7 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
         } else {
           this.projectLists = [];
           this.projects = [];
+          this.cardShow = true;
           this.convertProjectObject(n.data);
         }
       }).catch((error) => {
@@ -208,7 +211,8 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
   }
 
   displayProjects() {
-    this.activeFilter = { status: "ACTIVE" };
+    this.activeFilter = (this.activeFilter === undefined || this.activeFilter === null )? 
+      { status: "ACTIVE" } : this.activeFilter;
     this.activeSort = "created";
 
     this.dataSource = new DataSource({
@@ -476,6 +480,10 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
         .alertmessage {
           display: ${this.alertOpen ? "block" : "none"};
         }
+
+        .card-show {
+          display: ${this.cardShow ? "block" : "none"};
+        }
       </style>
       <omni-dialog title="Archive ${this.selectedProjectName}" close-string="Archive Project" dismiss-string="Cancel"
         is-open="${this.isOpenArchiveDialog}" @omni-dialog-dimissed="${this.archiveDialogDismissed}"
@@ -731,16 +739,17 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
                     <nav aria-label="Page navigation example">
                       <ul class="pagination justify-content-end">
                         <li class="page-item">
-                          <a class="page-link" href="javascript:void" @click=${e => this.navigatePage("first")}>First</a>
+                          <a href="javascript:void" @click=${e => this.navigatePage("first")}
+                            class="page-link ${this.currentPage !== 1? "active" : "inactive"}">First</a>                          
                         </li>
                         <li class="page-item">
-                          <a class="page-link" href="javascript:void" @click=${e => this.navigatePage("previous")} >Previous</a>
+                          <a class="page-link ${this.currentPage !== 1? "active" : "inactive"}" href="javascript:void" @click=${e => this.navigatePage("previous")} >Previous</a>
                         </li>
                         <li class="page-item">
-                          <a class="page-link" href="javascript:void" @click=${e => this.navigatePage("next")} >Next</a>
+                          <a class="page-link ${this.currentPage < this.totalPages? "active" : "inactive"}" href="javascript:void" @click=${e => this.navigatePage("next")} >Next</a>
                         </li>
                         <li class="page-item">
-                          <a class="page-link" href="javascript:void" @click=${e => this.navigatePage("last")} >Last</a>
+                          <a class="page-link ${this.currentPage < this.totalPages? "active" : "inactive"}" href="javascript:void" @click=${e => this.navigatePage("last")} >Last</a>
                         </li>
                         &nbsp;&nbsp;&nbsp;&nbsp;
                       </ul>
@@ -799,12 +808,24 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
                     <mwc-icon class="textColor">share</mwc-icon>&nbsp;&nbsp;&nbsp;
                     <h4 class="textColor card-title">Projects</h4>
                     <div style="position: absolute; right:0">
-                      <a class="btn btn-sm btn-secondary my-2">-</a>
+                      ${
+                        this.cardShow === false
+                        ? html`
+                          <a class="toggle-a btn btn-sm btn-secondary my-2" @click=${e => this.cardShow = true}>
+                            <span class="toggle-span">+</span>
+                          </a>
+                        `
+                        : html`
+                          <a class="toggle-a btn btn-sm btn-secondary my-2" @click=${e => this.cardShow = false}>
+                            <span class="toggle-span">-</span>
+                          </a>
+                        `
+                      }
                       &nbsp;&nbsp;&nbsp;&nbsp;
                     </div>
                   </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body card-show">
                   <div class="row" style="margin:10px 0;margin-bottom:20px;">
                     <h7>No Projects, get started with ML Workbench by creating your first project.</h7>
                   </div>

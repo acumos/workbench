@@ -88,8 +88,19 @@ label {
   height: 35px;
 }
 
-.page-link {
+.page-link.active {
   color: #591887;
+  background-color: white;
+}
+
+.page-link.inactive {
+  color: gray;
+  background-color: #f1f1f1;
+  cursor: not-allowed;
+  opacity: 0.5;
+  text-decoration: none;
+  display: inline-block;
+  pointer-events: none;
 }
 
 .pagination li:hover {
@@ -162,5 +173,17 @@ hr {
 
 .success-status {
   color: green;
+}
+
+.toggle-a {
+  width: 25px;
+  heigth: 25px;
+  color: white;
+  background-color:lightgray;
+  border-color: transparent;
+}
+
+.toggle-span {
+  color: black;
 }
 `;

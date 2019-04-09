@@ -18,11 +18,19 @@ limitations under the License.
 ===============LICENSE_END=========================================================
 -->
 
-<nav>
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a routerLink="/pages/dashboard">Dashboard</a></li>
-  </ol>
-</nav>
-<dashboard-element (dashboard-event)="this.OnDashboardEvent($event)" [attr.componenturl]="dashboardComponentURL"></dashboard-element>
+
+<div *ngIf="alertOpen">
+  <div class="alertmessage alert alert-danger">
+    <a class="close" (click)="alertOpen=false">
+      <span aria-hidden="true">&nbsp;&times;</span>
+    </a>
+    {{sessionError}}
+  </div>
+</div>
+
+<dashboard-element *ngIf="loadHtml" (dashboard-event)="this.OnDashboardEvent($event)" [attr.componenturl]="url" 
+[attr.userName]="userName" [attr.authToken]="authToken" [attr.userId]="userId" [attr.parentMsg]="parentMsg">
+</dashboard-element>
+
 
  

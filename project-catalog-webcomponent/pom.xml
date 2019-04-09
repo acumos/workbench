@@ -24,7 +24,7 @@ limitations under the License.
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.acumos.workbench</groupId>
 	<artifactId>project-catalog-webcomponent</artifactId>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.0.2-SNAPSHOT</version>
 	<name>project-catalog web component</name>
 	<description>project-catalog web component</description>
 	<packaging>pom</packaging>

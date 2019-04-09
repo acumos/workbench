@@ -19,21 +19,31 @@ limitations under the License.
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ScriptService } from '../../../@core/utils/script.service';
+import { BreadcrumbsService } from '../../../@core/utils/breadcrumbs.service';
+import { BaseComponent } from '../../base/base.component';
 
 @Component({
   templateUrl: './view.component.html',
 })
-export class ViewComponent implements OnInit {
+export class ViewComponent extends BaseComponent implements OnInit {
 
   public id: string;
   public name: string;
   public router: Router;
   script: ScriptService;
   public projectComponentURL: string;
+  public userName: any;
+  public authToken: any;
+  public sessionError: any;
+  public alertOpen: any;
+  public breadCrumbs: any[] = [
+    { name: 'Home', href: '' },
+    { name: 'Design Studio', href: '' },
+    { name: 'ML Workbench', sref: '/pages/dashboard' },
+    { name: 'Projects', sref: '/pages/projects/catalog' }];
 
-  constructor(private route: ActivatedRoute, router: Router, script: ScriptService) {
-    this.script = script;
-    this.router = router;
+  constructor(private route: ActivatedRoute, router: Router, script: ScriptService, breadcrumbsService: BreadcrumbsService) {
+    super(router, script, breadcrumbsService);
   }
 
   OnViewProjectEvent(e) {
@@ -43,9 +53,9 @@ export class ViewComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loadHtml = false;
     this.id = this.route.snapshot.paramMap.get('id');
     this.name = this.route.snapshot.paramMap.get('name');
-    this.projectComponentURL = this.script.getConfig('projectComponent');
-    this.script.load('projectComponent', '/src/project-element.js');
+    this.loadComponent('projectComponent', 'project-element', this.breadCrumbs);
   }
 }

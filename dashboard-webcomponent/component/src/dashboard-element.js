@@ -27,11 +27,19 @@ export class DashboardLitElement extends LitElement {
       message: { type: String, notify: true },
       componenturl: {type: String, notify: true},
       successMessge: {type: String},
-      errorMessge: {type: String},
-      user_name : {type: String},
+      errorMessage: {type: String},
+      userName : {type: String},
       projectCount: {type: Number},
       pipelineCount: {type: Number},
-      notebookCount: {type: Number}
+      notebookCount: {type: Number},
+      modelCount: {type: Number},
+      prModelCount: {type: Number},
+      portalFEUrl: {type: String},
+      userName: {type: String, notify: true},
+      authToken: {type: String, notify: true},
+      portalBEUrl: {type: String},
+      userId: {type: String},
+      myModelsUrl: {type: String}
     };
   }
 
@@ -42,11 +50,19 @@ export class DashboardLitElement extends LitElement {
   constructor() {
     super();
 
+    if (window.addEventListener) {
+      window.addEventListener("message", this.receiveMessage.bind(this), false);
+    } else {
+      window.attachEvent("onmessage", this.receiveMessage.bind(this));
+    }
+
     this.message = "Custom message placeholder";
     this.projectCount = 0;
     this.pipelineCount = 0;
     this.notebookCount = 0;
-
+    this.modelCount = 0;
+    this.prModelCount = 0;
+    this.view = '';
     this.requestUpdate().then(() => {
       console.log('update componenturl : ' + this.componenturl);
       this.componenturl = (this.componenturl === undefined || this.componenturl === null)? '' : this.componenturl;
@@ -74,25 +90,43 @@ export class DashboardLitElement extends LitElement {
     }).then(res => res.json())
       .then((envVar) => {
         this.msconfig = envVar.msconfig;
-        this.user_name = envVar.user_name;
-        if(this.user_name === undefined || this.user_name === null || this.user_name === ''){
-          this.errorMessge = 'Unable to retrieve User ID from Session Cookie. Pls login to Acumos portal and come back here..';
-          this.view = 'error';
-        } else {
+        let username = envVar.userName;
+        let token = envVar.authToken;
+        let id= envVar.userId;
+        this.portalFEUrl = envVar.portalFEUrl;
+        this.portalBEUrl = envVar.portalBEUrl;
+        
+        if(this.userName && this.userName !== '' && this.authToken && this.authToken !== '' && this.userId && this.userId !== '') {
+          this.view = 'view';   
           this.getProjectsCount();
           this.getPipelineCount();
           this.getNotebookCount();
+          this.getPRModelCount();
+        } else if(username && username !== '' && token && token !== '' && id && id !== '') {
+          this.view = 'view';
+          this.authToken = token;
+          this.userName = username;
+          this.userId = id;
+          this.getProjectsCount();
+          this.getPipelineCount();
+          this.getNotebookCount();
+          this.getPRModelCount();
+        } else {
+          this.errorMessage = 'Acumos session details are unavailable in browser cookies. Pls login to Acumos portal and come back here..';
+          this.alertOpen = true;
+          this.view = 'error';        
         }
     }).catch((error) => {
       console.info('Request failed', error);
-      this.errorMessge = 'Unable to retrive configuration information. Error is: '+ error;
+      this.errorMessage = 'Unable to retrive configuration information. Error is: '+ error;
+      this.alertOpen = true;
       this.view = 'error';
     });
   }
 
   resetMessage(){
     this.successMessge = '';
-    this.errorMessge = '';
+    this.errorMessage = '';
   }
 
   getProjectsCount(){
@@ -103,21 +137,22 @@ export class DashboardLitElement extends LitElement {
       cache: 'default',
       headers: {
         "Content-Type": "application/json",
+        "auth": this.authToken,
       },
       body: JSON.stringify({
         "url": this.msconfig.projectmSURL,
-        "user_name": this.user_name
+        "userName": this.userName
       })
     }).then(res => res.json())
       .then((n) => {
         if(n.status === 'Error'){
-          this.errorMessge = n.message;
+          this.errorMessage = n.message;
         } else {
           this.projectCount = n.data;
         }
     }).catch((error) => {
       console.error('Request failed', error);
-      this.errorMessge = 'Project count fetch request failed with error: '+ error;
+      this.errorMessage = 'Project count fetch request failed with error: '+ error;
     });
   }
 
@@ -129,21 +164,22 @@ export class DashboardLitElement extends LitElement {
       cache: 'default',
       headers: {
         "Content-Type": "application/json",
+        "auth": this.authToken,
       },
       body: JSON.stringify({
         "url": this.msconfig.notebookmSURL,
-        "user_name": this.user_name
+        "userName": this.userName
       })
     }).then(res => res.json())
       .then((n) => {
         if(n.status === 'Error'){
-          this.errorMessge = n.message;
+          this.errorMessage = n.message;
         } else {
           this.notebookCount = n.data;
         }
     }).catch((error) => {
       console.error('Request failed', error);
-      this.errorMessge = 'Notebook count fetch request failed with error: '+ error;
+      this.errorMessage = 'Notebook count fetch request failed with error: '+ error;
     });
   }
 
@@ -155,24 +191,95 @@ export class DashboardLitElement extends LitElement {
       cache: 'default',
       headers: {
         "Content-Type": "application/json",
+        "auth": this.authToken,
       },
       body: JSON.stringify({
         "url": this.msconfig.pipelinemSURL,
-        "user_name": this.user_name
+        "userName": this.userName
       })
     }).then(res => res.json())
       .then((n) => {
         if(n.status === 'Error'){
-          this.errorMessge = n.message;
+          this.errorMessage = n.message;
         } else {
           this.pipelineCount = n.data;
         }
     }).catch((error) => {
       console.error('Request failed', error);
-      this.errorMessge = 'Pipeline count fetch request failed with error: '+ error;
+      this.errorMessage = 'Pipeline count fetch request failed with error: '+ error;
     });
   }
 
+  
+  getModelCount(){
+    const url = this.componenturl + '/api/model/count';
+	  fetch(url, {
+		  method: 'POST',
+      mode: 'cors',
+      cache: 'default',
+      headers: {
+        "Content-Type": "application/json",
+        "auth": this.authToken
+      },
+      body: JSON.stringify({
+        "url": this.portalBEUrl,
+        "userName": this.userName,
+        "reqBody" : {
+          "request_body": {
+            "accessTypeCodes": ["OR", "PB"],
+            "active": true
+          }
+        }
+
+      }),
+    }).then(res => res.json())
+      .then((n) => {
+        if(n.status === 'Error'){
+          this.errorMessage = n.message;
+        } else {
+          this.modelCount = n.data + this.prModelCount;
+        }
+    }).catch((error) => {
+      console.error('Request failed', error);
+      this.errorMessage = 'Model count fetch request failed with error: '+ error;
+    });
+  }
+
+  getPRModelCount(){
+    const url = this.componenturl + '/api/prmodel/count';
+	  fetch(url, {
+		  method: 'POST',
+      mode: 'cors',
+      cache: 'default',
+      headers: {
+        "Content-Type": "application/json",
+        "auth": this.authToken
+      },
+      body: JSON.stringify({
+        "url": this.portalBEUrl,
+        "userName": this.userName,
+        "reqBody" : {
+          "request_body": {
+            "accessTypeCodes": ["PR"],
+            "active": true,
+            "userId": this.userId
+          }
+        }
+
+      }),
+    }).then(res => res.json())
+      .then((n) => {
+        if(n.status === 'Error'){
+          this.errorMessage = n.message;
+        } else {
+          this.prModelCount = n.data;
+          this.getModelCount();
+        }
+    }).catch((error) => {
+      console.error('Request failed', error);
+      this.errorMessage = 'Model count fetch request failed with error: '+ error;
+    });
+  }
   userAction(action) {
     this.dispatchEvent(
       new CustomEvent("dashboard-event", {
@@ -183,169 +290,148 @@ export class DashboardLitElement extends LitElement {
     );
   }
 
+  receiveMessage(event) {
+    if(event.data){
+      this.parentMsg = event.data;
+    }
+  }
+  
+  navigateToMyModel(){
+    if(this.parentMsg === "iframeMsg"){
+	    window.top.postMessage('navigateToMyModel', '*');
+    } else{
+      this.myModelsUrl = this.portalFEUrl + '/#/manageModule';
+      window.open(this.myModelsUrl, '_blank');
+    }
+  }
+
   render() {
     return html`
       <style>
         @import url("https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css");
+        .alertmessage {
+          display: ${this.alertOpen ? "block" : "none"};
+        }
       </style>
-      <div class="content-wrapper ">
-        <div class="row">
-          <div class="col-lg-12">
+      ${this.view === 'error'
+        ? html`
+          <div class="alertmessage alert alert-danger">
+            <a class="close" @click=${e => this.alertOpen = false}>
+                <span aria-hidden="true">&nbsp;&times;</span>
+            </a>
+            <mwc-icon>error</mwc-icon>&nbsp;&nbsp;<span class="span-message">${this.errorMessage}</span>
+          </div>
+        `
+        : html`
+      `} 
+      
+      ${this.view === ''
+        ? html`
+          <p class="success-status"> Loading ..</p>
+        `
+        : html`
+      `} 
+
+      ${this.view === 'view'
+        ? html`
+          <div class="content-wrapper ">
             <div class="row">
-              <div class="col-md-2">
-                <div class="card-shadow card card-link mb-3 mb-5 bg-white rounded">
-                  <a href="javascript:void" @click=${e => this.userAction("project")}>
-                    <div class="card-body text-center">
-                      <div class="div-color mb-4">
-                          <button class="btnIcon btn-primary">
-                            <mwc-icon class="mwc-icon">share</mwc-icon>
-                          </button>
-                        <h4 class="font-weight-normal mt-2">Projects</h4>
-                      </div>
-                      <h6 class="font-weight-normal">${this.projectCount}</h6>
+              <div class="col-lg-12">
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="card-shadow card card-link mb-3 mb-5 bg-white">
+                      <a href="javascript:void" @click=${e => this.userAction("project")}>
+                        <div class="card-body text-center">
+                          <div class="div-color mb-4">
+                              <button class="btnIcon btn-primary">
+                                <mwc-icon class="mwc-icon">share</mwc-icon>
+                              </button>
+                            <h2 class="font-weight-normal mt-2">Projects</h2>
+                          </div>
+                          ${this.projectCount === 0
+                            ? html`
+                              <button class="btn btn-primary card-button btn-md">
+                                Create Project
+                              </button>
+                            `
+                            : html`
+                              <h4 class="font-weight-normal">${this.projectCount}</h4>
+                            `
+                          }
+                        </div>
+                      </a>
                     </div>
-                  </a>
-                </div>
-              </div>
-              <div class="col-md-2">
-                <div class="card-shadow card card-link mb-3 mb-5 bg-white rounded">
-                  <a href="javascript:void" @click=${e => this.userAction("notebook")}>
-                    <div class="card-body text-center">
-                      <div class="div-color mb-4">
-                        <button class="btnIcon btn-primary">
-                          <mwc-icon class="mwc-icon">library_books</mwc-icon>
-                        </button>
-                        <h4 class="font-weight-normal mt-2">Notebooks</h4>
-                      </div>
-                      <h6 class="font-weight-normal">${this.notebookCount}</h6>
-                    </div>
-                  </a>
-                </div>
-              </div>
-              <div class="col-md-2">
-                <div class="card-shadow card card-link mb-3 mb-5 bg-white rounded">
-                  <a href="javascript:void" @click=${e => this.userAction("pipeline")}>
-                    <div class="card-body text-center">
-                      <div class="div-color mb-4">
-                        <button class="btnIcon btn-primary">
-                          <mwc-icon class="mwc-icon">device_hub</mwc-icon>
-                        </button>
-                        <h4 class="font-weight-normal mt-2">Data Pipelines</h4>
-                      </div>
-                      <h6 class="font-weight-normal">${this.pipelineCount}</h6>
-                    </div>
-                  </a>
-                </div>
-              </div>
-              <div class="col-md-2">
-                <div class="card-shadow card card-link mb-3 mb-5 bg-white rounded">
-                  <div class="card-body text-center">
-                    <div class="div-color mb-4">
-                      <button class="btnIcon btn-primary">
-                        <mwc-icon class="mwc-icon">dns</mwc-icon>
-                      </button>
-                      <h4 class="font-weight-normal mt-2">Datasets</h4>
-                    </div>
-                    <h6 class="font-weight-normal">Coming soon...</h6>
                   </div>
-                </div>
-              </div>
-              <div class="col-md-2">
-                <div class="card-shadow card card-link mb-3 mb-5 bg-white rounded">
-                  <div class="card-body text-center">
-                    <div class="div-color mb-4">
-                      <button class="btnIcon btn-primary">
-                        <mwc-icon class="mwc-icon">view_quilt</mwc-icon>
-                      </button>
-                      <h4 class="font-weight-normal mt-2">Predictors</h4>
+                  <div class="col-md-3">
+                    <div class="card-shadow card card-link mb-3 mb-5 bg-white">
+                      <a href="javascript:void" @click=${e => this.userAction("notebook")}>
+                        <div class="card-body text-center">
+                          <div class="div-color mb-4">
+                            <button class="btnIcon btn-primary">
+                              <mwc-icon class="mwc-icon">library_books</mwc-icon>
+                            </button>
+                            <h2 class="font-weight-normal mt-2">Notebooks</h2>
+                          </div>
+                          ${this.notebookCount === 0
+                            ? html`
+                              <button class="btn btn-primary card-button btn-md">
+                                Create Notebook
+                              </button>
+                            `
+                            : html`
+                              <h4 class="font-weight-normal">${this.notebookCount}</h4>
+                            `
+                          }
+                        </div>
+                      </a>
                     </div>
-                    <h6 class="font-weight-normal">Coming soon...</h6>
                   </div>
-                </div>
-              </div>
-              <div class="col-md-2">
-                <div class="card-shadow card card-link mb-3 mb-5 bg-white rounded">
-                  <div class="card-body text-center">
-                    <div class="div-color mb-4">
-                      <button class="btnIcon btn-primary">
-                        <mwc-icon class="mwc-icon">perm_data_setting</mwc-icon>
-                      </button>
-                      <h4 class="font-weight-normal mt-2">Models</h4>
+                  <div class="col-md-3">
+                    <div class="card-shadow card card-link mb-3 mb-5 bg-white">
+                      <a href="javascript:void" @click=${e => this.userAction("pipeline")}>
+                        <div class="card-body text-center">
+                          <div class="div-color mb-4">
+                            <button class="btnIcon btn-primary">
+                              <mwc-icon class="mwc-icon">device_hub</mwc-icon>
+                            </button>
+                            <h2 class="font-weight-normal mt-2">Data Pipelines</h2>
+                          </div>
+                          ${this.pipelineCount === 0
+                            ? html`
+                              <button class="btn btn-primary card-button btn-md">
+                                Create Pipeline
+                              </button>
+                            `
+                            : html`
+                              <h4 class="font-weight-normal">${this.pipelineCount}</h4>
+                            `
+                          }
+                        </div>
+                      </a>
                     </div>
-                    <h6 class="font-weight-normal">Coming soon...</h6>
                   </div>
-                </div>
-              </div>
-            </div>
-            <div class="row  mt-4">
-              <div class="col-md-3">
-                <div class="card-shadow card card-link mb-3 mb-5 bg-white rounded">
-                  <div class="card-body div-color text-center">
-                    <div class="mb-4">
-                      <button class="btnIcon btn-primary">
-                        <mwc-icon class="mwc-icon">donut_small</mwc-icon>
-                      </button>
-                      <h4 class="font-weight-normal mt-2">CMLP Studio</h4>
+                  <div class="col-md-3">
+                    <div class="card-shadow card card-link mb-3 mb-5 bg-white">
+                      <a href="javascript:void" @click=${e => this.navigateToMyModel()}>
+                        <div class="card-body text-center">
+                          <div class="div-color mb-4">
+                            <button class="btnIcon btn-primary">
+                              <img src="${this.componenturl}/src/my_model_icon.png" alt="My Models">
+                            </button>
+                            <h2 class="font-weight-normal mt-2">My Models</h2>
+                          </div>
+                          <h4 class="font-weight-normal">${this.modelCount}</h4>
+                        </div>
+                      </a>
                     </div>
-                    <h6 class="font-weight-normal card-text">
-                      CMLP Studio
-                    </h6>
-                    <button class="btn btn-primary card-button btn-md mt-3 mb-4">Download&nbsp;&nbsp;<mwc-icon>get_app</button>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="card-shadow card card-link mb-3 mb-5 bg-white rounded">
-                  <div class="card-body div-color text-center">
-                    <div class="mb-4">
-                      <button class="btnIcon btn-primary">
-                        <mwc-icon class="mwc-icon">crop</mwc-icon>
-                      </button>
-                      <h4 class="font-weight-normal mt-2">AcuCompose</h4>
-                    </div>
-                    <h6 class="font-weight-normal card-text">
-                      AcuCompose
-                    </h6>
-                    <button class="btn btn-primary card-button btn-md mt-3 mb-4">Launch&nbsp;&nbsp;<mwc-icon>launch</button>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="card-shadow card card-link mb-3 mb-5 bg-white rounded">
-                  <div class="card-body div-color text-center">
-                    <div class="mb-4">
-                      <button class="btnIcon btn-primary">
-                        <mwc-icon class="mwc-icon">library_books</mwc-icon>
-                      </button>
-                      <h4 class="font-weight-normal mt-2">Zeppelin Notebook</h4>
-                    </div>
-                    <h6 class="font-weight-normal card-text">
-                      Zeppelin Notebook
-                    </h6>
-                    <button class="btn btn-primary card-button btn-md mt-3 mb-4">Launch&nbsp;&nbsp;<mwc-icon>launch</mwc-icon></button>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="card-shadow card card-link mb-3 mb-5 bg-white rounded">
-                  <div class="card-body div-color text-center">
-                    <div class="mb-4">
-                      <button class="btnIcon btn-primary">
-                        <mwc-icon class="mwc-icon">library_books</mwc-icon>
-                      </button>
-                      <h4 class="font-weight-normal mt-2">Jupyter Notebook</h4>
-                    </div>
-                    <h6 class="font-weight-normal card-text">
-                      Jupyter Notebook
-                    </h6>
-                    <button class="btn btn-primary card-button btn-md mt-3 mb-4">Launch&nbsp;&nbsp;<mwc-icon>launch</button>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        `
+      : html`
+      `}
     `;
   }
 }

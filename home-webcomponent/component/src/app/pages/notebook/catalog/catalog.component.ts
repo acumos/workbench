@@ -19,6 +19,7 @@ limitations under the License.
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ScriptService } from '../../../@core/utils/script.service';
+import { BreadcrumbsService } from '../../../@core/utils/breadcrumbs.service';
 
 @Component({
   templateUrl: './catalog.component.html',
@@ -27,20 +28,54 @@ export class NotebookCatalogComponent implements OnInit {
   router: Router;
   script: ScriptService;
   public notebookCatalogComponentURL: string;
+  public userName: any;
+  public authToken: any;
+  public sessionError: any;
+  public alertOpen: any;
+  public loadHtml: any;
+  public breadCrumbs: any[] = [
+    { name: 'Home', href: '' },
+    { name: 'Design Studio', href: '' },
+    { name: 'ML Workbench', sref: '/pages/dashboard' },
+    { name: 'Notebooks' }];
 
-  constructor(router: Router, script: ScriptService) {
+  constructor(router: Router, script: ScriptService, private breadcrumbsService: BreadcrumbsService) {
     this.router = router;
     this.script = script;
   }
 
   OnCatalogNotebookEvent(e) {
     if (e.detail.data.action === 'view-notebook') {
-      this.router.navigateByUrl('/pages/notebook/view/' + e.detail.data.notebookId + '/' + e.detail.data.notebookName);
+      this.router.navigateByUrl('/pages/notebook/view/' + e.detail.data.noteBookId + '/' + e.detail.data.notebookName);
     }
   }
 
   ngOnInit() {
+    this.loadHtml = false;
+    this.loadComponent();
+  }
+
+  private loadComponent() {
     this.notebookCatalogComponentURL = this.script.getConfig('notebookCatalogComponent');
-    this.script.load('notebookCatalogComponent', '/src/notebook-catalog-element.js');
+    this.script.getUserSession().subscribe((res: any) => {
+      if ( res.userName !== '' && res.authToken !== '') {
+        let portalFEURL: any;
+        portalFEURL = this.script.getConfig('portalFEURL');
+        this.breadCrumbs[0].href = portalFEURL;
+        this.breadCrumbs[1].href = portalFEURL + '/#/designStudio';
+
+        this.breadcrumbsService.setBreadcrumbs(this.breadCrumbs);
+        this.userName = res.userName;
+        this.authToken = res.authToken;
+        this.alertOpen = false;
+        this.loadHtml = true;
+        this.script.load('notebookCatalogComponent', '/src/notebook-catalog-element.js');
+      } else {
+        this.sessionError = 'Acumos session details are unavailable in browser cookies. Pls login to Acumos portal and come back here..';
+        this.alertOpen = true;
+      }
+    }, (error) => {
+      console.error('Unable to get the user session :' + error);
+    });
   }
 }

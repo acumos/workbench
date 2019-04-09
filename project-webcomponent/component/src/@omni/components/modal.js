@@ -20,7 +20,7 @@ limitations under the License.
 
 import { LitElement, html, css, unsafeCSS } from "lit-element";
 
-const primaryColor = unsafeCSS`#591887`;
+const primaryColor = unsafeCSS`#671C9D`;
 const secondaryColor = unsafeCSS`#FFFFFF`;
 
 export class OmniModal extends LitElement {
@@ -110,7 +110,7 @@ export class OmniModal extends LitElement {
       case "warning":
         return "#591887";
       default:
-        return "rgb(89, 24, 135);";
+        return "rgb(103, 28, 157);";
     }
   }
 
@@ -123,6 +123,7 @@ export class OmniModal extends LitElement {
       <style>
         .modal {
           display: ${this.isOpen ? "block" : "none"};
+          border-radius: 0px;
         }
         .isOpen {
           display: ${this.isOpen ? "block" : "none"};
@@ -131,6 +132,50 @@ export class OmniModal extends LitElement {
         .variant {
           background-color: ${this.getVariant(this.variant)} !important;
         }
+
+        .modal-header {
+          border-radius: 0px;
+        }
+        
+        .modal-content {
+          border-radius: 0px;
+        }
+
+        .modal-footer {
+          background-color: #f1f1f1
+        }
+
+        .btn {
+          border-radius: 0px;
+        }
+        
+        .btn-secondary {
+          border-color: #E0E0E0;
+          height: 36px;
+        }
+
+        .btn-primary {
+          background-color: #671C9D;
+          border-color: transparent;
+          height: 36px;
+          border-radius: 0px;
+          color:white;
+        }
+
+        .btn-primary.disabled {
+          background-color: #a7a7a7;
+          border-color: #E0E0E0;
+        }
+
+        .btn-primary.disabled:hover {
+          background-color: #a7a7a7;
+          border-color: #E0E0E0;
+        }
+
+        .btn-primary:hover {
+          background-color: #4e147a;
+        }
+
       </style>
       <div class="modal-backdrop isOpen"></div>
       <div class="modal">

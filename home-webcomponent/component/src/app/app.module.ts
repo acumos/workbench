@@ -28,6 +28,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { ThemeModule } from './@theme/theme.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppConfigService } from './app-config.service';
+import {Globals} from './globals'
 import '@material/mwc-icon';
 
 declare module 'lit-html/lib/parts.d' { type bigint = number; }
@@ -60,6 +61,7 @@ const configInitializer = (appConfig: AppConfigService) => {
       multi: true,
       deps: [AppConfigService],
     },
+    Globals,
   ],
 })
 export class AppModule {}

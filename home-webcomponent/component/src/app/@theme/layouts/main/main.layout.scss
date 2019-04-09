@@ -16,9 +16,9 @@ limitations under the License.
 ===============LICENSE_END=========================================================
 */
 
-@import '../../styles/themes';
-@import '~bootstrap/scss/mixins/breakpoints';
-@import '~@nebular/theme/styles/global/breakpoints';
+@import "../../styles/themes";
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~@nebular/theme/styles/global/breakpoints";
 
 @include nb-install-component() {
   nb-layout-column.small {
@@ -61,11 +61,7 @@ limitations under the License.
     margin-top: 0;
 
     /deep/ .main-container {
-      height: calc (
-        #{ nb-theme(sidebar-height)} - #{ nb-theme(header-height)} - #{ nb-theme (
-            sidebar-header-gap
-          )}
-      ) !important;
+      height: calc (#{nb-theme(sidebar-height)} - #{nb-theme(header-height)} - #{nb-theme (sidebar-header-gap)}) !important;
     }
 
     /deep/ .scrollable {

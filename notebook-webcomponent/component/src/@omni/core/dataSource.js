@@ -18,7 +18,7 @@ limitations under the License.
 ===============LICENSE_END=========================================================
 */
 
-import { filter, sortBy, isFunction, each, lowerCase, cloneDeep, toLower } from "lodash-es";
+import { filter, orderBy, isFunction, each, lowerCase, isString} from "lodash-es";
 
 export class DataSource {
   constructor({ data, page, pageSize, filter, sort }) {
@@ -50,7 +50,13 @@ export class DataSource {
     if (isFunction(this._sort)) {
       return this._cachedData.sort(this._sort);
     } else {
-      return sortBy(this._cachedData, [this._sort]);
+      return orderBy(this._cachedData, [field => {
+        if (isString(field[this._sort])) {
+          return field[this._sort].toLowerCase()
+        }
+
+        return field[this._sort];
+      }], ['asc']);
     }
   }
 
@@ -87,7 +93,7 @@ export class DataSource {
     this._fuzzyFilter = fuzzy || false;
   }
 
-  search(searchCriteria){
+  search(searchCriteria) {
     this._searchCriteria = searchCriteria;
   }
 
@@ -104,7 +110,7 @@ export class DataSource {
         return JSON.stringify(item).toLowerCase().includes(filterTextLower);
       });
     } else {
-      results  = [...this._cachedData];
+      results = [...this._cachedData];
     }
     return results;
   }
@@ -165,10 +171,10 @@ export class DataSource {
         this.page = 0;
         break;
       case "next":
-        this.page = ((this.totalPages - 1) > this.page)? this.page + 1: this.page;
+        this.page = ((this.totalPages - 1) > this.page) ? this.page + 1 : this.page;
         break;
       case "previous":
-        this.page = (this.page > 0) ? this.page - 1: this.page;
+        this.page = (this.page > 0) ? this.page - 1 : this.page;
         break;
       case "last":
         this.page = this.totalPages - 1;

@@ -27,14 +27,37 @@ export const style = css`
 }
 
 .btn-primary {
- background-color: #591887;
-border-color: transparent;
-height: 35px;
+    background-color: #671C9D;
+    border-color: transparent;
+    height: 36px;
+    border-radius: 0px;
+}
+  
+.btn-primary:hover {
+    background-color: #4e147a;
+}
+
+.btn-primary:disabled {
+    background-color: #a7a7a7;
+    border-color: #E0E0E0;
 }
 
 .btn-outline-primary {
- color: #591887;
- border-color: #591887;
+    color: #671C9D;
+    border-color: #671C9D;
+    border-radius: 0px;
+    height: 36px;
+}
+  
+.btn-outline-primary:hover {
+    background-color: #4e147a;
+}
+  
+.btn-secondary {
+    color: gray;
+    border-color: gray;
+    background-color: white;
+    border-radius: 0px;
 }
 
 label {
@@ -56,17 +79,21 @@ padding-left: 15px;
 }
 
 .btnIcon {
-padding: 0.1rem 0.1rem;
-font-size: .075rem;
-line-height: 0.1;
-border-radius: 0.3rem;
-height: 30px;
+    padding: 0.1rem 0.1rem;
+    font-size: .075rem;
+    line-height: 0.1;
+    height: 30px;
+    width: 30px;
+    border-radius: 0px;
 }
 
-.btn-secondary {
-color: gray;
-border-color: gray;
-background-color: white;
+.btnIconTop {
+    padding: 0.1rem 0.1rem;
+    font-size: .075rem;
+    line-height: 0.1;
+    height: 36px;
+    width: 36px;
+    border-radius: 0px;
 }
 
 a.disabled {
@@ -74,10 +101,8 @@ pointer-events: none;
 cursor: default;					
 }
 
-.btn-primary.disabled {
-color: #1b1e21;
-background-color: #adb5bd;
-border-color: #adb5bd;
+.card {
+    border-radius: 0px;
 }
 
 .card-header {
@@ -86,11 +111,12 @@ padding-bottom: 0rem;
 }
 
 .textColor {
-color: #591887;
+color: #671C9D;
 }
 
 .mwc-icon-gray{
-color: gray;
+color: black;
+padding-top: 3px;
 }
 
 .active-status {
@@ -99,5 +125,50 @@ color: green
 
 .inactive-status {
 color: red
+}
+
+.toggle-a {
+    width: 25px;
+    heigth: 25px;
+    color: white;
+    background-color:lightgray;
+    border-color: transparent;
+    margin: 0px;
+    padding: 0px;
+}
+
+.toggle-span {
+    font-size: 42px;
+    line-height: 0.1px;
+    padding-top: 7px;
+    height: 20px;
+    display: block;
+    padding-left: 5px;
+    width: 14px;
+    color: white;
+}
+
+.toggle-plus-span {
+    font-weight: bold;
+    font-size: 25px;
+    padding-top: 8px;
+}
+
+.alertmessage {
+  background-color: white !important;
+  color: #dc3545;
+  border-color: #dc3545;
+  border: 1px solid; 
+  padding: .35rem 1.00rem;
+}
+
+.alert-success{
+  color: #28a745 ;
+  border-color: #28a745;
+}
+
+.span-message {
+    position: absolute;
+    margin-top: 5px;
 }
 `;

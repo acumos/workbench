@@ -16,6 +16,24 @@
       "revId": "20d498eabec24f2aa833a3f3659404685b9fa5e0",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9d710d15_242d5e13",
+        "filename": "project-catalog-webcomponent/component/src/@omni/mixins/Validation.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 236
+      },
+      "writtenOn": "2019-04-09T14:29:32Z",
+      "side": 1,
+      "message": "Its fixed.",
+      "parentUuid": "cd1e6409_72cc0f9d",
+      "revId": "20d498eabec24f2aa833a3f3659404685b9fa5e0",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
     }
   ]
 }

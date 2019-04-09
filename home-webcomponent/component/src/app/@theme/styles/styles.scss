@@ -36,4 +36,9 @@ limitations under the License.
     border-radius: 50%;
   }
   @include bootstrap-rtl();
+
+  .alertmessage {
+    border: 1px solid #ff6790 !important;
+    padding: .35rem 1.00rem; 
+  }
 };

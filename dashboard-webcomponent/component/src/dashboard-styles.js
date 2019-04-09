@@ -78,6 +78,18 @@ export const style = css`
   
   .card-button {
     display: inline-flex;  
+    line-height : 1.0 
   }
   
+  .alertmessage {
+	  background-color: white !important;
+	  color: #dc3545;
+	  border-color: #dc3545;
+	  border: 1px solid; 
+	}
+	
+	.alert-success{
+	  color: #28a745 ;
+	  border-color: #28a745;
+	}
 `;

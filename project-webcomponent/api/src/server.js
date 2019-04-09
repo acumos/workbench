@@ -40,20 +40,20 @@ app.use(cookieParser());
 app.use(methodOverride());
 
 app.use(bodyParser.json({
-	limit : '500mb',
+	limit : process.env.reqBodyLimit || '500mb',
 }));
 
 app.use(bodyParser.raw({
-	limit : '500mb',
+	limit : process.env.reqBodyLimit || '500mb',
 }));
 
 app.use(bodyParser.urlencoded({
 	extended : true,
-	limit : '500mb',
+	limit : process.env.reqBodyLimit || '500mb',
 }));
 
 app.use(bodyParser.text({
-	limit : '500mb'
+	limit : process.env.reqBodyLimit || '500mb'
 }));
 
 

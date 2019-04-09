@@ -48,7 +48,8 @@ export class NotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 				isOpenRestoreDialog: { type: Boolean },
 				successMessage: {type: String},
 				errorMessage: {type: String},
-				alertOpen: {type: Boolean}
+				alertOpen: {type: Boolean},
+				cardShow: {type: Boolean}
 			};
 		}
 		
@@ -135,6 +136,7 @@ export class NotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 					if(response.status === 'Success'){
 						this.renderViewNotebook(response.data);
 						this.view = 'view';
+						this.cardShow = true;
 					}else{
 						this.errorMessage = n.message;
 						this.view = 'error';
@@ -351,6 +353,9 @@ export class NotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 					.alertmessage {
 						display: ${this.alertOpen ? "block" : "none"};
 					}
+					.card-show {
+						display: ${this.cardShow ? "block" : "none"};
+					}
 				</style>
 				<omni-dialog title="Archive ${this.notebookName}" close-string="Archive Notebook" dismiss-string="Cancel"
 					is-open="${this.isOpenArchiveDialog}" @omni-dialog-dimissed="${this.archiveDialogDismissed}"
@@ -461,11 +466,24 @@ export class NotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 											: ``
 										}
 										<div style="position: absolute; right:0" >
-											<a  class="btn btn-sm btn-secondary my-2">-</a>&nbsp;&nbsp;&nbsp;&nbsp;
+											${
+												this.cardShow === false
+												? html`
+													<a class="toggle-a btn btn-sm btn-secondary my-2" @click=${e => this.cardShow = true}>
+														<span class="toggle-span">+</span>
+													</a>
+												`
+												: html`
+													<a class="toggle-a btn btn-sm btn-secondary my-2" @click=${e => this.cardShow = false}>
+														<span class="toggle-span">-</span>
+													</a>
+												`
+											}
+											&nbsp;&nbsp;&nbsp;&nbsp;
 										</div>
 									</div>
 								</div>
-								<div class="card-body ">
+								<div class="card-body card-show">
 									<table class="table table-bordered table-sm">
 										<tbody>
 											<tr>

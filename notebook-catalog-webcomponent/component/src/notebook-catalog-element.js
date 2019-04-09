@@ -51,7 +51,8 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
       user_name : {type: String},
       alertOpen: { type: Boolean },
       successMessage: { type: String },
-      errorMessage: { type: String }
+      errorMessage: { type: String },
+      cardShow: { type: Boolean }
     };
   }
 
@@ -86,6 +87,7 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
     ];
 
     this.notebookLists = [];
+    this.cardShow = false;
     this.requestUpdate().then(() => {
       console.info('update componenturl : ' + this.componenturl);
       this.componenturl = (this.componenturl === undefined || this.componenturl === null)? '' : this.componenturl;
@@ -177,6 +179,7 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
         } else {
           this.notebookLists = [];
           this.notebooks = [];
+          this.cardShow = true;
           this.convertNotebookObject(n.data);
         }
     }).catch((error) => {
@@ -476,6 +479,9 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
         .alertmessage {
           display: ${this.alertOpen ? "block" : "none"};
         }
+        .card-show {
+          display: ${this.cardShow ? "block" : "none"};
+        }
       </style>
       <omni-dialog title="Archive ${this.selectedNotebookName}" close-string="Archive Notebook" dismiss-string="Cancel"
         is-open="${this.isOpenArchiveDialog}" @omni-dialog-dimissed="${this.archiveDialogDismissed}"
@@ -739,17 +745,21 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
                 <div style="position: absolute; right:0;">
                   <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-end">
-                      <li class="page-item">
-                        <a class="page-link" href="javascript:void" @click=${e => this.navigatePage("first")}>First</a>
+                    <li class="page-item">
+                        <a href="javascript:void" @click=${e => this.navigatePage("first")}
+                          class="page-link ${this.currentPage !== 1? "active" : "inactive"}">First</a>                          
                       </li>
                       <li class="page-item">
-                        <a class="page-link" href="javascript:void" @click=${e => this.navigatePage("previous")} >Previous</a>
+                        <a class="page-link ${this.currentPage !== 1? "active" : "inactive"}" href="javascript:void" 
+                          @click=${e => this.navigatePage("previous")} >Previous</a>
                       </li>
                       <li class="page-item">
-                        <a class="page-link" href="javascript:void" @click=${e => this.navigatePage("next")} >Next</a>
+                        <a class="page-link ${this.currentPage < this.totalPages? "active" : "inactive"}" href="javascript:void" 
+                          @click=${e => this.navigatePage("next")} >Next</a>
                       </li>
                       <li class="page-item">
-                        <a class="page-link" href="javascript:void" @click=${e => this.navigatePage("last")} >Last</a>
+                        <a class="page-link ${this.currentPage < this.totalPages? "active" : "inactive"}" href="javascript:void" 
+                          @click=${e => this.navigatePage("last")} >Last</a>
                       </li>
                       &nbsp;&nbsp;&nbsp;&nbsp;
                     </ul>
@@ -808,12 +818,24 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
                     <mwc-icon class="textColor">library_books</mwc-icon>&nbsp;&nbsp;&nbsp;
                     <h4 class="textColor card-title">Notebooks</h4>
                     <div style="position: absolute; right:0">
-                      <a class="btn btn-sm btn-secondary my-2">-</a>
+                      ${
+                        this.cardShow === false
+                        ? html`
+                          <a class="toggle-a btn btn-sm btn-secondary my-2" @click=${e => this.cardShow = true}>
+                            <span class="toggle-span">+</span>
+                          </a>
+                        `
+                        : html`
+                          <a class="toggle-a btn btn-sm btn-secondary my-2" @click=${e => this.cardShow = false}>
+                            <span class="toggle-span">-</span>
+                          </a>
+                        `
+                      }
                       &nbsp;&nbsp;&nbsp;&nbsp;
                     </div>
                   </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body card-show">
                   <div class="row" style="margin:10px 0;margin-bottom:20px;">
                     <h7>No Notebooks, get started with ML Workbench by creating your first Notebook.</h7>
                   </div>

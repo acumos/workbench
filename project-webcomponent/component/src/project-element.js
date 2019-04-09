@@ -51,7 +51,8 @@ export class ProjectLitElement extends DataMixin(ValidationMixin(BaseElementMixi
 				isOpenRestoreDialog: { type: Boolean },
 				successMessage: {type: String},
 				errorMessage: {type: String},
-				alertOpen: {type: Boolean}
+				alertOpen: {type: Boolean},
+				cardShow: {type: Boolean}
     	};
 		}
 		
@@ -138,6 +139,7 @@ export class ProjectLitElement extends DataMixin(ValidationMixin(BaseElementMixi
 					if(response.status === 'Success'){
 						this.renderViewProject(response.data);
 						this.view = 'view';
+						this.cardShow = true;
 					}else{
 						this.errorMessage = response.message;
 						this.view = 'error';
@@ -353,6 +355,9 @@ export class ProjectLitElement extends DataMixin(ValidationMixin(BaseElementMixi
 					.alertmessage {
 						display: ${this.alertOpen ? "block" : "none"};
 					}
+					.card-show {
+						display: ${this.cardShow ? "block" : "none"};
+					}
 				</style>
 				<omni-dialog title="Archive ${this.projectName}" close-string="Archive Project" dismiss-string="Cancel"
 					is-open="${this.isOpenArchiveDialog}" @omni-dialog-dimissed="${this.archiveDialogDismissed}"
@@ -463,11 +468,24 @@ export class ProjectLitElement extends DataMixin(ValidationMixin(BaseElementMixi
 											: ``
 										}
 										<div style="position: absolute; right:0" >
-											<a  class="btn btn-sm btn-secondary my-2">-</a>&nbsp;&nbsp;&nbsp;&nbsp;
+											${
+												this.cardShow === false
+												? html`
+													<a class="toggle-a btn btn-sm btn-secondary my-2" @click=${e => this.cardShow = true}>
+														<span class="toggle-span">+</span>
+													</a>
+												`
+												: html`
+													<a class="toggle-a btn btn-sm btn-secondary my-2" @click=${e => this.cardShow = false}>
+														<span class="toggle-span">-</span>
+													</a>
+												`
+											}
+											&nbsp;&nbsp;&nbsp;&nbsp;
 										</div>
 									</div>
 								</div>
-								<div class="card-body ">
+								<div class="card-body card-show">
 									<table class="table table-bordered table-sm">
 										<tbody>
 											<tr>

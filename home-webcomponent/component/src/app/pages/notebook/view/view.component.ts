@@ -19,21 +19,24 @@ limitations under the License.
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ScriptService } from '../../../@core/utils/script.service';
+import { BreadcrumbsService } from '../../../@core/utils/breadcrumbs.service';
+import { BaseComponent } from '../../base/base.component';
 
 @Component({
   templateUrl: './view.component.html',
 })
-export class NotebookViewComponent implements OnInit {
+export class NotebookViewComponent extends BaseComponent implements OnInit {
 
   public id: string;
   public name: string;
-  public router: Router;
-  script: ScriptService;
-  public notebookComponentURL: string;
+  public breadCrumbs: any[] = [
+    { name: 'Home', href: '' },
+    { name: 'Design Studio', href: '' },
+    { name: 'ML Workbench', sref: '/pages/dashboard' },
+    { name: 'Notebooks', sref: '/pages/notebook/catalog' }];
 
-  constructor(private route: ActivatedRoute, router: Router, script: ScriptService) {
-    this.script = script;
-    this.router = router;
+  constructor(private route: ActivatedRoute, router: Router, script: ScriptService, breadcrumbsService: BreadcrumbsService) {
+    super(router, script, breadcrumbsService);
   }
 
   OnViewNotebookEvent(e) {
@@ -43,9 +46,9 @@ export class NotebookViewComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loadHtml = false;
     this.id = this.route.snapshot.paramMap.get('id');
     this.name = this.route.snapshot.paramMap.get('name');
-    this.notebookComponentURL = this.script.getConfig('notebookComponent');
-    this.script.load('notebookComponent', '/src/notebook-element.js');
+    this.loadComponent('notebookComponent', 'notebook-element', this.breadCrumbs);
   }
 }

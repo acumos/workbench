@@ -19,18 +19,23 @@ limitations under the License.
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ScriptService } from '../../@core/utils/script.service';
+import { BreadcrumbsService } from '../../@core/utils/breadcrumbs.service';
+import { BaseComponent } from '../base/base.component';
+import { Globals } from '../../globals';
 
 @Component({
   templateUrl: './dashboard.component.html',
 })
-export class DashboardComponent implements OnInit {
-  router: Router;
-  script: ScriptService;
-  public dashboardComponentURL: string;
+export class DashboardComponent extends BaseComponent implements OnInit {
+  public parentMsg: any;
+  public retry: number;
+  public breadCrumbs: any[] = [
+    { name: 'Home', href: '' },
+    { name: 'Design Studio', href: '' },
+    { name: 'ML Workbench' }];
 
-  constructor(router: Router, script: ScriptService) {
-    this.router = router;
-    this.script = script;
+  constructor(router: Router, script: ScriptService, breadcrumbsService: BreadcrumbsService, private globals: Globals) {
+    super(router, script, breadcrumbsService);
   }
 
   OnDashboardEvent(e) {
@@ -44,7 +49,20 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.dashboardComponentURL = this.script.getConfig('dashboardComponent');
-    this.script.load('dashboardComponent', '/src/dashboard-element.js');
+    this.loadHtml = false;
+    this.retry = 0;
+    this.getGlobalMsg();
+  }
+
+  getGlobalMsg() {
+    if(this.retry === 5 || this.globals.parentMsg !== undefined) {
+      this.parentMsg = this.globals.parentMsg;
+      this.loadComponent('dashboardComponent', 'dashboard-element', this.breadCrumbs);
+      return;
+    }
+    setTimeout( () => {
+      ++this.retry;
+      this.getGlobalMsg();
+    }, 1000);
   }
 }

@@ -21,11 +21,13 @@ import { NgModule } from '@angular/core';
 
 import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { CreateComponent } from './projects/create/create.component';
 import { CatalogComponent } from './projects/catalog/catalog.component';
 import { ViewComponent } from './projects/view/view.component';
 import { NotebookCatalogComponent } from './notebook/catalog/catalog.component';
 import { NotebookViewComponent } from './notebook/view/view.component';
+import { PipelineCatalogComponent } from './pipeline/catalog/catalog.component';
+import { PipelineViewComponent } from './pipeline/view/view.component';
+import { AcuComposeComponent } from './acuCompose/acuCompose.component';
 
 const routes: Routes = [
   {
@@ -35,10 +37,6 @@ const routes: Routes = [
       {
         path: 'dashboard',
         component: DashboardComponent,
-      },
-      {
-        path: 'projects/create',
-        component: CreateComponent,
       },
       {
         path: 'projects/catalog',
@@ -55,6 +53,18 @@ const routes: Routes = [
       {
         path: 'notebook/view/:id/:name',
         component: NotebookViewComponent,
+      },
+      {
+        path: 'pipeline/catalog',
+        component: PipelineCatalogComponent,
+      },
+      {
+        path: 'pipeline/view/:id/:name',
+        component: PipelineViewComponent,
+      },
+      {
+        path: 'acuCompose',
+        component: AcuComposeComponent,
       },
       {
         path: '',

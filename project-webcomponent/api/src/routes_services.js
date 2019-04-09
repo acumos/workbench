@@ -27,11 +27,12 @@ module.exports = function(app) {
 	let uripath = "/users/";
 	
 	var getJWTToken = function(req){
-		return req.cookies.auth_token;
+		return req.cookies.auth_tokenML;
 	}
 
 	var configENV = properties.ENVIRONMENT;
 	var userName = properties.userName;
+	var wikiURL = properties.wikiURL;
 	var ms_urls = {
 		projectmSURL : properties.projectmSURL,
 		notebookmSURL : properties.notebookmSURL
@@ -40,12 +41,12 @@ module.exports = function(app) {
 	app.get('/api/config', function(req, res) {
 		try {
 			let user_name = (req.cookies.userDetail !== undefined && req.cookies.userDetail !== null && req.cookies.userDetail.length > 0) ? 
-				req.cookies.userDetail[0]: userName;
-			console.info('user name: '+ user_name);
+				req.cookies.userDetailML[2]: userName;
 			res.configInfo = {
 				configENV : configENV,
 				msconfig : ms_urls,
-				user_name:  user_name
+				user_name:  user_name,
+				wikiURL: wikiURL
 			};
 			res.send(res.configInfo);
 		} catch (err) {
@@ -99,7 +100,7 @@ module.exports = function(app) {
 		});
 	});
 	
-	app.post('/api/project/getNotebooks', function (req, res){
+	app.post('/api/project/notebooksList', function (req, res){
 		let user_name = req.body.user_name;
     	let serviceUrl = req.body.url + uripath;
     	let projectId = req.body.projectId;
@@ -108,15 +109,15 @@ module.exports = function(app) {
     	});
 	});
 
-	app.put('/api/project/updateNotebook', function (req, res){
+	app.put('/api/project/associateNotebook', function (req, res){
 		let user_name = req.body.user_name;
 		let serviceUrl = req.body.url + uripath;
 		let notebookPayload = req.body.notebookPayload;
 		let projectId = req.body.projectId;
 		let notebookId = req.body.notebookId;
-    	updateNotebookDetails(user_name, serviceUrl, projectId, notebookId, notebookPayload, getJWTToken(req)).then(function(result){
-    		res.send(result);
-    	});
+		associateNotebookToProject(user_name, serviceUrl, projectId, notebookId, notebookPayload, getJWTToken(req)).then(function(result){
+			res.send(result);
+		});
 	});
 	
 	app.put('/api/project/archiveNotebook', function (req, res){
@@ -139,15 +140,14 @@ module.exports = function(app) {
 		});
 	});
 	
-	/*app.delete('/api/project/deleteNotebook', function (req, res){
+	app.delete('/api/project/deleteNotebook', function (req, res){
 		let serviceUrl = req.body.url + uripath;
 		let user_name = req.body.user_name;
-		let projectId = req.body.projectId;
 		let notebookId = req.body.notebookId;
-		deleteNotebook(user_name, serviceUrl, projectId, notebookId, getJWTToken(req)).then(function(result){
+		deleteNotebook(user_name, serviceUrl, notebookId, getJWTToken(req)).then(function(result){
 			res.send(result);
 		});
-	});*/
+	});
 	
 	app.post('/api/project/createNotebook', function (req, res){
 		let serviceUrl = req.body.url + uripath;
@@ -156,6 +156,14 @@ module.exports = function(app) {
 		let newNotebookReq = req.body.newNotebookDetails;
 		createNotebook(user_name, serviceUrl, projectId, newNotebookReq, getJWTToken(req)).then(function(result){
 			res.send(result);
+		});
+	});
+
+	app.post('/api/notebooks', function(req, res) {
+		let serviceUrl = req.body.url + uripath;
+		let user_name = req.body.user_name;
+		getNotebooksList(user_name, serviceUrl, getJWTToken(req)).then(function(result) {
+					res.send(result);
 		});
 	});
 	
@@ -322,7 +330,7 @@ module.exports = function(app) {
 		});
 	};
 	
-	var updateNotebookDetails = function(user_name, srvcUrl, projectId, notebookId, notebookPayload, jwtToken){
+	var associateNotebookToProject = function(user_name, srvcUrl, projectId, notebookId, notebookPayload, jwtToken){
     	return new Promise(function(resolve, reject) {
             var options = {
 				method : "PUT",
@@ -391,7 +399,7 @@ module.exports = function(app) {
 		});
 	};
 	
-	/*var deleteNotebook = function(user_name, srvcUrl, projectId, notebookId, jwtToken){
+	var deleteNotebook = function(user_name, srvcUrl, projectId, notebookId, jwtToken){
 		return new Promise(function(resolve, reject) {
 			var options = {
 				method : "DELETE",
@@ -411,7 +419,30 @@ module.exports = function(app) {
 				}
 			});
 		});
-	};*/
+	};
+
+	var getNotebooksList = function(user_name, url, jwtToken) {
+		return new Promise(function(resolve, reject) {
+			var options = {
+				method : "GET",
+				url : url + user_name + "/notebooks/",
+				headers : {
+					'Content-Type' : 'application/json',
+					'Authorization' : jwtToken,
+				},
+			};
+
+			request.get(options, function(error, response) {
+				if (!error && response.statusCode == 200) {
+					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Notebooks retrieved successfully."));
+				} else if (!error) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to retrieve Notebooks."));
+				} else {
+					resolve(prepRespJsonAndLogit(null, null, null, error));
+				}
+			});
+		});
+	};
 	
 	var prepRespJsonAndLogit = function(httpResponse, responseData, message, error) {
 		let r = {};
@@ -490,11 +521,7 @@ module.exports = function(app) {
 	var isNull = function(obj) {
 		return obj === undefined || obj === null;
 	};
-
-	var isEmptyStr = function(str) {
-		return str === undefined || str === null || str === "" || str === " ";
-	};
-
+	
 	function parseJSON(str) {
 		try {
 			var j = JSON.parse(str);

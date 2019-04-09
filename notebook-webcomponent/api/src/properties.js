@@ -23,11 +23,13 @@ var config = {
 		ENVIRONMENT : "dev",
 		userName : "sample",
 		notebookmSURL : "http://localhost:9089/mlWorkbench/v1/notebook",
+		wikiURL : "https://wiki.acumos.org/display/TRAIN",
 	},
 	deploy : {
 		ENVIRONMENT : process.env.ENVIRONMENT,
 		userName : process.env.userName,
 		notebookmSURL : process.env.notebookmSURL,
+		wikiURL : process.env.wikiURL,
 	}
 };
 

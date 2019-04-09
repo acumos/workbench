@@ -23,7 +23,8 @@ limitations under the License.
     <li class="breadcrumb-item active"><a>Notebooks</a></li>
   </ol>
 </nav>
-<notebook-catalog-element (catalog-notebook-event)="this.OnCatalogNotebookEvent($event)" [attr.componenturl]="notebookCatalogComponentURL">
+<notebook-catalog-element (catalog-notebook-event)="this.OnCatalogNotebookEvent($event)" [attr.componenturl]="notebookCatalogComponentURL"
+[attr.userName]="userName">
 </notebook-catalog-element>
 
 

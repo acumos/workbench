@@ -24,12 +24,20 @@ var config = {
 		userName : "sample",
 		projectmSURL : "http://localhost:9088/mlWorkbench/v1/project",
 		notebookmSURL : "http://localhost:9089/mlWorkbench/v1/notebook",
+		pipelinemSURL : "http://localhost:9090/mlWorkbench/v1/pipeline",
+		projectWikiURL : "https://wiki.acumos.org/display/TRAIN",
+		notebookWikiURL : "https://wiki.acumos.org/display/TRAIN",
+		pipelineWikiURL : "https://wiki.acumos.org/display/TRAIN",
 	},
 	deploy : {
 		ENVIRONMENT : process.env.ENVIRONMENT,
 		userName : process.env.userName,
 		projectmSURL : process.env.projectmSURL,
 		notebookmSURL : process.env.notebookmSURL,
+		pipelinemSURL : process.env.pipelinemSURL,
+		projectWikiURL : process.env.projectWikiURL,
+		notebookWikiURL : process.env.notebookWikiURL,
+		pipelineWikiURL : process.env.pipelineWikiURL,
 	}
 };
 

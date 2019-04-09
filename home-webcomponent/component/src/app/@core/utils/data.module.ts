@@ -19,9 +19,11 @@ limitations under the License.
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ScriptService } from './script.service';
+import { BreadcrumbsService } from './breadcrumbs.service';
 
 const SERVICES = [
   ScriptService,
+  BreadcrumbsService,
 ];
 
 @NgModule({

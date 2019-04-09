@@ -16,7 +16,7 @@
   ],
   "scripts": {
     "install:app": "cd component && npm install",
-    "install:api": "cd api && npm install --prod",
+    "install:api": "cd api && npm install",
     "run:api": "cd api && npm run start",
     "run:component": "cd component && npm run start:dev",
     "build:component": "cd component && npm run build",

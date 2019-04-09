@@ -289,14 +289,6 @@ module.exports = function(app) {
 		return credentials;
 	};
 
-	var isNull = function(obj) {
-		return obj === undefined || obj === null;
-	};
-
-	var isEmptyStr = function(str) {
-		return str === undefined || str === null || str === "" || str === " ";
-	};
-
 	function parseJSON(str) {
 		try {
 			var j = JSON.parse(str);

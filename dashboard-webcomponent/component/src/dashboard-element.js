@@ -290,7 +290,9 @@ export class DashboardLitElement extends LitElement {
                     <h6 class="font-weight-normal card-text">
                       CMLP Studio
                     </h6>
-                    <button class="btn btn-primary card-button btn-md mt-3 mb-4">Download&nbsp;&nbsp;<mwc-icon>get_app</button>
+                    <button class="btn btn-primary card-button btn-md mt-3 mb-4">Download&nbsp;&nbsp;
+                      <mwc-icon>get_app</mwc-icon>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -306,7 +308,9 @@ export class DashboardLitElement extends LitElement {
                     <h6 class="font-weight-normal card-text">
                       AcuCompose
                     </h6>
-                    <button class="btn btn-primary card-button btn-md mt-3 mb-4">Launch&nbsp;&nbsp;<mwc-icon>launch</button>
+                    <button class="btn btn-primary card-button btn-md mt-3 mb-4">Launch&nbsp;&nbsp;
+                      <mwc-icon>launch</mwc-icon>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -322,7 +326,8 @@ export class DashboardLitElement extends LitElement {
                     <h6 class="font-weight-normal card-text">
                       Zeppelin Notebook
                     </h6>
-                    <button class="btn btn-primary card-button btn-md mt-3 mb-4">Launch&nbsp;&nbsp;<mwc-icon>launch</mwc-icon></button>
+                    <button class="btn btn-primary card-button btn-md mt-3 mb-4">Launch&nbsp;&nbsp;<mwc-icon>launch</mwc-icon>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -338,7 +343,9 @@ export class DashboardLitElement extends LitElement {
                     <h6 class="font-weight-normal card-text">
                       Jupyter Notebook
                     </h6>
-                    <button class="btn btn-primary card-button btn-md mt-3 mb-4">Launch&nbsp;&nbsp;<mwc-icon>launch</button>
+                    <button class="btn btn-primary card-button btn-md mt-3 mb-4">Launch&nbsp;&nbsp;
+                      <mwc-icon>launch</mwc-icon>
+                    </button>
                   </div>
                 </div>
               </div>

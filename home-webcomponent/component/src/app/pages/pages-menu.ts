@@ -36,12 +36,9 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/notebook/catalog',
   },
   {
-    title: 'Models',
-    icon: 'fas fa-cogs',
-  },
-  {
     title: 'Data Pipelines',
     icon: 'fa fa-code-branch',
+    link: '/pages/pipeline/catalog',
   },
   {
     title: 'CMLP Studio',

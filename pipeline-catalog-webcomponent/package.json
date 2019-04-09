@@ -1,0 +1,21 @@
+{
+  "name": "PipelineCatalogWebComponent",
+  "version": "1.0.0",
+  "license": "Apache",
+  "scripts": {
+    "install:app": "cd component && npm install --prod",
+    "install:api": "cd api && npm install --prod",
+    "run:api": "cd api && npm run start",
+    "run:component": "cd component && npm run start:dev",
+    "build:component": "cd component && npm run build",
+    "postinstall": "run-s install:*",
+    "start:dev": "run-p run:*",
+    "polymer-build": "run-p build:*"
+  },
+  "devDependencies": {
+    "polymer-cli": "^1.9.6"
+  },
+  "dependencies": {
+    "npm-run-all": "^4.1.5"
+  }
+}

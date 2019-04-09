@@ -22,9 +22,10 @@ var config = {
 	local : {
 		ENVIRONMENT : "dev",
 		userName: "sample",
-		projectmSURL : "http://localhost:9080/mlWorkbench/v1/project",
-		notebookmSURL : "http://localhost:9082/mlWorkbench/v1/notebook",
-		pipelinemSURL : "http://localhost:9083/mlWorkbench/v1/pipeline",
+		projectmSURL : "http://localhost:9088/mlWorkbench/v1/project",
+		notebookmSURL : "http://localhost:9089/mlWorkbench/v1/notebook",
+		pipelinemSURL : "http://localhost:9090/mlWorkbench/v1/pipeline",
+		portalFEURL : "http://localhost:8085",
 	},
 	deploy : {
 		ENVIRONMENT : process.env.ENVIRONMENT,
@@ -32,6 +33,7 @@ var config = {
 		projectmSURL : process.env.projectmSURL,
 		notebookmSURL : process.env.notebookmSURL,
 		pipelinemSURL : process.env.pipelinemSURL,
+		portalFEURL : process.env.portalFEURL
 	}
 };
 

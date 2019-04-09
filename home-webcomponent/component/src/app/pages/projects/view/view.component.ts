@@ -19,6 +19,7 @@ limitations under the License.
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ScriptService } from '../../../@core/utils/script.service';
+import { BreadcrumbsService } from '../../../@core/utils/breadcrumbs.service';
 
 @Component({
   templateUrl: './view.component.html',
@@ -30,8 +31,17 @@ export class ViewComponent implements OnInit {
   public router: Router;
   script: ScriptService;
   public projectComponentURL: string;
+  public userName: any;
+  public authToken: any;
+  public sessionError: any;
+  public alertOpen: any;
+  public breadCrumbs: any[] = [
+    { name: 'Home', href: '' },
+    { name: 'Design Studio', href: '' },
+    { name: 'ML Workbench', sref: '/pages/dashboard' },
+    { name: 'Projects', sref: '/pages/projects/catalog' }];
 
-  constructor(private route: ActivatedRoute, router: Router, script: ScriptService) {
+  constructor(private route: ActivatedRoute, router: Router, script: ScriptService, private breadcrumbsService: BreadcrumbsService) {
     this.script = script;
     this.router = router;
   }
@@ -43,9 +53,32 @@ export class ViewComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loadComponent();
+  }
+
+  private loadComponent() {
     this.id = this.route.snapshot.paramMap.get('id');
     this.name = this.route.snapshot.paramMap.get('name');
     this.projectComponentURL = this.script.getConfig('projectComponent');
-    this.script.load('projectComponent', '/src/project-element.js');
+    this.script.getUserSession().subscribe((res: any) => {
+      if (res.userName !== '' && res.authToken !== '') {
+        let portalFEURL: any;
+        portalFEURL = this.script.getConfig('portalFEURL');
+        this.breadCrumbs[0].href = portalFEURL;
+        this.breadCrumbs[1].href = portalFEURL + '/#/designStudio';
+        this.breadCrumbs.push({ name: this.name });
+
+        this.breadcrumbsService.setBreadcrumbs(this.breadCrumbs);
+        this.userName = res.userName;
+        this.authToken = res.authToken;
+        this.alertOpen = false;
+        this.script.load('projectComponent', '/src/project-element.js');
+      } else {
+        this.sessionError = 'Acumos session details are unavailable in browser cookies. Pls login to Acumos portal and come back here..';
+        this.alertOpen = true;
+      }
+    }, (error) => {
+      console.error('Unable to get the user session :' + error);
+    });
   }
 }

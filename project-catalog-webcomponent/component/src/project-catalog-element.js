@@ -51,8 +51,11 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
       archiveProjectCount: { type: Number },
       allProjectCount: { type: Number },
       componenturl: { type: String, notify: true },
-      user_name: { type: String },
-      alertOpen: { type: Boolean }
+      alertOpen: { type: Boolean },
+      cardShow: { type: Boolean },
+      projectWikiURL: {type: String},
+      userName: {type: String, notify: true},
+      authToken: {type: String, notify: true}
     };
   }
 
@@ -83,6 +86,7 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
       }
     });
     this.alertOpen = false;
+    this.cardShow = false;
     this.sortOptions = [
       { value: "created", label: "Sort By Created Date" },
       { value: "name", label: "Sort By Name" },
@@ -113,6 +117,8 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
       }
     };
 
+    this.$data.snapshot('newProject');
+
     this.$data.set('createErrorMessage', '');
     this.$data.set('newProject.projectId.name', '');
     this.$data.set('newProject.projectId.versionId.label', '');
@@ -139,13 +145,23 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
     }).then(res => res.json())
       .then((envVar) => {
         this.mSurl = envVar.msconfig.projectmSURL;
-        this.user_name = envVar.user_name;
-        if (this.user_name === undefined || this.user_name === null || this.user_name === '') {
-          this.errorMessage = 'Unable to retrieve User ID from Session Cookie. Pls login to Acumos portal and come back here..';
-          this.alertOpen = true;
-          this.view = 'error';
-        } else {
+        this.projectWikiURL = envVar.projectWikiURL;
+
+        let username = envVar.userName;
+        let token = envVar.authToken;
+        
+        if(this.userName && this.userName !== '' && this.authToken && this.authToken !== '') {
+          this.resetActiveFilter = true;
           this.getProjectsList();
+        } else if(username && username !== '' && token && token !== '') {
+          this.authToken = token;
+          this.userName = username;
+          this.resetActiveFilter = true;
+          this.getProjectsList();
+        } else {
+          this.errorMessage = 'Acumos session details are unavailable in browser cookies. Pls login to Acumos portal and come back here..';
+          this.alertOpen = true;
+          this.view = 'error';        
         }
       }).catch((error) => {
         console.info('Request failed', error);
@@ -168,10 +184,11 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
       cache: 'default',
       headers: {
         "Content-Type": "application/json",
+        "auth": this.authToken,
       },
       body: JSON.stringify({
         "url": this.mSurl,
-        "user_name": this.user_name
+        "userName": this.userName
       })
     }).then(res => res.json())
       .then((n) => {
@@ -182,11 +199,13 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
         } else {
           this.projectLists = [];
           this.projects = [];
+          this.cardShow = true;
           this.convertProjectObject(n.data);
         }
       }).catch((error) => {
         console.info('Request failed', error);
         this.errorMessage = 'Project fetch request failed with error: ' + error;
+        this.alertOpen = true;
         this.view = 'error';
       });
   }
@@ -208,7 +227,10 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
   }
 
   displayProjects() {
-    this.activeFilter = { status: "ACTIVE" };
+    if(this.resetActiveFilter) {
+      this.resetActiveFilter = false;
+      this.activeFilter = { status: "ACTIVE" };
+    }
     this.activeSort = "created";
 
     this.dataSource = new DataSource({
@@ -242,17 +264,19 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
       cache: 'default',
       headers: {
         "Content-Type": "application/json",
+        "auth": this.authToken,
       },
       body: JSON.stringify({
         "url": this.mSurl,
         "newProjectDetails": this.data.newProject,
-        "user_name": this.user_name
+        "userName": this.userName
       })
     }).then(res => res.json())
       .then((n) => {
         if (n.status === 'Success') {
           this.successMessage = n.message;
           this.alertOpen = true;
+		      this.$data.revert('newProject');
           this.initializeCreateProjectForm();
           this.getProjectsList();
           this.isOpenModal = false;
@@ -262,6 +286,7 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
       }).catch((error) => {
         console.error('Request failed', error);
         this.$data.set('createErrorMessage', 'Project create request failed with error: ' + error);
+        this.alertOpen = true;
       });
   }
 
@@ -274,11 +299,12 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
       cache: 'default',
       headers: {
         "Content-Type": "application/json",
+        "auth": this.authToken,
       },
       body: JSON.stringify({
         "url": this.mSurl,
         "projectId": this.selectedProjectId,
-        "user_name": this.user_name
+        "userName": this.userName
       })
     }).then(res => res.json())
       .then((n) => {
@@ -293,6 +319,7 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
       }).catch((error) => {
         console.error('Request failed', error);
         this.errorMessage = 'Project delete request failed with error: ' + error;
+        this.alertOpen = true;
       });
   }
 
@@ -305,11 +332,12 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
       cache: 'default',
       headers: {
         "Content-Type": "application/json",
+        "auth": this.authToken,
       },
       body: JSON.stringify({
         "url": this.mSurl,
         "projectId": this.selectedProjectId,
-        "user_name": this.user_name
+        "userName": this.userName
       })
     }).then(res => res.json())
       .then((n) => {
@@ -324,6 +352,7 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
       }).catch((error) => {
         console.error('Request failed', error);
         this.errorMessage = 'Project archive request failed with error: ' + error;
+        this.alertOpen = true;
       });
   }
 
@@ -336,11 +365,12 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
       cache: 'default',
       headers: {
         "Content-Type": "application/json",
+        "auth": this.authToken,
       },
       body: JSON.stringify({
         "url": this.mSurl,
         "projectId": this.selectedProjectId,
-        "user_name": this.user_name
+        "userName": this.userName
       })
     }).then(res => res.json())
       .then((n) => {
@@ -355,6 +385,7 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
       }).catch((error) => {
         console.error('Request failed', error);
         this.errorMessage = 'Project unarchive request failed with error: ' + error;
+        this.alertOpen = true;
       });
   }
 
@@ -421,6 +452,7 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
   }
 
   modalDismissed() {
+    this.$data.revert('newProject');
     this.isOpenModal = false;
   }
 
@@ -436,8 +468,6 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
   openModal() {
     this.isOpenModal = true;
   }
-
-  redirectWikiPage() { }
 
   archiveDialogDismissed() {
     this.isOpenArchiveDialog = false;
@@ -476,6 +506,10 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
         .alertmessage {
           display: ${this.alertOpen ? "block" : "none"};
         }
+
+        .card-show {
+          display: ${this.cardShow ? "block" : "none"};
+        }
       </style>
       <omni-dialog title="Archive ${this.selectedProjectName}" close-string="Archive Project" dismiss-string="Cancel"
         is-open="${this.isOpenArchiveDialog}" @omni-dialog-dimissed="${this.archiveDialogDismissed}"
@@ -496,7 +530,8 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
       </omni-dialog>
 
       <omni-modal title="Create Project" close-string="Create Project" dismiss-string="Cancel"
-        is-open="${this.isOpenModal}" @omni-modal-dimissed="${this.modalDismissed}" @omni-modal-closed="${this.modalClosed}"
+        is-open="${this.isOpenModal}" @omni-modal-dimissed="${this.modalDismissed}" 
+        @omni-modal-closed="${this.modalClosed}"
         canClose="${this.$validations.$valid && this.$validations.$dirty}">
         <form novalidate>
           <p class="text-danger">${this.data.createErrorMessage} </p>
@@ -504,9 +539,10 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
             <div class="col">
               <div class="form-group">
                 <label>Project Name <small class="text-danger">*</small></label>
-                <input type="text" class="form-control" placeholder="Enter Project Name" value="${this.data.newProject.projectId.name}"
+                <input type="text" class="form-control" placeholder="Enter Project Name" 
+                  .value="${this.data.newProject.projectId.name}"
                   @blur="${ e => {
-                    this.$data.set('newProject.projectId.name', e.target.value); 
+                    this.$data.set('newProject.projectId.name', e); 
                     this.$validations.validate('newProject.projectId.name');
                   }}"
                 />
@@ -514,9 +550,9 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
                   this.$validations.getValidationErrors('newProject.projectId.name').map(error => {
                     switch (error) {
                       case 'isNotEmpty':
-                        return html`<div class="invalid-feedback d-block">Project name is required</div>`
+                        return html`<div class="invalid-feedback d-block">Name is required.</div>`
                       case 'pattern':
-                        return html`<div class="invalid-feedback d-block">Project Name is not valid. </div>`
+                        return html`<div class="invalid-feedback d-block">Name should contain between 6 to 30 char inlcudes only alphanumeric and '_'. Should not start from number.</div>`
                     }
                   })
                 }
@@ -525,9 +561,10 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
             <div class="col">
               <div class="form-group">
                 <label>Project Version <small class="text-danger">*</small></label>
-                <input type="text" class="form-control" placeholder="Enter Project Version" value="${this.data.newProject.projectId.versionId.label}"
+                <input type="text" class="form-control" placeholder="Enter Project Version" 
+                  .value="${this.data.newProject.projectId.versionId.label}"
                   @blur="${ e => {
-                      this.$data.set('newProject.projectId.versionId.label', e.target.value);
+                      this.$data.set('newProject.projectId.versionId.label', e);
                       this.$validations.validate('newProject.projectId.versionId.label');
                     }
                   }"
@@ -536,21 +573,22 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
                   this.$validations.getValidationErrors('newProject.projectId.versionId.label').map(error => {
                     switch (error) {
                       case 'isNotEmpty':
-                        return html`<div class="invalid-feedback d-block">Project version is required</div>`
+                        return html`<div class="invalid-feedback d-block">Version is required.</div>`
                       case 'pattern':
-                        return html`<div class="invalid-feedback d-block">Project version is not valid. </div>`
+                        return html`<div class="invalid-feedback d-block">Version should contain between 1 to 14 char includes only alphanumeric, '.' and '_'.</div>`
                     }
                   })
                 }
               </div>
             </div>
           </div>
+          <br/>
           <div class="row">
             <div class="col">
               <div class="form-group">
                 <label>Project Description</label>
-                <textarea class="form-control" placeholder="Enter Project Description"
-                  @blur="${e => this.$data.set('newProject.description', e.target.value)}">${this.data.newProject.description}</textarea>
+                <textarea class="form-control" placeholder="Enter Project Description" .value="${this.data.newProject.description}"
+                  @blur="${e => this.$data.set('newProject.description', e)}"></textarea>
               </div>
             </div>
           </div>
@@ -569,7 +607,7 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
                           <a  class="close" @click=${e => this.alertOpen = false}>
                             <span aria-hidden="true">&nbsp;&times;</span>
                           </a>
-                          ${this.successMessage}
+                          <mwc-icon>done_outline</mwc-icon>&nbsp;&nbsp;<span class="span-message">${this.successMessage}</span>
                         </div>
                       `
                     : ``
@@ -580,7 +618,7 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
                           <a class="close" @click=${e => this.alertOpen = false}>
                               <span aria-hidden="true">&nbsp;&times;</span>
                           </a>
-                          ${this.errorMessage}
+                          <mwc-icon>error</mwc-icon> &nbsp;&nbsp;<span class="span-message">${this.errorMessage}</span>
                         </div>
                       `
                       : ``
@@ -590,19 +628,18 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
                 <div class="row" style="margin:15px 0; margin-bottom:45px;">
                   <div class="btn-toolbar mb-2 mb-md-0" style="position: absolute; right:0;">
                     <div class="btn-group mr-2">
-                      <button type="button" class="btn btn-primary" style="border-top-right-radius:3px; border-bottom-right-radius: 3px"
+                      <button type="button" class="btn btn-primary"
                         @click="${this.openModal}">
                         Create Project</button>&nbsp;&nbsp;
 
                       <div class="input-group-append">
                         <a
-                          href="javascript:void"
-                          @click=${e => this.redirectWikiPage()}
+                          href=${this.projectWikiURL} target="_blank" 
                           class="btnIconTop btn btn-sm btn-secondary mr-1"
                           data-toggle="tooltip"
                           data-placement="top"
                           title="Click here for wiki help">
-                          <mwc-icon>help</mwc-icon>
+                          <mwc-icon class="help-icon">help</mwc-icon>
                         </a>
                       </div>
                     </div>
@@ -616,14 +653,16 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
                         <a href="javascript:void" @click=${e => this.filterProjects({ status: "ACTIVE" })}
                           class="nav-link ${get(this.activeFilter, "status", "") === "ACTIVE"? "active" : ""}">
                           Active Projects&nbsp;&nbsp;
-                          <span class="badge ${get(this.activeFilter, "status", "") === "ACTIVE"? "badge-light" : "badge-secondary"}"">${this.activeProjectCount}</span>
+                          <span class="badge ${get(this.activeFilter, "status", "") === "ACTIVE"? "badge-light" : "badge-secondary"}"">
+                            ${this.activeProjectCount}</span>
                         </a>
                       </li>
                       <li class="nav-item mr-2">
                         <a href="javascript:void"  @click=${e => this.filterProjects({ status: "ARCHIVED" })}
                           class="nav-link ${get(this.activeFilter,"status", "") === "ARCHIVED"? "active": ""}">
                           Archived Projects&nbsp;&nbsp;
-                          <span class="badge ${get(this.activeFilter, "status", "") === "ARCHIVED"? "badge-light" : "badge-secondary"}"">${this.archiveProjectCount}</span>
+                          <span class="badge ${get(this.activeFilter, "status", "") === "ARCHIVED"? "badge-light" : "badge-secondary"}"">
+                            ${this.archiveProjectCount}</span>
 
                         </a>
                       </li>
@@ -631,7 +670,8 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
                         <a href="javascript:void" @click=${e => this.filterProjects()}
                           class="nav-link ${get(this.activeFilter, "status","") === ""? "active": ""}">
                           All Projects&nbsp;&nbsp;
-                          <span class="badge ${get(this.activeFilter, "status", "") === ""? "badge-light" : "badge-secondary"}"">${this.allProjectCount}</span>
+                          <span class="badge ${get(this.activeFilter, "status", "") === ""? "badge-light" : "badge-secondary"}"">
+                            ${this.allProjectCount}</span>
                         </a>
                       </li>
                     </ul>
@@ -650,7 +690,7 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
                       </div>
                       <div class="btn-group mr-2">
                         &nbsp;
-                        <input type="text" style="height: 30px" class="form-control w-100" placeholder="Search Project"
+                        <input type="text" class="form-control w-100" placeholder="Search Project"
                           @input=${e => this.searchProjects(e.target.value)}/>
                         <div class="input-group-append">
                           <a class="btnIcon btn btn-sm btn-primary  mr-1" data-toggle="tooltip" data-placement="top" title="Search Project">
@@ -666,7 +706,7 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
                   ${this.projects.map(item =>
                     html`
                       <div class="col-md-3">
-                        <div class="card-shadow card card-link mb-3 mb-5 bg-white rounded">
+                        <div class="card-shadow card card-link mb-3 mb-5 bg-white">
                           <div class="card-body">
                             <div>
                               <a href="javascript:void" @click=${e => this.userAction("view-project", item.projectId, item.name)}>
@@ -731,16 +771,20 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
                     <nav aria-label="Page navigation example">
                       <ul class="pagination justify-content-end">
                         <li class="page-item">
-                          <a class="page-link" href="javascript:void" @click=${e => this.navigatePage("first")}>First</a>
+                          <a href="javascript:void" @click=${e => this.navigatePage("first")}
+                            class="page-link ${this.currentPage !== 1? "active" : "inactive"}">First</a>                          
                         </li>
                         <li class="page-item">
-                          <a class="page-link" href="javascript:void" @click=${e => this.navigatePage("previous")} >Previous</a>
+                          <a class="page-link ${this.currentPage !== 1? "active" : "inactive"}" href="javascript:void" 
+                            @click=${e => this.navigatePage("previous")} >Previous</a>
                         </li>
                         <li class="page-item">
-                          <a class="page-link" href="javascript:void" @click=${e => this.navigatePage("next")} >Next</a>
+                          <a class="page-link ${this.currentPage < this.totalPages? "active" : "inactive"}" href="javascript:void" 
+                            @click=${e => this.navigatePage("next")} >Next</a>
                         </li>
                         <li class="page-item">
-                          <a class="page-link" href="javascript:void" @click=${e => this.navigatePage("last")} >Last</a>
+                          <a class="page-link ${this.currentPage < this.totalPages? "active" : "inactive"}" href="javascript:void" 
+                            @click=${e => this.navigatePage("last")} >Last</a>
                         </li>
                         &nbsp;&nbsp;&nbsp;&nbsp;
                       </ul>
@@ -752,71 +796,87 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
             </div>
           `
         : html`
-  			`}
+        `}
 
-  		${this.view === 'add'
+      ${this.view === 'add'
         ? html`
-          <div class="row">
-            <div class="col-lg-12">
-              ${this.successMessage !== ''
-                ? html`
-                  <div class="alertmessage alert alert-success">
-                    <a class="close" @click=${e => this.alertOpen = false}>
-                      <span aria-hidden="true">&nbsp;&times;</span>
-                    </a> ${this.successMessage}
-                  </div>
-                `: ``
-              }
-              ${this.errorMessage !== ''
-                ? html`
-                  <div class="alertmessage alert alert-danger">
-                    <a class="close" @click=${e => this.alertOpen = false}>
+        <div class="row" style="margin:5px 0">
+          <div class="col-lg-12">
+            <div class="row">
+              <div class="col-lg-12">
+                ${this.successMessage !== ''
+                  ? html`
+                    <div class="alertmessage alert alert-success">
+                      <a class="close" @click=${e => this.alertOpen = false}>
                         <span aria-hidden="true">&nbsp;&times;</span>
-                    </a>  ${this.errorMessage}
-                  </div>
-                `: ``
-              }
+                      </a><mwc-icon>done_outline</mwc-icon>&nbsp;&nbsp;<span class="span-message">${this.successMessage}</span>
+                    </div>
+                  `: ``
+                }
+                ${this.errorMessage !== ''
+                  ? html`
+                    <div class="alertmessage alert alert-danger">
+                      <a class="close" @click=${e => this.alertOpen = false}>
+                          <span aria-hidden="true">&nbsp;&times;</span>
+                      </a>  <mwc-icon>error</mwc-icon>&nbsp;&nbsp;<span class="span-message">${this.errorMessage}</span>
+                    </div>
+                  `: ``
+                }
+              </div>
             </div>
-          </div>
-          <div class="row" style="margin:5px 0">
-            <div class="btn-toolbar mb-2 mb-md-0" style="position: absolute; right:0;">
-              <div class="btn-group mr-2">
-                <div class="input-group-append">
-                  <a href="javascript:void" @click=${e => this.redirectWikiPage()} class="btnIconTop btn btn-sm btn-secondary mr-1" 
-                    data-toggle="tooltip" data-placement="top" title="Click here for wiki help">
-                    <mwc-icon>help</mwc-icon>
-                  </a>
+            <div class="row" style="margin:5px 0;">
+              <div class="btn-toolbar mb-2 mb-md-0" style="position: absolute; right:0; padding-right: 5px;">
+                <div class="btn-group mr-2">
+                  <div class="input-group-append">
+                    <a href=${this.projectWikiURL} target="_blank" class="btnIconTop btn btn-sm btn-secondary mr-1" 
+                      data-toggle="tooltip" data-placement="top" title="Click here for wiki help">
+                      <mwc-icon class="help-icon">help</mwc-icon>
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <br/>
-          <div class="row">
-            <div class="col-md-12 py-3">
-              <div class="card mb-124  shadow mb-5 bg-white rounded">
-                <div class="card-header">
-                  <div class="row" style="margin:5px 0; margin-top: 0px;">
-                    <mwc-icon class="textColor">share</mwc-icon>&nbsp;&nbsp;&nbsp;
-                    <h4 class="textColor card-title">Projects</h4>
-                    <div style="position: absolute; right:0">
-                      <a class="btn btn-sm btn-secondary my-2">-</a>
-                      &nbsp;&nbsp;&nbsp;&nbsp;
+            <br/><br/>
+            <div class="row">
+              <div class="col-md-12 py-3">
+                <div class="card mb-124  shadow mb-5 bg-white">
+                  <div class="card-header">
+                    <div class="row" style="margin:5px 0; margin-top: 0px;">
+                      <mwc-icon class="textColor">share</mwc-icon>&nbsp;&nbsp;&nbsp;
+                      <h4 class="textColor card-title">Projects</h4>
+                      <div style="position: absolute; right:0">
+                        ${
+                          this.cardShow === false
+                          ? html`
+                            <a class="toggle-a btn btn-sm btn-secondary my-2" @click=${e => this.cardShow = true}>
+                              <span class="toggle-plus-span toggle-span">+</span>
+                            </a>
+                          `
+                          : html`
+                            <a class="toggle-a btn btn-sm btn-secondary my-2" @click=${e => this.cardShow = false}>
+                              <span class="toggle-span">-</span>
+                            </a>
+                          `
+                        }
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body card-show">
+                    <div class="row" style="margin:10px 0;margin-bottom:20px;">
+                      <h7>No Projects, get started with ML Workbench by creating your first project.</h7>
+                    </div>
+                    <div class="row" style="margin:10px 0">
+                      <button type="button" class="btn btn-primary" @click="${this.openModal}">
+                        Create Project
+                      </button>
                     </div>
                   </div>
                 </div>
-                <div class="card-body">
-                  <div class="row" style="margin:10px 0;margin-bottom:20px;">
-                    <h7>No Projects, get started with ML Workbench by creating your first project.</h7>
-                  </div>
-                  <div class="row" style="margin:10px 0">
-                    <button type="button" class="btn btn-primary" @click="${this.openModal}">
-                      Create Project
-                    </button>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
+        </div>
         `
         : html`
       `}
@@ -827,7 +887,7 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
             <a class="close" @click=${e => this.alertOpen = false}>
                 <span aria-hidden="true">&nbsp;&times;</span>
             </a>
-            ${this.errorMessage}
+            <mwc-icon>error</mwc-icon>&nbsp;&nbsp;<span class="span-message">${this.errorMessage}</span>
           </div>
         `
         : html`
@@ -839,7 +899,7 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
         `
         : html`
       `}
-  	`;
+    `;
   }
 }
 

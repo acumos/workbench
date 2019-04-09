@@ -20,7 +20,7 @@ limitations under the License.
 
 import { LitElement, html } from 'lit-element';
 import {style} from './notebook-styles.js';
-import { filter, get } from "lodash-es";
+import { filter, get, differenceWith } from "lodash-es";
 import { OmniModal, OmniDialog } from "./@omni/components";
 import { Forms, DataSource } from "./@omni/core";
 import { ValidationMixin, DataMixin, BaseElementMixin } from "./@omni/mixins";
@@ -44,7 +44,6 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
       jupyterNotebookCount: {type: Number},
       allNotebookCount: {type: Number},
       componenturl: {type: String, notify: true},
-			user_name : {type: String },
 			isOpenArchiveDialog: { type: Boolean },
 			isOpenDeleteDialog: { type: Boolean },
 			isOpenRestoreDialog: { type: Boolean },
@@ -55,7 +54,15 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 			isEdit:{type: Boolean, notify: true },
 			view: {type: String, notify: true },
 			isOpenModal: { type: Boolean },
-			isOpenModalLink: { type: Boolean }
+			isOpenModalLink: { type: Boolean },
+			isOpenModalEdit: { type: Boolean },
+			zeppelinNotebooks: [],
+			jupyterNotebooks: [],
+			unassociatedNotebooks: [],
+			notebookWikiURL: {type: String},
+			cardShow: {type: Boolean},
+			userName: {type: String, notify: true},
+			authToken: {type: String, notify: true}
 		};
 	}
 
@@ -67,6 +74,9 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 		super();
 		this.view = '';
 		this.notebooks = [];
+		this.zeppelinNotebooks = [];
+		this.jupyterNotebooks = [];
+		this.unassociatedNotebooks = [];
     this.initializeCreateNotebookForm();
     this.$validations.init({
       validations: {
@@ -81,7 +91,31 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
               pattern: Forms.validators.pattern('[a-zA-Z0-9_.]{1,14}$')
             }
           }
-        }
+				},
+				linkNotebook: {
+          name: {
+            isNotEmpty: Forms.validators.isNotEmpty,
+            pattern: Forms.validators.pattern('^[a-zA-Z][a-zA-Z0-9_ ]{6,30}$')
+          },
+          versionId : {
+            label: {
+              isNotEmpty: Forms.validators.isNotEmpty,
+              pattern: Forms.validators.pattern('[a-zA-Z0-9_.]{1,14}$')
+            }
+					}
+				},
+				editNotebook: {
+          name: {
+            isNotEmpty: Forms.validators.isNotEmpty,
+            pattern: Forms.validators.pattern('^[a-zA-Z][a-zA-Z0-9_ ]{6,30}$')
+          },
+          versionId : {
+            label: {
+              isNotEmpty: Forms.validators.isNotEmpty,
+              pattern: Forms.validators.pattern('[a-zA-Z0-9_.]{1,14}$')
+            }
+					}
+				}
       }
     });
     this.sortOptions = [
@@ -98,23 +132,59 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 	initializeCreateNotebookForm(){
     this.data = {
       createErrorMessage : "",
+			associateErrorMessage : "",
+			editErrorMessage : "",
       newNotebook:{
-        notebookId : {    
+        noteBookId : {    
           name : "",    
           versionId : {      
             comment : "",      
             label : ""    
           }  
         },
-        notebookType : "",
+        notebookType : "ZEPPELIN",
         description : ""
-      }
+			},
+		linkNotebook:{
+			noteBookId: {
+				name : "",
+				versionId : {
+					comment : "",
+					label : ""
+				}
+			},
+			notebookType: "",
+			description : ""
+		},
+		editNotebook:{
+			noteBookId: {
+				name : "",
+				uuid : "",
+				versionId : {
+					comment : "",
+					label : ""
+				}
+			},
+			description : ""
+		}
     };
 
     this.$data.set('createErrorMessage', '');
-    this.$data.set('newNotebook.notebookId.name', '');
-    this.$data.set('newNotebook.notebookId.label', '');
-    this.$data.set('newNotebook.description', '');
+		this.$data.set('associateErrorMessage', '');
+		this.$data.set('editErrorMessage', '');
+    this.$data.set('newNotebook.noteBookId.name', '');
+    this.$data.set('newNotebook.noteBookId.versionId.label', '');
+		this.$data.set('newNotebook.description', '');
+		this.$data.set('newNotebook.notebookType', 'ZEPPELIN');
+		this.$data.set('linkNotebook.noteBookId.name', '');
+    this.$data.set('linkNotebook.noteBookId.versionId.label', '');
+		this.$data.set('linkNotebook.description', '');
+		this.$data.set('linkNotebook.notebookType', '');
+		this.$data.set('editNotebook.noteBookId.name', '');
+		this.$data.set('editNotebook.noteBookId.uuid', '');
+    this.$data.set('editNotebook.noteBookId.versionId.label', '');
+		this.$data.set('editNotebook.description', '');
+
   }
 	
 	connectedCallback() {
@@ -136,15 +206,23 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 			cache: 'default'
 		}).then(res => res.json())
 			.then((envVar) => {
-				this.notebookmSURL = envVar.msconfig.notebookmSURL;
-				this.user_name = envVar.user_name;
-				if(this.user_name === undefined || this.user_name === null || this.user_name === ''){
-					this.errorMessge = 'Unable to retrieve User ID from Session Cookie. Pls login to Acumos portal and come back here..';
-					this.alertOpen = true;
-					this.view = 'view';
-				} else {
-					this.getNotebookDetailsForProject(true);
-				}
+			this.notebookmSURL = envVar.msconfig.notebookmSURL;
+			this.notebookWikiURL = envVar.wikiConfig.notebookWikiURL;
+
+			let username = envVar.userName;
+			let token = envVar.authToken;
+			
+			if(this.userName && this.userName !== '' && this.authToken && this.authToken !== '') {
+				this.getNotebookDetailsForProject(true);
+			} else if(username && username !== '' && token && token !== '') {
+				this.authToken = token;
+				this.userName = username;
+				this.getNotebookDetailsForProject(true);
+			} else {
+				this.errorMessage = 'Acumos session details are unavailable in browser cookies. Pls login to Acumos portal and come back here..';
+				this.alertOpen = true;
+				this.view = 'error';        
+			}
 		}).catch((error) => {
 			console.info('Request failed', error);
 			this.errorMessage = 'Unable to retrive notebook configuration information. Error is: '+ error;
@@ -159,7 +237,7 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 	}
 
 	getNotebookDetailsForProject(reset){
-		const url = this.componenturl + '/api/project/getNotebooks';
+		const url = this.componenturl + '/api/project/notebooksList';
 		if(reset) {
 			this.resetMessage();
 		}
@@ -169,28 +247,30 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 			mode: 'cors',
 			cache: 'default',
 			headers: {
-					"Content-Type": "application/json"
+					"Content-Type": "application/json",
+					"auth": this.authToken,
 			},
 			body: JSON.stringify({
 				"url": this.notebookmSURL,
 				"projectId" : this.projectId,
-				"user_name": this.user_name
+				"userName": this.userName
 			})
 		}).then(res => res.json())
 			.then((response) => {
 				if(response.status === 'Error'){
           this.errorMessage = response.message;
           this.alertOpen = true;
-          this.view = 'view';
+          this.view = 'error';
         } else {
           this.notebooksList = [];
-          this.notebooks = [];
+					this.notebooks = [];
+					this.cardShow = true;
           this.convertNotebookObject(response.data);
         }
 	    }).catch((error) => {
 		      console.info('Request failed', error);
 		      this.errorMessage = 'Notebooks fetch request for project failed with error: '+ error;
-		      this.view = 'view';
+		      this.view = 'error';
 		      this.alertOpen = true;
 	    });
 	}
@@ -199,10 +279,10 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
     let tempNotebook;
     notebooksInfo.forEach(item => {
       tempNotebook = {};
-      tempNotebook.notebookId = item.notebookId.uuid;
-      tempNotebook.name = item.notebookId.name;
-      tempNotebook.version = item.notebookId.versionId.label;
-      tempNotebook.createdTimestamp = item.notebookId.versionId.timeStamp;
+      tempNotebook.noteBookId = item.noteBookId.uuid;
+      tempNotebook.name = item.noteBookId.name;
+      tempNotebook.version = item.noteBookId.versionId.label;
+      tempNotebook.createdTimestamp = item.noteBookId.versionId.timeStamp;
       tempNotebook.createdBy = item.owner.authenticatedUserId;
       tempNotebook.description = item.description;
       tempNotebook.status = item.artifactStatus.status;
@@ -214,14 +294,14 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 	
 	createUpdateFormData(){
 		let notebook = {};
-		notebook.notebookId = {};
+		notebook.noteBookId = {};
 		notebook.artifactStatus = {};
-		notebook.notebookId.versionId = {};
-		notebook.notebookId.uuid = this.notebookId;
-		notebook.notebookId.name = this.Name;
+		notebook.noteBookId.versionId = {};
+		notebook.noteBookId.uuid = this.noteBookId;
+		notebook.noteBookId.name = this.Name;
 		notebook.description = this.description;
-		notebook.notebookId.versionId.timeStamp = this.createdTimestamp ;
-		notebook.notebookId.versionId.label = this.version;
+		notebook.noteBookId.versionId.timeStamp = this.createdTimestamp ;
+		notebook.noteBookId.versionId.label = this.version;
 		notebook.artifactStatus.status = this.status;
 		notebook.notebookType = this.notebookType;
 		return notebook;
@@ -235,19 +315,18 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
       mode: 'cors',
       cache: 'default',
       headers: {
-        "Content-Type": "application/json",
+				"Content-Type": "application/json",
+				"auth": this.authToken,
       },
       body: JSON.stringify({
         "url": this.notebookmSURL,
         "projectId" : this.projectId,
         "newNotebookDetails": this.data.newNotebook,
-        "user_name": this.user_name 
+        "userName": this.userName 
       })
     }).then(res => res.json())
       .then((n) => {
         if(n.status === 'Success'){
-        	this.successMessage = n.message;
-          this.alertOpen = true;
           this.initializeCreateNotebookForm();
           this.getNotebookDetailsForProject();
           this.isOpenModal = false;
@@ -260,65 +339,70 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 	    });
 	}
 
-	archiveNotebook(notebookId){
-		 const url = this.componenturl + '/api/project/notebookArchive';
+	archiveNotebook(){
+		 const url = this.componenturl + '/api/project/archiveNotebook';
 	    this.resetMessage();
 		  fetch(url, {
 			  method: 'PUT',
-		      mode: 'cors',
-		      cache: 'default',
-		      headers: {
-		          "Content-Type": "application/json",
-		      },
-		      body: JSON.stringify({
-		        "url": this.notebookmSURL,
-		        "projectId" : this.projectId,
-		        "notebookId" : notebookId,
-		        "user_name": this.user_name      		  
-		      })
-		    }).then(res => res.json())
-		      .then((n) => {
-		        if(n.status === 'Success'){
-		          this.successMessage = n.message;
-		          this.getNotebookDetailsForProject();
-		        } else {
-		          this.errorMessage = n.message;
-		        }
-		        this.alertOpen = true;
-		        this.isOpenArchiveDialog = false;         
-		    }).catch((error) => {
-			      console.error('Request failed', error);
-			      this.errorMessage = 'Notebook archive request failed with error: '+ error;
-			      this.alertOpen = true;
-		    });
+				mode: 'cors',
+				cache: 'default',
+				headers: {
+						"Content-Type": "application/json",
+						"auth": this.authToken,
+				},
+				body: JSON.stringify({
+					"url": this.notebookmSURL,
+					"projectId" : this.projectId,
+					"notebookId" : this.selectedNotebookId,
+					    		  
+					"userName": this.userName      		  
+				})
+			}).then(res => res.json())
+				.then((n) => {
+					if(n.status === 'Success'){
+						this.successMessage = n.message;
+						this.getNotebookDetailsForProject();
+					} else {
+						this.errorMessage = n.message;
+					}
+					this.alertOpen = true;
+					this.isOpenArchiveDialog = false;                  
+			}).catch((error) => {
+					console.error('Request failed', error);
+					this.errorMessage = 'Notebook archive request failed with error: '+ error;
+					this.alertOpen = true;
+			});
 		}
 
-	updateNotebook(notebookId){
-		const url = this.componenturl + '/api/project/notebookUpdate';
+	associateNotebook(){
+		const url = this.componenturl + '/api/project/associateNotebook';
 		this.resetMessage();
 		fetch(url, {
 			method: 'PUT',
 			mode: 'cors',
 			cache: 'default',
 			headers: {
-					"Content-Type": "application/json"
+					"Content-Type": "application/json",
+					"auth": this.authToken,
 			},
 			body: JSON.stringify({
-				"user_name": this.user_name,
+				"userName": this.userName,
 				"url": this.notebookmSURL,
 				"projectId" : this.projectId,
-				"notebookId" : notebookId,
-				"notebookPayload": this.createUpdateFormData()
+				"notebookId" : this.selectedNotebookId,
+				"notebookPayload": this.data.linkNotebook
 			})
 		}).then(res => res.json())
 			.then((n) => {
 				if(n.status === 'Success'){
-					this.isEdit = false;
-					this.successMessage = n.message;
-				}else{
-					this.errorMessage = n.message;
-				}
-				this.alertOpen = true;
+        	this.successMessage = n.message;
+          this.alertOpen = true;
+          this.initializeCreateNotebookForm();
+          this.getNotebookDetailsForProject();
+          this.isOpenModalLink = false;
+        } else {
+          this.$data.set('associateErrorMessage', n.message);
+        }
 		}).catch((error) => {
 				console.info('Request failed', error);
 				this.errorMessge = 'Update Notebook request failed with error: '+ error;
@@ -326,21 +410,22 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 		});
 	}
 	
-	restoreNotebook(notebookId) {
-    const url = this.componenturl + '/api/project/notebookRestore';
+	restoreNotebook() {
+    const url = this.componenturl + '/api/project/restoreNotebook';
     this.resetMessage();
 	  fetch(url, {
 		  method: 'PUT',
       mode: 'cors',
       cache: 'default',
       headers: {
-          "Content-Type": "application/json",
+					"Content-Type": "application/json",
+					"auth": this.authToken,
       },
       body: JSON.stringify({
         "url": this.notebookmSURL,
         "projectId" : this.projectId,
-        "notebookId" : notebookId,
-        "user_name": this.user_name      		  
+        "notebookId" : this.selectedNotebookId,
+        "userName": this.userName      		  
       })
     }).then(res => res.json())
       .then((n) => {
@@ -359,26 +444,160 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
     });
   }
 
-	userAction(action, projectId) {	
-		this.dispatchEvent(new CustomEvent('catalog-project-event', {
-			'detail': {
-				data: {
-					action: action,
-					projectId: projectId
+	getNotebookList(){
+    const url = this.componenturl + '/api/notebooks';
+	  fetch(url, {
+		  method: 'POST',
+      mode: 'cors',
+      cache: 'default',
+      headers: {
+					"Content-Type": "application/json",
+					"auth": this.authToken,
+      },
+      body: JSON.stringify({
+        "url": this.notebookmSURL,
+        "userName": this.userName
+      })
+    }).then(res => res.json())
+      .then((n) => {
+        if(n.status === 'Error'){
+          this.errorMessage = n.message;
+          this.view = 'error';
+          this.alertOpen = true;
+        } else {
+          this.allNotebooks = [];
+          this.convertAllNotebookObject(n.data);
+        }
+    }).catch((error) => {
+      console.info('Request failed', error);
+      this.errorMessage = 'Notebook fetch request failed with error: '+ error;
+      this.view = 'error';
+      this.alertOpen = true;
+    });
+  }
+
+	updateNotebook(){
+		const url = this.componenturl + '/api/notebook/update';
+		this.resetMessage();
+		fetch(url, {
+			method: 'PUT',
+			mode: 'cors',
+			cache: 'default',
+			headers: {
+				"Content-Type": "application/json",
+				"auth": this.authToken,
+			},
+			body: JSON.stringify({
+				"userName": this.userName,
+				"url": this.notebookmSURL,
+				"noteBookId" : this.selectedNotebookId,
+				"notebookPayload": this.data.editNotebook
+			})
+		}).then(res => res.json())
+			.then((n) => {
+				if(n.status === 'Success'){
+					this.isOpenModalEdit = false;
+					this.successMessage = n.message;
+					this.initializeCreateNotebookForm();
+					this.getNotebookDetailsForProject();
+				} else{
+					this.$data.set('editErrorMessage', n.message);
 				}
-			}
-		}));
+				this.alertOpen = true;
+		}).catch((error) => {
+			console.info('Request failed', error);
+			this.errorMessage = 'Update notebook request failed with error: '+ error;
+			this.alertOpen = true;
+		});
+	}
+	
+	launchNotebook(noteBookId) {
+		const url = this.componenturl + '/api/notebook/launch';
+		this.resetMessage();
+		fetch(url, {
+			method: 'POST',
+			mode: 'cors',
+			cache: 'default',
+			headers: {
+					"Content-Type": "application/json",
+					"auth": this.authToken,
+			},
+			body: JSON.stringify({
+				"url": this.notebookmSURL,
+				"notebookId" : noteBookId,
+				"userName": this.userName,
+				"projectId" : this.projectId
+			})
+		}).then(res => res.json())
+			.then((n) => {
+				if(n.status === 'Success'){
+					let launchURL = n.data.noteBookId.serviceUrl;
+					window.open(launchURL, '_blank');
+				} else {
+					this.errorMessage = n.message;
+					this.alertOpen = true; 
+				}      
+		}).catch((error) => {
+			console.error('Request failed', error);
+			this.errorMessage = 'Notebook launch request failed with error: '+ error;
+			this.alertOpen = true;
+		});
+	}
+	
+	convertAllNotebookObject(allNotebooksInfo){
+		let tempNotebook;
+		let allNotebooks = [];
+    allNotebooksInfo.forEach(item => {
+      tempNotebook = {};
+      tempNotebook.noteBookId = item.noteBookId.uuid;
+      tempNotebook.name = item.noteBookId.name;
+      tempNotebook.version = item.noteBookId.versionId.label;
+      tempNotebook.createdTimestamp = item.noteBookId.versionId.timeStamp;
+      tempNotebook.createdBy = item.owner.authenticatedUserId;
+      tempNotebook.description = item.description;
+      tempNotebook.status = item.artifactStatus.status;
+      tempNotebook.notebookType = item.notebookType;
+      allNotebooks.push(tempNotebook);
+    });
+    this.getAllNotebooks(allNotebooks);
 	}
 
+	getAllNotebooks(nbList){
+		this.unassociatedNotebooks = differenceWith(nbList, this.notebooks, function(notebook, projectNotebook) {
+			return notebook.noteBookId === projectNotebook.noteBookId;
+		});
+
+    this.jupyterNotebooks = this.unassociatedNotebooks.filter(notebook => {
+      return notebook.notebookType === 'JUPYTER';
+    });
+    this.zeppelinNotebooks = this.unassociatedNotebooks.filter(notebook => {
+      return notebook.notebookType === 'ZEPPELINE';
+    });
+	}
+
+	userAction(action, noteBookId, notebookName) {
+    this.dispatchEvent(
+      new CustomEvent("catalog-notebook-event", {
+        detail: {
+          data: {
+            action: action,
+            noteBookId: noteBookId,
+            notebookName: notebookName
+          }
+        }
+      })
+    );
+  }
+
  displayNotebooks() {
-    this.activeFilter = { notebookType: "ZEPPELIN" };
+    this.activeFilter = {};
     this.activeSort = "created";
 
     this.dataSource = new DataSource({
       data: this.notebooksList,
       filter: this.activeFilter,
       sort: this.activeSort,
-      pageSize: 8
+      pageSize: 5
     });
     this.sortNotebooks( this.activeSort);
     this.notebooks = this.dataSource.data;
@@ -387,7 +606,7 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
     this.totalNotebooks = this.notebooksList.length;
     this.allNotebookCount = this.getFilteredCount();
     this.zeppelinNotebookCount = this.getFilteredCount({ notebookType: "ZEPPELIN" });
-    this.jupyterNotebookCount = this.getFilteredCount({ notebookType: "JUPYTER" });
+		this.jupyterNotebookCount = this.getFilteredCount({ notebookType: "JUPYTER" });
 
     if(this.totalNotebooks > 0){
       this.view = 'view';
@@ -444,24 +663,67 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
     return filter(this.dataSource._rawData, criteria).length;
   }
 	
+	linkNotebook(notebook){
+		if(this.data.linkNotebook.notebookType === "ZEPPELIN"){
+			notebook = this.zeppelinNotebooks.filter(zpNotebook => {
+				return zpNotebook.name === notebook;
+			});
+		} else if(this.data.linkNotebook.notebookType === "JUPYTER"){
+			notebook = this.jupyterNotebooks.filter(jpNotebook => {
+				return jpNotebook.name === notebook;
+			});
+		}
+		this.selectedNotebookId = notebook[0].noteBookId;
+		this.$data.set('linkNotebook.noteBookId.name', notebook[0].name);
+    this.$data.set('linkNotebook.noteBookId.versionId.label', notebook[0].version);
+		this.$data.set('linkNotebook.description', notebook[0].description);
+		this.$data.set('linkNotebook.notebookType', notebook[0].notebookType);
+	}
+
   modalDismissed() {
     this.isOpenModal = false;
     this.isOpenModalLink = false;
+		this.isOpenModalEdit = false;
   }
-
+	
   modalClosed() {
     this.requestUpdate();
     this.createNotebook();
-  }
+	}
+	
+	modalClosedLink(){
+		this.requestUpdate();
+    this.associateNotebook();
+	}
+	
+	modalClosedEdit(){
+		this.requestUpdate();
+    this.updateNotebook();
+	}
   
   openModal() {
 		this.isOpenModal = true;
 		this.isOpenModalLink = false;
+		this.isOpenModalEdit = false;
   }
   
   openModalLink() {
+		this.getNotebookList();		
   	this.isOpenModalLink = true;
-  	this.isOpenModal = false;
+		this.isOpenModal = false;
+		this.isOpenModalEdit = false;
+  }
+  
+  openModalEdit(item) {
+		this.selectedNotebookId = item.noteBookId;
+	  this.$data.set('editNotebook.noteBookId.name', item.name);
+		this.$data.set('editNotebook.noteBookId.versionId.label', item.version);
+		this.$data.set('editNotebook.noteBookId.uuid', item.noteBookId);
+	  this.$data.set('editNotebook.description', item.description);
+	  this.$data.set('editNotebook.notebookType', item.notebookType);
+	  this.isOpenModalEdit = true;
+	  this.isOpenModalLink = false;
+	  this.isOpenModal = false;
   }
   
   archiveDialogDismissed(){
@@ -476,55 +738,51 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
     this.isOpenDeleteDialog = false;
   }
 
-  openArchiveDialog(notebookId, notebookName) { 
-    this.selectedNotebookId = notebookId;
+  openArchiveDialog(noteBookId, notebookName) { 
+    this.selectedNotebookId = noteBookId;
     this.selectedNotebookName = notebookName;
     this.isOpenArchiveDialog = true;
   }
   
-  openRestoreDialog(notebookId, notebookName) { 
-    this.selectedNotebookId = notebookId;
+  openRestoreDialog(noteBookId, notebookName) { 
+    this.selectedNotebookId = noteBookId;
     this.selectedNotebookName = notebookName;
     this.isOpenRestoreDialog = true;
   }
 
-  openDeleteDialog(notebookId, notebookName) { 
-    this.selectedNotebookId = notebookId;
+  openDeleteDialog(noteBookId, notebookName) { 
+    this.selectedNotebookId = noteBookId;
     this.selectedNotebookName = notebookName;
     this.isOpenDeleteDialog = true;
   }
-	launchNotebook(id){
-
-	}
-
-	redirectWikiPage(){
-
-	}
 
   render() {
     return html`
     	<style> 
-			@import url('https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css');
-			.alertmessage {
-				display: ${this.alertOpen ? "block" : "none"};
-			}
-		</style>
+				@import url('https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css');
+				.alertmessage {
+					display: ${this.alertOpen ? "block" : "none"};
+				}
+				.card-show {
+					display: ${this.cardShow ? "block" : "none"};
+				}
+			</style>
 		 <omni-dialog  title="Archive ${this.selectedNotebookName}" close-string="Archive Notebook" dismiss-string="Cancel"
 		 		is-open="${this.isOpenArchiveDialog}" @omni-dialog-dimissed="${this.archiveDialogDismissed}"
         @omni-dialog-closed="${this.archiveNotebook}" type="warning">
-        <form><P>Are you sure want to archive notebook: ${this.selectedNotebookName}?</p></form>
+        <form><P>Are you sure want to archive ${this.selectedNotebookName}?</p></form>
       </omni-dialog>
 
 			<omni-dialog title="Unarchive ${this.selectedNotebookName}" close-string="Unarchive Notebook" dismiss-string="Cancel"
 				is-open="${this.isOpenRestoreDialog}" @omni-dialog-dimissed="${this.restoreDialogDismissed}"
         @omni-dialog-closed="${this.restoreNotebook}" type="warning">
-        <form><P>Are you sure want to unarchive notebook: ${this.selectedNotebookName}?</p></form>
+        <form><P>Are you sure want to unarchive ${this.selectedNotebookName}?</p></form>
       </omni-dialog>
 
 			<omni-dialog title="Delete ${this.selectedNotebookName}" close-string="Delete Notebook" dismiss-string="Cancel"
 				is-open="${this.isOpenDeleteDialog}" @omni-dialog-dimissed="${this.deleteDialogDismissed}"
         @omni-dialog-closed="${this.deleteNotebook}" type="warning">
-        <form><P>Are you sure want to delete notebook: ${this.selectedNotebookName}?</p></form>
+        <form><P>Are you sure want to delete ${this.selectedNotebookName}?</p></form>
       </omni-dialog>
 
       <omni-modal title="Create Notebook" close-string="Create Notebook" dismiss-string="Cancel"
@@ -536,15 +794,15 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
             <div class="col">
               <div class="form-group">
                 <label>Notebook Name <small class="text-danger">*</small></label>
-                <input type="text" class="form-control" placeholder="Enter Notebook Name" value="${this.data.newNotebook.notebookId.name}"
+                <input type="text" class="form-control" placeholder="Enter Notebook Name" value="${this.data.newNotebook.noteBookId.name}"
                   @blur="${ e => {
-                    this.$data.set('newNotebook.notebookId.name', e.target.value);
-                    this.$validations.validate('newNotebook.notebookId.name');
+                    this.$data.set('newNotebook.noteBookId.name', e.target.value);
+                    this.$validations.validate('newNotebook.noteBookId.name');
                   }
                 }"
                 />
                 ${
-                  this.$validations.getValidationErrors('newNotebook.notebookId.name').map(error => {
+                  this.$validations.getValidationErrors('newNotebook.noteBookId.name').map(error => {
                     switch (error) {
                       case 'isNotEmpty':
                         return html`<div class="invalid-feedback d-block">Notebook name is required</div>`
@@ -558,15 +816,15 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
             <div class="col">
               <div class="form-group">
                 <label>Notebook Version <small class="text-danger">*</small></label>
-                <input type="text" class="form-control" placeholder="Enter Notebook Version" value="${this.data.newNotebook.notebookId.versionId.label}"
+                <input type="text" class="form-control" placeholder="Enter Notebook Version" value="${this.data.newNotebook.noteBookId.versionId.label}"
                   @blur="${ e => {
-                      this.$data.set('newNotebook.notebookId.versionId.label', e.target.value);
-                      this.$validations.validate('newNotebook.notebookId.versionId.label');
+                      this.$data.set('newNotebook.noteBookId.versionId.label', e.target.value);
+                      this.$validations.validate('newNotebook.noteBookId.versionId.label');
                     }
                   }"
                 />
                 ${
-                  this.$validations.getValidationErrors('newNotebook.notebookId.versionId.label').map(error => {
+                  this.$validations.getValidationErrors('newNotebook.noteBookId.versionId.label').map(error => {
                     switch (error) {
                       case 'isNotEmpty':
                         return html`<div class="invalid-feedback d-block">Notebook version is required</div>`
@@ -577,11 +835,12 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
                 }
               </div>
             </div>
-          </div>
+					</div>
+					<br/>
           <div class="row">
             <div class="col">
               <div class="form-group">
-                <label>Notebook Type</label>
+                <label>Notebook Type <small class="text-danger">*</small></label>
                 <select class="form-control" id="mySelect"
                   @change="${e => this.$data.set('newNotebook.notebookType', e.target.value)}">
                   <option value="ZEPPELIN">Zeppelin Notebook</option>
@@ -601,117 +860,253 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
       </omni-modal>
       
       <omni-modal title="Associate Notebook" close-string="Associate Notebook" dismiss-string="Cancel"
-        is-open="${this.isOpenModalLink}" @omni-modal-dimissed="${this.modalDismissed}" @omni-modal-closed="${this.modalClosed}">
+				is-open="${this.isOpenModalLink}" @omni-modal-dimissed="${this.modalDismissed}" @omni-modal-closed="${this.modalClosedLink}"
+				canClose="${this.$validations.$valid && this.$validations.$dirty}">
         <form novalidate>
-          <p class="text-danger">${this.data.createErrorMessage} </p>
+          <p class="text-danger">${this.data.associateErrorMessage} </p>
           <div class="row">
             <div class="col">
             	<div class="form-group">
-	                <label>Notebook Type</label>
-	                <select class="form-control" id="mySelect"
-	                  @change="${e => this.$data.set('newNotebook.notebookType', e.target.value)}">
+									<label>Notebook Type <small class="text-danger">*</small></label>
+	                <select class="form-control" id="mySelect" 
+										@change="${e => {
+											this.$data.set('linkNotebook.notebookType', e.target.value);
+											this.$validations.validate('linkNotebook.notebookType');
+										}}">
+										<option value="null"> Select Notebook Type</option>
 	                  <option value="ZEPPELIN">Zeppelin Notebook</option>
 	                  <option value="JUPYTER">Jupyter Notebook</option>
-	                </select>
+									</select>
+									${
+										this.$validations.getValidationErrors('linkNotebook.notebookType').map(error => {
+											switch (error) {
+												case 'isNotEmpty':
+													return html`<div class="invalid-feedback d-block">Notebook Type is required</div>`
+											}
+										})
+									}
 	            </div>
-	        </div>
-	      </div>
-	      <div class="row">
+	        	</div>
+					</div>
+					<br/>
+					<div class="row">
+						<div class="col">
+							<div class="form-group">
+								<label>Notebook Name <small class="text-danger">*</small></label>
+								${(this.data.linkNotebook.notebookType !== undefined && this.data.linkNotebook.notebookType !== "null" && this.data.linkNotebook.notebookType !== '')
+									? html`
+										${(this.data.linkNotebook.notebookType === "ZEPPELIN" || this.data.linkNotebook.notebookType === "ZEPPELINE")
+											? html`								
+												<select class="form-control" id="selectNotebook" 
+													@change="${e => {
+														this.linkNotebook(e.target.value);
+														this.$validations.validate('linkNotebook.noteBookId.name');
+													}}">
+													<option value="null">Select a Notebook</option>
+													${this.zeppelinNotebooks.map((item, index) => 
+														html`															
+															<option value="${item.name}">${item.name}</option>
+														`
+													)}
+												</select>
+												
+											`
+											:``
+										}	
+										${this.data.linkNotebook.notebookType === "JUPYTER"
+											? html`
+												<select class="form-control" id="selectNotebook" 
+													@change="${e => {
+														this.linkNotebook(e.target.value);
+														this.$validations.validate('linkNotebook.noteBookId.name');
+													}}">
+													<option value="null">Select a Notebook</option>
+													${this.jupyterNotebooks.map((item, index) => 
+														html`
+															<option value="${item.name}">${item.name}</option>
+														`
+													)}
+												</select>
+											`
+											:``
+										}
+										
+										${
+											this.$validations.getValidationErrors('linkNotebook.noteBookId.name').map(error => {
+												switch (error) {
+													case 'isNotEmpty':
+														return html`<div class="invalid-feedback d-block">Notebook Type is required</div>`
+
+												}
+											})
+										}
+									`
+									: html`
+										<select class="form-control" id="selectNotebook" disabled/>
+									`
+								}
+							</div>
+						</div>
+						<div class="col">
+							<div class="form-group">
+								<label>Notebook Version <small class="text-danger">*</small></label>
+								${(this.data.linkNotebook.noteBookId.versionId.label !== undefined || this.data.linkNotebook.noteBookId.versionId.label !== '')
+								? html`
+										<input type="text" class="form-control" placeholder="${this.data.linkNotebook.noteBookId.versionId.label}" 
+										value="${this.data.linkNotebook.noteBookId.versionId.label}" disabled/>
+									`
+									: html`
+									<input type="text" class="form-control" placeholder="Notebook Version" value="${this.data.linkNotebook.noteBookId.versionId.label}"  disabled/>
+									`
+								}
+							</div>
+						</div>
+					</div>	
+				</form>
+			</omni-modal>
+	
+	    <omni-modal title="Edit Notebook" close-string="Update Notebook" dismiss-string="Cancel"
+        is-open="${this.isOpenModalEdit}" @omni-modal-dimissed="${this.modalDismissed}" @omni-modal-closed="${this.modalClosedEdit}"
+        canClose="${this.$validations.$valid && this.$validations.$dirty}">
+        <form novalidate>
+          <p class="text-danger">${this.data.editErrorMessage} </p>
+          <div class="row">
             <div class="col">
               <div class="form-group">
                 <label>Notebook Name <small class="text-danger">*</small></label>
-                <input type="text" class="form-control" placeholder="Enter Notebook Name" value="${this.data.newNotebook.notebookId.name}"
+                <input type="text" class="form-control" placeholder="Enter Notebook Name" value="${this.data.editNotebook.noteBookId.name}"
                   @blur="${ e => {
-                    this.$data.set('newNotebook.notebookId.name', e.target.value);
-                    this.$validations.validate('newNotebook.notebookId.name');
+                    this.$data.set('editNotebook.noteBookId.name', e.target.value);
+                    this.$validations.validate('editNotebook.noteBookId.name');
                   }
                 }"
                 />
+                ${
+                  this.$validations.getValidationErrors('editNotebook.noteBookId.name').map(error => {
+                    switch (error) {
+                      case 'isNotEmpty':
+                        return html`<div class="invalid-feedback d-block">Notebook name is required</div>`
+                    }
+                  })
+                }
               </div>
             </div>
             <div class="col">
               <div class="form-group">
                 <label>Notebook Version <small class="text-danger">*</small></label>
-                <input type="text" class="form-control" placeholder="Enter Notebook Version" value="${this.data.newNotebook.notebookId.versionId.label}"
+                <input type="text" class="form-control" placeholder="Enter Notebook Version" value="${this.data.editNotebook.noteBookId.versionId.label}"
                   @blur="${ e => {
-                      this.$data.set('newNotebook.notebookId.versionId.label', e.target.value);
-                      this.$validations.validate('newNotebook.notebookId.versionId.label');
+                      this.$data.set('editNotebook.noteBookId.versionId.label', e.target.value);
+                      this.$validations.validate('editNotebook.noteBookId.versionId.label');
                     }
                   }"
                 />
+                ${
+                  this.$validations.getValidationErrors('editNotebook.noteBookId.versionId.label').map(error => {
+                    switch (error) {
+                      case 'isNotEmpty':
+                        return html`<div class="invalid-feedback d-block">Notebook version is required</div>`
+                    }
+                  })
+                }
+              </div>
+            </div>
+					</div>
+					<br/>
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label>Notebook Description</label>
+                <textarea class="form-control" placeholder="Enter Notebook Description"
+                  @blur="${e => this.$data.set('editNotebook.description', e.target.value)}">${this.data.editNotebook.description}</textarea>
               </div>
             </div>
           </div>
         </form>
       </omni-modal>
+      
       ${this.view === 'view'
         ? html`
         	<div class="row ">
 					<div class="col-md-12 py-3">
-						<div class="card mb-124 shadow mb-5 bg-white rounded">
+						<div class="card mb-124 shadow mb-5 bg-white">
 							<div class="card-header">
 								<div class="row" style="margin:5px 0; margin-top: 0px;">
 									<mwc-icon class="textColor">library_books</mwc-icon>&nbsp;&nbsp;&nbsp;
 									<h4 class="textColor card-title">Notebooks</h4>
 									<div style="position: absolute; right:0" >
-										<a href="javascript:void" @click=${(e) => this.redirectWikiPage()} class="my-2">Learn more</a>&nbsp;&nbsp;&nbsp;
-										<a  class="btn btn-sm btn-secondary my-2">-</a> 
+										<a href=${this.notebookWikiURL} target="_blank" class="my-2">Learn more</a>&nbsp;&nbsp;&nbsp;
+										${
+											this.cardShow === false
+											? html`
+												<a class="toggle-a btn btn-sm btn-secondary my-2" @click=${e => this.cardShow = true}>
+													<span class="toggle-plus-span toggle-span">+</span>
+												</a>
+											`
+											: html`
+												<a class="toggle-a btn btn-sm btn-secondary my-2" @click=${e => this.cardShow = false}>
+													<span class="toggle-span">-</span>
+												</a>
+											`
+										}
 										&nbsp;&nbsp;&nbsp;&nbsp;
 									</div>
 								</div>
 							</div>			
-						<div class="card-body ">
+						<div class="card-body card-show">
 							<div class="row" style="margin:5px 0; margin-top: 0px;">
-	              ${this.successMessage !== ''
-	                ? html`
-	                  <div class="alertmessage alert alert-success">
-	                    <a class="close" @click=${e => this.alertOpen = false}>
-	                      <span aria-hidden="true">&nbsp;&times;</span>
-	                    </a> ${this.successMessage}
-	                  </div>
-	                `: ``
-	              }
-	              ${this.errorMessage !== ''
-	                ? html`
-	                  <div class="alertmessage alert alert-danger">
-	                    <a class="close" @click=${e => this.alertOpen = false}>
-	                        <span aria-hidden="true">&nbsp;&times;</span>
-	                    </a>  ${this.errorMessage}
-	                  </div>
-	                `: ``
-	              }
-							<div style="position: absolute; right:0">								
+							 	<div class="col-lg-12">
+									${this.successMessage !== ''
+										? html`
+											<div class="alertmessage alert alert-success">
+												<a class="close" @click=${e => this.alertOpen = false}>
+													<span aria-hidden="true">&nbsp;&times;</span>
+												</a> <mwc-icon>done_outline</mwc-icon>&nbsp;&nbsp;<span class="span-message">${this.successMessage}</span>
+											</div>
+										`: ``
+									}
+									${this.errorMessage !== ''
+										? html`
+											<div class="alertmessage alert alert-danger">
+												<a class="close" @click=${e => this.alertOpen = false}>
+														<span aria-hidden="true">&nbsp;&times;</span>
+												</a> <mwc-icon>error</mwc-icon>&nbsp;&nbsp;<span class="span-message">${this.errorMessage}</span>
+											</div>
+										`: ``
+									}
+				        </div>
+				      </div>
+							<div  class="row" style="margin:5px 0; margin-top: 0px; position: absolute; right:0">								
 								<div class="btn-toolbar mb-2 mb-md-0">
 									<div class="dropdown">
 										<select class="custom-select mr-sm-2" id="template" @change=${e => this.sortNotebooks(e.target.value)}>
-                        ${this.sortOptions.map(item => item.value === this.activeSort
-                          ? html`
-                            <option value="${item.value}" selected>${item.label}</option>
-                          `
-                          : html`
-                            <option value="${item.value}">${item.label}</option>
-                          `
-                        )}
-                      </select>
+											${this.sortOptions.map(item => item.value === this.activeSort
+												? html`
+													<option value="${item.value}" selected>${item.label}</option>
+												`
+												: html`
+													<option value="${item.value}">${item.label}</option>
+												`
+											)}
+										</select>
 									</div>
 									<div class="btn-group mr-2">
 										&nbsp;
-										<input type="text" style="height: 30px" class="form-control w-100" @input=${(e) => this.filterNotebooks(e)} placeholder="Search Notebook" aria-label="Search Notebook" aria-describedby="button-addon2">
-										
+										<input type="text" class="form-control w-100" placeholder="Search Notebook"
+												@input=${e => this.searchNotebooks(e.target.value)}/>
 										<div class="input-group-append">
-											<a class="btnIcon btn btn-sm btn-primary  mr-1" data-toggle="tooltip" data-placement="top" title="Search Notebook Instance"  @input=${e => this.searchNotebooks(e.target.value)}>
-												<mwc-icon class="white-color">search</mwc-icon>
+											<a class="btnIcon btn btn-sm btn-primary  mr-1" data-toggle="tooltip" data-placement="top" title="Search Notebook Instance" >
+												<mwc-icon class="mwc-icon-primary white-color">search</mwc-icon>
 											</a>&nbsp;
 											<a href="javascript:void" @click=${(e) => this.openModal()} class="btnIcon btn btn-sm btn-primary mr-1" data-toggle="tooltip" data-placement="top" title="Create Notebook">
-													<mwc-icon>add</mwc-icon>
+													<mwc-icon class="mwc-icon-primary">add</mwc-icon>
 											</a>&nbsp;
 											<a href="javascript:void" @click=${(e) => this.openModalLink()} class="btnIcon btn btn-sm btn-secondary  mr-1" data-toggle="tooltip" data-placement="top" title="Associate Existing Notebook">
-													<mwc-icon>link</mwc-icon>
+													<mwc-icon class="mwc-icon-secondary">link</mwc-icon>
 											</a>&nbsp;&nbsp;&nbsp;
 										</div>
 									</div>
 								</div>
-							</div>
 							</div>
 							<br/>
 
@@ -720,9 +1115,10 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 									<thead class="thead-light">
 										<tr class="d-flex">
 											<th class="col-1" >#</th>
-											<th class="col-3" >Notebook Name</th>
-											<th class="col-2" >Version</th>
+											<th class="col-2" >Notebook Name</th>
+											<th class="col-1" >Version</th>
 											<th class="col-2" >Notebook Type</th>
+											<th class="col-2" >Notebook Status</th>
 											<th class="col-2" >Creation Date</th>
 											<th class="col-2">Actions</th>
 										</tr>
@@ -733,29 +1129,39 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 											${this.notebooks.map((item, index) => 
 												html`
 												<tr class="d-flex">
-													<td class="col-1">${this.tableIndex++}</td>
-													<td class="col-3">${item.name}</td>
-													<td class="col-2">${item.version}</td>
+													<td class="col-1">${(this.currentPage-1) * 5 + ++index}</td>
+													<td class="col-2">${item.name}</td>
+													<td class="col-1">${item.version}</td>
 													<td class="col-2">${item.notebookType}</td>
+													<td class="col-2">
+														${item.status === 'ACTIVE'
+															? html`
+																<span class="active-status">${item.status}</span>
+															`
+															: html`
+																<span class="inactive-status">${item.status}</span>
+															`
+														}
+													</td>
 													<td class="col-2">${item.createdTimestamp}</td>
 													<td class="col-2" style="padding: .05rem; padding-left: 20px;">
 														${item.status == 'ACTIVE' 
 														? html`
-														<a href="javascript:void" @click=${(e) => this.launchNotebook(item.notebookId)}   class="btnIcon btn btn-sm btn-primary my-1 mr-1" data-toggle="tooltip" data-placement="top" title="Launch Notebook">
-																<mwc-icon>launch</mwc-icon>
-														</a>&nbsp;&nbsp;
-														<a href="javascript:void" @click=${(e) => this.openUpdateDialog(item.notebookId, item.name)} class="btnIcon btn btn-sm btn-secondary my-1 mr-1 " data-toggle="tooltip" data-placement="top" title="Edit Notebook">
-																<mwc-icon>edit</mwc-icon>
-														</a>&nbsp;&nbsp;
-														<a href="javascript:void" @click=${(e) => this.openArchiveDialog(item.notebookId, item.name)} class="btnIcon btn btn-sm btn-secondary my-1 mr-1" data-toggle="tooltip" data-placement="top" title="Archive Notebook">
-																<mwc-icon>archive</mwc-icon>
+														<a href="javascript:void" @click=${(e) => this.launchNotebook(item.noteBookId)}   class="btnIcon btn btn-sm btn-primary my-1 mr-1" data-toggle="tooltip" data-placement="top" title="Launch Notebook">
+																<mwc-icon class="mwc-icon-primary">launch</mwc-icon>
+														</a>&nbsp;
+														<a href="javascript:void" @click=${e => this.openModalEdit(item)} class="btnIcon btn btn-sm btn-secondary my-1 mr-1 " data-toggle="tooltip" data-placement="top" title="Edit Notebook">
+																<mwc-icon class="mwc-icon-secondary">edit</mwc-icon>
+														</a>&nbsp;
+														<a href="javascript:void" @click=${(e) => this.openArchiveDialog(item.noteBookId, item.name)} class="btnIcon btn btn-sm btn-secondary my-1 mr-1" data-toggle="tooltip" data-placement="top" title="Archive Notebook">
+																<mwc-icon class="mwc-icon-secondary">archive</mwc-icon>
 														</a>
 														`
 														: html`
-															<a href="javascript:void" @click="${e => this.openRestoreDialog(item.notebookId, item.name)}"
-							                                  class="btnIcon btn btn-sm btn-secondary my-1 mr-1" data-toggle="tooltip" data-placement="top" title="Unarchive Notebook">
-							                                  <mwc-icon class="mwc-icon-gray">restore</mwc-icon>
-							                                </a>
+															<a href="javascript:void" @click="${e => this.openRestoreDialog(item.noteBookId, item.name)}"
+																class="btnIcon btn btn-sm btn-secondary my-1 mr-1" data-toggle="tooltip" data-placement="top" title="Unarchive Notebook">
+																<mwc-icon class="mwc-icon-secondary">restore</mwc-icon>
+															</a>
 														`}
 													</td>
 												</tr>
@@ -773,18 +1179,22 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
                 <div style="position: absolute; right:0;">
                   <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-end">
-                      <li class="page-item">
-                        <a class="page-link" href="javascript:void" @click=${e => this.navigatePage("first")}>First</a>
-                      </li>
-                      <li class="page-item">
-                        <a class="page-link" href="javascript:void" @click=${e => this.navigatePage("previous")} >Previous</a>
-                      </li>
-                      <li class="page-item">
-                        <a class="page-link" href="javascript:void" @click=${e => this.navigatePage("next")} >Next</a>
-                      </li>
-                      <li class="page-item">
-                        <a class="page-link" href="javascript:void" @click=${e => this.navigatePage("last")} >Last</a>
-                      </li>
+											<li class="page-item">
+												<a href="javascript:void" @click=${e => this.navigatePage("first")}
+													class="page-link ${this.currentPage !== 1? "active" : "inactive"}">First</a>                          
+											</li>
+											<li class="page-item">
+												<a class="page-link ${this.currentPage !== 1? "active" : "inactive"}" href="javascript:void" 
+													@click=${e => this.navigatePage("previous")} >Previous</a>
+											</li>
+											<li class="page-item">
+												<a class="page-link ${this.currentPage < this.totalPages? "active" : "inactive"}" href="javascript:void" 
+													@click=${e => this.navigatePage("next")} >Next</a>
+											</li>
+											<li class="page-item">
+												<a class="page-link ${this.currentPage < this.totalPages? "active" : "inactive"}" href="javascript:void" 
+													@click=${e => this.navigatePage("last")} >Last</a>
+											</li>
                       &nbsp;&nbsp;&nbsp;&nbsp;
                     </ul>
                   </nav>
@@ -803,13 +1213,13 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 	        ? html`
 						<div class="row">
 							<div class="col-md-12 py-3">
-								<div class="card mb-124  shadow mb-5 bg-white rounded">
+								<div class="card mb-124  shadow mb-5 bg-white">
 									<div class="card-header">
 										<div class="row" style="margin:5px 0; margin-top: 0px;">
 											<mwc-icon class="textColor">library_books</mwc-icon>&nbsp;&nbsp;&nbsp;
 											<h4 class="textColor card-title">Notebooks</h4>
 											<div style="position: absolute; right:0" >
-												<a href="javascript:void" @click=${(e) => this.redirectWikiPage()} class="my-2">Learn more</a>&nbsp;&nbsp;&nbsp;
+												<a href=${this.notebookWikiURL} target="_blank" class="my-2">Learn more</a>&nbsp;&nbsp;&nbsp;
 												<a class="btn btn-sm btn-secondary my-2">-</a> 
 												&nbsp;&nbsp;&nbsp;&nbsp;
 											</div>
@@ -822,7 +1232,7 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 				                  <div class="alertmessage alert alert-success">
 				                    <a class="close" @click=${e => this.alertOpen = false}>
 				                      <span aria-hidden="true">&nbsp;&times;</span>
-				                    </a> ${this.successMessage}
+				                    </a> <mwc-icon>done_outline</mwc-icon>&nbsp;&nbsp;<span class="span-message">${this.successMessage}</span>
 				                  </div>
 				                `: ``
 				              }
@@ -831,7 +1241,7 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 				                  <div class="alertmessage alert alert-danger">
 				                    <a class="close" @click=${e => this.alertOpen = false}>
 				                        <span aria-hidden="true">&nbsp;&times;</span>
-				                    </a>  ${this.errorMessage}
+				                    </a>  <mwc-icon>error</mwc-icon>&nbsp;&nbsp;<span class="span-message">${this.errorMessage}</span>
 				                  </div>
 				                `: ``
 											}
@@ -857,7 +1267,7 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
             <a class="close" @click=${e => this.alertOpen = false}>
                 <span aria-hidden="true">&nbsp;&times;</span>
             </a>
-            ${this.errorMessage}
+            <mwc-icon>error</mwc-icon>&nbsp;&nbsp;<span class="span-message">${this.errorMessage}</span>
           </div>
         `
         : html`

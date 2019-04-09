@@ -24,149 +24,285 @@ var https = require("https");
 var request = require('request');
 
 module.exports = function(app) {
-	let uripath = "/users/";
-	
-	var getJWTToken = function(req){
-		return req.cookies.auth_token;
+	const uripath = "/users/";
+	const configENV = properties.ENVIRONMENT;
+	const wiki_urls = {
+		projectWikiURL: properties.projectWikiURL,
+		notebookWikiURL: properties.notebookWikiURL,
+		pipelineWikiURL: properties.pipelineWikiURL
 	}
-
-	var configENV = properties.ENVIRONMENT;
-	var userName = properties.userName;
-	var ms_urls = {
+	const ms_urls = {
 		projectmSURL : properties.projectmSURL,
-		notebookmSURL : properties.notebookmSURL
+		notebookmSURL : properties.notebookmSURL,
+		pipelinemSURL : properties.pipelinemSURL
 	};
+
+	var getUserName = function (req){
+		let userName = '';
+		if(req.cookies !== undefined && req.cookies.userDetail !== undefined && req.cookies.userDetail !== null) {
+			let userInfo = JSON.parse(req.cookies.userDetail);
+			if(userInfo.length === 3){
+				userName = userInfo[2];
+			}
+		} 
+		return userName;	
+	}
+	
+	var getLatestAuthToken = function (req, authToken){
+		let token = (req.cookies !== undefined && req.cookies.authToken !== undefined && req.cookies.authToken !== null ) ? 
+				req.cookies.authToken: authToken ;
+		return token;
+	}
 	
 	app.get('/api/config', function(req, res) {
 		try {
-			let user_name = (req.cookies.userDetail !== undefined && req.cookies.userDetail !== null && req.cookies.userDetail.length > 0) ? 
-				req.cookies.userDetail[0]: userName;
-			console.info('user name: '+ user_name);
+			let userName = getUserName(req);
+			let authToken = getLatestAuthToken(req, '');
+			
 			res.configInfo = {
 				configENV : configENV,
 				msconfig : ms_urls,
-				user_name:  user_name
+				userName:  userName,
+				authToken: authToken,
+				wikiConfig: wiki_urls
 			};
 			res.send(res.configInfo);
 		} catch (err) {
-			reject("error");
+			console.error('Error while retrieving config details: '+ err);
 		}
 	});
 	
 	app.post('/api/project/details', function (req, res){
-		let user_name = req.body.user_name;
-    	let serviceUrl = req.body.url + uripath;
-    	let projectId = req.body.projectId;
-    	getSelectedProjectDetails(user_name, serviceUrl, projectId, getJWTToken(req)).then(function(result){
-    		res.send(result);
-    	});
+		let userName = req.body.userName;
+		let serviceUrl = req.body.url + uripath;
+		let projectId = req.body.projectId;
+		let authToken = req.headers['auth'];
+		getSelectedProjectDetails(userName, serviceUrl, projectId, getLatestAuthToken(req, authToken)).then(function(result){
+			res.send(result);
+		});
 	});
 
 	app.put('/api/project/update', function (req, res){
-		let user_name = req.body.user_name;
+		let userName = req.body.userName;
     let serviceUrl = req.body.url + uripath;
 		let projectPayload = req.body.projectPayload;
 		let projectId = req.body.projectId;
-    	updateProjectDetails(user_name, serviceUrl, projectId, projectPayload, getJWTToken(req)).then(function(result){
-    		res.send(result);
-    	});
+		let authToken = req.headers['auth'];
+		updateProjectDetails(userName, serviceUrl, projectId, projectPayload, getLatestAuthToken(req, authToken)).then(function(result){
+			res.send(result);
+		});
 	});
 	
 	app.put('/api/project/archive', function (req, res){
 		let serviceUrl = req.body.url + uripath;
-		let user_name = req.body.user_name;
+		let userName = req.body.userName;
 		let projectId = req.body.projectId;
-		archiveProject(user_name, serviceUrl, projectId, getJWTToken(req)).then(function(result){
+		let authToken = req.headers['auth'];
+		archiveProject(userName, serviceUrl, projectId, getLatestAuthToken(req, authToken)).then(function(result){
 			res.send(result);
 		});
 	});
 	
 	app.put('/api/project/restore', function (req, res){
 		let serviceUrl = req.body.url + uripath;
-		let user_name = req.body.user_name;
+		let userName = req.body.userName;
 		let projectId = req.body.projectId;
-		restoreProject(user_name, serviceUrl, projectId, getJWTToken(req)).then(function(result){
+		let authToken = req.headers['auth'];
+		restoreProject(userName, serviceUrl, projectId, getLatestAuthToken(req, authToken)).then(function(result){
 			res.send(result);
 		});
 	});
 	
 	app.delete('/api/project/delete', function (req, res){
 		let serviceUrl = req.body.url + uripath;
-		let user_name = req.body.user_name;
+		let userName = req.body.userName;
 		let projectId = req.body.projectId;
-		deleteProject(user_name, serviceUrl, projectId, getJWTToken(req)).then(function(result){
+		let authToken = req.headers['auth'];
+		deleteProject(userName, serviceUrl, projectId, getLatestAuthToken(req, authToken)).then(function(result){
 			res.send(result);
 		});
 	});
 	
-	app.post('/api/project/getNotebooks', function (req, res){
-		let user_name = req.body.user_name;
-    	let serviceUrl = req.body.url + uripath;
-    	let projectId = req.body.projectId;
-    	getSelectedProjectNotebookDetails(user_name, serviceUrl, projectId, getJWTToken(req)).then(function(result){
-    		res.send(result);
-    	});
+	app.post('/api/project/notebooksList', function (req, res){
+		let userName = req.body.userName;
+		let serviceUrl = req.body.url + uripath;
+		let projectId = req.body.projectId;
+		let authToken = req.headers['auth'];
+		getSelectedProjectNotebookDetails(userName, serviceUrl, projectId, getLatestAuthToken(req, authToken)).then(function(result){
+			res.send(result);
+		});
 	});
 
-	app.put('/api/project/updateNotebook', function (req, res){
-		let user_name = req.body.user_name;
+	app.put('/api/project/associateNotebook', function (req, res){
+		let userName = req.body.userName;
 		let serviceUrl = req.body.url + uripath;
 		let notebookPayload = req.body.notebookPayload;
 		let projectId = req.body.projectId;
 		let notebookId = req.body.notebookId;
-    	updateNotebookDetails(user_name, serviceUrl, projectId, notebookId, notebookPayload, getJWTToken(req)).then(function(result){
-    		res.send(result);
-    	});
+		let authToken = req.headers['auth'];
+		associateNotebookToProject(userName, serviceUrl, projectId, notebookId, notebookPayload, getLatestAuthToken(req, authToken)).then(function(result){
+			res.send(result);
+		});
 	});
 	
 	app.put('/api/project/archiveNotebook', function (req, res){
 		let serviceUrl = req.body.url + uripath;
-		let user_name = req.body.user_name;
+		let userName = req.body.userName;
 		let projectId = req.body.projectId;
 		let notebookId = req.body.notebookId;
-		archiveNotebook(user_name, serviceUrl, projectId, notebookId, getJWTToken(req)).then(function(result){
+		let authToken = req.headers['auth'];
+		archiveNotebook(userName, serviceUrl, projectId, notebookId, getLatestAuthToken(req, authToken)).then(function(result){
 			res.send(result);
 		});
 	});
 	
 	app.put('/api/project/restoreNotebook', function (req, res){
 		let serviceUrl = req.body.url + uripath;
-		let user_name = req.body.user_name;
+		let userName = req.body.userName;
 		let projectId = req.body.projectId;
 		let notebookId = req.body.notebookId;
-		restoreNotebook(user_name, serviceUrl, projectId, notebookId, getJWTToken(req)).then(function(result){
+		let authToken = req.headers['auth'];
+		restoreNotebook(userName, serviceUrl, projectId, notebookId, getLatestAuthToken(req, authToken)).then(function(result){
 			res.send(result);
 		});
 	});
-	
-	/*app.delete('/api/project/deleteNotebook', function (req, res){
-		let serviceUrl = req.body.url + uripath;
-		let user_name = req.body.user_name;
-		let projectId = req.body.projectId;
-		let notebookId = req.body.notebookId;
-		deleteNotebook(user_name, serviceUrl, projectId, notebookId, getJWTToken(req)).then(function(result){
-			res.send(result);
-		});
-	});*/
 	
 	app.post('/api/project/createNotebook', function (req, res){
 		let serviceUrl = req.body.url + uripath;
-		let user_name = req.body.user_name;
+		let userName = req.body.userName;
 		let projectId = req.body.projectId;
 		let newNotebookReq = req.body.newNotebookDetails;
-		createNotebook(user_name, serviceUrl, projectId, newNotebookReq, getJWTToken(req)).then(function(result){
+		let authToken = req.headers['auth'];
+		createNotebook(userName, serviceUrl, projectId, newNotebookReq, getLatestAuthToken(req, authToken)).then(function(result){
+			res.send(result);
+		});
+	});
+
+	app.post('/api/notebooks', function(req, res) {
+		let serviceUrl = req.body.url + uripath;
+		let userName = req.body.userName;
+		let authToken = req.headers['auth'];
+		getNotebooksList(userName, serviceUrl, getLatestAuthToken(req, authToken)).then(function(result) {
+					res.send(result);
+		});
+	});
+	
+	app.post('/api/notebook/launch', function(req, res) {
+		let serviceUrl = req.body.url + uripath;
+		let userName = req.body.userName;
+		let notebookId = req.body.notebookId;
+		let projectId = req.body.projectId;
+		let authToken = req.headers['auth'];
+		launchNotebook(userName, serviceUrl, projectId, notebookId, getLatestAuthToken(req, authToken)).then(function(result) {
+					res.send(result);
+		});
+	});
+
+	app.put('/api/notebook/update', function (req, res){
+		let userName = req.body.userName;
+    let serviceUrl = req.body.url + uripath;
+		let notebookPayload = req.body.notebookPayload;
+		let noteBookId = req.body.noteBookId;
+		let authToken = req.headers['auth'];
+		updateNotebookDetails(userName, serviceUrl, noteBookId, notebookPayload, getLatestAuthToken(req, authToken)).then(function(result){
 			res.send(result);
 		});
 	});
 	
-	var getSelectedProjectDetails = function(user_name, srvcUrl, projectId, jwtToken){
+	app.post('/api/project/pipelinesList', function (req, res){
+		let userName = req.body.userName;
+		let serviceUrl = req.body.url + uripath;
+		let projectId = req.body.projectId;
+		let authToken = req.headers['auth'];
+		getSelectedProjectPipelineDetails(userName, serviceUrl, projectId, getLatestAuthToken(req, authToken)).then(function(result){
+			res.send(result);
+		});
+	});
+
+	app.put('/api/project/associatePipeline', function (req, res){
+		let userName = req.body.userName;
+		let serviceUrl = req.body.url + uripath;
+		let pipelinePayload = req.body.pipelinePayload;
+		let projectId = req.body.projectId;
+		let pipelineId = req.body.pipelineId;
+		let authToken = req.headers['auth'];
+		associatePipelineToProject(userName, serviceUrl, projectId, pipelineId, pipelinePayload, getLatestAuthToken(req, authToken)).then(function(result){
+			res.send(result);
+		});
+	});
+	
+	app.put('/api/project/archivePipeline', function (req, res){
+		let serviceUrl = req.body.url + uripath;
+		let userName = req.body.userName;
+		let projectId = req.body.projectId;
+		let pipelineId = req.body.pipelineId;
+		let authToken = req.headers['auth'];
+		archivePipeline(userName, serviceUrl, projectId, pipelineId, getLatestAuthToken(req, authToken)).then(function(result){
+			res.send(result);
+		});
+	});
+	
+	app.put('/api/project/restorePipeline', function (req, res){
+		let serviceUrl = req.body.url + uripath;
+		let userName = req.body.userName;
+		let projectId = req.body.projectId;
+		let pipelineId = req.body.pipelineId;
+		let authToken = req.headers['auth'];
+		restorePipeline(userName, serviceUrl, projectId, pipelineId, getLatestAuthToken(req, authToken)).then(function(result){
+			res.send(result);
+		});
+	});
+	
+	app.post('/api/project/createPipeline', function (req, res){
+		let serviceUrl = req.body.url + uripath;
+		let userName = req.body.userName;
+		let projectId = req.body.projectId;
+		let newPipelineReq = req.body.newPipelineDetails;
+		let authToken = req.headers['auth'];
+		createPipeline(userName, serviceUrl, projectId, newPipelineReq, getLatestAuthToken(req, authToken)).then(function(result){
+			res.send(result);
+		});
+	});
+
+	app.post('/api/pipelines', function(req, res) {
+		let serviceUrl = req.body.url + uripath;
+		let userName = req.body.userName;
+		let authToken = req.headers['auth'];
+		getPipelinesList(userName, serviceUrl, getLatestAuthToken(req, authToken)).then(function(result) {
+					res.send(result);
+		});
+	});
+	
+	app.post('/api/pipeline/launch', function(req, res) {
+		let serviceUrl = req.body.url + uripath;
+		let userName = req.body.userName;
+		let pipelineId = req.body.pipelineId;
+		let projectId = req.body.projectId;
+		let authToken = req.headers['auth'];
+		launchPipeline(userName, serviceUrl, projectId, pipelineId, getLatestAuthToken(req, authToken)).then(function(result) {
+					res.send(result);
+		});
+	});
+
+	app.put('/api/pipeline/update', function (req, res){
+		let userName = req.body.userName;
+    let serviceUrl = req.body.url + uripath;
+		let pipelinePayload = req.body.pipelinePayload;
+		let pipelineId = req.body.pipelineId;
+		let authToken = req.headers['auth'];
+		updatePipelineDetails(userName, serviceUrl, pipelineId, pipelinePayload, getLatestAuthToken(req, authToken)).then(function(result){
+			res.send(result);
+		});
+	});
+	
+	var getSelectedProjectDetails = function(userName, srvcUrl, projectId, authToken){
     	return new Promise(function(resolve, reject) {
             var options = {
 				method : "GET",
-				url : srvcUrl + user_name + "/projects/" + projectId,
+				url : srvcUrl + userName + "/projects/" + projectId,
 				headers : {
 					'Content-Type' : 'application/json',
-					'Authorization' : jwtToken,
+					'Authorization' : authToken,
 				}
             };
             
@@ -183,14 +319,14 @@ module.exports = function(app) {
       });
     };
 	
-	var updateProjectDetails = function(user_name, srvcUrl, projectId, projectPayload, jwtToken){
+	var updateProjectDetails = function(userName, srvcUrl, projectId, projectPayload, authToken){
     	return new Promise(function(resolve, reject) {
             var options = {
 				method : "PUT",
-				url : srvcUrl + user_name + "/projects/" + projectId,
+				url : srvcUrl + userName + "/projects/" + projectId,
 				headers : {
 					'Content-Type' : 'application/json',
-					'Authorization' : jwtToken,
+					'Authorization' : authToken,
 				},
 				body: projectPayload,
 				json: true
@@ -208,14 +344,14 @@ module.exports = function(app) {
        });
     };
 	
-    var archiveProject = function(user_name, srvcUrl, projectId, jwtToken){
+    var archiveProject = function(userName, srvcUrl, projectId, authToken){
 		return new Promise(function(resolve, reject) {
 			var options = {
 				method : "PUT",
-				url : srvcUrl + user_name + "/projects/" + projectId + "/actionType/A",
+				url : srvcUrl + userName + "/projects/" + projectId + "/actionType/A",
 				headers : {
 					'Content-Type' : 'application/json',
-					'Authorization' : jwtToken,
+					'Authorization' : authToken,
 				},
 			};
 			request.put(options, function(error, response, body) {
@@ -230,21 +366,21 @@ module.exports = function(app) {
 		});
 	};
 	
-	var restoreProject = function(user_name, srvcUrl, projectId, jwtToken){
+	var restoreProject = function(userName, srvcUrl, projectId, authToken){
 		return new Promise(function(resolve, reject) {
 			var options = {
 				method : "PUT",
-				url : srvcUrl + user_name + "/projects/" + projectId + "/actionType/UA",
+				url : srvcUrl + userName + "/projects/" + projectId + "/actionType/UA",
 				headers : {
 					'Content-Type' : 'application/json',
-					'Authorization' : jwtToken,
+					'Authorization' : authToken,
 				},
 			};
 			request.put(options, function(error, response, body) {
 				if (!error && response.statusCode == 200) {
-					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Project restored successfully."));
+					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Project unarchived successfully."));
 				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to restore Project."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to unarchive Project."));
 				} else {
 					resolve(prepRespJsonAndLogit(null, null, null, error));
 				}
@@ -252,14 +388,14 @@ module.exports = function(app) {
 		});
 	};
 	
-	var deleteProject = function(user_name, srvcUrl, projectId, jwtToken){
+	var deleteProject = function(userName, srvcUrl, projectId, authToken){
 		return new Promise(function(resolve, reject) {
 			var options = {
 				method : "DELETE",
-				url : srvcUrl + user_name + "/projects/" + projectId,
+				url : srvcUrl + userName + "/projects/" + projectId,
 				headers : {
 					'Content-Type' : 'application/json',
-					'Authorization' : jwtToken,
+					'Authorization' : authToken,
 				},
 			};
 			request.delete(options, function(error, response, body) {
@@ -274,14 +410,14 @@ module.exports = function(app) {
 		});
 	};
 	
-	var getSelectedProjectNotebookDetails = function(user_name, srvcUrl, projectId, jwtToken){
+	var getSelectedProjectNotebookDetails = function(userName, srvcUrl, projectId, authToken){
     	return new Promise(function(resolve, reject) {
             var options = {
 				method : "GET",
-				url : srvcUrl + user_name + "/projects/" + projectId + "/notebooks/",
+				url : srvcUrl + userName + "/projects/" + projectId + "/notebooks/",
 				headers : {
 					'Content-Type' : 'application/json',
-					'Authorization' : jwtToken,
+					'Authorization' : authToken,
 				}
             };
 			
@@ -297,14 +433,14 @@ module.exports = function(app) {
       });
     };
 	
-    var createNotebook = function(user_name, srvcUrl, projectId, newNotebookReq, jwtToken){
+    var createNotebook = function(userName, srvcUrl, projectId, newNotebookReq, authToken){
 		return new Promise(function(resolve, reject) {
 			var options = {
 				method : "POST",
-				url : srvcUrl + user_name + "/projects/" + projectId + "/notebooks",
+				url : srvcUrl + userName + "/projects/" + projectId + "/notebooks",
 				headers : {
 					'Content-Type' : 'application/json',
-					'Authorization' : jwtToken,
+					'Authorization' : authToken,
 				},
 				body: newNotebookReq,
 				json: true
@@ -322,14 +458,14 @@ module.exports = function(app) {
 		});
 	};
 	
-	var updateNotebookDetails = function(user_name, srvcUrl, projectId, notebookId, notebookPayload, jwtToken){
+	var associateNotebookToProject = function(userName, srvcUrl, projectId, notebookId, notebookPayload, authToken){
     	return new Promise(function(resolve, reject) {
             var options = {
 				method : "PUT",
-				url : srvcUrl + user_name + "/projects/" + projectId + "/notebooks/" + notebookId,
+				url : srvcUrl + userName + "/projects/" + projectId + "/notebooks/" + notebookId,
 				headers : {
 					'Content-Type' : 'application/json',
-					'Authorization' : jwtToken,
+					'Authorization' : authToken,
 				},
 				body: notebookPayload,
 				json: true
@@ -337,9 +473,9 @@ module.exports = function(app) {
 
             request.put(options, function(error, response) {
 				if (!error && response.statusCode == 200) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Notebook details updated successfully."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Notebook associated successfully."));
 				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to update Notebook."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to associate Notebook."));
 				} else {
 					resolve(prepRespJsonAndLogit(null, null, null, error));
 				}
@@ -347,14 +483,14 @@ module.exports = function(app) {
        });
     };
 	
-    var archiveNotebook = function(user_name, srvcUrl, projectId, notebookId, jwtToken){
+    var archiveNotebook = function(userName, srvcUrl, projectId, notebookId, authToken){
 		return new Promise(function(resolve, reject) {
 			var options = {
 				method : "PUT",
-				url : srvcUrl + user_name + "/projects/" + projectId + "/notebooks/" + notebookId + "/A",
+				url : srvcUrl + userName + "/projects/" + projectId + "/notebooks/" + notebookId + "/A",
 				headers : {
 					'Content-Type' : 'application/json',
-					'Authorization' : jwtToken,
+					'Authorization' : authToken,
 				},
 			};
 			request.put(options, function(error, response, body) {
@@ -369,21 +505,44 @@ module.exports = function(app) {
 		});
 	};
 	
-	var restoreNotebook = function(user_name, srvcUrl, projectId, notebookId, jwtToken){
+	var restoreNotebook = function(userName, srvcUrl, projectId, notebookId, authToken){
 		return new Promise(function(resolve, reject) {
 			var options = {
 				method : "PUT",
-				url : srvcUrl + user_name + "/projects/" + projectId + "/notebooks/" + notebookId + "/UA",
+				url : srvcUrl + userName + "/projects/" + projectId + "/notebooks/" + notebookId + "/UA",
 				headers : {
 					'Content-Type' : 'application/json',
-					'Authorization' : jwtToken,
+					'Authorization' : authToken,
 				},
 			};
 			request.put(options, function(error, response, body) {
 				if (!error && response.statusCode == 200) {
-					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Notebook restored successfully."));
+					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Notebook unarchived successfully."));
 				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to restore Notebook."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to unarchive Notebook."));
+				} else {
+					resolve(prepRespJsonAndLogit(null, null, null, error));
+				}
+			});
+		});
+	};
+
+	var getNotebooksList = function(userName, url, authToken) {
+		return new Promise(function(resolve, reject) {
+			var options = {
+				method : "GET",
+				url : url + userName + "/notebooks/",
+				headers : {
+					'Content-Type' : 'application/json',
+					'Authorization' : authToken,
+				},
+			};
+
+			request.get(options, function(error, response) {
+				if (!error && response.statusCode == 200) {
+					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Notebooks retrieved successfully."));
+				} else if (!error) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to retrieve Notebooks."));
 				} else {
 					resolve(prepRespJsonAndLogit(null, null, null, error));
 				}
@@ -391,28 +550,241 @@ module.exports = function(app) {
 		});
 	};
 	
-	/*var deleteNotebook = function(user_name, srvcUrl, projectId, notebookId, jwtToken){
+	var launchNotebook = function(userName, srvcUrl, projectId, noteBookId, authToken){
 		return new Promise(function(resolve, reject) {
 			var options = {
-				method : "DELETE",
-				url : srvcUrl + user_name + "/projects/" + projectId + "/notebooks/" + notebookId,
+				method : "GET",
+				url : srvcUrl + userName + "/projects/" + projectId + "/notebooks/" + noteBookId + "/launch",
 				headers : {
 					'Content-Type' : 'application/json',
-					'Authorization' : jwtToken,
+					'Authorization' : authToken,
 				},
 			};
-			request.delete(options, function(error, response, body) {
+
+			request.get(options, function(error, response) {
 				if (!error && response.statusCode == 200) {
-					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Project Deleted successfully."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Notebook launched successfully."));
 				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to delete Project."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to launch Notebook."));
 				} else {
 					resolve(prepRespJsonAndLogit(null, null, null, error));
 				}
 			});
 		});
-	};*/
+	};
+
+	var updateNotebookDetails = function(userName, srvcUrl, noteBookId, notebookPayload, authToken){
+		return new Promise(function(resolve, reject) {
+	    var options = {
+					method : "PUT",
+					url : srvcUrl + userName + "/notebooks/" + noteBookId,
+					headers : {
+						'Content-Type' : 'application/json',
+						'Authorization' : authToken,
+					},
+					body: notebookPayload,
+					json: true
+	    };
 	
+	    request.put(options, function(error, response) {
+					if (!error && response.statusCode == 200) {
+						resolve(prepRespJsonAndLogit(response, response.body, "Notebook details updated successfully."));
+					} else if (!error) {
+						resolve(prepRespJsonAndLogit(response, response.body, "Unable to update Notebook."));
+					} else {
+						resolve(prepRespJsonAndLogit(null, null, null, error));
+					}
+	    });
+	  });
+	};
+	
+	var getSelectedProjectPipelineDetails = function(userName, srvcUrl, projectId, authToken){
+		return new Promise(function(resolve, reject) {
+			var options = {
+			method : "GET",
+			url : srvcUrl + userName + "/projects/" + projectId + "/pipelines/",
+			headers : {
+				'Content-Type' : 'application/json',
+				'Authorization' : authToken,
+			}
+					};
+		
+			request.get(options, function(error, response) {
+				if (!error && response.statusCode == 200) {						
+					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Data Pipelines for the project retrieved successfully."));
+				} else if (!error) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to retrieve Data Pipelines."));
+				} else {
+					resolve(prepRespJsonAndLogit(null, null, null, error));
+				}
+			});
+		});
+	};
+
+	var createPipeline = function(userName, srvcUrl, projectId, newPipelineReq, authToken){
+		return new Promise(function(resolve, reject) {
+			var options = {
+				method : "POST",
+				url : srvcUrl + userName + "/projects/" + projectId + "/pipelines",
+				headers : {
+					'Content-Type' : 'application/json',
+					'Authorization' : authToken,
+				},
+				body: newPipelineReq,
+				json: true
+			};
+				
+		request.post(options, function(error, response, body) {
+				if (!error && response.statusCode == 201) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Data Pipeline created successfully."));
+				} else if (!error) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to create Data Pipeline."));
+				} else {
+					resolve(prepRespJsonAndLogit(null, null, null, error));
+				}
+		});
+		});
+	};
+
+	var associatePipelineToProject = function(userName, srvcUrl, projectId, pipelineId, pipelinePayload, authToken){
+		return new Promise(function(resolve, reject) {
+					var options = {
+			method : "PUT",
+			url : srvcUrl + userName + "/projects/" + projectId + "/pipelines/" + pipelineId,
+			headers : {
+				'Content-Type' : 'application/json',
+				'Authorization' : authToken,
+			},
+			body: pipelinePayload,
+			json: true
+					};
+
+					request.put(options, function(error, response) {
+			if (!error && response.statusCode == 200) {
+				resolve(prepRespJsonAndLogit(response, response.body, "Data Pipeline associated successfully."));
+			} else if (!error) {
+				resolve(prepRespJsonAndLogit(response, response.body, "Unable to associate Data Pipeline."));
+			} else {
+				resolve(prepRespJsonAndLogit(null, null, null, error));
+			}
+					});
+		 });
+	};
+
+	var archivePipeline = function(userName, srvcUrl, projectId, pipelineId, authToken){
+		return new Promise(function(resolve, reject) {
+			var options = {
+				method : "PUT",
+				url : srvcUrl + userName + "/projects/" + projectId + "/pipelines/" + pipelineId + "/A",
+				headers : {
+					'Content-Type' : 'application/json',
+					'Authorization' : authToken,
+				},
+			};
+			request.put(options, function(error, response, body) {
+				if (!error && response.statusCode == 200) {
+					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Data Pipeline archived successfully."));
+				} else if (!error) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to archive Data Pipeline."));
+				} else {
+					resolve(prepRespJsonAndLogit(null, null, null, error));
+				}
+			});
+		});
+	};
+	
+	var restorePipeline = function(userName, srvcUrl, projectId, pipelineId, authToken){
+		return new Promise(function(resolve, reject) {
+			var options = {
+				method : "PUT",
+				url : srvcUrl + userName + "/projects/" + projectId + "/pipelines/" + pipelineId + "/UA",
+				headers : {
+					'Content-Type' : 'application/json',
+					'Authorization' : authToken,
+				},
+			};
+			request.put(options, function(error, response, body) {
+				if (!error && response.statusCode == 200) {
+					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Data Pipeline unarchived successfully."));
+				} else if (!error) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to unarchive Data Pipeline."));
+				} else {
+					resolve(prepRespJsonAndLogit(null, null, null, error));
+				}
+			});
+		});
+	};
+	
+	var getPipelinesList = function(userName, url, authToken) {
+		return new Promise(function(resolve, reject) {
+			var options = {
+				method : "GET",
+				url : url + userName + "/pipelines/",
+				headers : {
+					'Content-Type' : 'application/json',
+					'Authorization' : authToken,
+				},
+			};
+	
+			request.get(options, function(error, response) {
+				if (!error && response.statusCode == 200) {
+					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Data Pipelines retrieved successfully."));
+				} else if (!error) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to retrieve Data Pipelines."));
+				} else {
+					resolve(prepRespJsonAndLogit(null, null, null, error));
+				}
+			});
+		});
+	};
+
+	var launchPipeline = function(userName, srvcUrl, projectId, pipelineId, authToken){
+		return new Promise(function(resolve, reject) {
+			var options = {
+				method : "GET",
+				url : srvcUrl + userName + "/projects/" + projectId + "/pipelines/" + pipelineId + "/launch",
+				headers : {
+					'Content-Type' : 'application/json',
+					'Authorization' : authToken,
+				},
+			};
+			request.get(options, function(error, response) {
+				if (!error && response.statusCode == 200) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Data Pipeline launched successfully."));
+				} else if (!error) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to launch Data Pipeline."));
+				} else {
+					resolve(prepRespJsonAndLogit(null, null, null, error));
+				}
+			});
+		});
+	};
+	
+	var updatePipelineDetails = function(userName, srvcUrl, pipelineId, pipelinePayload, authToken){
+		return new Promise(function(resolve, reject) {
+					var options = {
+			method : "PUT",
+			url : srvcUrl + userName + "/pipelines/" + pipelineId,
+			headers : {
+				'Content-Type' : 'application/json',
+				'Authorization' : authToken,
+			},
+			body: pipelinePayload,
+			json: true
+					};
+
+			request.put(options, function(error, response) {
+				if (!error && response.statusCode == 200) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Data Pipeline details updated successfully."));
+				} else if (!error) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to update Data Pipeline."));
+				} else {
+					resolve(prepRespJsonAndLogit(null, null, null, error));
+				}
+			});
+		});
+	};
+  
 	var prepRespJsonAndLogit = function(httpResponse, responseData, message, error) {
 		let r = {};
 		let errorFlag = true;
@@ -490,11 +862,7 @@ module.exports = function(app) {
 	var isNull = function(obj) {
 		return obj === undefined || obj === null;
 	};
-
-	var isEmptyStr = function(str) {
-		return str === undefined || str === null || str === "" || str === " ";
-	};
-
+	
 	function parseJSON(str) {
 		try {
 			var j = JSON.parse(str);

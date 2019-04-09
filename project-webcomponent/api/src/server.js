@@ -39,29 +39,20 @@ app.use(express.static("../component/build/default"));
 app.use(cookieParser());
 app.use(methodOverride());
 
-app.use(bodyParser.json({
-	limit : '500mb',
-}));
+app.use(bodyParser.json());
 
-app.use(bodyParser.raw({
-	limit : '500mb',
-}));
+app.use(bodyParser.raw());
 
 app.use(bodyParser.urlencoded({
 	extended : true,
-	limit : '500mb',
 }));
 
-app.use(bodyParser.text({
-	limit : '500mb'
-}));
-
+app.use(bodyParser.text());
 
 require('./routes_services.js')(app);
-
 
 var server = app.listen(port, function() {
 	console.info('running on ...'+ port);
 });
 
-server.timeout = 840000; 
+server.timeout = process.env.timeout || 840000; 

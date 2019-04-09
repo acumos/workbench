@@ -41,7 +41,6 @@ module.exports = function(app) {
 		try {
 			let user_name = (req.cookies.userDetail !== undefined && req.cookies.userDetail !== null && req.cookies.userDetail.length > 0) ? 
 				req.cookies.userDetail[0]: userName;
-			console.info('user name: '+ user_name);
 			res.configInfo = {
 				configENV : configENV,
 				msconfig : ms_urls,
@@ -490,11 +489,7 @@ module.exports = function(app) {
 	var isNull = function(obj) {
 		return obj === undefined || obj === null;
 	};
-
-	var isEmptyStr = function(str) {
-		return str === undefined || str === null || str === "" || str === " ";
-	};
-
+	
 	function parseJSON(str) {
 		try {
 			var j = JSON.parse(str);

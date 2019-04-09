@@ -52,7 +52,8 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
       allProjectCount: { type: Number },
       componenturl: { type: String, notify: true },
       user_name: { type: String },
-      alertOpen: { type: Boolean }
+      alertOpen: { type: Boolean },
+      cardShow: { type: Boolean }
     };
   }
 
@@ -83,6 +84,7 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
       }
     });
     this.alertOpen = false;
+    this.cardShow = false;
     this.sortOptions = [
       { value: "created", label: "Sort By Created Date" },
       { value: "name", label: "Sort By Name" },
@@ -182,6 +184,7 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
         } else {
           this.projectLists = [];
           this.projects = [];
+          this.cardShow = true;
           this.convertProjectObject(n.data);
         }
       }).catch((error) => {
@@ -208,7 +211,8 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
   }
 
   displayProjects() {
-    this.activeFilter = { status: "ACTIVE" };
+    this.activeFilter = (this.activeFilter === undefined || this.activeFilter === null )? 
+      { status: "ACTIVE" } : this.activeFilter;
     this.activeSort = "created";
 
     this.dataSource = new DataSource({
@@ -476,6 +480,10 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
         .alertmessage {
           display: ${this.alertOpen ? "block" : "none"};
         }
+
+        .card-show {
+          display: ${this.cardShow ? "block" : "none"};
+        }
       </style>
       <omni-dialog title="Archive ${this.selectedProjectName}" close-string="Archive Project" dismiss-string="Cancel"
         is-open="${this.isOpenArchiveDialog}" @omni-dialog-dimissed="${this.archiveDialogDismissed}"
@@ -496,7 +504,8 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
       </omni-dialog>
 
       <omni-modal title="Create Project" close-string="Create Project" dismiss-string="Cancel"
-        is-open="${this.isOpenModal}" @omni-modal-dimissed="${this.modalDismissed}" @omni-modal-closed="${this.modalClosed}"
+        is-open="${this.isOpenModal}" @omni-modal-dimissed="${this.modalDismissed}" 
+        @omni-modal-closed="${this.modalClosed}"
         canClose="${this.$validations.$valid && this.$validations.$dirty}">
         <form novalidate>
           <p class="text-danger">${this.data.createErrorMessage} </p>
@@ -504,7 +513,8 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
             <div class="col">
               <div class="form-group">
                 <label>Project Name <small class="text-danger">*</small></label>
-                <input type="text" class="form-control" placeholder="Enter Project Name" value="${this.data.newProject.projectId.name}"
+                <input type="text" class="form-control" placeholder="Enter Project Name" 
+                  value="${this.data.newProject.projectId.name}"
                   @blur="${ e => {
                     this.$data.set('newProject.projectId.name', e.target.value); 
                     this.$validations.validate('newProject.projectId.name');
@@ -525,7 +535,8 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
             <div class="col">
               <div class="form-group">
                 <label>Project Version <small class="text-danger">*</small></label>
-                <input type="text" class="form-control" placeholder="Enter Project Version" value="${this.data.newProject.projectId.versionId.label}"
+                <input type="text" class="form-control" placeholder="Enter Project Version" 
+                  value="${this.data.newProject.projectId.versionId.label}"
                   @blur="${ e => {
                       this.$data.set('newProject.projectId.versionId.label', e.target.value);
                       this.$validations.validate('newProject.projectId.versionId.label');
@@ -550,7 +561,8 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
               <div class="form-group">
                 <label>Project Description</label>
                 <textarea class="form-control" placeholder="Enter Project Description"
-                  @blur="${e => this.$data.set('newProject.description', e.target.value)}">${this.data.newProject.description}</textarea>
+                  @blur="${e => this.$data.set('newProject.description', e.target.value)}">
+                  ${this.data.newProject.description}</textarea>
               </div>
             </div>
           </div>
@@ -616,14 +628,16 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
                         <a href="javascript:void" @click=${e => this.filterProjects({ status: "ACTIVE" })}
                           class="nav-link ${get(this.activeFilter, "status", "") === "ACTIVE"? "active" : ""}">
                           Active Projects&nbsp;&nbsp;
-                          <span class="badge ${get(this.activeFilter, "status", "") === "ACTIVE"? "badge-light" : "badge-secondary"}"">${this.activeProjectCount}</span>
+                          <span class="badge ${get(this.activeFilter, "status", "") === "ACTIVE"? "badge-light" : "badge-secondary"}"">
+                            ${this.activeProjectCount}</span>
                         </a>
                       </li>
                       <li class="nav-item mr-2">
                         <a href="javascript:void"  @click=${e => this.filterProjects({ status: "ARCHIVED" })}
                           class="nav-link ${get(this.activeFilter,"status", "") === "ARCHIVED"? "active": ""}">
                           Archived Projects&nbsp;&nbsp;
-                          <span class="badge ${get(this.activeFilter, "status", "") === "ARCHIVED"? "badge-light" : "badge-secondary"}"">${this.archiveProjectCount}</span>
+                          <span class="badge ${get(this.activeFilter, "status", "") === "ARCHIVED"? "badge-light" : "badge-secondary"}"">
+                            ${this.archiveProjectCount}</span>
 
                         </a>
                       </li>
@@ -631,7 +645,8 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
                         <a href="javascript:void" @click=${e => this.filterProjects()}
                           class="nav-link ${get(this.activeFilter, "status","") === ""? "active": ""}">
                           All Projects&nbsp;&nbsp;
-                          <span class="badge ${get(this.activeFilter, "status", "") === ""? "badge-light" : "badge-secondary"}"">${this.allProjectCount}</span>
+                          <span class="badge ${get(this.activeFilter, "status", "") === ""? "badge-light" : "badge-secondary"}"">
+                            ${this.allProjectCount}</span>
                         </a>
                       </li>
                     </ul>
@@ -731,16 +746,20 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
                     <nav aria-label="Page navigation example">
                       <ul class="pagination justify-content-end">
                         <li class="page-item">
-                          <a class="page-link" href="javascript:void" @click=${e => this.navigatePage("first")}>First</a>
+                          <a href="javascript:void" @click=${e => this.navigatePage("first")}
+                            class="page-link ${this.currentPage !== 1? "active" : "inactive"}">First</a>                          
                         </li>
                         <li class="page-item">
-                          <a class="page-link" href="javascript:void" @click=${e => this.navigatePage("previous")} >Previous</a>
+                          <a class="page-link ${this.currentPage !== 1? "active" : "inactive"}" href="javascript:void" 
+                            @click=${e => this.navigatePage("previous")} >Previous</a>
                         </li>
                         <li class="page-item">
-                          <a class="page-link" href="javascript:void" @click=${e => this.navigatePage("next")} >Next</a>
+                          <a class="page-link ${this.currentPage < this.totalPages? "active" : "inactive"}" href="javascript:void" 
+                            @click=${e => this.navigatePage("next")} >Next</a>
                         </li>
                         <li class="page-item">
-                          <a class="page-link" href="javascript:void" @click=${e => this.navigatePage("last")} >Last</a>
+                          <a class="page-link ${this.currentPage < this.totalPages? "active" : "inactive"}" href="javascript:void" 
+                            @click=${e => this.navigatePage("last")} >Last</a>
                         </li>
                         &nbsp;&nbsp;&nbsp;&nbsp;
                       </ul>
@@ -799,12 +818,24 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
                     <mwc-icon class="textColor">share</mwc-icon>&nbsp;&nbsp;&nbsp;
                     <h4 class="textColor card-title">Projects</h4>
                     <div style="position: absolute; right:0">
-                      <a class="btn btn-sm btn-secondary my-2">-</a>
+                      ${
+                        this.cardShow === false
+                        ? html`
+                          <a class="toggle-a btn btn-sm btn-secondary my-2" @click=${e => this.cardShow = true}>
+                            <span class="toggle-span">+</span>
+                          </a>
+                        `
+                        : html`
+                          <a class="toggle-a btn btn-sm btn-secondary my-2" @click=${e => this.cardShow = false}>
+                            <span class="toggle-span">-</span>
+                          </a>
+                        `
+                      }
                       &nbsp;&nbsp;&nbsp;&nbsp;
                     </div>
                   </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body card-show">
                   <div class="row" style="margin:10px 0;margin-bottom:20px;">
                     <h7>No Projects, get started with ML Workbench by creating your first project.</h7>
                   </div>

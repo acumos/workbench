@@ -51,7 +51,8 @@ export class ProjectLitElement extends DataMixin(ValidationMixin(BaseElementMixi
 				isOpenRestoreDialog: { type: Boolean },
 				successMessage: {type: String},
 				errorMessage: {type: String},
-				alertOpen: {type: Boolean}
+				alertOpen: {type: Boolean},
+				cardShow: {type: Boolean}
     	};
 		}
 		
@@ -138,6 +139,7 @@ export class ProjectLitElement extends DataMixin(ValidationMixin(BaseElementMixi
 					if(response.status === 'Success'){
 						this.renderViewProject(response.data);
 						this.view = 'view';
+						this.cardShow = true;
 					}else{
 						this.errorMessage = response.message;
 						this.view = 'error';
@@ -353,6 +355,9 @@ export class ProjectLitElement extends DataMixin(ValidationMixin(BaseElementMixi
 					.alertmessage {
 						display: ${this.alertOpen ? "block" : "none"};
 					}
+					.card-show {
+						display: ${this.cardShow ? "block" : "none"};
+					}
 				</style>
 				<omni-dialog title="Archive ${this.projectName}" close-string="Archive Project" dismiss-string="Cancel"
 					is-open="${this.isOpenArchiveDialog}" @omni-dialog-dimissed="${this.archiveDialogDismissed}"
@@ -449,12 +454,14 @@ export class ProjectLitElement extends DataMixin(ValidationMixin(BaseElementMixi
 											? html`
 												${this.isEdit 
 													? html`
-														<a href="javascript:void" @click=${(e) => this.updateProject()} class="btnIcon btn btn-sm btn-primary mr-1" data-toggle="tooltip" data-placement="top" title="Edit Project">
+														<a href="javascript:void" @click=${(e) => this.updateProject()} 
+															class="btnIcon btn btn-sm btn-primary mr-1" data-toggle="tooltip" data-placement="top" title="Edit Project">
 															<mwc-icon>save</mwc-icon>
 														</a>&nbsp;
 													`
 													: html`
-														<a href="javascript:void" @click=${(e) => this.openEditWindow()} class="btnIcon btn btn-sm btn-primary mr-1" data-toggle="tooltip" data-placement="top" title="Edit Project">
+														<a href="javascript:void" @click=${(e) => this.openEditWindow()} 
+															class="btnIcon btn btn-sm btn-primary mr-1" data-toggle="tooltip" data-placement="top" title="Edit Project">
 															<mwc-icon>edit</mwc-icon>
 														</a>&nbsp;
 													`
@@ -463,11 +470,24 @@ export class ProjectLitElement extends DataMixin(ValidationMixin(BaseElementMixi
 											: ``
 										}
 										<div style="position: absolute; right:0" >
-											<a  class="btn btn-sm btn-secondary my-2">-</a>&nbsp;&nbsp;&nbsp;&nbsp;
+											${
+												this.cardShow === false
+												? html`
+													<a class="toggle-a btn btn-sm btn-secondary my-2" @click=${e => this.cardShow = true}>
+														<span class="toggle-span">+</span>
+													</a>
+												`
+												: html`
+													<a class="toggle-a btn btn-sm btn-secondary my-2" @click=${e => this.cardShow = false}>
+														<span class="toggle-span">-</span>
+													</a>
+												`
+											}
+											&nbsp;&nbsp;&nbsp;&nbsp;
 										</div>
 									</div>
 								</div>
-								<div class="card-body ">
+								<div class="card-body card-show">
 									<table class="table table-bordered table-sm">
 										<tbody>
 											<tr>
@@ -475,7 +495,8 @@ export class ProjectLitElement extends DataMixin(ValidationMixin(BaseElementMixi
 												${this.isEdit 
 													? html`
 														<td>
-															<input type="text" value=${this.projectName} class="form-control" @input=${(e) => this.setName(e)} id="name" placeholder="Enter project name">
+															<input type="text" value=${this.projectName} class="form-control" @input=${(e) => this.setName(e)} 
+																id="name" placeholder="Enter project name">
 														</td>
 													`
 													: html`
@@ -492,7 +513,8 @@ export class ProjectLitElement extends DataMixin(ValidationMixin(BaseElementMixi
 												${this.isEdit 
 													? html`
 														<td>
-															<input type="text" value=${this.projectVersion} class="form-control" @input=${(e) => this.setVersion(e)} id="version" placeholder="Enter project version">
+															<input type="text" value=${this.projectVersion} class="form-control" @input=${(e) => this.setVersion(e)} 
+															id="version" placeholder="Enter project version">
 														</td>
 													`
 													: html`
@@ -524,7 +546,8 @@ export class ProjectLitElement extends DataMixin(ValidationMixin(BaseElementMixi
 												${this.isEdit 
 													? html`
 													<td>
-														<textarea class="form-control" id="description" rows="2" @input=${(e) => this.setDescription(e)} value=${this.projectDesc}>${this.projectDesc}</textarea>
+														<textarea class="form-control" id="description" rows="2" @input=${(e) => this.setDescription(e)} 
+														value=${this.projectDesc}>${this.projectDesc}</textarea>
 													</td>
 													`
 													: html`

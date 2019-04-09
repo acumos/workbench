@@ -18,7 +18,7 @@ limitations under the License.
 ===============LICENSE_END=========================================================
 */
 
-import { set } from "lodash-es";
+import { get, set, isUndefined } from "lodash-es";
 
 export default LitElementBase =>
   class extends LitElementBase {
@@ -32,11 +32,44 @@ export default LitElementBase =>
 
     constructor() {
       super();
-      const _this = this;      
+      const _this = this;
+
+      // Cache data so it can be reverted
+      let data_cache = {}
 
       this.$data = {
-        set(fieldPath, value) {
+        /**
+         * Takes a snapshot of a data property and caches it.
+         * 
+         * @param {string} path Path to the property to take a snapshot of
+         */
+        snapshot(path) {
+          data_cache[path] = JSON.stringify(get(_this, `data.${path}`));
+        },
+
+        /**
+         * Reverts data to the initialized values
+         * 
+         * @param {string} path Path of the property to restore
+         */
+        revert(path) {
+          set(_this, `data.${path}`, JSON.parse(data_cache[path]));
+        },
+
+        /**
+         * Sets a field value in the data store
+         * 
+         * @param {string} fieldPath Path to the field property in the data store
+         * @param {string | event} e string or event
+         */
+        set(fieldPath, e) {
+          const value = get(e, 'target.value', e);
           set(_this, `data.${fieldPath}`, value);
+
+          if(!isUndefined(e.stopPropagation)) {
+            e.stopPropagation();
+          }
+          
           _this.requestUpdate();
         }
       };

@@ -33,6 +33,7 @@ module.exports = function(app) {
 
 	var configENV = properties.ENVIRONMENT;
 	var userName = properties.userName;
+	var wikiURL = properties.wikiURL;
 	var ms_urls = {
 		notebookmSURL : properties.notebookmSURL
 	};
@@ -45,7 +46,8 @@ module.exports = function(app) {
 			res.configInfo = {
 				configENV : configENV,
 				msconfig : ms_urls,
-				user_name:  user_name
+				user_name:  user_name,
+				wikiURL: wikiURL
 			};
 			res.send(res.configInfo);
 		} catch (err) {
@@ -291,10 +293,6 @@ module.exports = function(app) {
 
 	var isNull = function(obj) {
 		return obj === undefined || obj === null;
-	};
-
-	var isEmptyStr = function(str) {
-		return str === undefined || str === null || str === "" || str === " ";
 	};
 
 	function parseJSON(str) {

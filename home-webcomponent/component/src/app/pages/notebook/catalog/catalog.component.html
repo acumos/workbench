@@ -17,13 +17,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ===============LICENSE_END=========================================================
 -->
-<nav>
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a routerLink="/pages/dashboard">ML Workbench</a></li>
-    <li class="breadcrumb-item active"><a>Notebooks</a></li>
-  </ol>
-</nav>
-<notebook-catalog-element (catalog-notebook-event)="this.OnCatalogNotebookEvent($event)" [attr.componenturl]="notebookCatalogComponentURL">
+
+<div *ngIf="alertOpen">
+  <div class="alertmessage alert alert-danger">
+    <a class="close" (click)="alertOpen=false">
+      <span aria-hidden="true">&nbsp;&times;</span>
+    </a>
+    {{sessionError}}
+  </div>
+</div>
+
+<notebook-catalog-element *ngIf="loadHtml" (catalog-notebook-event)="this.OnCatalogNotebookEvent($event)" [attr.componenturl]="url"
+[attr.userName]="userName" [attr.authToken]="authToken">
 </notebook-catalog-element>
+
 
 

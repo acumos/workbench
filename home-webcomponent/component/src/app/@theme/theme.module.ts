@@ -55,9 +55,10 @@ import {
 
 import { NbSecurityModule } from '@nebular/security';
 
-import { FooterComponent, HeaderComponent } from './components';
+import { FooterComponent, HeaderComponent, BreadcrumbsComponent } from './components';
 import { MainLayoutComponent } from './layouts';
 import { DEFAULT_THEME } from './styles/theme.default';
+import { RouterModule } from '@angular/router';
 
 const BASE_MODULES = [CommonModule, FormsModule, ReactiveFormsModule];
 
@@ -92,9 +93,10 @@ const NB_MODULES = [
   NbRadioModule,
   NbSelectModule,
   NbTooltipModule,
+  RouterModule,
 ];
 
-const COMPONENTS = [HeaderComponent, FooterComponent, MainLayoutComponent];
+const COMPONENTS = [HeaderComponent, FooterComponent, BreadcrumbsComponent, MainLayoutComponent];
 
 const ENTRY_COMPONENTS = [];
 

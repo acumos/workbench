@@ -25,15 +25,36 @@ var https = require("https");
 var request = require('request');
 
 module.exports = function(app) {
-
+	var userId='';
 	var ms_wc_urls = {
 		dashboardComponent : properties.dashboardComponent,
 		projectComponent : properties.projectComponent,
 		projectCatalogComponent : properties.projectCatalogComponent,
 		notebookCatalogComponent : properties.notebookCatalogComponent,
-		notebookComponent: properties.notebookComponent
+		notebookComponent: properties.notebookComponent,
+		pipelineCatalogComponent : properties.pipelineCatalogComponent,
+		pipelineComponent: properties.pipelineComponent,
+		portalFEURL: properties.portalFEURL,
 	};
 	
+	var getLatestAuthToken = function (req, authToken){
+		let token = (req.cookies !== undefined && req.cookies.authToken !== undefined && req.cookies.authToken !== null ) ? 
+				req.cookies.authToken: authToken ;
+		return token;
+	}
+
+	var getUserName = function (req){
+		let userName = '';
+		if(req.cookies !== undefined && req.cookies.userDetail !== undefined && req.cookies.userDetail !== null) {
+			let userInfo = JSON.parse(req.cookies.userDetail);
+			if(userInfo.length === 3){
+				userName = userInfo[2];
+				userId = userInfo[1];
+			}
+		} 
+		return userName;	
+	}
+
 	app.get('/config', function(req, res) {
 		try {
 			res.send(ms_wc_urls);
@@ -42,5 +63,21 @@ module.exports = function(app) {
 		}
 	});
 
+
+	app.get('/session', function(req, res) {
 	
+		let userName = getUserName(req);
+		let authToken = getLatestAuthToken(req,'');	
+		try {
+			res.configInfo = {
+        userName:  userName,
+				authToken: authToken,
+			  	userId: userId
+			};
+			res.send(res.configInfo);
+		} catch (err) {
+			console.log(err);
+		}
+	});
+
 };

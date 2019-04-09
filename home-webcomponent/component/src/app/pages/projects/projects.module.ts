@@ -20,13 +20,12 @@ limitations under the License.
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ThemeModule } from '../../@theme/theme.module';
 import { CatalogComponent } from './catalog/catalog.component';
-import { CreateComponent } from './create/create.component';
 import { ViewComponent } from './view/view.component';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [ThemeModule, RouterModule],
-  declarations: [CatalogComponent, CreateComponent, ViewComponent],
+  declarations: [CatalogComponent, ViewComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ProjectsModule {}

@@ -19,28 +19,31 @@ limitations under the License.
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ScriptService } from '../../../@core/utils/script.service';
+import { BreadcrumbsService } from '../../../@core/utils/breadcrumbs.service';
+import { BaseComponent } from '../../base/base.component';
 
 @Component({
   templateUrl: './catalog.component.html',
 })
-export class NotebookCatalogComponent implements OnInit {
-  router: Router;
-  script: ScriptService;
-  public notebookCatalogComponentURL: string;
+export class NotebookCatalogComponent extends BaseComponent implements OnInit {
+  public breadCrumbs: any[] = [
+    { name: 'Home', href: '' },
+    { name: 'Design Studio', href: '' },
+    { name: 'ML Workbench', sref: '/pages/dashboard' },
+    { name: 'Notebooks' }];
 
-  constructor(router: Router, script: ScriptService) {
-    this.router = router;
-    this.script = script;
+  constructor(router: Router, script: ScriptService, breadcrumbsService: BreadcrumbsService) {
+    super(router, script, breadcrumbsService);
   }
 
   OnCatalogNotebookEvent(e) {
     if (e.detail.data.action === 'view-notebook') {
-      this.router.navigateByUrl('/pages/notebook/view/' + e.detail.data.notebookId + '/' + e.detail.data.notebookName);
+      this.router.navigateByUrl('/pages/notebook/view/' + e.detail.data.noteBookId + '/' + e.detail.data.notebookName);
     }
   }
 
   ngOnInit() {
-    this.notebookCatalogComponentURL = this.script.getConfig('notebookCatalogComponent');
-    this.script.load('notebookCatalogComponent', '/src/notebook-catalog-element.js');
+    this.loadHtml = false;
+    this.loadComponent('notebookCatalogComponent', 'notebook-catalog-element', this.breadCrumbs);
   }
 }

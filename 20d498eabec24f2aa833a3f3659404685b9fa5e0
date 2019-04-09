@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd1e6409_72cc0f9d",
+        "filename": "project-catalog-webcomponent/component/src/@omni/mixins/Validation.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-04-09T03:07:11Z",
+      "side": 1,
+      "message": "what is the need of the iteration if nothing is done inside.",
+      "revId": "20d498eabec24f2aa833a3f3659404685b9fa5e0",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}

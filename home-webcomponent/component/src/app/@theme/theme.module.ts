@@ -55,7 +55,7 @@ import {
 
 import { NbSecurityModule } from '@nebular/security';
 
-import { FooterComponent, HeaderComponent } from './components';
+import { FooterComponent, HeaderComponent, BreadcrumbsComponent } from './components';
 import { MainLayoutComponent } from './layouts';
 import { DEFAULT_THEME } from './styles/theme.default';
 
@@ -94,7 +94,7 @@ const NB_MODULES = [
   NbTooltipModule,
 ];
 
-const COMPONENTS = [HeaderComponent, FooterComponent, MainLayoutComponent];
+const COMPONENTS = [HeaderComponent, FooterComponent, BreadcrumbsComponent, MainLayoutComponent];
 
 const ENTRY_COMPONENTS = [];
 

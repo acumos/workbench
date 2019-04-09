@@ -33,14 +33,24 @@ module.exports = function(app) {
 		notebookmSURL : properties.notebookmSURL
 	};
 	
+	var getLatestAuthToken = function (req, authToken){
+		let token = (req.cookies !== undefined && req.cookies.authToken !== undefined && req.cookies.authToken !== null ) ? 
+				req.cookies.authToken: authToken ;
+		return token;
+	}
+
 	app.get('/api/config', function(req, res) {
 		try {
-			let user_name = (req.cookies.userDetail !== undefined && req.cookies.userDetail !== null && req.cookies.userDetail.length > 0) ? 
-				req.cookies.userDetail[0]: userName;
+			
+			let userName = (req.cookies !== undefined && req.cookies.userDetail !== undefined && req.cookies.userDetail !== null 
+					&& req.cookies.userDetail.length === 3 ) ? req.cookies.userDetail[2]: '' ;
+			let authToken = getLatestAuthToken(req, '');
+			
 			res.configInfo = {
 				configENV : configENV,
 				msconfig : ms_urls,
-				user_name:  user_name
+				userName:  userName,
+				authToken: authToken
 			};
 			res.send(res.configInfo);
 		} catch (err) {
@@ -48,21 +58,18 @@ module.exports = function(app) {
 		}
 	});
 	
-	var getJWTToken = function(req){
-		return req.cookies.auth_token;
-	}
-
 	app.post('/api/project/count', function(req, res) {
 		let serviceUrl = req.body.url + uripath;
-		let user_name = req.body.user_name;
-		getProjectsCount(user_name, serviceUrl, getJWTToken(req)).then(function(result) {
+		let userName = req.body.userName;
+		let authToken = req.headers['auth'];
+		getProjectsCount(userName, serviceUrl, getLatestAuthToken(req, authToken)).then(function(result) {
 					res.send(result);
 		});
 	});
 
 	app.post('/api/pipeline/count', function(req, res) {
 		// let serviceUrl = req.body.url + uripath;
-		// let user_name = req.body.user_name;
+		// let userName = req.body.userName;
 		var r = {
 			status: 'Success',
 			code : 200,
@@ -70,26 +77,27 @@ module.exports = function(app) {
 			message : 'Success'
 		};
 		res.send(r);
-		// getProjectsCount(user_name, serviceUrl, getJWTToken(req)).then(function(result) {					
+		// getProjectsCount(userName, serviceUrl, getJWTToken(req)).then(function(result) {					
 		// });
 	});
 
 	app.post('/api/notebook/count', function(req, res) {
 		let serviceUrl = req.body.url + uripath;
-		let user_name = req.body.user_name;
-		getNotebookCount(user_name, serviceUrl, getJWTToken(req)).then(function(result) {
+		let userName = req.body.userName;
+		let authToken = req.headers['auth'];
+		getNotebookCount(userName, serviceUrl, getLatestAuthToken(req, authToken)).then(function(result) {
 			res.send(result);
 		});
 	});
 
-	var getProjectsCount = function(user_name, url, jwtToken) {
+	var getProjectsCount = function(userName, url, authToken) {
 		return new Promise(function(resolve, reject) {
 			var options = {
 				method : "GET",
-				url : url + user_name + "/projects/",
+				url : url + userName + "/projects/",
 				headers : {
 					'Content-Type' : 'application/json',
-					'Authorization' : jwtToken,
+					'Authorization' : authToken,
 				},
 			};
 
@@ -106,14 +114,14 @@ module.exports = function(app) {
 		});
 	};
 
-	var getNotebookCount = function(user_name, url, jwtToken) {
+	var getNotebookCount = function(userName, url, authToken) {
 		return new Promise(function(resolve, reject) {
 			var options = {
 				method : "GET",
-				url : url + user_name + "/notebooks/",
+				url : url + userName + "/notebooks/",
 				headers : {
 					'Content-Type' : 'application/json',
-					'Authorization' : jwtToken,
+					'Authorization' : authToken,
 				},
 			};
 
@@ -147,7 +155,7 @@ module.exports = function(app) {
 					if (typeof responseData == 'string'){
 						responseData = JSON.parse(responseData);
 					}
-          if(responseData.serviceStatus !== undefined && responseData.serviceStatus.statusMessage !== undefined){
+          			if(responseData.serviceStatus !== undefined && responseData.serviceStatus.statusMessage !== undefined){
 						message = responseData.serviceStatus.statusMessage;
 					}else{ 
 						message = responseData;
@@ -208,11 +216,7 @@ module.exports = function(app) {
 	var isNull = function(obj) {
 		return obj === undefined || obj === null;
 	};
-
-	var isEmptyStr = function(str) {
-		return str === undefined || str === null || str === "" || str === " ";
-	};
-
+	
 	function parseJSON(str) {
 		try {
 			var j = JSON.parse(str);

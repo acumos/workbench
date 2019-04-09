@@ -27,6 +27,7 @@ export class NotebookCatalogComponent implements OnInit {
   router: Router;
   script: ScriptService;
   public notebookCatalogComponentURL: string;
+  public userName: any;
 
   constructor(router: Router, script: ScriptService) {
     this.router = router;
@@ -40,7 +41,16 @@ export class NotebookCatalogComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loadComponent();
+  }
+
+  private loadComponent() {
     this.notebookCatalogComponentURL = this.script.getConfig('notebookCatalogComponent');
-    this.script.load('notebookCatalogComponent', '/src/notebook-catalog-element.js');
+    this.script.getUserSession().subscribe((res: any) => {
+      this.userName = res;
+      this.script.load('notebookCatalogComponent', '/src/notebook-catalog-element.js');
+    }, (error) => {
+      console.error('Unable to get the user session :' + error);
+    });
   }
 }

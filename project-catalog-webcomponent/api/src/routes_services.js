@@ -27,87 +27,96 @@ var request = require('request');
 module.exports = function(app) {
 	
 	const uripath = "/users/";
-
-	var getJWTToken = function(req){
-		return req.cookies.auth_token;
-	}
-
-	var configENV = properties.ENVIRONMENT;
-	var userName = properties.userName;
-	var ms_urls = {
+	const configENV = properties.ENVIRONMENT;
+	const wikiURL = properties.wikiURL;
+	const ms_urls = {
 		projectmSURL : properties.projectmSURL,
 		pipelinemSURL : properties.pipelinemSURL,
 		notebookmSURL : properties.notebookmSURL
 	};
 	
+	var getLatestAuthToken = function (req, authToken){
+		let token = (req.cookies !== undefined && req.cookies.authToken !== undefined && req.cookies.authToken !== null ) ? 
+				req.cookies.authToken: authToken ;
+		return token;
+	}
+
 	app.get('/api/config', function(req, res) {
 		try {
-			let user_name = (req.cookies.userDetail !== undefined && req.cookies.userDetail !== null && req.cookies.userDetail.length > 0) ? 
-				req.cookies.userDetail[0]: userName;
-			console.info('user name: '+ user_name);
+			let userName = (req.cookies !== undefined && req.cookies.userDetail !== undefined && req.cookies.userDetail !== null 
+					&& req.cookies.userDetail.length === 3 ) ? req.cookies.userDetail[2]: '' ;
+			let authToken = getLatestAuthToken(req, '');
+
 			res.configInfo = {
 				configENV : configENV,
 				msconfig : ms_urls,
-				user_name:  user_name
+				userName:  userName,
+				authToken: authToken,
+				wikiUrl: wikiURL
 			};
 			res.send(res.configInfo);
 		} catch (err) {
-			reject("error");
+			console.error('Error while retrieving config details: '+ err);
 		}
 	});
 
 	app.post('/api/projects', function(req, res) {
 		let serviceUrl = req.body.url + uripath;
-		let user_name = req.body.user_name;
-		getProjectsCatalog(user_name, serviceUrl, getJWTToken(req)).then(function(result) {
+		let userName = req.body.userName;
+		let authToken = req.headers['auth'];
+		getProjectsCatalog(userName, serviceUrl, getLatestAuthToken(req, authToken)).then(function(result) {
 					res.send(result);
 		});
 	});
 
 	app.post('/api/project/create', function (req, res){
 		let serviceUrl = req.body.url + uripath;
-		let user_name = req.body.user_name;
+		let userName = req.body.userName;
 		let newPrReq = req.body.newProjectDetails;
-		createProject(user_name, serviceUrl, newPrReq, getJWTToken(req)).then(function(result){
+		let authToken = req.headers['auth'];
+		createProject(userName, serviceUrl, newPrReq, getLatestAuthToken(req, authToken)).then(function(result){
 			res.send(result);
 		});
 	});
 	
 	app.put('/api/project/archive', function (req, res){
 		let serviceUrl = req.body.url + uripath;
-		let user_name = req.body.user_name;
+		let userName = req.body.userName;
 		let projectId = req.body.projectId;
-		archiveProject(user_name, serviceUrl, projectId, getJWTToken(req)).then(function(result){
+		let authToken = req.headers['auth'];
+		archiveProject(userName, serviceUrl, projectId, getLatestAuthToken(req, authToken)).then(function(result){
 			res.send(result);
 		});
 	});
 
 	app.put('/api/project/restore', function (req, res){
 		let serviceUrl = req.body.url + uripath;
-		let user_name = req.body.user_name;
+		let userName = req.body.userName;
 		let projectId = req.body.projectId;
-		restoreProject(user_name, serviceUrl, projectId, getJWTToken(req)).then(function(result){
+		let authToken = req.headers['auth'];
+		restoreProject(userName, serviceUrl, projectId, getLatestAuthToken(req, authToken)).then(function(result){
 			res.send(result);
 		});
 	});
 	
 	app.delete('/api/project/delete', function (req, res){
 		let serviceUrl = req.body.url + uripath;
-		let user_name = req.body.user_name;
+		let userName = req.body.userName;
 		let projectId = req.body.projectId;
-		deleteProject(user_name, serviceUrl, projectId, getJWTToken(req)).then(function(result){
+		let authToken = req.headers['auth'];
+		deleteProject(userName, serviceUrl, projectId, getLatestAuthToken(req, authToken)).then(function(result){
 			res.send(result);
 		});
 	});
 
-	var getProjectsCatalog = function(user_name, url, jwtToken) {
+	var getProjectsCatalog = function(userName, url, authToken) {
 		return new Promise(function(resolve, reject) {
 			var options = {
 				method : "GET",
-				url : url + user_name + "/projects/",
+				url : url + userName + "/projects/",
 				headers : {
 					'Content-Type' : 'application/json',
-					'Authorization' : jwtToken,
+					'Authorization' : authToken,
 				},
 			};
 
@@ -123,20 +132,20 @@ module.exports = function(app) {
 		});
 	};
 		
-	var createProject = function(user_name, srvcUrl, newProjectReq, jwtToken){
+	var createProject = function(userName, srvcUrl, newProjectReq, authToken){
 		return new Promise(function(resolve, reject) {
 			var options = {
 				method : "POST",
-				url : srvcUrl + user_name + "/projects/",
+				url : srvcUrl + userName + "/projects/",
 				headers : {
 					'Content-Type' : 'application/json',
-					'Authorization' : jwtToken,
+					'Authorization' : authToken,
 				},
 				body: newProjectReq,
 				json: true
 			};
 				
-		request.post(options, function(error, response, body) {
+			request.post(options, function(error, response, body) {
 				if (!error && response.statusCode == 201) {
 					resolve(prepRespJsonAndLogit(response, response.body, "Project created successfully."));
 				} else if (!error) {
@@ -144,18 +153,18 @@ module.exports = function(app) {
 				} else {
 					resolve(prepRespJsonAndLogit(null, null, null, error));
 				}
-		});
+			});
 		});
 	};
 		
-	var deleteProject = function(user_name, srvcUrl, projectId, jwtToken){
+	var deleteProject = function(userName, srvcUrl, projectId, authToken){
 		return new Promise(function(resolve, reject) {
 			var options = {
 				method : "DELETE",
-				url : srvcUrl + user_name + "/projects/" + projectId,
+				url : srvcUrl + userName + "/projects/" + projectId,
 				headers : {
 					'Content-Type' : 'application/json',
-					'Authorization' : jwtToken,
+					'Authorization' : authToken,
 				},
 			};
 			request.delete(options, function(error, response, body) {
@@ -170,14 +179,14 @@ module.exports = function(app) {
 		});
 	};
 	
-	var archiveProject = function(user_name, srvcUrl, projectId, jwtToken){
+	var archiveProject = function(userName, srvcUrl, projectId, authToken){
 		return new Promise(function(resolve, reject) {
 			var options = {
 				method : "PUT",
-				url : srvcUrl + user_name + "/projects/" + projectId + "/actionType/A",
+				url : srvcUrl + userName + "/projects/" + projectId + "/actionType/A",
 				headers : {
 					'Content-Type' : 'application/json',
-					'Authorization' : jwtToken,
+					'Authorization' : authToken,
 				},
 			};
 			request.put(options, function(error, response, body) {
@@ -192,14 +201,14 @@ module.exports = function(app) {
 		});
 	};
 
-	var restoreProject = function(user_name, srvcUrl, projectId, jwtToken){
+	var restoreProject = function(userName, srvcUrl, projectId, authToken){
 		return new Promise(function(resolve, reject) {
 			var options = {
 				method : "PUT",
-				url : srvcUrl + user_name + "/projects/" + projectId + "/actionType/UA",
+				url : srvcUrl + userName + "/projects/" + projectId + "/actionType/UA",
 				headers : {
 					'Content-Type' : 'application/json',
-					'Authorization' : jwtToken,
+					'Authorization' : authToken,
 				},
 			};
 			request.put(options, function(error, response, body) {
@@ -291,10 +300,6 @@ module.exports = function(app) {
 
 	var isNull = function(obj) {
 		return obj === undefined || obj === null;
-	};
-
-	var isEmptyStr = function(str) {
-		return str === undefined || str === null || str === "" || str === " ";
 	};
 
 	function parseJSON(str) {

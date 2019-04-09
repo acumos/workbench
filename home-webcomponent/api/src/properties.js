@@ -25,8 +25,10 @@ var config = {
 		projectCatalogComponent: "http://localhost:9085",
 		notebookComponent: "http://localhost:9086",
 		notebookCatalogComponent: "http://localhost:9087",
-		projectmSURL : "http://localhost:9088",
-		notebookmSURL : "http://localhost:9089",
+		pipelineComponent: "http://localhost:9093",
+		pipelineCatalogComponent: "http://localhost:9091",
+		projectmSURL : "http://localhost:9080",
+		notebookmSURL : "http://localhost:9081",
 	},
 	deploy : {
 		dashboardComponent : process.env.dashboardComponent,
@@ -34,6 +36,8 @@ var config = {
 		projectCatalogComponent: process.env.projectCatalogComponent,
 		notebookComponent : process.env.notebookComponent,
 		notebookCatalogComponent: process.env.notebookCatalogComponent,
+		pipelineComponent : process.env.pipelineComponent,
+		pipelineCatalogComponent: process.env.pipelineCatalogComponent,
 		projectmSURL : process.env.projectmSURL,
 	}
 };

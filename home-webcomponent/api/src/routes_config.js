@@ -31,7 +31,9 @@ module.exports = function(app) {
 		projectComponent : properties.projectComponent,
 		projectCatalogComponent : properties.projectCatalogComponent,
 		notebookCatalogComponent : properties.notebookCatalogComponent,
-		notebookComponent: properties.notebookComponent
+		notebookComponent: properties.notebookComponent,
+		pipelineCatalogComponent : properties.pipelineCatalogComponent,
+		pipelineComponent: properties.pipelineComponent
 	};
 	
 	app.get('/config', function(req, res) {
@@ -42,5 +44,18 @@ module.exports = function(app) {
 		}
 	});
 
-	
+	app.get('/session', function(req, res) {
+		console.log('inside home componenrt userinfo method');
+		console.log(req);
+		try {
+			res.config = {
+				firstName : req.cookies.attESHr.split('|')[0].replace('+', ' '),
+				lastName : req.cookies.attESHr.split('|')[0].replace('+', ' ')
+			};
+			res.send(res.config);
+		} catch (err) {
+			console.log(err);
+		}
+	});
+
 };

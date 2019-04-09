@@ -31,7 +31,9 @@ module.exports = function(app) {
 		projectComponent : properties.projectComponent,
 		projectCatalogComponent : properties.projectCatalogComponent,
 		notebookCatalogComponent : properties.notebookCatalogComponent,
-		notebookComponent: properties.notebookComponent
+		notebookComponent: properties.notebookComponent,
+		pipelineCatalogComponent : properties.pipelineCatalogComponent,
+		pipelineComponent: properties.pipelineComponent
 	};
 	
 	app.get('/config', function(req, res) {

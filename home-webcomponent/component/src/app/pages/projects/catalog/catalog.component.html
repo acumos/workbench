@@ -23,7 +23,18 @@ limitations under the License.
     <li class="breadcrumb-item active"><a>Projects</a></li>
   </ol>
 </nav>
-<project-catalog-element (catalog-project-event)="this.OnCatalogProjectEvent($event)" [attr.componenturl]="projectCatalogComponentURL">
-</project-catalog-element>
+<div *ngIf="alertOpen; else loadComponent">
+  <div class="alertmessage alert alert-danger">
+    <a class="close" (click)="alertOpen=false">
+      <span aria-hidden="true">&nbsp;&times;</span>
+    </a>
+    {{sessionError}}
+  </div>
+</div>
+<ng-template #loadComponent>
+  <project-catalog-element (catalog-project-event)="this.OnCatalogProjectEvent($event)" [attr.componenturl]="projectCatalogComponentURL"
+  [attr.userName]="userName" [attr.authToken]="authToken">
+  </project-catalog-element>
+</ng-template>
 
 

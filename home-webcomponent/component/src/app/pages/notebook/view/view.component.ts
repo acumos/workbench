@@ -30,6 +30,10 @@ export class NotebookViewComponent implements OnInit {
   public router: Router;
   script: ScriptService;
   public notebookComponentURL: string;
+  public userName: any;
+  public authToken: any;
+  public sessionError: any;
+  public alertOpen: any;
 
   constructor(private route: ActivatedRoute, router: Router, script: ScriptService) {
     this.script = script;
@@ -43,9 +47,25 @@ export class NotebookViewComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loadComponent();
+  }
+
+  private loadComponent() {
     this.id = this.route.snapshot.paramMap.get('id');
     this.name = this.route.snapshot.paramMap.get('name');
     this.notebookComponentURL = this.script.getConfig('notebookComponent');
-    this.script.load('notebookComponent', '/src/notebook-element.js');
+    this.script.getUserSession().subscribe((res: any) => {
+      if(res.userName !== "" && res.authToken !== ""){ 
+        this.userName = res.userName;
+        this.authToken = res.authToken;
+        this.alertOpen = false;
+        this.script.load('notebookComponent', '/src/notebook-element.js');
+      } else{
+        this.sessionError = "Acumos session details are unavailable in browser cookies. Pls login to Acumos portal and come back here..";
+        this.alertOpen = true;
+      }
+    }, (error) => {
+      console.error('Unable to get the user session :' + error);
+    });
   }
 }

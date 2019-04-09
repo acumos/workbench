@@ -23,6 +23,18 @@ limitations under the License.
     <li class="breadcrumb-item"><a routerLink="/pages/dashboard">Dashboard</a></li>
   </ol>
 </nav>
-<dashboard-element (dashboard-event)="this.OnDashboardEvent($event)" [attr.componenturl]="dashboardComponentURL"></dashboard-element>
+<div *ngIf="alertOpen; else loadComponent">
+  <div class="alertmessage alert alert-danger">
+    <a class="close" (click)="alertOpen=false">
+      <span aria-hidden="true">&nbsp;&times;</span>
+    </a>
+    {{sessionError}}
+  </div>
+</div>
+<ng-template #loadComponent>
+  <dashboard-element (dashboard-event)="this.OnDashboardEvent($event)" [attr.componenturl]="dashboardComponentURL" 
+  [attr.userName]="userName" [attr.authToken]="authToken">
+  </dashboard-element>
+</ng-template>
 
  

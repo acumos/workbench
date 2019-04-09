@@ -31,9 +31,28 @@ module.exports = function(app) {
 		projectComponent : properties.projectComponent,
 		projectCatalogComponent : properties.projectCatalogComponent,
 		notebookCatalogComponent : properties.notebookCatalogComponent,
-		notebookComponent: properties.notebookComponent
+		notebookComponent: properties.notebookComponent,
+		pipelineCatalogComponent : properties.pipelineCatalogComponent,
+		pipelineComponent: properties.pipelineComponent
 	};
 	
+	var getLatestAuthToken = function (req, authToken){
+		let token = (req.cookies !== undefined && req.cookies.authToken !== undefined && req.cookies.authToken !== null ) ? 
+				req.cookies.authToken: authToken ;
+		return token;
+	}
+
+	var getUserName = function (req){
+		let userName = '';
+		if(req.cookies !== undefined && req.cookies.userDetail !== undefined && req.cookies.userDetail !== null) {
+			let userInfo = JSON.parse(req.cookies.userDetail);
+			if(userInfo.length === 3){
+				userName = userInfo[2];
+			}
+		} 
+		return userName;	
+	}
+
 	app.get('/config', function(req, res) {
 		try {
 			res.send(ms_wc_urls);
@@ -42,5 +61,21 @@ module.exports = function(app) {
 		}
 	});
 
+
+	app.get('/session', function(req, res) {
+		console.log('inside home component userinfo method');
 	
+		let userName = getUserName(req);
+		let authToken = getLatestAuthToken(req,'');	
+		try {
+			res.configInfo = {
+                userName:  userName,
+                authToken: authToken
+			};
+			res.send(res.configInfo);
+		} catch (err) {
+			console.log(err);
+		}
+	});
+
 };

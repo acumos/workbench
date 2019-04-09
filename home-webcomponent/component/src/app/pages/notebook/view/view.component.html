@@ -24,5 +24,16 @@ limitations under the License.
           <li class="breadcrumb-item active">{{name}}</li>
      </ol>
 </nav>
-
-<notebook-element attr.notebookId="{{ id }}" [attr.componenturl]="notebookComponentURL" (notebook-event)="this.OnViewNotebookEvent($event)"> </notebook-element>
+<div *ngIf="alertOpen; else loadComponent">
+     <div class="alertmessage alert alert-danger">
+          <a class="close" (click)="alertOpen=false">
+          <span aria-hidden="true">&nbsp;&times;</span>
+          </a>
+          {{sessionError}}
+     </div>
+</div>
+<ng-template #loadComponent>
+     <notebook-element attr.notebookId="{{ id }}" [attr.componenturl]="notebookComponentURL" (notebook-event)="this.OnViewNotebookEvent($event)"
+     [attr.userName]="userName" [attr.authToken]="authToken">
+     </notebook-element>
+ </ng-template>

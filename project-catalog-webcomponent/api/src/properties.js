@@ -25,6 +25,7 @@ var config = {
 		projectmSURL : "http://localhost:9088/mlWorkbench/v1/project",
 		notebookmSURL : "http://localhost:9089/mlWorkbench/v1/notebook",
 		pipelinemSURL : "http://localhost:9083/mlWorkbench/v1/pipeline",
+		wikiURL : "https://wiki.acumos.org/display/TRAIN",
 	},
 	deploy : {
 		ENVIRONMENT : process.env.ENVIRONMENT,
@@ -32,6 +33,7 @@ var config = {
 		projectmSURL : process.env.projectmSURL,
 		notebookmSURL : process.env.notebookmSURL,
 		pipelinemSURL : process.env.pipelinemSURL,
+		wikiURL : process.env.wikiURL,
 	}
 };
 

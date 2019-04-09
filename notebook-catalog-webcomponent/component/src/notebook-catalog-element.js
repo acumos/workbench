@@ -47,11 +47,14 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
       zeppelinNotebookCount: {type: Number},
       jupyterNotebookCount: {type: Number},
       allNotebookCount: {type: Number},
-      componenturl: {type: String, notify: true},
-      user_name : {type: String},
       alertOpen: { type: Boolean },
       successMessage: { type: String },
-      errorMessage: { type: String }
+      errorMessage: { type: String },
+      cardShow: { type: Boolean },
+      wikiUrl: {type: String},
+      componenturl: {type: String, notify: true},
+      userName: {type: String, notify: true},
+      authToken: {type: String, notify: true}
     };
   }
 
@@ -61,7 +64,6 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
 
   constructor() {
     super();
-    this.view = '';
     this.initializeCreateNotebookForm();
     this.$validations.init({
       validations: {
@@ -84,12 +86,14 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
       { value: "name", label: "Sort By Name" },
       { value: "id", label: "Sort By ID" }
     ];
-
+    this.view = '';
     this.notebookLists = [];
+    this.cardShow = false;
     this.requestUpdate().then(() => {
       console.info('update componenturl : ' + this.componenturl);
+      console.info('userName: ' + this.userName);
+      
       this.componenturl = (this.componenturl === undefined || this.componenturl === null)? '' : this.componenturl;
-      this.view = '';
       this.getConfig();
     })
   }
@@ -136,16 +140,28 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
     }).then(res => res.json())
       .then((envVar) => {
         this.mSurl = envVar.msconfig.notebookmSURL;
-        this.user_name = envVar.user_name;
-        if(this.user_name === undefined || this.user_name === null || this.user_name === ''){
-          this.errorMessage = 'Unable to retrieve User ID from Session Cookie. Pls login to Acumos portal and come back here..';
-          this.view = 'error';
-        } else {
+        this.wikiUrl = envVar.wikiUrl;
+
+        let username = envVar.userName;
+        let token = envVar.authToken;
+        
+        if(this.userName && this.userName !== '' && this.authToken && this.authToken !== '') {
+          this.resetActiveFilter = true;
           this.getNotebookList();
+        } else if(username && username !== '' && token && token !== '') {
+          this.authToken = token;
+          this.userName = username;
+          this.resetActiveFilter = true;
+          this.getNotebookList();
+        } else {
+          this.errorMessage = 'Acumos session details are unavailable in browser cookies. Pls login to Acumos portal and come back here..';
+          this.alertOpen = true;
+          this.view = 'error';        
         }
     }).catch((error) => {
       console.info('Request failed', error);
       this.errorMessage = 'Unable to retrive configuration information. Error is: '+ error;
+      this.alertOpen = true;
       this.view = 'error';
     });
   }
@@ -163,10 +179,11 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
       cache: 'default',
       headers: {
           "Content-Type": "application/json",
+          "auth": this.authToken,
       },
       body: JSON.stringify({
         "url": this.mSurl,
-        "user_name": this.user_name
+        "userName": this.userName
       })
     }).then(res => res.json())
       .then((n) => {
@@ -177,6 +194,7 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
         } else {
           this.notebookLists = [];
           this.notebooks = [];
+          this.cardShow = true;
           this.convertNotebookObject(n.data);
         }
     }).catch((error) => {
@@ -205,7 +223,10 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
   }
 
   displayNotebooks() {
-    this.activeFilter = { notebookType: "ZEPPELIN" };
+    if(this.resetActiveFilter) {
+      this.resetActiveFilter = false;
+      this.activeFilter = { notebookType: "ZEPPELIN" };
+    }
     this.activeSort = "created";
 
     this.dataSource = new DataSource({
@@ -239,11 +260,12 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
       cache: 'default',
       headers: {
         "Content-Type": "application/json",
+        "auth": this.authToken
       },
       body: JSON.stringify({
         "url": this.mSurl,
         "newNotebookDetails": this.data.newNotebook,
-        "user_name": this.user_name 
+        "userName": this.userName,
       })
     }).then(res => res.json())
       .then((n) => {
@@ -271,11 +293,12 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
       cache: 'default',
       headers: {
           "Content-Type": "application/json",
+          "auth": this.authToken,
       },
       body: JSON.stringify({
         "url": this.mSurl,
         "notebookId" : this.selectedNotebookId,
-        "user_name": this.user_name      		  
+        "userName": this.userName      		  
       })
     }).then(res => res.json())
       .then((n) => {
@@ -302,11 +325,12 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
       cache: 'default',
       headers: {
           "Content-Type": "application/json",
+          "auth": this.authToken,
       },
       body: JSON.stringify({
         "url": this.mSurl,
         "notebookId" : this.selectedNotebookId,
-        "user_name": this.user_name      		  
+        "userName": this.userName      		  
       })
     }).then(res => res.json())
       .then((n) => {
@@ -333,11 +357,12 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
       cache: 'default',
       headers: {
           "Content-Type": "application/json",
+          "auth": this.authToken,
       },
       body: JSON.stringify({
         "url": this.mSurl,
         "notebookId" : this.selectedNotebookId,
-        "user_name": this.user_name      		  
+        "userName": this.userName      		  
       })
     }).then(res => res.json())
       .then((n) => {
@@ -476,21 +501,26 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
         .alertmessage {
           display: ${this.alertOpen ? "block" : "none"};
         }
+        .card-show {
+          display: ${this.cardShow ? "block" : "none"};
+        }
       </style>
-      <omni-dialog title="Archive ${this.selectedNotebookName}" close-string="Archive Notebook" dismiss-string="Cancel"
+      <omni-dialog title="Archive ${this.selectedNotebookName}" 
+        close-string="Archive Notebook" dismiss-string="Cancel"
         is-open="${this.isOpenArchiveDialog}" @omni-dialog-dimissed="${this.archiveDialogDismissed}"
         @omni-dialog-closed="${this.archiveNotebook}" type="warning">
         <form><P>Are you sure want to archive ${this.selectedNotebookName}?</p></form>
       </omni-dialog>
 
-      <omni-dialog title="Unarchive ${this.selectedNotebookName}" close-string="Unarchive Notebook" dismiss-string="Cancel"
+      <omni-dialog title="Unarchive ${this.selectedNotebookName}" 
+        close-string="Unarchive Notebook" dismiss-string="Cancel"
         is-open="${this.isOpenRestoreDialog}" @omni-dialog-dimissed="${this.restoreDialogDismissed}"
         @omni-dialog-closed="${this.restoreNotebook}" type="warning">
         <form><P>Are you sure want to unarchive ${this.selectedNotebookName}?</p></form>
       </omni-dialog>
 
-      <omni-dialog title="Delete ${this.selectedNotebookName}" close-string="Delete Notebook" dismiss-string="Cancel"
-        is-open="${this.isOpenDeleteDialog}" @omni-dialog-dimissed="${this.deleteDialogDismissed}"
+      <omni-dialog title="Delete ${this.selectedNotebookName}" close-string="Delete Notebook" 
+        dismiss-string="Cancel" is-open="${this.isOpenDeleteDialog}" @omni-dialog-dimissed="${this.deleteDialogDismissed}"
         @omni-dialog-closed="${this.deleteNotebook}" type="warning">
         <form><P>Are you sure want to delete ${this.selectedNotebookName}?</p></form>
       </omni-dialog>
@@ -504,7 +534,8 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
             <div class="col">
               <div class="form-group">
                 <label>Notebook Name <small class="text-danger">*</small></label>
-                <input type="text" class="form-control" placeholder="Enter Notebook Name" value="${this.data.newNotebook.noteBookId.name}"
+                <input type="text" class="form-control" placeholder="Enter Notebook Name" 
+                  value="${this.data.newNotebook.noteBookId.name}"
                   @blur="${ e => {
                     this.$data.set('newNotebook.noteBookId.name', e.target.value);
                     this.$validations.validate('newNotebook.noteBookId.name');
@@ -526,7 +557,8 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
             <div class="col">
               <div class="form-group">
                 <label>Notebook Version <small class="text-danger">*</small></label>
-                <input type="text" class="form-control" placeholder="Enter Notebook Version" value="${this.data.newNotebook.noteBookId.versionId.label}"
+                <input type="text" class="form-control" placeholder="Enter Notebook Version" 
+                  value="${this.data.newNotebook.noteBookId.versionId.label}"
                   @blur="${ e => {
                       this.$data.set('newNotebook.noteBookId.versionId.label', e.target.value);
                       this.$validations.validate('newNotebook.noteBookId.versionId.label');
@@ -606,7 +638,7 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
                         Create Notebook
                       </button>&nbsp;&nbsp;
                       <div class="input-group-append">
-                          <a href="javascript:void" @click=${e => this.redirectWikiPage()}
+                          <a href=${this.wikiUrl} target="_blank"
                             class="btnIconTop btn btn-sm btn-secondary mr-1"
                             data-toggle="tooltip"
                             data-placement="top"
@@ -625,7 +657,8 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
                       <a href="javascript:void" @click=${e => this.filterNotebooks({ notebookType: "ZEPPELIN" })}
                         class="nav-link ${get(this.activeFilter, "notebookType", "") === "ZEPPELIN"? "active" : ""}">
                         Zeppelin Notebooks&nbsp;&nbsp;
-                        <span class="badge ${get(this.activeFilter, "notebookType", "") === "ZEPPELIN"? "badge-light" : "badge-secondary"}"">${this.zeppelinNotebookCount}</span>
+                        <span class="badge ${get(this.activeFilter, "notebookType", "") === "ZEPPELIN"? "badge-light" : "badge-secondary"}"">
+                          ${this.zeppelinNotebookCount}</span>
                       </a>
                     </li>
                     <li class="nav-item mr-2">
@@ -633,14 +666,16 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
                         class="nav-link ${get(this.activeFilter,"notebookType", "") === "JUPYTER"? "active": ""}">
                         Jupyter Notebooks&nbsp;&nbsp;
                         
-                        <span class="badge ${get(this.activeFilter, "notebookType", "") === "JUPYTER"? "badge-light" : "badge-secondary"}"">${this.jupyterNotebookCount}</span>
+                        <span class="badge ${get(this.activeFilter, "notebookType", "") === "JUPYTER"? "badge-light" : "badge-secondary"}"">
+                          ${this.jupyterNotebookCount}</span>
                       </a>
                     </li>
                     <li class="nav-item mr-2">
                       <a href="javascript:void" @click=${e => this.filterNotebooks()}
                         class="nav-link ${get(this.activeFilter, "notebookType","") === ""? "active": ""}">
                         All Notebooks&nbsp;&nbsp;
-                        <span class="badge ${get(this.activeFilter, "notebookType", "") === ""? "badge-light" : "badge-secondary"}"">${this.allNotebookCount}</span>
+                        <span class="badge ${get(this.activeFilter, "notebookType", "") === ""? "badge-light" : "badge-secondary"}"">
+                          ${this.allNotebookCount}</span>
                       </a>
                     </li>
                   </ul>
@@ -740,16 +775,20 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
                   <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-end">
                       <li class="page-item">
-                        <a class="page-link" href="javascript:void" @click=${e => this.navigatePage("first")}>First</a>
+                        <a href="javascript:void" @click=${e => this.navigatePage("first")}
+                          class="page-link ${this.currentPage !== 1? "active" : "inactive"}">First</a>                          
                       </li>
                       <li class="page-item">
-                        <a class="page-link" href="javascript:void" @click=${e => this.navigatePage("previous")} >Previous</a>
+                        <a class="page-link ${this.currentPage !== 1? "active" : "inactive"}" href="javascript:void" 
+                          @click=${e => this.navigatePage("previous")} >Previous</a>
                       </li>
                       <li class="page-item">
-                        <a class="page-link" href="javascript:void" @click=${e => this.navigatePage("next")} >Next</a>
+                        <a class="page-link ${this.currentPage < this.totalPages? "active" : "inactive"}" href="javascript:void" 
+                          @click=${e => this.navigatePage("next")} >Next</a>
                       </li>
                       <li class="page-item">
-                        <a class="page-link" href="javascript:void" @click=${e => this.navigatePage("last")} >Last</a>
+                        <a class="page-link ${this.currentPage < this.totalPages? "active" : "inactive"}" href="javascript:void" 
+                          @click=${e => this.navigatePage("last")} >Last</a>
                       </li>
                       &nbsp;&nbsp;&nbsp;&nbsp;
                     </ul>
@@ -808,12 +847,24 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
                     <mwc-icon class="textColor">library_books</mwc-icon>&nbsp;&nbsp;&nbsp;
                     <h4 class="textColor card-title">Notebooks</h4>
                     <div style="position: absolute; right:0">
-                      <a class="btn btn-sm btn-secondary my-2">-</a>
+                      ${
+                        this.cardShow === false
+                        ? html`
+                          <a class="toggle-a btn btn-sm btn-secondary my-2" @click=${e => this.cardShow = true}>
+                            <span class="toggle-span">+</span>
+                          </a>
+                        `
+                        : html`
+                          <a class="toggle-a btn btn-sm btn-secondary my-2" @click=${e => this.cardShow = false}>
+                            <span class="toggle-span">—</span>
+                          </a>
+                        `
+                      }
                       &nbsp;&nbsp;&nbsp;&nbsp;
                     </div>
                   </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body card-show">
                   <div class="row" style="margin:10px 0;margin-bottom:20px;">
                     <h7>No Notebooks, get started with ML Workbench by creating your first Notebook.</h7>
                   </div>
@@ -829,7 +880,7 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
         `
         : html`
       `}
-          
+
       ${this.view === 'error'
         ? html`
           <div class="alertmessage alert alert-danger">
@@ -840,14 +891,14 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
           </div>
         `
         : html`
-      `}
-
+      `} 
+      
       ${this.view === ''
         ? html`
           <p class="success-status"> Loading ..</p>
         `
         : html`
-      `}  
+      `} 
     `;
   }
 }

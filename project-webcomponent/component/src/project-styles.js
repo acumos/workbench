@@ -100,4 +100,28 @@ color: green
 .inactive-status {
 color: red
 }
+
+.toggle-a {
+    width: 25px;
+    heigth: 25px;
+    color: white;
+    background-color:lightgray;
+    border-color: transparent;
+}
+
+.toggle-span {
+    color: black;
+}
+
+.alertmessage {
+  background-color: white !important;
+  color: #dc3545;
+  border-color: #dc3545;
+  border: 1px solid; 
+}
+
+.alert-success{
+  color: #28a745 ;
+  border-color: #28a745;
+}
 `;

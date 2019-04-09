@@ -25,95 +25,122 @@ var request = require('request');
 
 module.exports = function(app) {
 	
-	let uripath = "/users/";
-	
-	var getJWTToken = function(req){
-		return req.cookies.auth_token;
-	}
-
-	var configENV = properties.ENVIRONMENT;
-	var userName = properties.userName;
-	var ms_urls = {
+	const uripath = "/users/";
+	const configENV = properties.ENVIRONMENT;
+	const wikiURL = properties.wikiURL;
+	const ms_urls = {
 		notebookmSURL : properties.notebookmSURL
 	};
 	
+	var getUserName = function (req){
+		let userName = '';
+		if(req.cookies !== undefined && req.cookies.userDetail !== undefined && req.cookies.userDetail !== null) {
+			let userInfo = JSON.parse(req.cookies.userDetail);
+			if(userInfo.length === 3){
+				userName = userInfo[2];
+			}
+		} 
+		return userName;	
+	}
+
+	var getLatestAuthToken = function (req, authToken){
+		let token = (req.cookies !== undefined && req.cookies.authToken !== undefined && req.cookies.authToken !== null ) ? 
+				req.cookies.authToken: authToken ;
+		return token;
+	}
+
 	app.get('/api/config', function(req, res) {
 		try {
-			let user_name = (req.cookies.userDetail !== undefined && req.cookies.userDetail !== null && req.cookies.userDetail.length > 0) ? 
-				req.cookies.userDetail[0]: userName;
-			console.info('user name: '+ user_name);
+			let userName = getUserName(req);
+			let authToken = getLatestAuthToken(req, '');
+
 			res.configInfo = {
 				configENV : configENV,
 				msconfig : ms_urls,
-				user_name:  user_name
+				userName:  userName,
+				authToken: authToken,
+				wikiUrl: wikiURL
 			};
 			res.send(res.configInfo);
 		} catch (err) {
-			reject("error");
+			console.error('Error while retrieving config details: '+ err);
 		}
 	});
 	
 	app.post('/api/notebook/details', function (req, res){
-		let user_name = req.body.user_name;
+		let userName = req.body.userName;
     	let serviceUrl = req.body.url + uripath;
-    	let notebookId = req.body.notebookId;
-    	getSelectedNotebookDetails(user_name, serviceUrl, notebookId, getJWTToken(req)).then(function(result){
+			let noteBookId = req.body.noteBookId;
+			let authToken = req.headers['auth'];
+    	getSelectedNotebookDetails(userName, serviceUrl, noteBookId, getLatestAuthToken(req, authToken)).then(function(result){
     		res.send(result);
     	});
 	});
 
+	app.post('/api/notebook/launch', function(req, res) {
+		let serviceUrl = req.body.url + uripath;
+		let userName = req.body.userName;
+		let noteBookId = req.body.noteBookId;
+		let authToken = req.headers['auth'];
+		launchNotebook(userName, serviceUrl, noteBookId, getLatestAuthToken(req, authToken)).then(function(result) {
+					res.send(result);
+		});
+	});
+
 	app.put('/api/notebook/update', function (req, res){
-		let user_name = req.body.user_name;
-    	let serviceUrl = req.body.url + uripath;
+		let userName = req.body.userName;
+    let serviceUrl = req.body.url + uripath;
 		let notebookPayload = req.body.notebookPayload;
-		console.log(notebookPayload);
-		let notebookId = req.body.notebookId;
-    	updateNotebookDetails(user_name, serviceUrl, notebookId, notebookPayload, getJWTToken(req)).then(function(result){
-    		res.send(result);
-    	});
+		let noteBookId = req.body.noteBookId;
+		let authToken = req.headers['auth'];
+		updateNotebookDetails(userName, serviceUrl, noteBookId, notebookPayload, getLatestAuthToken(req, authToken)).then(function(result){
+			res.send(result);
+		});
 	});
 	
 	app.put('/api/notebook/archive', function (req, res){
 		let serviceUrl = req.body.url + uripath;
-		let user_name = req.body.user_name;
-		let notebookId = req.body.notebookId;
-		archiveNotebook(user_name, serviceUrl, notebookId, getJWTToken(req)).then(function(result){
+		let userName = req.body.userName;
+		let noteBookId = req.body.noteBookId;
+		let authToken = req.headers['auth'];
+		archiveNotebook(userName, serviceUrl, noteBookId, getLatestAuthToken(req, authToken)).then(function(result){
 			res.send(result);
 		});
 	});
 	
 	app.put('/api/notebook/restore', function (req, res){
 		let serviceUrl = req.body.url + uripath;
-		let user_name = req.body.user_name;
-		let notebookId = req.body.notebookId;
-		restoreNotebook(user_name, serviceUrl, notebookId, getJWTToken(req)).then(function(result){
+		let userName = req.body.userName;
+		let noteBookId = req.body.noteBookId;
+		let authToken = req.headers['auth'];
+		restoreNotebook(userName, serviceUrl, noteBookId, getLatestAuthToken(req, authToken)).then(function(result){
 			res.send(result);
 		});
 	});
 	
 	app.delete('/api/notebook/delete', function (req, res){
 		let serviceUrl = req.body.url + uripath;
-		let user_name = req.body.user_name;
-		let notebookId = req.body.notebookId;
-		deleteNotebook(user_name, serviceUrl, notebookId, getJWTToken(req)).then(function(result){
+		let userName = req.body.userName;
+		let noteBookId = req.body.noteBookId;
+		let authToken = req.headers['auth'];
+		deleteNotebook(userName, serviceUrl, noteBookId, getLatestAuthToken(req, authToken)).then(function(result){
 			res.send(result);
 		});
 	});
 	
-	var getSelectedNotebookDetails = function(user_name, srvcUrl, notebookId, jwtToken){
+	var getSelectedNotebookDetails = function(userName, srvcUrl, noteBookId, authToken){
     	return new Promise(function(resolve, reject) {
-            var options = {
-				method : "GET",
-				url : srvcUrl + user_name + "/notebooks/" + notebookId,
-				headers : {
-					'Content-Type' : 'application/json',
-					'Authorization' : jwtToken,
-				}
-            };
+        var options = {
+					method : "GET",
+					url : srvcUrl + userName + "/notebooks/" + noteBookId,
+					headers : {
+						'Content-Type' : 'application/json',
+						'Authorization' : authToken,
+					}
+        };
 			
         request.get(options, function(error, response) {
 					if (!error && response.statusCode == 200) {
-						
 						resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Notebook details retrieved successfully."));
 					} else if (!error) {
 						resolve(prepRespJsonAndLogit(response, response.body, "Unable to retrieve Notebook."));
@@ -124,39 +151,61 @@ module.exports = function(app) {
       });
     };
 	
-	var updateNotebookDetails = function(user_name, srvcUrl, notebookId, notebookPayload, jwtToken){
-    	return new Promise(function(resolve, reject) {
-            var options = {
-				method : "PUT",
-				url : srvcUrl + user_name + "/notebooks/" + notebookId,
-				headers : {
-					'Content-Type' : 'application/json',
-					'Authorization' : jwtToken,
-				},
-				body: notebookPayload,
-				json: true
-            };
+		var launchNotebook = function(userName, srvcUrl, noteBookId, authToken){
+			return new Promise(function(resolve, reject) {
+				var options = {
+					method : "GET",
+					url : srvcUrl + userName + "/notebooks/" + noteBookId + "/launch",
+					headers : {
+						'Content-Type' : 'application/json',
+						'Authorization' : authToken,
+					},
+				};
+				request.get(options, function(error, response) {
+					if (!error && response.statusCode == 200) {
+						resolve(prepRespJsonAndLogit(response, response.body, "Notebook launched successfully."));
+					} else if (!error) {
+						resolve(prepRespJsonAndLogit(response, response.body, "Unable to launch Notebook."));
+					} else {
+						resolve(prepRespJsonAndLogit(null, null, null, error));
+					}
+				});
+			});
+		};
 
-            request.put(options, function(error, response) {
-				if (!error && response.statusCode == 200) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Notebook details updated successfully."));
-				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to update Notebook."));
-				} else {
-					resolve(prepRespJsonAndLogit(null, null, null, error));
-				}
-            });
-       });
+		var updateNotebookDetails = function(userName, srvcUrl, noteBookId, notebookPayload, authToken){
+    	return new Promise(function(resolve, reject) {
+        var options = {
+					method : "PUT",
+					url : srvcUrl + userName + "/notebooks/" + noteBookId,
+					headers : {
+						'Content-Type' : 'application/json',
+						'Authorization' : authToken,
+					},
+					body: notebookPayload,
+					json: true
+        };
+
+        request.put(options, function(error, response) {
+					if (!error && response.statusCode == 200) {
+						resolve(prepRespJsonAndLogit(response, response.body, "Notebook details updated successfully."));
+					} else if (!error) {
+						resolve(prepRespJsonAndLogit(response, response.body, "Unable to update Notebook."));
+					} else {
+						resolve(prepRespJsonAndLogit(null, null, null, error));
+					}
+        });
+      });
     };
 	
-    var archiveNotebook = function(user_name, srvcUrl, notebookId, jwtToken){
+    var archiveNotebook = function(userName, srvcUrl, noteBookId, authToken){
 		return new Promise(function(resolve, reject) {
 			var options = {
 				method : "PUT",
-				url : srvcUrl + user_name + "/notebooks/" + notebookId + "/A",
+				url : srvcUrl + userName + "/notebooks/" + noteBookId + "/A",
 				headers : {
 					'Content-Type' : 'application/json',
-					'Authorization' : jwtToken,
+					'Authorization' : authToken,
 				},
 			};
 			request.put(options, function(error, response, body) {
@@ -171,14 +220,14 @@ module.exports = function(app) {
 		});
 	};
 	
-	var restoreNotebook = function(user_name, srvcUrl, notebookId, jwtToken){
+	var restoreNotebook = function(userName, srvcUrl, noteBookId, authToken){
 		return new Promise(function(resolve, reject) {
 			var options = {
 				method : "PUT",
-				url : srvcUrl + user_name + "/notebooks/" + notebookId + "/UA",
+				url : srvcUrl + userName + "/notebooks/" + noteBookId + "/UA",
 				headers : {
 					'Content-Type' : 'application/json',
-					'Authorization' : jwtToken,
+					'Authorization' : authToken,
 				},
 			};
 			request.put(options, function(error, response, body) {
@@ -193,14 +242,14 @@ module.exports = function(app) {
 		});
 	};
 	
-	var deleteNotebook = function(user_name, srvcUrl, notebookId, jwtToken){
+	var deleteNotebook = function(userName, srvcUrl, noteBookId, authToken){
 		return new Promise(function(resolve, reject) {
 			var options = {
 				method : "DELETE",
-				url : srvcUrl + user_name + "/notebooks/" + notebookId,
+				url : srvcUrl + userName + "/notebooks/" + noteBookId,
 				headers : {
 					'Content-Type' : 'application/json',
-					'Authorization' : jwtToken,
+					'Authorization' : authToken,
 				},
 			};
 			request.delete(options, function(error, response, body) {
@@ -291,10 +340,6 @@ module.exports = function(app) {
 
 	var isNull = function(obj) {
 		return obj === undefined || obj === null;
-	};
-
-	var isEmptyStr = function(str) {
-		return str === undefined || str === null || str === "" || str === " ";
 	};
 
 	function parseJSON(str) {

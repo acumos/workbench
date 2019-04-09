@@ -109,4 +109,67 @@ hr {
 .table-bordered{
   border: 0px solid #dee2e6;
 }
+
+.page-link.active {
+  color: #591887;
+  background-color: white;
+}
+
+.page-link.inactive {
+  color: gray;
+  background-color: #f1f1f1;
+  cursor: not-allowed;
+  opacity: 0.5;
+  text-decoration: none;
+  display: inline-block;
+  pointer-events: none;
+}
+
+.toggle-a {
+  width: 25px;
+  heigth: 25px;
+  color: white;
+  background-color:lightgray;
+  border-color: transparent;
+  margin: 0px;
+  padding: 0px;
+}
+
+.toggle-span {
+  font-size: 42px;
+  line-height: 0.1px;
+  padding-top: 7px;
+  height: 20px;
+  display: block;
+  padding-left: 5px;
+  width: 14px;
+  color: white;
+}
+
+.toggle-plus-span {
+  font-weight: bold;
+  font-size: 25px;
+  padding-top: 8px;
+}
+
+.active-status {
+color: green
+}
+
+.inactive-status {
+color: red
+}
+
+.alertmessage {
+  background-color: white !important;
+  color: #dc3545;
+  border-color: #dc3545;
+  border: 1px solid; 
+  padding: .35rem 1.00rem;
+}
+
+.alert-success{
+  color: #28a745 ;
+  border-color: #28a745;
+}
 `;

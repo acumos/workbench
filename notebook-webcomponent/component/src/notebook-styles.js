@@ -100,4 +100,44 @@ color: green
 .inactive-status {
 color: red
 }
+
+.toggle-a {
+    width: 25px;
+    heigth: 25px;
+    color: white;
+    background-color:lightgray;
+    border-color: transparent;
+    margin: 0px;
+    padding: 0px;
+}
+
+.toggle-span {
+    font-size: 42px;
+    line-height: 0.1px;
+    padding-top: 7px;
+    height: 20px;
+    display: block;
+    padding-left: 5px;
+    width: 14px;
+    color: white;
+}
+
+.toggle-plus-span {
+    font-weight: bold;
+    font-size: 25px;
+    padding-top: 8px;
+}
+
+.alertmessage {
+    background-color: white !important;
+    color: #dc3545;
+    border-color: #dc3545;
+    border: 1px solid; 
+    padding: .35rem 1.00rem;
+}
+  
+.alert-success{
+    color: #28a745 ;
+    border-color: #28a745;
+}
 `;

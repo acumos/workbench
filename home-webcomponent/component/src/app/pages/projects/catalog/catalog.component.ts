@@ -19,6 +19,7 @@ limitations under the License.
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ScriptService } from '../../../@core/utils/script.service';
+import { BreadcrumbsService } from '../../../@core/utils/breadcrumbs.service';
 
 @Component({
   templateUrl: './catalog.component.html',
@@ -27,8 +28,12 @@ export class CatalogComponent implements OnInit {
   router: Router;
   script: ScriptService;
   public projectCatalogComponentURL: string;
+  public userName: any;
+  public authToken: any;
+  public sessionError: any;
+  public alertOpen: any;
 
-  constructor(router: Router, script: ScriptService) {
+  constructor(router: Router, script: ScriptService, private breadcrumbsService: BreadcrumbsService) {
     this.router = router;
     this.script = script;
   }
@@ -40,7 +45,24 @@ export class CatalogComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loadComponent();
+  }
+
+  private loadComponent() {
     this.projectCatalogComponentURL = this.script.getConfig('projectCatalogComponent');
-    this.script.load('projectCatalogComponent', '/src/project-catalog-element.js');
+    this.script.getUserSession().subscribe((res: any) => {
+      if (res.userName !== '' && res.authToken !== '') {
+        this.breadcrumbsService.setBreadcrumbs(['Home', 'Design Studio', 'ML Workbench', 'Projects']);
+        this.userName = res.userName;
+        this.authToken = res.authToken;
+        this.alertOpen = false;
+        this.script.load('projectCatalogComponent', '/src/project-catalog-element.js');
+      } else {
+        this.sessionError = 'Acumos session details are unavailable in browser cookies. Pls login to Acumos portal and come back here..';
+        this.alertOpen = true;
+      }
+    }, (error) => {
+      console.error('Unable to get the user session :' + error);
+    });
   }
 }

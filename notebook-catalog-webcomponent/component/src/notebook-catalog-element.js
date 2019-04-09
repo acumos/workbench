@@ -47,11 +47,14 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
       zeppelinNotebookCount: {type: Number},
       jupyterNotebookCount: {type: Number},
       allNotebookCount: {type: Number},
-      componenturl: {type: String, notify: true},
-      user_name : {type: String},
       alertOpen: { type: Boolean },
       successMessage: { type: String },
-      errorMessage: { type: String }
+      errorMessage: { type: String },
+      cardShow: { type: Boolean },
+      notebookWikiURL: {type: String},
+      componenturl: {type: String, notify: true},
+      userName: {type: String, notify: true},
+      authToken: {type: String, notify: true}
     };
   }
 
@@ -61,19 +64,20 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
 
   constructor() {
     super();
-    this.view = '';
     this.initializeCreateNotebookForm();
     this.$validations.init({
       validations: {
         newNotebook: {
-          name: {
-            isNotEmpty: Forms.validators.isNotEmpty,
-            pattern: Forms.validators.pattern('^[a-zA-Z][a-zA-Z0-9_ ]{6,30}$')
-          },
-          versionId : {
-            label: {
+          noteBookId: {
+            name: {
               isNotEmpty: Forms.validators.isNotEmpty,
-              pattern: Forms.validators.pattern('[a-zA-Z0-9_.]{1,14}$')
+              pattern: Forms.validators.pattern('^[a-zA-Z][a-zA-Z0-9_ ]{6,30}$')
+            },
+            versionId : {
+              label: {
+                isNotEmpty: Forms.validators.isNotEmpty,
+                pattern: Forms.validators.pattern('[a-zA-Z0-9_.]{1,14}$')
+              }
             }
           }
         }
@@ -84,12 +88,13 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
       { value: "name", label: "Sort By Name" },
       { value: "id", label: "Sort By ID" }
     ];
-
+    this.view = '';
     this.notebookLists = [];
+    this.cardShow = false;
     this.requestUpdate().then(() => {
       console.info('update componenturl : ' + this.componenturl);
+      
       this.componenturl = (this.componenturl === undefined || this.componenturl === null)? '' : this.componenturl;
-      this.view = '';
       this.getConfig();
     })
   }
@@ -108,7 +113,7 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
         notebookType : "ZEPPELIN"
       }
     };
-
+    this.$data.snapshot('newNotebook');
     this.$data.set('createErrorMessage', '');
     this.$data.set('newNotebook.noteBookId.name', '');
     this.$data.set('newNotebook.noteBookId.versionId.label', '');
@@ -136,16 +141,28 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
     }).then(res => res.json())
       .then((envVar) => {
         this.mSurl = envVar.msconfig.notebookmSURL;
-        this.user_name = envVar.user_name;
-        if(this.user_name === undefined || this.user_name === null || this.user_name === ''){
-          this.errorMessage = 'Unable to retrieve User ID from Session Cookie. Pls login to Acumos portal and come back here..';
-          this.view = 'error';
-        } else {
+        this.notebookWikiURL = envVar.notebookWikiURL;
+
+        let username = envVar.userName;
+        let token = envVar.authToken;
+        
+        if(this.userName && this.userName !== '' && this.authToken && this.authToken !== '') {
+          this.resetActiveFilter = true;
           this.getNotebookList();
+        } else if(username && username !== '' && token && token !== '') {
+          this.authToken = token;
+          this.userName = username;
+          this.resetActiveFilter = true;
+          this.getNotebookList();
+        } else {
+          this.errorMessage = 'Acumos session details are unavailable in browser cookies. Pls login to Acumos portal and come back here..';
+          this.alertOpen = true;
+          this.view = 'error';        
         }
     }).catch((error) => {
       console.info('Request failed', error);
       this.errorMessage = 'Unable to retrive configuration information. Error is: '+ error;
+      this.alertOpen = true;
       this.view = 'error';
     });
   }
@@ -163,10 +180,11 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
       cache: 'default',
       headers: {
           "Content-Type": "application/json",
+          "auth": this.authToken,
       },
       body: JSON.stringify({
         "url": this.mSurl,
-        "user_name": this.user_name
+        "userName": this.userName
       })
     }).then(res => res.json())
       .then((n) => {
@@ -177,6 +195,7 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
         } else {
           this.notebookLists = [];
           this.notebooks = [];
+          this.cardShow = true;
           this.convertNotebookObject(n.data);
         }
     }).catch((error) => {
@@ -191,7 +210,7 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
     let tempNotebook;
     notebooksInfo.forEach(item => {
       tempNotebook = {};
-      tempNotebook.notebookId = item.noteBookId.uuid;
+      tempNotebook.noteBookId = item.noteBookId.uuid;
       tempNotebook.name = item.noteBookId.name;
       tempNotebook.version = item.noteBookId.versionId.label;
       tempNotebook.createdTimestamp = item.noteBookId.versionId.timeStamp;
@@ -205,7 +224,10 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
   }
 
   displayNotebooks() {
-    this.activeFilter = { notebookType: "ZEPPELIN" };
+    if(this.resetActiveFilter) {
+      this.resetActiveFilter = false;
+      this.activeFilter = { notebookType: "ZEPPELIN" };
+    }
     this.activeSort = "created";
 
     this.dataSource = new DataSource({
@@ -239,17 +261,19 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
       cache: 'default',
       headers: {
         "Content-Type": "application/json",
+        "auth": this.authToken
       },
       body: JSON.stringify({
         "url": this.mSurl,
         "newNotebookDetails": this.data.newNotebook,
-        "user_name": this.user_name 
+        "userName": this.userName,
       })
     }).then(res => res.json())
       .then((n) => {
         if(n.status === 'Success'){
           this.successMessage = n.message;
           this.alertOpen = true;
+          this.$data.revert('newNotebook');
           this.initializeCreateNotebookForm();
           this.getNotebookList();
           this.isOpenModal = false;
@@ -271,11 +295,12 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
       cache: 'default',
       headers: {
           "Content-Type": "application/json",
+          "auth": this.authToken,
       },
       body: JSON.stringify({
         "url": this.mSurl,
-        "notebookId" : this.selectedNotebookId,
-        "user_name": this.user_name      		  
+        "noteBookId" : this.selectedNotebookId,
+        "userName": this.userName      		  
       })
     }).then(res => res.json())
       .then((n) => {
@@ -290,6 +315,7 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
     }).catch((error) => {
       console.error('Request failed', error);
       this.errorMessage = 'Notebook delete request failed with error: '+ error;
+      this.alertOpen = true;
     });
   }
 
@@ -302,11 +328,12 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
       cache: 'default',
       headers: {
           "Content-Type": "application/json",
+          "auth": this.authToken,
       },
       body: JSON.stringify({
         "url": this.mSurl,
-        "notebookId" : this.selectedNotebookId,
-        "user_name": this.user_name      		  
+        "noteBookId" : this.selectedNotebookId,
+        "userName": this.userName      		  
       })
     }).then(res => res.json())
       .then((n) => {
@@ -321,6 +348,7 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
     }).catch((error) => {
       console.error('Request failed', error);
       this.errorMessage = 'Notebook archive request failed with error: '+ error;
+      this.alertOpen = true;
     });
   }
 
@@ -333,11 +361,12 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
       cache: 'default',
       headers: {
           "Content-Type": "application/json",
+          "auth": this.authToken,
       },
       body: JSON.stringify({
         "url": this.mSurl,
-        "notebookId" : this.selectedNotebookId,
-        "user_name": this.user_name      		  
+        "noteBookId" : this.selectedNotebookId,
+        "userName": this.userName      		  
       })
     }).then(res => res.json())
       .then((n) => {
@@ -352,6 +381,39 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
     }).catch((error) => {
       console.error('Request failed', error);
       this.errorMessage = 'Notebook unarchive request failed with error: '+ error;
+      this.alertOpen = true;
+    });
+  }
+
+  launchNotebook(noteBookId) {
+    const url = this.componenturl + '/api/notebook/launch';
+    this.resetMessage();
+	  fetch(url, {
+		  method: 'POST',
+      mode: 'cors',
+      cache: 'default',
+      headers: {
+          "Content-Type": "application/json",
+          "auth": this.authToken,
+      },
+      body: JSON.stringify({
+        "url": this.mSurl,
+        "noteBookId" : noteBookId,
+        "userName": this.userName      		  
+      })
+    }).then(res => res.json())
+      .then((n) => {
+        if(n.status === 'Success'){
+          let launchURL = n.data.noteBookId.serviceUrl;
+          window.open(launchURL, '_blank');
+        } else {
+          this.errorMessage = n.message;
+          this.alertOpen = true; 
+        }      
+    }).catch((error) => {
+      console.error('Request failed', error);
+      this.errorMessage = 'Notebook launch request failed with error: '+ error;
+      this.alertOpen = true;
     });
   }
 
@@ -404,6 +466,8 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
   }
 
   modalDismissed() {
+    this.$data.revert('newNotebook');
+    this.$validations.resetValidation('newNotebook');
     this.isOpenModal = false;
   }
 
@@ -420,8 +484,6 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
     this.isOpenModal = true;
   }
 
-  redirectWikiPage() {}
-
   archiveDialogDismissed(){
     this.isOpenArchiveDialog = false;
   }
@@ -434,39 +496,36 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
     this.isOpenDeleteDialog = false;
   }
 
-  openArchiveDialog(notebookId, notebookName) { 
-    this.selectedNotebookId = notebookId;
+  openArchiveDialog(noteBookId, notebookName) { 
+    this.selectedNotebookId = noteBookId;
     this.selectedNotebookName = notebookName;
     this.isOpenArchiveDialog = true;
   }
   
-  openRestoreDialog(notebookId, notebookName) { 
-    this.selectedNotebookId = notebookId;
+  openRestoreDialog(noteBookId, notebookName) { 
+    this.selectedNotebookId = noteBookId;
     this.selectedNotebookName = notebookName;
     this.isOpenRestoreDialog = true;
   }
 
-  openDeleteDialog(notebookId, notebookName) { 
-    this.selectedNotebookId = notebookId;
+  openDeleteDialog(noteBookId, notebookName) { 
+    this.selectedNotebookId = noteBookId;
     this.selectedNotebookName = notebookName;
     this.isOpenDeleteDialog = true;
   }
   
-  userAction(action, notebookId, notebookName) {
+  userAction(action, noteBookId, notebookName) {
     this.dispatchEvent(
       new CustomEvent("catalog-notebook-event", {
         detail: {
           data: {
             action: action,
-            notebookId: notebookId,
+            noteBookId: noteBookId,
             notebookName: notebookName
           }
         }
       })
     );
-  }
-
-  redirectWikiPage(){
   }
 
   render() {
@@ -476,21 +535,26 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
         .alertmessage {
           display: ${this.alertOpen ? "block" : "none"};
         }
+        .card-show {
+          display: ${this.cardShow ? "block" : "none"};
+        }
       </style>
-      <omni-dialog title="Archive ${this.selectedNotebookName}" close-string="Archive Notebook" dismiss-string="Cancel"
+      <omni-dialog title="Archive ${this.selectedNotebookName}" 
+        close-string="Archive Notebook" dismiss-string="Cancel"
         is-open="${this.isOpenArchiveDialog}" @omni-dialog-dimissed="${this.archiveDialogDismissed}"
         @omni-dialog-closed="${this.archiveNotebook}" type="warning">
         <form><P>Are you sure want to archive ${this.selectedNotebookName}?</p></form>
       </omni-dialog>
 
-      <omni-dialog title="Unarchive ${this.selectedNotebookName}" close-string="Unarchive Notebook" dismiss-string="Cancel"
+      <omni-dialog title="Unarchive ${this.selectedNotebookName}" 
+        close-string="Unarchive Notebook" dismiss-string="Cancel"
         is-open="${this.isOpenRestoreDialog}" @omni-dialog-dimissed="${this.restoreDialogDismissed}"
         @omni-dialog-closed="${this.restoreNotebook}" type="warning">
         <form><P>Are you sure want to unarchive ${this.selectedNotebookName}?</p></form>
       </omni-dialog>
 
-      <omni-dialog title="Delete ${this.selectedNotebookName}" close-string="Delete Notebook" dismiss-string="Cancel"
-        is-open="${this.isOpenDeleteDialog}" @omni-dialog-dimissed="${this.deleteDialogDismissed}"
+      <omni-dialog title="Delete ${this.selectedNotebookName}" close-string="Delete Notebook" 
+        dismiss-string="Cancel" is-open="${this.isOpenDeleteDialog}" @omni-dialog-dimissed="${this.deleteDialogDismissed}"
         @omni-dialog-closed="${this.deleteNotebook}" type="warning">
         <form><P>Are you sure want to delete ${this.selectedNotebookName}?</p></form>
       </omni-dialog>
@@ -504,9 +568,10 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
             <div class="col">
               <div class="form-group">
                 <label>Notebook Name <small class="text-danger">*</small></label>
-                <input type="text" class="form-control" placeholder="Enter Notebook Name" value="${this.data.newNotebook.noteBookId.name}"
+                <input type="text" class="form-control" placeholder="Enter Notebook Name" 
+                  .value="${this.data.newNotebook.noteBookId.name}"
                   @blur="${ e => {
-                    this.$data.set('newNotebook.noteBookId.name', e.target.value);
+                    this.$data.set('newNotebook.noteBookId.name', e);
                     this.$validations.validate('newNotebook.noteBookId.name');
                   }
                 }"
@@ -515,9 +580,9 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
                   this.$validations.getValidationErrors('newNotebook.noteBookId.name').map(error => {
                     switch (error) {
                       case 'isNotEmpty':
-                        return html`<div class="invalid-feedback d-block">Notebook name is required</div>`
+                        return html`<div class="invalid-feedback d-block">Notebook name is required.</div>`
                       case 'pattern':
-                        return html`<div class="invalid-feedback d-block">Notebook Name is not valid. </div>`
+                        return html`<div class="invalid-feedback d-block">Notebook name should contain between 6 to 30 char inlcudes only alphanumeric and '_'. It should start from alphabetic character.</div>`
                     }
                   })
                 }
@@ -526,9 +591,10 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
             <div class="col">
               <div class="form-group">
                 <label>Notebook Version <small class="text-danger">*</small></label>
-                <input type="text" class="form-control" placeholder="Enter Notebook Version" value="${this.data.newNotebook.noteBookId.versionId.label}"
+                <input type="text" class="form-control" placeholder="Enter Notebook Version" 
+                  .value="${this.data.newNotebook.noteBookId.versionId.label}"
                   @blur="${ e => {
-                      this.$data.set('newNotebook.noteBookId.versionId.label', e.target.value);
+                      this.$data.set('newNotebook.noteBookId.versionId.label', e);
                       this.$validations.validate('newNotebook.noteBookId.versionId.label');
                     }
                   }"
@@ -537,15 +603,16 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
                   this.$validations.getValidationErrors('newNotebook.noteBookId.versionId.label').map(error => {
                     switch (error) {
                       case 'isNotEmpty':
-                        return html`<div class="invalid-feedback d-block">Notebook version is required</div>`
+                        return html`<div class="invalid-feedback d-block">Notebook version is required.</div>`
                       case 'pattern':
-                        return html`<div class="invalid-feedback d-block">Notebook version is not valid. </div>`
+                        return html`<div class="invalid-feedback d-block">Notebook version should contain between 1 to 14 char includes only alphanumeric, '.' and '_'.</div>`
                     }
                   })
                 }
               </div>
             </div>
           </div>
+          <br/>
           <div class="row">
             <div class="col">
               <div class="form-group">
@@ -560,8 +627,8 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
             <div class="col">
               <div class="form-group">
                 <label>Notebook Description</label>
-                <textarea class="form-control" placeholder="Enter Notebook Description"
-                  @blur="${e => this.$data.set('newNotebook.description', e.target.value)}">${this.data.newNotebook.description}</textarea>
+                <textarea class="form-control" placeholder="Enter Notebook Description" .value="${this.data.newNotebook.description}"
+                  @blur="${e => this.$data.set('newNotebook.description', e)}"></textarea>
               </div>
             </div>
           </div>
@@ -580,7 +647,7 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
                         <a  class="close" @click=${e => this.alertOpen=false}>
                           <span aria-hidden="true">&nbsp;&times;</span>
                         </a>
-                        ${this.successMessage}
+                        <mwc-icon>done_outline</mwc-icon>&nbsp;&nbsp;<span class="span-message">${this.successMessage}</span>
                       </div>
                     `
                     :``
@@ -591,7 +658,7 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
                         <a class="close" @click=${e => this.alertOpen=false}>
                             <span aria-hidden="true">&nbsp;&times;</span>
                         </a>
-                        ${this.errorMessage}
+                        <mwc-icon>error</mwc-icon>&nbsp;&nbsp;<span class="span-message">${this.errorMessage}</span>
                       </div>
                     `
                     :``
@@ -601,17 +668,17 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
               <div class="row" style="margin:15px 0;">
                   <div class="btn-toolbar mb-2 mb-md-0" style="position: absolute; right:0;">
                     <div class="btn-group mr-2">
-                      <button type="button" class="btn btn-primary" style="border-top-right-radius:3px; border-bottom-right-radius: 3px"
+                      <button type="button" class="btn btn-primary"
                         @click="${this.openModal}">
                         Create Notebook
                       </button>&nbsp;&nbsp;
                       <div class="input-group-append">
-                          <a href="javascript:void" @click=${e => this.redirectWikiPage()}
+                          <a href=${this.notebookWikiURL} target="_blank"
                             class="btnIconTop btn btn-sm btn-secondary mr-1"
                             data-toggle="tooltip"
                             data-placement="top"
                             title="Click here for wiki help">
-                            <mwc-icon>help</mwc-icon> </a>
+                            <mwc-icon class="help-icon">help</mwc-icon> </a>
                         </div>
                     </div>
                   </div>
@@ -625,7 +692,8 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
                       <a href="javascript:void" @click=${e => this.filterNotebooks({ notebookType: "ZEPPELIN" })}
                         class="nav-link ${get(this.activeFilter, "notebookType", "") === "ZEPPELIN"? "active" : ""}">
                         Zeppelin Notebooks&nbsp;&nbsp;
-                        <span class="badge ${get(this.activeFilter, "notebookType", "") === "ZEPPELIN"? "badge-light" : "badge-secondary"}"">${this.zeppelinNotebookCount}</span>
+                        <span class="badge ${get(this.activeFilter, "notebookType", "") === "ZEPPELIN"? "badge-light" : "badge-secondary"}"">
+                          ${this.zeppelinNotebookCount}</span>
                       </a>
                     </li>
                     <li class="nav-item mr-2">
@@ -633,14 +701,16 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
                         class="nav-link ${get(this.activeFilter,"notebookType", "") === "JUPYTER"? "active": ""}">
                         Jupyter Notebooks&nbsp;&nbsp;
                         
-                        <span class="badge ${get(this.activeFilter, "notebookType", "") === "JUPYTER"? "badge-light" : "badge-secondary"}"">${this.jupyterNotebookCount}</span>
+                        <span class="badge ${get(this.activeFilter, "notebookType", "") === "JUPYTER"? "badge-light" : "badge-secondary"}"">
+                          ${this.jupyterNotebookCount}</span>
                       </a>
                     </li>
                     <li class="nav-item mr-2">
                       <a href="javascript:void" @click=${e => this.filterNotebooks()}
                         class="nav-link ${get(this.activeFilter, "notebookType","") === ""? "active": ""}">
                         All Notebooks&nbsp;&nbsp;
-                        <span class="badge ${get(this.activeFilter, "notebookType", "") === ""? "badge-light" : "badge-secondary"}"">${this.allNotebookCount}</span>
+                        <span class="badge ${get(this.activeFilter, "notebookType", "") === ""? "badge-light" : "badge-secondary"}"">
+                          ${this.allNotebookCount}</span>
                       </a>
                     </li>
                   </ul>
@@ -659,7 +729,7 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
                     </div>
                     <div class="btn-group mr-2">
                       &nbsp;
-                      <input type="text" style="height: 30px" class="form-control w-100" placeholder="Search Notebook"
+                      <input type="text" class="form-control w-100" placeholder="Search Notebook"
                         @input=${e => this.searchNotebooks(e.target.value)}/>
                       <div class="input-group-append">
                         <a class="btnIcon btn btn-sm btn-primary  mr-1" data-toggle="tooltip" data-placement="top" title="Search Notebook">
@@ -676,11 +746,11 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
                   item =>
                     html`
                     <div class="col-md-3">
-                      <div class="card-shadow card card-link mb-3 mb-5 bg-white rounded">
+                      <div class="card-shadow card card-link mb-3 mb-5 bg-white">
                         <div class="card-body">
                           <div>
-                            <a href="javascript:void" @click=${e => this.userAction("view-notebook", item.notebookId, item.name)}>
-                              <h4 class="name">${item.name}</h4>
+                            <a href="javascript:void" @click=${e => this.userAction("view-notebook", item.noteBookId, item.name)}>
+                              <h4 class="notebook-name">${item.name}</h4>
                               <span><strong>Notebook Type</strong>: &nbsp; ${item.notebookType}</span>
                               <br />
                               <span><strong>Notebook Version</strong>: &nbsp;
@@ -711,17 +781,17 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
                             <div>
                             ${item.status === "ACTIVE"
                               ? html`
-                                <a href="javascript:void"
+                                <a href="javascript:void" @click="${e => this.launchNotebook(item.noteBookId)}"
                                   class="btnIcon btn btn-sm my-1 mr-1" data-toggle="tooltip" data-placement="top" title="Launch Notebook">
                                   <mwc-icon class="mwc-icon-gray">launch</mwc-icon>
                                 </a>
-                                <a href="javascript:void" @click="${e => this.openArchiveDialog(item.notebookId, item.name)}"
+                                <a href="javascript:void" @click="${e => this.openArchiveDialog(item.noteBookId, item.name)}"
                                   class="btnIcon btn btn-sm my-1 mr-1" data-toggle="tooltip" data-placement="top" title="Archive Notebook" >
                                   <mwc-icon class="mwc-icon-gray">archive</mwc-icon>
                                 </a>
                               `
                               : html`
-                                <a href="javascript:void" @click="${e => this.openRestoreDialog(item.notebookId, item.name)}"
+                                <a href="javascript:void" @click="${e => this.openRestoreDialog(item.noteBookId, item.name)}"
                                   class="btnIcon btn btn-sm my-1 mr-1" data-toggle="tooltip" data-placement="top" title="Unarchive Notebook">
                                   <mwc-icon class="mwc-icon-gray">restore</mwc-icon>
                                 </a>
@@ -740,16 +810,20 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
                   <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-end">
                       <li class="page-item">
-                        <a class="page-link" href="javascript:void" @click=${e => this.navigatePage("first")}>First</a>
+                        <a href="javascript:void" @click=${e => this.navigatePage("first")}
+                          class="page-link ${this.currentPage !== 1? "active" : "inactive"}">First</a>                          
                       </li>
                       <li class="page-item">
-                        <a class="page-link" href="javascript:void" @click=${e => this.navigatePage("previous")} >Previous</a>
+                        <a class="page-link ${this.currentPage !== 1? "active" : "inactive"}" href="javascript:void" 
+                          @click=${e => this.navigatePage("previous")} >Previous</a>
                       </li>
                       <li class="page-item">
-                        <a class="page-link" href="javascript:void" @click=${e => this.navigatePage("next")} >Next</a>
+                        <a class="page-link ${this.currentPage < this.totalPages? "active" : "inactive"}" href="javascript:void" 
+                          @click=${e => this.navigatePage("next")} >Next</a>
                       </li>
                       <li class="page-item">
-                        <a class="page-link" href="javascript:void" @click=${e => this.navigatePage("last")} >Last</a>
+                        <a class="page-link ${this.currentPage < this.totalPages? "active" : "inactive"}" href="javascript:void" 
+                          @click=${e => this.navigatePage("last")} >Last</a>
                       </li>
                       &nbsp;&nbsp;&nbsp;&nbsp;
                     </ul>
@@ -765,89 +839,105 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
       
       ${this.view === 'add'
         ? html`
-          <div class="row">
-            <div class="col-lg-12">
-              ${this.successMessage !== ''
-                ? html`
-                  <div class="alertmessage alert alert-success">
-                    <a class="close" @click=${e => this.alertOpen = false}>
-                      <span aria-hidden="true">&nbsp;&times;</span>
-                    </a> ${this.successMessage}
-                  </div>
-                `: ``
-              }
-              ${this.errorMessage !== ''
-                ? html`
-                  <div class="alertmessage alert alert-danger">
-                    <a class="close" @click=${e => this.alertOpen = false}>
+        <div class="row" style="margin:5px 0">
+          <div class="col-lg-12">
+            <div class="row">
+              <div class="col-lg-12">
+                ${this.successMessage !== ''
+                  ? html`
+                    <div class="alertmessage alert alert-success">
+                      <a class="close" @click=${e => this.alertOpen = false}>
                         <span aria-hidden="true">&nbsp;&times;</span>
-                    </a>  ${this.errorMessage}
-                  </div>
-                `: ``
-              }
+                      </a> <mwc-icon>done_outline</mwc-icon>&nbsp;&nbsp;<span class="span-message">${this.successMessage}</span>
+                    </div>
+                  `: ``
+                }
+                ${this.errorMessage !== ''
+                  ? html`
+                    <div class="alertmessage alert alert-danger">
+                      <a class="close" @click=${e => this.alertOpen = false}>
+                          <span aria-hidden="true">&nbsp;&times;</span>
+                      </a>  <mwc-icon>error</mwc-icon>&nbsp;&nbsp;<span class="span-message">${this.errorMessage}</span>
+                    </div>
+                  `: ``
+                }
+              </div>
             </div>
-          </div>
-          <div class="row" style="margin:5px 0">
-            <div class="btn-toolbar mb-2 mb-md-0" style="position: absolute; right:0;">
-              <div class="btn-group mr-2">
-                <div class="input-group-append">
-                  <a href="javascript:void" @click=${e => this.redirectWikiPage()} class="btnIconTop btn btn-sm btn-secondary mr-1" 
-                    data-toggle="tooltip" data-placement="top" title="Click here for wiki help">
-                    <mwc-icon>help</mwc-icon>
-                  </a>
+            <div class="row" style="margin:5px 0">
+              <div class="btn-toolbar mb-2 mb-md-0" style="position: absolute; right:0; padding-right: 5px;">
+                <div class="btn-group mr-2">
+                  <div class="input-group-append">
+                    <a href=${this.notebookWikiURL} target="_blank" class="btnIconTop btn btn-sm btn-secondary mr-1" 
+                      data-toggle="tooltip" data-placement="top" title="Click here for wiki help">
+                      <mwc-icon class="help-icon">help</mwc-icon>
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <br/>
-          <div class="row">
-            <div class="col-md-12 py-3">
-              <div class="card mb-124 shadow mb-5 bg-white rounded">
-                <div class="card-header">
-                  <div class="row" style="margin:5px 0; margin-top: 0px;">
-                    <mwc-icon class="textColor">library_books</mwc-icon>&nbsp;&nbsp;&nbsp;
-                    <h4 class="textColor card-title">Notebooks</h4>
-                    <div style="position: absolute; right:0">
-                      <a class="btn btn-sm btn-secondary my-2">-</a>
-                      &nbsp;&nbsp;&nbsp;&nbsp;
+            <br/><br/>
+            <div class="row">
+              <div class="col-md-12 py-3">
+                <div class="card mb-124 shadow mb-5 bg-white">
+                  <div class="card-header">
+                    <div class="row" style="margin:5px 0; margin-top: 0px;">
+                      <mwc-icon class="textColor">library_books</mwc-icon>&nbsp;&nbsp;&nbsp;
+                      <h4 class="textColor card-title">Notebooks</h4>
+                      <div style="position: absolute; right:0">
+                        ${
+                          this.cardShow === false
+                          ? html`
+                            <a class="toggle-a btn btn-sm btn-secondary my-2" @click=${e => this.cardShow = true}>
+                              <span class="toggle-plus-span toggle-span">+</span>
+                            </a>
+                          `
+                          : html`
+                            <a class="toggle-a btn btn-sm btn-secondary my-2" @click=${e => this.cardShow = false}>
+                              <span class="toggle-span">-</span>
+                            </a>
+                          `
+                        }
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body card-show">
+                    <div class="row" style="margin:10px 0;margin-bottom:20px;">
+                      <h7>No Notebooks, get started with ML Workbench by creating your first Notebook.</h7>
+                    </div>
+                    <div class="row" style="margin:10px 0">
+                      <button type="button" class="btn btn-primary" @click="${this.openModal}">
+                        Create Notebook
+                      </button>
                     </div>
                   </div>
                 </div>
-                <div class="card-body">
-                  <div class="row" style="margin:10px 0;margin-bottom:20px;">
-                    <h7>No Notebooks, get started with ML Workbench by creating your first Notebook.</h7>
-                  </div>
-                  <div class="row" style="margin:10px 0">
-                    <button type="button" class="btn btn-primary" @click="${this.openModal}">
-                      Create Notebook
-                    </button>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
+        </div>
         `
         : html`
       `}
-          
+
       ${this.view === 'error'
         ? html`
           <div class="alertmessage alert alert-danger">
             <a class="close" @click=${e => this.alertOpen = false}>
                 <span aria-hidden="true">&nbsp;&times;</span>
             </a>
-            ${this.errorMessage}
+            <mwc-icon>error</mwc-icon>&nbsp;&nbsp;<span class="span-message">${this.errorMessage}</span>
           </div>
         `
         : html`
-      `}
-
+      `} 
+      
       ${this.view === ''
         ? html`
           <p class="success-status"> Loading ..</p>
         `
         : html`
-      `}  
+      `} 
     `;
   }
 }

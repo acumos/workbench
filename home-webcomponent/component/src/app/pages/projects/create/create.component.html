@@ -20,14 +20,18 @@ limitations under the License.
 
 <!-- <create-project-element (create-project-event)="this.OnCreateProjectEvent($event)">
 </create-project-element> -->
-<nav>
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a routerLink="/pages/dashboard">Dashboard</a></li>
-    <li class="breadcrumb-item"><a>Projects</a></li>
-    <li class="breadcrumb-item active">Create</li>
-  </ol>
-</nav>
-<project-element [attr.projectId]="id" [attr.componenturl]="projectComponentURL" (project-event)="this.OnProjectEvent($event)"> 
-  
-</project-element>
+
+<div *ngIf="alertOpen; else loadComponent">
+  <div class="alertmessage alert alert-danger">
+    <a class="close" (click)="alertOpen=false">
+      <span aria-hidden="true">&nbsp;&times;</span>
+    </a>
+    {{sessionError}}
+  </div>
+</div>
+<ng-template #loadComponent>
+  <project-element [attr.projectId]="id" [attr.componenturl]="projectComponentURL" (project-event)="this.OnProjectEvent($event)"
+  [attr.userName]="userName" [attr.authToken]="authToken">  
+  </project-element>
+</ng-template>
 

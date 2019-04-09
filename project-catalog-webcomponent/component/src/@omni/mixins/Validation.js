@@ -18,7 +18,7 @@ limitations under the License.
 ===============LICENSE_END=========================================================
 */
 
-import { each, set, get, isUndefined, isEmpty } from "lodash-es";
+import { each, set, get, isUndefined, isObject } from "lodash-es";
 export default LitElementBase =>
   class extends LitElementBase {
     static get properties() {
@@ -72,6 +72,17 @@ export default LitElementBase =>
         },
 
         /**
+         * Resets the validation state
+         * @param {String} path The path of the form to reset the validation on
+         */
+        resetValidation(path) {
+          this.setDeepProperty('$dirty', false, get(this.$fields, path));
+          this.setDeepProperty('$touch', false, get(this.$fields, path));
+          this.setDeepProperty('$invalid', false, get(this.$fields, path));
+          this.setDeepProperty('failedValidations', [], get(this.$fields, path));
+        },
+
+        /**
          * Checks the give path and returns the valiation state
          * @param {String} path The path of the field to check validation
          */
@@ -80,7 +91,7 @@ export default LitElementBase =>
           return get(this.$fields, `${path}.failedValidations`, []);
         },
 
-        get $valid() {          
+        get $valid() {
           return this.countDeepTruthy('$invalid', this.$fields) === 0;
         },
 
@@ -111,6 +122,18 @@ export default LitElementBase =>
           }
 
           return searchDeep(root, 0);
+        },
+
+        setDeepProperty(property, newValue, root) {
+          each(root, (value, key) => {
+            if (key === property) {
+              set(root, key, newValue);
+            } else {
+              if (isObject(root[key])) {
+                this.setDeepProperty(property, newValue, root[key])
+              }
+            }
+          })
         }
       };
     }

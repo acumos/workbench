@@ -48,7 +48,8 @@ export class NotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 				isOpenRestoreDialog: { type: Boolean },
 				successMessage: {type: String},
 				errorMessage: {type: String},
-				alertOpen: {type: Boolean}
+				alertOpen: {type: Boolean},
+				cardShow: {type: Boolean}
 			};
 		}
 		
@@ -93,7 +94,7 @@ export class NotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 					this.notebookmSURL = envVar.msconfig.notebookmSURL;
 					this.user_name = envVar.user_name;
 					if(this.user_name === undefined || this.user_name === null || this.user_name === ''){
-						this.errorMessge = 'Unable to retrieve User ID from Session Cookie. Pls login to Acumos portal and come back here..';
+						this.errorMessage = 'Unable to retrieve User ID from Session Cookie. Pls login to Acumos portal and come back here..';
 						this.alertOpen = true;
 						this.view = 'error';
 					} else {
@@ -135,8 +136,9 @@ export class NotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 					if(response.status === 'Success'){
 						this.renderViewNotebook(response.data);
 						this.view = 'view';
+						this.cardShow = true;
 					}else{
-						this.errorMessage = n.message;
+						this.errorMessage = response.message;
 						this.view = 'error';
 						this.alertOpen = true;
 					}
@@ -224,7 +226,7 @@ export class NotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 					this.alertOpen = true;
 			}).catch((error) => {
 				console.info('Request failed', error);
-				this.errorMessge = 'Update notebook request failed with error: '+ error;
+				this.errorMessage = 'Update notebook request failed with error: '+ error;
 			});
 		}
 
@@ -351,6 +353,9 @@ export class NotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 					.alertmessage {
 						display: ${this.alertOpen ? "block" : "none"};
 					}
+					.card-show {
+						display: ${this.cardShow ? "block" : "none"};
+					}
 				</style>
 				<omni-dialog title="Archive ${this.notebookName}" close-string="Archive Notebook" dismiss-string="Cancel"
 					is-open="${this.isOpenArchiveDialog}" @omni-dialog-dimissed="${this.archiveDialogDismissed}"
@@ -447,12 +452,14 @@ export class NotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 											? html`
 												${this.isEdit 
 													? html`
-														<a href="javascript:void" @click=${(e) => this.updateNotebook()} class="btnIcon btn btn-sm btn-primary mr-1" data-toggle="tooltip" data-placement="top" title="Edit Notebook">
+														<a href="javascript:void" @click=${(e) => this.updateNotebook()} 
+															class="btnIcon btn btn-sm btn-primary mr-1" data-toggle="tooltip" data-placement="top" title="Edit Notebook">
 															<mwc-icon>save</mwc-icon>
 														</a>&nbsp;
 													`
 													: html`
-														<a href="javascript:void" @click=${(e) => this.openEditWindow()} class="btnIcon btn btn-sm btn-primary mr-1" data-toggle="tooltip" data-placement="top" title="Edit Notebook">
+														<a href="javascript:void" @click=${(e) => this.openEditWindow()} 
+															class="btnIcon btn btn-sm btn-primary mr-1" data-toggle="tooltip" data-placement="top" title="Edit Notebook">
 															<mwc-icon>edit</mwc-icon>
 														</a>&nbsp;
 													`
@@ -461,11 +468,24 @@ export class NotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 											: ``
 										}
 										<div style="position: absolute; right:0" >
-											<a  class="btn btn-sm btn-secondary my-2">-</a>&nbsp;&nbsp;&nbsp;&nbsp;
+											${
+												this.cardShow === false
+												? html`
+													<a class="toggle-a btn btn-sm btn-secondary my-2" @click=${e => this.cardShow = true}>
+														<span class="toggle-span">+</span>
+													</a>
+												`
+												: html`
+													<a class="toggle-a btn btn-sm btn-secondary my-2" @click=${e => this.cardShow = false}>
+														<span class="toggle-span">-</span>
+													</a>
+												`
+											}
+											&nbsp;&nbsp;&nbsp;&nbsp;
 										</div>
 									</div>
 								</div>
-								<div class="card-body ">
+								<div class="card-body card-show">
 									<table class="table table-bordered table-sm">
 										<tbody>
 											<tr>
@@ -473,7 +493,8 @@ export class NotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 												${this.isEdit 
 													? html`
 														<td>
-															<input type="text" value=${this.notebookName} class="form-control" @input=${(e) => this.setName(e)} id="name" placeholder="Enter notebook name">
+															<input type="text" value=${this.notebookName} class="form-control" @input=${(e) => this.setName(e)} 
+																id="name" placeholder="Enter notebook name">
 														</td>
 													`
 													: html`
@@ -490,7 +511,8 @@ export class NotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 												${this.isEdit 
 													? html`
 														<td>
-															<input type="text" value=${this.notebookVersion} class="form-control" @input=${(e) => this.setVersion(e)} id="version" placeholder="Enter notebook version">
+															<input type="text" value=${this.notebookVersion} class="form-control" @input=${(e) => this.setVersion(e)} 
+																id="version" placeholder="Enter notebook version">
 														</td>
 													`
 													: html`
@@ -526,7 +548,8 @@ export class NotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 												${this.isEdit 
 													? html`
 													<td>
-														<textarea class="form-control" id="description" rows="2" @input=${(e) => this.setDescription(e)} value=${this.notebookDesc}>${this.notebookDesc}</textarea>
+														<textarea class="form-control" id="description" rows="2" @input=${(e) => this.setDescription(e)} 
+															value=${this.notebookDesc}>${this.notebookDesc}</textarea>
 													</td>
 													`
 													: html`
@@ -550,7 +573,7 @@ export class NotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 						<a class="close" @click=${e => this.alertOpen=false}>
 								<span aria-hidden="true">&nbsp;&times;</span>
 						</a>
-						${this.errorMessge}
+						${this.errorMessage}
 					</div>
 				`   
 				: html`

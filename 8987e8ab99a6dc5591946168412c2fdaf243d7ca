@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7a3a92a7_0ced439f",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/controller/NotebookServiceController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-10T17:19:06Z",
+      "side": 1,
+      "message": "launchNotebook method starts (if not already started) either JupyterNotebook or Zeppelin instance and return the URL.",
+      "parentUuid": "3e965d32_7c866bad",
+      "range": {
+        "startLine": 167,
+        "startChar": 26,
+        "endLine": 167,
+        "endChar": 40
+      },
+      "revId": "8987e8ab99a6dc5591946168412c2fdaf243d7ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d56916e_183aa917",
         "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/exception/AssociationNotFoundException.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2019-04-10T14:25:06Z",
       "side": 1,
       "message": "This seems like a silly way to report an error, a trivial extension of an exception, with the error expressed as the class name.  It does not carry any supplementary information so I think it\u0027s not a good pattern.",
+      "range": {
+        "startLine": 26,
+        "startChar": 13,
+        "endLine": 26,
+        "endChar": 41
+      },
+      "revId": "8987e8ab99a6dc5591946168412c2fdaf243d7ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "abd54f67_3ecc939e",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/exception/AssociationNotFoundException.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-10T17:19:06Z",
+      "side": 1,
+      "message": "Class is more generic, the error message passed to constructor will carry specific of missing association.  For notebook we have validation to verify whether notebook and project are associated or not.  \nSupplementary information will be in message parameter pass to the constructor.",
+      "parentUuid": "9d56916e_183aa917",
       "range": {
         "startLine": 26,
         "startChar": 13,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f951abc2_8628b0e0",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/exception/CustomizedResponseEntityExceptionHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-10T17:19:06Z",
+      "side": 1,
+      "message": "updated to HttpStatus.BAD_REQUEST",
+      "parentUuid": "466adefd_5f6976fb",
+      "range": {
+        "startLine": 84,
+        "startChar": 48,
+        "endLine": 84,
+        "endChar": 65
+      },
+      "revId": "8987e8ab99a6dc5591946168412c2fdaf243d7ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e859a37e_5725bf0f",
         "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/exception/CustomizedResponseEntityExceptionHandler.java",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2019-04-10T14:25:06Z",
       "side": 1,
       "message": "This is very confusing.  How do you judge a true path-not-found 404 from a valid path but the request could not be processed 404?  The notebook object is null anyhow, right??",
+      "range": {
+        "startLine": 99,
+        "startChar": 48,
+        "endLine": 99,
+        "endChar": 68
+      },
+      "revId": "8987e8ab99a6dc5591946168412c2fdaf243d7ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f29e32b7_48db3822",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/exception/CustomizedResponseEntityExceptionHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-10T17:19:06Z",
+      "side": 1,
+      "message": "I did some google but not able to make out which HttpStatus to use, should I use 400 (BAD_REQUEST).  But EntityNotFoundExcetion may be for : User, Project, Notebook, etc.  The message has the missing details.  Please suggest for appropriate HttpStatus.",
+      "parentUuid": "e859a37e_5725bf0f",
       "range": {
         "startLine": 99,
         "startChar": 48,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "26158da4_d79ed488",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/exception/CustomizedResponseEntityExceptionHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-10T17:19:06Z",
+      "side": 1,
+      "message": "renamed to : getNotebokWithErroStatus",
+      "parentUuid": "47896d4c_808fb9d4",
+      "range": {
+        "startLine": 122,
+        "startChar": 18,
+        "endLine": 122,
+        "endChar": 28
+      },
+      "revId": "8987e8ab99a6dc5591946168412c2fdaf243d7ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12f08d90_1d77fe31",
         "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/exception/TargetServiceInvocationException.java",
         "patchSetId": 2
@@ -128,6 +248,30 @@
       "writtenOn": "2019-04-10T14:25:06Z",
       "side": 1,
       "message": "This simply duplicates the class name, why hardcode it, why not just do this.class.getName() ?",
+      "range": {
+        "startLine": 31,
+        "startChar": 40,
+        "endLine": 31,
+        "endChar": 75
+      },
+      "revId": "8987e8ab99a6dc5591946168412c2fdaf243d7ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9cc406e9_51414f37",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/exception/TargetServiceInvocationException.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-10T17:19:06Z",
+      "side": 1,
+      "message": "to initialize static final variable used : TargetServiceInvocationException.class.getSimpleName()",
+      "parentUuid": "12f08d90_1d77fe31",
       "range": {
         "startLine": 31,
         "startChar": 40,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "5182919c_115d272f",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/JupyterhubRestClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-10T17:19:06Z",
+      "side": 1,
+      "message": "I didn\u0027t follow the convention of \"I\" at the beginning of Interface name.  Updated name to JupyterHubRestClient",
+      "parentUuid": "94021ff1_1d187ca1",
+      "range": {
+        "startLine": 23,
+        "startChar": 17,
+        "endLine": 23,
+        "endChar": 18
+      },
+      "revId": "8987e8ab99a6dc5591946168412c2fdaf243d7ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40b230cc_716c7b98",
         "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/JupyterhubRestClientImpl.java",
         "patchSetId": 2
@@ -174,6 +342,30 @@
       "writtenOn": "2019-04-10T14:25:06Z",
       "side": 1,
       "message": "services rarely carry the impl class name, are you sure you want this?",
+      "range": {
+        "startLine": 54,
+        "startChar": 10,
+        "endLine": 54,
+        "endChar": 34
+      },
+      "revId": "8987e8ab99a6dc5591946168412c2fdaf243d7ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a4b5ac14_c67e0292",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/JupyterhubRestClientImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-10T17:19:06Z",
+      "side": 1,
+      "message": "some where required for mockito",
+      "parentUuid": "40b230cc_716c7b98",
       "range": {
         "startLine": 54,
         "startChar": 10,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "a7c65f84_7cfa64e4",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/JupyterhubRestClientImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-10T17:19:06Z",
+      "side": 1,
+      "message": "Yes, but other logging configuration as pre Acumos standards also need to done.  So included TODO to get it done after merge in subsequent commit.",
+      "parentUuid": "3bde1f13_667b4c82",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 119,
+        "endChar": 22
+      },
+      "revId": "8987e8ab99a6dc5591946168412c2fdaf243d7ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d97ebddd_b2258627",
         "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookService.java",
         "patchSetId": 2
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "2429aa0d_54a31075",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-10T17:19:06Z",
+      "side": 1,
+      "message": "Just to avoid if(true) statement in caller.  If validation hold true, then control will automatically return back to caller, or else will take exception path.  No explicit check is required at caller end, to check where validation passed or failed.",
+      "parentUuid": "d97ebddd_b2258627",
+      "range": {
+        "startLine": 49,
+        "startChar": 1,
+        "endLine": 49,
+        "endChar": 5
+      },
+      "revId": "8987e8ab99a6dc5591946168412c2fdaf243d7ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41eab7ec_6457809b",
         "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookService.java",
         "patchSetId": 2
@@ -243,6 +483,30 @@
       "writtenOn": "2019-04-10T14:25:06Z",
       "side": 1,
       "message": "Does it ever return true, or does it throw!?  This is confusing.",
+      "range": {
+        "startLine": 102,
+        "startChar": 3,
+        "endLine": 105,
+        "endChar": 59
+      },
+      "revId": "8987e8ab99a6dc5591946168412c2fdaf243d7ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "28711fbb_0aaabc83",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-10T17:19:06Z",
+      "side": 1,
+      "message": "It always return true, in case of validation failure, control will take exception path.  Have keep it,so as to check how JUnit will differ from void return type.",
+      "parentUuid": "41eab7ec_6457809b",
       "range": {
         "startLine": 102,
         "startChar": 3,
@@ -301,6 +565,30 @@
     },
     {
       "key": {
+        "uuid": "20308d7d_73c14a74",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-10T17:19:06Z",
+      "side": 1,
+      "message": "To get more control of the dependency injection process and even developer will know which exact is wired and avoid any confusion",
+      "parentUuid": "8279a26d_833ba951",
+      "range": {
+        "startLine": 69,
+        "startChar": 13,
+        "endLine": 69,
+        "endChar": 41
+      },
+      "revId": "8987e8ab99a6dc5591946168412c2fdaf243d7ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc452586_50f665e9",
         "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookServiceImpl.java",
         "patchSetId": 2
@@ -347,6 +635,30 @@
     },
     {
       "key": {
+        "uuid": "d26f06a6_f90ef3df",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-10T17:19:06Z",
+      "side": 1,
+      "message": ":) Changed",
+      "parentUuid": "85021061_58ded513",
+      "range": {
+        "startLine": 199,
+        "startChar": 33,
+        "endLine": 199,
+        "endChar": 51
+      },
+      "revId": "8987e8ab99a6dc5591946168412c2fdaf243d7ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6460130c_d15f1580",
         "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookServiceImpl.java",
         "patchSetId": 2
@@ -358,6 +670,30 @@
       "writtenOn": "2019-04-10T14:25:06Z",
       "side": 1,
       "message": "This should throw for now, or at least log a BIG FAT error, method not implemented yet etc. etc.",
+      "range": {
+        "startLine": 452,
+        "startChar": 0,
+        "endLine": 452,
+        "endChar": 11
+      },
+      "revId": "8987e8ab99a6dc5591946168412c2fdaf243d7ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c6448c87_4e8e90f0",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-10T17:19:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6460130c_d15f1580",
       "range": {
         "startLine": 452,
         "startChar": 0,
@@ -393,6 +729,30 @@
     },
     {
       "key": {
+        "uuid": "e33f3945_07380b33",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-10T17:19:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b083f4c2_df958618",
+      "range": {
+        "startLine": 453,
+        "startChar": 4,
+        "endLine": 453,
+        "endChar": 11
+      },
+      "revId": "8987e8ab99a6dc5591946168412c2fdaf243d7ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79e95088_d303103b",
         "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookServiceImpl.java",
         "patchSetId": 2
@@ -404,6 +764,30 @@
       "writtenOn": "2019-04-10T14:25:06Z",
       "side": 1,
       "message": "Instead of implementing this yourself, you should have raised a feature request on CDS because I can do this with a single SQL query and give you true/false.  Consider it.",
+      "range": {
+        "startLine": 462,
+        "startChar": 0,
+        "endLine": 462,
+        "endChar": 77
+      },
+      "revId": "8987e8ab99a6dc5591946168412c2fdaf243d7ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a22dd132_e10b50f6",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-10T17:19:06Z",
+      "side": 1,
+      "message": "Ok, will put TODO for now, we can include it in subsequent CDS version",
+      "parentUuid": "79e95088_d303103b",
       "range": {
         "startLine": 462,
         "startChar": 0,
@@ -439,6 +823,30 @@
     },
     {
       "key": {
+        "uuid": "1a36f913_bdee276e",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/ProjectServiceRestClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-10T17:19:06Z",
+      "side": 1,
+      "message": "But Manoop and you commented to remove the code which is duplicate with project-service and instead should invoke project-service API.  Now what\u0027s the issue, I am totally confused.",
+      "parentUuid": "1ebd66db_a2a729fc",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 43
+      },
+      "revId": "8987e8ab99a6dc5591946168412c2fdaf243d7ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44a69dff_071d5d13",
         "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/ProjectServiceRestClientImpl.java",
         "patchSetId": 2
@@ -450,6 +858,30 @@
       "writtenOn": "2019-04-10T14:25:06Z",
       "side": 1,
       "message": "pls check your service names, don\u0027t think you want Impl in them",
+      "range": {
+        "startLine": 45,
+        "startChar": 10,
+        "endLine": 45,
+        "endChar": 38
+      },
+      "revId": "8987e8ab99a6dc5591946168412c2fdaf243d7ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6309949e_10ca2a96",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/ProjectServiceRestClientImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-10T17:19:06Z",
+      "side": 1,
+      "message": "This helps to identify that class implements Interface, that\u0027s the naming convention followed.",
+      "parentUuid": "44a69dff_071d5d13",
       "range": {
         "startLine": 45,
         "startChar": 10,
@@ -485,6 +917,30 @@
     },
     {
       "key": {
+        "uuid": "1a156688_dfaf5270",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/util/ConfigurationProperties.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-10T17:19:06Z",
+      "side": 1,
+      "message": "Its individual property, not nested.",
+      "parentUuid": "570fe19e_eb483e75",
+      "range": {
+        "startLine": 38,
+        "startChar": 11,
+        "endLine": 38,
+        "endChar": 24
+      },
+      "revId": "8987e8ab99a6dc5591946168412c2fdaf243d7ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d168462c_f27e4745",
         "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/util/NotebookServiceProperties.java",
         "patchSetId": 2
@@ -496,6 +952,30 @@
       "writtenOn": "2019-04-10T14:25:06Z",
       "side": 1,
       "message": "what configuration property do you enter for a notebook exception?  This seems unusual.",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 35
+      },
+      "revId": "8987e8ab99a6dc5591946168412c2fdaf243d7ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "210a3e3f_405dc9b6",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/util/NotebookServiceProperties.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-10T17:19:06Z",
+      "side": 1,
+      "message": "In ds-compositionengine its very difficult to make out what exactly caused error, unless we dig the logs.  Just an attempt to indicate that some issue while accessing CDS MS and for which method.  Corresponding values are in application.proerties and not in SPRING_APPLICATION_JSON.  This class is only for properties in application.properties file.",
+      "parentUuid": "d168462c_f27e4745",
       "range": {
         "startLine": 67,
         "startChar": 0,
@@ -554,6 +1034,30 @@
     },
     {
       "key": {
+        "uuid": "7b73f5ce_625799cd",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/util/NotebookType.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-10T17:19:06Z",
+      "side": 1,
+      "message": "Just default implementation.",
+      "parentUuid": "da6cf18a_ae571f84",
+      "range": {
+        "startLine": 46,
+        "startChar": 16,
+        "endLine": 46,
+        "endChar": 22
+      },
+      "revId": "8987e8ab99a6dc5591946168412c2fdaf243d7ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00f5e07a_754fe0a5",
         "filename": "notebook-service/src/main/resources/application.properties",
         "patchSetId": 2
@@ -577,6 +1081,30 @@
     },
     {
       "key": {
+        "uuid": "35c34eeb_76ead4da",
+        "filename": "notebook-service/src/main/resources/application.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-10T17:19:06Z",
+      "side": 1,
+      "message": "For e.g., complete message will be : \nTargetServiceInvocationException : JupyterNotebook - Launch Server.\nNot to be displayed on UI, the way CDS send back error message, which we cannot display on UI as it is.",
+      "parentUuid": "00f5e07a_754fe0a5",
+      "range": {
+        "startLine": 31,
+        "startChar": 15,
+        "endLine": 31,
+        "endChar": 16
+      },
+      "revId": "8987e8ab99a6dc5591946168412c2fdaf243d7ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4bdd0923_ee16e199",
         "filename": "notebook-service/src/main/resources/application.properties",
         "patchSetId": 2
@@ -588,6 +1116,30 @@
       "writtenOn": "2019-04-10T14:25:06Z",
       "side": 1,
       "message": "What are these properties?  Very confusing",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 48
+      },
+      "revId": "8987e8ab99a6dc5591946168412c2fdaf243d7ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ff041375_28f209a9",
+        "filename": "notebook-service/src/main/resources/application.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-10T17:19:06Z",
+      "side": 1,
+      "message": "to get where exactly its failing.  As per past experience, most of the time its CDS configuration issue, but to find it out we have to dig the logs.  Thsi is just an attempt to get exact cause and for which method.",
+      "parentUuid": "4bdd0923_ee16e199",
       "range": {
         "startLine": 43,
         "startChar": 0,

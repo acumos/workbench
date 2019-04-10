@@ -26,14 +26,29 @@ import org.acumos.cds.domain.MLPUser;
 import org.acumos.workbench.common.vo.Notebook;
 import org.acumos.workbench.common.vo.ServiceState;
 import org.acumos.workbench.notebookservice.exception.ArchivedException;
+import org.acumos.workbench.notebookservice.exception.AssociationNotFoundException;
 import org.acumos.workbench.notebookservice.exception.DuplicateNotebookException;
 import org.acumos.workbench.notebookservice.exception.NotOwnerException;
 import org.acumos.workbench.notebookservice.exception.NotebookNotFoundException;
-import org.acumos.workbench.notebookservice.exception.ProjectNotFoundException;
+import org.acumos.workbench.notebookservice.exception.TargetServiceInvocationException;
 import org.acumos.workbench.notebookservice.exception.UserNotFoundException;
 
 public interface NotebookService {
 
+	
+	/**
+	 * Checks if Notebook for given project ID exists in DB. 
+	 * 
+	 * @param notebookId
+	 * 		the notebookId
+	 * @throws NotebookNotFoundException
+	 * 		throws NotebookNotFoundException if Notebook does not exists.
+	 * @throws TargetServiceInvocationException
+	 * 		Throws TargetServiceInvocationException in case of any error while accessing CDS
+	 */
+	void notebookExists(String notebookId) throws NotebookNotFoundException, TargetServiceInvocationException;
+	
+	
 	/**
 	 * Checks if Notebook with same name and type already exists in DB. 
 	 * If projectId is null then for a user and if projectId is not null then for the project.
@@ -59,8 +74,10 @@ public interface NotebookService {
 	 * 		the notebook object instance.
 	 * @return Notebook
 	 * 		returns Notebook object with additional details.
+	 * @throws TargetServiceInvocationException
+	 * 		Throws TargetServiceInvocationException in case of any error while accessing CDS
 	 */
-	Notebook createNotebook(String authenticatedUserId, String projectId, Notebook notebook);
+	Notebook createNotebook(String authenticatedUserId, String projectId, Notebook notebook) throws TargetServiceInvocationException;
 	
 	
 	/**
@@ -85,7 +102,7 @@ public interface NotebookService {
 	 * @return boolean
 	 * 		return true or false, indicating whether Notebook is archived or not. 
 	 * @throws ArchivedException
-	 * 		throws ArchivedException is the Notebook is archived.
+	 * 		throws ArchivedException if the Notebook is archived.
 	 */
 	boolean isNotebookArchived(String notebookId) throws ArchivedException;
 	
@@ -149,8 +166,10 @@ public interface NotebookService {
 	 * 
 	 * @throws UserNotFoundException
 	 * 		in case if user is not found throws UserNotFoundException.
+	 * @throws TargetServiceInvocationException
+	 * 		in case of any error while accessing CDS service.
 	 */
-	MLPUser getUserDetails(String authenticatedUserId) throws UserNotFoundException;
+	MLPUser getUserDetails(String authenticatedUserId) throws UserNotFoundException, TargetServiceInvocationException;
 
 
 	/**
@@ -168,5 +187,29 @@ public interface NotebookService {
 	 * 		returns Notebook object indication that Notebook is archived successfully.
 	 */
 	Notebook archiveNotebook(String authenticatedUserId, String projectId, String notebookId, String actionType);
+	
+	/**
+	 * Launch the Notebook based on the type of the Notebook
+	 * @param authenticatedUserId
+	 * 		the user login id.
+	 * @param projectId
+	 * 		Associated ProjectId, if not associated then specify null.
+	 * @param notebookId
+	 * 		Notebook Id to be archived
+	 * @return Notebook
+	 * 		Notebook with URL
+	 */
+	Notebook launchNotebook(String authenticatedUserId, String projectId, String notebookId);
+	
+	/**
+	 * Checks if Notebook (for input notbookId) is associated with Project (for input projectId)
+	 * @param projectId
+	 * 		Project Id
+	 * @param notebookId
+	 * 		Notebook Id
+	 @throws AssociationNotFoundException
+	 * 		Throws AssociationNotFoundException if Notebook is not associated to specified Project.
+	 */
+	void isNotebookProjectAssociated(String projectId, String notebookId) throws AssociationNotFoundException;
 	
 }

@@ -18,24 +18,16 @@
  * ===============LICENSE_END=========================================================
  */
 
-package org.acumos.workbench.notebookservice.service;
+package org.acumos.workbench.notebookservice.exception;
+/**
+ *This exception is thrown when not association is found between two entities. 
+ *
+ */
+public class AssociationNotFoundException extends EntityNotFoundException {
 
-import org.acumos.workbench.common.vo.Project;
-import org.acumos.workbench.notebookservice.exception.TargetServiceInvocationException;
-import org.springframework.http.ResponseEntity;
+	private static final long serialVersionUID = 8883443657076030291L;
 
-public interface ProjectServiceRestClient {
-
-	/**
-	 * Get the Project details by accessing project-service API
-	 * 
-	 * @param authenticatedUserId
-	 * 		Acumos User login Id
-	 * @param projectId
-	 * 		Project Id 
-	 * @return ResponseEntity<Project>
-	 * 		returns ResponseEntity<Project> 
-	 */
-	ResponseEntity<Project> getProject(String authenticatedUserId,String projectId) throws TargetServiceInvocationException;
-
+	public AssociationNotFoundException(String msg) {
+		super(msg);
+	}
 }

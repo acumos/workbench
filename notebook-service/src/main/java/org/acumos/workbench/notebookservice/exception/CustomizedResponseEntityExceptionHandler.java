@@ -28,7 +28,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -49,7 +48,7 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 	 */
 	@ExceptionHandler(BadRequestException.class)
 	public final ResponseEntity<?> handleBadRequestException(BadRequestException ex, WebRequest request) {
-		Notebook notebook = getNotebok(ex);
+		Notebook notebook = getNotebokWithErroStatus(ex);
 		return new ResponseEntity<Notebook>(notebook, HttpStatus.BAD_REQUEST);
 	}
 	
@@ -65,7 +64,7 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 	 */
 	@ExceptionHandler(ForbiddenException.class)
 	public final ResponseEntity<?> handleForbiddenException(ForbiddenException ex, WebRequest request) {
-		Notebook notebook = getNotebok(ex);
+		Notebook notebook = getNotebokWithErroStatus(ex);
 		return new ResponseEntity<Notebook>(notebook, HttpStatus.FORBIDDEN);
 	}
 	
@@ -80,9 +79,9 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 	 * 		returns Notebook with ServiceStatus indicating error 
 	 */
 	@ExceptionHandler(ArchivedException.class)
-	public final ResponseEntity<?> handleArchivedException(ForbiddenException ex, WebRequest request) {
-		Notebook notebook = getNotebok(ex);
-		return new ResponseEntity<Notebook>(notebook, HttpStatus.LOCKED);
+	public final ResponseEntity<?> handleArchivedException(ArchivedException ex, WebRequest request) {
+		Notebook notebook = getNotebokWithErroStatus(ex);
+		return new ResponseEntity<Notebook>(notebook, HttpStatus.BAD_REQUEST);
 	}
 
 	/**
@@ -96,12 +95,12 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 	 */
 	@ExceptionHandler(EntityNotFoundException.class)
 	public final ResponseEntity<?> handleArtifactNotFoundException(EntityNotFoundException ex, WebRequest request) {
-		Notebook notebook = getNotebok(ex);
+		Notebook notebook = getNotebokWithErroStatus(ex);
 		return new ResponseEntity<Notebook>(notebook, HttpStatus.NOT_FOUND);
 	}
 	
 	/**
-	 * To handle RestClientResponseException from CDS
+	 * To handle TargetServiceInvocationException from CDS
 	 * @param ex
 	 * 		the exception thrown by the service method
 	 * @param request
@@ -109,18 +108,18 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 	 * @return ResponseEntitiy<Notebook> 
 	 * 		returns Notebook with ServiceStatus indicating error
 	 */
-	@ExceptionHandler(RestClientResponseException.class)
-	public final ResponseEntity<?> handleRestClientResponseException(RestClientResponseException ex, WebRequest request) { 
+	@ExceptionHandler(TargetServiceInvocationException.class)
+	public final ResponseEntity<?> handleRestClientException(TargetServiceInvocationException ex, WebRequest request) { 
 		//TODO : Include logger to log the CDS error details.
 		Notebook notebook = new Notebook();
 		ServiceState serviceState = new ServiceState();
 		serviceState.setStatus(ServiceStatus.ERROR);
-		serviceState.setStatusMessage("Error invoking CDS Micro Service");
+		serviceState.setStatusMessage(ex.getMessage());
 		notebook.setServiceStatus(serviceState);
-		return new ResponseEntity<Notebook>(notebook, HttpStatus.METHOD_FAILURE);
+		return new ResponseEntity<Notebook>(notebook, HttpStatus.SERVICE_UNAVAILABLE);
 	}
 	
-	private Notebook getNotebok(RuntimeException ex) {
+	private Notebook getNotebokWithErroStatus(RuntimeException ex) {
 		Notebook notebook = new Notebook();
 		ServiceState serviceState = new ServiceState();
 		serviceState.setStatus(ServiceStatus.ERROR);

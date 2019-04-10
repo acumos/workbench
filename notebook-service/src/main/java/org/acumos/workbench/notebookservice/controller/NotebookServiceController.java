@@ -125,24 +125,30 @@ public class NotebookServiceController {
 			@ApiParam(value="Notebook Id ")@PathVariable("notebookId") String notebookId) {
 		Notebook result = new Notebook();
 		
-		//TODO : implementation TDB.
-		
-		//1. Validate input json 
-		
-		//2. authenticated UserId should be present 
-		
-		//3. notebookId should be present 
+		// Check authenticatedUserId should be present
+		inputValidationService.isValuePresent("AuthenticatedUserId", authenticatedUserId);
+				
+		// project Id should be present 
+		inputValidationService.isValuePresent("Project Id", projectId);
+
+		// notebookId should be present 
+		inputValidationService.isValuePresent("Notebook Id", notebookId);
 		
 		//4. notebook should exists
+		notebookService.notebookExists(notebookId);
 		
 		//5. notebook should not be archived
+		notebookService.isNotebookArchived(notebookId);
 		
 		//6. check if user is authorized to launch the notebook 
+		notebookService.isOwnerOfNotebook(authenticatedUserId, notebookId);
+		
+		//check if notebook is associated to a project
+		notebookService.isNotebookProjectAssociated(projectId, notebookId);
 		
 		//7. Call JupyterHub Server to start an instance of the Notebook Server for the user
-		//TODO : result = notebookService.launchNotebook();
-		//
-		
+		result = notebookService.launchNotebook(authenticatedUserId, projectId, notebookId);
+				
 		return new ResponseEntity<Notebook>(result, HttpStatus.OK);
 		
 	}
@@ -163,23 +169,24 @@ public class NotebookServiceController {
 			@ApiParam(value="Notebook Id ")@PathVariable("notebookId") String notebookId) {
 		Notebook result = new Notebook();
 		
-		//TODO : implementation TDB.
+		// Check authenticatedUserId should be present
+		inputValidationService.isValuePresent("AuthenticatedUserId", authenticatedUserId);
+				 
 		
-		//1. Validate input json 
-		
-		//2. authenticated UserId should be present 
-		
-		//3. notebookId should be present 
+		// notebookId should be present 
+		inputValidationService.isValuePresent("Notebook Id", notebookId);
 		
 		//4. notebook should exists
+		notebookService.notebookExists(notebookId);
 		
 		//5. notebook should not be archived
+		notebookService.isNotebookArchived(notebookId);
 		
 		//6. check if user is authorized to launch the notebook 
-		
+		notebookService.isOwnerOfNotebook(authenticatedUserId, notebookId);
+				
 		//7. Call JupyterHub Server to start an instance of the Notebook Server for the user
-		//TODO : result = notebookService.launchNotebook();
-		//
+		result = notebookService.launchNotebook(authenticatedUserId, null, notebookId);
 		
 		return new ResponseEntity<Notebook>(result, HttpStatus.OK);
 		
@@ -273,6 +280,8 @@ public class NotebookServiceController {
 		//Validation 
 		notebookValidationService.validateNotebook(authenticatedUserId, notebook);
 		
+		//Check if notebook for given id exists 
+		notebookService.notebookExists(notebookId);
 		//Check if authenticated user is the owner of the Notebook. (Call to CDS)
 		notebookService.isOwnerOfNotebook(authenticatedUserId, notebookId);
 		
@@ -304,7 +313,8 @@ public class NotebookServiceController {
 		
 		//Validation 
 		notebookValidationService.validateNotebook(authenticatedUserId, notebook);
-		
+		//check if notebook with given Id exists
+		notebookService.notebookExists(notebookId);
 		//Check if authenticated user is the owner of the Notebook. (Call to CDS)
 		notebookService.isOwnerOfNotebook(authenticatedUserId, notebookId);
 		
@@ -368,15 +378,16 @@ public class NotebookServiceController {
 		
 		ServiceState result = null;
 		
-		// 1. Validate the input
-
-		// 2. Check authenticatedUserId should be present
+		//Check authenticatedUserId should be present
 		inputValidationService.isValuePresent("AuthenticatedUserId", authenticatedUserId);
 		
-		// 3. Check if the user is the owner of the Notebook or has the permission to archive the Notebook.(call to CDS).  
+		// Notebook Exists 
+		notebookService.notebookExists(notebookId);
+		
+		//Check if the user is the owner of the Notebook or has the permission to archive the Notebook.(call to CDS).  
 		notebookService.isOwnerOfNotebook(authenticatedUserId, notebookId);
 		
-		// 4. Delete Notebook 
+		//Delete Notebook 
 		result = notebookService.deleteNotebook(notebookId);
 		
         return new ResponseEntity<ServiceState>(result, HttpStatus.OK);
@@ -466,9 +477,12 @@ public class NotebookServiceController {
     	//Check projectId is present 
     	if(null != projectId) {
     		inputValidationService.isValuePresent("Project Id", projectId);
+    		notebookValidationService.validateProject(authenticatedUserId, projectId);
     	}
     	//Check notebookId is present 
     	inputValidationService.isValuePresent("Notebook Id", notebookId);
+    	
+    	notebookService.notebookExists(notebookId);
     	
 		// Check if the user is the owner of the notebook or has the permission to archive/un archive the project.(call to CDS).  
     	notebookService.isOwnerOfNotebook(authenticatedUserId, notebookId);

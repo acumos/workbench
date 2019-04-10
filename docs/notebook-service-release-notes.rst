@@ -20,7 +20,11 @@
 Notebook Service Release Notes
 ===============================
 
-Version 0.0.1, 2019-03-29
+Version 1.0.0, 2019-04-10
 ---------------------------
 * Initial Code commit
-* [More details coming soon]
+* ACUMOS-2485 : Create (Jupyter) Notebook
+* ACUMOS-2486 : Update Jupyter notebook
+* ACUMOS-2496 : List Notebooks
+* ACUMOS-2503 : Delete Notebook
+* ACUMOS-2495 : Launch Notebook

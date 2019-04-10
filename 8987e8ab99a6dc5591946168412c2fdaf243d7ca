@@ -1,0 +1,602 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e965d32_7c866bad",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/controller/NotebookServiceController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-10T14:25:06Z",
+      "side": 1,
+      "message": "how is this different from launch PROJECT notebook?",
+      "range": {
+        "startLine": 167,
+        "startChar": 26,
+        "endLine": 167,
+        "endChar": 40
+      },
+      "revId": "8987e8ab99a6dc5591946168412c2fdaf243d7ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9d56916e_183aa917",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/exception/AssociationNotFoundException.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-10T14:25:06Z",
+      "side": 1,
+      "message": "This seems like a silly way to report an error, a trivial extension of an exception, with the error expressed as the class name.  It does not carry any supplementary information so I think it\u0027s not a good pattern.",
+      "range": {
+        "startLine": 26,
+        "startChar": 13,
+        "endLine": 26,
+        "endChar": 41
+      },
+      "revId": "8987e8ab99a6dc5591946168412c2fdaf243d7ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "466adefd_5f6976fb",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/exception/CustomizedResponseEntityExceptionHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-10T14:25:06Z",
+      "side": 1,
+      "message": "Code 423, locked? To indicate ARCHIVED?  This is a REALLY strange response.  If the user makes a bad request just return 400, bad request.",
+      "range": {
+        "startLine": 84,
+        "startChar": 48,
+        "endLine": 84,
+        "endChar": 65
+      },
+      "revId": "8987e8ab99a6dc5591946168412c2fdaf243d7ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e859a37e_5725bf0f",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/exception/CustomizedResponseEntityExceptionHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-10T14:25:06Z",
+      "side": 1,
+      "message": "This is very confusing.  How do you judge a true path-not-found 404 from a valid path but the request could not be processed 404?  The notebook object is null anyhow, right??",
+      "range": {
+        "startLine": 99,
+        "startChar": 48,
+        "endLine": 99,
+        "endChar": 68
+      },
+      "revId": "8987e8ab99a6dc5591946168412c2fdaf243d7ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "47896d4c_808fb9d4",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/exception/CustomizedResponseEntityExceptionHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-10T14:25:06Z",
+      "side": 1,
+      "message": "get?  You mean, buildEmptyWithError?  A better name would make the intent clear.\n\nThis is still pretty confusing, giving back a Notebook that doesn\u0027t exist to carry an error message in the service-status attribute.",
+      "range": {
+        "startLine": 122,
+        "startChar": 18,
+        "endLine": 122,
+        "endChar": 28
+      },
+      "revId": "8987e8ab99a6dc5591946168412c2fdaf243d7ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "12f08d90_1d77fe31",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/exception/TargetServiceInvocationException.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-10T14:25:06Z",
+      "side": 1,
+      "message": "This simply duplicates the class name, why hardcode it, why not just do this.class.getName() ?",
+      "range": {
+        "startLine": 31,
+        "startChar": 40,
+        "endLine": 31,
+        "endChar": 75
+      },
+      "revId": "8987e8ab99a6dc5591946168412c2fdaf243d7ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "94021ff1_1d187ca1",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/JupyterhubRestClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-10T14:25:06Z",
+      "side": 1,
+      "message": "Interface classes often start with \"I\" in the name\n\nMaybe use proper camel case with cap H\n\nJupyterHubRestClient",
+      "range": {
+        "startLine": 23,
+        "startChar": 17,
+        "endLine": 23,
+        "endChar": 18
+      },
+      "revId": "8987e8ab99a6dc5591946168412c2fdaf243d7ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "40b230cc_716c7b98",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/JupyterhubRestClientImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-10T14:25:06Z",
+      "side": 1,
+      "message": "services rarely carry the impl class name, are you sure you want this?",
+      "range": {
+        "startLine": 54,
+        "startChar": 10,
+        "endLine": 54,
+        "endChar": 34
+      },
+      "revId": "8987e8ab99a6dc5591946168412c2fdaf243d7ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3bde1f13_667b4c82",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/JupyterhubRestClientImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-10T14:25:06Z",
+      "side": 1,
+      "message": "it\u0027s just as little work to log the error as to write the TODO comment :/\n\n   logger.error(\"method name failed\", e);",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 119,
+        "endChar": 22
+      },
+      "revId": "8987e8ab99a6dc5591946168412c2fdaf243d7ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d97ebddd_b2258627",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-10T14:25:06Z",
+      "side": 1,
+      "message": "For a simple boolean response, why not just give back true/false instead of throwing?  Kind of awkward.  Exceptions are for unexpected and rare cases.  This method performs basic validation.\n\nCompare with your method isOwnerOfNotebook() which returns boolean.  Why use different styles in the same interface?",
+      "range": {
+        "startLine": 49,
+        "startChar": 1,
+        "endLine": 49,
+        "endChar": 5
+      },
+      "revId": "8987e8ab99a6dc5591946168412c2fdaf243d7ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "41eab7ec_6457809b",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-10T14:25:06Z",
+      "side": 1,
+      "message": "Does it ever return true, or does it throw!?  This is confusing.",
+      "range": {
+        "startLine": 102,
+        "startChar": 3,
+        "endLine": 105,
+        "endChar": 59
+      },
+      "revId": "8987e8ab99a6dc5591946168412c2fdaf243d7ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2cb8e0c5_2b854902",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-10T14:25:06Z",
+      "side": 1,
+      "message": "unusual to have \"Impl\" in the service name, I think",
+      "range": {
+        "startLine": 56,
+        "startChar": 10,
+        "endLine": 56,
+        "endChar": 29
+      },
+      "revId": "8987e8ab99a6dc5591946168412c2fdaf243d7ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8279a26d_833ba951",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-10T14:25:06Z",
+      "side": 1,
+      "message": "Why do you explicitly limit this to a single Impl?? The whole value of Spring and interfaces, with dependency injection, is that you can inject anything that meets the interface.  What you have done here looks like an anti pattern to me, something to avoid.",
+      "range": {
+        "startLine": 69,
+        "startChar": 13,
+        "endLine": 69,
+        "endChar": 41
+      },
+      "revId": "8987e8ab99a6dc5591946168412c2fdaf243d7ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dc452586_50f665e9",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-10T14:25:06Z",
+      "side": 1,
+      "message": "Ditto",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 39
+      },
+      "revId": "8987e8ab99a6dc5591946168412c2fdaf243d7ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "85021061_58ded513",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-10T14:25:06Z",
+      "side": 1,
+      "message": "Update not allowed?  This is weird.",
+      "range": {
+        "startLine": 199,
+        "startChar": 33,
+        "endLine": 199,
+        "endChar": 51
+      },
+      "revId": "8987e8ab99a6dc5591946168412c2fdaf243d7ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6460130c_d15f1580",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-10T14:25:06Z",
+      "side": 1,
+      "message": "This should throw for now, or at least log a BIG FAT error, method not implemented yet etc. etc.",
+      "range": {
+        "startLine": 452,
+        "startChar": 0,
+        "endLine": 452,
+        "endChar": 11
+      },
+      "revId": "8987e8ab99a6dc5591946168412c2fdaf243d7ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b083f4c2_df958618",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-10T14:25:06Z",
+      "side": 1,
+      "message": "Ditto",
+      "range": {
+        "startLine": 453,
+        "startChar": 4,
+        "endLine": 453,
+        "endChar": 11
+      },
+      "revId": "8987e8ab99a6dc5591946168412c2fdaf243d7ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "79e95088_d303103b",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-10T14:25:06Z",
+      "side": 1,
+      "message": "Instead of implementing this yourself, you should have raised a feature request on CDS because I can do this with a single SQL query and give you true/false.  Consider it.",
+      "range": {
+        "startLine": 462,
+        "startChar": 0,
+        "endLine": 462,
+        "endChar": 77
+      },
+      "revId": "8987e8ab99a6dc5591946168412c2fdaf243d7ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ebd66db_a2a729fc",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/ProjectServiceRestClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-10T14:25:06Z",
+      "side": 1,
+      "message": "we have been around many times on this topic.  Sayee and Adi have argued one way, Kazi another way, Manoop and I a third way. Did the team reach a consensus?  Everything ties together back at CDS.",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 43
+      },
+      "revId": "8987e8ab99a6dc5591946168412c2fdaf243d7ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "44a69dff_071d5d13",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/ProjectServiceRestClientImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-10T14:25:06Z",
+      "side": 1,
+      "message": "pls check your service names, don\u0027t think you want Impl in them",
+      "range": {
+        "startLine": 45,
+        "startChar": 10,
+        "endLine": 45,
+        "endChar": 38
+      },
+      "revId": "8987e8ab99a6dc5591946168412c2fdaf243d7ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "570fe19e_eb483e75",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/util/ConfigurationProperties.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-10T14:25:06Z",
+      "side": 1,
+      "message": "Please be consistent with your properties - either use word1.word2 or word1Word2.  Don\u0027t mix the styles, it\u0027s just so difficult to get them right in a Docker compose config block.",
+      "range": {
+        "startLine": 38,
+        "startChar": 11,
+        "endLine": 38,
+        "endChar": 24
+      },
+      "revId": "8987e8ab99a6dc5591946168412c2fdaf243d7ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d168462c_f27e4745",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/util/NotebookServiceProperties.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-10T14:25:06Z",
+      "side": 1,
+      "message": "what configuration property do you enter for a notebook exception?  This seems unusual.",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 35
+      },
+      "revId": "8987e8ab99a6dc5591946168412c2fdaf243d7ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "51143504_796f83aa",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/util/NotebookServiceProperties.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-10T14:25:06Z",
+      "side": 1,
+      "message": "What are all these configuration properties for exceptions??",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 39
+      },
+      "revId": "8987e8ab99a6dc5591946168412c2fdaf243d7ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6cf18a_ae571f84",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/util/NotebookType.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-10T14:25:06Z",
+      "side": 1,
+      "message": "Why is a launch method embedded in an enum?  This is very strange!",
+      "range": {
+        "startLine": 46,
+        "startChar": 16,
+        "endLine": 46,
+        "endChar": 22
+      },
+      "revId": "8987e8ab99a6dc5591946168412c2fdaf243d7ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "00f5e07a_754fe0a5",
+        "filename": "notebook-service/src/main/resources/application.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-10T14:25:06Z",
+      "side": 1,
+      "message": "These are messages to be sent IF an exception is seen?",
+      "range": {
+        "startLine": 31,
+        "startChar": 15,
+        "endLine": 31,
+        "endChar": 16
+      },
+      "revId": "8987e8ab99a6dc5591946168412c2fdaf243d7ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4bdd0923_ee16e199",
+        "filename": "notebook-service/src/main/resources/application.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-10T14:25:06Z",
+      "side": 1,
+      "message": "What are these properties?  Very confusing",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 48
+      },
+      "revId": "8987e8ab99a6dc5591946168412c2fdaf243d7ca",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}

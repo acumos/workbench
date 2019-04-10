@@ -43,6 +43,51 @@ public class NotebookServiceProperties implements Serializable {
 	@Value("${msg.invalidNotebookType}")
 	private String invalidNotebookType;
 
+	@Value("${jupyternotebook.launch.excp}")
+	private String jupyternotebookLaunchExcp;
+
+	@Value("${jupyterhub.launch.excp}")
+	private String jupyterhubLaunchExcp;
+
+	@Value("${jupyterhub.get.user.excp}")
+	private String jupyterhubGetUser;
+
+	@Value("${jupyterhub.create.user.excp}")
+	private String jupyterhubCreateUserExcp;
+
+	@Value("${jsonparser.parse.excp}")
+	private String jsonparserParseExcp;
+
+	@Value("${jsonparser.mapping.excp}")
+	private String jsonparserMappingExcp;
+
+	@Value("${jsonparser.io.excp}")
+	private String jsonparserIoExcp;
+
+	@Value("${cds.get.notebook.excp}")
+	private String cdsGetNotebookExcp;
+
+	@Value("${cds.search.notebooks.excp}")
+	private String cdsSearchNotebooksExcp;
+
+	@Value("${cds.create.notebook.excp}")
+	private String cdsCreateNotebookExcp;
+
+	@Value("${cds.add.project.notebook.excp}")
+	private String cdsAddProjectNotebookExcp;
+
+	@Value("${cds.update.notebook.excp}")
+	private String cdsUpdateNotebookExcp;
+
+	@Value("${cds.get.project.notebooks.excp}")
+	private String cdsGetProjectNotebooksExcp;
+
+	@Value("${cds.get.user.excp}")
+	private String cdsGetUserExcp;
+
+	@Value("${project.service.get.project.excp}")
+	private String projectServiceGetProjectExcp;
+
 	/**
 	 * @return the invalidNotebookName
 	 */
@@ -70,6 +115,110 @@ public class NotebookServiceProperties implements Serializable {
 	public String getInvalidNotebookType() {
 		return invalidNotebookType;
 	}
-	
+
+	/**
+	 * @return the jupyternotebookLaunchExcp
+	 */
+	public String getJupyternotebookLaunchExcp() {
+		return jupyternotebookLaunchExcp;
+	}
+
+	/**
+	 * @return the jupyterhubLaunchExcp
+	 */
+	public String getJupyterhubLaunchExcp() {
+		return jupyterhubLaunchExcp;
+	}
+
+	/**
+	 * @return the jupyterhubGetUser
+	 */
+	public String getJupyterhubGetUser() {
+		return jupyterhubGetUser;
+	}
+
+	/**
+	 * @return the jupyterhubCreateUserExcp
+	 */
+	public String getJupyterhubCreateUserExcp() {
+		return jupyterhubCreateUserExcp;
+	}
+
+	/**
+	 * @return the jsonparserParseExcp
+	 */
+	public String getJsonparserParseExcp() {
+		return jsonparserParseExcp;
+	}
+
+	/**
+	 * @return the jsonparserMappingExcp
+	 */
+	public String getJsonparserMappingExcp() {
+		return jsonparserMappingExcp;
+	}
+
+	/**
+	 * @return the jsonparserIoExcp
+	 */
+	public String getJsonparserIoExcp() {
+		return jsonparserIoExcp;
+	}
+
+	/**
+	 * @return the cdsGetNotebookExcp
+	 */
+	public String getCdsGetNotebookExcp() {
+		return cdsGetNotebookExcp;
+	}
+
+	/**
+	 * @return the cdsSearchNotebooksExcp
+	 */
+	public String getCdsSearchNotebooksExcp() {
+		return cdsSearchNotebooksExcp;
+	}
+
+	/**
+	 * @return the cdsCreateNotebookExcp
+	 */
+	public String getCdsCreateNotebookExcp() {
+		return cdsCreateNotebookExcp;
+	}
+
+	/**
+	 * @return the cdsAddProjectNotebookExcp
+	 */
+	public String getCdsAddProjectNotebookExcp() {
+		return cdsAddProjectNotebookExcp;
+	}
+
+	/**
+	 * @return the cdsUpdateNotebookExcp
+	 */
+	public String getCdsUpdateNotebookExcp() {
+		return cdsUpdateNotebookExcp;
+	}
+
+	/**
+	 * @return the cdsGetProjectNotebooksExcp
+	 */
+	public String getCdsGetProjectNotebooksExcp() {
+		return cdsGetProjectNotebooksExcp;
+	}
+
+	/**
+	 * @return the cdsGetUserExcp
+	 */
+	public String getCdsGetUserExcp() {
+		return cdsGetUserExcp;
+	}
+
+	/**
+	 * @return the projectServiceGetProjectExcp
+	 */
+	public String getProjectServiceGetProjectExcp() {
+		return projectServiceGetProjectExcp;
+	}
 	
 }

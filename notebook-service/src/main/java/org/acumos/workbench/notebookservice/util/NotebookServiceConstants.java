@@ -18,24 +18,21 @@
  * ===============LICENSE_END=========================================================
  */
 
-package org.acumos.workbench.notebookservice.service;
+package org.acumos.workbench.notebookservice.util;
 
-import org.acumos.workbench.common.vo.Project;
-import org.acumos.workbench.notebookservice.exception.TargetServiceInvocationException;
-import org.springframework.http.ResponseEntity;
+public class NotebookServiceConstants {
 
-public interface ProjectServiceRestClient {
-
-	/**
-	 * Get the Project details by accessing project-service API
-	 * 
-	 * @param authenticatedUserId
-	 * 		Acumos User login Id
-	 * @param projectId
-	 * 		Project Id 
-	 * @return ResponseEntity<Project>
-	 * 		returns ResponseEntity<Project> 
-	 */
-	ResponseEntity<Project> getProject(String authenticatedUserId,String projectId) throws TargetServiceInvocationException;
-
+    public static final String GET_PROJECT_PATH = "/users/{authenticatedUserId}/projects/{projectId}";
+	public static final String QUESTION_MARK = "?";
+	public static final String JUPYTERHUB_USER_PATH = "/hub/api/users/{name}";
+	public static final String JUPYTERHUB_LAUNCH_SERVER_PATH = "/hub/api/users/{name}/server";
+	
+	public static final String JUPYTERNOTEBOOK_PATH = "/user/{name}/tree";
+	
+	public static final String PATH_VAR_USERNAME_KEY = "name";
+	public static final String PATH_VAR_PROJECT_ID_KEY = "projectId";
+	public static final String PATH_VAR_AUTHENTICATED_USER_ID_KEY = "authenticatedUserId";
+	
+	public static final String HEADER_AUTHORIZATION_KEY = "Authorization";
+	
 }

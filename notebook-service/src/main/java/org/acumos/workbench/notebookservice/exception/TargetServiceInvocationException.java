@@ -18,24 +18,44 @@
  * ===============LICENSE_END=========================================================
  */
 
-package org.acumos.workbench.notebookservice.service;
+package org.acumos.workbench.notebookservice.exception;
 
-import org.acumos.workbench.common.vo.Project;
-import org.acumos.workbench.notebookservice.exception.TargetServiceInvocationException;
-import org.springframework.http.ResponseEntity;
+/**
+ * This Exception is thrown in case of any error accessing dependent service.
+ *
+ */
+public class TargetServiceInvocationException extends RuntimeException {
 
-public interface ProjectServiceRestClient {
-
+	private static final long serialVersionUID = -8269469583909822292L;
+	
+	private static final String baseMsg = "Target Service Invocation Exception : ";
+	
 	/**
-	 * Get the Project details by accessing project-service API
-	 * 
-	 * @param authenticatedUserId
-	 * 		Acumos User login Id
-	 * @param projectId
-	 * 		Project Id 
-	 * @return ResponseEntity<Project>
-	 * 		returns ResponseEntity<Project> 
+	 * Default Constructor
 	 */
-	ResponseEntity<Project> getProject(String authenticatedUserId,String projectId) throws TargetServiceInvocationException;
-
+	public TargetServiceInvocationException() {
+		super();
+	}
+	
+	/**
+	 * Parameterized Constructor
+	 * @param msg
+	 * 		Message to be listed in log.
+	 */
+	public TargetServiceInvocationException(String msg) { 
+		super(baseMsg + msg);
+	}
+	
+	/**
+	 * Parameterized Constructor 
+	 * @param msg
+	 * 		Message to be listed in log.
+	 * @param cause
+	 * 		
+	 */
+	public TargetServiceInvocationException(String msg, Throwable cause) {
+        super(msg, cause);
+    }
+	
+	
 }

@@ -30,50 +30,63 @@ import javax.annotation.PostConstruct;
 
 import org.acumos.workbench.common.vo.Project;
 import org.acumos.workbench.notebookservice.exception.InvalidConfiguration;
+import org.acumos.workbench.notebookservice.exception.TargetServiceInvocationException;
 import org.acumos.workbench.notebookservice.util.ConfigurationProperties;
+import org.acumos.workbench.notebookservice.util.NotebookServiceConstants;
+import org.acumos.workbench.notebookservice.util.NotebookServiceProperties;
+import org.acumos.workbench.notebookservice.util.NotebookServiceUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
+
 
 @Service("ProjectServiceRestClientImpl")
 public class ProjectServiceRestClientImpl implements ProjectServiceRestClient {
 
-	private static final String PATH_VAR_PROJECT_ID = "projectId";
-	private static final String PATH_VAR_AUTHENTICATED_USER_ID = "authenticatedUserId";
-	private static final String GET_PROJECT_URL = "/users/{authenticatedUserId}/projects/{projectId}";
-
+	
 
 	@Autowired
 	private ConfigurationProperties confprops;
 	
+	@Autowired
+	private NotebookServiceProperties props;
 	
 	private RestTemplate restTemplate;
-	private String baseURL;
+	private String basePSURL;
+	
 	
 	@PostConstruct
 	public void initializeRestClient() { 
 		
+		
 		String surl = confprops.getProjectServiceURL();
 		try {
 			URL url = new URL(surl);
-			this.baseURL = surl;
+			this.basePSURL = surl;
 		} catch (MalformedURLException e) {
 			throw new InvalidConfiguration("Invalid project-service URL " + surl, e);
 		}
+				
 		restTemplate = new RestTemplate();
 	}
 	
 	@Override
-	public ResponseEntity<Project> getProject(String authenticatedUserId,String projectId) {
-		UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(this.baseURL + GET_PROJECT_URL);
-		Map<String, String> uriParam = new HashMap<String, String>();
-		uriParam.put(PATH_VAR_AUTHENTICATED_USER_ID, authenticatedUserId);
-		uriParam.put(PATH_VAR_PROJECT_ID, projectId);
-		URI uri = uriBuilder.buildAndExpand(uriParam).encode().toUri();
-		ResponseEntity<Project> response = restTemplate.exchange(uri, HttpMethod.GET, null, Project.class);
+	public ResponseEntity<Project> getProject(String authenticatedUserId,String projectId) throws TargetServiceInvocationException {
+		ResponseEntity<Project> response = null;
+		try { 
+			Map<String, String> uriParams = new HashMap<String, String>();
+			uriParams.put(NotebookServiceConstants.PATH_VAR_AUTHENTICATED_USER_ID_KEY, authenticatedUserId);
+			uriParams.put(NotebookServiceConstants.PATH_VAR_PROJECT_ID_KEY, projectId);
+			URI uri = NotebookServiceUtil.buildURI(this.basePSURL + NotebookServiceConstants.GET_PROJECT_PATH, uriParams);
+			response = restTemplate.exchange(uri, HttpMethod.GET, null, Project.class);
+		} catch (Exception e) { 
+			//TODO : log error.
+			throw new TargetServiceInvocationException(props.getProjectServiceGetProjectExcp());
+		}
 		return response;
 	}
+	
+	
 }

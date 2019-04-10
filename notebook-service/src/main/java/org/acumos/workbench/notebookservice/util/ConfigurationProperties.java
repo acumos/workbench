@@ -41,6 +41,13 @@ public class ConfigurationProperties {
 	@Value("${projectservice.url}")
 	private String projectServiceURL;
 	
+	@Value("${jupyterhub.url}")
+	private String jupyterhubURL;
+	
+	@Value("${jupyterhub.token}")
+	private String jupyterhubToken;
+	
+	
 	/**
 	 * @return the resultsetSize
 	 */
@@ -75,6 +82,19 @@ public class ConfigurationProperties {
 	public String getProjectServiceURL() {
 		return projectServiceURL;
 	}
+
+	/**
+	 * @return the jupyerHubURL
+	 */
+	public String getJupyterhubURL() {
+		return jupyterhubURL;
+	}
 	
-	
+	/**
+	 * @return the jupyterhubToken
+	 */
+	public String getJupyterhubToken() {
+		return "token " + jupyterhubToken;
+	}
+
 }

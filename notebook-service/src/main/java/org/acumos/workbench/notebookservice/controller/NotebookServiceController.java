@@ -125,24 +125,30 @@ public class NotebookServiceController {
 			@ApiParam(value="Notebook Id ")@PathVariable("notebookId") String notebookId) {
 		Notebook result = new Notebook();
 		
-		//TODO : implementation TDB.
-		
-		//1. Validate input json 
-		
-		//2. authenticated UserId should be present 
-		
-		//3. notebookId should be present 
+		// Check authenticatedUserId should be present
+		inputValidationService.isValuePresent("AuthenticatedUserId", authenticatedUserId);
+				
+		// project Id should be present 
+		inputValidationService.isValuePresent("Project Id", projectId);
+
+		// notebookId should be present 
+		inputValidationService.isValuePresent("Notebook Id", notebookId);
 		
 		//4. notebook should exists
+		notebookService.notebookExists(notebookId);
 		
 		//5. notebook should not be archived
+		notebookService.isNotebookArchived(notebookId);
 		
 		//6. check if user is authorized to launch the notebook 
+		notebookService.isOwnerOfNotebook(authenticatedUserId, notebookId);
+		
+		//check if notebook is associated to a project
+		notebookService.isNotebookProjectAssociated(projectId, notebookId);
 		
 		//7. Call JupyterHub Server to start an instance of the Notebook Server for the user
-		//TODO : result = notebookService.launchNotebook();
-		//
-		
+		result = notebookService.launchNotebook(authenticatedUserId, projectId, notebookId);
+				
 		return new ResponseEntity<Notebook>(result, HttpStatus.OK);
 		
 	}
@@ -163,23 +169,24 @@ public class NotebookServiceController {
 			@ApiParam(value="Notebook Id ")@PathVariable("notebookId") String notebookId) {
 		Notebook result = new Notebook();
 		
-		//TODO : implementation TDB.
+		// Check authenticatedUserId should be present
+		inputValidationService.isValuePresent("AuthenticatedUserId", authenticatedUserId);
+				 
 		
-		//1. Validate input json 
-		
-		//2. authenticated UserId should be present 
-		
-		//3. notebookId should be present 
+		// notebookId should be present 
+		inputValidationService.isValuePresent("Notebook Id", notebookId);
 		
 		//4. notebook should exists
+		notebookService.notebookExists(notebookId);
 		
 		//5. notebook should not be archived
+		notebookService.isNotebookArchived(notebookId);
 		
 		//6. check if user is authorized to launch the notebook 
-		
+		notebookService.isOwnerOfNotebook(authenticatedUserId, notebookId);
+				
 		//7. Call JupyterHub Server to start an instance of the Notebook Server for the user
-		//TODO : result = notebookService.launchNotebook();
-		//
+		result = notebookService.launchNotebook(authenticatedUserId, null, notebookId);
 		
 		return new ResponseEntity<Notebook>(result, HttpStatus.OK);
 		

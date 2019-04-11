@@ -51,7 +51,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@Service("JupyterhubRestClientImpl")
+@Service("JupyterHubRestClientImpl")
 public class JupyterHubRestClientImpl implements JupyterHubRestClient {
 	
 	private String baseJHURL;

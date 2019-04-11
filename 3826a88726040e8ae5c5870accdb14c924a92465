@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "bcf8679f_3933ddbf",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/PipelineServiceApplication.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-11T20:05:42Z",
+      "side": 1,
+      "message": "Check if it has {? That is **not** successful parsing!",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 100
+      },
+      "revId": "3826a88726040e8ae5c5870accdb14c924a92465",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "427c2cd0_869858f1",
         "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/PipeLineServiceImpl.java",
         "patchSetId": 1

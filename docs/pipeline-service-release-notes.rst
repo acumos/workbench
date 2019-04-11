@@ -20,6 +20,11 @@
 Pipeline Service Release Notes
 ===============================
 
-Version 0.0.1, 2019-03-29
+Version 0.0.1, 2019-004-12
 ---------------------------
-* [More details coming soon]
+* Initial pipeline project commit
+* ACUMOS-2504 : Create Pipeline
+* ACUMOS-2505 : Launch Pipeline
+* ACUMOS-2506 : Update Pipeline
+* ACUMOS-2507 : List Pipeline
+* ACUMOS-2508 : Delete Pipeline

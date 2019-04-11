@@ -20,6 +20,7 @@
 
 package org.acumos.workbench.notebookservice.util;
 
+import java.net.URI;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,6 +28,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.acumos.cds.domain.MLPNotebook;
 import org.acumos.cds.domain.MLPUser;
@@ -39,6 +41,7 @@ import org.acumos.workbench.common.vo.Notebook;
 import org.acumos.workbench.common.vo.ServiceState;
 import org.acumos.workbench.common.vo.User;
 import org.acumos.workbench.common.vo.Version;
+import org.springframework.web.util.UriComponentsBuilder;
 
 public class NotebookServiceUtil {
 
@@ -234,4 +237,24 @@ public class NotebookServiceUtil {
 		return result;
 	}
 	
+	
+	/**
+	 * Builds the rest API URI
+	 * @param url
+	 * 		URL of the rest API to be invoked.
+	 * @param uriParams
+	 * 		URI Path variable key-value map.  Map<String, String>
+	 * @return URI
+	 * 		Return UIR constructed based on the input parameters.
+	 */
+	public static URI buildURI(String url, Map<String, String> uriParams) { 
+		URI resultURI = null;
+		UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(url);
+		if(null != uriParams) { 
+			resultURI = uriBuilder.buildAndExpand(uriParams).encode().toUri();
+		} else {
+			resultURI = uriBuilder.build().encode().toUri();
+		}
+		return resultURI;
+	}
 }

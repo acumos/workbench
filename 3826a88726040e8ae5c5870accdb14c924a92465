@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "93ea6a63_d1c4fb49",
+        "filename": "pipeline-service/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-12T11:47:41Z",
+      "side": 1,
+      "message": "This failed during build time, with an error that I don\u0027t understand.  Please try version 0.28.0.",
+      "range": {
+        "startLine": 217,
+        "startChar": 13,
+        "endLine": 217,
+        "endChar": 19
+      },
+      "revId": "3826a88726040e8ae5c5870accdb14c924a92465",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3feeeb5_2c220ce6",
         "filename": "pipeline-service/pom.xml",
         "patchSetId": 1

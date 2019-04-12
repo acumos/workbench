@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "e68cb202_52dc757a",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/exception/ProjectNotFoundException.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-04-12T01:37:18Z",
+      "side": 1,
+      "message": "Probably this can go in common since this might belong to ProjectService",
+      "revId": "3826a88726040e8ae5c5870accdb14c924a92465",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "427c2cd0_869858f1",
         "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/PipeLineServiceImpl.java",
         "patchSetId": 1
@@ -226,6 +243,23 @@
         "endLine": 27,
         "endChar": 36
       },
+      "revId": "3826a88726040e8ae5c5870accdb14c924a92465",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a8b320bb_49ed0cac",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/util/PipeLineServiceUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-04-12T01:37:18Z",
+      "side": 1,
+      "message": "Please remove this stackTrace",
       "revId": "3826a88726040e8ae5c5870accdb14c924a92465",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false

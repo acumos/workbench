@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "e3feeeb5_2c220ce6",
+        "filename": "pipeline-service/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-12T11:46:43Z",
+      "side": 1,
+      "message": "You can replace with just\n\t\t\t\t\t\t\t\t\u003cassembly\u003e\n\t\t\t\t\t\t\t\t\t\u003cdescriptorRef\u003eartifact\u003c/descriptorRef\u003e\n\t\t\t\t\t\t\t\t\u003c/assembly\u003e",
+      "range": {
+        "startLine": 233,
+        "startChar": 0,
+        "endLine": 242,
+        "endChar": 18
+      },
+      "revId": "3826a88726040e8ae5c5870accdb14c924a92465",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bcf8679f_3933ddbf",
         "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/PipelineServiceApplication.java",
         "patchSetId": 1

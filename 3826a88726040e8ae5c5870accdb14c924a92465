@@ -636,6 +636,30 @@
     },
     {
       "key": {
+        "uuid": "496dc453_99193aeb",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/util/ConfigurationProperties.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-12T13:12:12Z",
+      "side": 1,
+      "message": "I feel this is very very dangerous, what you\u0027re saying here.  You should have one set of properties, and all of them should be overridable from SPRING_APPLICATION_JSON.  Having two sets makes configuration much more difficult than it should be.  Please please revisit.",
+      "parentUuid": "9810687f_06b76992",
+      "range": {
+        "startLine": 27,
+        "startChar": 13,
+        "endLine": 27,
+        "endChar": 36
+      },
+      "revId": "3826a88726040e8ae5c5870accdb14c924a92465",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8b320bb_49ed0cac",
         "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/util/PipeLineServiceUtil.java",
         "patchSetId": 1

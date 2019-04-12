@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ddb13750_affcae19",
+        "filename": "pipeline-service/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-12T14:14:21Z",
+      "side": 1,
+      "message": "The docker build fails because the \u003cbuild\u003e element is missing, this \u003cfrom\u003e element must be nested within that, please check against a working example, hth.",
+      "range": {
+        "startLine": 228,
+        "startChar": 7,
+        "endLine": 228,
+        "endChar": 33
+      },
+      "revId": "0757043b95509cbc1ab4d19b54c2d2830b782ea5",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}

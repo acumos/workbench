@@ -660,6 +660,30 @@
     },
     {
       "key": {
+        "uuid": "2657104a_6fe27bf1",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/util/ConfigurationProperties.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-04-12T17:04:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "496dc453_99193aeb",
+      "range": {
+        "startLine": 27,
+        "startChar": 13,
+        "endLine": 27,
+        "endChar": 36
+      },
+      "revId": "3826a88726040e8ae5c5870accdb14c924a92465",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8b320bb_49ed0cac",
         "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/util/PipeLineServiceUtil.java",
         "patchSetId": 1

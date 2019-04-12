@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ab85b246_432552fa",
+        "filename": "pipeline-service/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-04-12T12:57:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93ea6a63_d1c4fb49",
+      "range": {
+        "startLine": 217,
+        "startChar": 13,
+        "endLine": 217,
+        "endChar": 19
+      },
+      "revId": "3826a88726040e8ae5c5870accdb14c924a92465",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3feeeb5_2c220ce6",
         "filename": "pipeline-service/pom.xml",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2019-04-12T11:46:43Z",
       "side": 1,
       "message": "You can replace with just\n\t\t\t\t\t\t\t\t\u003cassembly\u003e\n\t\t\t\t\t\t\t\t\t\u003cdescriptorRef\u003eartifact\u003c/descriptorRef\u003e\n\t\t\t\t\t\t\t\t\u003c/assembly\u003e",
+      "range": {
+        "startLine": 233,
+        "startChar": 0,
+        "endLine": 242,
+        "endChar": 18
+      },
+      "revId": "3826a88726040e8ae5c5870accdb14c924a92465",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "877d8da4_b503769e",
+        "filename": "pipeline-service/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-04-12T12:57:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3feeeb5_2c220ce6",
       "range": {
         "startLine": 233,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7d6ecb11_a60d361a",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/PipelineServiceApplication.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-04-12T12:57:48Z",
+      "side": 1,
+      "message": "Done on line Number : 39",
+      "parentUuid": "bcf8679f_3933ddbf",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 100
+      },
+      "revId": "3826a88726040e8ae5c5870accdb14c924a92465",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e68cb202_52dc757a",
         "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/exception/ProjectNotFoundException.java",
         "patchSetId": 1
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "74404396_2738b9c0",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/exception/ProjectNotFoundException.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-04-12T12:57:48Z",
+      "side": 1,
+      "message": "I have put TODO for now to be moved to common.",
+      "parentUuid": "e68cb202_52dc757a",
+      "revId": "3826a88726040e8ae5c5870accdb14c924a92465",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "427c2cd0_869858f1",
         "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/PipeLineServiceImpl.java",
         "patchSetId": 1
@@ -99,6 +189,30 @@
       "writtenOn": "2019-04-11T20:01:04Z",
       "side": 1,
       "message": "The error message can be fetched by calling e.getResponseBodyAsString()\n\nYou are discarding it entirely which you must not :(",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 41
+      },
+      "revId": "3826a88726040e8ae5c5870accdb14c924a92465",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ebe276e4_7bb4f766",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/PipeLineServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-04-12T12:57:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "427c2cd0_869858f1",
       "range": {
         "startLine": 91,
         "startChar": 0,
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "1bec20d2_7d8e46fc",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/PipeLineServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-04-12T12:57:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cad3efc7_3dd86216",
+      "range": {
+        "startLine": 92,
+        "startChar": 10,
+        "endLine": 92,
+        "endChar": 14
+      },
+      "revId": "3826a88726040e8ae5c5870accdb14c924a92465",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae16fa1d_a67b4f96",
         "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/PipeLineServiceImpl.java",
         "patchSetId": 1
@@ -145,6 +283,30 @@
       "writtenOn": "2019-04-11T20:01:04Z",
       "side": 1,
       "message": "Can this be put into a constants file somewhere?",
+      "range": {
+        "startLine": 110,
+        "startChar": 21,
+        "endLine": 110,
+        "endChar": 27
+      },
+      "revId": "3826a88726040e8ae5c5870accdb14c924a92465",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0fb61936_688a70c2",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/PipeLineServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-04-12T12:57:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae16fa1d_a67b4f96",
       "range": {
         "startLine": 110,
         "startChar": 21,
@@ -174,6 +336,24 @@
     },
     {
       "key": {
+        "uuid": "3b784176_faa15d13",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/PipeLineServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-04-12T12:57:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64ac8b5a_d34a3199",
+      "revId": "3826a88726040e8ae5c5870accdb14c924a92465",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10ac99b9_c4a21be6",
         "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/PipeLineServiceImpl.java",
         "patchSetId": 1
@@ -185,6 +365,30 @@
       "writtenOn": "2019-04-11T20:01:04Z",
       "side": 1,
       "message": "If you have the identifier, and it appears you do, then just call getPipeline() don\u0027t do a search; the get-by-id is much MUCH faster.",
+      "range": {
+        "startLine": 145,
+        "startChar": 0,
+        "endLine": 145,
+        "endChar": 102
+      },
+      "revId": "3826a88726040e8ae5c5870accdb14c924a92465",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ab128cb6_b7370657",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/PipeLineServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-04-12T12:57:48Z",
+      "side": 1,
+      "message": "Here we don\u0027t have the pipelineId, only version and name is available, that is why calling searchpipelines api for the specific userId.",
+      "parentUuid": "10ac99b9_c4a21be6",
       "range": {
         "startLine": 145,
         "startChar": 0,
@@ -220,6 +424,30 @@
     },
     {
       "key": {
+        "uuid": "09e329c3_ec59103a",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/PipeLineServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-04-12T12:57:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af0b13c2_12bf1769",
+      "range": {
+        "startLine": 165,
+        "startChar": 0,
+        "endLine": 165,
+        "endChar": 104
+      },
+      "revId": "3826a88726040e8ae5c5870accdb14c924a92465",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bcb20cf1_de5d5c2f",
         "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/PipeLineServiceImpl.java",
         "patchSetId": 1
@@ -231,6 +459,30 @@
       "writtenOn": "2019-04-11T20:01:04Z",
       "side": 1,
       "message": "All this is-project-this and is-project-that stuff is getting replicated all over the place, it makes me nuts that because you chose to make 17 new microservices you wind up duplicating half of the code 16 times.  How is that better than a single service with a single copy of the code!?",
+      "range": {
+        "startLine": 181,
+        "startChar": 1,
+        "endLine": 215,
+        "endChar": 2
+      },
+      "revId": "3826a88726040e8ae5c5870accdb14c924a92465",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0987924d_0372c712",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/PipeLineServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-04-12T12:57:48Z",
+      "side": 1,
+      "message": "Removed and invoking project service method",
+      "parentUuid": "bcb20cf1_de5d5c2f",
       "range": {
         "startLine": 181,
         "startChar": 1,
@@ -266,6 +518,30 @@
     },
     {
       "key": {
+        "uuid": "dc885cc1_71c4d307",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/PipeLineValidationServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-04-12T12:57:48Z",
+      "side": 1,
+      "message": "I have put TODO for now, this validates project only, which is doing by calling ProjectService method. Please see the line number 81.",
+      "parentUuid": "dc81511c_a40ad7cc",
+      "range": {
+        "startLine": 78,
+        "startChar": 13,
+        "endLine": 78,
+        "endChar": 28
+      },
+      "revId": "3826a88726040e8ae5c5870accdb14c924a92465",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18800912_d114b82a",
         "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/ProjectServiceRestClientImpl.java",
         "patchSetId": 1
@@ -277,6 +553,30 @@
       "writtenOn": "2019-04-11T20:01:04Z",
       "side": 1,
       "message": "These constants are defined elsewhere, reuse don\u0027t redefine",
+      "range": {
+        "startLine": 51,
+        "startChar": 27,
+        "endLine": 53,
+        "endChar": 99
+      },
+      "revId": "3826a88726040e8ae5c5870accdb14c924a92465",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "897142ad_7e845908",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/ProjectServiceRestClientImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-04-12T12:57:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18800912_d114b82a",
       "range": {
         "startLine": 51,
         "startChar": 27,
@@ -312,6 +612,30 @@
     },
     {
       "key": {
+        "uuid": "9810687f_06b76992",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/util/ConfigurationProperties.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-04-12T12:57:48Z",
+      "side": 1,
+      "message": "ConfigurationProperties is for SPRING_APPLICATION_JSON env varibales, but PipelineProperties is for applcaition.properties file. This helps to identify the properties to be configured in SPRING_APPLICATION_JSON.",
+      "parentUuid": "a1a8ef84_02dd32bd",
+      "range": {
+        "startLine": 27,
+        "startChar": 13,
+        "endLine": 27,
+        "endChar": 36
+      },
+      "revId": "3826a88726040e8ae5c5870accdb14c924a92465",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8b320bb_49ed0cac",
         "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/util/PipeLineServiceUtil.java",
         "patchSetId": 1
@@ -329,6 +653,24 @@
     },
     {
       "key": {
+        "uuid": "49a23509_6ff96161",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/util/PipeLineServiceUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-04-12T12:57:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8b320bb_49ed0cac",
+      "revId": "3826a88726040e8ae5c5870accdb14c924a92465",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc7ec3cf_f2c0c5f0",
         "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/util/PipelineProperties.java",
         "patchSetId": 1
@@ -340,6 +682,30 @@
       "writtenOn": "2019-04-11T20:01:04Z",
       "side": 1,
       "message": "Please use the formatter to clean up whitespace issues like these",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 1
+      },
+      "revId": "3826a88726040e8ae5c5870accdb14c924a92465",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "863ac07a_288e962f",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/util/PipelineProperties.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-04-12T12:57:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc7ec3cf_f2c0c5f0",
       "range": {
         "startLine": 44,
         "startChar": 0,
@@ -375,6 +741,30 @@
     },
     {
       "key": {
+        "uuid": "fb1fd14b_64d32f76",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/util/PipelineServiceLogConstants.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-04-12T12:57:48Z",
+      "side": 1,
+      "message": "Will implement it later after OA\u0026M team provides the library.",
+      "parentUuid": "8bb139c4_b0dfb625",
+      "range": {
+        "startLine": 23,
+        "startChar": 13,
+        "endLine": 23,
+        "endChar": 40
+      },
+      "revId": "3826a88726040e8ae5c5870accdb14c924a92465",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8828548_e0d0a121",
         "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/util/ProjectServiceUtil.java",
         "patchSetId": 1
@@ -386,6 +776,30 @@
       "writtenOn": "2019-04-11T20:01:04Z",
       "side": 1,
       "message": "This is the Pipeline project.  This code for a project should be in your common library.  This alone makes me vote -1.",
+      "range": {
+        "startLine": 57,
+        "startChar": 1,
+        "endLine": 57,
+        "endChar": 47
+      },
+      "revId": "3826a88726040e8ae5c5870accdb14c924a92465",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "db249aa6_d66d5b0a",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/util/ProjectServiceUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-04-12T12:57:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8828548_e0d0a121",
       "range": {
         "startLine": 57,
         "startChar": 1,
@@ -421,6 +835,30 @@
     },
     {
       "key": {
+        "uuid": "e723792c_c75a70a3",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/util/ProjectServiceUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-04-12T12:57:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b51ba5e6_a8663bc8",
+      "range": {
+        "startLine": 87,
+        "startChar": 23,
+        "endLine": 87,
+        "endChar": 36
+      },
+      "revId": "3826a88726040e8ae5c5870accdb14c924a92465",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "377c6f0b_32f0591e",
         "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/util/ProjectServiceUtil.java",
         "patchSetId": 1
@@ -432,6 +870,30 @@
       "writtenOn": "2019-04-11T20:01:04Z",
       "side": 1,
       "message": "This is the pipeline backend.  These methods should be in a shared library.",
+      "range": {
+        "startLine": 152,
+        "startChar": 26,
+        "endLine": 152,
+        "endChar": 42
+      },
+      "revId": "3826a88726040e8ae5c5870accdb14c924a92465",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b1d61e71_32f9b03c",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/util/ProjectServiceUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-04-12T12:57:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "377c6f0b_32f0591e",
       "range": {
         "startLine": 152,
         "startChar": 26,
@@ -467,6 +929,30 @@
     },
     {
       "key": {
+        "uuid": "effa31fd_1e937f29",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/util/ValidationRule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-04-12T12:57:48Z",
+      "side": 1,
+      "message": "I have put TODO for now to be moved to common.",
+      "parentUuid": "74536760_ad8aaf7e",
+      "range": {
+        "startLine": 25,
+        "startChar": 12,
+        "endLine": 25,
+        "endChar": 26
+      },
+      "revId": "3826a88726040e8ae5c5870accdb14c924a92465",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab22e9ac_1def3da4",
         "filename": "pipeline-service/src/test/java/org/acumos/workbench/pipelineservice/test/PipeLineServiceControllerTest.java",
         "patchSetId": 1
@@ -478,6 +964,24 @@
       "writtenOn": "2019-04-11T20:01:04Z",
       "side": 1,
       "message": "how about a trivial test like ContextLoads?\n\n    @RunWith(SpringRunner.class)\n    @SpringBootTest\n    public class DashboardApplicationTests {\n\n\t@Test\n\tpublic void contextLoads() {\n\t}\n\n    }",
+      "revId": "3826a88726040e8ae5c5870accdb14c924a92465",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "76905316_756a273e",
+        "filename": "pipeline-service/src/test/java/org/acumos/workbench/pipelineservice/test/PipeLineServiceControllerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-04-12T12:57:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab22e9ac_1def3da4",
       "revId": "3826a88726040e8ae5c5870accdb14c924a92465",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false

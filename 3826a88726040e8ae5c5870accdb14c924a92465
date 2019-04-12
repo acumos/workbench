@@ -111,6 +111,23 @@
     },
     {
       "key": {
+        "uuid": "64ac8b5a_d34a3199",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/PipeLineServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-04-12T01:51:35Z",
+      "side": 1,
+      "message": "Unchecked Exceptions are RunTime Exceptions and should not be thrown explicitly in method declaration.\nNeed to clean up for all RunTimeExceptions as needed",
+      "revId": "3826a88726040e8ae5c5870accdb14c924a92465",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10ac99b9_c4a21be6",
         "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/PipeLineServiceImpl.java",
         "patchSetId": 1

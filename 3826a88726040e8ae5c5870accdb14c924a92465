@@ -542,6 +542,29 @@
     },
     {
       "key": {
+        "uuid": "4303d166_eb94ae62",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/PipeLineValidationServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 263
+      },
+      "writtenOn": "2019-04-15T19:59:03Z",
+      "side": 1,
+      "message": "Can we call CDS directly than calling project service?",
+      "range": {
+        "startLine": 85,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 87
+      },
+      "revId": "3826a88726040e8ae5c5870accdb14c924a92465",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18800912_d114b82a",
         "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/ProjectServiceRestClientImpl.java",
         "patchSetId": 1

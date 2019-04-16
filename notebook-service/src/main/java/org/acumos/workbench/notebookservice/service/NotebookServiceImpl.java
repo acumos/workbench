@@ -260,6 +260,16 @@ public class NotebookServiceImpl implements NotebookService {
 			//TODO : log error
 			throw new TargetServiceInvocationException(props.getCdsUpdateNotebookExcp());
 		}
+		
+		try {
+			if (null != projectId) {
+				cdsClient.addProjectNotebook(projectId, newMLPNotebook.getNotebookId());
+			}
+		} catch (Exception e) {
+			//TODO : log error
+			throw new TargetServiceInvocationException(props.getCdsAddProjectNotebookExcp());
+		}
+		
 		newMLPNotebook.setServiceStatusCode(ServiceStatus.COMPLETED.getServiceStatusCode());
 		
 		

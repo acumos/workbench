@@ -20,9 +20,13 @@
 
 package org.acumos.workbench.notebookservice.exception;
 
+import java.lang.invoke.MethodHandles;
+
 import org.acumos.workbench.common.util.ServiceStatus;
 import org.acumos.workbench.common.vo.Notebook;
 import org.acumos.workbench.common.vo.ServiceState;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -34,6 +38,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 @RestController
 public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
 	
 	/**
@@ -110,21 +115,24 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 	 */
 	@ExceptionHandler(TargetServiceInvocationException.class)
 	public final ResponseEntity<?> handleRestClientException(TargetServiceInvocationException ex, WebRequest request) { 
-		//TODO : Include logger to log the CDS error details.
+		logger.debug("handleRestClientException() Begin");
 		Notebook notebook = new Notebook();
 		ServiceState serviceState = new ServiceState();
 		serviceState.setStatus(ServiceStatus.ERROR);
 		serviceState.setStatusMessage(ex.getMessage());
 		notebook.setServiceStatus(serviceState);
+		logger.debug("handleRestClientException() End");
 		return new ResponseEntity<Notebook>(notebook, HttpStatus.SERVICE_UNAVAILABLE);
 	}
 	
 	private Notebook getNotebokWithErroStatus(RuntimeException ex) {
+		logger.debug("getNotebokWithErroStatus() Begin");
 		Notebook notebook = new Notebook();
 		ServiceState serviceState = new ServiceState();
 		serviceState.setStatus(ServiceStatus.ERROR);
 		serviceState.setStatusMessage(ex.getMessage());
 		notebook.setServiceStatus(serviceState);
+		logger.debug("getNotebokWithErroStatus() End");
 		return notebook;
 	}
 	 

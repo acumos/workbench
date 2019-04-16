@@ -20,6 +20,8 @@
 
 package org.acumos.workbench.notebookservice.service;
 
+import java.lang.invoke.MethodHandles;
+
 import org.acumos.workbench.common.util.ArtifactStatus;
 import org.acumos.workbench.common.util.ServiceStatus;
 import org.acumos.workbench.common.vo.Notebook;
@@ -28,6 +30,8 @@ import org.acumos.workbench.notebookservice.exception.ArchivedException;
 import org.acumos.workbench.notebookservice.exception.NotProjectOwnerException;
 import org.acumos.workbench.notebookservice.exception.ProjectNotFoundException;
 import org.acumos.workbench.notebookservice.exception.ValueNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -36,6 +40,7 @@ import org.springframework.stereotype.Service;
 
 @Service("NotebookValidationServiceImpl")
 public class NotebookValidationServiceImpl implements NotebookValidationService {
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 	
 	
 	@Autowired
@@ -47,6 +52,7 @@ public class NotebookValidationServiceImpl implements NotebookValidationService 
 	private ProjectServiceRestClientImpl psClient;
 	
 	public void validateNotebook(String authenticatedUserId, Notebook notebook ) { 
+		logger.debug("validateNotebook() Begin");
 		
 		//1. Validation service to validate the input
 		inputValidationServiceImpl.validateNotebookInput(notebook);
@@ -68,6 +74,7 @@ public class NotebookValidationServiceImpl implements NotebookValidationService 
 		
 		//6. Validate Notebook Type 
 		inputValidationServiceImpl.validateNotebookType(notebook.getNotebookType());
+		logger.debug("validateNotebook() End");
 		
 	}
 	
@@ -75,27 +82,34 @@ public class NotebookValidationServiceImpl implements NotebookValidationService 
 	public void validateProject(String authenticatedUserId, String projectId)
 			throws ValueNotFoundException, ProjectNotFoundException,
 			NotProjectOwnerException, ArchivedException { 
+		logger.debug("validateProject() Begin");
 		ResponseEntity<Project> response = psClient.getProject(authenticatedUserId, projectId);
 		if(null != response) { 
 			Project project = response.getBody();
 			if(null != project) { 
 				if(!ServiceStatus.ERROR.equals(project.getServiceStatus().getStatus())) {
 					if(ArtifactStatus.ARCHIVED.equals(project.getArtifactStatus().getStatus())){
+						logger.error("Specified Project : " + projectId + " is archived");
 						throw new ArchivedException("Specified Project : " + projectId + " is archived");
 					}
 				} else {
 					if(HttpStatus.BAD_REQUEST.equals(response.getStatusCode())) { //Bad request 
+						logger.error("Error Message : " + project.getServiceStatus().getStatusMessage());
 						throw new ValueNotFoundException(project.getServiceStatus().getStatusMessage());
 					} else if (HttpStatus.FORBIDDEN.equals(response.getStatusCode())) { //Not owner
+						logger.error("User is not owner of the Project or has permission to access Project");
 						throw new NotProjectOwnerException();
 					}
 				}
 			} else {
+				logger.error("Project Specified Not found");
 				throw new ProjectNotFoundException();
 			}
 		} else { 
+			logger.error("Project Specified Not found");
 			throw new ProjectNotFoundException();
 		}
+		logger.debug("validateProject() End");
 	}
 	
 }

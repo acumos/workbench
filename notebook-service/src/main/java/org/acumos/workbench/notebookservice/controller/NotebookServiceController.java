@@ -23,6 +23,7 @@ package org.acumos.workbench.notebookservice.controller;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
+import java.lang.invoke.MethodHandles;
 import java.util.List;
 
 import org.acumos.workbench.common.vo.Notebook;
@@ -30,6 +31,8 @@ import org.acumos.workbench.common.vo.ServiceState;
 import org.acumos.workbench.notebookservice.service.InputValidationService;
 import org.acumos.workbench.notebookservice.service.NotebookService;
 import org.acumos.workbench.notebookservice.service.NotebookValidationService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -43,6 +46,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/")
 public class NotebookServiceController {
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 	
 	@Autowired
 	@Qualifier("InputValidationServiceImpl")
@@ -76,9 +80,11 @@ public class NotebookServiceController {
 			@ApiParam(value="Acumos User login Id ")@PathVariable("authenticatedUserId") String authenticatedUserId,
 			@ApiParam(value="Project Id under which Notebook need to be created")@PathVariable("projectId") String projectId,
 			@ApiParam(value="Notebook Details")@RequestBody Notebook notebook) {
+		logger.debug("createNotebookUnderProject() Begin");
         
 		Notebook result = createNotebook(authenticatedUserId, projectId, notebook);
 		
+		logger.debug("createNotebookUnderProject() End");
         return new ResponseEntity<Notebook>(result, HttpStatus.CREATED);
         
     }
@@ -99,8 +105,9 @@ public class NotebookServiceController {
     		@ApiParam(value="Acumos User login Id ")@PathVariable("authenticatedUserId") String authenticatedUserId, 
     		@ApiParam(value="Notebook details")@RequestBody Notebook notebook) {
 		
+		logger.debug("createIndependentNotebook() Begin");
 		Notebook result = createNotebook(authenticatedUserId, null, notebook);
-		
+		logger.debug("createIndependentNotebook() End");
         return new ResponseEntity<Notebook>(result, HttpStatus.CREATED);
 		
 	}
@@ -123,6 +130,7 @@ public class NotebookServiceController {
 			@ApiParam(value="Acumos User login Id")@PathVariable("authenticatedUserId") String authenticatedUserId,
 			@ApiParam(value="Project Id ")@PathVariable("projectId") String projectId,
 			@ApiParam(value="Notebook Id ")@PathVariable("notebookId") String notebookId) {
+		logger.debug("launchProjectNotebook() Begin");
 		Notebook result = new Notebook();
 		
 		// Check authenticatedUserId should be present
@@ -148,7 +156,7 @@ public class NotebookServiceController {
 		
 		//7. Call JupyterHub Server to start an instance of the Notebook Server for the user
 		result = notebookService.launchNotebook(authenticatedUserId, projectId, notebookId);
-				
+		logger.debug("launchProjectNotebook() End");
 		return new ResponseEntity<Notebook>(result, HttpStatus.OK);
 		
 	}
@@ -167,6 +175,7 @@ public class NotebookServiceController {
 	public ResponseEntity<?> launchNotebook(
 			@ApiParam(value="Acumos User login Id ")@PathVariable("authenticatedUserId") String authenticatedUserId, 
 			@ApiParam(value="Notebook Id ")@PathVariable("notebookId") String notebookId) {
+		logger.debug("launchNotebook() Begin");
 		Notebook result = new Notebook();
 		
 		// Check authenticatedUserId should be present
@@ -187,7 +196,7 @@ public class NotebookServiceController {
 				
 		//7. Call JupyterHub Server to start an instance of the Notebook Server for the user
 		result = notebookService.launchNotebook(authenticatedUserId, null, notebookId);
-		
+		logger.debug("launchNotebook() End");
 		return new ResponseEntity<Notebook>(result, HttpStatus.OK);
 		
 	}
@@ -207,6 +216,7 @@ public class NotebookServiceController {
     public ResponseEntity<?> getNotebooks(
     		@ApiParam(value="Acumos User login Id ")@PathVariable("authenticatedUserId") String authenticatedUserId, 
     		@ApiParam(value="Project Id ")@PathVariable("projectId") String projectId) {
+		logger.debug("getNotebooks() Begin");
 		
 		// 1. Validate the input
 
@@ -221,7 +231,7 @@ public class NotebookServiceController {
 		
 		// Service call to get existing project (active and archive both). (Call to CDS)
 		List<Notebook> result = notebookService.getNotebooks(authenticatedUserId, projectId);
-		
+		logger.debug("getNotebooks() End");
         return new ResponseEntity<List<Notebook>>(result, HttpStatus.OK);
     }
 	
@@ -237,7 +247,7 @@ public class NotebookServiceController {
 	@ApiOperation(value = "Gets list of all Notebook for a user", response = Notebook.class)
 	@RequestMapping(value = "/users/{authenticatedUserId}/notebooks/", method = RequestMethod.GET)
     public ResponseEntity<?> getAllNotebooks(@ApiParam(value="Acumos User login Id ")@PathVariable("authenticatedUserId") String authenticatedUserId) {
-		
+		logger.debug("getAllNotebooks() Begin");
 		// 1. Validate the input
 
 		// 2. Check authenticatedUserId should be present
@@ -247,7 +257,7 @@ public class NotebookServiceController {
 		
 		//4. Service call to get existing Notebooks (active and archive both). (Call to CDS)
 		List<Notebook> result = notebookService.getNotebooks(authenticatedUserId, null);
-		
+		logger.debug("getAllNotebooks() End");
         return new ResponseEntity<List<Notebook>>(result, HttpStatus.OK);
     }
 	
@@ -273,6 +283,7 @@ public class NotebookServiceController {
     		@ApiParam(value="Project Id ")@PathVariable("projectId") String projectId, 
     		@ApiParam(value="Notebook Id ")@PathVariable("notebookId") String notebookId,
     		@ApiParam(value="Notebook Details")@RequestBody Notebook notebook) {
+		logger.debug("updatePrjectNotebook() Begin");
 		Notebook result = null;
 		
 		
@@ -288,7 +299,7 @@ public class NotebookServiceController {
 		notebookValidationService.validateProject(authenticatedUserId, projectId);
 		
 		result = notebookService.updateNotebook(authenticatedUserId, projectId, notebookId, notebook);
-			
+		logger.debug("updatePrjectNotebook() End");
       	return new ResponseEntity<Notebook>(result, HttpStatus.OK);
     }
 	
@@ -309,6 +320,7 @@ public class NotebookServiceController {
     		@ApiParam(value="Acumos User login Id ")@PathVariable("authenticatedUserId") String authenticatedUserId, 
     		@ApiParam(value="Notebook Id ")@PathVariable("notebookId") String notebookId, 
     		@ApiParam(value="Notebook Details")@RequestBody Notebook notebook) {
+		logger.debug("updateNotebook() Begin");
 		Notebook result = null;
 		
 		//Validation 
@@ -319,7 +331,7 @@ public class NotebookServiceController {
 		notebookService.isOwnerOfNotebook(authenticatedUserId, notebookId);
 		
 		result = notebookService.updateNotebook(authenticatedUserId, null, notebookId, notebook);
-		
+		logger.debug("updateNotebook() End");
       	return new ResponseEntity<Notebook>(result, HttpStatus.OK);
     }
 	
@@ -339,7 +351,7 @@ public class NotebookServiceController {
     public ResponseEntity<?> getNotebook(
     		@ApiParam(value="Acumos User login Id ")@PathVariable("authenticatedUserId") String authenticatedUserId, 
     		@ApiParam(value="Notebook Id ")@PathVariable("notebookId") String notebookId) {
-		
+		logger.debug("getNotebook() Begin");
 		// 1. Validate the input
 		
 		// 2. Check authenticatedUserId should be present
@@ -353,7 +365,7 @@ public class NotebookServiceController {
 		
 		// 5. Service call to get existing project (Call to CDS)
 		Notebook result = notebookService.getNotebook(authenticatedUserId, notebookId);
-		
+		logger.debug("getNotebook() End");
         return new ResponseEntity<Notebook>(result, HttpStatus.OK);
     }
 	
@@ -375,7 +387,7 @@ public class NotebookServiceController {
     public ResponseEntity<?> deleteNotebook(
     		@ApiParam(value="Acumos User login Id ")@PathVariable("authenticatedUserId") String authenticatedUserId, 
     		@ApiParam(value="Notebook Id ")@PathVariable("notebookId") String notebookId) {
-		
+		logger.debug("deleteNotebook() Begin");
 		ServiceState result = null;
 		
 		//Check authenticatedUserId should be present
@@ -389,7 +401,7 @@ public class NotebookServiceController {
 		
 		//Delete Notebook 
 		result = notebookService.deleteNotebook(notebookId);
-		
+		logger.debug("deleteNotebook() End");
         return new ResponseEntity<ServiceState>(result, HttpStatus.OK);
     }
 	
@@ -414,9 +426,10 @@ public class NotebookServiceController {
     		@ApiParam(value="Project Id ")@PathVariable("projectId") String projectId,
     		@ApiParam(value="Notebook Id ")@PathVariable("notebookId") String notebookId,
     		@ApiParam(value="Action Type", allowableValues = "A, UA")@PathVariable("actionType") String actionType) {
+		logger.debug("archiveProjectNotebook() Begin");
 		Notebook result = null;
 		result = archiveNotebook(authenticatedUserId, projectId, notebookId, actionType);
-		
+		logger.debug("archiveProjectNotebook() End");
         return new ResponseEntity<Notebook>(result, HttpStatus.OK);
         
     }
@@ -439,14 +452,16 @@ public class NotebookServiceController {
     		@ApiParam(value="Acumos User login Id ")@PathVariable("authenticatedUserId") String authenticatedUserId, 
     		@ApiParam(value="Notebook Id ")@PathVariable("notebookId") String notebookId,
     		@ApiParam(value="Action Type ", allowableValues = "A, UA")@PathVariable("actionType") String actionType) {
+		logger.debug("archiveNotebook() Begin");
 		Notebook result = null;
 		result = archiveNotebook(authenticatedUserId, null, notebookId, actionType);
-		
+		logger.debug("archiveNotebook() End");
         return new ResponseEntity<Notebook>(result, HttpStatus.OK);
         
     }
 	
-	private Notebook createNotebook(String authenticatedUserId, String projectId, Notebook notebook) { 
+	private Notebook createNotebook(String authenticatedUserId, String projectId, Notebook notebook) {
+		logger.debug("createNotebook() Begin");
 	 	//Validation 
 		notebookValidationService.validateNotebook(authenticatedUserId, notebook);
 		
@@ -461,13 +476,14 @@ public class NotebookServiceController {
 		
 		// 7. Service call to create new Notebook (Call to CDS)
 		Notebook result = notebookService.createNotebook(authenticatedUserId, projectId, notebook);
-		
+		logger.debug("createNotebook() End");
 		return result;
 	}
    
 	
 	private Notebook archiveNotebook(String authenticatedUserId,
 			String projectId, String notebookId, String actionType) {
+		logger.debug("archiveNotebook() Begin");
 		Notebook result;
 		// 1. Validate the input
 
@@ -491,6 +507,7 @@ public class NotebookServiceController {
     	
     	// 4. Mark the project as archived/un archived (call to CDS).
 		result = notebookService.archiveNotebook(authenticatedUserId, projectId, notebookId, actionType );
+		logger.debug("archiveNotebook() End");
 		return result;
 	}
 }

@@ -21,6 +21,7 @@
 package org.acumos.workbench.notebookservice.service;
 
 import java.io.IOException;
+import java.lang.invoke.MethodHandles;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
@@ -36,6 +37,8 @@ import org.acumos.workbench.notebookservice.util.NotebookServiceConstants;
 import org.acumos.workbench.notebookservice.util.NotebookServiceProperties;
 import org.acumos.workbench.notebookservice.util.NotebookServiceUtil;
 import org.acumos.workbench.notebookservice.vo.jupyterHub.JupyterHubUser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -53,6 +56,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service("JupyterHubRestClientImpl")
 public class JupyterHubRestClientImpl implements JupyterHubRestClient {
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 	
 	private String baseJHURL;
 	private ObjectMapper objMapper;
@@ -66,22 +70,24 @@ public class JupyterHubRestClientImpl implements JupyterHubRestClient {
 	
 	@PostConstruct
 	public void initializeRestClient() { 
-		
+		logger.debug("initializeRestClient() Begin");
 		objMapper = new ObjectMapper();
 		String jhurl = confprops.getJupyterhubURL();
 		try {
 			URL url = new URL(jhurl);
 			this.baseJHURL = jhurl;
 		} catch (MalformedURLException e) {
+			logger.error("Invalid JupyterHub URL " + jhurl);
 			throw new InvalidConfiguration("Invalid JupyterHub URL " + jhurl, e);
 		}
-		
+		logger.debug("initializeRestClient() End");
 		restTemplate = new RestTemplate();
 	}
 
 	@Override
 	public String launchJupyterNotebook(String authenticatedUserId, String projectId,
 			String notebookId) {
+		logger.debug("launchJupyterNotebook() Begin");
 		String result = null;
 		JupyterHubUser jbUser = null;
 		//Get Jupyter Hub user
@@ -95,10 +101,12 @@ public class JupyterHubRestClientImpl implements JupyterHubRestClient {
 		} else {
 			result = launchJupyterNotebookForUser(authenticatedUserId);
 		}
+		logger.debug("launchJupyterNotebook() End");
 		return result;
 	}
 
 	private String launchJupyterNotebookForUser(String authenticatedUserId) {
+		logger.debug("launchJupyterNotebookForUser() Begin");
 		String result = null;
 		Map<String, String> uriParams = new HashMap<String, String>();
 		uriParams.put(NotebookServiceConstants.PATH_VAR_USERNAME_KEY, authenticatedUserId);
@@ -116,18 +124,20 @@ public class JupyterHubRestClientImpl implements JupyterHubRestClient {
 			if(HttpStatus.CREATED.equals(response.getStatusCode()) || HttpStatus.ACCEPTED.equals(response.getStatusCode())) {
 				result = NotebookServiceUtil.buildURI(this.baseJHURL + NotebookServiceConstants.JUPYTERNOTEBOOK_PATH, uriParams).toString() + NotebookServiceConstants.QUESTION_MARK;
 			} else {
-				//TODO : Log error
+				logger.error("JupyterNotebook - Launch Server");
 				throw new TargetServiceInvocationException(props.getJupyternotebookLaunchExcp());
 				
 			}
 		} catch (RestClientResponseException e) {
-			//TODO : Log and handle the Exception
+			logger.error("JupyterNotebook - Launch Server");
 			throw new TargetServiceInvocationException(props.getJupyterhubLaunchExcp());
 		}
+		logger.debug("launchJupyterNotebookForUser() End");
 		return result;
 	}
 
 	private JupyterHubUser getJupyterHubUser(String authenticatedUserId) {
+		logger.debug("getJupyterHubUser() Begin");
 		JupyterHubUser jbUser = null;
 		Map<String, String> uriParams = new HashMap<String, String>();
 		uriParams.put(NotebookServiceConstants.PATH_VAR_USERNAME_KEY, authenticatedUserId);
@@ -148,26 +158,30 @@ public class JupyterHubRestClientImpl implements JupyterHubRestClient {
 		} catch (HttpClientErrorException e) {
 			if(HttpStatus.NOT_FOUND.equals(e.getStatusCode())) {
 				//Create the user
+				logger.debug("createJupyterHubUser() Begin");
 				jbUser = createJupyterHubUser(authenticatedUserId);
+				logger.debug("createJupyterHubUser() End");
 			}
 		} catch (RestClientResponseException e) {
-			//TODO : Log error.
+			logger.error("Jupyterhub - Get User");
 			throw new TargetServiceInvocationException(props.getJupyterhubGetUser());
 		} catch (JsonParseException e) {
-			//TODO : Log error.
+			logger.error("JsonParser - Parse");
 			throw new TargetServiceInvocationException(props.getJsonparserParseExcp());
 		} catch (JsonMappingException e) {
-			//TODO : Log error.
+			logger.error("JsonParser - Mapping");
 			throw new TargetServiceInvocationException(props.getJsonparserMappingExcp());
 		} catch (IOException e) {
-			//TODO : Log error.
+			logger.error("JsonParser - IO");
 			throw new TargetServiceInvocationException(props.getJsonparserIoExcp());
 		}
+		logger.debug("getJupyterHubUser() End");
 		return jbUser;
 	}
 	
 	
 	private JupyterHubUser createJupyterHubUser(String authenticatedUserId) {
+		logger.debug("createJupyterHubUser() Begin");
 		JupyterHubUser jbUser = null;
 		Map<String, String> uriParams = new HashMap<String, String>();
 		uriParams.put(NotebookServiceConstants.PATH_VAR_USERNAME_KEY, authenticatedUserId);
@@ -182,9 +196,10 @@ public class JupyterHubRestClientImpl implements JupyterHubRestClient {
 			String jsonStr = response.getBody();
 			jbUser = objMapper.readValue(jsonStr, JupyterHubUser.class);
 		} catch (Exception e) {
-			//TODO : Log error.
+			logger.error("Jupyterhub - Create User");
 			throw new TargetServiceInvocationException(props.getJupyterhubCreateUserExcp());
 		}
+		logger.debug("createJupyterHubUser() End");
 		return jbUser;
 	}
 	

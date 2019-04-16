@@ -20,6 +20,7 @@
 
 package org.acumos.workbench.notebookservice.service;
 
+import java.lang.invoke.MethodHandles;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
@@ -35,6 +36,8 @@ import org.acumos.workbench.notebookservice.util.ConfigurationProperties;
 import org.acumos.workbench.notebookservice.util.NotebookServiceConstants;
 import org.acumos.workbench.notebookservice.util.NotebookServiceProperties;
 import org.acumos.workbench.notebookservice.util.NotebookServiceUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -44,6 +47,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Service("ProjectServiceRestClientImpl")
 public class ProjectServiceRestClientImpl implements ProjectServiceRestClient {
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
 	
 
@@ -59,21 +63,24 @@ public class ProjectServiceRestClientImpl implements ProjectServiceRestClient {
 	
 	@PostConstruct
 	public void initializeRestClient() { 
-		
+		logger.debug("initializeRestClient() Begin");
 		
 		String surl = confprops.getProjectServiceURL();
 		try {
 			URL url = new URL(surl);
 			this.basePSURL = surl;
 		} catch (MalformedURLException e) {
+			logger.error("Invalid project-service URL " + surl);
 			throw new InvalidConfiguration("Invalid project-service URL " + surl, e);
 		}
 				
 		restTemplate = new RestTemplate();
+		logger.debug("initializeRestClient() End");
 	}
 	
 	@Override
 	public ResponseEntity<Project> getProject(String authenticatedUserId,String projectId) throws TargetServiceInvocationException {
+		logger.debug("getProject() Begin");
 		ResponseEntity<Project> response = null;
 		try { 
 			Map<String, String> uriParams = new HashMap<String, String>();
@@ -82,9 +89,10 @@ public class ProjectServiceRestClientImpl implements ProjectServiceRestClient {
 			URI uri = NotebookServiceUtil.buildURI(this.basePSURL + NotebookServiceConstants.GET_PROJECT_PATH, uriParams);
 			response = restTemplate.exchange(uri, HttpMethod.GET, null, Project.class);
 		} catch (Exception e) { 
-			//TODO : log error.
+			logger.error("Project Service - Get Project");
 			throw new TargetServiceInvocationException(props.getProjectServiceGetProjectExcp());
 		}
+		logger.debug("getProject() End");
 		return response;
 	}
 	

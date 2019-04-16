@@ -20,6 +20,10 @@
 
 package org.acumos.workbench.notebookservice;
 
+import java.lang.invoke.MethodHandles;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -27,6 +31,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 @EnableAutoConfiguration
 public class NotebookServiceApplication {
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
 	
 	public static final String CONFIG_ENV_VAR_NAME = "SPRING_APPLICATION_JSON";
@@ -40,7 +45,11 @@ public class NotebookServiceApplication {
 	 */
 	public static void main(String[] args) throws Exception {
 		final String springApplicationJson = System.getenv(CONFIG_ENV_VAR_NAME);
-		//TODO : Add springApplicationJson validation code and log the error if any. 
+		if (springApplicationJson != null && springApplicationJson.contains("{")) {
+			logger.debug("main: successfully parsed configuration from environment {}", CONFIG_ENV_VAR_NAME);
+		} else {
+			logger.warn("main: no configuration found in environment {}", CONFIG_ENV_VAR_NAME);
+		}
 		SpringApplication.run(NotebookServiceApplication.class, args);
 	}
 }

@@ -20,6 +20,7 @@
 
 package org.acumos.workbench.notebookservice.util;
 
+import java.lang.invoke.MethodHandles;
 import java.net.URI;
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -41,9 +42,12 @@ import org.acumos.workbench.common.vo.Notebook;
 import org.acumos.workbench.common.vo.ServiceState;
 import org.acumos.workbench.common.vo.User;
 import org.acumos.workbench.common.vo.Version;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.util.UriComponentsBuilder;
 
 public class NotebookServiceUtil {
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
 	private final static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
 	
@@ -57,6 +61,7 @@ public class NotebookServiceUtil {
 	 * 		Returns MLPNotebook instance corresponding to input Notebook VO
 	 */
 	public static MLPNotebook getMLPNotebook(String userId, Notebook notebook) {
+		logger.debug("getMLPNotebook() Begin");
 		//TODO : To implement Null check for each field. 
 		MLPNotebook mlpNotebook = null;
 		if(null != notebook) { 
@@ -82,7 +87,7 @@ public class NotebookServiceUtil {
 							Timestamp timestamp = new Timestamp(parsedDate.getTime());
 							mlpNotebook.setModified(timestamp.toInstant());
 						} catch (ParseException e) {
-							//TODO : Log the exception 
+							logger.error(e.getMessage());
 							//TODO : Throw new appropriate Exception 
 						}
 						
@@ -106,6 +111,7 @@ public class NotebookServiceUtil {
 			}
 			
 		}
+		logger.debug("getMLPNotebook() End");
 		return mlpNotebook;
 	}
 
@@ -121,6 +127,7 @@ public class NotebookServiceUtil {
 	 *
 	 */
 	public static Notebook getNotebookVO(MLPNotebook mlpnotebook, MLPUser mlpUser) {
+		logger.debug("getNotebookVO() Begin");
 		Notebook notebook = null;
 		if(null != mlpnotebook) { 
 			notebook = new Notebook();
@@ -186,7 +193,7 @@ public class NotebookServiceUtil {
 				notebook.setServiceStatus(serviceStatus);
 			}
 		}
-		
+		logger.debug("getNotebookVO() End");
 		return notebook;
 		
 	}
@@ -206,6 +213,7 @@ public class NotebookServiceUtil {
 	 * 		Returns MLPNotebook with updated values.
 	 */
 	public static MLPNotebook updateMLPNotebook(MLPNotebook mlpNotebook, Notebook notebook) { 
+		logger.debug("updateMLPNotebook() Begin");
 		MLPNotebook result = mlpNotebook;
 		Identifier notebookIdentifier = notebook.getNoteBookId();
 		Version version = notebookIdentifier.getVersionId();
@@ -215,6 +223,7 @@ public class NotebookServiceUtil {
 			result.setVersion(version.getLabel());
 		}
 		result.setModified(Instant.now());
+		logger.debug("updateMLPNotebook() End");
 		return result;
 	}
 	
@@ -229,11 +238,13 @@ public class NotebookServiceUtil {
 	 * 		Returns list of Notebook VO
 	 */
 	public static List<Notebook> getNotebookVOs(List<MLPNotebook> mlpNotebooks, MLPUser mlpUser) { 
+		logger.debug("getNotebookVOs() Begin");
 		List<Notebook> result = new ArrayList<Notebook>(); 
 		
 		for(MLPNotebook mlpNotebook : mlpNotebooks) { 
 			result.add(getNotebookVO(mlpNotebook, mlpUser));
 		}
+		logger.debug("getNotebookVOs() End");
 		return result;
 	}
 	
@@ -248,6 +259,7 @@ public class NotebookServiceUtil {
 	 * 		Return UIR constructed based on the input parameters.
 	 */
 	public static URI buildURI(String url, Map<String, String> uriParams) { 
+		logger.debug("buildURI() Begin");
 		URI resultURI = null;
 		UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(url);
 		if(null != uriParams) { 
@@ -255,6 +267,7 @@ public class NotebookServiceUtil {
 		} else {
 			resultURI = uriBuilder.build().encode().toUri();
 		}
+		logger.debug("buildURI() End");
 		return resultURI;
 	}
 }

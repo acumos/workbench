@@ -264,6 +264,12 @@ public class PipeLineServiceImpl implements PipeLineService{
 		} catch (Exception e) {
 			logger.error("CDS - Update Pipeline");
 			throw new TargetServiceInvocationException(PipelineServiceConstants.CDS_UPDATE_PIPELINE);
+		}try {
+			if(null != pipelineId){
+				cdsClient.addProjectPipeline(projectId, newMLPPipeline.getPipelineId());
+			}
+		} catch (Exception e) {
+			throw new TargetServiceInvocationException(PipelineServiceConstants.CDS_ADD_PROJECT_PIPELINE);
 		}
 		
 		newMLPPipeline.setServiceStatusCode(ServiceStatus.COMPLETED.getServiceStatusCode());

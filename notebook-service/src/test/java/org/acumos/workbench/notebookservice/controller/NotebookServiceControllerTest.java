@@ -20,6 +20,223 @@
 
 package org.acumos.workbench.notebookservice.controller;
 
-public class NotebookServiceControllerTest {
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.acumos.workbench.common.util.ArtifactStatus;
+import org.acumos.workbench.common.util.ServiceStatus;
+import org.acumos.workbench.common.vo.ArtifactState;
+import org.acumos.workbench.common.vo.Notebook;
+import org.acumos.workbench.common.vo.ServiceState;
+import org.acumos.workbench.notebookservice.service.InputValidationService;
+import org.acumos.workbench.notebookservice.service.NotebookService;
+import org.acumos.workbench.notebookservice.service.NotebookValidationService;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
+import org.springframework.http.ResponseEntity;
+
+public class NotebookServiceControllerTest extends NotebookCommons {
+	
+	private static final String authenticatedUserId = "123"; 
+	
+	@Rule
+	public MockitoRule mockitoRule = MockitoJUnit.rule();
+	
+	@InjectMocks
+	private NotebookServiceController notebookServiceController;
+	
+	@Mock
+	private InputValidationService inputValidationService;
+	
+	@Mock
+	private NotebookValidationService notebookValidationService;
+	
+	@Mock
+	private NotebookService notebookService;
+	
+	private NotebookValidationService notebookValidationServiceImpl;
+	
+	private NotebookService notebookServiceImpl;
+	
+	private InputValidationService inputValidationServiceImpl;
+	
+	@Before
+	public void setUp() {
+		 MockitoAnnotations.initMocks(this);
+		 notebookValidationServiceImpl = mock(NotebookValidationService.class);
+		 notebookServiceImpl = mock(NotebookService.class);
+		 inputValidationServiceImpl = mock(InputValidationService.class);
+	}
+	
+	@Test
+	public void createNotebookUnderProjectTest(){
+		Notebook notebook = buildNotebook();
+		doNothing().when(notebookValidationServiceImpl).validateNotebook(authenticatedUserId, notebook);
+		doNothing().when(notebookValidationServiceImpl).validateProject(authenticatedUserId, "123");
+		doNothing().when(notebookServiceImpl).notebookExists(authenticatedUserId, "123", notebook);
+		when(notebookService.createNotebook(authenticatedUserId, "123", notebook)).thenReturn(notebook);
+		ResponseEntity<?> notebookResult = notebookServiceController.createNotebookUnderProject(authenticatedUserId, "123", notebook);
+		assertNotNull(notebookResult);
+	}
+	
+	@Test
+	public void createIndependentNotebookTest(){
+		Notebook notebook = buildNotebook();
+		doNothing().when(notebookValidationServiceImpl).validateNotebook(authenticatedUserId, notebook);
+		doNothing().when(notebookValidationServiceImpl).validateProject(authenticatedUserId, null);
+		doNothing().when(notebookServiceImpl).notebookExists(authenticatedUserId, null, notebook);
+		when(notebookService.createNotebook(authenticatedUserId, null, notebook)).thenReturn(notebook);
+		ResponseEntity<?> notebookResult = notebookServiceController.createNotebookUnderProject(authenticatedUserId, null, notebook);
+		assertNotNull(notebookResult);
+	}
+	
+	@Test
+	public void getNotebooksTest(){
+		Notebook notebook = buildNotebook();
+		List<Notebook> notebookList = new ArrayList<Notebook>();
+		notebookList.add(notebook);
+		doNothing().when(inputValidationServiceImpl).isValuePresent("AuthenticatedUserId", authenticatedUserId);
+		doNothing().when(inputValidationServiceImpl).isValuePresent("Project Id", "123");
+		doNothing().when(notebookValidationServiceImpl).validateProject(authenticatedUserId, "123");
+		when(notebookService.getNotebooks(authenticatedUserId, "123")).thenReturn(notebookList);
+		ResponseEntity<?> notebookResult = notebookServiceController.getNotebooks(authenticatedUserId, "123");
+		assertNotNull(notebookResult);
+		
+	}
+	
+	@Test
+	public void getAllNotebooksTest(){
+		Notebook notebook = buildNotebook();
+		List<Notebook> notebookList = new ArrayList<Notebook>();
+		notebookList.add(notebook);
+		doNothing().when(inputValidationServiceImpl).isValuePresent("AuthenticatedUserId", authenticatedUserId);
+		when(notebookService.getNotebooks(authenticatedUserId, null)).thenReturn(notebookList);
+		ResponseEntity<?> notebookResult = notebookServiceController.getNotebooks(authenticatedUserId, null);
+		assertNotNull(notebookResult);
+		
+	}
+	
+	@Test
+	public void updateProjectNotebookTest(){
+		Notebook notebook = buildNotebook();
+		doNothing().when(inputValidationServiceImpl).isValuePresent("Project Id", "123");
+		doNothing().when(notebookValidationServiceImpl).validateNotebook(authenticatedUserId, notebook);
+		doNothing().when(notebookServiceImpl).notebookExists("123");
+		when(notebookServiceImpl.isOwnerOfNotebook(authenticatedUserId, "123")).thenReturn(true);
+		doNothing().when(notebookValidationServiceImpl).validateProject(authenticatedUserId, "123");
+		when(notebookService.updateNotebook(authenticatedUserId, "123", "123", notebook)).thenReturn(notebook);
+		ResponseEntity<?> notebookResult = notebookServiceController.updatePrjectNotebook(authenticatedUserId, "123", "123", notebook);
+		assertNotNull(notebookResult);
+		
+	}
+	
+	@Test
+	public void updateNotebookTest(){
+		Notebook notebook = buildNotebook();
+		doNothing().when(notebookValidationServiceImpl).validateNotebook(authenticatedUserId, notebook);
+		doNothing().when(notebookServiceImpl).notebookExists("123");
+		when(notebookServiceImpl.isOwnerOfNotebook(authenticatedUserId, "123")).thenReturn(true);
+		when(notebookService.updateNotebook(authenticatedUserId, null, "123", notebook)).thenReturn(notebook);
+		ResponseEntity<?> notebookResult = notebookServiceController.updateNotebook(authenticatedUserId, "123", notebook);
+		assertNotNull(notebookResult);
+		
+	}
+	
+	@Test
+	public void getNotebookTest(){
+		Notebook notebook = buildNotebook();
+		doNothing().when(inputValidationServiceImpl).isValuePresent("AuthenticatedUserId", authenticatedUserId);
+		doNothing().when(inputValidationServiceImpl).isValuePresent("Notebook Id", "123");
+		when(notebookServiceImpl.isOwnerOfNotebook(authenticatedUserId, "123")).thenReturn(true);
+		when(notebookService.getNotebook(authenticatedUserId, "123")).thenReturn(notebook);
+		ResponseEntity<?> notebookResult = notebookServiceController.getNotebook(authenticatedUserId, "123");
+		assertNotNull(notebookResult);
+		
+	}
+	
+	@Test
+	public void deleteNotebookTest(){
+		ServiceState state = new ServiceState();
+		state.setStatus(ServiceStatus.COMPLETED);
+		doNothing().when(inputValidationServiceImpl).isValuePresent("AuthenticatedUserId", authenticatedUserId);
+		doNothing().when(notebookServiceImpl).notebookExists("123");
+		when(notebookServiceImpl.isOwnerOfNotebook(authenticatedUserId, "123")).thenReturn(true);
+		when(notebookService.deleteNotebook("123")).thenReturn(state);
+		ResponseEntity<?> notebookResult = notebookServiceController.deleteNotebook(authenticatedUserId, "123");
+		assertNotNull(notebookResult);
+		
+	}
+	
+	@Test
+	public void archiveProjectNotebookTest(){
+		Notebook notebook = buildNotebook();
+		ArtifactState state = new ArtifactState();
+		state.setStatus(ArtifactStatus.ARCHIVED);
+		notebook.setArtifactStatus(state);
+		doNothing().when(inputValidationServiceImpl).isValuePresent("AuthenticatedUserId", authenticatedUserId);
+		doNothing().when(inputValidationServiceImpl).isValuePresent("Project Id", "123");
+		doNothing().when(notebookValidationServiceImpl).validateProject(authenticatedUserId, "123");
+		doNothing().when(inputValidationServiceImpl).isValuePresent("Notebook Id", "123");
+		doNothing().when(notebookServiceImpl).notebookExists("123");
+		when(notebookServiceImpl.isOwnerOfNotebook(authenticatedUserId, "123")).thenReturn(true);
+		when(notebookService.archiveNotebook(authenticatedUserId, "123", "123", "A")).thenReturn(notebook);
+		ResponseEntity<?> notebookResult = notebookServiceController.archiveProjectNotebook(authenticatedUserId,"123", "123", "A");
+		assertNotNull(notebookResult);
+		
+	}
+	
+	@Test
+	public void archiveNotebookTest(){
+		Notebook notebook = buildNotebook();
+		doNothing().when(inputValidationServiceImpl).isValuePresent("AuthenticatedUserId", authenticatedUserId);
+		doNothing().when(inputValidationServiceImpl).isValuePresent("Project Id", "123");
+		doNothing().when(notebookValidationServiceImpl).validateProject(authenticatedUserId, "123");
+		doNothing().when(inputValidationServiceImpl).isValuePresent("Notebook Id", "123");
+		doNothing().when(notebookServiceImpl).notebookExists("123");
+		when(notebookServiceImpl.isOwnerOfNotebook(authenticatedUserId, "123")).thenReturn(true);
+		when(notebookService.archiveNotebook(authenticatedUserId, null, "123", "UA")).thenReturn(notebook);
+		ResponseEntity<?> notebookResult = notebookServiceController.archiveNotebook(authenticatedUserId,"123", "UA");
+		assertNotNull(notebookResult);
+	}
+	
+	@Test
+	public void launchProjectNotebookTest(){
+		Notebook notebook = buildNotebook();
+		doNothing().when(inputValidationServiceImpl).isValuePresent("AuthenticatedUserId", authenticatedUserId);
+		doNothing().when(inputValidationServiceImpl).isValuePresent("Project Id", "123");
+		doNothing().when(inputValidationServiceImpl).isValuePresent("Notebook Id", "123");
+		doNothing().when(notebookServiceImpl).notebookExists("123");
+		when(notebookServiceImpl.isNotebookArchived("123")).thenReturn(false);
+		when(notebookServiceImpl.isOwnerOfNotebook(authenticatedUserId, "123")).thenReturn(true);
+		doNothing().when(notebookServiceImpl).isNotebookProjectAssociated("123", "123");
+		when(notebookService.launchNotebook(authenticatedUserId, "123", "123")).thenReturn(notebook);
+		ResponseEntity<?> notebookResult = notebookServiceController.launchProjectNotebook(authenticatedUserId, "123", "123");
+		assertNotNull(notebookResult);
+	}
+	
+	@Test
+	public void launchNotebookTest(){
+		Notebook notebook = buildNotebook();
+		doNothing().when(inputValidationServiceImpl).isValuePresent("AuthenticatedUserId", authenticatedUserId);
+		doNothing().when(inputValidationServiceImpl).isValuePresent("Notebook Id", "123");
+		doNothing().when(notebookServiceImpl).notebookExists("123");
+		when(notebookServiceImpl.isNotebookArchived("123")).thenReturn(false);
+		when(notebookServiceImpl.isOwnerOfNotebook(authenticatedUserId, "123")).thenReturn(true);
+		when(notebookService.launchNotebook(authenticatedUserId, null, "123")).thenReturn(notebook);
+		ResponseEntity<?> notebookResult = notebookServiceController.launchNotebook(authenticatedUserId, "123");
+		assertNotNull(notebookResult);
+		
+	}
+	
 }

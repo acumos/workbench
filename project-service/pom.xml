@@ -269,6 +269,11 @@
 										</files>
 									</inline>
 								</assembly>
+								<runCmds>
+									<!-- Ensure logs dir exists and is world writable -->
+									<runCmd>mkdir /maven/logs</runCmd>
+									<runCmd>chmod -R 777 /maven</runCmd>
+								</runCmds>
 								<!-- This is the same CMD used in a Dockerfile -->
 								<cmd>
 									<!-- CDATA prevents Eclipse formatter from breaking line -->
@@ -289,5 +294,5 @@
 				</executions>
 			</plugin>
 		</plugins>
-  </build>
+	</build>
 </project>

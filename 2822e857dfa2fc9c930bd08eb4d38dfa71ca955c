@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9044521_86a248d8",
+        "filename": "workbench-common/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-22T20:00:53Z",
+      "side": 1,
+      "message": "Is this a library?  If so, you probably should not inherit from spring-boot parent because that brings a TON of libraries with it.  Why not just add exactly what you require?",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 11
+      },
+      "revId": "2822e857dfa2fc9c930bd08eb4d38dfa71ca955c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e1b3496f_ee4ff0fd",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/common/security/AuthenticatedUser.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-22T20:00:53Z",
+      "side": 1,
+      "message": "drop worthless empty javadoc",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 33,
+        "endChar": 4
+      },
+      "revId": "2822e857dfa2fc9c930bd08eb4d38dfa71ca955c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "78cb94ea_8605e77c",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/common/security/AuthenticatedUser.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-22T20:00:53Z",
+      "side": 1,
+      "message": "Please use a generated serial version ID",
+      "range": {
+        "startLine": 34,
+        "startChar": 46,
+        "endLine": 34,
+        "endChar": 48
+      },
+      "revId": "2822e857dfa2fc9c930bd08eb4d38dfa71ca955c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "576810c7_196f3ce6",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/common/security/JWTAuthorizationFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-22T20:00:53Z",
+      "side": 1,
+      "message": "Why hardcode this string repeatedly?  Please clean up this poor coding practice.",
+      "range": {
+        "startLine": 64,
+        "startChar": 38,
+        "endLine": 64,
+        "endChar": 46
+      },
+      "revId": "2822e857dfa2fc9c930bd08eb4d38dfa71ca955c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3696560b_56bb946a",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/common/security/JWTAuthorizationFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-22T20:00:53Z",
+      "side": 1,
+      "message": "It takes equal time to write the logger invocation, why not just do that up front?",
+      "range": {
+        "startLine": 84,
+        "startChar": 5,
+        "endLine": 84,
+        "endChar": 9
+      },
+      "revId": "2822e857dfa2fc9c930bd08eb4d38dfa71ca955c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7c0bde1_da321120",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/common/security/JwtTokenUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-22T20:00:53Z",
+      "side": 1,
+      "message": "remove don\u0027t comment out",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 60
+      },
+      "revId": "2822e857dfa2fc9c930bd08eb4d38dfa71ca955c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "14a460d1_5f5d4836",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/common/security/UserService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-22T20:00:53Z",
+      "side": 1,
+      "message": "this is a very awkward class.  You have a static constructor, a static variable, a static method.  Static should be avoided at all costs in a Spring environment where multiple threads are managed by the container.  Find a way to do this in a web container compatible way.",
+      "range": {
+        "startLine": 32,
+        "startChar": 13,
+        "endLine": 32,
+        "endChar": 24
+      },
+      "revId": "2822e857dfa2fc9c930bd08eb4d38dfa71ca955c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}

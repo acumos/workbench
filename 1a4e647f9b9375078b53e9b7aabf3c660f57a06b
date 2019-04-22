@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a374b784_c7b07f16",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/common/security/JWTAuthorizationFilter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-04-22T20:47:15Z",
+      "side": 1,
+      "message": "Since this is a core library , userService need to have setter/getter to be set from caller.\n\n// Workbench Services (Caller)  should use below format of SecurityConfiguration\n\n   public class SecurityConfiguration extends WebSecurityConfigurerAdapter {\n     @Autowired\n     UserService userService;\n \n    @Bean\n    public JWTAuthorizationFilter authenticationTokenFilterBean() throws Exception {\n      JWTAuthorizationFilter jwtAuthorizationFilter \u003d new JWTAuthorizationFilter();\n      authenticationTokenFilter.setUserService(userService);\n      return jwtAuthorizationFilter;\n    }",
+      "revId": "1a4e647f9b9375078b53e9b7aabf3c660f57a06b",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a605986_7d23459e",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/common/security/UserService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-04-22T20:47:15Z",
+      "side": 1,
+      "message": "Need to remove static as multiple Thread access could be an issue for Static. It is not recommended.",
+      "revId": "1a4e647f9b9375078b53e9b7aabf3c660f57a06b",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}

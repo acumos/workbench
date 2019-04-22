@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "dfbc9308_08c3a4f2",
+        "filename": "home-webcomponent/component/src/app/pages/notebook/catalog/catalog.component.ts",
+        "patchSetId": 26
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-04-22T20:07:50Z",
+      "side": 1,
+      "message": "Can this component and logic shared accross all .ts file be refactored into a BaseComponent and use export class NotebookCatalogComponent extends BaseComponent implements OnInit",
+      "revId": "066708f417b33553e529db0ff6a813a3ce54ff03",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0737f2b8_65f6f3a3",
         "filename": "home-webcomponent/component/src/app/pages/notebook/view/view.component.ts",
         "patchSetId": 26

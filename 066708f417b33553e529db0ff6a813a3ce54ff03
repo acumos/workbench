@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6aa49192_5c579d96",
+        "filename": "dashboard-webcomponent/component/src/dashboard-element.js",
+        "patchSetId": 26
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-04-22T18:22:04Z",
+      "side": 1,
+      "message": "Can this logic be shared with another js file routes_services.js",
+      "revId": "066708f417b33553e529db0ff6a813a3ce54ff03",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "13ec288c_bc15f2af",
+        "filename": "home-webcomponent/component/src/app/@core/utils/script.service.ts",
+        "patchSetId": 26
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-04-22T18:22:04Z",
+      "side": 1,
+      "message": "Is the error going to be caught and rethrown as per proper standards and rethrown as custom error\n return this.http.get\u003c\u0027session\u0027)\n    .pipe(\n      retry(2), \n      catchError(this.handleError) // then handle the error\n    );",
+      "revId": "066708f417b33553e529db0ff6a813a3ce54ff03",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}

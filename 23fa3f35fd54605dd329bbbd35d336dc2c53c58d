@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4d96bb9_c02e66ff",
+        "filename": "dashboard-webcomponent/api/src/routes_services.js",
+        "patchSetId": 28
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2019-04-23T14:40:04Z",
+      "side": 1,
+      "message": "Commit comment says styling changes. But, the changes seems to be more than that. So, I tried to understand the functional requirements listed in the linked Jira, but it is not clear if you completed everything or part of it. \n\nAction items: \n1)Can you please update the commit comment with details about which part of the assciated Jira item is completed?\n2) Please fix the format of issue id \"ACUMOS-2623\" in the commit comment. Check the the other merged commits for right format.",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 2
+      },
+      "revId": "23fa3f35fd54605dd329bbbd35d336dc2c53c58d",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bb6c453c_b6c864bc",
+        "filename": "home-webcomponent/component/src/app/@theme/components/breadcrumbs/breadcrumbs.component.html",
+        "patchSetId": 28
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2019-04-23T14:40:04Z",
+      "side": 1,
+      "message": "This may not scale for longterm, as the depth of the application becomes deeper. We should find some dynamic way to achieve this.\n\nIf not explored yet, please consider - https://www.npmjs.com/package/ng7-dynamic-breadcrumb and reply if this is feasible in this release. Thanks.",
+      "revId": "23fa3f35fd54605dd329bbbd35d336dc2c53c58d",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3bd79c0c_00ad9b35",
+        "filename": "home-webcomponent/component/src/app/pages/dashboard/dashboard.component.ts",
+        "patchSetId": 28
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2019-04-23T14:40:04Z",
+      "side": 1,
+      "message": "This cannot scale. Please refer to the breadcrumbs suggestion posted earlier.",
+      "range": {
+        "startLine": 32,
+        "startChar": 8,
+        "endLine": 35,
+        "endChar": 30
+      },
+      "revId": "23fa3f35fd54605dd329bbbd35d336dc2c53c58d",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}

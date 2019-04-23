@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "672533f1_c65eae73",
+        "filename": "home-webcomponent/component/src/app/@theme/components/breadcrumbs/breadcrumbs.component.html",
+        "patchSetId": 28
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 293
+      },
+      "writtenOn": "2019-04-23T16:03:35Z",
+      "side": 1,
+      "message": "The above is not feasible because the styles will not fit our needs.\n\nOur current implementation allows for implementing route based breadcrumbs in the future since we\u0027re leveraging an independent component and service for managing the breadcrumbs application wide.\n\nThe \u0027ng7-dynamics-breadcrumbs\u0027 (and similar solutions), further, only supports route based navigation, but in our implementation requires both route based navigation as well as link based navigation (navigating back to the portal marketplace)\n\nWhat we have gives us more capability for our specific needs, and it\u0027s extendable to be further generalized as the application grows with minimal configuration and without changing existing code.",
+      "parentUuid": "bb6c453c_b6c864bc",
+      "revId": "23fa3f35fd54605dd329bbbd35d336dc2c53c58d",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3bd79c0c_00ad9b35",
         "filename": "home-webcomponent/component/src/app/pages/dashboard/dashboard.component.ts",
         "patchSetId": 28
@@ -53,6 +71,30 @@
       "writtenOn": "2019-04-23T14:40:04Z",
       "side": 1,
       "message": "This cannot scale. Please refer to the breadcrumbs suggestion posted earlier.",
+      "range": {
+        "startLine": 32,
+        "startChar": 8,
+        "endLine": 35,
+        "endChar": 30
+      },
+      "revId": "23fa3f35fd54605dd329bbbd35d336dc2c53c58d",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4336b55c_7bfa8e03",
+        "filename": "home-webcomponent/component/src/app/pages/dashboard/dashboard.component.ts",
+        "patchSetId": 28
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 293
+      },
+      "writtenOn": "2019-04-23T16:03:35Z",
+      "side": 1,
+      "message": "Our current implementation allows for implementing route based breadcrumbs in the future since we\u0027re leveraging an independent component and service for managing the breadcrumbs application wide.\n\nThe \u0027ng7-dynamics-breadcrumbs\u0027 (and similar solutions), further, only supports route based navigation, but in our implementation requires both route based navigation as well as link based navigation (navigating back to the portal marketplace)\n\nWhat we have gives us more capability for our specific needs, and it\u0027s extendable to be further generalized as the application grows with minimal configuration and without changing existing code.",
+      "parentUuid": "3bd79c0c_00ad9b35",
       "range": {
         "startLine": 32,
         "startChar": 8,

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "48330d92_059e076e",
+        "filename": "dashboard-webcomponent/component/src/dashboard-element.js",
+        "patchSetId": 26
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2019-04-23T17:13:13Z",
+      "side": 1,
+      "message": "By this, did you mean instead of writing a function in route_services.js, can we reuse this? If that is the question, this is where we are calling the express server api, and the function in route-services.js is the api call for the actual backend service like project-service etc. So i believe we cannot share this.",
+      "parentUuid": "6aa49192_5c579d96",
+      "revId": "066708f417b33553e529db0ff6a813a3ce54ff03",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13ec288c_bc15f2af",
         "filename": "home-webcomponent/component/src/app/@core/utils/script.service.ts",
         "patchSetId": 26
@@ -64,6 +82,24 @@
       "writtenOn": "2019-04-22T18:48:09Z",
       "side": 1,
       "message": "where are ML workbench and Notebook used Here. Need to remove if not used.",
+      "revId": "066708f417b33553e529db0ff6a813a3ce54ff03",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f72a8446_89d99980",
+        "filename": "home-webcomponent/component/src/app/pages/notebook/view/view.component.ts",
+        "patchSetId": 26
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2019-04-23T17:13:13Z",
+      "side": 1,
+      "message": "This is being used for the breadcrumbs. So if the user goes to notebook detail page, on the breadcrumbs, we will see the ML Workbench and Notebooks.",
+      "parentUuid": "0737f2b8_65f6f3a3",
       "revId": "066708f417b33553e529db0ff6a813a3ce54ff03",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false

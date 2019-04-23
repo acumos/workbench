@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "2f55b038_412f36dd",
+        "filename": "workbench-common/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-23T10:12:06Z",
+      "side": 1,
+      "message": "2.2.2 is released, you don\u0027t need the -SNAPSHOT suffix",
+      "range": {
+        "startLine": 51,
+        "startChar": 17,
+        "endLine": 51,
+        "endChar": 25
+      },
+      "revId": "1a4e647f9b9375078b53e9b7aabf3c660f57a06b",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a374b784_c7b07f16",
         "filename": "workbench-common/src/main/java/org/acumos/workbench/common/security/JWTAuthorizationFilter.java",
         "patchSetId": 2

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6cd7d5e0_459b0b67",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/common/security/AuthenticatedUser.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-24T15:01:04Z",
+      "side": 1,
+      "message": "I tried removing but then get compilation error for unimplemented methods.  Currently we don\u0027t have corresponding field for it.  Let me know on this.",
+      "parentUuid": "c05d5baf_ab5c9cf6",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 14
+      },
+      "revId": "b456fc591194fec5a0fa7774bd051fc107490777",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f51f0e49_2d33049a",
         "filename": "workbench-common/src/main/java/org/acumos/workbench/common/security/AuthenticatedUser.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2019-04-24T13:52:19Z",
       "side": 1,
       "message": "Please implement. Again there does not appear to be a password field in this class.  \n\nFWIW you know Eclipse will generate fully functional getters and setters with one click on a menu item?",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 14
+      },
+      "revId": "b456fc591194fec5a0fa7774bd051fc107490777",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d0e1a8d8_df6ff9fb",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/common/security/AuthenticatedUser.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-24T15:01:04Z",
+      "side": 1,
+      "message": "returning user.getLoginHash(), will that be ok?",
+      "parentUuid": "f51f0e49_2d33049a",
       "range": {
         "startLine": 51,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4273570a_5f13fdc3",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/common/security/JWTAuthorizationFilter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-24T15:01:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48507622_519d3ebb",
+      "range": {
+        "startLine": 58,
+        "startChar": 4,
+        "endLine": 58,
+        "endChar": 13
+      },
+      "revId": "b456fc591194fec5a0fa7774bd051fc107490777",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3ce1b23_4fb84117",
         "filename": "workbench-common/src/main/java/org/acumos/workbench/common/security/JWTAuthorizationFilter.java",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2019-04-24T13:52:19Z",
       "side": 1,
       "message": "please fix indentation",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 11
+      },
+      "revId": "b456fc591194fec5a0fa7774bd051fc107490777",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d2cdda4e_defb03b7",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/common/security/JWTAuthorizationFilter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-24T15:01:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3ce1b23_4fb84117",
       "range": {
         "startLine": 80,
         "startChar": 0,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "b693cf0a_184ef6e3",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/common/security/JwtTokenUtil.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-24T15:01:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9508aa01_828a506a",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 74
+      },
+      "revId": "b456fc591194fec5a0fa7774bd051fc107490777",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec792ac9_a8786f1d",
         "filename": "workbench-common/src/main/java/org/acumos/workbench/common/security/JwtTokenUtil.java",
         "patchSetId": 3
@@ -128,6 +248,30 @@
       "writtenOn": "2019-04-24T13:52:19Z",
       "side": 1,
       "message": "Please add javadoc",
+      "range": {
+        "startLine": 46,
+        "startChar": 8,
+        "endLine": 46,
+        "endChar": 14
+      },
+      "revId": "b456fc591194fec5a0fa7774bd051fc107490777",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d2c828c3_5d91b9de",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/common/security/JwtTokenUtil.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-24T15:01:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec792ac9_a8786f1d",
       "range": {
         "startLine": 46,
         "startChar": 8,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "733a0570_460ff338",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/common/security/UserService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-24T15:01:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8fc38208_922c0aa8",
+      "range": {
+        "startLine": 36,
+        "startChar": 8,
+        "endLine": 36,
+        "endChar": 19
+      },
+      "revId": "b456fc591194fec5a0fa7774bd051fc107490777",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b13e9fe9_182493ce",
         "filename": "workbench-common/src/main/java/org/acumos/workbench/common/security/UserService.java",
         "patchSetId": 3
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "21243304_6d0c64f6",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/common/security/UserService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-24T15:01:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b13e9fe9_182493ce",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 53
+      },
+      "revId": "b456fc591194fec5a0fa7774bd051fc107490777",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06e1d05d_c3ce2748",
         "filename": "workbench-common/src/main/java/org/acumos/workbench/common/security/UserService.java",
         "patchSetId": 3
@@ -197,6 +389,24 @@
       "writtenOn": "2019-04-24T13:52:19Z",
       "side": 1,
       "message": "Pls fix indentation",
+      "revId": "b456fc591194fec5a0fa7774bd051fc107490777",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "35108909_abe16a89",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/common/security/UserService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-24T15:01:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06e1d05d_c3ce2748",
       "revId": "b456fc591194fec5a0fa7774bd051fc107490777",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false

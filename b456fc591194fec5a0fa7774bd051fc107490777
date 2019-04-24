@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "69bb482b_f35675ef",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/common/security/AuthenticatedUser.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-24T15:27:15Z",
+      "side": 1,
+      "message": "I don\u0027t know what the requirement is here, but keeping a TODO comment and returning null does not seem like the right thing to do.",
+      "parentUuid": "6cd7d5e0_459b0b67",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 14
+      },
+      "revId": "b456fc591194fec5a0fa7774bd051fc107490777",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f51f0e49_2d33049a",
         "filename": "workbench-common/src/main/java/org/acumos/workbench/common/security/AuthenticatedUser.java",
         "patchSetId": 3
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "74708632_13484a4c",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/common/security/AuthenticatedUser.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-24T15:27:15Z",
+      "side": 1,
+      "message": "CDS never ever EVER returns anything in the loginHash field, it\u0027s always null",
+      "parentUuid": "d0e1a8d8_df6ff9fb",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 14
+      },
+      "revId": "b456fc591194fec5a0fa7774bd051fc107490777",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48507622_519d3ebb",
         "filename": "workbench-common/src/main/java/org/acumos/workbench/common/security/JWTAuthorizationFilter.java",
         "patchSetId": 3
@@ -131,6 +179,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "48507622_519d3ebb",
+      "range": {
+        "startLine": 58,
+        "startChar": 4,
+        "endLine": 58,
+        "endChar": 13
+      },
+      "revId": "b456fc591194fec5a0fa7774bd051fc107490777",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d2379581_fb74b4fd",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/common/security/JWTAuthorizationFilter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2019-04-24T15:27:15Z",
+      "side": 1,
+      "message": "What is done? you have made no change, you have added no Javadoc to explain; am I blind here?",
+      "parentUuid": "4273570a_5f13fdc3",
       "range": {
         "startLine": 58,
         "startChar": 4,

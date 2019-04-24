@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "be21f051_1ae9e983",
+        "filename": "workbench-common/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-24T09:43:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f55b038_412f36dd",
+      "range": {
+        "startLine": 51,
+        "startChar": 17,
+        "endLine": 51,
+        "endChar": 25
+      },
+      "revId": "1a4e647f9b9375078b53e9b7aabf3c660f57a06b",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a374b784_c7b07f16",
         "filename": "workbench-common/src/main/java/org/acumos/workbench/common/security/JWTAuthorizationFilter.java",
         "patchSetId": 2
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "f9d56533_40f04387",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/common/security/JWTAuthorizationFilter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-24T09:43:57Z",
+      "side": 1,
+      "message": "Its stand alone library and not entirely as Spring Boot application, so cannot use Spring annotation @Autowired and @Bean.",
+      "parentUuid": "a374b784_c7b07f16",
+      "revId": "1a4e647f9b9375078b53e9b7aabf3c660f57a06b",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a605986_7d23459e",
         "filename": "workbench-common/src/main/java/org/acumos/workbench/common/security/UserService.java",
         "patchSetId": 2
@@ -53,6 +95,24 @@
       "writtenOn": "2019-04-22T20:47:15Z",
       "side": 1,
       "message": "Need to remove static as multiple Thread access could be an issue for Static. It is not recommended.",
+      "revId": "1a4e647f9b9375078b53e9b7aabf3c660f57a06b",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8ab45052_ffbe81ed",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/common/security/UserService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-24T09:43:57Z",
+      "side": 1,
+      "message": "I create Singleton to restrict user creating multiple instance.  But I have removed it and converted it to normal class.",
+      "parentUuid": "8a605986_7d23459e",
       "revId": "1a4e647f9b9375078b53e9b7aabf3c660f57a06b",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false

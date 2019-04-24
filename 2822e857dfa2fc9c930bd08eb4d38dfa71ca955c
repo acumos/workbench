@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4ddea8a4_340404bc",
+        "filename": "workbench-common/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-24T09:43:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9044521_86a248d8",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 11
+      },
+      "revId": "2822e857dfa2fc9c930bd08eb4d38dfa71ca955c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1b3496f_ee4ff0fd",
         "filename": "workbench-common/src/main/java/org/acumos/workbench/common/security/AuthenticatedUser.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2019-04-22T20:00:53Z",
       "side": 1,
       "message": "drop worthless empty javadoc",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 33,
+        "endChar": 4
+      },
+      "revId": "2822e857dfa2fc9c930bd08eb4d38dfa71ca955c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "66a004e2_9b54e536",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/common/security/AuthenticatedUser.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-24T09:43:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1b3496f_ee4ff0fd",
       "range": {
         "startLine": 31,
         "startChar": 2,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "48691177_ab056f4e",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/common/security/AuthenticatedUser.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-24T09:43:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78cb94ea_8605e77c",
+      "range": {
+        "startLine": 34,
+        "startChar": 46,
+        "endLine": 34,
+        "endChar": 48
+      },
+      "revId": "2822e857dfa2fc9c930bd08eb4d38dfa71ca955c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "576810c7_196f3ce6",
         "filename": "workbench-common/src/main/java/org/acumos/workbench/common/security/JWTAuthorizationFilter.java",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2019-04-22T20:00:53Z",
       "side": 1,
       "message": "Why hardcode this string repeatedly?  Please clean up this poor coding practice.",
+      "range": {
+        "startLine": 64,
+        "startChar": 38,
+        "endLine": 64,
+        "endChar": 46
+      },
+      "revId": "2822e857dfa2fc9c930bd08eb4d38dfa71ca955c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d33c12d4_1f3479eb",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/common/security/JWTAuthorizationFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-24T09:43:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "576810c7_196f3ce6",
       "range": {
         "startLine": 64,
         "startChar": 38,
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "12c0b2e1_e446ca1c",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/common/security/JwtTokenUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-24T09:43:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7c0bde1_da321120",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 60
+      },
+      "revId": "2822e857dfa2fc9c930bd08eb4d38dfa71ca955c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14a460d1_5f5d4836",
         "filename": "workbench-common/src/main/java/org/acumos/workbench/common/security/UserService.java",
         "patchSetId": 1
@@ -151,6 +271,30 @@
       "writtenOn": "2019-04-22T20:00:53Z",
       "side": 1,
       "message": "this is a very awkward class.  You have a static constructor, a static variable, a static method.  Static should be avoided at all costs in a Spring environment where multiple threads are managed by the container.  Find a way to do this in a web container compatible way.",
+      "range": {
+        "startLine": 32,
+        "startChar": 13,
+        "endLine": 32,
+        "endChar": 24
+      },
+      "revId": "2822e857dfa2fc9c930bd08eb4d38dfa71ca955c",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4454b2b5_120002ad",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/common/security/UserService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-24T09:43:57Z",
+      "side": 1,
+      "message": "It was Singleton, to restrict to create multiple instance.  But any way removed Singleton and made normal class.",
+      "parentUuid": "14a460d1_5f5d4836",
       "range": {
         "startLine": 32,
         "startChar": 13,

@@ -20,11 +20,16 @@
 
 package org.acumos.workbench.notebookservice.controller;
 
+import static org.acumos.workbench.common.security.SecurityConstants.*;
+import static org.acumos.workbench.notebookservice.util.NotebookServiceConstants.*;
+
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
 import java.lang.invoke.MethodHandles;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.acumos.workbench.common.vo.Notebook;
 import org.acumos.workbench.common.vo.ServiceState;
@@ -77,13 +82,14 @@ public class NotebookServiceController {
 	@ApiOperation(value = "Creates new  Notebook under a Project in ML Workbench", response = Notebook.class)
 	@RequestMapping(value = "/users/{authenticatedUserId}/projects/{projectId}/notebooks", method = RequestMethod.POST)
 	public ResponseEntity<?> createNotebookUnderProject(
+			HttpServletRequest request,
 			@ApiParam(value="Acumos User login Id ")@PathVariable("authenticatedUserId") String authenticatedUserId,
 			@ApiParam(value="Project Id under which Notebook need to be created")@PathVariable("projectId") String projectId,
 			@ApiParam(value="Notebook Details")@RequestBody Notebook notebook) {
 		logger.debug("createNotebookUnderProject() Begin");
-        
-		Notebook result = createNotebook(authenticatedUserId, projectId, notebook);
-		
+		String authToken = getAuthJWTToken(request);
+		inputValidationService.isValuePresent(FIELD_PROJECT_ID, projectId);
+		Notebook result = createNotebook(authenticatedUserId, projectId, notebook, authToken);
 		logger.debug("createNotebookUnderProject() End");
         return new ResponseEntity<Notebook>(result, HttpStatus.CREATED);
         
@@ -102,11 +108,12 @@ public class NotebookServiceController {
 	@ApiOperation(value = "Creates new  independent Notebook for a User in ML Workbench", response = Notebook.class)
 	@RequestMapping(value = "/users/{authenticatedUserId}/notebooks", method = RequestMethod.POST)
     public ResponseEntity<?> createIndependentNotebook(
+    		HttpServletRequest request,
     		@ApiParam(value="Acumos User login Id ")@PathVariable("authenticatedUserId") String authenticatedUserId, 
     		@ApiParam(value="Notebook details")@RequestBody Notebook notebook) {
-		
 		logger.debug("createIndependentNotebook() Begin");
-		Notebook result = createNotebook(authenticatedUserId, null, notebook);
+		String authToken = getAuthJWTToken(request);
+		Notebook result = createNotebook(authenticatedUserId, null, notebook, authToken);
 		logger.debug("createIndependentNotebook() End");
         return new ResponseEntity<Notebook>(result, HttpStatus.CREATED);
 		
@@ -127,39 +134,20 @@ public class NotebookServiceController {
 	@ApiOperation(value = "Launch the new instance of Notebook associated to a Project based on type and return the Notebook instance will URL.", response = Notebook.class)
 	@RequestMapping(value = "/users/{authenticatedUserId}/projects/{projectId}/notebooks/{notebookId}/launch", method = RequestMethod.GET)
 	public ResponseEntity<?> launchProjectNotebook(
+			HttpServletRequest request,
 			@ApiParam(value="Acumos User login Id")@PathVariable("authenticatedUserId") String authenticatedUserId,
 			@ApiParam(value="Project Id ")@PathVariable("projectId") String projectId,
 			@ApiParam(value="Notebook Id ")@PathVariable("notebookId") String notebookId) {
 		logger.debug("launchProjectNotebook() Begin");
-		Notebook result = new Notebook();
-		
-		// Check authenticatedUserId should be present
-		inputValidationService.isValuePresent("AuthenticatedUserId", authenticatedUserId);
-				
+		String authToken = getAuthJWTToken(request);
 		// project Id should be present 
-		inputValidationService.isValuePresent("Project Id", projectId);
-
-		// notebookId should be present 
-		inputValidationService.isValuePresent("Notebook Id", notebookId);
-		
-		//4. notebook should exists
-		notebookService.notebookExists(notebookId);
-		
-		//5. notebook should not be archived
-		notebookService.isNotebookArchived(notebookId);
-		
-		//6. check if user is authorized to launch the notebook 
-		notebookService.isOwnerOfNotebook(authenticatedUserId, notebookId);
-		
-		//check if notebook is associated to a project
-		notebookService.isNotebookProjectAssociated(projectId, notebookId);
-		
-		//7. Call JupyterHub Server to start an instance of the Notebook Server for the user
-		result = notebookService.launchNotebook(authenticatedUserId, projectId, notebookId);
+		inputValidationService.isValuePresent(FIELD_PROJECT_ID, projectId);
+		Notebook result = launchNotebook(authenticatedUserId, projectId, notebookId, authToken);
 		logger.debug("launchProjectNotebook() End");
 		return new ResponseEntity<Notebook>(result, HttpStatus.OK);
 		
 	}
+
 	
 	/**
 	 * Launch the Notebook  
@@ -172,30 +160,13 @@ public class NotebookServiceController {
 	 */
 	@ApiOperation(value = "Launch the new instance of Notebook based on type and return the Notebook instance with URL.", response = Notebook.class)
 	@RequestMapping(value = "/users/{authenticatedUserId}/notebooks/{notebookId}/launch", method = RequestMethod.GET)
-	public ResponseEntity<?> launchNotebook(
+	public ResponseEntity<?> launchIndependentNotebook(
+			HttpServletRequest request,
 			@ApiParam(value="Acumos User login Id ")@PathVariable("authenticatedUserId") String authenticatedUserId, 
 			@ApiParam(value="Notebook Id ")@PathVariable("notebookId") String notebookId) {
 		logger.debug("launchNotebook() Begin");
-		Notebook result = new Notebook();
-		
-		// Check authenticatedUserId should be present
-		inputValidationService.isValuePresent("AuthenticatedUserId", authenticatedUserId);
-				 
-		
-		// notebookId should be present 
-		inputValidationService.isValuePresent("Notebook Id", notebookId);
-		
-		//4. notebook should exists
-		notebookService.notebookExists(notebookId);
-		
-		//5. notebook should not be archived
-		notebookService.isNotebookArchived(notebookId);
-		
-		//6. check if user is authorized to launch the notebook 
-		notebookService.isOwnerOfNotebook(authenticatedUserId, notebookId);
-				
-		//7. Call JupyterHub Server to start an instance of the Notebook Server for the user
-		result = notebookService.launchNotebook(authenticatedUserId, null, notebookId);
+		String authToken = getAuthJWTToken(request);
+		Notebook result = launchNotebook(authenticatedUserId, null, notebookId, authToken);
 		logger.debug("launchNotebook() End");
 		return new ResponseEntity<Notebook>(result, HttpStatus.OK);
 		
@@ -214,20 +185,21 @@ public class NotebookServiceController {
 	@ApiOperation(value = "Gets list of Notebook associated to a project", response = Notebook.class)
 	@RequestMapping(value = "/users/{authenticatedUserId}/projects/{projectId}/notebooks/", method = RequestMethod.GET)
     public ResponseEntity<?> getNotebooks(
+    		HttpServletRequest request,
     		@ApiParam(value="Acumos User login Id ")@PathVariable("authenticatedUserId") String authenticatedUserId, 
     		@ApiParam(value="Project Id ")@PathVariable("projectId") String projectId) {
 		logger.debug("getNotebooks() Begin");
-		
+		String authToken = getAuthJWTToken(request);
 		// 1. Validate the input
 
 		// Check authenticatedUserId should be present
-		inputValidationService.isValuePresent("AuthenticatedUserId", authenticatedUserId);
+		inputValidationService.isValuePresent(FIELD_AUTHENTICATED_USER_ID, authenticatedUserId);
 		
 		// project Id should be present 
-		inputValidationService.isValuePresent("Project Id", projectId);
+		inputValidationService.isValuePresent(FIELD_PROJECT_ID, projectId);
 				
 		//Validate project 
-		notebookValidationService.validateProject(authenticatedUserId, projectId);
+		notebookValidationService.validateProject(authenticatedUserId, projectId, authToken);
 		
 		// Service call to get existing project (active and archive both). (Call to CDS)
 		List<Notebook> result = notebookService.getNotebooks(authenticatedUserId, projectId);
@@ -246,12 +218,12 @@ public class NotebookServiceController {
 	 */
 	@ApiOperation(value = "Gets list of all Notebook for a user", response = Notebook.class)
 	@RequestMapping(value = "/users/{authenticatedUserId}/notebooks/", method = RequestMethod.GET)
-    public ResponseEntity<?> getAllNotebooks(@ApiParam(value="Acumos User login Id ")@PathVariable("authenticatedUserId") String authenticatedUserId) {
+    public ResponseEntity<?> getAllNotebooks(HttpServletRequest request, @ApiParam(value="Acumos User login Id ")@PathVariable("authenticatedUserId") String authenticatedUserId) {
 		logger.debug("getAllNotebooks() Begin");
 		// 1. Validate the input
 
 		// 2. Check authenticatedUserId should be present
-		inputValidationService.isValuePresent("AuthenticatedUserId", authenticatedUserId);
+		inputValidationService.isValuePresent(FIELD_AUTHENTICATED_USER_ID, authenticatedUserId);
 			
 		//3. Validate is user authorized to request this operation 
 		
@@ -278,30 +250,21 @@ public class NotebookServiceController {
 	 */
 	@ApiOperation(value = "Updates existing Notebook associated to a Project", response = Notebook.class)
 	@RequestMapping(value = "/users/{authenticatedUserId}/projects/{projectId}/notebooks/{notebookId}", method = RequestMethod.PUT)
-    public ResponseEntity<?> updatePrjectNotebook(
+    public ResponseEntity<?> updateProjectNotebook(
+    		HttpServletRequest request,
     		@ApiParam(value="Acumos User login Id ")@PathVariable("authenticatedUserId") String authenticatedUserId, 
     		@ApiParam(value="Project Id ")@PathVariable("projectId") String projectId, 
     		@ApiParam(value="Notebook Id ")@PathVariable("notebookId") String notebookId,
     		@ApiParam(value="Notebook Details")@RequestBody Notebook notebook) {
 		logger.debug("updatePrjectNotebook() Begin");
-		Notebook result = null;
+		String authToken = getAuthJWTToken(request);
+		inputValidationService.isValuePresent(FIELD_PROJECT_ID, projectId);
+		 Notebook result = updateNotebook(authenticatedUserId, projectId, notebookId, notebook, authToken);
 		
-		
-		inputValidationService.isValuePresent("Project Id", projectId);
-		//Validation 
-		notebookValidationService.validateNotebook(authenticatedUserId, notebook);
-		
-		//Check if notebook for given id exists 
-		notebookService.notebookExists(notebookId);
-		//Check if authenticated user is the owner of the Notebook. (Call to CDS)
-		notebookService.isOwnerOfNotebook(authenticatedUserId, notebookId);
-		
-		notebookValidationService.validateProject(authenticatedUserId, projectId);
-		
-		result = notebookService.updateNotebook(authenticatedUserId, projectId, notebookId, notebook);
 		logger.debug("updatePrjectNotebook() End");
       	return new ResponseEntity<Notebook>(result, HttpStatus.OK);
     }
+
 	
 	/**
 	 * To update existing Notebook 
@@ -317,20 +280,12 @@ public class NotebookServiceController {
 	@ApiOperation(value = "Updates existing Notebook", response = Notebook.class)
 	@RequestMapping(value = "/users/{authenticatedUserId}/notebooks/{notebookId}", method = RequestMethod.PUT)
     public ResponseEntity<?> updateNotebook(
+    		HttpServletRequest request,
     		@ApiParam(value="Acumos User login Id ")@PathVariable("authenticatedUserId") String authenticatedUserId, 
     		@ApiParam(value="Notebook Id ")@PathVariable("notebookId") String notebookId, 
     		@ApiParam(value="Notebook Details")@RequestBody Notebook notebook) {
 		logger.debug("updateNotebook() Begin");
-		Notebook result = null;
-		
-		//Validation 
-		notebookValidationService.validateNotebook(authenticatedUserId, notebook);
-		//check if notebook with given Id exists
-		notebookService.notebookExists(notebookId);
-		//Check if authenticated user is the owner of the Notebook. (Call to CDS)
-		notebookService.isOwnerOfNotebook(authenticatedUserId, notebookId);
-		
-		result = notebookService.updateNotebook(authenticatedUserId, null, notebookId, notebook);
+		Notebook result = updateNotebook(authenticatedUserId, null, notebookId, notebook, null);
 		logger.debug("updateNotebook() End");
       	return new ResponseEntity<Notebook>(result, HttpStatus.OK);
     }
@@ -349,16 +304,17 @@ public class NotebookServiceController {
 	@ApiOperation(value = "Gets the existing Notebook details for a user", response = Notebook.class)
 	@RequestMapping(value = "/users/{authenticatedUserId}/notebooks/{notebookId}", method = RequestMethod.GET)
     public ResponseEntity<?> getNotebook(
+    		HttpServletRequest request,
     		@ApiParam(value="Acumos User login Id ")@PathVariable("authenticatedUserId") String authenticatedUserId, 
     		@ApiParam(value="Notebook Id ")@PathVariable("notebookId") String notebookId) {
 		logger.debug("getNotebook() Begin");
 		// 1. Validate the input
 		
 		// 2. Check authenticatedUserId should be present
-		inputValidationService.isValuePresent("AuthenticatedUserId", authenticatedUserId);
+		inputValidationService.isValuePresent(FIELD_AUTHENTICATED_USER_ID, authenticatedUserId);
 		
 		// 3. Notebook Id should be present
-		inputValidationService.isValuePresent("Notebook Id", notebookId);
+		inputValidationService.isValuePresent(NOTEBOOK_ID, notebookId);
 		
 		// 4. Check if authenticated user is the owner of the Project. (Call to CDS)
 		notebookService.isOwnerOfNotebook(authenticatedUserId, notebookId);
@@ -385,13 +341,14 @@ public class NotebookServiceController {
 	@ApiOperation(value = "Delete Notebook", response = Notebook.class)
 	@RequestMapping(value = "/users/{authenticatedUserId}/notebooks/{notebookId}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteNotebook(
+    		HttpServletRequest request,
     		@ApiParam(value="Acumos User login Id ")@PathVariable("authenticatedUserId") String authenticatedUserId, 
     		@ApiParam(value="Notebook Id ")@PathVariable("notebookId") String notebookId) {
 		logger.debug("deleteNotebook() Begin");
 		ServiceState result = null;
 		
 		//Check authenticatedUserId should be present
-		inputValidationService.isValuePresent("AuthenticatedUserId", authenticatedUserId);
+		inputValidationService.isValuePresent(FIELD_AUTHENTICATED_USER_ID, authenticatedUserId);
 		
 		// Notebook Exists 
 		notebookService.notebookExists(notebookId);
@@ -400,7 +357,7 @@ public class NotebookServiceController {
 		notebookService.isOwnerOfNotebook(authenticatedUserId, notebookId);
 		
 		//Delete Notebook 
-		result = notebookService.deleteNotebook(notebookId);
+		result = notebookService.deleteNotebook(authenticatedUserId, notebookId);
 		logger.debug("deleteNotebook() End");
         return new ResponseEntity<ServiceState>(result, HttpStatus.OK);
     }
@@ -422,13 +379,15 @@ public class NotebookServiceController {
 	@ApiOperation(value = "Archive/Un Archive Notebook associated to a Project", response = Notebook.class)
 	@RequestMapping(value = "/users/{authenticatedUserId}/projects/{projectId}/notebooks/{notebookId}/{actionType}", method = RequestMethod.PUT)
     public ResponseEntity<Notebook> archiveProjectNotebook(
+    		HttpServletRequest request,
     		@ApiParam(value="Acumos User login Id ")@PathVariable("authenticatedUserId") String authenticatedUserId, 
     		@ApiParam(value="Project Id ")@PathVariable("projectId") String projectId,
     		@ApiParam(value="Notebook Id ")@PathVariable("notebookId") String notebookId,
     		@ApiParam(value="Action Type", allowableValues = "A, UA")@PathVariable("actionType") String actionType) {
 		logger.debug("archiveProjectNotebook() Begin");
-		Notebook result = null;
-		result = archiveNotebook(authenticatedUserId, projectId, notebookId, actionType);
+		String authToken = getAuthJWTToken(request);
+		inputValidationService.isValuePresent(FIELD_PROJECT_ID, projectId);
+		Notebook result = archiveNotebook(authenticatedUserId, projectId, notebookId, actionType, authToken);
 		logger.debug("archiveProjectNotebook() End");
         return new ResponseEntity<Notebook>(result, HttpStatus.OK);
         
@@ -449,24 +408,29 @@ public class NotebookServiceController {
 	@ApiOperation(value = "Archive/Un Archive Notebook ", response = Notebook.class)
 	@RequestMapping(value = "/users/{authenticatedUserId}/notebooks/{notebookId}/{actionType}", method = RequestMethod.PUT)
     public ResponseEntity<Notebook> archiveNotebook(
+    		HttpServletRequest request,
     		@ApiParam(value="Acumos User login Id ")@PathVariable("authenticatedUserId") String authenticatedUserId, 
     		@ApiParam(value="Notebook Id ")@PathVariable("notebookId") String notebookId,
     		@ApiParam(value="Action Type ", allowableValues = "A, UA")@PathVariable("actionType") String actionType) {
 		logger.debug("archiveNotebook() Begin");
 		Notebook result = null;
-		result = archiveNotebook(authenticatedUserId, null, notebookId, actionType);
+		result = archiveNotebook(authenticatedUserId, null, notebookId, actionType, null);
 		logger.debug("archiveNotebook() End");
         return new ResponseEntity<Notebook>(result, HttpStatus.OK);
         
     }
 	
-	private Notebook createNotebook(String authenticatedUserId, String projectId, Notebook notebook) {
+	private Notebook createNotebook(String authenticatedUserId, String projectId, Notebook notebook, String authToken) {
 		logger.debug("createNotebook() Begin");
+		
+		//Check authenticatedUserId should be present
+    	inputValidationService.isValuePresent(FIELD_AUTHENTICATED_USER_ID, authenticatedUserId);
+    	
 	 	//Validation 
 		notebookValidationService.validateNotebook(authenticatedUserId, notebook);
 		
 		if(null != projectId ){
-			notebookValidationService.validateProject(authenticatedUserId, projectId);
+			notebookValidationService.validateProject(authenticatedUserId, projectId, authToken);
 		}
 		
 		// 5. Check if Notebook Name and Notebook Type [and Version optional] already present for the userId in Workspace. (Call to CDS)
@@ -482,21 +446,20 @@ public class NotebookServiceController {
    
 	
 	private Notebook archiveNotebook(String authenticatedUserId,
-			String projectId, String notebookId, String actionType) {
+			String projectId, String notebookId, String actionType, String authToken) {
 		logger.debug("archiveNotebook() Begin");
 		Notebook result;
 		// 1. Validate the input
 
 		//Check authenticatedUserId should be present
-    	inputValidationService.isValuePresent("AuthenticatedUserId", authenticatedUserId);
+    	inputValidationService.isValuePresent(FIELD_AUTHENTICATED_USER_ID, authenticatedUserId);
     	
     	//Check projectId is present 
     	if(null != projectId) {
-    		inputValidationService.isValuePresent("Project Id", projectId);
-    		notebookValidationService.validateProject(authenticatedUserId, projectId);
+    		notebookValidationService.validateProject(authenticatedUserId, projectId, authToken);
     	}
     	//Check notebookId is present 
-    	inputValidationService.isValuePresent("Notebook Id", notebookId);
+    	inputValidationService.isValuePresent(NOTEBOOK_ID, notebookId);
     	
     	notebookService.notebookExists(notebookId);
     	
@@ -506,8 +469,74 @@ public class NotebookServiceController {
     	//TODO : Check if the Notebook is referenced by other Users or in Other Projects.  Need to discuss how to get this done. 
     	
     	// 4. Mark the project as archived/un archived (call to CDS).
-		result = notebookService.archiveNotebook(authenticatedUserId, projectId, notebookId, actionType );
+		result = notebookService.archiveNotebook(authenticatedUserId, projectId, notebookId, actionType);
 		logger.debug("archiveNotebook() End");
 		return result;
+	}
+	
+
+	private Notebook updateNotebook(String authenticatedUserId, String projectId,
+			String notebookId, Notebook notebook, String authToken) {
+		Notebook result = null;
+		
+		//Check authenticatedUserId should be present
+    	inputValidationService.isValuePresent(FIELD_AUTHENTICATED_USER_ID, authenticatedUserId);
+    	
+		if(null != projectId) {
+			notebookValidationService.validateProject(authenticatedUserId, projectId, authToken);
+		}
+		//Validation 
+		notebookValidationService.validateNotebook(authenticatedUserId, notebook);
+		
+		//Check if notebook for given id exists 
+		notebookService.notebookExists(notebookId);
+		//Check if authenticated user is the owner of the Notebook. (Call to CDS)
+		notebookService.isOwnerOfNotebook(authenticatedUserId, notebookId);
+		
+		result = notebookService.updateNotebook(authenticatedUserId, projectId, notebookId, notebook);
+		return result;
+	}
+	
+	private Notebook launchNotebook(String authenticatedUserId, String projectId, String notebookId, String authToken) {
+		Notebook result = null;
+		// Check authenticatedUserId should be present
+		inputValidationService.isValuePresent(FIELD_AUTHENTICATED_USER_ID, authenticatedUserId);
+				
+		
+		// notebookId should be present 
+		inputValidationService.isValuePresent(NOTEBOOK_ID, notebookId);
+		
+		//4. notebook should exists
+		notebookService.notebookExists(notebookId);
+		
+		//5. notebook should not be archived
+		notebookService.isNotebookArchived(notebookId);
+		
+		//6. check if user is authorized to launch the notebook 
+		notebookService.isOwnerOfNotebook(authenticatedUserId, notebookId);
+		
+		if (null != projectId) {
+			//check if notebook is associated to a project
+			notebookService.isNotebookProjectAssociated(projectId, notebookId);
+			notebookValidationService.validateProject(authenticatedUserId, projectId, authToken);
+		}
+		
+		//7. Call JupyterHub Server to start an instance of the Notebook Server for the user
+		result = notebookService.launchNotebook(authenticatedUserId, projectId, notebookId);
+		return result;
+	}
+	
+	private String getAuthJWTToken(HttpServletRequest request) { 
+		HttpServletRequest httpRequest = (HttpServletRequest) request;
+		String authToken = null;
+		authToken = httpRequest.getHeader(AUTHORIZATION_HEADER_KEY);
+		
+		if (authToken == null) {
+			authToken = httpRequest.getHeader(JWT_TOKEN_HEADER_KEY);
+		}
+		if (authToken == null) {
+			authToken = request.getParameter(JWT_TOKEN_HEADER_KEY);
+		}
+		return authToken;
 	}
 }

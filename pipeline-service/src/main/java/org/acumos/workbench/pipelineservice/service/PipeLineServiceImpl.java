@@ -89,7 +89,7 @@ public class PipeLineServiceImpl implements PipeLineService{
 		responseMLPPileLine = cdsClient.createPipeline(mlpPipeline);
 		logger.debug("CDS createPipeLine() method End");
 		} catch(RestClientResponseException e){
-			logger.error("CDS - Create Pipeline");
+			logger.error("CDS - Create Pipeline", e);
 			throw new TargetServiceInvocationException(PipelineServiceConstants.CDS_CREATE_PIPELINE);
 			
 		}
@@ -100,7 +100,7 @@ public class PipeLineServiceImpl implements PipeLineService{
 				logger.debug("CDS addProjectPipeline() method End");
 			}
 		} catch (Exception e) {
-			logger.error("CDS - Create Pipeline");
+			logger.error("CDS - Create Pipeline", e);
 			throw new TargetServiceInvocationException(PipelineServiceConstants.CDS_CREATE_PIPELINE);
 		}
 		
@@ -163,7 +163,7 @@ public class PipeLineServiceImpl implements PipeLineService{
 				logger.debug("CDS searchPipelines() method End");
 				mlpPipelines = response.getContent();
 			} catch (Exception e) {
-				logger.error("CDS - Search Pipelines");
+				logger.error("CDS - Search Pipelines", e);
 				throw new TargetServiceInvocationException(PipelineServiceConstants.CDS_SEARCH_PIPELINES);
 			}
 		}else {
@@ -172,7 +172,7 @@ public class PipeLineServiceImpl implements PipeLineService{
 				mlpPipelines = cdsClient.getProjectPipelines(projectId);
 				logger.debug("CDS getProjectPipelines() method End");
 			} catch (Exception e) {
-				logger.error("CDS - Get Project Pipelines");
+				logger.error("CDS - Get Project Pipelines", e);
 				throw new TargetServiceInvocationException(PipelineServiceConstants.CDS_GET_PROJECT_PIPELINES);
 			}
 		}
@@ -228,7 +228,7 @@ public class PipeLineServiceImpl implements PipeLineService{
 			oldMLPPipeline = cdsClient.getPipeline(pipelineId);
 			logger.debug("CDS getPipeline() method End");
 		} catch (Exception e) {
-			logger.error("CDS - Get Pipeline");
+			logger.error("CDS - Get Pipeline", e);
 			throw new TargetServiceInvocationException(PipelineServiceConstants.CDS_GET_PIPELINE);
 		}
 		
@@ -245,7 +245,7 @@ public class PipeLineServiceImpl implements PipeLineService{
 				response = cdsClient.searchPipelines(queryParameters, false, pageRequest);
 				logger.debug("CDS searchPipelines() method End");
 			} catch (Exception e) {
-				logger.error("CDS - Search Pipelines");
+				logger.error("CDS - Search Pipelines", e);
 				throw new TargetServiceInvocationException(PipelineServiceConstants.CDS_SEARCH_PIPELINES);
 			}
 			
@@ -262,7 +262,7 @@ public class PipeLineServiceImpl implements PipeLineService{
 			cdsClient.updatePipeline(newMLPPipeline);
 			logger.debug("CDS updatePipeline() method End");
 		} catch (Exception e) {
-			logger.error("CDS - Update Pipeline");
+			logger.error("CDS - Update Pipeline", e);
 			throw new TargetServiceInvocationException(PipelineServiceConstants.CDS_UPDATE_PIPELINE);
 		}try {
 			if(null != pipelineId){
@@ -298,7 +298,7 @@ public class PipeLineServiceImpl implements PipeLineService{
 			}
 			result = PipeLineServiceUtil.getPipeLineVO(response, mlpUser);
 		} catch (Exception e) {
-			logger.error("CDS - Get Pipeline");
+			logger.error("CDS - Get Pipeline", e);
 			throw new TargetServiceInvocationException(PipelineServiceConstants.CDS_GET_PIPELINE);
 		}
 		logger.debug("getPipeline() End");
@@ -316,7 +316,7 @@ public class PipeLineServiceImpl implements PipeLineService{
 			mlpProjects = cdsClient.getPipelineProjects(pipelineId);
 			logger.debug("CDS getPipelineProjects() method End");
 		} catch (Exception e) {
-			logger.error("CDS - Get Pipeline Projects");
+			logger.error("CDS - Get Pipeline Projects", e);
 			throw new TargetServiceInvocationException(PipelineServiceConstants.CDS_GET_PIPELINE_PROJECTS);
 		}
 		try {
@@ -329,7 +329,7 @@ public class PipeLineServiceImpl implements PipeLineService{
 				}
 			}
 		} catch (Exception e) {
-			logger.error("CDS - Drop Project Pipeline");
+			logger.error("CDS - Drop Project Pipeline", e);
 			throw new TargetServiceInvocationException(PipelineServiceConstants.CDS_DROP_PROJECT_PIPELINE);
 		}
 		try {
@@ -339,7 +339,7 @@ public class PipeLineServiceImpl implements PipeLineService{
 			cdsClient.deletePipeline(pipelineId);
 			logger.debug("CDS deletePipeline() method End");
 		} catch (Exception e) {
-			logger.error("CDS - Delete Pipeline");
+			logger.error("CDS - Delete Pipeline", e);
 			throw new TargetServiceInvocationException(PipelineServiceConstants.CDS_DELETE_PIPELINE);
 		}
 		result = new ServiceState();
@@ -362,7 +362,7 @@ public class PipeLineServiceImpl implements PipeLineService{
 			mlpPipeline = cdsClient.getPipeline(pipelineId);
 			logger.debug("CDS getPipeline() method End");
 		} catch (Exception e) {
-			logger.error("CDS - Get Pipeline");
+			logger.error("CDS - Get Pipeline", e);
 			throw new TargetServiceInvocationException(PipelineServiceConstants.CDS_GET_PIPELINE);
 		}
 		
@@ -380,7 +380,7 @@ public class PipeLineServiceImpl implements PipeLineService{
 			cdsClient.updatePipeline(mlpPipeline);
 			logger.debug("CDS updatePipeline() method End");
 		} catch (Exception e) {
-			logger.error("CDS - Update Pipeline");
+			logger.error("CDS - Update Pipeline", e);
 			throw new TargetServiceInvocationException(PipelineServiceConstants.CDS_UPDATE_PIPELINE);
 		}
 		
@@ -425,7 +425,7 @@ public class PipeLineServiceImpl implements PipeLineService{
 				throw new ArchivedException("Cannot launch – pipeline is archived");
 			}
 		} catch (RestClientResponseException e) { 
-			logger.error("CDS - Get Pipeline");
+			logger.error("CDS - Get Pipeline", e);
 			throw new TargetServiceInvocationException(PipelineServiceConstants.CDS_GET_PIPELINE);
 		}
 		logger.debug("isPipelineArchived() End");
@@ -446,7 +446,7 @@ public class PipeLineServiceImpl implements PipeLineService{
 				}
 			}
 		} catch (Exception e) {
-			logger.error("CDS - Get Pipeline");
+			logger.error("CDS - Get Pipeline", e);
 			throw new TargetServiceInvocationException(PipelineServiceConstants.CDS_GET_PIPELINE);
 		}
 		if (!associated) {

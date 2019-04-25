@@ -41,11 +41,13 @@ import org.acumos.workbench.common.vo.Version;
 import org.acumos.workbench.notebookservice.exception.ArchivedException;
 import org.acumos.workbench.notebookservice.exception.AssociationNotFoundException;
 import org.acumos.workbench.notebookservice.exception.DuplicateNotebookException;
+import org.acumos.workbench.notebookservice.exception.IncorrectValueException;
 import org.acumos.workbench.notebookservice.exception.NotOwnerException;
 import org.acumos.workbench.notebookservice.exception.NotebookNotFoundException;
 import org.acumos.workbench.notebookservice.exception.TargetServiceInvocationException;
 import org.acumos.workbench.notebookservice.exception.UserNotFoundException;
 import org.acumos.workbench.notebookservice.util.ConfigurationProperties;
+import org.acumos.workbench.notebookservice.util.NotebookServiceConstants;
 import org.acumos.workbench.notebookservice.util.NotebookServiceLoggingConstants;
 import org.acumos.workbench.notebookservice.util.NotebookServiceProperties;
 import org.acumos.workbench.notebookservice.util.NotebookServiceUtil;
@@ -60,6 +62,7 @@ import org.springframework.web.client.RestClientResponseException;
 
 @Service("NotebookServiceImpl")
 public class NotebookServiceImpl implements NotebookService {
+	
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
 	@Autowired
@@ -76,8 +79,8 @@ public class NotebookServiceImpl implements NotebookService {
 	private ProjectServiceRestClient psClient;
 	
 	@Autowired
-	@Qualifier("JupyterHubRestClientImpl")
-	private JupyterHubRestClient jhClient;
+	@Qualifier("JupyterHubRestClient")
+	private NotebookRestClient jhClient;
 	
 
 	@Override
@@ -85,17 +88,15 @@ public class NotebookServiceImpl implements NotebookService {
 		//CDS call to get MLPNotebook 
 		logger.debug("notebookExists() Begin");
 		try {
-			logger.debug("getNotebook() Begin");
 			cdsClient.setRequestId(MDC.get(NotebookServiceLoggingConstants.MDCs.REQUEST_ID));
 			MLPNotebook response = cdsClient.getNotebook(notebookId);
-			logger.debug("getNotebook() End");
 			if (null == response) {
 				logger.error("Requested Notebook Not found");
 				throw new NotebookNotFoundException();
 			}
 
 		} catch (RestClientResponseException e) { 
-			logger.error("CDS - Get Notebook");
+			logger.error(props.getCdsGetNotebookExcp());
 			throw new TargetServiceInvocationException(props.getCdsGetNotebookExcp());
 		}
 		logger.debug("notebookExists() End");
@@ -116,70 +117,94 @@ public class NotebookServiceImpl implements NotebookService {
 
 		if (null != notebook.getNoteBookId()) {
 			Identifier notebookIdentifier = notebook.getNoteBookId();
-			queryParameters.put("name", notebookIdentifier.getName());
+			queryParameters.put(NotebookServiceConstants.CDS_QUERY_PARAM_NAME_KEY, notebookIdentifier.getName());
 			if (null != notebookIdentifier.getVersionId()) {
 				Version notebookVersion = notebookIdentifier.getVersionId();
 				if (null != notebookVersion.getLabel()
 						&& !notebookVersion.getLabel().trim().equals("")) {
-					queryParameters.put("version", notebookVersion.getLabel());
+					queryParameters.put(NotebookServiceConstants.CDS_QUERY_PARAM_VERSION_KEY, notebookVersion.getLabel());
 				}
 			}
 		}
 
-		queryParameters.put("notebookTypeCode", notebook.getNotebookType());
+		queryParameters.put(NotebookServiceConstants.CDS_QUERY_PARAM_NOTEBOOKTYPECODE_KEY, notebook.getNotebookType());
 		queryParameters.put("userId", userId);
 
 		try {
 			RestPageRequest pageRequest = new RestPageRequest(0, 1);
-			logger.debug("searchNotebooks() Begin");
 			cdsClient.setRequestId(MDC.get(NotebookServiceLoggingConstants.MDCs.REQUEST_ID));
 			RestPageResponse<MLPNotebook> response = cdsClient.searchNotebooks(queryParameters,
 					false, pageRequest);
-			logger.debug("searchNotebooks() End");
 			if (null != response && response.getContent().size() > 0) {
 				logger.error("Notebook name and type [and version] already exists");
 				throw new DuplicateNotebookException();
 			}
 		} catch (RestClientResponseException e) {
-			logger.error("CDS - Search Notebooks");
+			logger.error(props.getCdsSearchNotebooksExcp());
 			throw new TargetServiceInvocationException(props.getCdsSearchNotebooksExcp());
 		}
 		logger.debug("notebookExists() End");
 	}
 
 	@Override
+	public Notebook launchNotebook(String authenticatedUserId, String projectId, String notebookId) {
+		Notebook result = null;
+		logger.debug("launchNotebook() Begin");
+		String url = null;
+		result = getNotebook(authenticatedUserId, notebookId);
+		if (null != result) {
+			NotebookRestClient restClient = getNotebookRestClient(result.getNotebookType());	
+			url = restClient.launchNotebook(authenticatedUserId, projectId, result);
+			result.getNoteBookId().setServiceUrl(url);
+		}
+		logger.debug("launchNotebook() End");
+		
+		return result;
+	}
+	@Override
 	public Notebook createNotebook(String authenticatedUserId, String projectId, Notebook notebook) throws TargetServiceInvocationException {
 		logger.debug("createNotebook() Begin");
 		MLPUser mlpUser = getUserDetails(authenticatedUserId);
 		String userId = mlpUser.getUserId();
 
+		//Create notebook in Notebook server 
+		//First Launch the notebook
+		String notebookName = notebook.getNoteBookId().getName()+"_"+ notebook.getNoteBookId().getVersionId().getLabel();
+		NotebookRestClient notebookRestClient = getNotebookRestClient(notebook.getNotebookType());
+		String url =  notebookRestClient.launchNotebookServer(authenticatedUserId);
+		String serviceURL = null;
+		if(null != url) { 
+			//Create notebook 
+			serviceURL = notebookRestClient.createNotebookInNotebookServer(authenticatedUserId, notebookName);
+		}
+		//TODO : Once JupyterHub is integrated with Git, stop the launched notebook server after creating notebook in it. notebookRestClient.stopNotebookServer(authenticatedUserId)
+				
 		Notebook result = null;
 		MLPNotebook responseMLPNotebook = null;
 		MLPNotebook mlpNotebook = null;
 		try {
 			mlpNotebook = NotebookServiceUtil.getMLPNotebook(userId, notebook);
-			logger.debug("CDS : createNotebook() Begin");
+			if(null != serviceURL) {
+				mlpNotebook.setServiceUrl(serviceURL);
+			}
 			cdsClient.setRequestId(MDC.get(NotebookServiceLoggingConstants.MDCs.REQUEST_ID));
 			responseMLPNotebook = cdsClient.createNotebook(mlpNotebook);
-			logger.debug("CDS : createNotebook() End");
 		} catch (RestClientResponseException e) {
-			logger.error("CDS - Create Notebook");
+			logger.error(props.getCdsCreateNotebookExcp());
 			throw new TargetServiceInvocationException(props.getCdsCreateNotebookExcp());
 		}
 		
 		try {
 			if (null != projectId) {
-				logger.debug("CDS : addProjectNotebook() Begin");
 				cdsClient.addProjectNotebook(projectId, responseMLPNotebook.getNotebookId());
-				logger.debug("CDS : addProjectNotebook() End");
 			}
 		} catch (Exception e) {
-			logger.error("CDS - Add Project Notebook");
+			logger.error(props.getCdsAddProjectNotebookExcp());
 			throw new TargetServiceInvocationException(props.getCdsAddProjectNotebookExcp());
 		}
 		mlpNotebook.setServiceStatusCode(ServiceStatus.COMPLETED.getServiceStatusCode());
 		result = NotebookServiceUtil.getNotebookVO(responseMLPNotebook, mlpUser);
-
+		
 		//Add success or error message to Notification. (Call to CDS)
 		String statusCode = "SU";
 		String taskName = "Notebook : ";
@@ -188,6 +213,7 @@ public class NotebookServiceImpl implements NotebookService {
 		logger.debug("createNotebook() End");
 		return result;
 	}
+
 
 	@Override
 	public boolean isOwnerOfNotebook(String authenticatedUserId, String notebookId)
@@ -198,10 +224,8 @@ public class NotebookServiceImpl implements NotebookService {
 			// Call to CDS to check if user is the owner of the project.
 			MLPUser mlpUser = getUserDetails(authenticatedUserId);
 			String userId = mlpUser.getUserId();
-			logger.debug("CDS : getNotebook() Begin");
 			cdsClient.setRequestId(MDC.get(NotebookServiceLoggingConstants.MDCs.REQUEST_ID));
 			MLPNotebook response = cdsClient.getNotebook(notebookId);
-			logger.debug("CDS : getNotebook() End");
 			if ((null == response)) {
 				logger.error("Requested Notebook Not found");
 				throw new NotebookNotFoundException();
@@ -223,10 +247,8 @@ public class NotebookServiceImpl implements NotebookService {
 		boolean result = false;
 		try {
 			// CDS call to check if project is archived 
-			logger.debug("CDS : getNotebook() Begin");
 			cdsClient.setRequestId(MDC.get(NotebookServiceLoggingConstants.MDCs.REQUEST_ID));
 			MLPNotebook mlpNotebook = cdsClient.getNotebook(notebookId);
-			logger.debug("CDS : getNotebook() End");
 			if (null != mlpNotebook && !mlpNotebook.isActive()) {
 				logger.error("Specified notebook is archived");
 				throw new ArchivedException("Specified notebook is archived");
@@ -250,6 +272,8 @@ public class NotebookServiceImpl implements NotebookService {
 		String newNotebookName = notebookIdentifier.getName();
 		Version newNotebookVersionId = notebookIdentifier.getVersionId();
 		String newNotebookVersion = null;
+		String serviceURL = null;
+		boolean nameVersionChanged = false;
 		if (null != newNotebookVersionId && null != newNotebookVersionId.getLabel()) {
 			newNotebookVersion = newNotebookVersionId.getLabel();
 		}
@@ -259,32 +283,33 @@ public class NotebookServiceImpl implements NotebookService {
 		//Check if notebook name, type and version is not same as previous, if so then check for duplicate 
 		MLPNotebook oldmlpNotebook = null;
 		try {
-			logger.debug("getNotebook() Begin");
 			cdsClient.setRequestId(MDC.get(NotebookServiceLoggingConstants.MDCs.REQUEST_ID));
 			oldmlpNotebook = cdsClient.getNotebook(notebookId);
-			logger.debug("getNotebook() End");
 		} catch (Exception e) { 
-			logger.error("CDS - Get Notebook");
+			logger.error(props.getCdsGetNotebookExcp());
 			throw new TargetServiceInvocationException(props.getCdsGetNotebookExcp());
 		}
 		
+		if(!newnotebookTypeCode.equals(oldmlpNotebook.getNotebookTypeCode())) {
+			logger.error("Notebook Type cannot be changed");
+			throw new IncorrectValueException("Notebook Type cannot be changed");
+		}
+		
+		
 		if (!newNotebookName.equals(oldmlpNotebook.getName())
-				|| !newnotebookTypeCode.equals(oldmlpNotebook.getNotebookTypeCode())
 				|| (null != newNotebookVersion && null != oldmlpNotebook.getVersion() && !newNotebookVersion
 						.equals(oldmlpNotebook.getVersion()))) {
 			Map<String, Object> queryParameters = new HashMap<String, Object>();
-			queryParameters.put("name", newNotebookName);
-			queryParameters.put("version", newNotebookVersion);
-			queryParameters.put("notebookTypeCode", newnotebookTypeCode);
+			queryParameters.put(NotebookServiceConstants.CDS_QUERY_PARAM_NAME_KEY, newNotebookName);
+			queryParameters.put(NotebookServiceConstants.CDS_QUERY_PARAM_VERSION_KEY, newNotebookVersion);
+			queryParameters.put(NotebookServiceConstants.CDS_QUERY_PARAM_NOTEBOOKTYPECODE_KEY, newnotebookTypeCode);
 			queryParameters.put("userId", userId);
 			RestPageRequest pageRequest = new RestPageRequest(0, 1);
 			RestPageResponse<MLPNotebook> response = null;
 			try {
-				logger.debug("searchNotebooks() Begin");
 				response = cdsClient.searchNotebooks(queryParameters, false, pageRequest);
-				logger.debug("searchNotebooks() End");
 			} catch (Exception e) { 
-				logger.error("CDS - Search Notebooks");
+				logger.error(props.getCdsSearchNotebooksExcp());
 				throw new TargetServiceInvocationException(props.getCdsSearchNotebooksExcp());
 			}
 			List<MLPNotebook> notebooks = response.getContent();
@@ -292,8 +317,27 @@ public class NotebookServiceImpl implements NotebookService {
 				logger.error("Notebook name and type [and version] already exists");
 				throw new DuplicateNotebookException();
 			}
+			
+			//Create notebook in Notebook server 
+			//First Launch the notebook
+			String notebookName = newNotebookName+"_"+ newNotebookVersion;
+			String oldNotebookName = oldmlpNotebook.getName() + "_" + oldmlpNotebook.getVersion();
+			NotebookRestClient notebookRestClient = getNotebookRestClient(notebook.getNotebookType());
+			String url =  notebookRestClient.launchNotebookServer(authenticatedUserId);
+			
+			if(null != url) { 
+				//Create notebook 
+				serviceURL = notebookRestClient.updateNotebookInNotebookServer(authenticatedUserId, notebookName, oldNotebookName);
+				nameVersionChanged = true;
+			}
+			//TODO : Once JupyterHub is integrated with Git, stop the launched notebook server after updating notebook in it. notebookRestClient.stopNotebookServer(authenticatedUserId)
+			
+			
 		}
 		MLPNotebook newMLPNotebook = NotebookServiceUtil.updateMLPNotebook(oldmlpNotebook, notebook);
+		if(nameVersionChanged && null != serviceURL) {
+			newMLPNotebook.setServiceUrl(serviceURL);
+		}
 		try {
 			logger.debug("updateNotebook() Begin");
 			cdsClient.updateNotebook(newMLPNotebook);
@@ -337,17 +381,15 @@ public class NotebookServiceImpl implements NotebookService {
 		String userId = mlpUser.getUserId();
 		try {
 			//CDS call to get MLPNotebook 
-			logger.debug("CDS : getNotebook() Begin");
 			cdsClient.setRequestId(MDC.get(NotebookServiceLoggingConstants.MDCs.REQUEST_ID));
 			MLPNotebook response = cdsClient.getNotebook(notebookId);
-			logger.debug("CDS : getNotebook() End");
 			if (null == response) {
 				logger.error("Requested Notebook Not found");
 				throw new NotebookNotFoundException();
 			}
 			result = NotebookServiceUtil.getNotebookVO(response, mlpUser);
 		} catch (RestClientResponseException e) { 
-			logger.error("CDS - Get Notebook");
+			logger.error(props.getCdsGetNotebookExcp());
 			throw new TargetServiceInvocationException(props.getCdsGetNotebookExcp());
 		}
 		logger.debug("getNotebook() End");
@@ -366,24 +408,20 @@ public class NotebookServiceImpl implements NotebookService {
 				Map<String, Object> queryParameters = new HashMap<String, Object>();
 				queryParameters.put("userId", userId);
 				RestPageRequest pageRequest = new RestPageRequest(0, confprops.getResultsetSize());
-				logger.debug("searchNotebooks() Begin");
 				cdsClient.setRequestId(MDC.get(NotebookServiceLoggingConstants.MDCs.REQUEST_ID));
 				RestPageResponse<MLPNotebook> response = cdsClient.searchNotebooks(queryParameters,
 						false, pageRequest);
-				logger.debug("searchNotebooks() End");
 				mlpNotebooks = response.getContent();
 			} catch (Exception e) { 
-				logger.error("CDS - Search Notebooks");
+				logger.error(props.getCdsSearchNotebooksExcp());
 				throw new TargetServiceInvocationException(props.getCdsSearchNotebooksExcp());
 			}
 
 		} else {
 			try {
-				logger.debug("getProjectNotebooks() Begin");
 				mlpNotebooks = cdsClient.getProjectNotebooks(projectId);
-				logger.debug("getProjectNotebooks() End");
 			} catch (Exception e) { 
-				logger.error("CDS - Get Project Notebooks");
+				logger.error(props.getCdsGetProjectNotebooksExcp());
 				throw new TargetServiceInvocationException(props.getCdsGetProjectNotebooksExcp());
 			}
 		}
@@ -396,17 +434,29 @@ public class NotebookServiceImpl implements NotebookService {
 	}
 
 	@Override
-	public ServiceState deleteNotebook(String notebookId) {
+	public ServiceState deleteNotebook(String authenticatedUserId, String notebookId) {
 		logger.debug("deleteNotebook() Begin");
 		ServiceState result = null;
 		List<MLPProject> mlpProjects = null;
 		
+		//Delete Notebook from Notebook server 
+		Notebook notebook = getNotebook(authenticatedUserId, notebookId);
+		//First Launch the notebook
+		String notebookName = notebook.getNoteBookId().getName()+"_"+ notebook.getNoteBookId().getVersionId().getLabel();
+		NotebookRestClient notebookRestClient = getNotebookRestClient(notebook.getNotebookType());
+		String url =  notebookRestClient.launchNotebookServer(authenticatedUserId);
+		String serviceURL = null;
+		if(null != url) { 
+			//delete notebook 
+			notebookRestClient.deleteNotebookFromNotebookServer(authenticatedUserId, notebookName);
+		}
+		//TODO : Once JupyterHub is integrated with Git, stop the launched notebook server after deleting notebook in it. notebookRestClient.stopNotebookServer(authenticatedUserId)
+		
+		
 		//Delete any association with Project
 		try {
-			logger.debug("getNotebookProjects() Begin");
 			cdsClient.setRequestId(MDC.get(NotebookServiceLoggingConstants.MDCs.REQUEST_ID));
 			mlpProjects = cdsClient.getNotebookProjects(notebookId);
-			logger.debug("getNotebookProjects() End");
 		} catch (Exception e) { 
 			logger.error("CDS - Get Notebook Projects");
 			throw new TargetServiceInvocationException(props.getCdsGetNotebookProjectsExcp()); 
@@ -422,7 +472,7 @@ public class NotebookServiceImpl implements NotebookService {
 			}
 		} catch (Exception e) {
 			logger.error("CDS - Drop Project Notebook");
-			throw new TargetServiceInvocationException(props.getCdsDropProjectNotebookExcp()); //TODO : need to change the Exception message
+			throw new TargetServiceInvocationException(props.getCdsDropProjectNotebookExcp()); 
 		}
 		
 		try {
@@ -431,7 +481,7 @@ public class NotebookServiceImpl implements NotebookService {
 			logger.debug("deleteNotebook() End");
 		} catch (Exception e) { 
 			logger.error("CDS - Delete Notebook");
-			throw new TargetServiceInvocationException(props.getCdsDeleteNotebookExcp()); //TODO : need to change the Exception message
+			throw new TargetServiceInvocationException(props.getCdsDeleteNotebookExcp()); 
 		}
 		result = new ServiceState();
 		result.setStatus(ServiceStatus.COMPLETED);
@@ -449,11 +499,9 @@ public class NotebookServiceImpl implements NotebookService {
 			Map<String, Object> queryParameters = new HashMap<String, Object>();
 			queryParameters.put("loginName", authenticatedUserId);
 			RestPageRequest pageRequest = new RestPageRequest(0, 1);
-			logger.debug("searchUsers() Begin");
 			cdsClient.setRequestId(MDC.get(NotebookServiceLoggingConstants.MDCs.REQUEST_ID));
 			RestPageResponse<MLPUser> response = cdsClient.searchUsers(queryParameters, false,
 					pageRequest);
-			logger.debug("searchUsers() End");
 			List<MLPUser> mlpUsers = response.getContent();
 			if (null != mlpUsers && mlpUsers.size() > 0) {
 				mlpUser = mlpUsers.get(0);
@@ -486,12 +534,10 @@ public class NotebookServiceImpl implements NotebookService {
 		MLPUser mlpUser = getUserDetails(authenticatedUserId);
 		MLPNotebook mlpNotebook = null;
 		try {
-			logger.debug("getNotebook() Begin");
 			cdsClient.setRequestId(MDC.get(NotebookServiceLoggingConstants.MDCs.REQUEST_ID));
 			mlpNotebook = cdsClient.getNotebook(notebookId);
-			logger.debug("getNotebook() End");
 		} catch (Exception e) {
-			logger.error("CDS - Get Notebook");
+			logger.error(props.getCdsGetNotebookExcp());
 			throw new TargetServiceInvocationException(props.getCdsGetNotebookExcp());
 		}
 		switch (actionType) {
@@ -504,11 +550,9 @@ public class NotebookServiceImpl implements NotebookService {
 		}
 		mlpNotebook.setServiceStatusCode(ServiceStatus.COMPLETED.getServiceStatusCode());
 		try {
-			logger.debug("updateNotebook() Begin");
 			cdsClient.updateNotebook(mlpNotebook);
-			logger.debug("updateNotebook() End");
 		} catch (Exception e) { 
-			logger.error("CDS - Update Notebook");
+			logger.error(props.getCdsUpdateNotebookExcp());
 			throw new TargetServiceInvocationException(props.getCdsUpdateNotebookExcp());
 		}
 		result = NotebookServiceUtil.getNotebookVO(mlpNotebook, mlpUser);
@@ -523,34 +567,6 @@ public class NotebookServiceImpl implements NotebookService {
 	}
 
 	@Override
-	public Notebook launchNotebook(String authenticatedUserId, String projectId, String notebookId) {
-		logger.debug("launchNotebook() Begin");
-		String url = null;
-		Notebook notebook = getNotebook(authenticatedUserId, notebookId);
-		if (null != notebook) {
-			NotebookType notebookType = NotebookType.valueOf(notebook.getNotebookType());
-			
-			switch(notebookType) {
-				case JUPYTER : 
-					logger.debug("launchJupyterNotebook() Begin");
-					url = jhClient.launchJupyterNotebook(authenticatedUserId, projectId, notebookId);
-					logger.debug("launchJupyterNotebook() End");
-					break;
-				case ZEPPELIN :
-					logger.error("Zeppelin - Service Not Found");
-					throw new TargetServiceInvocationException("Zeppelin - Service Not Found");
-				default:
-					logger.error("Anonymous - Service Not Found");
-					throw new TargetServiceInvocationException("Anonymous - Service Not Found");
-			}
-			
-			notebook.getNoteBookId().setServiceUrl(url);
-		}
-		logger.debug("launchNotebook() End");
-		return notebook;
-	}
-
-	@Override
 	public void isNotebookProjectAssociated(String projectId, String notebookId)
 			throws AssociationNotFoundException {
 		logger.debug("isNotebookProjectAssociated() Begin");
@@ -558,10 +574,8 @@ public class NotebookServiceImpl implements NotebookService {
 		//TODO : Need CDS API instead
 		boolean associated = false;
 		try {
-			logger.debug("getProjectNotebooks() Begin");
 			cdsClient.setRequestId(MDC.get(NotebookServiceLoggingConstants.MDCs.REQUEST_ID));
 			List<MLPNotebook> mlpNotebooks = cdsClient.getProjectNotebooks(projectId);
-			logger.debug("getProjectNotebooks() End");
 			if (null != mlpNotebooks && mlpNotebooks.size() > 0) {
 				for (MLPNotebook notebook : mlpNotebooks) {
 					//check if equals to input notebookId 
@@ -572,7 +586,7 @@ public class NotebookServiceImpl implements NotebookService {
 				}
 			}
 		} catch (Exception e) { 
-			logger.error("CDS - Get Project Notebooks");
+			logger.error(props.getCdsGetProjectNotebooksExcp());
 			throw new TargetServiceInvocationException(props.getCdsGetProjectNotebooksExcp());
 		}
 		if (!associated) {
@@ -583,4 +597,27 @@ public class NotebookServiceImpl implements NotebookService {
 		logger.debug("isNotebookProjectAssociated() End");
 	}
 
+	
+	private NotebookRestClient getNotebookRestClient(String notebookType) {
+		logger.debug("getNotebookRestClient() Begin");
+		NotebookRestClient result = null;
+		if (null != notebookType) {
+			NotebookType notebookTypeEnum = NotebookType.valueOf(notebookType.toUpperCase());
+			switch(notebookTypeEnum) {
+				case JUPYTER : 
+					result = jhClient;
+					break;
+				case ZEPPELIN :
+					logger.error("Zeppelin - Service Not Found");
+					throw new TargetServiceInvocationException("Zeppelin - Service Not Found");
+				default:
+					logger.error("Anonymous - Service Not Found");
+					throw new TargetServiceInvocationException("Anonymous - Service Not Found");
+			}
+		}
+		logger.debug("getNotebookRestClient() End");
+		return result;
+	}
+
+	
 }

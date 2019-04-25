@@ -22,11 +22,9 @@ package org.acumos.workbench.projectservice.util;
 
 import java.io.Serializable;
 
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 @Component
-@PropertySource("classpath:application.properties")
 public class WBProjectProperties implements Serializable {
 
 	private static final long serialVersionUID = -6513487895845271163L;

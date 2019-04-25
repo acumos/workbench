@@ -23,34 +23,14 @@ package org.acumos.workbench.notebookservice.util;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.acumos.workbench.common.vo.Notebook;
 import org.acumos.workbench.notebookservice.service.JupyterHubRestClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 public enum NotebookType {
-	JUPYTER("JP") {
-		@Autowired
-		@Qualifier("JupyterhubRestClientImpl")
-		private JupyterHubRestClient jhClient;
-		
-		@Override
-		public String launch(String authenticatedUserId, String projectId, String notebookId) {
-			String url = null;
-			url = jhClient.launchJupyterNotebook(authenticatedUserId, projectId, notebookId);
-			return url;
-		}
-	},
-	ZEPPELIN("ZP") {
-		@Override
-		public String launch(String authenticatedUserId, String projectId, String notebookId) {
-			String url = null;
-			//TODO : Yet to implement.
-			url = "Not implemented";
-			return url;
-		}
-	};
-	
-	
+	JUPYTER("JP"),
+	ZEPPELIN("ZP");
 	
 	private final String notebookTypeCode;
 	
@@ -93,5 +73,4 @@ public enum NotebookType {
          
     }
 	
-	public abstract String launch(String authenticatedUserId, String projectId, String notebookId);
 }

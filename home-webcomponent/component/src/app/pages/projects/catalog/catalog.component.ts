@@ -19,18 +19,21 @@ limitations under the License.
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ScriptService } from '../../../@core/utils/script.service';
+import { BreadcrumbsService } from '../../../@core/utils/breadcrumbs.service';
+import { BaseComponent } from '../../base/base.component';
 
 @Component({
   templateUrl: './catalog.component.html',
 })
-export class CatalogComponent implements OnInit {
-  router: Router;
-  script: ScriptService;
-  public projectCatalogComponentURL: string;
+export class CatalogComponent extends BaseComponent implements OnInit {
+  public breadCrumbs: any[] = [
+    { name: 'Home', href: '' },
+    { name: 'Design Studio', href: '' },
+    { name: 'ML Workbench', sref: '/pages/dashboard' },
+    { name: 'Projects' }];
 
-  constructor(router: Router, script: ScriptService) {
-    this.router = router;
-    this.script = script;
+  constructor(router: Router, script: ScriptService, breadcrumbsService: BreadcrumbsService) {
+    super(router, script, breadcrumbsService);
   }
 
   OnCatalogProjectEvent(e) {
@@ -40,7 +43,7 @@ export class CatalogComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.projectCatalogComponentURL = this.script.getConfig('projectCatalogComponent');
-    this.script.load('projectCatalogComponent', '/src/project-catalog-element.js');
+    this.loadHtml = false;
+    this.loadComponent('projectCatalogComponent', 'project-catalog-element', this.breadCrumbs);
   }
 }

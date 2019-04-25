@@ -63,6 +63,7 @@ export const style = css`
 
   .card-shadow {
     transition: box-shadow 0.3s;
+    border-radius: 0px;
   }
   
   .card-shadow:hover {
@@ -78,6 +79,23 @@ export const style = css`
   
   .card-button {
     display: inline-flex;  
+    line-height : 1.0 
   }
   
+  .alertmessage {
+	  background-color: white !important;
+	  color: #dc3545;
+	  border-color: #dc3545;
+	  border: 1px solid; 
+	}
+	
+	.alert-success{
+	  color: #28a745 ;
+	  border-color: #28a745;
+  }
+  
+  .span-message {
+    position: absolute;
+    margin-top: 5px;
+  }
 `;

@@ -18,6 +18,9 @@ limitations under the License.
 
 import { Injectable } from '@angular/core';
 import { AppConfigService } from '../../app-config.service';
+import { HttpClient } from '@angular/common/http';
+import { retry, catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 declare var document: any;
 
@@ -26,11 +29,19 @@ export class ScriptService {
 
   private scripts: any = {};
   private config: any = {};
+  private session: any = {};
 
-  constructor(config: AppConfigService) {
+  constructor(config: AppConfigService, private http: HttpClient) {
     this.config = config.getConfig();
+  }
 
+  getUserSession() {
+    return this.http.get('session').pipe(retry(2), catchError(this.handleError));
+  }
 
+  handleError() {
+    const errorMessage = 'Error while retrieving Acumos Session information from browser cookies.';
+    return throwError(errorMessage);
   }
 
   getConfig(name: string) {

@@ -150,12 +150,14 @@ public interface NotebookService {
 	
 	/**
 	 * Deletes Notebook
+	 * @param authenticatedUserId
+	 * 		the authenticatedUserId Id.
 	 * @param notebookId
 	 * 		the Notebook Id. 
 	 * @return ServiceState 
 	 * 		returns ServiceState indicating Notebook is deleted successfully. 
 	 */
-	ServiceState deleteNotebook(String notebookId);
+	ServiceState deleteNotebook(String authenticatedUserId, String notebookId);
 	
 	/**
 	 * Gets the user details based on authenticationUserId which is the Acumos User LoginId. 
@@ -188,16 +190,17 @@ public interface NotebookService {
 	 */
 	Notebook archiveNotebook(String authenticatedUserId, String projectId, String notebookId, String actionType);
 	
+	
 	/**
-	 * Launch the Notebook based on the type of the Notebook
-	 * @param authenticatedUserId
+	 * Launch the Notebook 
+	  * @param authenticatedUserId
 	 * 		the user login id.
 	 * @param projectId
 	 * 		Associated ProjectId, if not associated then specify null.
 	 * @param notebookId
 	 * 		Notebook Id to be archived
-	 * @return Notebook
-	 * 		Notebook with URL
+	 * @return
+	 * 		returns the Notebook instance, with service URL to access the launched Notebook
 	 */
 	Notebook launchNotebook(String authenticatedUserId, String projectId, String notebookId);
 	

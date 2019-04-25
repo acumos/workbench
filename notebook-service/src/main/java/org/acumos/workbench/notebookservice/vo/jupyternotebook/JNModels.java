@@ -18,26 +18,27 @@
  * ===============LICENSE_END=========================================================
  */
 
-package org.acumos.workbench.notebookservice.service;
+package org.acumos.workbench.notebookservice.vo.jupyternotebook;
 
-import org.acumos.workbench.common.vo.Project;
-import org.acumos.workbench.notebookservice.exception.TargetServiceInvocationException;
-import org.springframework.http.ResponseEntity;
+import java.util.List;
 
-public interface ProjectServiceRestClient {
+public class JNModels extends JNBaseModel {
 
+	private static final long serialVersionUID = 2800053935138053594L;
+	
+	private List<JNModel> content;
+	
 	/**
-	 * Get the Project details by accessing project-service API
-	 * 
-	 * @param authenticatedUserId
-	 * 		Acumos User login Id
-	 * @param projectId
-	 * 		Project Id 
-	 * @param authToken
-	 * 		JWT Auth Token 
-	 * @return ResponseEntity<Project>
-	 * 		returns ResponseEntity<Project> 
+	 * @return the content
 	 */
-	ResponseEntity<Project> getProject(String authenticatedUserId,String projectId, String authToken) throws TargetServiceInvocationException;
-
+	public List<JNModel> getContent() {
+		return content;
+	}
+	/**
+	 * @param content the content to set
+	 */
+	public void setContent(List<JNModel> content) {
+		this.content = content;
+	}
+	
 }

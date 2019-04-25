@@ -39,6 +39,8 @@ import org.acumos.workbench.notebookservice.util.NotebookServiceUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -79,7 +81,7 @@ public class ProjectServiceRestClientImpl implements ProjectServiceRestClient {
 	}
 	
 	@Override
-	public ResponseEntity<Project> getProject(String authenticatedUserId,String projectId) throws TargetServiceInvocationException {
+	public ResponseEntity<Project> getProject(String authenticatedUserId,String projectId, String authToken) throws TargetServiceInvocationException {
 		logger.debug("getProject() Begin");
 		ResponseEntity<Project> response = null;
 		try { 
@@ -87,7 +89,15 @@ public class ProjectServiceRestClientImpl implements ProjectServiceRestClient {
 			uriParams.put(NotebookServiceConstants.PATH_VAR_AUTHENTICATED_USER_ID_KEY, authenticatedUserId);
 			uriParams.put(NotebookServiceConstants.PATH_VAR_PROJECT_ID_KEY, projectId);
 			URI uri = NotebookServiceUtil.buildURI(this.basePSURL + NotebookServiceConstants.GET_PROJECT_PATH, uriParams);
-			response = restTemplate.exchange(uri, HttpMethod.GET, null, Project.class);
+			
+			//create headers you need to send
+			HttpHeaders httpHeaders = new HttpHeaders();
+			httpHeaders.set(NotebookServiceConstants.HEADER_AUTHORIZATION_KEY, authToken);
+			
+			//Create entity to pass on to restTemplate
+			HttpEntity<String> entity = new HttpEntity<String>(httpHeaders);
+			
+			response = restTemplate.exchange(uri, HttpMethod.GET, entity, Project.class);
 		} catch (Exception e) { 
 			logger.error("Project Service - Get Project");
 			throw new TargetServiceInvocationException(props.getProjectServiceGetProjectExcp());

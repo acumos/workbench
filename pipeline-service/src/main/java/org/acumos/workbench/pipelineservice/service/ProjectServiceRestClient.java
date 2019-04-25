@@ -32,8 +32,10 @@ public interface ProjectServiceRestClient {
 	 * 		Acumos User login Id
 	 * @param projectId
 	 * 		Project Id 
+	 * @param authToken
+	 * 		JWT Auth Token
 	 * @return ResponseEntity<Project>
 	 * 		returns ResponseEntity<Project> 
 	 */
-	ResponseEntity<Project> getProject(String authenticatedUserId,String projectId);
+	ResponseEntity<Project> getProject(String authenticatedUserId,String projectId, String authToken);
 }

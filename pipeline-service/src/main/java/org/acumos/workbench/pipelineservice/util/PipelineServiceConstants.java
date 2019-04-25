@@ -25,7 +25,6 @@ public class PipelineServiceConstants {
 	public static final String GET_PROJECT_PATH = "/users/{authenticatedUserId}/projects/{projectId}";
 	public static final String PATH_VAR_PROJECT_ID_KEY = "projectId";
 	public static final String PATH_VAR_AUTHENTICATED_USER_ID_KEY = "authenticatedUserId";
-	
 	public static final String CDS_GET_PIPELINE = "CDS - Get Pipeline";
 	public static final String CDS_SEARCH_PIPELINES = "CDS - Search Pipelines";
 	public static final String CDS_CREATE_PIPELINE = "CDS - Create Pipeline";
@@ -37,8 +36,9 @@ public class PipelineServiceConstants {
 	public static final String CDS_DROP_PROJECT_PIPELINE = "CDS - Drop Project Pipeline";
 	public static final String CDS_DELETE_PIPELINE = "CDS - Delete Pipeline";
 	public static final String PROJECT_SERVICE_GET_PROJECT = "Project Service - Get Project";
-	
-	
+	public static final String FIELD_PIPELINE_ID = "Pipeline Id";
+	public static final String FIELD_PROJECT_ID = "Project Id";
+	public static final String FIELD_AUTHENTICATED_USER_ID = "AuthenticatedUserId";
 	
 
 }

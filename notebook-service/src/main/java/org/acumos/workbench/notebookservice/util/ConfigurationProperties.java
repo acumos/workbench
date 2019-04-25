@@ -47,6 +47,8 @@ public class ConfigurationProperties {
 	@Value("${jupyterhub.token}")
 	private String jupyterhubToken;
 	
+	@Value("${jwt.secretkey}")
+	private String jwtSecretKey;
 	
 	/**
 	 * @return the resultsetSize
@@ -95,6 +97,13 @@ public class ConfigurationProperties {
 	 */
 	public String getJupyterhubToken() {
 		return "token " + jupyterhubToken;
+	}
+
+	/**
+	 * @return the jwtSecretKey
+	 */
+	public String getJwtSecretKey() {
+		return jwtSecretKey;
 	}
 
 }

@@ -28,6 +28,8 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.acumos.workbench.common.util.ArtifactStatus;
 import org.acumos.workbench.common.util.ServiceStatus;
 import org.acumos.workbench.common.vo.ArtifactState;
@@ -65,6 +67,9 @@ public class NotebookServiceControllerTest extends NotebookCommons {
 	@Mock
 	private NotebookService notebookService;
 	
+	@Mock
+    private HttpServletRequest request;
+	
 	private NotebookValidationService notebookValidationServiceImpl;
 	
 	private NotebookService notebookServiceImpl;
@@ -83,10 +88,11 @@ public class NotebookServiceControllerTest extends NotebookCommons {
 	public void createNotebookUnderProjectTest(){
 		Notebook notebook = buildNotebook();
 		doNothing().when(notebookValidationServiceImpl).validateNotebook(authenticatedUserId, notebook);
-		doNothing().when(notebookValidationServiceImpl).validateProject(authenticatedUserId, "123");
+		doNothing().when(notebookValidationServiceImpl).validateProject(authenticatedUserId, "123", "123");
 		doNothing().when(notebookServiceImpl).notebookExists(authenticatedUserId, "123", notebook);
 		when(notebookService.createNotebook(authenticatedUserId, "123", notebook)).thenReturn(notebook);
-		ResponseEntity<?> notebookResult = notebookServiceController.createNotebookUnderProject(authenticatedUserId, "123", notebook);
+		when(request.getHeader("Authorization")).thenReturn("123");
+		ResponseEntity<?> notebookResult = notebookServiceController.createNotebookUnderProject(request, authenticatedUserId, "123", notebook);
 		assertNotNull(notebookResult);
 	}
 	
@@ -94,10 +100,11 @@ public class NotebookServiceControllerTest extends NotebookCommons {
 	public void createIndependentNotebookTest(){
 		Notebook notebook = buildNotebook();
 		doNothing().when(notebookValidationServiceImpl).validateNotebook(authenticatedUserId, notebook);
-		doNothing().when(notebookValidationServiceImpl).validateProject(authenticatedUserId, null);
+		doNothing().when(notebookValidationServiceImpl).validateProject(authenticatedUserId, null, null);
 		doNothing().when(notebookServiceImpl).notebookExists(authenticatedUserId, null, notebook);
 		when(notebookService.createNotebook(authenticatedUserId, null, notebook)).thenReturn(notebook);
-		ResponseEntity<?> notebookResult = notebookServiceController.createNotebookUnderProject(authenticatedUserId, null, notebook);
+		when(request.getHeader("Authorization")).thenReturn("123");
+		ResponseEntity<?> notebookResult = notebookServiceController.createNotebookUnderProject(request, authenticatedUserId, null, notebook);
 		assertNotNull(notebookResult);
 	}
 	
@@ -108,9 +115,10 @@ public class NotebookServiceControllerTest extends NotebookCommons {
 		notebookList.add(notebook);
 		doNothing().when(inputValidationServiceImpl).isValuePresent("AuthenticatedUserId", authenticatedUserId);
 		doNothing().when(inputValidationServiceImpl).isValuePresent("Project Id", "123");
-		doNothing().when(notebookValidationServiceImpl).validateProject(authenticatedUserId, "123");
+		doNothing().when(notebookValidationServiceImpl).validateProject(authenticatedUserId, "123",null);
 		when(notebookService.getNotebooks(authenticatedUserId, "123")).thenReturn(notebookList);
-		ResponseEntity<?> notebookResult = notebookServiceController.getNotebooks(authenticatedUserId, "123");
+		when(request.getHeader("Authorization")).thenReturn("123");
+		ResponseEntity<?> notebookResult = notebookServiceController.getNotebooks(request, authenticatedUserId, "123");
 		assertNotNull(notebookResult);
 		
 	}
@@ -122,7 +130,8 @@ public class NotebookServiceControllerTest extends NotebookCommons {
 		notebookList.add(notebook);
 		doNothing().when(inputValidationServiceImpl).isValuePresent("AuthenticatedUserId", authenticatedUserId);
 		when(notebookService.getNotebooks(authenticatedUserId, null)).thenReturn(notebookList);
-		ResponseEntity<?> notebookResult = notebookServiceController.getNotebooks(authenticatedUserId, null);
+		when(request.getHeader("Authorization")).thenReturn("123");
+		ResponseEntity<?> notebookResult = notebookServiceController.getNotebooks(request, authenticatedUserId, null);
 		assertNotNull(notebookResult);
 		
 	}
@@ -134,9 +143,10 @@ public class NotebookServiceControllerTest extends NotebookCommons {
 		doNothing().when(notebookValidationServiceImpl).validateNotebook(authenticatedUserId, notebook);
 		doNothing().when(notebookServiceImpl).notebookExists("123");
 		when(notebookServiceImpl.isOwnerOfNotebook(authenticatedUserId, "123")).thenReturn(true);
-		doNothing().when(notebookValidationServiceImpl).validateProject(authenticatedUserId, "123");
+		doNothing().when(notebookValidationServiceImpl).validateProject(authenticatedUserId, "123","123");
 		when(notebookService.updateNotebook(authenticatedUserId, "123", "123", notebook)).thenReturn(notebook);
-		ResponseEntity<?> notebookResult = notebookServiceController.updatePrjectNotebook(authenticatedUserId, "123", "123", notebook);
+		when(request.getHeader("Authorization")).thenReturn("123");
+		ResponseEntity<?> notebookResult = notebookServiceController.updateProjectNotebook(request, authenticatedUserId, "123", "123", notebook);
 		assertNotNull(notebookResult);
 		
 	}
@@ -148,7 +158,8 @@ public class NotebookServiceControllerTest extends NotebookCommons {
 		doNothing().when(notebookServiceImpl).notebookExists("123");
 		when(notebookServiceImpl.isOwnerOfNotebook(authenticatedUserId, "123")).thenReturn(true);
 		when(notebookService.updateNotebook(authenticatedUserId, null, "123", notebook)).thenReturn(notebook);
-		ResponseEntity<?> notebookResult = notebookServiceController.updateNotebook(authenticatedUserId, "123", notebook);
+		when(request.getHeader("Authorization")).thenReturn("123");
+		ResponseEntity<?> notebookResult = notebookServiceController.updateNotebook(request, authenticatedUserId, "123", notebook);
 		assertNotNull(notebookResult);
 		
 	}
@@ -160,7 +171,8 @@ public class NotebookServiceControllerTest extends NotebookCommons {
 		doNothing().when(inputValidationServiceImpl).isValuePresent("Notebook Id", "123");
 		when(notebookServiceImpl.isOwnerOfNotebook(authenticatedUserId, "123")).thenReturn(true);
 		when(notebookService.getNotebook(authenticatedUserId, "123")).thenReturn(notebook);
-		ResponseEntity<?> notebookResult = notebookServiceController.getNotebook(authenticatedUserId, "123");
+		when(request.getHeader("Authorization")).thenReturn("123");
+		ResponseEntity<?> notebookResult = notebookServiceController.getNotebook(request, authenticatedUserId, "123");
 		assertNotNull(notebookResult);
 		
 	}
@@ -172,8 +184,9 @@ public class NotebookServiceControllerTest extends NotebookCommons {
 		doNothing().when(inputValidationServiceImpl).isValuePresent("AuthenticatedUserId", authenticatedUserId);
 		doNothing().when(notebookServiceImpl).notebookExists("123");
 		when(notebookServiceImpl.isOwnerOfNotebook(authenticatedUserId, "123")).thenReturn(true);
-		when(notebookService.deleteNotebook("123")).thenReturn(state);
-		ResponseEntity<?> notebookResult = notebookServiceController.deleteNotebook(authenticatedUserId, "123");
+		when(notebookService.deleteNotebook(authenticatedUserId,"123")).thenReturn(state);
+		when(request.getHeader("Authorization")).thenReturn("123");
+		ResponseEntity<?> notebookResult = notebookServiceController.deleteNotebook(request, authenticatedUserId, "123");
 		assertNotNull(notebookResult);
 		
 	}
@@ -186,12 +199,13 @@ public class NotebookServiceControllerTest extends NotebookCommons {
 		notebook.setArtifactStatus(state);
 		doNothing().when(inputValidationServiceImpl).isValuePresent("AuthenticatedUserId", authenticatedUserId);
 		doNothing().when(inputValidationServiceImpl).isValuePresent("Project Id", "123");
-		doNothing().when(notebookValidationServiceImpl).validateProject(authenticatedUserId, "123");
+		doNothing().when(notebookValidationServiceImpl).validateProject(authenticatedUserId, "123","123");
 		doNothing().when(inputValidationServiceImpl).isValuePresent("Notebook Id", "123");
 		doNothing().when(notebookServiceImpl).notebookExists("123");
 		when(notebookServiceImpl.isOwnerOfNotebook(authenticatedUserId, "123")).thenReturn(true);
 		when(notebookService.archiveNotebook(authenticatedUserId, "123", "123", "A")).thenReturn(notebook);
-		ResponseEntity<?> notebookResult = notebookServiceController.archiveProjectNotebook(authenticatedUserId,"123", "123", "A");
+		when(request.getHeader("Authorization")).thenReturn("123");
+		ResponseEntity<?> notebookResult = notebookServiceController.archiveProjectNotebook(request, authenticatedUserId,"123", "123", "A");
 		assertNotNull(notebookResult);
 		
 	}
@@ -201,12 +215,13 @@ public class NotebookServiceControllerTest extends NotebookCommons {
 		Notebook notebook = buildNotebook();
 		doNothing().when(inputValidationServiceImpl).isValuePresent("AuthenticatedUserId", authenticatedUserId);
 		doNothing().when(inputValidationServiceImpl).isValuePresent("Project Id", "123");
-		doNothing().when(notebookValidationServiceImpl).validateProject(authenticatedUserId, "123");
+		doNothing().when(notebookValidationServiceImpl).validateProject(authenticatedUserId, "123", null);
 		doNothing().when(inputValidationServiceImpl).isValuePresent("Notebook Id", "123");
 		doNothing().when(notebookServiceImpl).notebookExists("123");
 		when(notebookServiceImpl.isOwnerOfNotebook(authenticatedUserId, "123")).thenReturn(true);
 		when(notebookService.archiveNotebook(authenticatedUserId, null, "123", "UA")).thenReturn(notebook);
-		ResponseEntity<?> notebookResult = notebookServiceController.archiveNotebook(authenticatedUserId,"123", "UA");
+		when(request.getHeader("Authorization")).thenReturn("123");
+		ResponseEntity<?> notebookResult = notebookServiceController.archiveNotebook(request, authenticatedUserId,"123", "UA");
 		assertNotNull(notebookResult);
 	}
 	
@@ -221,12 +236,14 @@ public class NotebookServiceControllerTest extends NotebookCommons {
 		when(notebookServiceImpl.isOwnerOfNotebook(authenticatedUserId, "123")).thenReturn(true);
 		doNothing().when(notebookServiceImpl).isNotebookProjectAssociated("123", "123");
 		when(notebookService.launchNotebook(authenticatedUserId, "123", "123")).thenReturn(notebook);
-		ResponseEntity<?> notebookResult = notebookServiceController.launchProjectNotebook(authenticatedUserId, "123", "123");
+		doNothing().when(notebookValidationServiceImpl).validateProject(authenticatedUserId, "123", "123");
+		when(request.getHeader("Authorization")).thenReturn("123");
+		ResponseEntity<?> notebookResult = notebookServiceController.launchProjectNotebook(request, authenticatedUserId, "123", "123");
 		assertNotNull(notebookResult);
 	}
 	
 	@Test
-	public void launchNotebookTest(){
+	public void launchIndependentNotebookTest(){
 		Notebook notebook = buildNotebook();
 		doNothing().when(inputValidationServiceImpl).isValuePresent("AuthenticatedUserId", authenticatedUserId);
 		doNothing().when(inputValidationServiceImpl).isValuePresent("Notebook Id", "123");
@@ -234,7 +251,8 @@ public class NotebookServiceControllerTest extends NotebookCommons {
 		when(notebookServiceImpl.isNotebookArchived("123")).thenReturn(false);
 		when(notebookServiceImpl.isOwnerOfNotebook(authenticatedUserId, "123")).thenReturn(true);
 		when(notebookService.launchNotebook(authenticatedUserId, null, "123")).thenReturn(notebook);
-		ResponseEntity<?> notebookResult = notebookServiceController.launchNotebook(authenticatedUserId, "123");
+		when(request.getHeader("Authorization")).thenReturn("123");
+		ResponseEntity<?> notebookResult = notebookServiceController.launchIndependentNotebook(request, authenticatedUserId, "123");
 		assertNotNull(notebookResult);
 		
 	}

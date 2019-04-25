@@ -41,6 +41,16 @@ public class ConfigurationProperties {
 	@Value("${projectservice.url}")
 	private String projectServiceURL;
 	
+	@Value("${jwt.secretkey}")
+	private String jwtSecretKey;
+	
+	/**
+	 * @return the jwtSecretKey
+	 */
+	public String getJwtSecretKey() {
+		return jwtSecretKey;
+	}
+
 	/**
 	 * @return the resultsetSize
 	 */

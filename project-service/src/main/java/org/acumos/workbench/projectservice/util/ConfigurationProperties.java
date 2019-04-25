@@ -38,6 +38,9 @@ public class ConfigurationProperties {
 	@Value("${resultsetSize}")
 	private int resultsetSize;
 	
+	@Value("${jwt.secretkey}")
+	private String jwtSecretKey;
+	
 	/**
 	 * @return the resultsetSize
 	 */
@@ -65,7 +68,12 @@ public class ConfigurationProperties {
 	public String getCmndatasvcpwd() {
 		return cmndatasvcpwd;
 	}
-	
-	
+
+	/**
+	 * @return the jwtSecretKey
+	 */
+	public String getJwtSecretKey() {
+		return jwtSecretKey;
+	}
 	
 }

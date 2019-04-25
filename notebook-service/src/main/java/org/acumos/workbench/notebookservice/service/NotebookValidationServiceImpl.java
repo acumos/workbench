@@ -79,11 +79,11 @@ public class NotebookValidationServiceImpl implements NotebookValidationService 
 	}
 	
 	//TODO : Move method to workbench-common library module.
-	public void validateProject(String authenticatedUserId, String projectId)
+	public void validateProject(String authenticatedUserId, String projectId, String authToken)
 			throws ValueNotFoundException, ProjectNotFoundException,
 			NotProjectOwnerException, ArchivedException { 
 		logger.debug("validateProject() Begin");
-		ResponseEntity<Project> response = psClient.getProject(authenticatedUserId, projectId);
+		ResponseEntity<Project> response = psClient.getProject(authenticatedUserId, projectId, authToken);
 		if(null != response) { 
 			Project project = response.getBody();
 			if(null != project) { 
@@ -97,7 +97,7 @@ public class NotebookValidationServiceImpl implements NotebookValidationService 
 						logger.error("Error Message : " + project.getServiceStatus().getStatusMessage());
 						throw new ValueNotFoundException(project.getServiceStatus().getStatusMessage());
 					} else if (HttpStatus.FORBIDDEN.equals(response.getStatusCode())) { //Not owner
-						logger.error("User is not owner of the Project or has permission to access Project");
+						logger.error("User is not owner of the Project or authorized to access Project");
 						throw new NotProjectOwnerException();
 					}
 				}

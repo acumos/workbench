@@ -75,10 +75,10 @@ public class PipeLineValidationServiceImpl implements PipeLineValidationService 
 	}
 	
 	// TODO : Move method to workbench-common library module.
-	public void validateProject(String authenticatedUserId, String projectId)
+	public void validateProject(String authenticatedUserId, String projectId, String authToken)
 			throws ValueNotFoundException, ProjectNotFoundException, NotProjectOwnerException, ArchivedException {
 		logger.debug("validateProject() Begin");
-		ResponseEntity<Project> response = psClient.getProject(authenticatedUserId, projectId);
+		ResponseEntity<Project> response = psClient.getProject(authenticatedUserId, projectId, authToken);
 		if (null != response) {
 			Project project = response.getBody();
 			if (null != project) {

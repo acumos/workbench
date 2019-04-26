@@ -55,6 +55,8 @@ public interface NotebookValidationService {
 	 * 		Acumos user login Id
 	 * @param projectId
 	 * 		Project Id
+	 * @param authToken
+	 * 		JWT Auth Token
 	 * @throws ValueNotFoundException
 	 * 		Both input parameter is mandatory, if in case value is null of any of the parameter 
 	 * 		method throws ValueNotFoundException
@@ -65,7 +67,7 @@ public interface NotebookValidationService {
 	 * @throws ArchivedException
 	 * 		Throws ArchivedException if Project is archived.
 	 */
-	void validateProject(String authenticatedUserId,String projectId) throws ValueNotFoundException, ProjectNotFoundException, NotProjectOwnerException, ArchivedException;
+	void validateProject(String authenticatedUserId,String projectId, String authToken) throws ValueNotFoundException, ProjectNotFoundException, NotProjectOwnerException, ArchivedException;
 	
 	
 }

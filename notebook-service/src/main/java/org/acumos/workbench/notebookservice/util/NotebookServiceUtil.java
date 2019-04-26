@@ -23,6 +23,7 @@ package org.acumos.workbench.notebookservice.util;
 import java.lang.invoke.MethodHandles;
 import java.net.URI;
 import java.sql.Timestamp;
+import java.text.MessageFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -42,6 +43,8 @@ import org.acumos.workbench.common.vo.Notebook;
 import org.acumos.workbench.common.vo.ServiceState;
 import org.acumos.workbench.common.vo.User;
 import org.acumos.workbench.common.vo.Version;
+import org.acumos.workbench.notebookservice.exception.IncorrectValueException;
+import org.acumos.workbench.notebookservice.exception.ValueNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -88,7 +91,7 @@ public class NotebookServiceUtil {
 							mlpNotebook.setModified(timestamp.toInstant());
 						} catch (ParseException e) {
 							logger.error(e.getMessage());
-							//TODO : Throw new appropriate Exception 
+							throw new IncorrectValueException("Incorrect value for Modify Date"); 
 						}
 						
 					} else { 
@@ -96,7 +99,8 @@ public class NotebookServiceUtil {
 					}
 				}
 			} else { 
-				//TODO : Throw new exception indication mandatory field not available. 
+				String msg = MessageFormat.format("Mandatory field: {0} is missing", "Notebook ID");
+				throw new ValueNotFoundException(msg);
 			}
 			mlpNotebook.setDescription(notebook.getDescription());
 			mlpNotebook.setNotebookTypeCode(NotebookType.valueOf(notebook.getNotebookType().toUpperCase()).getNotebookTypeCode());
@@ -140,13 +144,10 @@ public class NotebookServiceUtil {
 			}
 			notebook.setArtifactStatus(artifactStatus);
 			
-			//TODO : notebook.setCollaborators(collaborators);
-			//TODO : notebook.setDataSets(dataSets);
 			notebook.setDescription(mlpnotebook.getDescription());
 			Identifier notebookIdentifier = new Identifier();
 			notebookIdentifier.setName(mlpnotebook.getName());
 			notebookIdentifier.setIdentifierType(IdentifierType.NOTEBOOK);
-			//TODO : notebookIdentifier.setMetrics(metrics);
 			if(null != mlpnotebook.getRepositoryUrl()) {
 				notebookIdentifier.setRepositoryUrl(mlpnotebook.getRepositoryUrl());
 			}
@@ -159,7 +160,6 @@ public class NotebookServiceUtil {
 			}
 			
 			Version version = new Version();
-			//TODO : version.setComment(comment);
 			version.setLabel(mlpnotebook.getVersion());
 			Timestamp timestamp =  null;
 			if(null == mlpnotebook.getModified()) { 
@@ -174,19 +174,12 @@ public class NotebookServiceUtil {
 			notebook.setNotebookType(NotebookType.get(mlpnotebook.getNotebookTypeCode()).toString());
 			User notebookOwner = new User();
 			notebookOwner.setAuthenticatedUserId(mlpUser.getLoginName());
-			//TODO : notebookOwner.setModels(models);
-			//TODO : notebookOwner.setNotebooks(notebooks);
-			//TODO : notebookOwner.setOrganization(organization);
-			//TODO : notebookOwner.setPipelines(pipelines);
-			//TODO : notebookOwner.setProjects(projects);
-			//TODO : notebookOwner.setRoles(roles);
 			Identifier userId = new Identifier();
 			userId.setIdentifierType(IdentifierType.USER);
 			userId.setName(mlpUser.getFirstName() + " " + mlpUser.getLastName());
 			userId.setUuid(mlpUser.getUserId());
 			notebookOwner.setUserId(userId);
 			notebook.setOwner(notebookOwner);
-			//TODO : notebook.setProjects(projects);
 			if(null != mlpnotebook.getServiceStatusCode()) {
 				ServiceState serviceStatus = new ServiceState();
 				serviceStatus.setStatus(ServiceStatus.get(mlpnotebook.getServiceStatusCode()));

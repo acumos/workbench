@@ -38,20 +38,30 @@ module.exports = function(app) {
 	};
 	
 	var getLatestAuthToken = function (req, authToken){
+		console.log("request cookie");
+		console.log(req.cookies);
+		console.log(req.cookies.authToken);
 		let token = (req.cookies !== undefined && req.cookies.authToken !== undefined && req.cookies.authToken !== null ) ? 
 				req.cookies.authToken: authToken ;
+		console.log("return auth token:" +token);
 		return token;
 	}
 
 	var getUserName = function (req){
 		let userName = '';
+		console.log("request cookie under getUsername method");
+		console.log(req.cookies);
+		console.log(req.cookies.userDetail);
 		if(req.cookies !== undefined && req.cookies.userDetail !== undefined && req.cookies.userDetail !== null) {
 			let userInfo = JSON.parse(req.cookies.userDetail);
+			console.log(userInfo);
 			if(userInfo.length === 3){
 				userName = userInfo[2];
 				userId = userInfo[1];
+				console.log("inside if condition:"+userName+" userId: "+userId);
 			}
 		} 
+
 		return userName;	
 	}
 
@@ -68,6 +78,8 @@ module.exports = function(app) {
 	
 		let userName = getUserName(req);
 		let authToken = getLatestAuthToken(req,'');	
+		console.log("inside session api:"+userName+" userId: "+userId);
+		console.log("auth :"+authToken);
 		try {
 			res.configInfo = {
         userName:  userName,

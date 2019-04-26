@@ -30,7 +30,7 @@ import { ScriptService } from '../../../@core/utils/script.service';
 })
 export class BreadcrumbsComponent implements OnInit {
   public breadcrumbs$: Observable<string[]>;
-  public defaultBreadcrumbs: string[];
+  public defaultBreadcrumbs: any[];
   public parentMsg: string;
   public portalFEURL: string;
   script: ScriptService;
@@ -41,7 +41,10 @@ export class BreadcrumbsComponent implements OnInit {
 
   ngOnInit() {
     this.breadcrumbs$ = this.breadcrumbsService.getBreadcrumbs();
-    this.defaultBreadcrumbs = ['Home', 'Design Studio'];
+    this.defaultBreadcrumbs = [
+      { name: 'Home', href: 'Home' },
+      { name: 'Design Studio', href: 'Design Studio' },
+      { name: 'ML Workbench' }];
   }
   
   navigateToPortal(path) {

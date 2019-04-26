@@ -27,8 +27,6 @@ var config = {
 		notebookCatalogComponent: "http://localhost:9087",
 		pipelineComponent: "http://localhost:9093",
 		pipelineCatalogComponent: "http://localhost:9091",
-		projectmSURL : "http://localhost:9088",
-		notebookmSURL : "http://localhost:9089",
 		portalFEURL: "http://localhost:8085"
 	},
 	deploy : {
@@ -39,7 +37,6 @@ var config = {
 		notebookCatalogComponent: process.env.notebookCatalogComponent,
 		pipelineComponent : process.env.pipelineComponent,
 		pipelineCatalogComponent: process.env.pipelineCatalogComponent,
-		projectmSURL : process.env.projectmSURL,
 		portalFEURL: process.env.portalFEURL,
 	}
 };

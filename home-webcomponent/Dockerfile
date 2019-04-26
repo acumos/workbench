@@ -26,7 +26,7 @@ WORKDIR /opt/app/home-component
 RUN npm install --unsafe-perm
 
 # Build component
-RUN npm run build:prod
+RUN npm run build:component
 
 RUN chmod 777 -R /opt/app/
 

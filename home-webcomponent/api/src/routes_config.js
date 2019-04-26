@@ -52,6 +52,7 @@ module.exports = function(app) {
 				userId = userInfo[1];
 			}
 		} 
+
 		return userName;	
 	}
 
@@ -68,6 +69,7 @@ module.exports = function(app) {
 	
 		let userName = getUserName(req);
 		let authToken = getLatestAuthToken(req,'');	
+
 		try {
 			res.configInfo = {
         userName:  userName,

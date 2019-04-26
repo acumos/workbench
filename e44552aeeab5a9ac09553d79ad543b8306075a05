@@ -536,6 +536,23 @@
     },
     {
       "key": {
+        "uuid": "f0b4330c_e5e4df93",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/controller/PipeLineServiceController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-04-26T00:45:53Z",
+      "side": 1,
+      "message": "This seems to be same as httpServletRequest and can be removed as duplicate",
+      "revId": "e44552aeeab5a9ac09553d79ad543b8306075a05",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96621be8_cb9dca5d",
         "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/PipeLineValidationServiceImpl.java",
         "patchSetId": 1

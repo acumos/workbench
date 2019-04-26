@@ -20,7 +20,7 @@
 Project Service Release Notes
 ===============================
 
-Version 1.0.0, 2019-04-02
+Version 1.0.0, 2019-04-27
 ---------------------------
 * Initial Code commit
 * ACUMOS-2480 : Create Project
@@ -29,3 +29,4 @@ Version 1.0.0, 2019-04-02
 * ACUMOS-2483 : View (Get) Project
 * ACUMOS-2484 : Delete project
 * ACUMOS-2690 : Update project-service to include dependency for workbench-common
+* ACUMOS-2789 : JWT Authentication

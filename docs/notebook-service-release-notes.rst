@@ -20,7 +20,7 @@
 Notebook Service Release Notes
 ===============================
 
-Version 1.0.0, 2019-04-10
+Version 1.0.0, 2019-04-27
 ---------------------------
 * Initial Code commit
 * ACUMOS-2485 : Create (Jupyter) Notebook

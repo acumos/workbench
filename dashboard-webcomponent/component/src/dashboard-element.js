@@ -58,6 +58,7 @@ export class DashboardLitElement extends LitElement {
     this.modelCount = 0;
     this.prModelCount = 0;
     this.view = '';
+    
     this.requestUpdate().then(() => {
       console.log('update componenturl : ' + this.componenturl);
       this.componenturl = (this.componenturl === undefined || this.componenturl === null)? '' : this.componenturl;

@@ -422,7 +422,6 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
 
   navigatePage(direction) {
     this.dataSource.navigatePage(direction);
-
     this.currentPage = this.dataSource.page + 1;
     this.projects = this.dataSource.data;
   }

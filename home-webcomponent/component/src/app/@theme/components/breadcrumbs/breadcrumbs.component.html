@@ -30,10 +30,12 @@ limitations under the License.
     </ul>
   </ng-container>
   <ng-template #elseTemplate>
-    <span>Dashboard</span>
+    <span>ML Workbench</span>
     <ul class="list-inline">
-      <li class="list-inline-item">Home</li>
-      <li class="list-inline-item">Dashboard</li>
+      <li class="list-inline-item" *ngFor="let item of defaultBreadcrumbs">
+        <a href="#" (click)="navigateToPortal(item)" *ngIf="item.href" >{{ item.name }}</a>
+        <div class="d-inline" *ngIf="!item.href">{{ item.name }}</div>
+      </li>
     </ul>
   </ng-template>
 </div>

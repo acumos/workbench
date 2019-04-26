@@ -47,8 +47,15 @@ public class ConfigurationProperties {
 	@Value("${jupyterhub.token}")
 	private String jupyterhubToken;
 	
+	@Value("${jupyterhub.storepass}")
+	private String jupyterhubStorepass;
+	
 	@Value("${jwt.secretkey}")
 	private String jwtSecretKey;
+	
+	@Value("${outputfolder}")
+	private String outputFolder;
+	
 	
 	/**
 	 * @return the resultsetSize
@@ -106,4 +113,19 @@ public class ConfigurationProperties {
 		return jwtSecretKey;
 	}
 
+	/**
+	 * @return the outputFolder
+	 */
+	public String getOutputFolder() {
+		return outputFolder;
+	}
+
+	/**
+	 * @return the jupyterhubStorepass
+	 */
+	public String getJupyterhubStorepass() {
+		return jupyterhubStorepass;
+	}
+
+	
 }

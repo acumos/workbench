@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "10e9ea1e_93c76b0b",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/config/SwaggerConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-26T08:44:06Z",
+      "side": 1,
+      "message": "Configure Swagger to allow user to set JWT Token as Authorization header on swagger UI",
+      "parentUuid": "9288cff2_c32dace3",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 87
+      },
+      "revId": "e44552aeeab5a9ac09553d79ad543b8306075a05",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f555c36_c5746341",
         "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/config/SwaggerConfiguration.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2019-04-25T20:55:41Z",
       "side": 1,
       "message": "Is this needed to open up the Swagger documents? A comment would help",
+      "range": {
+        "startLine": 93,
+        "startChar": 1,
+        "endLine": 99,
+        "endChar": 1
+      },
+      "revId": "e44552aeeab5a9ac09553d79ad543b8306075a05",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4c11deb0_a9397015",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/config/SwaggerConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-26T08:44:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f555c36_c5746341",
       "range": {
         "startLine": 93,
         "startChar": 1,
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "cdb00c12_34f9ea66",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/JupyterHubRestClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-26T08:44:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6576f13_2ef94781",
+      "range": {
+        "startLine": 157,
+        "startChar": 0,
+        "endLine": 157,
+        "endChar": 24
+      },
+      "revId": "e44552aeeab5a9ac09553d79ad543b8306075a05",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53e01f6c_c92f1dce",
         "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/JupyterHubRestClient.java",
         "patchSetId": 1
@@ -105,6 +177,30 @@
       "writtenOn": "2019-04-25T20:55:41Z",
       "side": 1,
       "message": "You want the stack trace in the logger??  Use the exception, not toString or getMessage",
+      "range": {
+        "startLine": 158,
+        "startChar": 10,
+        "endLine": 158,
+        "endChar": 11
+      },
+      "revId": "e44552aeeab5a9ac09553d79ad543b8306075a05",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "70f2d412_ee66371f",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/JupyterHubRestClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-26T08:44:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53e01f6c_c92f1dce",
       "range": {
         "startLine": 158,
         "startChar": 10,
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "7812cea6_b515ddf5",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/JupyterHubRestClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-26T08:44:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a05754b_b1493c18",
+      "range": {
+        "startLine": 216,
+        "startChar": 0,
+        "endLine": 216,
+        "endChar": 24
+      },
+      "revId": "e44552aeeab5a9ac09553d79ad543b8306075a05",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27996bff_51fb4eda",
         "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/JupyterHubRestClient.java",
         "patchSetId": 1
@@ -151,6 +271,30 @@
       "writtenOn": "2019-04-25T20:55:41Z",
       "side": 1,
       "message": "Supply exception to logger?",
+      "range": {
+        "startLine": 217,
+        "startChar": 4,
+        "endLine": 217,
+        "endChar": 10
+      },
+      "revId": "e44552aeeab5a9ac09553d79ad543b8306075a05",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a9eace95_5022f730",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/JupyterHubRestClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-26T08:44:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27996bff_51fb4eda",
       "range": {
         "startLine": 217,
         "startChar": 4,
@@ -186,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "d55d844f_e0941562",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/JupyterHubRestClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-26T08:44:06Z",
+      "side": 1,
+      "message": "Framework will take care of it.",
+      "parentUuid": "20bf19ad_0ac7f425",
+      "range": {
+        "startLine": 260,
+        "startChar": 10,
+        "endLine": 260,
+        "endChar": 11
+      },
+      "revId": "e44552aeeab5a9ac09553d79ad543b8306075a05",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7689e23_d3f21f27",
         "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/JupyterHubRestClient.java",
         "patchSetId": 1
@@ -197,6 +365,30 @@
       "writtenOn": "2019-04-25T20:55:41Z",
       "side": 1,
       "message": "what about the exception e that was just thrown here?",
+      "range": {
+        "startLine": 300,
+        "startChar": 17,
+        "endLine": 300,
+        "endChar": 22
+      },
+      "revId": "e44552aeeab5a9ac09553d79ad543b8306075a05",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f61a59d8_384f98d2",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/JupyterHubRestClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-26T08:44:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7689e23_d3f21f27",
       "range": {
         "startLine": 300,
         "startChar": 17,
@@ -232,6 +424,30 @@
     },
     {
       "key": {
+        "uuid": "d4f14c4c_52bfaf54",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/JupyterHubRestClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-26T08:44:06Z",
+      "side": 1,
+      "message": "While debugging just want to get exact error",
+      "parentUuid": "9ca1703d_9b826bf1",
+      "range": {
+        "startLine": 337,
+        "startChar": 2,
+        "endLine": 349,
+        "endChar": 3
+      },
+      "revId": "e44552aeeab5a9ac09553d79ad543b8306075a05",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "687e3772_c20c3cd4",
         "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/JupyterHubRestClient.java",
         "patchSetId": 1
@@ -243,6 +459,30 @@
       "writtenOn": "2019-04-25T20:55:41Z",
       "side": 1,
       "message": "pass the exception?",
+      "range": {
+        "startLine": 371,
+        "startChar": 16,
+        "endLine": 371,
+        "endChar": 21
+      },
+      "revId": "e44552aeeab5a9ac09553d79ad543b8306075a05",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "06131bf9_9019c038",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/JupyterHubRestClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-26T08:44:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "687e3772_c20c3cd4",
       "range": {
         "startLine": 371,
         "startChar": 16,
@@ -278,6 +518,30 @@
     },
     {
       "key": {
+        "uuid": "3e61c71f_e3344f07",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/JupyterHubRestClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-26T08:44:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1207d22d_1a482377",
+      "range": {
+        "startLine": 394,
+        "startChar": 10,
+        "endLine": 394,
+        "endChar": 15
+      },
+      "revId": "e44552aeeab5a9ac09553d79ad543b8306075a05",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "746d720f_3420f0ba",
         "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/JupyterHubRestClient.java",
         "patchSetId": 1
@@ -289,6 +553,30 @@
       "writtenOn": "2019-04-25T20:55:41Z",
       "side": 1,
       "message": "pls remove",
+      "range": {
+        "startLine": 443,
+        "startChar": 0,
+        "endLine": 443,
+        "endChar": 24
+      },
+      "revId": "e44552aeeab5a9ac09553d79ad543b8306075a05",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6a47a35f_e6f77527",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/JupyterHubRestClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-26T08:44:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "746d720f_3420f0ba",
       "range": {
         "startLine": 443,
         "startChar": 0,
@@ -324,6 +612,30 @@
     },
     {
       "key": {
+        "uuid": "4f89030e_bfc9548b",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/JupyterHubRestClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-26T08:44:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49b66bb5_400ca642",
+      "range": {
+        "startLine": 444,
+        "startChar": 11,
+        "endLine": 444,
+        "endChar": 16
+      },
+      "revId": "e44552aeeab5a9ac09553d79ad543b8306075a05",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "628ce275_bc08c5dd",
         "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookServiceImpl.java",
         "patchSetId": 1
@@ -347,6 +659,30 @@
     },
     {
       "key": {
+        "uuid": "5edeb36d_5fda3cc4",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-26T08:44:06Z",
+      "side": 1,
+      "message": "But no harm is specifying Qualifier right?",
+      "parentUuid": "628ce275_bc08c5dd",
+      "range": {
+        "startLine": 78,
+        "startChar": 2,
+        "endLine": 78,
+        "endChar": 11
+      },
+      "revId": "e44552aeeab5a9ac09553d79ad543b8306075a05",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f87cfe3_21737f58",
         "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/util/NotebookServiceConstants.java",
         "patchSetId": 1
@@ -358,6 +694,30 @@
       "writtenOn": "2019-04-25T20:55:41Z",
       "side": 1,
       "message": "near dupe of line 32?",
+      "range": {
+        "startLine": 36,
+        "startChar": 28,
+        "endLine": 36,
+        "endChar": 55
+      },
+      "revId": "e44552aeeab5a9ac09553d79ad543b8306075a05",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1f5b74ff_29102b8f",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/util/NotebookServiceConstants.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-26T08:44:06Z",
+      "side": 1,
+      "message": "Yes, but case difference does matter, line 32 constant is used to pass value as path variable, and line 36 is to specify the field name.",
+      "parentUuid": "4f87cfe3_21737f58",
       "range": {
         "startLine": 36,
         "startChar": 28,
@@ -417,6 +777,30 @@
     },
     {
       "key": {
+        "uuid": "66d5b85b_bab519e0",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/util/NotebookType.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-26T08:44:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "873c6936_a7029e32",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 40
+      },
+      "revId": "e44552aeeab5a9ac09553d79ad543b8306075a05",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df6ee9e7_745bbe9e",
         "filename": "notebook-service/src/test/java/org/acumos/workbench/notebookservice/controller/NotebookServiceControllerTest.java",
         "patchSetId": 1
@@ -428,6 +812,24 @@
       "writtenOn": "2019-04-25T20:55:41Z",
       "side": 1,
       "message": "private ?",
+      "revId": "e44552aeeab5a9ac09553d79ad543b8306075a05",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6cf01da2_a51724d8",
+        "filename": "notebook-service/src/test/java/org/acumos/workbench/notebookservice/controller/NotebookServiceControllerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-26T08:44:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df6ee9e7_745bbe9e",
       "revId": "e44552aeeab5a9ac09553d79ad543b8306075a05",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false
@@ -451,6 +853,24 @@
     },
     {
       "key": {
+        "uuid": "d74ab153_723432c1",
+        "filename": "notebook-service/src/test/java/org/acumos/workbench/notebookservice/service/NotebookServiceImplTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-26T08:44:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a5dbb74_aa166d15",
+      "revId": "e44552aeeab5a9ac09553d79ad543b8306075a05",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aaaf5be_c8597e74",
         "filename": "notebook-service/src/test/java/org/acumos/workbench/notebookservice/service/NotebookServiceImplTest.java",
         "patchSetId": 1
@@ -468,6 +888,24 @@
     },
     {
       "key": {
+        "uuid": "4791ca3d_2dd837e8",
+        "filename": "notebook-service/src/test/java/org/acumos/workbench/notebookservice/service/NotebookServiceImplTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-26T08:44:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aaaf5be_c8597e74",
+      "revId": "e44552aeeab5a9ac09553d79ad543b8306075a05",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2b97f52_efd24083",
         "filename": "notebook-service/src/test/java/org/acumos/workbench/notebookservice/service/NotebookServiceImplTest.java",
         "patchSetId": 1
@@ -479,6 +917,30 @@
       "writtenOn": "2019-04-25T20:55:41Z",
       "side": 1,
       "message": "pls remove don\u0027t comment out",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 10
+      },
+      "revId": "e44552aeeab5a9ac09553d79ad543b8306075a05",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6914c369_97aabaea",
+        "filename": "notebook-service/src/test/java/org/acumos/workbench/notebookservice/service/NotebookServiceImplTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-26T08:44:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2b97f52_efd24083",
       "range": {
         "startLine": 90,
         "startChar": 0,
@@ -514,6 +976,30 @@
     },
     {
       "key": {
+        "uuid": "f695eea8_681f8842",
+        "filename": "notebook-service/src/test/java/org/acumos/workbench/notebookservice/service/NotebookServiceImplTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-26T08:44:06Z",
+      "side": 1,
+      "message": "Failing with new code for integration with Jupyternotebook, will fix it latter on",
+      "parentUuid": "b3856d51_2537f183",
+      "range": {
+        "startLine": 249,
+        "startChar": 0,
+        "endLine": 249,
+        "endChar": 8
+      },
+      "revId": "e44552aeeab5a9ac09553d79ad543b8306075a05",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ba12e93_9acc0949",
         "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/config/SwaggerConfiguration.java",
         "patchSetId": 1
@@ -525,6 +1011,30 @@
       "writtenOn": "2019-04-25T20:55:41Z",
       "side": 1,
       "message": "Please comment why a security context and JWT token is needed for Swagger",
+      "range": {
+        "startLine": 89,
+        "startChar": 1,
+        "endLine": 94,
+        "endChar": 5
+      },
+      "revId": "e44552aeeab5a9ac09553d79ad543b8306075a05",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f20b67dd_7d67dbb3",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/config/SwaggerConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-26T08:44:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ba12e93_9acc0949",
       "range": {
         "startLine": 89,
         "startChar": 1,
@@ -560,6 +1070,30 @@
     },
     {
       "key": {
+        "uuid": "201dc3da_8194fab9",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/controller/PipeLineServiceController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-26T08:44:06Z",
+      "side": 1,
+      "message": "Currently only one controller.  Moment we have multiple, then need to be moved to util.",
+      "parentUuid": "cd5366a8_46c6c87f",
+      "range": {
+        "startLine": 505,
+        "startChar": 16,
+        "endLine": 505,
+        "endChar": 31
+      },
+      "revId": "e44552aeeab5a9ac09553d79ad543b8306075a05",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0b4330c_e5e4df93",
         "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/controller/PipeLineServiceController.java",
         "patchSetId": 1
@@ -571,6 +1105,24 @@
       "writtenOn": "2019-04-26T00:45:53Z",
       "side": 1,
       "message": "This seems to be same as httpServletRequest and can be removed as duplicate",
+      "revId": "e44552aeeab5a9ac09553d79ad543b8306075a05",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "12dbdd3f_5feaa36d",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/controller/PipeLineServiceController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-26T08:44:06Z",
+      "side": 1,
+      "message": "one stmt is to get from header and another stmt is to get it from parameter",
+      "parentUuid": "f0b4330c_e5e4df93",
       "revId": "e44552aeeab5a9ac09553d79ad543b8306075a05",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false
@@ -600,6 +1152,30 @@
     },
     {
       "key": {
+        "uuid": "21bdf41e_de70fc93",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/PipeLineValidationServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-26T08:44:06Z",
+      "side": 1,
+      "message": "time crunch, still have lot to cover.  I will create task in JIRA.",
+      "parentUuid": "96621be8_cb9dca5d",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 58
+      },
+      "revId": "e44552aeeab5a9ac09553d79ad543b8306075a05",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f080dc22_963fc237",
         "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/ProjectServiceRestClientImpl.java",
         "patchSetId": 1
@@ -611,6 +1187,30 @@
       "writtenOn": "2019-04-25T20:55:41Z",
       "side": 1,
       "message": "pass the exception to the logger",
+      "range": {
+        "startLine": 95,
+        "startChar": 10,
+        "endLine": 95,
+        "endChar": 15
+      },
+      "revId": "e44552aeeab5a9ac09553d79ad543b8306075a05",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "93f40675_942bf2b7",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/ProjectServiceRestClientImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-04-26T08:44:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f080dc22_963fc237",
       "range": {
         "startLine": 95,
         "startChar": 10,

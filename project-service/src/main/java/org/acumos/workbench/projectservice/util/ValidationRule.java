@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
 
 public enum ValidationRule {
 
-	NAME("^[a-zA-Z][a-zA-Z0-9_ ]{6,30}$"),
+	NAME("^[a-zA-Z][a-zA-Z0-9_ ]{5,29}$"),
 	VERSION("[a-zA-Z0-9_.]{1,14}$");
 	
 	private final Pattern pattern; 

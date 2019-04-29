@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51886a25_aabadd2d",
+        "filename": "acumosauthenticator/setup.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-04-29T13:01:04Z",
+      "side": 1,
+      "message": "Please confirm if this is design studio or Training",
+      "revId": "5a868e6ce8a1bdca9b585c7e6c11a2322bbb3826",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}

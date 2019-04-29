@@ -275,7 +275,7 @@ public class JupyterHubRestClient implements NotebookRestClient {
 		
 		//Get Jupyter Hub user
 		jbUser = getJupyterHubUser(authenticatedUserId);
-		if (null == jbUser.getServer() && null == jbUser.getServers()) {
+		if (null == jbUser.getServer()) {
 			URI uri = NotebookServiceUtil.buildURI(this.baseJHURL + NotebookServiceConstants.JUPYTERHUB_LAUNCH_SERVER_PATH, uriParams);
 			
 			//create headers you need send

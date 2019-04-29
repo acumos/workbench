@@ -17,16 +17,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ===============LICENSE_END=========================================================
 -->
-<div *ngIf="alertOpen">
-  <div class="alertmessage alert alert-danger">
-    <a class="close" (click)="alertOpen=false">
-      <span aria-hidden="true">&nbsp;&times;</span>
-    </a>
-    {{sessionError}}
-  </div>
-</div>
+<ngx-base-component [alertOpen]="alertOpen" [showSpinner]="showSpinner" [sessionError]="sessionError"></ngx-base-component>
 
-<pipeline-catalog-element *ngIf="loadHtml" (catalog-pipeline-event)="this.OnCatalogPipelineEvent($event)" [attr.componenturl]="url"
+<pipeline-catalog-element *ngIf="loadHtml" (on-load-event)="this.stopSpinner()" (catalog-pipeline-event)="this.OnCatalogPipelineEvent($event)" [attr.componenturl]="url"
 [attr.userName]="userName" [attr.authToken]="authToken">
 </pipeline-catalog-element>
 

@@ -54,6 +54,8 @@ export class ViewComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.loadHtml = false;
+    this.showSpinner = true;
+    this.alertOpen = false;
     this.id = this.route.snapshot.paramMap.get('id');
     this.name = this.route.snapshot.paramMap.get('name');
     this.loadComponent('projectComponent', 'project-element', this.breadCrumbs);

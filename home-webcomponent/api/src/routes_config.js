@@ -35,6 +35,7 @@ module.exports = function(app) {
 		pipelineCatalogComponent : properties.pipelineCatalogComponent,
 		pipelineComponent: properties.pipelineComponent,
 		portalFEURL: properties.portalFEURL,
+		menuItems : properties.menuItems
 	};
 	
 	var getLatestAuthToken = function (req, authToken){

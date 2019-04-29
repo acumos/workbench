@@ -50,11 +50,19 @@ export class ProjectLitElement extends DataMixin(ValidationMixin(BaseElementMixi
         userName: {type: String, notify: true},
         authToken: {type: String, notify: true},
         projectId: { type: String, notify: true },
+        pipelineFlag: { type: String }
       };
     }
     
     static get styles() {
       return [style];
+    }
+
+    onLoad() {
+      this.dispatchEvent(
+        new CustomEvent("on-load-event", {
+        })
+      );
     }
 
     constructor() {
@@ -90,6 +98,7 @@ export class ProjectLitElement extends DataMixin(ValidationMixin(BaseElementMixi
 			}
 
       this.requestUpdate().then(() => {
+        this.onLoad();
         this.componenturl = (this.componenturl === undefined || this.componenturl === null) ? '' : this.componenturl;
         this.$data.set('project.projectId', this.projectId, true);
         this.getConfig();
@@ -117,7 +126,7 @@ export class ProjectLitElement extends DataMixin(ValidationMixin(BaseElementMixi
         .then((envVar) => {
           this.projectmSURL = envVar.msconfig.projectmSURL;
           this.projectWikiURL = envVar.wikiConfig.projectWikiURL;
-
+          this.pipelineFlag = envVar.pipelineFlag;  
           let username = envVar.userName;
           let token = envVar.authToken;
           
@@ -633,7 +642,7 @@ export class ProjectLitElement extends DataMixin(ValidationMixin(BaseElementMixi
           ${this.data.project.projectStatus === "ACTIVE"
         	? html`
              <project-notebook-element componenturl=${this.componenturl} projectId=${this.projectId} userName=${this.userName} authToken=${this.authToken}></project-notebook-element>
-             ${false
+             ${this.pipelineFlag === "true"
               ?html`
                 <project-pipeline-element componenturl=${this.componenturl} projectId=${this.projectId} userName=${this.userName} authToken=${this.authToken}></project-pipeline-element> 
               `

@@ -18,17 +18,10 @@ limitations under the License.
 ===============LICENSE_END=========================================================
 -->
 
-<div *ngIf="alertOpen">
-  <div class="alertmessage alert alert-danger">
-    <a class="close" (click)="alertOpen=false">
-      <span aria-hidden="true">&nbsp;&times;</span>
-    </a>
-    {{sessionError}}
-  </div>
-</div>
+<ngx-base-component [alertOpen]="alertOpen" [showSpinner]="showSpinner" [sessionError]="sessionError"></ngx-base-component>
 
 <notebook-catalog-element *ngIf="loadHtml" (catalog-notebook-event)="this.OnCatalogNotebookEvent($event)" [attr.componenturl]="url"
-[attr.userName]="userName" [attr.authToken]="authToken">
+[attr.userName]="userName" [attr.authToken]="authToken" (on-load-event)="this.stopSpinner()">
 </notebook-catalog-element>
 
 

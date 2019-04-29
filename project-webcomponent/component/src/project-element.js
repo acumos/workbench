@@ -57,6 +57,13 @@ export class ProjectLitElement extends DataMixin(ValidationMixin(BaseElementMixi
       return [style];
     }
 
+    onLoad() {
+      this.dispatchEvent(
+        new CustomEvent("on-load-event", {
+        })
+      );
+    }
+
     constructor() {
       super();
       this.$validations.init({
@@ -90,6 +97,7 @@ export class ProjectLitElement extends DataMixin(ValidationMixin(BaseElementMixi
 			}
 
       this.requestUpdate().then(() => {
+        this.onLoad();
         this.componenturl = (this.componenturl === undefined || this.componenturl === null) ? '' : this.componenturl;
         this.$data.set('project.projectId', this.projectId, true);
         this.getConfig();

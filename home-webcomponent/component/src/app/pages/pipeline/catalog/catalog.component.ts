@@ -44,6 +44,8 @@ export class PipelineCatalogComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.loadHtml = false;
+    this.showSpinner = true;
+    this.alertOpen = false;
     this.loadComponent('pipelineCatalogComponent', 'pipeline-catalog-element', this.breadCrumbs);
   }
 }

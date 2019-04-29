@@ -62,6 +62,13 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
     return [style];
   }
 
+  onLoad() {
+    this.dispatchEvent(
+      new CustomEvent("on-load-event", {
+      })
+    );
+  }
+
   constructor() {
     super();
     this.initializeCreateNotebookForm();
@@ -92,8 +99,7 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
     this.notebookLists = [];
     this.cardShow = false;
     this.requestUpdate().then(() => {
-      console.info('update componenturl : ' + this.componenturl);
-      
+      this.onLoad();
       this.componenturl = (this.componenturl === undefined || this.componenturl === null)? '' : this.componenturl;
       this.getConfig();
     })

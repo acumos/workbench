@@ -33,6 +33,7 @@ export class BaseComponent implements OnInit {
   public alertOpen: boolean;
   public userId: string;
   public loadHtml: boolean;
+  public showSpinner: boolean;
 
   constructor(public router: Router, public script: ScriptService, 
     public breadcrumbsService: BreadcrumbsService) {
@@ -68,6 +69,11 @@ export class BaseComponent implements OnInit {
       this.sessionError = error;
       this.alertOpen = true;
     });
+  }
+
+
+  public stopSpinner() {
+    this.showSpinner = false;
   }
 
 }

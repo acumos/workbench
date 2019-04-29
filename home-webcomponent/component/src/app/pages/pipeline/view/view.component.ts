@@ -47,8 +47,11 @@ export class PipelineViewComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.loadHtml = false;
+    this.showSpinner = true;
+    this.alertOpen = false;
     this.id = this.route.snapshot.paramMap.get('id');
     this.name = this.route.snapshot.paramMap.get('name');
+    this.breadCrumbs.push({ name: this.name });
     this.loadComponent('pipelineComponent', 'pipeline-element', this.breadCrumbs);
   }
 }

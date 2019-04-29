@@ -132,9 +132,9 @@ module.exports = function(app) {
 
 			request.get(options, function(error, response) {
 				if (!error && response.statusCode == 200) {
-					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Projects retrieved successfully."));
+					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Projects retrieved successfully"));
 				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to retrieve Projects."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to retrieve Projects"));
 				} else {
 					resolve(prepRespJsonAndLogit(null, null, null, error));
 				}
@@ -157,9 +157,9 @@ module.exports = function(app) {
 				
 			request.post(options, function(error, response, body) {
 				if (!error && response.statusCode == 201) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Project created successfully."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Project created successfully"));
 				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to create Project."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to create Project"));
 				} else {
 					resolve(prepRespJsonAndLogit(null, null, null, error));
 				}
@@ -179,9 +179,9 @@ module.exports = function(app) {
 			};
 			request.delete(options, function(error, response, body) {
 				if (!error && response.statusCode == 200) {
-					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Project Deleted successfully."));
+					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Project Deleted successfully"));
 				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to delete Project."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to delete Project"));
 				} else {
 					resolve(prepRespJsonAndLogit(null, null, null, error));
 				}
@@ -201,9 +201,9 @@ module.exports = function(app) {
 			};
 			request.put(options, function(error, response, body) {
 				if (!error && response.statusCode == 200) {
-					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Project archived successfully."));
+					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Project archived successfully"));
 				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to archive Project."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to archive Project"));
 				} else {
 					resolve(prepRespJsonAndLogit(null, null, null, error));
 				}
@@ -223,9 +223,9 @@ module.exports = function(app) {
 			};
 			request.put(options, function(error, response, body) {
 				if (!error && response.statusCode == 200) {
-					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Project restored successfully."));
+					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Project restored successfully"));
 				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to restore Project."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to restore Project"));
 				} else {
 					resolve(prepRespJsonAndLogit(null, null, null, error));
 				}

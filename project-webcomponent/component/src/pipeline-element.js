@@ -445,6 +445,39 @@ class ProjectPipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
     });
   }
 
+	deletePipeline() {
+    const url = this.componenturl + '/api/pipeline/delete';
+    this.resetMessage();
+	  fetch(url, {
+		  method: 'DELETE',
+      mode: 'cors',
+      cache: 'default',
+      headers: {
+          "Content-Type": "application/json",
+          "auth": this.authToken,
+      },
+      body: JSON.stringify({
+        "url": this.pipelinemSURL,
+        "pipelineId" : this.selectedPipelineId,
+        "userName": this.userName      		  
+      })
+    }).then(res => res.json())
+      .then((n) => {
+        if(n.status === 'Success'){
+          this.successMessage = n.message;
+          this.getPipelineList();
+        } else {
+          this.errorMessage = n.message;
+        }
+        this.alertOpen = true;
+        this.isOpenDeleteDialog = false;
+    }).catch((error) => {
+      console.error('Request failed', error);
+      this.errorMessage = 'Data Pipeline delete request failed with error: '+ error;
+      this.alertOpen = true;
+    });
+	}
+	
 	getPipelineList(){
     const url = this.componenturl + '/api/pipelines';
 	  fetch(url, {
@@ -814,9 +847,9 @@ class ProjectPipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
                   this.$validations.getValidationErrors('newPipeline.pipelineId.name').map(error => {
                     switch (error) {
                       case 'isNotEmpty':
-                        return html`<div class="invalid-feedback d-block">Data Pipeline name is required.</div>`
+                        return html`<div class="invalid-feedback d-block">Data Pipeline Name is required</div>`
                       case 'pattern':
-                        return html`<div class="invalid-feedback d-block">Data Pipeline name should contain between 6 to 30 char inlcudes only alphanumeric and '_'. It should start from alphabetic character. </div>`
+                        return html`<div class="invalid-feedback d-block">Data Pipeline Name should contain only 6-30 alphanumeric characters, may include “_” and should not begin with number</div>`
                     }
                   })
                 }
@@ -836,9 +869,9 @@ class ProjectPipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
                   this.$validations.getValidationErrors('newPipeline.pipelineId.versionId.label').map(error => {
                     switch (error) {
                       case 'isNotEmpty':
-                        return html`<div class="invalid-feedback d-block">Data Pipeline version is required.</div>`
+                        return html`<div class="invalid-feedback d-block">Data Pipeline Version is required</div>`
                       case 'pattern':
-                        return html`<div class="invalid-feedback d-block">Data Pipeline version should contain between 1 to 14 char includes only alphanumeric, '.' and '_'.</div>`
+                        return html`<div class="invalid-feedback d-block">Data Pipeline Version should contain only 1-14 numeric characters, may include “_” and "."</div>`
                     }
                   })
                 }
@@ -890,7 +923,7 @@ class ProjectPipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
 									this.$validations.getValidationErrors('linkPipeline.pipelineId.name').map(error => {
 										switch (error) {
 											case 'isNotEmpty':
-												return html`<div class="invalid-feedback d-block">Data Pipeline Type is required.</div>`
+												return html`<div class="invalid-feedback d-block">Data Pipeline Type is required</div>`
 
 										}
 									})
@@ -928,9 +961,9 @@ class ProjectPipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
                   this.$validations.getValidationErrors('editPipeline.pipelineId.name').map(error => {
                     switch (error) {
                       case 'isNotEmpty':
-                        return html`<div class="invalid-feedback d-block">Data Pipeline name is required.</div>`
+                        return html`<div class="invalid-feedback d-block">Data Pipeline Name is required</div>`
                       case 'pattern':
-                        return html`<div class="invalid-feedback d-block">Data Pipeline name should contain between 6 to 30 char inlcudes only alphanumeric and '_'. It should start from alphabetic character. </div>`
+                        return html`<div class="invalid-feedback d-block">Data Pipeline Name should contain only 6-30 alphanumeric characters, may include “_” and should not begin with number</div>`
                     }
                   })
                 }
@@ -950,9 +983,9 @@ class ProjectPipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
                   this.$validations.getValidationErrors('editPipeline.pipelineId.versionId.label').map(error => {
                     switch (error) {
                       case 'isNotEmpty':
-                        return html`<div class="invalid-feedback d-block">Data Pipeline version is required.</div>`
+                        return html`<div class="invalid-feedback d-block">Data Pipeline Version is required</div>`
                       case 'pattern':
-                        return html`<div class="invalid-feedback d-block">Data Pipeline version should contain between 1 to 14 char includes only alphanumeric, '.' and '_'. </div>`
+                        return html`<div class="invalid-feedback d-block">Data Pipeline Version should contain only 1-14 numeric characters, may include “_” and "."</div>`
                     }
                   })
                 }
@@ -1110,6 +1143,9 @@ class ProjectPipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
 															<a href="javascript:void" @click="${e => this.openRestoreDialog(item.pipelineId, item.name)}"
 																class="btnIcon btn btn-sm btn-secondary my-1 mr-1" data-toggle="tooltip" data-placement="top" title="Unarchive Data Data Pipeline">
 																<mwc-icon class="mwc-icon-secondary">restore_from_trash</mwc-icon>
+															</a>
+															<a href="javascript:void" @click=${(e) => this.openDeleteDialog(item.pipelineId, item.name)} class="btnIcon btn btn-sm btn-secondary my-1 mr-1" data-toggle="tooltip" data-placement="top" title="Delete Data Pipeline">
+																<mwc-icon class="mwc-icon-secondary">delete</mwc-icon>
 															</a>
 														`}
 													</td>

@@ -62,6 +62,13 @@ export class PipelineCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
     return [style];
   }
 
+  onLoad() {
+    this.dispatchEvent(
+      new CustomEvent("on-load-event", {
+      })
+    );
+  }
+
   constructor() {
     super();
     this.view = '';
@@ -94,7 +101,7 @@ export class PipelineCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
     this.pipelineLists = [];
     this.cardShow = false;
     this.requestUpdate().then(() => {
-      console.info('update componenturl : ' + this.componenturl);
+      this.onLoad();
       this.componenturl = (this.componenturl === undefined || this.componenturl === null)? '' : this.componenturl;
       this.view = '';
       this.getConfig();
@@ -579,9 +586,9 @@ export class PipelineCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
                   this.$validations.getValidationErrors('newPipeline.pipelineId.name').map(error => {
                     switch (error) {
                       case 'isNotEmpty':
-                        return html`<div class="invalid-feedback d-block">Data Pipeline name is required.</div>`
+                        return html`<div class="invalid-feedback d-block">Data Pipeline Name is required</div>`
                       case 'pattern':
-                        return html`<div class="invalid-feedback d-block">Data Pipeline name should contain between 6 to 30 char inlcudes only alphanumeric and '_'. It should start from alphabetic character.</div>`
+                        return html`<div class="invalid-feedback d-block">Data Pipeline Name should contain only 6-30 alphanumeric characters, may include “_” and should not begin with number</div>`
                     }
                   })
                 }
@@ -602,9 +609,9 @@ export class PipelineCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
                   this.$validations.getValidationErrors('newPipeline.pipelineId.versionId.label').map(error => {
                     switch (error) {
                       case 'isNotEmpty':
-                        return html`<div class="invalid-feedback d-block">Data Pipeline version is required.</div>`
+                        return html`<div class="invalid-feedback d-block">Data Pipeline Version is required</div>`
                       case 'pattern':
-                        return html`<div class="invalid-feedback d-block">Data Pipeline version should contain between 1 to 14 char includes only alphanumeric, '.' and '_'.</div>`
+                        return html`<div class="invalid-feedback d-block">Data Pipeline Version should contain only 1-14 numeric characters, may include “_” and "."</div>`
                     }
                   })
                 }
@@ -783,6 +790,10 @@ export class PipelineCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
                                 <a href="javascript:void" @click="${e => this.openRestoreDialog(item.pipelineId, item.name)}"
                                   class="btnIcon btn btn-sm my-1 mr-1" data-toggle="tooltip" data-placement="top" title="Unarchive Data Pipeline">
                                   <mwc-icon class="mwc-icon-gray">restore_from_trash</mwc-icon>
+                                </a>
+                                <a href="javascript:void" @click="${e => this.openDeleteDialog(item.pipelineId, item.name)}"
+                                  class="btnIcon btn btn-sm my-1 mr-1" data-toggle="tooltip" data-placement="top" title="Delete Data Pipeline" >
+                                  <mwc-icon class="mwc-icon-gray">delete</mwc-icon>
                                 </a>
                             `}
                           </div>

@@ -16,9 +16,9 @@ limitations under the License.
 ===============LICENSE_END=========================================================
 */
 
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import { MENU_ITEMS } from './pages-menu';
+import { ScriptService } from '../@core/utils/script.service';
 
 @Component({
   selector: 'ngx-pages',
@@ -29,6 +29,14 @@ import { MENU_ITEMS } from './pages-menu';
     </ngx-main-layout>
   `,
 })
-export class PagesComponent {
-  menu = MENU_ITEMS;
+export class PagesComponent implements OnInit{
+  menu: [];
+
+  constructor(public script: ScriptService) {
+  }
+
+  ngOnInit() {
+    this.menu = this.script.getConfig('menuItems');
+  }
+
 }

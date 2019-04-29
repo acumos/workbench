@@ -137,9 +137,9 @@ module.exports = function(app) {
 			request.get(options, function(error, response) {
 				if (!error && response.statusCode == 200 && response.body !== undefined) {
 					let projectCount = JSON.parse(response.body).length;
-					resolve(prepRespJsonAndLogit(response, projectCount, "Projects count retrieved successfully."));
+					resolve(prepRespJsonAndLogit(response, projectCount, "Projects count retrieved successfully"));
 				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to retrieve Projects."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to retrieve Projects"));
 				} else {
 					resolve(prepRespJsonAndLogit(null, null, null, error));
 				}
@@ -161,9 +161,9 @@ module.exports = function(app) {
 			request.get(options, function(error, response) {
 				if (!error && response.statusCode == 200 && response.body !== undefined) {
 					let notebookCount = JSON.parse(response.body).length;
-					resolve(prepRespJsonAndLogit(response, notebookCount, "Notebook count retrieved successfully."));
+					resolve(prepRespJsonAndLogit(response, notebookCount, "Notebook count retrieved successfully"));
 				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to retrieve Notebook count."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to retrieve Notebook count"));
 				} else {
 					resolve(prepRespJsonAndLogit(null, null, null, error));
 				}
@@ -185,9 +185,9 @@ module.exports = function(app) {
 			request.get(options, function(error, response) {
 				if (!error && response.statusCode == 200 && response.body !== undefined) {
 					let pipelineCount = JSON.parse(response.body).length;
-					resolve(prepRespJsonAndLogit(response, pipelineCount, "Pipeline count retrieved successfully."));
+					resolve(prepRespJsonAndLogit(response, pipelineCount, "Pipeline count retrieved successfully"));
 				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to retrieve Pipeline count."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to retrieve Pipeline count"));
 				} else {
 					resolve(prepRespJsonAndLogit(null, null, null, error));
 				}
@@ -213,9 +213,9 @@ module.exports = function(app) {
 					let modelCount = 0;
 					if(responseData.response_body !== null)
 						modelCount = responseData.response_body.totalElements;
-					resolve(prepRespJsonAndLogit(response, modelCount, "Models count retrieved successfully."));
+					resolve(prepRespJsonAndLogit(response, modelCount, "Models count retrieved successfully"));
 				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to retrieve Models count."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to retrieve Models count"));
 				} else {
 					resolve(prepRespJsonAndLogit(null, null, null, error));
 				}
@@ -241,9 +241,9 @@ module.exports = function(app) {
 					let prModelCount = 0;
 					if(prResponseData.response_body !== null)
 						prModelCount = prResponseData.response_body.totalElements;
-					resolve(prepRespJsonAndLogit(response, prModelCount, "Private Models count retrieved successfully."));
+					resolve(prepRespJsonAndLogit(response, prModelCount, "Private Models count retrieved successfully"));
 				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to retrieve Private Models count."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to retrieve Private Models count"));
 				} else {
 					resolve(prepRespJsonAndLogit(null, null, null, error));
 				}

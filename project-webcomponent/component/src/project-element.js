@@ -50,11 +50,19 @@ export class ProjectLitElement extends DataMixin(ValidationMixin(BaseElementMixi
         userName: {type: String, notify: true},
         authToken: {type: String, notify: true},
         projectId: { type: String, notify: true },
+        pipelineFlag: { type: String }
       };
     }
     
     static get styles() {
       return [style];
+    }
+
+    onLoad() {
+      this.dispatchEvent(
+        new CustomEvent("on-load-event", {
+        })
+      );
     }
 
     constructor() {
@@ -90,6 +98,7 @@ export class ProjectLitElement extends DataMixin(ValidationMixin(BaseElementMixi
 			}
 
       this.requestUpdate().then(() => {
+        this.onLoad();
         this.componenturl = (this.componenturl === undefined || this.componenturl === null) ? '' : this.componenturl;
         this.$data.set('project.projectId', this.projectId, true);
         this.getConfig();
@@ -117,7 +126,7 @@ export class ProjectLitElement extends DataMixin(ValidationMixin(BaseElementMixi
         .then((envVar) => {
           this.projectmSURL = envVar.msconfig.projectmSURL;
           this.projectWikiURL = envVar.wikiConfig.projectWikiURL;
-
+          this.pipelineFlag = envVar.pipelineFlag;  
           let username = envVar.userName;
           let token = envVar.authToken;
           
@@ -543,9 +552,9 @@ export class ProjectLitElement extends DataMixin(ValidationMixin(BaseElementMixi
                                 this.$validations.getValidationErrors('project.projectName').map(error => {
                                   switch (error) {
                                     case 'isNotEmpty':
-                                      return html`<div class="invalid-feedback d-block">Project name is required</div>`
+                                      return html`<div class="invalid-feedback d-block">Project Name is required</div>`
                                     case 'pattern':
-																			return html`<div class="invalid-feedback d-block">Project name should contain between 6 to 30 char inlcudes only alphanumeric and '_'. It should start from alphabetic character.</div>`
+																			return html`<div class="invalid-feedback d-block">Project Name should contain only 6-30 alphanumeric characters, may include “_” and should not begin with number</div>`
                                   }
                                 })
                               }
@@ -576,9 +585,9 @@ export class ProjectLitElement extends DataMixin(ValidationMixin(BaseElementMixi
                                 this.$validations.getValidationErrors('project.projectVersion').map(error => {
                                   switch (error) {
                                     case 'isNotEmpty':
-                                      return html`<div class="invalid-feedback d-block">Project version is required.</div>`
+                                      return html`<div class="invalid-feedback d-block">Project Version is required</div>`
                                     case 'pattern':
-																			return html`<div class="invalid-feedback d-block">Project version should contain between 1 to 14 char includes only alphanumeric, '.' and '_'.</div>`
+																			return html`<div class="invalid-feedback d-block">Project Version should contain only 1-14 numeric characters, may include “_” and "."</div>`
                                   }
                                 })
                               }
@@ -633,7 +642,7 @@ export class ProjectLitElement extends DataMixin(ValidationMixin(BaseElementMixi
           ${this.data.project.projectStatus === "ACTIVE"
         	? html`
              <project-notebook-element componenturl=${this.componenturl} projectId=${this.projectId} userName=${this.userName} authToken=${this.authToken}></project-notebook-element>
-             ${false
+             ${this.pipelineFlag === "true"
               ?html`
                 <project-pipeline-element componenturl=${this.componenturl} projectId=${this.projectId} userName=${this.userName} authToken=${this.authToken}></project-pipeline-element> 
               `

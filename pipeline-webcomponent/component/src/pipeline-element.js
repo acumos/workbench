@@ -55,6 +55,13 @@ export class PipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
 			return [style];
 		}
 
+		onLoad() {
+			this.dispatchEvent(
+				new CustomEvent("on-load-event", {
+				})
+			);
+		}
+
 		constructor() {
 			super();
 			this.$validations.init({
@@ -88,6 +95,7 @@ export class PipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
 			this.isEdit = false; 
 			
 			this.requestUpdate().then(() => {
+				this.onLoad();
 				this.componenturl = (this.componenturl === undefined || this.componenturl === null) ? '' : this.componenturl;
 				this.getConfig();
 			})
@@ -493,6 +501,10 @@ export class PipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
 													restore_from_trash
 												</mwc-icon>
 											</a>&nbsp;
+											<a href="javascript:void" @click="${e => this.openDeleteDialog()}" class="btnIconTop btn btn-sm btn-secondary mr-1"
+												data-toggle="tooltip" data-placement="top" title="Delete Data Pipeline">
+												<mwc-icon class="mwc-icon-gray">delete</mwc-icon>
+											</a>&nbsp;
 											<a href=${this.pipelineWikiURL} target="_blank" class="btnIconTop btn btn-sm btn-secondary mr-1"
 												data-toggle="tooltip" data-placement="top" title="Click here for wiki help"  >
 												<mwc-icon class="mwc-icon-gray">help</mwc-icon>
@@ -576,9 +588,9 @@ export class PipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
                                 this.$validations.getValidationErrors('pipeline.pipelineName').map(error => {
                                   switch (error) {
                                     case 'isNotEmpty':
-																			return html`<div class="invalid-feedback d-block">Data Pipeline name is required.</div>`
+																			return html`<div class="invalid-feedback d-block">Data Pipeline Name is required</div>`
 																		case 'pattern':
-																			return html`<div class="invalid-feedback d-block">Data Pipeline name should contain between 6 to 30 char inlcudes only alphanumeric and '_'. It should start from alphabetic character.</div>`
+																			return html`<div class="invalid-feedback d-block">Data Pipeline Name should contain only 6-30 alphanumeric characters, may include “_” and should not begin with number</div>`
                                   }
                                 })
                               }
@@ -609,9 +621,9 @@ export class PipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
                                 this.$validations.getValidationErrors('pipeline.pipelineVersion').map(error => {
                                   switch (error) {
                                     case 'isNotEmpty':
-																			return html`<div class="invalid-feedback d-block">Data Pipeline version is required.</div>`
+																			return html`<div class="invalid-feedback d-block">Data Pipeline Version is required</div>`
 																		case 'pattern':
-																			return html`<div class="invalid-feedback d-block">Data Pipeline version should contain between 1 to 14 char includes only alphanumeric, '.' and '_'.</div>`
+																			return html`<div class="invalid-feedback d-block">Data Pipeline Version should contain only 1-14 numeric characters, may include “_” and "."</div>`
                                   }
                                 })
                               }

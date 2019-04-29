@@ -33,6 +33,7 @@ export class BaseComponent implements OnInit {
   public alertOpen: boolean;
   public userId: string;
   public loadHtml: boolean;
+  public showSpinner: boolean;
 
   constructor(public router: Router, public script: ScriptService, 
     public breadcrumbsService: BreadcrumbsService) {
@@ -61,13 +62,20 @@ export class BaseComponent implements OnInit {
       } else {
         this.sessionError = 'Acumos session details are unavailable in browser cookies. Pls login to Acumos portal and come back here..';
         this.alertOpen = true;
+        this.showSpinner = false;
       }
 
     }, (error) => {
       console.error('Unable to get the user session :' + error);
       this.sessionError = error;
       this.alertOpen = true;
+      this.showSpinner = false;
     });
+  }
+
+
+  public stopSpinner() {
+    this.showSpinner = false;
   }
 
 }

@@ -96,7 +96,7 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
     this.projectLists = [];
 
     this.requestUpdate().then(() => {
-      console.info('update componenturl : ' + this.componenturl);
+      this.onLoad();
       this.componenturl = (this.componenturl === undefined || this.componenturl === null) ? '' : this.componenturl;
       this.getConfig();
     })
@@ -448,6 +448,13 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
             projectName: projectName
           }
         }
+      })
+    );
+  }
+
+  onLoad() {
+    this.dispatchEvent(
+      new CustomEvent("on-load-event", {
       })
     );
   }

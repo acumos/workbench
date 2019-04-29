@@ -48,6 +48,13 @@ export class DashboardLitElement extends LitElement {
      return [style];
   }
 
+  onLoad() {
+    this.dispatchEvent(
+      new CustomEvent("on-load-event", {
+      })
+    );
+  }
+
   constructor() {
     super();
 
@@ -60,7 +67,7 @@ export class DashboardLitElement extends LitElement {
     this.view = '';
     
     this.requestUpdate().then(() => {
-      console.log('update componenturl : ' + this.componenturl);
+      this.onLoad();
       this.componenturl = (this.componenturl === undefined || this.componenturl === null)? '' : this.componenturl;
       this.parentMsg = (this.parentMsg === undefined || this.parentMsg === null)? '' : this.parentMsg;
       this.getConfig();
@@ -223,8 +230,12 @@ export class DashboardLitElement extends LitElement {
         "userName": this.userName,
         "reqBody" : {
           "request_body": {
-            "accessTypeCodes": ["OR", "PB"],
-            "active": true
+            "published": true,
+            "active": true,
+            "pageRequest": {
+              "page" : 1,
+              "size" : 1
+            }
           }
         }
 
@@ -258,9 +269,13 @@ export class DashboardLitElement extends LitElement {
         "userName": this.userName,
         "reqBody" : {
           "request_body": {
-            "accessTypeCodes": ["PR"],
+            "published": false,
             "active": true,
-            "userId": this.userId
+            "userId": this.userId,
+            "pageRequest": {
+              "page" : 1,
+              "size" : 1
+            }
           }
         }
 

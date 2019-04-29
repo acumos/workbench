@@ -27,7 +27,11 @@ var config = {
 		notebookCatalogComponent: "http://localhost:9087",
 		pipelineComponent: "http://localhost:9093",
 		pipelineCatalogComponent: "http://localhost:9091",
-		portalFEURL: "http://localhost:8085"
+		portalFEURL: "http://localhost:8085",
+		menuItems: [{title: 'Dashboard', icon: 'fa fa-tachometer-alt', link: '/pages/dashboard', home: true},
+					{title: 'Projects', icon: 'fa fa-project-diagram', link: '/pages/projects/catalog'}, 
+					{title: 'Notebooks', icon: 'fas fa-book-open', link: '/pages/notebook/catalog'},  
+					{title: 'AcuCompose', icon: 'fas fa-crop-alt', link: '/pages/acuCompose'}]
 	},
 	deploy : {
 		dashboardComponent : process.env.dashboardComponent,
@@ -38,6 +42,7 @@ var config = {
 		pipelineComponent : process.env.pipelineComponent,
 		pipelineCatalogComponent: process.env.pipelineCatalogComponent,
 		portalFEURL: process.env.portalFEURL,
+		menuItems: process.env.menuItems
 	}
 };
 

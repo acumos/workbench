@@ -18,14 +18,7 @@ limitations under the License.
 ===============LICENSE_END=========================================================
 -->
 
-<div *ngIf="alertOpen">
-     <div class="alertmessage alert alert-danger">
-          <a class="close" (click)="alertOpen=false">
-          <span aria-hidden="true">&nbsp;&times;</span>
-          </a>
-          {{sessionError}}
-     </div>
-</div>
+<ngx-base-component [alertOpen]="alertOpen" [showSpinner]="showSpinner" [sessionError]="sessionError"></ngx-base-component>
 
-<project-element *ngIf="loadHtml" attr.projectId="{{ id }}" [attr.componenturl]="url" (project-event)="this.OnViewProjectEvent($event)"
-[attr.userName]="userName" [attr.authToken]="authToken"> </project-element>
+<project-element *ngIf="loadHtml" attr.projectId="{{ id }}" [attr.componenturl]="url" (on-load-event)="this.stopSpinner()" 
+     (project-event)="this.OnViewProjectEvent($event)" [attr.userName]="userName" [attr.authToken]="authToken"> </project-element>

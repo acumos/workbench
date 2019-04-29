@@ -30,13 +30,13 @@ module.exports = function(app) {
 		projectWikiURL: properties.projectWikiURL,
 		notebookWikiURL: properties.notebookWikiURL,
 		pipelineWikiURL: properties.pipelineWikiURL
-	}
+	};
 	const ms_urls = {
 		projectmSURL : properties.projectmSURL,
 		notebookmSURL : properties.notebookmSURL,
 		pipelinemSURL : properties.pipelinemSURL
 	};
-
+	const pipelineFlag = properties.pipelineFlag;
 	var getUserName = function (req){
 		let userName = '';
 		if(req.cookies !== undefined && req.cookies.userDetail !== undefined && req.cookies.userDetail !== null) {
@@ -64,7 +64,8 @@ module.exports = function(app) {
 				msconfig : ms_urls,
 				userName:  userName,
 				authToken: authToken,
-				wikiConfig: wiki_urls
+				wikiConfig: wiki_urls,
+				pipelineFlag: pipelineFlag
 			};
 			res.send(res.configInfo);
 		} catch (err) {

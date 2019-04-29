@@ -54,6 +54,13 @@ export class NotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 			return [style];
 		}
 
+		onLoad() {
+			this.dispatchEvent(
+				new CustomEvent("on-load-event", {
+				})
+			);
+		}
+
 		constructor() {
 			super();
 
@@ -88,6 +95,7 @@ export class NotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 			this.isEdit = false; 
 			
 			this.requestUpdate().then(() => {
+				this.onLoad();
 				this.componenturl = (this.componenturl === undefined || this.componenturl === null) ? '' : this.componenturl;
 				this.getConfig();
 			})

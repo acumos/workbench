@@ -22,6 +22,30 @@
       "revId": "31bed1543864d45e6b9f139b33c1a89c6b945a23",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d81ef5d4_56af286b",
+        "filename": "project-webcomponent/api/src/properties.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2019-05-01T15:27:07Z",
+      "side": 1,
+      "message": "It is required. Uploaded the patch.",
+      "parentUuid": "071057fe_9ae645bd",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 14
+      },
+      "revId": "31bed1543864d45e6b9f139b33c1a89c6b945a23",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
     }
   ]
 }

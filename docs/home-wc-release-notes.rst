@@ -20,6 +20,11 @@
 ML Workbench Home Web Component
 ===============================================
 
+Version 1.0.3  3rd May 2019 
+=================================
+* Update Error messages (ACUMOS-2852)
+* Implement Dynamic sidebar in the workbench (ACUMOS-2851)
+
 Version 1.0.2  26th April 2019 
 =================================
 * ML Workbench UI - Develop ML Workbench master/shell application in Angular 7 framework (ACUMOS-2754)

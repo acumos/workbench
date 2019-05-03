@@ -20,6 +20,10 @@
 ML Workbench Dashboard Web Component
 ===============================================
 
+Version 1.0.3  3rd May 2019 
+=================================
+* Update Error messages (ACUMOS-2852)
+
 Version 1.0.2  26th April 2019 
 =================================
 * Commit Initial skeleton UI code to workbench Repo (ACUMOS-2615)

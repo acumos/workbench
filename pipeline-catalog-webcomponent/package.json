@@ -1,6 +1,6 @@
 {
   "name": "PipelineCatalogWebComponent",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "license": "Apache",
   "scripts": {
     "install:app": "cd component && npm install --prod",

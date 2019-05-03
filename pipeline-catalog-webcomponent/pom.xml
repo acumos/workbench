@@ -24,7 +24,7 @@ limitations under the License.
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.acumos.workbench</groupId>
 	<artifactId>pipeline-catalog-webcomponent</artifactId>
-	<version>1.0.2-SNAPSHOT</version>
+	<version>1.0.3-SNAPSHOT</version>
 	<name>Pipeline Catalog Web Component</name>
 	<description>Pipeline Catalog Web Component</description>
 	<packaging>pom</packaging>

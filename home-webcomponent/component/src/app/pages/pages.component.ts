@@ -36,7 +36,7 @@ export class PagesComponent implements OnInit{
   }
 
   ngOnInit() {
-    this.menu = this.script.getConfig('menuItems');
+    this.menu = JSON.parse(this.script.getConfig('menuItems'));
   }
 
 }

@@ -20,7 +20,7 @@
 ML Workbench Home Web Component
 ===============================================
 
-Version 1.0.3  3rd May 2019 
+Version 1.0.4  3rd May 2019 
 =================================
 * Update Error messages (ACUMOS-2852)
 * Implement Dynamic sidebar in the workbench (ACUMOS-2851)

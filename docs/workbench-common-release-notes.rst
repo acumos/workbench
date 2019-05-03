@@ -20,6 +20,14 @@
 Workbench Common Release Notes
 ================================
 
+Version 1.0.2, 2019-04-02
+---------------------------
+* ACUMOS-2850 : Moved Common Code viz., logging, ProjectService rest client, Exceptions
+
+Version 1.0.1, 2019-04-02
+---------------------------
+* ACUMOS-2789 : Common code for JWT Authentication for ML Workbench micro services
+
 Version 1.0.0, 2019-04-02
 ---------------------------
 * ACUMOS-2675 : Create Common Module for ML Workbench

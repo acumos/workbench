@@ -50,12 +50,14 @@ export class DashboardComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.loadHtml = false;
+    this.showSpinner = true;
+    this.alertOpen = false;
     this.retry = 0;
     this.getGlobalMsg();
   }
 
   getGlobalMsg() {
-    if(this.retry === 5 || this.globals.parentMsg !== undefined) {
+    if (this.retry === 5 || this.globals.parentMsg !== undefined) {
       this.parentMsg = this.globals.parentMsg;
       this.loadComponent('dashboardComponent', 'dashboard-element', this.breadCrumbs);
       return;

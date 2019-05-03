@@ -30,13 +30,13 @@ module.exports = function(app) {
 		projectWikiURL: properties.projectWikiURL,
 		notebookWikiURL: properties.notebookWikiURL,
 		pipelineWikiURL: properties.pipelineWikiURL
-	}
+	};
 	const ms_urls = {
 		projectmSURL : properties.projectmSURL,
 		notebookmSURL : properties.notebookmSURL,
 		pipelinemSURL : properties.pipelinemSURL
 	};
-
+	const pipelineFlag = properties.pipelineFlag;
 	var getUserName = function (req){
 		let userName = '';
 		if(req.cookies !== undefined && req.cookies.userDetail !== undefined && req.cookies.userDetail !== null) {
@@ -64,7 +64,8 @@ module.exports = function(app) {
 				msconfig : ms_urls,
 				userName:  userName,
 				authToken: authToken,
-				wikiConfig: wiki_urls
+				wikiConfig: wiki_urls,
+				pipelineFlag: pipelineFlag
 			};
 			res.send(res.configInfo);
 		} catch (err) {
@@ -166,6 +167,16 @@ module.exports = function(app) {
 			res.send(result);
 		});
 	});
+
+	app.delete('/api/project/deleteNotebook', function (req, res){
+		let serviceUrl = req.body.url + uripath;
+		let userName = req.body.userName;
+		let noteBookId = req.body.noteBookId;
+		let authToken = req.headers['auth'];
+		deleteNotebook(userName, serviceUrl, noteBookId, getLatestAuthToken(req, authToken)).then(function(result){
+			res.send(result);
+		});
+	});
 	
 	app.post('/api/project/createNotebook', function (req, res){
 		let serviceUrl = req.body.url + uripath;
@@ -253,6 +264,16 @@ module.exports = function(app) {
 		});
 	});
 	
+	app.delete('/api/pipeline/delete', function (req, res){
+		let serviceUrl = req.body.url + uripath;
+		let userName = req.body.userName;
+		let pipelineId = req.body.pipelineId;
+		let authToken = req.headers['auth'];
+		deletePipeline(userName, serviceUrl, pipelineId, getLatestAuthToken(req, authToken)).then(function(result){
+			res.send(result);
+		});
+	});
+
 	app.post('/api/project/createPipeline', function (req, res){
 		let serviceUrl = req.body.url + uripath;
 		let userName = req.body.userName;
@@ -309,9 +330,9 @@ module.exports = function(app) {
         request.get(options, function(error, response) {
 					if (!error && response.statusCode == 200) {
 						
-						resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Project details retrieved successfully."));
+						resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Project details retrieved successfully"));
 					} else if (!error) {
-						resolve(prepRespJsonAndLogit(response, response.body, "Unable to retrieve Project."));
+						resolve(prepRespJsonAndLogit(response, response.body, "Unable to retrieve Project"));
 					} else {
 						resolve(prepRespJsonAndLogit(null, null, null, error));
 					}
@@ -334,9 +355,9 @@ module.exports = function(app) {
 
             request.put(options, function(error, response) {
 				if (!error && response.statusCode == 200) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Project details updated successfully."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Project details updated successfully"));
 				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to update Project."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to update Project"));
 				} else {
 					resolve(prepRespJsonAndLogit(null, null, null, error));
 				}
@@ -356,9 +377,9 @@ module.exports = function(app) {
 			};
 			request.put(options, function(error, response, body) {
 				if (!error && response.statusCode == 200) {
-					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Project archived successfully."));
+					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Project archived successfully"));
 				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to archive Project."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to archive Project"));
 				} else {
 					resolve(prepRespJsonAndLogit(null, null, null, error));
 				}
@@ -378,9 +399,9 @@ module.exports = function(app) {
 			};
 			request.put(options, function(error, response, body) {
 				if (!error && response.statusCode == 200) {
-					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Project unarchived successfully."));
+					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Project unarchived successfully"));
 				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to unarchive Project."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to unarchive Project"));
 				} else {
 					resolve(prepRespJsonAndLogit(null, null, null, error));
 				}
@@ -400,9 +421,9 @@ module.exports = function(app) {
 			};
 			request.delete(options, function(error, response, body) {
 				if (!error && response.statusCode == 200) {
-					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Project Deleted successfully."));
+					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Project Deleted successfully"));
 				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to delete Project."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to delete Project"));
 				} else {
 					resolve(prepRespJsonAndLogit(null, null, null, error));
 				}
@@ -423,9 +444,9 @@ module.exports = function(app) {
 			
         request.get(options, function(error, response) {
 					if (!error && response.statusCode == 200) {						
-						resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Notebooks for the project retrieved successfully."));
+						resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Notebooks for the project retrieved successfully"));
 					} else if (!error) {
-						resolve(prepRespJsonAndLogit(response, response.body, "Unable to retrieve Notebooks."));
+						resolve(prepRespJsonAndLogit(response, response.body, "Unable to retrieve Notebooks"));
 					} else {
 						resolve(prepRespJsonAndLogit(null, null, null, error));
 					}
@@ -448,9 +469,9 @@ module.exports = function(app) {
 				
 		request.post(options, function(error, response, body) {
 				if (!error && response.statusCode == 201) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Notebook created successfully."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Notebook created successfully"));
 				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to create Notebook."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to create Notebook"));
 				} else {
 					resolve(prepRespJsonAndLogit(null, null, null, error));
 				}
@@ -473,9 +494,9 @@ module.exports = function(app) {
 
             request.put(options, function(error, response) {
 				if (!error && response.statusCode == 200) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Notebook associated successfully."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Notebook associated successfully"));
 				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to associate Notebook."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to associate Notebook"));
 				} else {
 					resolve(prepRespJsonAndLogit(null, null, null, error));
 				}
@@ -495,9 +516,9 @@ module.exports = function(app) {
 			};
 			request.put(options, function(error, response, body) {
 				if (!error && response.statusCode == 200) {
-					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Notebook archived successfully."));
+					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Notebook archived successfully"));
 				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to archive Notebook."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to archive Notebook"));
 				} else {
 					resolve(prepRespJsonAndLogit(null, null, null, error));
 				}
@@ -517,9 +538,9 @@ module.exports = function(app) {
 			};
 			request.put(options, function(error, response, body) {
 				if (!error && response.statusCode == 200) {
-					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Notebook unarchived successfully."));
+					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Notebook unarchived successfully"));
 				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to unarchive Notebook."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to unarchive Notebook"));
 				} else {
 					resolve(prepRespJsonAndLogit(null, null, null, error));
 				}
@@ -527,6 +548,28 @@ module.exports = function(app) {
 		});
 	};
 
+	var deleteNotebook = function(userName, srvcUrl, noteBookId, authToken){
+		return new Promise(function(resolve, reject) {
+			var options = {
+				method : "DELETE",
+				url : srvcUrl + userName + "/notebooks/" + noteBookId,
+				headers : {
+					'Content-Type' : 'application/json',
+					'Authorization' : authToken,
+				},
+			};
+			request.delete(options, function(error, response, body) {
+				if (!error && response.statusCode == 200) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Notebook Deleted successfully"));
+				} else if (!error) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to delete Notebook"));
+				} else {
+					resolve(prepRespJsonAndLogit(null, null, null, error));
+				}
+			});
+		});
+	};
+	
 	var getNotebooksList = function(userName, url, authToken) {
 		return new Promise(function(resolve, reject) {
 			var options = {
@@ -540,9 +583,9 @@ module.exports = function(app) {
 
 			request.get(options, function(error, response) {
 				if (!error && response.statusCode == 200) {
-					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Notebooks retrieved successfully."));
+					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Notebooks retrieved successfully"));
 				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to retrieve Notebooks."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to retrieve Notebooks"));
 				} else {
 					resolve(prepRespJsonAndLogit(null, null, null, error));
 				}
@@ -563,9 +606,9 @@ module.exports = function(app) {
 
 			request.get(options, function(error, response) {
 				if (!error && response.statusCode == 200) {
-					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Notebook launched successfully."));
+					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Notebook launched successfully"));
 				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to launch Notebook."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to launch Notebook"));
 				} else {
 					resolve(prepRespJsonAndLogit(null, null, null, error));
 				}
@@ -588,9 +631,9 @@ module.exports = function(app) {
 	
 	    request.put(options, function(error, response) {
 					if (!error && response.statusCode == 200) {
-						resolve(prepRespJsonAndLogit(response, response.body, "Notebook details updated successfully."));
+						resolve(prepRespJsonAndLogit(response, response.body, "Notebook details updated successfully"));
 					} else if (!error) {
-						resolve(prepRespJsonAndLogit(response, response.body, "Unable to update Notebook."));
+						resolve(prepRespJsonAndLogit(response, response.body, "Unable to update Notebook"));
 					} else {
 						resolve(prepRespJsonAndLogit(null, null, null, error));
 					}
@@ -611,9 +654,9 @@ module.exports = function(app) {
 		
 			request.get(options, function(error, response) {
 				if (!error && response.statusCode == 200) {						
-					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Data Pipelines for the project retrieved successfully."));
+					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Data Pipelines for the project retrieved successfully"));
 				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to retrieve Data Pipelines."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to retrieve Data Pipelines"));
 				} else {
 					resolve(prepRespJsonAndLogit(null, null, null, error));
 				}
@@ -636,9 +679,9 @@ module.exports = function(app) {
 				
 		request.post(options, function(error, response, body) {
 				if (!error && response.statusCode == 201) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Data Pipeline created successfully."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Data Pipeline created successfully"));
 				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to create Data Pipeline."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to create Data Pipeline"));
 				} else {
 					resolve(prepRespJsonAndLogit(null, null, null, error));
 				}
@@ -661,9 +704,9 @@ module.exports = function(app) {
 
 					request.put(options, function(error, response) {
 			if (!error && response.statusCode == 200) {
-				resolve(prepRespJsonAndLogit(response, response.body, "Data Pipeline associated successfully."));
+				resolve(prepRespJsonAndLogit(response, response.body, "Data Pipeline associated successfully"));
 			} else if (!error) {
-				resolve(prepRespJsonAndLogit(response, response.body, "Unable to associate Data Pipeline."));
+				resolve(prepRespJsonAndLogit(response, response.body, "Unable to associate Data Pipeline"));
 			} else {
 				resolve(prepRespJsonAndLogit(null, null, null, error));
 			}
@@ -683,9 +726,9 @@ module.exports = function(app) {
 			};
 			request.put(options, function(error, response, body) {
 				if (!error && response.statusCode == 200) {
-					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Data Pipeline archived successfully."));
+					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Data Pipeline archived successfully"));
 				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to archive Data Pipeline."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to archive Data Pipeline"));
 				} else {
 					resolve(prepRespJsonAndLogit(null, null, null, error));
 				}
@@ -705,9 +748,32 @@ module.exports = function(app) {
 			};
 			request.put(options, function(error, response, body) {
 				if (!error && response.statusCode == 200) {
-					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Data Pipeline unarchived successfully."));
+					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Data Pipeline unarchived successfully"));
 				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to unarchive Data Pipeline."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to unarchive Data Pipeline"));
+				} else {
+					resolve(prepRespJsonAndLogit(null, null, null, error));
+				}
+			});
+		});
+	};
+	
+	var deletePipeline = function(userName, srvcUrl, pipelineId, authToken){
+		return new Promise(function(resolve, reject) {
+			var options = {
+				method : "DELETE",
+				url : srvcUrl + userName + "/pipelines/" + pipelineId,
+				headers : {
+					'Content-Type' : 'application/json',
+					'Authorization' : authToken,
+				},
+			};
+			request.delete(options, function(error, response, body) {
+				console.log(response.body);
+				if (!error && response.statusCode == 200) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Data Pipeline Deleted successfully"));
+				} else if (!error) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to delete Data Pipeline"));
 				} else {
 					resolve(prepRespJsonAndLogit(null, null, null, error));
 				}
@@ -728,9 +794,9 @@ module.exports = function(app) {
 	
 			request.get(options, function(error, response) {
 				if (!error && response.statusCode == 200) {
-					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Data Pipelines retrieved successfully."));
+					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Data Pipelines retrieved successfully"));
 				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to retrieve Data Pipelines."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to retrieve Data Pipelines"));
 				} else {
 					resolve(prepRespJsonAndLogit(null, null, null, error));
 				}
@@ -750,9 +816,9 @@ module.exports = function(app) {
 			};
 			request.get(options, function(error, response) {
 				if (!error && response.statusCode == 200) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Data Pipeline launched successfully."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Data Pipeline launched successfully"));
 				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to launch Data Pipeline."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to launch Data Pipeline"));
 				} else {
 					resolve(prepRespJsonAndLogit(null, null, null, error));
 				}
@@ -775,9 +841,9 @@ module.exports = function(app) {
 
 			request.put(options, function(error, response) {
 				if (!error && response.statusCode == 200) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Data Pipeline details updated successfully."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Data Pipeline details updated successfully"));
 				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to update Data Pipeline."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to update Data Pipeline"));
 				} else {
 					resolve(prepRespJsonAndLogit(null, null, null, error));
 				}

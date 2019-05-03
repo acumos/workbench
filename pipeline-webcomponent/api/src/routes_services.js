@@ -142,9 +142,9 @@ module.exports = function(app) {
 			request.get(options, function(error, response) {
 				if (!error && response.statusCode == 200) {
 					
-					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Data Pipeline details retrieved successfully."));
+					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Data Pipeline details retrieved successfully"));
 				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to retrieve Data Pipeline."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to retrieve Data Pipeline"));
 				} else {
 					resolve(prepRespJsonAndLogit(null, null, null, error));
 				}
@@ -167,9 +167,9 @@ module.exports = function(app) {
 
 			request.put(options, function(error, response) {
 				if (!error && response.statusCode == 200) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Data Pipeline details updated successfully."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Data Pipeline details updated successfully"));
 				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to update Data Pipeline."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to update Data Pipeline"));
 				} else {
 					resolve(prepRespJsonAndLogit(null, null, null, error));
 				}
@@ -189,9 +189,9 @@ module.exports = function(app) {
 			};
 			request.put(options, function(error, response, body) {
 				if (!error && response.statusCode == 200) {
-					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Data Pipeline archived successfully."));
+					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Data Pipeline archived successfully"));
 				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to archive Data Pipeline."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to archive Data Pipeline"));
 				} else {
 					resolve(prepRespJsonAndLogit(null, null, null, error));
 				}
@@ -211,9 +211,9 @@ module.exports = function(app) {
 			};
 			request.put(options, function(error, response, body) {
 				if (!error && response.statusCode == 200) {
-					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Data Pipeline restored successfully."));
+					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Data Pipeline restored successfully"));
 				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to restore Data Pipeline."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to restore Data Pipeline"));
 				} else {
 					resolve(prepRespJsonAndLogit(null, null, null, error));
 				}
@@ -233,9 +233,9 @@ module.exports = function(app) {
 			};
 			request.delete(options, function(error, response, body) {
 				if (!error && response.statusCode == 200) {
-					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Data Pipeline Deleted successfully."));
+					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Data Pipeline Deleted successfully"));
 				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to delete Data Pipeline."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to delete Data Pipeline"));
 				} else {
 					resolve(prepRespJsonAndLogit(null, null, null, error));
 				}
@@ -255,9 +255,9 @@ module.exports = function(app) {
 			};
 			request.get(options, function(error, response) {
 				if (!error && response.statusCode == 200) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Data Pipeline launched successfully."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Data Pipeline launched successfully"));
 				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to launch Data Pipeline."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to launch Data Pipeline"));
 				} else {
 					resolve(prepRespJsonAndLogit(null, null, null, error));
 				}

@@ -455,6 +455,39 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
     });
   }
 
+	deleteNotebook() {
+    const url = this.componenturl + '/api/project/deleteNotebook';
+    this.resetMessage();
+	  fetch(url, {
+		  method: 'DELETE',
+      mode: 'cors',
+      cache: 'default',
+      headers: {
+          "Content-Type": "application/json",
+          "auth": this.authToken,
+      },
+      body: JSON.stringify({
+        "url": this.notebookmSURL,
+        "noteBookId" : this.selectedNotebookId,
+        "userName": this.userName      		  
+      })
+    }).then(res => res.json())
+      .then((n) => {
+        if(n.status === 'Success'){
+          this.successMessage = n.message;
+          this.getNotebookDetailsForProject();
+        } else {
+          this.errorMessage = n.message;
+        }
+        this.alertOpen = true;
+        this.isOpenDeleteDialog = false;
+    }).catch((error) => {
+      console.error('Request failed', error);
+      this.errorMessage = 'Notebook delete request failed with error: '+ error;
+      this.alertOpen = true;
+    });
+  }
+
 	getNotebookList(){
     const url = this.componenturl + '/api/notebooks';
 	  fetch(url, {
@@ -834,9 +867,9 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
                   this.$validations.getValidationErrors('newNotebook.noteBookId.name').map(error => {
                     switch (error) {
                       case 'isNotEmpty':
-                        return html`<div class="invalid-feedback d-block">Notebook name is required</div>`
+                        return html`<div class="invalid-feedback d-block">Notebook Name is required</div>`
                       case 'pattern':
-                        return html`<div class="invalid-feedback d-block">Notebook name should contain between 6 to 30 char inlcudes only alphanumeric and '_'. It should start from alphabetic character. </div>`
+                        return html`<div class="invalid-feedback d-block">Notebook Name should contain only 6-30 alphanumeric characters, may include “_” and should not begin with number</div>`
                     }
                   })
                 }
@@ -856,9 +889,9 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
                   this.$validations.getValidationErrors('newNotebook.noteBookId.versionId.label').map(error => {
                     switch (error) {
                       case 'isNotEmpty':
-                        return html`<div class="invalid-feedback d-block">Notebook version is required</div>`
+                        return html`<div class="invalid-feedback d-block">Notebook Version is required</div>`
                       case 'pattern':
-                        return html`<div class="invalid-feedback d-block">Notebook version should contain between 1 to 14 char includes only alphanumeric, '.' and '_'. </div>`
+                        return html`<div class="invalid-feedback d-block">Notebook Version should contain only 1-14 numeric characters, may include “_” and "."</div>`
                     }
                   })
                 }
@@ -968,7 +1001,7 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 											this.$validations.getValidationErrors('linkNotebook.noteBookId.name').map(error => {
 												switch (error) {
 													case 'isNotEmpty':
-														return html`<div class="invalid-feedback d-block">Please select Notebook from dropdown.</div>`
+														return html`<div class="invalid-feedback d-block">Please select Notebook from dropdown</div>`
 
 												}
 											})
@@ -1018,9 +1051,9 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
                   this.$validations.getValidationErrors('editNotebook.noteBookId.name').map(error => {
                     switch (error) {
                       case 'isNotEmpty':
-                        return html`<div class="invalid-feedback d-block">Notebook name is required</div>`
+                        return html`<div class="invalid-feedback d-block">Notebook Name is required</div>`
                       case 'pattern':
-                        return html`<div class="invalid-feedback d-block">Notebook name should contain between 6 to 30 char inlcudes only alphanumeric and '_'. It should start from alphabetic character. </div>`
+                        return html`<div class="invalid-feedback d-block">Notebook Name should contain only 6-30 alphanumeric characters, may include “_” and should not begin with number</div>`
                     }
                   })
                 }
@@ -1040,9 +1073,9 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
                   this.$validations.getValidationErrors('editNotebook.noteBookId.versionId.label').map(error => {
                     switch (error) {
                       case 'isNotEmpty':
-                        return html`<div class="invalid-feedback d-block">Notebook version is required</div>`
+                        return html`<div class="invalid-feedback d-block">Notebook Version is required</div>`
                       case 'pattern':
-                        return html`<div class="invalid-feedback d-block">Notebook version should contain between 1 to 14 char includes only alphanumeric, '.' and '_'. </div>`
+                        return html`<div class="invalid-feedback d-block">Notebook Version should contain only 1-14 numeric characters, may include “_” and "."</div>`
                     }
                   })
                 }
@@ -1202,6 +1235,10 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 															<a href="javascript:void" @click="${e => this.openRestoreDialog(item.noteBookId, item.name)}"
 																class="btnIcon btn btn-sm btn-secondary my-1 mr-1" data-toggle="tooltip" data-placement="top" title="Unarchive Notebook">
 																<mwc-icon class="mwc-icon-secondary">restore_from_trash</mwc-icon>
+															</a>&nbsp;
+															<a href="javascript:void" @click="${e => this.openDeleteDialog(item.noteBookId, item.name)}"
+																class="btnIcon btn btn-sm btn-secondary my-1 mr-1" data-toggle="tooltip" data-placement="top" title="Delete Notebook">
+																<mwc-icon class="mwc-icon-secondary">delete</mwc-icon>
 															</a>
 														`}
 													</td>

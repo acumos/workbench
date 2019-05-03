@@ -22,7 +22,7 @@ import { Component } from '@angular/core';
   selector: 'ngx-footer',
   styleUrls: ['./footer.component.scss'],
   template: `
-    <span class="created-by">© 2019 AT&T Intellectual Property & Tech Mahindra-  ML Workbench.</span>
+    <span class="created-by">© 2019 AT&T Intellectual Property & Tech Mahindra-  ML Workbench</span>
   `,
 })
 export class FooterComponent {}

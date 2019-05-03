@@ -141,9 +141,9 @@ module.exports = function(app) {
 			
         request.get(options, function(error, response) {
 					if (!error && response.statusCode == 200) {
-						resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Notebook details retrieved successfully."));
+						resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Notebook details retrieved successfully"));
 					} else if (!error) {
-						resolve(prepRespJsonAndLogit(response, response.body, "Unable to retrieve Notebook."));
+						resolve(prepRespJsonAndLogit(response, response.body, "Unable to retrieve Notebook"));
 					} else {
 						resolve(prepRespJsonAndLogit(null, null, null, error));
 					}
@@ -163,9 +163,9 @@ module.exports = function(app) {
 				};
 				request.get(options, function(error, response) {
 					if (!error && response.statusCode == 200) {
-						resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Notebook launched successfully."));
+						resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Notebook launched successfully"));
 					} else if (!error) {
-						resolve(prepRespJsonAndLogit(response, response.body, "Unable to launch Notebook."));
+						resolve(prepRespJsonAndLogit(response, response.body, "Unable to launch Notebook"));
 					} else {
 						resolve(prepRespJsonAndLogit(null, null, null, error));
 					}
@@ -188,9 +188,9 @@ module.exports = function(app) {
 
         request.put(options, function(error, response) {
 					if (!error && response.statusCode == 200) {
-						resolve(prepRespJsonAndLogit(response, response.body, "Notebook details updated successfully."));
+						resolve(prepRespJsonAndLogit(response, response.body, "Notebook details updated successfully"));
 					} else if (!error) {
-						resolve(prepRespJsonAndLogit(response, response.body, "Unable to update Notebook."));
+						resolve(prepRespJsonAndLogit(response, response.body, "Unable to update Notebook"));
 					} else {
 						resolve(prepRespJsonAndLogit(null, null, null, error));
 					}
@@ -210,9 +210,9 @@ module.exports = function(app) {
 			};
 			request.put(options, function(error, response, body) {
 				if (!error && response.statusCode == 200) {
-					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Notebook archived successfully."));
+					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Notebook archived successfully"));
 				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to archive Notebook."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to archive Notebook"));
 				} else {
 					resolve(prepRespJsonAndLogit(null, null, null, error));
 				}
@@ -232,9 +232,9 @@ module.exports = function(app) {
 			};
 			request.put(options, function(error, response, body) {
 				if (!error && response.statusCode == 200) {
-					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Notebook unarchived successfully."));
+					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Notebook unarchived successfully"));
 				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to unarchive Notebook."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to unarchive Notebook"));
 				} else {
 					resolve(prepRespJsonAndLogit(null, null, null, error));
 				}
@@ -254,9 +254,9 @@ module.exports = function(app) {
 			};
 			request.delete(options, function(error, response, body) {
 				if (!error && response.statusCode == 200) {
-					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Notebook Deleted successfully."));
+					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Notebook Deleted successfully"));
 				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to delete Notebook."));
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to delete Notebook"));
 				} else {
 					resolve(prepRespJsonAndLogit(null, null, null, error));
 				}

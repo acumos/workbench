@@ -24,7 +24,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.acumos.workbench</groupId>
   <artifactId>workbench-common</artifactId>
-  <version>1.0.1-SNAPSHOT</version>
+  <version>1.0.2-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>workbench-common</name>
   
@@ -77,6 +77,12 @@
 		<artifactId>springfox-bean-validators</artifactId>
 		<version>2.9.2</version>
 	</dependency>
+	<!-- https://mvnrepository.com/artifact/org.springframework/spring-web -->
+	<dependency>
+	    <groupId>org.springframework</groupId>
+	    <artifactId>spring-webmvc</artifactId>
+	    <version>5.1.5.RELEASE</version>
+	</dependency>
 	
 	<!-- Setup Spring security -->
 	<dependency>
@@ -96,6 +102,7 @@
 	    <version>2.5</version>
 	    <scope>provided</scope>
 	</dependency>
+	
   </dependencies>
   
 

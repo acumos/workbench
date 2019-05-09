@@ -26,6 +26,6 @@ limitations under the License.
 	<artifactId>dashboard-webcomponent</artifactId>
 	<name>Dashboard Web Component</name>
 	<description>Dashboard Web Component</description>
-	<version>1.0.3-SNAPSHOT</version>
+	<version>1.0.5-SNAPSHOT</version>
 	<packaging>pom</packaging>
 </project>

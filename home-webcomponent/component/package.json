@@ -69,7 +69,8 @@
     "zone.js": "^0.8.26",
     "sass-google-fonts": "^1.0.1",
     "sass-web-fonts": "^2.1.0",
-    "@fortawesome/fontawesome-free": "^5.8.1"
+    "@fortawesome/fontawesome-free": "^5.8.1",
+    "@webcomponents/webcomponentsjs": "2.2.7"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "0.10.2",

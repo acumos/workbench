@@ -40,7 +40,8 @@ export class DashboardLitElement extends LitElement {
       portalBEUrl: {type: String},
       userId: {type: String},
       myModelsUrl: {type: String},
-      parentMsg: {type: String}
+      parentMsg: {type: String},
+      pipelineFlag: { type: String }
     };
   }
 
@@ -96,10 +97,10 @@ export class DashboardLitElement extends LitElement {
         this.msconfig = envVar.msconfig;
         let username = envVar.userName;
         let token = envVar.authToken;
-        let id= envVar.userId;
+        let id = envVar.userId;
         this.portalFEUrl = envVar.portalFEUrl;
         this.portalBEUrl = envVar.portalBEUrl;
-        
+        this.pipelineFlag = envVar.pipelineFlag;
         if(this.userName && this.userName !== '' && this.authToken && this.authToken !== '' && this.userId && this.userId !== '') {
           this.view = 'view';   
           this.getProjectsCount();
@@ -318,13 +319,10 @@ export class DashboardLitElement extends LitElement {
     return html`
       <style>
         @import url("https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css");
-        .alertmessage {
-          display: ${this.alertOpen ? "block" : "none"};
-        }
       </style>
       ${this.view === 'error'
         ? html`
-          <div class="alertmessage alert alert-danger">
+          <div class="alert alert-danger ${this.alertOpen ? 'show' : 'hide'}">
             <a class="close" @click=${e => this.alertOpen = false}>
                 <span aria-hidden="true">&nbsp;&times;</span>
             </a>
@@ -395,7 +393,7 @@ export class DashboardLitElement extends LitElement {
                       </a>
                     </div>
                   </div>
-                  ${false
+                  ${this.pipelineFlag === "true"
                     ?html`
                     <div class="col-md-3">
                       <div class="card-shadow card card-link mb-3 mb-5 bg-white">

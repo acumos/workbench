@@ -422,11 +422,11 @@ export class NotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
     	return html` 
 				<style> 
 					@import url('https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css');
-					.alertmessage {
-						display: ${this.alertOpen ? "block" : "none"};
+					.hide {
+						display: none;
 					}
-					.card-show {
-						display: ${this.cardShow ? "block" : "none"};
+					.show {
+						display: block;
 					}
 				</style>
 				<omni-dialog title="Archive ${this.notebookName}" close-string="Archive Notebook" dismiss-string="Cancel"
@@ -454,7 +454,7 @@ export class NotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 						<div class="col-lg-12">
 							${this.successMessage !== ''
 								? html`
-									<div class="alertmessage alert alert-success">
+									<div class="alert alert-success ${this.alertOpen ? 'show' : 'hide'}">
 										<a  class="close" @click=${e => this.alertOpen=false}>
 											<span aria-hidden="true">&nbsp;&times;</span>
 										</a>
@@ -465,7 +465,7 @@ export class NotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 							}
 							${this.errorMessage !== ''
 								? html`
-									<div class="alertmessage alert alert-danger">
+									<div class="alert alert-danger ${this.alertOpen ? 'show' : 'hide'}">
 										<a class="close" @click=${e => this.alertOpen=false}>
 												<span aria-hidden="true">&nbsp;&times;</span>
 										</a>
@@ -571,7 +571,7 @@ export class NotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 										</div>
 									</div>
 								</div>
-								<div class="card-body card-show">
+								<div class="card-body ${this.cardShow ? 'show' : 'hide'}">
 									<table class="table table-bordered table-sm">
 										<tbody>
 											<tr>
@@ -591,7 +591,7 @@ export class NotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
                                     case 'isNotEmpty':
 																			return html`<div class="invalid-feedback d-block">Notebook Name is required</div>`
 																		case 'pattern':
-																			return html`<div class="invalid-feedback d-block">Notebook Name should contain only 6-30 alphanumeric characters, may include “_” and should not begin with number</div>`
+																			return html`<div class="invalid-feedback d-block">Notebook Name should contain only 6-30 alphanumeric characters, may include "_" and should not begin with number</div>`
                                   }
                                 })
                               }
@@ -624,7 +624,7 @@ export class NotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
                                     case 'isNotEmpty':
 																			return html`<div class="invalid-feedback d-block">Notebook Version is required</div>`
 																		case 'pattern':
-																			return html`<div class="invalid-feedback d-block">Notebook Version should contain only 1-14 numeric characters, may include “_” and "."</div>`
+																			return html`<div class="invalid-feedback d-block">Notebook Version should contain only 1-14 numeric characters, may include "_" and "."</div>`
                                   }
                                 })
                               }
@@ -685,7 +685,7 @@ export class NotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 		
 			${this.view === 'error'
       	? html`
-					<div class="alertmessage alert alert-danger">
+					<div class="alert alert-danger ${this.alertOpen ? 'show' : 'hide'}">
 						<a class="close" @click=${e => this.alertOpen=false}>
 								<span aria-hidden="true">&nbsp;&times;</span>
 						</a>

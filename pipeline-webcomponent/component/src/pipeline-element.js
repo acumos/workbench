@@ -70,11 +70,7 @@ export class PipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
             pipelineName: { 
 							isNotEmpty: Forms.validators.isNotEmpty,
               pattern: Forms.validators.pattern('^[a-zA-Z][a-zA-Z0-9_]{5,29}$')
-						},
-            pipelineVersion: { 
-							isNotEmpty: Forms.validators.isNotEmpty,
-							pattern: Forms.validators.pattern('^[a-zA-Z0-9_.]{1,14}$')
-						},
+						}
           }
         }
 			})
@@ -590,7 +586,7 @@ export class PipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
                                     case 'isNotEmpty':
 																			return html`<div class="invalid-feedback d-block">Data Pipeline Name is required</div>`
 																		case 'pattern':
-																			return html`<div class="invalid-feedback d-block">Data Pipeline Name should contain only 6-30 alphanumeric characters, may include “_” and should not begin with number</div>`
+																			return html`<div class="invalid-feedback d-block">Data Pipeline Name should contain only 6-30 alphanumeric characters, may include "_" and should not begin with number</div>`
                                   }
                                 })
                               }
@@ -607,32 +603,7 @@ export class PipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
 											</tr>
 											<tr>
 												<td class="highlight">Data Pipeline Version</td>
-												${this.isEdit 
-													? html`
-														<td>
-                              <input type="text" value=${this.data.pipeline.pipelineVersion} class="form-control" id="version" 
-                                placeholder="Enter Data Pipeline version"
-                                @keyup=${(e) => {
-                                  this.$data.set('pipeline.pipelineVersion', e);
-                                  this.$validations.validate('pipeline.pipelineVersion');
-                                }}
-                              >
-                              ${
-                                this.$validations.getValidationErrors('pipeline.pipelineVersion').map(error => {
-                                  switch (error) {
-                                    case 'isNotEmpty':
-																			return html`<div class="invalid-feedback d-block">Data Pipeline Version is required</div>`
-																		case 'pattern':
-																			return html`<div class="invalid-feedback d-block">Data Pipeline Version should contain only 1-14 numeric characters, may include “_” and "."</div>`
-                                  }
-                                })
-                              }
-                            </td>
-													`
-													: html`
-														<td>${this.data.pipeline.pipelineVersion}</td>
-													`
-												}
+												<td>${this.data.pipeline.pipelineVersion}</td>
 											</tr>
 											<tr>
 												<td class="highlight">Data Pipeline Status</td>

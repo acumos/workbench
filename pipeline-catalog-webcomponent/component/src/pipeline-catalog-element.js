@@ -80,12 +80,6 @@ export class PipelineCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
             name: {
               isNotEmpty: Forms.validators.isNotEmpty,
               pattern: Forms.validators.pattern('^[a-zA-Z][a-zA-Z0-9_]{5,29}$')
-            },
-            versionId : {
-              label: {
-                isNotEmpty: Forms.validators.isNotEmpty,
-                pattern: Forms.validators.pattern('^[a-zA-Z0-9_.]{1,14}$')
-              }
             }
           }
         }
@@ -113,10 +107,7 @@ export class PipelineCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
       createErrorMessage : "",
       newPipeline:{
         pipelineId : {    
-          name : "",    
-          versionId : {         
-            label : ""    
-          }  
+          name : ""
         },  
         description : ""
       }
@@ -124,7 +115,6 @@ export class PipelineCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
     this.$data.snapshot('newPipeline');
     this.$data.set('createErrorMessage', '');
     this.$data.set('newPipeline.pipelineId.name', '');
-    this.$data.set('newPipeline.pipelineId.versionId.label', '');
     this.$data.set('newPipeline.description', '');
   }
 
@@ -588,30 +578,7 @@ export class PipelineCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
                       case 'isNotEmpty':
                         return html`<div class="invalid-feedback d-block">Data Pipeline Name is required</div>`
                       case 'pattern':
-                        return html`<div class="invalid-feedback d-block">Data Pipeline Name should contain only 6-30 alphanumeric characters, may include “_” and should not begin with number</div>`
-                    }
-                  })
-                }
-              </div>
-            </div>
-            <div class="col">
-              <div class="form-group">
-                <label>Data Pipeline Version <small class="text-danger">*</small></label>
-                <input type="text" class="form-control" placeholder="Enter Data Pipeline Version" 
-                  .value="${this.data.newPipeline.pipelineId.versionId.label}"
-                  @keyup="${ e => {
-                      this.$data.set('newPipeline.pipelineId.versionId.label', e);
-                      this.$validations.validate('newPipeline.pipelineId.versionId.label');
-                    }
-                  }"
-                />
-                ${
-                  this.$validations.getValidationErrors('newPipeline.pipelineId.versionId.label').map(error => {
-                    switch (error) {
-                      case 'isNotEmpty':
-                        return html`<div class="invalid-feedback d-block">Data Pipeline Version is required</div>`
-                      case 'pattern':
-                        return html`<div class="invalid-feedback d-block">Data Pipeline Version should contain only 1-14 numeric characters, may include “_” and "."</div>`
+                        return html`<div class="invalid-feedback d-block">Data Pipeline Name should contain only 6-30 alphanumeric characters, may include "_" and should not begin with number</div>`
                     }
                   })
                 }

@@ -79,12 +79,6 @@ class ProjectPipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
 					name: {
 						isNotEmpty: Forms.validators.isNotEmpty,
 						pattern: Forms.validators.pattern('^[a-zA-Z][a-zA-Z0-9_]{5,29}$')
-					},
-					versionId : {
-						label: {
-						isNotEmpty: Forms.validators.isNotEmpty,
-						pattern: Forms.validators.pattern('^[a-zA-Z0-9_.]{1,14}$')
-						}
 					}
 				}
 			},
@@ -100,12 +94,6 @@ class ProjectPipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
 					name: {
 						isNotEmpty: Forms.validators.isNotEmpty,
 						pattern: Forms.validators.pattern('^[a-zA-Z][a-zA-Z0-9_]{5,29}$')
-					},
-					versionId : {
-						label: {
-						isNotEmpty: Forms.validators.isNotEmpty,
-						pattern: Forms.validators.pattern('^[a-zA-Z0-9_.]{1,14}$')
-						}
 					}
 				}
 			}
@@ -130,11 +118,7 @@ class ProjectPipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
       editErrorMessage : "",
       newPipeline:{
         pipelineId : {    
-          name : "",    
-          versionId : {      
-            comment : "",      
-            label : ""    
-          }  
+          name : ""
         },
         description : ""
 			},
@@ -168,7 +152,6 @@ class ProjectPipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
 		this.$data.set('associateErrorMessage', '');
 		this.$data.set('editErrorMessage', '');
 		this.$data.set('newPipeline.pipelineId.name', '');
-		this.$data.set('newPipeline.pipelineId.versionId.label', '');
 		this.$data.set('newPipeline.description', '');
 		this.$data.set('linkPipeline.pipelineId.name', '');
 		this.$data.set('linkPipeline.pipelineId.versionId.label', '');
@@ -281,21 +264,6 @@ class ProjectPipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
       this.pipelinesList.push(tempPipeline);
     });
     this.displayPipelines();
-	}
-	
-	createUpdateFormData(){
-		let pipeline = {};
-		pipeline.pipelineId = {};
-		pipeline.artifactStatus = {};
-		pipeline.pipelineId.versionId = {};
-		pipeline.pipelineId.uuid = this.pipelineId;
-		pipeline.pipelineId.name = this.Name;
-		pipeline.description = this.description;
-		pipeline.pipelineId.versionId.timeStamp = this.createdTimestamp ;
-		pipeline.pipelineId.versionId.label = this.version;
-		pipeline.artifactStatus.status = this.status;
-		pipeline.pipelineType = this.pipelineType;
-		return pipeline;
 	}
 	
 	createPipeline(){
@@ -849,29 +817,7 @@ class ProjectPipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
                       case 'isNotEmpty':
                         return html`<div class="invalid-feedback d-block">Data Pipeline Name is required</div>`
                       case 'pattern':
-                        return html`<div class="invalid-feedback d-block">Data Pipeline Name should contain only 6-30 alphanumeric characters, may include “_” and should not begin with number</div>`
-                    }
-                  })
-                }
-              </div>
-            </div>
-            <div class="col">
-              <div class="form-group">
-                <label>Data Pipeline Version <small class="text-danger">*</small></label>
-                <input type="text" class="form-control" placeholder="Enter Data Pipeline Version" .value="${this.data.newPipeline.pipelineId.versionId.label}"
-                  @keyup="${ e => {
-                      this.$data.set('newPipeline.pipelineId.versionId.label', e);
-                      this.$validations.validate('newPipeline.pipelineId.versionId.label');
-                    }
-                  }"
-                />
-                ${
-                  this.$validations.getValidationErrors('newPipeline.pipelineId.versionId.label').map(error => {
-                    switch (error) {
-                      case 'isNotEmpty':
-                        return html`<div class="invalid-feedback d-block">Data Pipeline Version is required</div>`
-                      case 'pattern':
-                        return html`<div class="invalid-feedback d-block">Data Pipeline Version should contain only 1-14 numeric characters, may include “_” and "."</div>`
+                        return html`<div class="invalid-feedback d-block">Data Pipeline Name should contain only 6-30 alphanumeric characters, may include "_" and should not begin with number</div>`
                     }
                   })
                 }
@@ -963,34 +909,18 @@ class ProjectPipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
                       case 'isNotEmpty':
                         return html`<div class="invalid-feedback d-block">Data Pipeline Name is required</div>`
                       case 'pattern':
-                        return html`<div class="invalid-feedback d-block">Data Pipeline Name should contain only 6-30 alphanumeric characters, may include “_” and should not begin with number</div>`
+                        return html`<div class="invalid-feedback d-block">Data Pipeline Name should contain only 6-30 alphanumeric characters, may include "_" and should not begin with number</div>`
                     }
                   })
                 }
               </div>
-            </div>
-            <div class="col">
+						</div>
+						<div class="col">
               <div class="form-group">
-                <label>Data Pipeline Version <small class="text-danger">*</small></label>
-                <input type="text" class="form-control" placeholder="Enter Data Pipeline Version" .value="${this.data.editPipeline.pipelineId.versionId.label}"
-                  @keyup="${ e => {
-                      this.$data.set('editPipeline.pipelineId.versionId.label', e);
-                      this.$validations.validate('editPipeline.pipelineId.versionId.label');
-                    }
-                  }"
-                />
-                ${
-                  this.$validations.getValidationErrors('editPipeline.pipelineId.versionId.label').map(error => {
-                    switch (error) {
-                      case 'isNotEmpty':
-                        return html`<div class="invalid-feedback d-block">Data Pipeline Version is required</div>`
-                      case 'pattern':
-                        return html`<div class="invalid-feedback d-block">Data Pipeline Version should contain only 1-14 numeric characters, may include “_” and "."</div>`
-                    }
-                  })
-                }
-              </div>
-            </div>
+                <label>Data Pipeline Version</label>
+								<input type="text" class="form-control" placeholder="Enter Data Pipeline Version" .value="${this.data.editPipeline.pipelineId.versionId.label}" disabled />
+							</div>
+						</div>
 					</div>
 					<br/>
           <div class="row">

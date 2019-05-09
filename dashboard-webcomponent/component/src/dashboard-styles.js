@@ -21,81 +21,81 @@ limitations under the License.
 import {css} from 'lit-element/lit-element.js';
 export const style = css`
   #divid {
-    border: thin solid darkblue;
-    padding: 25px;
-    border-radius: 5px;
+    border: thin solid darkblue !important;
+    padding: 25px !important;
+    border-radius: 5px !important;
   }
 
   .btn-primary {
-    background-color: #591887;
-    border-color: transparent;
+    background-color: #591887 !important;
+    border-color: transparent !important;
   }
 
   .btn-outline-primary {
-    color: #591887;
-    border-color: #591887;
+    color: #591887 !important;
+    border-color: #591887 !important;
   }
 
   label {
-    color: #4b4b4b;
+    color: #4b4b4b !important;
   }
 
   .div-color {
-    color: #591887;
+    color: #591887 !important;
   }
 
   .btnIcon {
-    padding: 0.1rem 0.1rem;
-    font-size: 0.075rem;
-    line-height: 0.1;
-    border-radius: 1.5rem;
-    height: 40px;
-    width: 40px;
+    padding: 0.1rem 0.1rem !important;
+    font-size: 0.075rem !important;
+    line-height: 0.1 !important;
+    border-radius: 1.5rem !important;
+    height: 40px !important;
+    width: 40px !important;
   }
   
   .mwc-icon {
-    color: white;
+    color: white !important;
   }
 
   .card-text {
-    color: black;
+    color: black !important;
   }
 
   .card-shadow {
-    transition: box-shadow 0.3s;
-    border-radius: 0px;
+    transition: box-shadow 0.3s !important;
+    border-radius: 0px !important;
   }
   
   .card-shadow:hover {
-    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.15);
-    transform: scale(1.02);
-    transition: all 0.2s ease-in-out;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.15) !important;
+    transform: scale(1.02) !important;
+    transition: all 0.2s ease-in-out !important;
   }
   
   .card.card-link a {
-    color: inherit;
-    text-decoration: none;
+    color: inherit !important;
+    text-decoration: none !important;
   }
   
   .card-button {
-    display: inline-flex;  
+    display: inline-flex !important;  
     line-height : 1.0 
   }
   
   .alertmessage {
 	  background-color: white !important;
-	  color: #dc3545;
-	  border-color: #dc3545;
-	  border: 1px solid; 
+	  color: #dc3545 !important;
+	  border-color: #dc3545 !important;
+	  border: 1px solid !important; 
 	}
 	
 	.alert-success{
-	  color: #28a745 ;
-	  border-color: #28a745;
+	  color: #28a745  !important;
+	  border-color: #28a745 !important;
   }
   
   .span-message {
-    position: absolute;
-    margin-top: 5px;
+    position: absolute !important;
+    margin-top: 5px !important;
   }
 `;

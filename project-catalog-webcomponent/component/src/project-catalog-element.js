@@ -562,7 +562,7 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
                       case 'isNotEmpty':
                         return html`<div class="invalid-feedback d-block">Project Name is required</div>`
                       case 'pattern':
-                        return html`<div class="invalid-feedback d-block">Project Name should contain only 6-30 alphanumeric characters, may include “_” and should not begin with number</div>`
+                        return html`<div class="invalid-feedback d-block">Project Name should contain only 6-30 alphanumeric characters, may include "_" and should not begin with number</div>`
                     }
                   })
                 }
@@ -585,7 +585,7 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
                       case 'isNotEmpty':
                         return html`<div class="invalid-feedback d-block">Project Version is required</div>`
                       case 'pattern':
-                        return html`<div class="invalid-feedback d-block">Project Version should contain only 1-14 numeric characters, may include “_” and "."</div>`
+                        return html`<div class="invalid-feedback d-block">Project Version should contain only 1-14 numeric characters, may include "_" and "."</div>`
                     }
                   })
                 }

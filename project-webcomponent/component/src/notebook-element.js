@@ -295,21 +295,6 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
     this.displayNotebooks();
 	}
 	
-	createUpdateFormData(){
-		let notebook = {};
-		notebook.noteBookId = {};
-		notebook.artifactStatus = {};
-		notebook.noteBookId.versionId = {};
-		notebook.noteBookId.uuid = this.noteBookId;
-		notebook.noteBookId.name = this.Name;
-		notebook.description = this.description;
-		notebook.noteBookId.versionId.timeStamp = this.createdTimestamp ;
-		notebook.noteBookId.versionId.label = this.version;
-		notebook.artifactStatus.status = this.status;
-		notebook.notebookType = this.notebookType;
-		return notebook;
-	}
-	
 	createNotebook(){
 		const url = this.componenturl + '/api/project/createNotebook';
     this.resetMessage();
@@ -869,7 +854,7 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
                       case 'isNotEmpty':
                         return html`<div class="invalid-feedback d-block">Notebook Name is required</div>`
                       case 'pattern':
-                        return html`<div class="invalid-feedback d-block">Notebook Name should contain only 6-30 alphanumeric characters, may include “_” and should not begin with number</div>`
+                        return html`<div class="invalid-feedback d-block">Notebook Name should contain only 6-30 alphanumeric characters, may include "_" and should not begin with number</div>`
                     }
                   })
                 }
@@ -891,7 +876,7 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
                       case 'isNotEmpty':
                         return html`<div class="invalid-feedback d-block">Notebook Version is required</div>`
                       case 'pattern':
-                        return html`<div class="invalid-feedback d-block">Notebook Version should contain only 1-14 numeric characters, may include “_” and "."</div>`
+                        return html`<div class="invalid-feedback d-block">Notebook Version should contain only 1-14 numeric characters, may include "_" and "."</div>`
                     }
                   })
                 }
@@ -1053,7 +1038,7 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
                       case 'isNotEmpty':
                         return html`<div class="invalid-feedback d-block">Notebook Name is required</div>`
                       case 'pattern':
-                        return html`<div class="invalid-feedback d-block">Notebook Name should contain only 6-30 alphanumeric characters, may include “_” and should not begin with number</div>`
+                        return html`<div class="invalid-feedback d-block">Notebook Name should contain only 6-30 alphanumeric characters, may include "_" and should not begin with number</div>`
                     }
                   })
                 }
@@ -1075,7 +1060,7 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
                       case 'isNotEmpty':
                         return html`<div class="invalid-feedback d-block">Notebook Version is required</div>`
                       case 'pattern':
-                        return html`<div class="invalid-feedback d-block">Notebook Version should contain only 1-14 numeric characters, may include “_” and "."</div>`
+                        return html`<div class="invalid-feedback d-block">Notebook Version should contain only 1-14 numeric characters, may include "_" and "."</div>`
                     }
                   })
                 }

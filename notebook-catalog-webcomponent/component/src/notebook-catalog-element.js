@@ -591,7 +591,7 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
                       case 'isNotEmpty':
                         return html`<div class="invalid-feedback d-block">Notebook Name is required</div>`
                       case 'pattern':
-                        return html`<div class="invalid-feedback d-block">Notebook Name should contain only 6-30 alphanumeric characters, may include “_” and should not begin with number</div>`
+                        return html`<div class="invalid-feedback d-block">Notebook Name should contain only 6-30 alphanumeric characters, may include "_" and should not begin with number</div>`
                     }
                   })
                 }
@@ -614,7 +614,7 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
                       case 'isNotEmpty':
                         return html`<div class="invalid-feedback d-block">Notebook Version is required</div>`
                       case 'pattern':
-                        return html`<div class="invalid-feedback d-block">Notebook Version should contain only 1-14 numeric characters, may include “_” and "."</div>`
+                        return html`<div class="invalid-feedback d-block">Notebook Version should contain only 1-14 numeric characters, may include "_" and "."</div>`
                     }
                   })
                 }

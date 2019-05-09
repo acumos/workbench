@@ -390,11 +390,11 @@ export class ProjectLitElement extends DataMixin(ValidationMixin(BaseElementMixi
       return html`         
         <style> 
           @import url('https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css');
-          .alertmessage {
-            display: ${this.alertOpen ? "block" : "none"};
+          .hide {
+            display: none;
           }
-          .card-show {
-            display: ${this.cardShow ? "block" : "none"};
+          .show {
+            display: block;
           }
         </style>
         <omni-dialog title="Archive ${this.projectName}" close-string="Archive Project" dismiss-string="Cancel"
@@ -421,7 +421,7 @@ export class ProjectLitElement extends DataMixin(ValidationMixin(BaseElementMixi
             <div class="col-lg-12">
               ${this.successMessage !== ''
                 ? html`
-                  <div class="alertmessage alert alert-success">
+                  <div class="alert alert-success ${this.alertOpen ? 'show' : 'hide'}">
                     <a  class="close" @click=${e => this.alertOpen = false}>
                       <span aria-hidden="true">&nbsp;&times;</span>
                     </a>
@@ -432,7 +432,7 @@ export class ProjectLitElement extends DataMixin(ValidationMixin(BaseElementMixi
               }
               ${this.errorMessage !== ''
                 ? html`
-                  <div class="alertmessage alert alert-danger">
+                  <div class="alert alert-danger ${this.alertOpen ? 'show' : 'hide'}">
                     <a class="close" @click=${e => this.alertOpen = false}>
                       <span aria-hidden="true">&nbsp;&times;</span>
                     </a>
@@ -534,7 +534,7 @@ export class ProjectLitElement extends DataMixin(ValidationMixin(BaseElementMixi
                     </div>
                   </div>
                 </div>
-                <div class="card-body card-show">
+                <div class="card-body ${this.cardShow ? 'show' : 'hide'}">
                   <table class="table table-bordered table-sm">
                     <tbody>
                       <tr>
@@ -554,7 +554,7 @@ export class ProjectLitElement extends DataMixin(ValidationMixin(BaseElementMixi
                                     case 'isNotEmpty':
                                       return html`<div class="invalid-feedback d-block">Project Name is required</div>`
                                     case 'pattern':
-																			return html`<div class="invalid-feedback d-block">Project Name should contain only 6-30 alphanumeric characters, may include “_” and should not begin with number</div>`
+																			return html`<div class="invalid-feedback d-block">Project Name should contain only 6-30 alphanumeric characters, may include "_" and should not begin with number</div>`
                                   }
                                 })
                               }
@@ -587,7 +587,7 @@ export class ProjectLitElement extends DataMixin(ValidationMixin(BaseElementMixi
                                     case 'isNotEmpty':
                                       return html`<div class="invalid-feedback d-block">Project Version is required</div>`
                                     case 'pattern':
-																			return html`<div class="invalid-feedback d-block">Project Version should contain only 1-14 numeric characters, may include “_” and "."</div>`
+																			return html`<div class="invalid-feedback d-block">Project Version should contain only 1-14 numeric characters, may include "_" and "."</div>`
                                   }
                                 })
                               }
@@ -659,7 +659,7 @@ export class ProjectLitElement extends DataMixin(ValidationMixin(BaseElementMixi
   
       ${this.view === 'error'
         ? html`
-          <div class="alertmessage alert alert-danger">
+          <div class="alert alert-danger ${this.alertOpen ? 'show' : 'hide'}">
             <a class="close" @click=${e => this.alertOpen = false}>
                 <span aria-hidden="true">&nbsp;&times;</span>
             </a>

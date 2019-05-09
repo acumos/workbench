@@ -21,154 +21,154 @@ limitations under the License.
 import {css} from 'lit-element/lit-element.js';
 export const style = css`
 #divid { 
-    border: thin solid darkblue;
-    padding: 25px; 
-    border-radius: 5px;
+    border: thin solid darkblue !important;
+    padding: 25px !important; 
+    border-radius: 5px !important;
 }
 
 .btn-primary {
-    background-color: #671C9D;
-    border-color: transparent;
-    height: 36px;
-    border-radius: 0px;
+    background-color: #671C9D !important;
+    border-color: transparent !important;
+    height: 36px !important;
+    border-radius: 0px !important;
 }
   
 .btn-primary:hover {
-    background-color: #4e147a;
+    background-color: #4e147a !important;
 }
 
 .btn-primary:disabled {
-    background-color: #a7a7a7;
-    border-color: #E0E0E0;
+    background-color: #a7a7a7 !important;
+    border-color: #E0E0E0 !important;
 }
 
 .btn-outline-primary {
-    color: #671C9D;
-    border-color: #671C9D;
-    border-radius: 0px;
-    height: 36px;
+    color: #671C9D !important;
+    border-color: #671C9D !important;
+    border-radius: 0px !important;
+    height: 36px !important;
 }
   
 .btn-outline-primary:hover {
-    background-color: #4e147a;
+    background-color: #4e147a !important;
 }
   
 .btn-secondary {
-    color: gray;
-    border-color: gray;
-    background-color: white;
-    border-radius: 0px;
+    color: gray !important;
+    border-color: gray !important;
+    background-color: white !important;
+    border-radius: 0px !important;
 }
 
 label {
- color: #4b4b4b;
+ color: #4b4b4b !important;
 } 
 
 .highlight {
-background-color: #f1f1f1;
-font-weight: bold;
-width: 300px;
+background-color: #f1f1f1 !important;
+font-weight: bold !important;
+width: 300px !important;
 }
 
 .table-sm td, .table-sm th {
-padding-left: 15px;
+padding-left: 15px !important;
 }
 
 .table-sm td, .table-sm th {
-    padding: 0.5rem;
+    padding: 0.5rem !important;
 }
 
 .btnIcon {
-    padding: 0.1rem 0.1rem;
-    font-size: .075rem;
-    line-height: 0.1;
-    height: 30px;
-    width: 30px;
-    border-radius: 0px;
+    padding: 0.1rem 0.1rem !important;
+    font-size: .075rem !important;
+    line-height: 0.1 !important;
+    height: 30px !important;
+    width: 30px !important;
+    border-radius: 0px !important;
 }
 
 .btnIconTop {
-    padding: 0.1rem 0.1rem;
-    font-size: .075rem;
-    line-height: 0.1;
-    height: 36px;
-    width: 36px;
-    border-radius: 0px;
+    padding: 0.1rem 0.1rem !important;
+    font-size: .075rem !important;
+    line-height: 0.1 !important;
+    height: 36px !important;
+    width: 36px !important;
+    border-radius: 0px !important;
 }
 
 a.disabled {
-pointer-events: none;
-cursor: default;					
+pointer-events: none !important;
+cursor: default !important;					
 }
 
 .card {
-    border-radius: 0px;
+    border-radius: 0px !important;
 }
 
 .card-header {
-background-color: white;
-padding-bottom: 0rem;
+background-color: white !important;
+padding-bottom: 0rem !important;
 }
 
 .textColor {
-color: #671C9D;
+color: #671C9D !important;
 }
 
 .mwc-icon-gray{
-color: black;
-padding-top: 3px;
+color: black !important;
+padding-top: 3px !important;
 }
 
 .active-status {
-color: green
+color: green !important;
 }
 
 .inactive-status {
-color: red
+color: red !important;
 }
 
 .toggle-a {
-    width: 25px;
-    heigth: 25px;
-    color: white;
-    background-color:lightgray;
-    border-color: transparent;
-    margin: 0px;
-    padding: 0px;
+    width: 25px !important;
+    heigth: 25px !important;
+    color: white !important;
+    background-color:lightgray !important;
+    border-color: transparent !important;
+    margin: 0px !important;
+    padding: 0px !important;
 }
 
 .toggle-span {
-    font-size: 42px;
-    line-height: 0.1px;
-    padding-top: 7px;
-    height: 20px;
-    display: block;
-    padding-left: 5px;
-    width: 14px;
-    color: white;
+    font-size: 42px !important;
+    line-height: 0.1px !important;
+    padding-top: 7px !important;
+    height: 20px !important;
+    display: block !important;
+    padding-left: 5px !important;
+    width: 14px !important;
+    color: white !important;
 }
 
 .toggle-plus-span {
-    font-weight: bold;
-    font-size: 25px;
-    padding-top: 8px;
+    font-weight: bold !important;
+    font-size: 25px !important;
+    padding-top: 8px !important;
 }
 
 .alertmessage {
-  background-color: white !important;
-  color: #dc3545;
-  border-color: #dc3545;
-  border: 1px solid; 
-  padding: .35rem 1.00rem;
+  background-color: white !important !important;
+  color: #dc3545 !important;
+  border-color: #dc3545 !important;
+  border: 1px solid !important; 
+  padding: .35rem 1.00rem !important;
 }
 
 .alert-success{
-  color: #28a745 ;
-  border-color: #28a745;
+  color: #28a745  !important;
+  border-color: #28a745 !important;
 }
 
 .span-message {
-    position: absolute;
-    margin-top: 5px;
+    position: absolute !important;
+    margin-top: 5px !important;
 }
 `;

@@ -318,13 +318,10 @@ export class DashboardLitElement extends LitElement {
     return html`
       <style>
         @import url("https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css");
-        .alertmessage {
-          display: ${this.alertOpen ? "block" : "none"};
-        }
       </style>
       ${this.view === 'error'
         ? html`
-          <div class="alertmessage alert alert-danger">
+          <div class="alert alert-danger ${this.alertOpen ? 'show' : 'hide'}">
             <a class="close" @click=${e => this.alertOpen = false}>
                 <span aria-hidden="true">&nbsp;&times;</span>
             </a>

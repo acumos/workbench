@@ -21,7 +21,7 @@ limitations under the License.
 var config = {
 	local : {
 		ENVIRONMENT : "dev",
-		pipelinemSURL : "http://localhost:9081/mlWorkbench/v1/pipeline",
+		pipelinemSURL : "http://localhost:9090/mlWorkbench/v1/pipeline",
 		pipelineWikiURL : "https://wiki.acumos.org/display/TRAIN",
 	},
 	deploy : {

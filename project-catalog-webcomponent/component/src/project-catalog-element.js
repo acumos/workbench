@@ -513,12 +513,11 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
     return html`
       <style>
         @import url("https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css");
-        .alertmessage {
-          display: ${this.alertOpen ? "block" : "none"};
+        .hide {
+          display: none;
         }
-
-        .card-show {
-          display: ${this.cardShow ? "block" : "none"};
+        .show {
+          display: block;
         }
       </style>
       <omni-dialog title="Archive ${this.selectedProjectName}" close-string="Archive Project" dismiss-string="Cancel"
@@ -562,7 +561,7 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
                       case 'isNotEmpty':
                         return html`<div class="invalid-feedback d-block">Project Name is required</div>`
                       case 'pattern':
-                        return html`<div class="invalid-feedback d-block">Project Name should contain only 6-30 alphanumeric characters, may include “_” and should not begin with number</div>`
+                        return html`<div class="invalid-feedback d-block">Project Name should contain only 6-30 alphanumeric characters, may include "_" and should not begin with number</div>`
                     }
                   })
                 }
@@ -585,7 +584,7 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
                       case 'isNotEmpty':
                         return html`<div class="invalid-feedback d-block">Project Version is required</div>`
                       case 'pattern':
-                        return html`<div class="invalid-feedback d-block">Project Version should contain only 1-14 numeric characters, may include “_” and "."</div>`
+                        return html`<div class="invalid-feedback d-block">Project Version should contain only 1-14 numeric characters, may include "_" and "."</div>`
                     }
                   })
                 }
@@ -613,7 +612,7 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
                   <div class="col-lg-12">
                     ${this.successMessage !== ''
                       ? html`
-                        <div class="alertmessage alert alert-success">
+                        <div class="alert alert-success ${this.alertOpen ? 'show' : 'hide'}">
                           <a  class="close" @click=${e => this.alertOpen = false}>
                             <span aria-hidden="true">&nbsp;&times;</span>
                           </a>
@@ -624,7 +623,7 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
                     }
                     ${this.errorMessage !== ''
                       ? html`
-                        <div class="alertmessage alert alert-danger">
+                        <div class="alert alert-danger ${this.alertOpen ? 'show' : 'hide'}">
                           <a class="close" @click=${e => this.alertOpen = false}>
                               <span aria-hidden="true">&nbsp;&times;</span>
                           </a>
@@ -816,7 +815,7 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
               <div class="col-lg-12">
                 ${this.successMessage !== ''
                   ? html`
-                    <div class="alertmessage alert alert-success">
+                    <div class="alert alert-success ${this.alertOpen ? 'show' : 'hide'}">
                       <a class="close" @click=${e => this.alertOpen = false}>
                         <span aria-hidden="true">&nbsp;&times;</span>
                       </a><mwc-icon>done_outline</mwc-icon>&nbsp;&nbsp;<span class="span-message">${this.successMessage}</span>
@@ -825,7 +824,7 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
                 }
                 ${this.errorMessage !== ''
                   ? html`
-                    <div class="alertmessage alert alert-danger">
+                    <div class="alert alert-danger ${this.alertOpen ? 'show' : 'hide'}">
                       <a class="close" @click=${e => this.alertOpen = false}>
                           <span aria-hidden="true">&nbsp;&times;</span>
                       </a>  <mwc-icon>error</mwc-icon>&nbsp;&nbsp;<span class="span-message">${this.errorMessage}</span>
@@ -872,7 +871,7 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
                       </div>
                     </div>
                   </div>
-                  <div class="card-body card-show">
+                  <div class="card-body ${this.cardShow ? 'show' : 'hide'}">
                     <div class="row" style="margin:10px 0;margin-bottom:20px;">
                       <h7>No Projects, get started with ML Workbench by creating your first project.</h7>
                     </div>
@@ -893,7 +892,7 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
           
       ${this.view === 'error'
         ? html`
-          <div class="alertmessage alert alert-danger">
+          <div class="alert alert-danger ${this.alertOpen ? 'show' : 'hide'}">
             <a class="close" @click=${e => this.alertOpen = false}>
                 <span aria-hidden="true">&nbsp;&times;</span>
             </a>

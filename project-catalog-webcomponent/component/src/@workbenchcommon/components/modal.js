@@ -121,64 +121,67 @@ export class OmniModal extends LitElement {
         href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
       />
       <style>
+        .display-none {
+          display: none !important;
+        }
         .modal {
-          display: ${this.isOpen ? "block" : "none"};
-          border-radius: 0px;
+          display: block !important;
+          border-radius: 0px !important;
         }
         .isOpen {
-          display: ${this.isOpen ? "block" : "none"};
-          opacity: 0.4;
+          display: block !important;
+          opacity: 0.4 !important;
         }
         .variant {
           background-color: ${this.getVariant(this.variant)} !important;
         }
 
         .modal-header {
-          border-radius: 0px;
+          border-radius: 0px !important;
         }
         
         .modal-content {
-          border-radius: 0px;
+          border-radius: 0px !important;
         }
 
         .modal-footer {
-          background-color: #f1f1f1
+          background-color: #f1f1f1 !important;
         }
 
         .btn {
-          border-radius: 0px;
+          border-radius: 0px !important;
         }
         
         .btn-secondary {
-          border-color: #E0E0E0;
-          height: 36px;
+          border-color: #E0E0E0 !important;
+          height: 36px !important;
         }
 
         .btn-primary {
-          background-color: #671C9D;
-          border-color: transparent;
-          height: 36px;
-          border-radius: 0px;
-          color:white;
+          background-color: #671C9D !important;
+          border-color: transparent !important;
+          height: 36px !important;
+          border-radius: 0px !important;
+          color:white !important;
         }
 
         .btn-primary.disabled {
-          background-color: #a7a7a7;
-          border-color: #E0E0E0;
+          background-color: #a7a7a7 !important;
+          border-color: #E0E0E0 !important;
         }
 
         .btn-primary.disabled:hover {
-          background-color: #a7a7a7;
-          border-color: #E0E0E0;
+          background-color: #a7a7a7 !important;
+          border-color: #E0E0E0 !important;
         }
 
         .btn-primary:hover {
-          background-color: #4e147a;
+          background-color: #4e147a !important;
         }
 
       </style>
-      <div class="modal-backdrop isOpen"></div>
-      <div class="modal">
+      <div class="modal-backdrop ${this.isOpen ? 'isOpen' : 'display-none'}"></div>
+      <div class="${this.isOpen ? 'modal' : 'display-none'}">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header variant">

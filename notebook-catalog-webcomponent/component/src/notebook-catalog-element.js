@@ -541,11 +541,11 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
     return html`
       <style>
         @import url("https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css");
-        .alertmessage {
-          display: ${this.alertOpen ? "block" : "none"};
+        .hide {
+          display: none;
         }
-        .card-show {
-          display: ${this.cardShow ? "block" : "none"};
+        .show {
+          display: block;
         }
       </style>
       <omni-dialog title="Archive ${this.selectedNotebookName}" 
@@ -591,7 +591,7 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
                       case 'isNotEmpty':
                         return html`<div class="invalid-feedback d-block">Notebook Name is required</div>`
                       case 'pattern':
-                        return html`<div class="invalid-feedback d-block">Notebook Name should contain only 6-30 alphanumeric characters, may include “_” and should not begin with number</div>`
+                        return html`<div class="invalid-feedback d-block">Notebook Name should contain only 6-30 alphanumeric characters, may include "_" and should not begin with number</div>`
                     }
                   })
                 }
@@ -614,7 +614,7 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
                       case 'isNotEmpty':
                         return html`<div class="invalid-feedback d-block">Notebook Version is required</div>`
                       case 'pattern':
-                        return html`<div class="invalid-feedback d-block">Notebook Version should contain only 1-14 numeric characters, may include “_” and "."</div>`
+                        return html`<div class="invalid-feedback d-block">Notebook Version should contain only 1-14 numeric characters, may include "_" and "."</div>`
                     }
                   })
                 }
@@ -651,7 +651,7 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
                 <div class="col-lg-12">
                   ${this.successMessage !== ''
                     ? html`
-                      <div class="alertmessage alert alert-success">
+                      <div class="alert alert-success ${this.alertOpen ? 'show' : 'hide'}">
                         <a  class="close" @click=${e => this.alertOpen=false}>
                           <span aria-hidden="true">&nbsp;&times;</span>
                         </a>
@@ -662,7 +662,7 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
                   }
                   ${this.errorMessage !== ''
                     ? html`
-                      <div class="alertmessage alert alert-danger">
+                      <div class="alert alert-danger ${this.alertOpen ? 'show' : 'hide'}">
                         <a class="close" @click=${e => this.alertOpen=false}>
                             <span aria-hidden="true">&nbsp;&times;</span>
                         </a>
@@ -867,7 +867,7 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
               <div class="col-lg-12">
                 ${this.successMessage !== ''
                   ? html`
-                    <div class="alertmessage alert alert-success">
+                    <div class="alert alert-success ${this.alertOpen ? 'show' : 'hide'}">
                       <a class="close" @click=${e => this.alertOpen = false}>
                         <span aria-hidden="true">&nbsp;&times;</span>
                       </a> <mwc-icon>done_outline</mwc-icon>&nbsp;&nbsp;<span class="span-message">${this.successMessage}</span>
@@ -876,7 +876,7 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
                 }
                 ${this.errorMessage !== ''
                   ? html`
-                    <div class="alertmessage alert alert-danger">
+                    <div class="alert alert-danger ${this.alertOpen ? 'show' : 'hide'}">
                       <a class="close" @click=${e => this.alertOpen = false}>
                           <span aria-hidden="true">&nbsp;&times;</span>
                       </a>  <mwc-icon>error</mwc-icon>&nbsp;&nbsp;<span class="span-message">${this.errorMessage}</span>
@@ -923,7 +923,7 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
                       </div>
                     </div>
                   </div>
-                  <div class="card-body card-show">
+                  <div class="card-body ${this.cardShow ? 'show' : 'hide'}">
                     <div class="row" style="margin:10px 0;margin-bottom:20px;">
                       <h7>No Notebooks, get started with ML Workbench by creating your first Notebook.</h7>
                     </div>
@@ -944,7 +944,7 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
 
       ${this.view === 'error'
         ? html`
-          <div class="alertmessage alert alert-danger">
+          <div class="alert alert-danger ${this.alertOpen ? 'show' : 'hide'}">
             <a class="close" @click=${e => this.alertOpen = false}>
                 <span aria-hidden="true">&nbsp;&times;</span>
             </a>

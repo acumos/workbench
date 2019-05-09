@@ -36,6 +36,7 @@ module.exports = function(app) {
 		notebookmSURL : properties.notebookmSURL
 	};
 	
+	const pipelineFlag = properties.pipelineFlag;
 	var getUserName = function (req){
 		let userName = '';
 		
@@ -68,7 +69,8 @@ module.exports = function(app) {
 				authToken: authToken,
 				portalFEUrl: portalFEUrl,
 				portalBEUrl: portalBEUrl,
-				userId : userId
+				userId : userId,
+				pipelineFlag: pipelineFlag
 			};
 			res.send(res.configInfo);
 		} catch (err) {

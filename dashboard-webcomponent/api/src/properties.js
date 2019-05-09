@@ -26,6 +26,7 @@ var config = {
 		pipelinemSURL : "http://localhost:9090/mlWorkbench/v1/pipeline",
 		portalFEURL : "http://localhost:8085",
 		portalBEURL : "http://localhost:8083",
+		pipelineFlag : "false"
 	},
 	deploy : {
 		ENVIRONMENT : process.env.ENVIRONMENT,
@@ -34,6 +35,7 @@ var config = {
 		pipelinemSURL : process.env.pipelinemSURL,
 		portalFEURL : process.env.portalFEURL,
 		portalBEURL : process.env.portalBEURL,
+		pipelineFlag : process.env.pipelineFlag
 	}
 };
 

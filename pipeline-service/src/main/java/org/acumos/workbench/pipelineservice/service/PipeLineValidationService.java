@@ -20,11 +20,11 @@
 
 package org.acumos.workbench.pipelineservice.service;
 
+import org.acumos.workbench.common.exception.ArchivedException;
+import org.acumos.workbench.common.exception.NotProjectOwnerException;
+import org.acumos.workbench.common.exception.ProjectNotFoundException;
+import org.acumos.workbench.common.exception.ValueNotFoundException;
 import org.acumos.workbench.common.vo.Pipeline;
-import org.acumos.workbench.pipelineservice.exception.ArchivedException;
-import org.acumos.workbench.pipelineservice.exception.NotProjectOwnerException;
-import org.acumos.workbench.pipelineservice.exception.ProjectNotFoundException;
-import org.acumos.workbench.pipelineservice.exception.ValueNotFoundException;
 
 public interface PipeLineValidationService {
 

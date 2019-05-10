@@ -23,13 +23,13 @@ package org.acumos.workbench.projectservice.service;
 import java.util.List;
 
 import org.acumos.cds.domain.MLPUser;
+import org.acumos.workbench.common.exception.ArchivedException;
+import org.acumos.workbench.common.exception.NotOwnerException;
+import org.acumos.workbench.common.exception.ProjectNotFoundException;
+import org.acumos.workbench.common.exception.UserNotFoundException;
 import org.acumos.workbench.common.vo.Project;
 import org.acumos.workbench.common.vo.ServiceState;
-import org.acumos.workbench.projectservice.exception.ArchivedException;
 import org.acumos.workbench.projectservice.exception.DuplicateProjectException;
-import org.acumos.workbench.projectservice.exception.NotOwnerException;
-import org.acumos.workbench.projectservice.exception.ProjectNotFoundException;
-import org.acumos.workbench.projectservice.exception.UserNotFoundException;
 
 public interface ProjectService {
 

@@ -22,14 +22,15 @@ package org.acumos.workbench.pipelineservice.service;
 
 import java.lang.invoke.MethodHandles;
 
+import org.acumos.workbench.common.exception.ArchivedException;
+import org.acumos.workbench.common.exception.NotProjectOwnerException;
+import org.acumos.workbench.common.exception.ProjectNotFoundException;
+import org.acumos.workbench.common.exception.ValueNotFoundException;
+import org.acumos.workbench.common.service.ProjectServiceRestClientImpl;
 import org.acumos.workbench.common.util.ArtifactStatus;
 import org.acumos.workbench.common.util.ServiceStatus;
 import org.acumos.workbench.common.vo.Pipeline;
 import org.acumos.workbench.common.vo.Project;
-import org.acumos.workbench.pipelineservice.exception.ArchivedException;
-import org.acumos.workbench.pipelineservice.exception.NotProjectOwnerException;
-import org.acumos.workbench.pipelineservice.exception.ProjectNotFoundException;
-import org.acumos.workbench.pipelineservice.exception.ValueNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +48,6 @@ public class PipeLineValidationServiceImpl implements PipeLineValidationService 
 	private InputValidationService inputValidationServiceImpl;
 	
 	@Autowired
-	@Qualifier("ProjectServiceRestClientImpl")
 	private ProjectServiceRestClientImpl psClient;
 	
 

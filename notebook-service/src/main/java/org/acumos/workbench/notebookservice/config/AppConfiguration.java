@@ -21,6 +21,8 @@
 package org.acumos.workbench.notebookservice.config;
 
 import org.acumos.cds.client.CommonDataServiceRestClientImpl;
+import org.acumos.workbench.common.service.ProjectServiceRestClient;
+import org.acumos.workbench.common.service.ProjectServiceRestClientImpl;
 import org.acumos.workbench.notebookservice.util.ConfigurationProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -41,6 +43,13 @@ public class AppConfiguration {
 	public CommonDataServiceRestClientImpl commonDataServiceRestClientImpl() {
 		CommonDataServiceRestClientImpl cdsClient = (CommonDataServiceRestClientImpl) CommonDataServiceRestClientImpl.getInstance(confProps.getCmndatasvcendpointurl(), confProps.getCmndatasvcuser(), confProps.getCmndatasvcpwd());
 		return cdsClient;
+	}
+	
+	@Bean
+	@Lazy(value = true) 
+	public ProjectServiceRestClientImpl projectServiceRestClientImpl() {
+		ProjectServiceRestClientImpl projectRestClient = new ProjectServiceRestClientImpl(confProps.getProjectServiceURL());
+		return projectRestClient;
 	}
 	
 	@Bean

@@ -41,7 +41,8 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
 
-import org.acumos.workbench.notebookservice.exception.TargetServiceInvocationException;
+import org.acumos.workbench.common.exception.TargetServiceInvocationException;
+import org.acumos.workbench.common.util.CommonUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,7 +76,7 @@ public class CACertUtil {
     public boolean installCert() {
     	boolean result = false;
 		try {
-			URI uri = NotebookServiceUtil.buildURI(confprops.getJupyterhubURL(), null);
+			URI uri = CommonUtil.buildURI(confprops.getJupyterhubURL(), null);
 			String host = uri.getHost();
 			int port = uri.getPort();
 			String storepass = confprops.getJupyterhubStorepass();

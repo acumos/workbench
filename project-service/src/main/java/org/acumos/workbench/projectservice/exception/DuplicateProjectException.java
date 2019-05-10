@@ -20,6 +20,8 @@
 
 package org.acumos.workbench.projectservice.exception;
 
+import org.acumos.workbench.common.exception.BadRequestException;
+
 public class DuplicateProjectException extends BadRequestException {
 
 	

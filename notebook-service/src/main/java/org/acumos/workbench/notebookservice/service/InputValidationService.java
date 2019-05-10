@@ -20,10 +20,10 @@
 
 package org.acumos.workbench.notebookservice.service;
 
+import org.acumos.workbench.common.exception.IncorrectValueException;
+import org.acumos.workbench.common.exception.InvalidInputJSONException;
+import org.acumos.workbench.common.exception.ValueNotFoundException;
 import org.acumos.workbench.common.vo.Notebook;
-import org.acumos.workbench.notebookservice.exception.IncorrectValueException;
-import org.acumos.workbench.notebookservice.exception.InvalidInputJSONException;
-import org.acumos.workbench.notebookservice.exception.ValueNotFoundException;
 
 public interface InputValidationService {
 

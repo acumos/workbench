@@ -26,7 +26,7 @@
   <!-- FixMe Values are for template -->
   <groupId>org.acumos.workbench</groupId>
   <artifactId>notebook-service</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.1-SNAPSHOT</version>
   <name>NotebookService</name>
   
   <parent>
@@ -68,7 +68,7 @@
 	<dependency>
 		<groupId>org.acumos.workbench</groupId>
 		<artifactId>workbench-common</artifactId>
-		<version>1.0.1</version>
+		<version>1.0.2-SNAPSHOT</version>
 	</dependency>
 	
     <dependency>
@@ -144,7 +144,7 @@
 		<artifactId>logback-core</artifactId>
 		<!-- Spring chooses <version>${logback.version}</version> -->
 	</dependency>
-
+	
   </dependencies>
 
   <build>

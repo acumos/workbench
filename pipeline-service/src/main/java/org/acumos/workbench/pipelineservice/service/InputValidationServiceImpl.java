@@ -24,11 +24,11 @@ import java.lang.invoke.MethodHandles;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.acumos.workbench.common.exception.IncorrectValueException;
+import org.acumos.workbench.common.exception.InvalidInputJSONException;
+import org.acumos.workbench.common.exception.ValueNotFoundException;
 import org.acumos.workbench.common.vo.Identifier;
 import org.acumos.workbench.common.vo.Pipeline;
-import org.acumos.workbench.pipelineservice.exception.IncorrectValueException;
-import org.acumos.workbench.pipelineservice.exception.InvalidInputJsonStructureException;
-import org.acumos.workbench.pipelineservice.exception.ValueNotFoundException;
 import org.acumos.workbench.pipelineservice.util.ValidationRule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +39,7 @@ public class InputValidationServiceImpl implements InputValidationService {
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 	
 	@Override
-	public void validatePipeLineInputJsonStructure(Pipeline pipeLine) throws InvalidInputJsonStructureException {
+	public void validatePipeLineInputJsonStructure(Pipeline pipeLine) throws InvalidInputJSONException {
 		logger.debug("validatePipeLineInputJsonStructure() Begin");
 		boolean result = false;
 		if (null != pipeLine) {
@@ -52,7 +52,7 @@ public class InputValidationServiceImpl implements InputValidationService {
 		}
 		if (!result) {
 			logger.error("Incorrectly formatted input – Invalid JSON");
-			throw new InvalidInputJsonStructureException();
+			throw new InvalidInputJSONException();
 		}
 		logger.debug("validatePipeLineInputJsonStructure() End");
 	}

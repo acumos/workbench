@@ -24,12 +24,12 @@ import java.lang.invoke.MethodHandles;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.acumos.workbench.common.exception.IncorrectValueException;
+import org.acumos.workbench.common.exception.InvalidInputJSONException;
+import org.acumos.workbench.common.exception.ValueNotFoundException;
 import org.acumos.workbench.common.vo.Identifier;
 import org.acumos.workbench.common.vo.Project;
 import org.acumos.workbench.common.vo.Version;
-import org.acumos.workbench.projectservice.exception.IncorrectValueException;
-import org.acumos.workbench.projectservice.exception.InvalidInputJSONException;
-import org.acumos.workbench.projectservice.exception.ValueNotFoundException;
 import org.acumos.workbench.projectservice.util.ValidationRule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

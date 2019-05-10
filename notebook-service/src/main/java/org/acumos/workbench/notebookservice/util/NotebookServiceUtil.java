@@ -34,6 +34,8 @@ import java.util.Map;
 
 import org.acumos.cds.domain.MLPNotebook;
 import org.acumos.cds.domain.MLPUser;
+import org.acumos.workbench.common.exception.IncorrectValueException;
+import org.acumos.workbench.common.exception.ValueNotFoundException;
 import org.acumos.workbench.common.util.ArtifactStatus;
 import org.acumos.workbench.common.util.IdentifierType;
 import org.acumos.workbench.common.util.ServiceStatus;
@@ -43,8 +45,6 @@ import org.acumos.workbench.common.vo.Notebook;
 import org.acumos.workbench.common.vo.ServiceState;
 import org.acumos.workbench.common.vo.User;
 import org.acumos.workbench.common.vo.Version;
-import org.acumos.workbench.notebookservice.exception.IncorrectValueException;
-import org.acumos.workbench.notebookservice.exception.ValueNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -241,26 +241,4 @@ public class NotebookServiceUtil {
 		return result;
 	}
 	
-	
-	/**
-	 * Builds the rest API URI
-	 * @param url
-	 * 		URL of the rest API to be invoked.
-	 * @param uriParams
-	 * 		URI Path variable key-value map.  Map<String, String>
-	 * @return URI
-	 * 		Return UIR constructed based on the input parameters.
-	 */
-	public static URI buildURI(String url, Map<String, String> uriParams) { 
-		logger.debug("buildURI() Begin");
-		URI resultURI = null;
-		UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(url);
-		if(null != uriParams) { 
-			resultURI = uriBuilder.buildAndExpand(uriParams).encode().toUri();
-		} else {
-			resultURI = uriBuilder.build().encode().toUri();
-		}
-		logger.debug("buildURI() End");
-		return resultURI;
-	}
 }

@@ -22,11 +22,11 @@ package org.acumos.workbench.projectservice.service;
 
 import java.lang.invoke.MethodHandles;
 
+import org.acumos.workbench.common.exception.IncorrectValueException;
+import org.acumos.workbench.common.exception.InvalidInputJSONException;
+import org.acumos.workbench.common.exception.ValueNotFoundException;
 import org.acumos.workbench.common.vo.Project;
 import org.acumos.workbench.projectservice.controller.UnitTestCommons;
-import org.acumos.workbench.projectservice.exception.IncorrectValueException;
-import org.acumos.workbench.projectservice.exception.InvalidInputJSONException;
-import org.acumos.workbench.projectservice.exception.ValueNotFoundException;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;

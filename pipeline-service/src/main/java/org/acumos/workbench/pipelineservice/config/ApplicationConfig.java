@@ -21,6 +21,7 @@
 package org.acumos.workbench.pipelineservice.config;
 
 import org.acumos.cds.client.CommonDataServiceRestClientImpl;
+import org.acumos.workbench.common.service.ProjectServiceRestClientImpl;
 import org.acumos.workbench.pipelineservice.util.ConfigurationProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -43,6 +44,13 @@ public class ApplicationConfig {
 		return cdsClient;
 	}
 
+	@Bean
+	@Lazy(value = true) 
+	public ProjectServiceRestClientImpl projectServiceRestClientImpl() {
+		ProjectServiceRestClientImpl projectRestClient = new ProjectServiceRestClientImpl(configProps.getProjectServiceURL());
+		return projectRestClient;
+	}
+	
 	@Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurerAdapter() {

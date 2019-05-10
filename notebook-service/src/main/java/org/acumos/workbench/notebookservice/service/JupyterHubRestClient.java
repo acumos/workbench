@@ -20,7 +20,14 @@
 
 package org.acumos.workbench.notebookservice.service;
 
-import static org.acumos.workbench.notebookservice.util.NotebookServiceConstants.*;
+import static org.acumos.workbench.notebookservice.util.NotebookServiceConstants.JUPYTERNOTEBOOK_API_PATH_BASE;
+import static org.acumos.workbench.notebookservice.util.NotebookServiceConstants.JUPYTERNOTEBOOK_API_PATH_NOTEBOOKNAME;
+import static org.acumos.workbench.notebookservice.util.NotebookServiceConstants.JUPYTERNOTEBOOK_CREATE_NOTEBOOK_EXCEPTION_MSG;
+import static org.acumos.workbench.notebookservice.util.NotebookServiceConstants.JUPYTERNOTEBOOK_DELETE_NOTEBOOK_EXCEPTION_MSG;
+import static org.acumos.workbench.notebookservice.util.NotebookServiceConstants.JUPYTERNOTEBOOK_PATH;
+import static org.acumos.workbench.notebookservice.util.NotebookServiceConstants.JUPYTERNOTEBOOK_SERVER_CONTENT_EXCEPTION_MSG;
+import static org.acumos.workbench.notebookservice.util.NotebookServiceConstants.JUPYTERNOTEBOOK_SERVER_PATH;
+import static org.acumos.workbench.notebookservice.util.NotebookServiceConstants.PATH_VAR_NOTEBOOKNAME_KEY;
 
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
@@ -33,9 +40,10 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
+import org.acumos.workbench.common.exception.InvalidConfiguration;
+import org.acumos.workbench.common.exception.TargetServiceInvocationException;
+import org.acumos.workbench.common.util.CommonUtil;
 import org.acumos.workbench.common.vo.Notebook;
-import org.acumos.workbench.notebookservice.exception.InvalidConfiguration;
-import org.acumos.workbench.notebookservice.exception.TargetServiceInvocationException;
 import org.acumos.workbench.notebookservice.util.ConfigurationProperties;
 import org.acumos.workbench.notebookservice.util.NotebookServiceConstants;
 import org.acumos.workbench.notebookservice.util.NotebookServiceProperties;
@@ -129,7 +137,7 @@ public class JupyterHubRestClient implements NotebookRestClient {
 		uriParams.put(NotebookServiceConstants.PATH_VAR_USERNAME_KEY, authenticatedUserId);
 		if(!notebookExists) {
 			// create Notebook 
-			URI uri = NotebookServiceUtil.buildURI(this.baseJHURL + JUPYTERNOTEBOOK_API_PATH_NOTEBOOKNAME , uriParams);
+			URI uri = CommonUtil.buildURI(this.baseJHURL + JUPYTERNOTEBOOK_API_PATH_NOTEBOOKNAME , uriParams);
 			//create headers you need to send
 			HttpHeaders httpHeaders = new HttpHeaders();
 			httpHeaders.set(NotebookServiceConstants.HEADER_AUTHORIZATION_KEY, confprops.getJupyterhubToken());
@@ -160,7 +168,7 @@ public class JupyterHubRestClient implements NotebookRestClient {
 		}
 		
 		//format the repository path
-		notebookURL = NotebookServiceUtil.buildURI(this.baseJHURL + JUPYTERNOTEBOOK_PATH , uriParams).toString();
+		notebookURL = CommonUtil.buildURI(this.baseJHURL + JUPYTERNOTEBOOK_PATH , uriParams).toString();
 		
 		logger.debug("createNotebookInNotebooServer() End");
 		return notebookURL;
@@ -183,7 +191,7 @@ public class JupyterHubRestClient implements NotebookRestClient {
 		uriParams.put(NotebookServiceConstants.PATH_VAR_USERNAME_KEY, authenticatedUserId);
 		if(notebookExists) {
 			// create Notebook 
-			URI uri = NotebookServiceUtil.buildURI(this.baseJHURL + JUPYTERNOTEBOOK_API_PATH_NOTEBOOKNAME , uriParams);
+			URI uri = CommonUtil.buildURI(this.baseJHURL + JUPYTERNOTEBOOK_API_PATH_NOTEBOOKNAME , uriParams);
 			//create headers you need to send
 			HttpHeaders httpHeaders = new HttpHeaders();
 			httpHeaders.set(NotebookServiceConstants.HEADER_AUTHORIZATION_KEY, confprops.getJupyterhubToken());
@@ -219,7 +227,7 @@ public class JupyterHubRestClient implements NotebookRestClient {
 		
 		//format the repository path
 		uriParams.put(PATH_VAR_NOTEBOOKNAME_KEY, newNotebookNameWithExt);
-		notebookURL = NotebookServiceUtil.buildURI(this.baseJHURL + JUPYTERNOTEBOOK_PATH , uriParams).toString();
+		notebookURL = CommonUtil.buildURI(this.baseJHURL + JUPYTERNOTEBOOK_PATH , uriParams).toString();
 		
 		logger.debug("updateNotebookInNotebookServer() End");
 		return notebookURL;
@@ -235,7 +243,7 @@ public class JupyterHubRestClient implements NotebookRestClient {
 		if (null != jbUser.getServer() && null != jbUser.getServers()) {
 			Map<String, String> uriParams = new HashMap<String, String>();
 			uriParams.put(NotebookServiceConstants.PATH_VAR_USERNAME_KEY, authenticatedUserId);
-			URI uri = NotebookServiceUtil.buildURI(this.baseJHURL
+			URI uri = CommonUtil.buildURI(this.baseJHURL
 					+ NotebookServiceConstants.JUPYTERHUB_LAUNCH_SERVER_PATH, uriParams);
 			//create headers you need send
 			HttpHeaders httpHeaders = new HttpHeaders();
@@ -276,7 +284,7 @@ public class JupyterHubRestClient implements NotebookRestClient {
 		//Get Jupyter Hub user
 		jbUser = getJupyterHubUser(authenticatedUserId);
 		if (null == jbUser.getServer()) {
-			URI uri = NotebookServiceUtil.buildURI(this.baseJHURL + NotebookServiceConstants.JUPYTERHUB_LAUNCH_SERVER_PATH, uriParams);
+			URI uri = CommonUtil.buildURI(this.baseJHURL + NotebookServiceConstants.JUPYTERHUB_LAUNCH_SERVER_PATH, uriParams);
 			
 			//create headers you need send
 			HttpHeaders httpHeaders = new HttpHeaders();
@@ -288,7 +296,7 @@ public class JupyterHubRestClient implements NotebookRestClient {
 			try {
 				ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.POST, entity, String.class);
 				if(HttpStatus.CREATED.equals(response.getStatusCode()) || HttpStatus.ACCEPTED.equals(response.getStatusCode())) {
-					result = NotebookServiceUtil.buildURI(this.baseJHURL + JUPYTERNOTEBOOK_SERVER_PATH, uriParams).toString() + NotebookServiceConstants.QUESTION_MARK;
+					result = CommonUtil.buildURI(this.baseJHURL + JUPYTERNOTEBOOK_SERVER_PATH, uriParams).toString() + NotebookServiceConstants.QUESTION_MARK;
 				} else {
 					logger.error("JupyterNotebook - Launch Server");
 					throw new TargetServiceInvocationException(props.getJupyternotebookLaunchExcp());
@@ -299,7 +307,7 @@ public class JupyterHubRestClient implements NotebookRestClient {
 				throw new TargetServiceInvocationException(props.getJupyterhubLaunchExcp());
 			}
 		} else {
-			result = NotebookServiceUtil.buildURI(this.baseJHURL + JUPYTERNOTEBOOK_SERVER_PATH, uriParams).toString() + NotebookServiceConstants.QUESTION_MARK;
+			result = CommonUtil.buildURI(this.baseJHURL + JUPYTERNOTEBOOK_SERVER_PATH, uriParams).toString() + NotebookServiceConstants.QUESTION_MARK;
 		}
 		
 		logger.debug("launchJupyterNotebookForUser() End");
@@ -311,7 +319,7 @@ public class JupyterHubRestClient implements NotebookRestClient {
 		JupyterHubUser jbUser = null;
 		Map<String, String> uriParams = new HashMap<String, String>();
 		uriParams.put(NotebookServiceConstants.PATH_VAR_USERNAME_KEY, authenticatedUserId);
-		URI uri = NotebookServiceUtil.buildURI(this.baseJHURL + NotebookServiceConstants.JUPYTERHUB_USER_PATH, uriParams);
+		URI uri = CommonUtil.buildURI(this.baseJHURL + NotebookServiceConstants.JUPYTERHUB_USER_PATH, uriParams);
 		//create headers 
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.set(NotebookServiceConstants.HEADER_AUTHORIZATION_KEY, confprops.getJupyterhubToken());
@@ -355,7 +363,7 @@ public class JupyterHubRestClient implements NotebookRestClient {
 		JupyterHubUser jbUser = null;
 		Map<String, String> uriParams = new HashMap<String, String>();
 		uriParams.put(NotebookServiceConstants.PATH_VAR_USERNAME_KEY, authenticatedUserId);
-		URI uri = NotebookServiceUtil.buildURI(this.baseJHURL + NotebookServiceConstants.JUPYTERHUB_USER_PATH, uriParams);
+		URI uri = CommonUtil.buildURI(this.baseJHURL + NotebookServiceConstants.JUPYTERHUB_USER_PATH, uriParams);
 		//create headers you need send
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.set(NotebookServiceConstants.HEADER_AUTHORIZATION_KEY, confprops.getJupyterhubToken());
@@ -377,7 +385,7 @@ public class JupyterHubRestClient implements NotebookRestClient {
 		boolean result = false;
 		Map<String, String> uriParams = new HashMap<String, String>();
 		uriParams.put(NotebookServiceConstants.PATH_VAR_USERNAME_KEY, authenticatedUserId);
-		URI uri = NotebookServiceUtil.buildURI(this.baseJHURL + JUPYTERNOTEBOOK_API_PATH_BASE , uriParams);
+		URI uri = CommonUtil.buildURI(this.baseJHURL + JUPYTERNOTEBOOK_API_PATH_BASE , uriParams);
 		
 		//create headers you need send
 		HttpHeaders httpHeaders = new HttpHeaders();
@@ -427,7 +435,7 @@ public class JupyterHubRestClient implements NotebookRestClient {
 		uriParams.put(NotebookServiceConstants.PATH_VAR_USERNAME_KEY, authenticatedUserId);
 		if(notebookExists) {
 			// create Notebook 
-			URI uri = NotebookServiceUtil.buildURI(this.baseJHURL + JUPYTERNOTEBOOK_API_PATH_NOTEBOOKNAME , uriParams);
+			URI uri = CommonUtil.buildURI(this.baseJHURL + JUPYTERNOTEBOOK_API_PATH_NOTEBOOKNAME , uriParams);
 			//create headers you need to send
 			HttpHeaders httpHeaders = new HttpHeaders();
 			httpHeaders.set(NotebookServiceConstants.HEADER_AUTHORIZATION_KEY, confprops.getJupyterhubToken());

@@ -20,6 +20,8 @@
 
 package org.acumos.workbench.notebookservice.exception;
 
+import org.acumos.workbench.common.exception.EntityNotFoundException;
+
 public class NotebookNotFoundException extends EntityNotFoundException {
 
 	private static final long serialVersionUID = -2957705932783242451L;

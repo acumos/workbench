@@ -199,27 +199,6 @@ public class PipeLineServiceUtil {
 		return result;
 	}
 	
-	/**
-	 * Builds the rest API URI
-	 * @param url
-	 * 		URL of the rest API to be invoked.
-	 * @param uriParams
-	 * 		URI Path variable key-value map.  Map<String, String>
-	 * @return URI
-	 * 		Return UIR constructed based on the input parameters.
-	 */
-	public static URI buildURI(String url, Map<String, String> uriParams) { 
-		URI resultURI = null;
-		UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(url);
-		if(null != uriParams) { 
-			resultURI = uriBuilder.buildAndExpand(uriParams).encode().toUri();
-		} else {
-			resultURI = uriBuilder.build().encode().toUri();
-		}
-		return resultURI;
-	}
-	
-
 }
 
 

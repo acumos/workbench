@@ -22,14 +22,15 @@ package org.acumos.workbench.notebookservice.service;
 
 import java.lang.invoke.MethodHandles;
 
+import org.acumos.workbench.common.exception.ArchivedException;
+import org.acumos.workbench.common.exception.NotProjectOwnerException;
+import org.acumos.workbench.common.exception.ProjectNotFoundException;
+import org.acumos.workbench.common.exception.ValueNotFoundException;
+import org.acumos.workbench.common.service.ProjectServiceRestClientImpl;
 import org.acumos.workbench.common.util.ArtifactStatus;
 import org.acumos.workbench.common.util.ServiceStatus;
 import org.acumos.workbench.common.vo.Notebook;
 import org.acumos.workbench.common.vo.Project;
-import org.acumos.workbench.notebookservice.exception.ArchivedException;
-import org.acumos.workbench.notebookservice.exception.NotProjectOwnerException;
-import org.acumos.workbench.notebookservice.exception.ProjectNotFoundException;
-import org.acumos.workbench.notebookservice.exception.ValueNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +49,6 @@ public class NotebookValidationServiceImpl implements NotebookValidationService 
 	private InputValidationService inputValidationServiceImpl;
 	
 	@Autowired
-	@Qualifier("ProjectServiceRestClientImpl")
 	private ProjectServiceRestClientImpl psClient;
 	
 	public void validateNotebook(String authenticatedUserId, Notebook notebook ) { 

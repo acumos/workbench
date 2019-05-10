@@ -34,6 +34,11 @@ import org.acumos.cds.domain.MLPProject;
 import org.acumos.cds.domain.MLPUser;
 import org.acumos.cds.transport.RestPageRequest;
 import org.acumos.cds.transport.RestPageResponse;
+import org.acumos.workbench.common.exception.ArchivedException;
+import org.acumos.workbench.common.exception.NotOwnerException;
+import org.acumos.workbench.common.exception.ProjectNotFoundException;
+import org.acumos.workbench.common.exception.UserNotFoundException;
+import org.acumos.workbench.common.logging.LoggingConstants;
 import org.acumos.workbench.common.util.ArtifactStatus;
 import org.acumos.workbench.common.util.ServiceStatus;
 import org.acumos.workbench.common.vo.ArtifactState;
@@ -41,13 +46,8 @@ import org.acumos.workbench.common.vo.Identifier;
 import org.acumos.workbench.common.vo.Project;
 import org.acumos.workbench.common.vo.ServiceState;
 import org.acumos.workbench.common.vo.Version;
-import org.acumos.workbench.projectservice.exception.ArchivedException;
 import org.acumos.workbench.projectservice.exception.DuplicateProjectException;
-import org.acumos.workbench.projectservice.exception.NotOwnerException;
-import org.acumos.workbench.projectservice.exception.ProjectNotFoundException;
-import org.acumos.workbench.projectservice.exception.UserNotFoundException;
 import org.acumos.workbench.projectservice.util.ConfigurationProperties;
-import org.acumos.workbench.projectservice.util.PSLogConstants;
 import org.acumos.workbench.projectservice.util.ProjectServiceUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -91,7 +91,7 @@ public class ProjectServiceImpl implements ProjectService {
 		queryParameters.put("version",project.getProjectId().getVersionId().getLabel());
 		queryParameters.put("userId",userId);
 		RestPageRequest pageRequest = new RestPageRequest(0, 1);
-		cdsClient.setRequestId(MDC.get(PSLogConstants.MDCs.REQUEST_ID));
+		cdsClient.setRequestId(MDC.get(LoggingConstants.MDCs.REQUEST_ID));
 		RestPageResponse<MLPProject> response = cdsClient.searchProjects(queryParameters, false, pageRequest);
 		List<MLPProject> projects = response.getContent();
 		if(null != projects && projects.size() > 0 ) { 
@@ -111,7 +111,7 @@ public class ProjectServiceImpl implements ProjectService {
 		MLPProject mlpProject = ProjectServiceUtil.getMLPProject(userId, project);
 		
 		// Call to CDS to create new Project
-		cdsClient.setRequestId(MDC.get(PSLogConstants.MDCs.REQUEST_ID));
+		cdsClient.setRequestId(MDC.get(LoggingConstants.MDCs.REQUEST_ID));
 		MLPProject responseMLPProject = cdsClient.createProject(mlpProject);
 		
 		result = ProjectServiceUtil.getProjectVO(responseMLPProject, mlpUser);
@@ -135,7 +135,7 @@ public class ProjectServiceImpl implements ProjectService {
 		queryParameters.put("projectId",projectId);
 		queryParameters.put("userId",userId);
 		RestPageRequest pageRequest = new RestPageRequest(0, 1);
-		cdsClient.setRequestId(MDC.get(PSLogConstants.MDCs.REQUEST_ID));
+		cdsClient.setRequestId(MDC.get(LoggingConstants.MDCs.REQUEST_ID));
 		RestPageResponse<MLPProject> response = cdsClient.searchProjects(queryParameters, false, pageRequest);
 		
 		if((null == response) || (null != response && response.getContent().size() == 0 )) {
@@ -151,7 +151,7 @@ public class ProjectServiceImpl implements ProjectService {
 		logger.debug("isProjectArchived() Begin");
 		boolean result = false;
 		// CDS call to check if project is archived 
-		cdsClient.setRequestId(MDC.get(PSLogConstants.MDCs.REQUEST_ID));
+		cdsClient.setRequestId(MDC.get(LoggingConstants.MDCs.REQUEST_ID));
 		MLPProject mlpProject = cdsClient.getProject(projectId);
 		if(null != mlpProject && !mlpProject.isActive()){
 			logger.warn("Update not allowed – project is archived");
@@ -172,7 +172,7 @@ public class ProjectServiceImpl implements ProjectService {
 		MLPUser mlpUser = getUserDetails(authenticatedUserId);
 		String userId = mlpUser.getUserId();
 		
-		cdsClient.setRequestId(MDC.get(PSLogConstants.MDCs.REQUEST_ID));
+		cdsClient.setRequestId(MDC.get(LoggingConstants.MDCs.REQUEST_ID));
 		MLPProject old_mlpProject = cdsClient.getProject(projectId);
 		if(!newName.equals(old_mlpProject.getName()) || !newversion.equals(old_mlpProject.getVersion())){
 			// Check if new project name and version is not same as previous, then it should not already exists in the DB. (Call to CDS).
@@ -212,7 +212,7 @@ public class ProjectServiceImpl implements ProjectService {
 		MLPUser mlpUser = getUserDetails(authenticatedUserId);
 		String userId = mlpUser.getUserId();
 		//CDS call to get the project details. 
-		cdsClient.setRequestId(MDC.get(PSLogConstants.MDCs.REQUEST_ID));
+		cdsClient.setRequestId(MDC.get(LoggingConstants.MDCs.REQUEST_ID));
 		MLPProject mlpProject = cdsClient.getProject(projectId);
 		if(null != mlpProject) { 
 			result = ProjectServiceUtil.getProjectVO(mlpProject, mlpUser);
@@ -236,7 +236,7 @@ public class ProjectServiceImpl implements ProjectService {
 		Map<String, Object> queryParameters = new HashMap<String, Object>();
 		queryParameters.put("userId", userId);
 		RestPageRequest pageRequest = new RestPageRequest(0, confprops.getResultsetSize());
-		cdsClient.setRequestId(MDC.get(PSLogConstants.MDCs.REQUEST_ID));
+		cdsClient.setRequestId(MDC.get(LoggingConstants.MDCs.REQUEST_ID));
 		RestPageResponse<MLPProject> response = cdsClient.searchProjects(queryParameters, false, pageRequest);
 		List<MLPProject> mlpProjects = response.getContent();
 		if(null != mlpProjects && mlpProjects.size() > 0 ){
@@ -252,7 +252,7 @@ public class ProjectServiceImpl implements ProjectService {
 		ServiceState result = new ServiceState(); 
 		
 		//4.Delete the association between the project and its child artifacts (call to CDS).
-		cdsClient.setRequestId(MDC.get(PSLogConstants.MDCs.REQUEST_ID));
+		cdsClient.setRequestId(MDC.get(LoggingConstants.MDCs.REQUEST_ID));
 		List<MLPPipeline> mlpPipelines = cdsClient.getProjectPipelines(projectId);
 		List<MLPNotebook> mlpNotebooks = cdsClient.getProjectNotebooks(projectId);
 		
@@ -287,7 +287,7 @@ public class ProjectServiceImpl implements ProjectService {
 		Project result = null;
 		MLPUser mlpUser = getUserDetails(authenticatedUserId);
 		// Call to CDS to mark project as archived.
-		cdsClient.setRequestId(MDC.get(PSLogConstants.MDCs.REQUEST_ID));
+		cdsClient.setRequestId(MDC.get(LoggingConstants.MDCs.REQUEST_ID));
 		MLPProject mlpProject = cdsClient.getProject(projectId);
 		ArtifactState artifactStatus = new ArtifactState();
 
@@ -320,7 +320,7 @@ public class ProjectServiceImpl implements ProjectService {
 		Map<String, Object> queryParameters = new HashMap<String, Object>();
 		queryParameters.put("loginName", authenticatedUserId);
 		RestPageRequest pageRequest = new RestPageRequest(0, 1);
-		cdsClient.setRequestId(MDC.get(PSLogConstants.MDCs.REQUEST_ID));
+		cdsClient.setRequestId(MDC.get(LoggingConstants.MDCs.REQUEST_ID));
 		RestPageResponse<MLPUser> response = cdsClient.searchUsers(queryParameters, false, pageRequest);
 		
 		List<MLPUser> mlpUsers = response.getContent();

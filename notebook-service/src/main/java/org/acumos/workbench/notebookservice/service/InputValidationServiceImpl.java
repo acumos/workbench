@@ -23,11 +23,11 @@ package org.acumos.workbench.notebookservice.service;
 import java.lang.invoke.MethodHandles;
 import java.text.MessageFormat;
 
+import org.acumos.workbench.common.exception.IncorrectValueException;
+import org.acumos.workbench.common.exception.InvalidInputJSONException;
+import org.acumos.workbench.common.exception.ValueNotFoundException;
 import org.acumos.workbench.common.vo.Identifier;
 import org.acumos.workbench.common.vo.Notebook;
-import org.acumos.workbench.notebookservice.exception.IncorrectValueException;
-import org.acumos.workbench.notebookservice.exception.InvalidInputJSONException;
-import org.acumos.workbench.notebookservice.exception.ValueNotFoundException;
 import org.acumos.workbench.notebookservice.util.NotebookServiceProperties;
 import org.acumos.workbench.notebookservice.util.NotebookType;
 import org.acumos.workbench.notebookservice.util.ValidationRule;

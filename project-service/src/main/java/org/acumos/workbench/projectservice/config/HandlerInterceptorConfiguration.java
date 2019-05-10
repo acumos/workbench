@@ -20,6 +20,7 @@
 
 package org.acumos.workbench.projectservice.config;
 
+import org.acumos.workbench.common.logging.LoggingHandlerInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

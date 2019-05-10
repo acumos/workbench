@@ -22,6 +22,11 @@ package org.acumos.workbench.notebookservice.exception;
 
 import java.lang.invoke.MethodHandles;
 
+import org.acumos.workbench.common.exception.ArchivedException;
+import org.acumos.workbench.common.exception.BadRequestException;
+import org.acumos.workbench.common.exception.EntityNotFoundException;
+import org.acumos.workbench.common.exception.ForbiddenException;
+import org.acumos.workbench.common.exception.TargetServiceInvocationException;
 import org.acumos.workbench.common.util.ServiceStatus;
 import org.acumos.workbench.common.vo.Notebook;
 import org.acumos.workbench.common.vo.ServiceState;

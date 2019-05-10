@@ -22,11 +22,11 @@ package org.acumos.workbench.notebookservice.service;
 
 import static org.mockito.Mockito.when;
 
+import org.acumos.workbench.common.exception.IncorrectValueException;
+import org.acumos.workbench.common.exception.InvalidInputJSONException;
+import org.acumos.workbench.common.exception.ValueNotFoundException;
 import org.acumos.workbench.common.vo.Notebook;
 import org.acumos.workbench.notebookservice.controller.NotebookCommons;
-import org.acumos.workbench.notebookservice.exception.IncorrectValueException;
-import org.acumos.workbench.notebookservice.exception.InvalidInputJSONException;
-import org.acumos.workbench.notebookservice.exception.ValueNotFoundException;
 import org.acumos.workbench.notebookservice.util.NotebookServiceProperties;
 import org.junit.Before;
 import org.junit.Rule;

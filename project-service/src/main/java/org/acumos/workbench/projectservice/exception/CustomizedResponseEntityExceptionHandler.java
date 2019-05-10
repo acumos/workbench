@@ -20,6 +20,10 @@
 
 package org.acumos.workbench.projectservice.exception;
 
+import org.acumos.workbench.common.exception.ArchivedException;
+import org.acumos.workbench.common.exception.BadRequestException;
+import org.acumos.workbench.common.exception.EntityNotFoundException;
+import org.acumos.workbench.common.exception.ForbiddenException;
 import org.acumos.workbench.common.util.ServiceStatus;
 import org.acumos.workbench.common.vo.Project;
 import org.acumos.workbench.common.vo.ServiceState;

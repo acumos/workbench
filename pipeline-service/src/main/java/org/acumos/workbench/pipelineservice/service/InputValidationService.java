@@ -20,10 +20,10 @@
 
 package org.acumos.workbench.pipelineservice.service;
 
+import org.acumos.workbench.common.exception.IncorrectValueException;
+import org.acumos.workbench.common.exception.InvalidInputJSONException;
+import org.acumos.workbench.common.exception.ValueNotFoundException;
 import org.acumos.workbench.common.vo.Pipeline;
-import org.acumos.workbench.pipelineservice.exception.IncorrectValueException;
-import org.acumos.workbench.pipelineservice.exception.InvalidInputJsonStructureException;
-import org.acumos.workbench.pipelineservice.exception.ValueNotFoundException;
 
 public interface InputValidationService {
 	
@@ -32,9 +32,9 @@ public interface InputValidationService {
 	 * @param pipeLine
 	 * 			pipeLine acts as input param
 	 * @throws InvalidInputJsonStructureException
-	 * 			throws InvalidJsonStructureException in case of incorrect input Json.
+	 * 			throws InvalidJSONException in case of incorrect input Json.
 	 */
-	public void validatePipeLineInputJsonStructure(Pipeline pipeLine) throws InvalidInputJsonStructureException;
+	public void validatePipeLineInputJsonStructure(Pipeline pipeLine) throws InvalidInputJSONException;
 	
 	/**
 	 * This method verifies if the value is exists i.e, value is not null or empty.

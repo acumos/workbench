@@ -23,15 +23,15 @@ package org.acumos.workbench.notebookservice.service;
 import java.util.List;
 
 import org.acumos.cds.domain.MLPUser;
+import org.acumos.workbench.common.exception.ArchivedException;
+import org.acumos.workbench.common.exception.AssociationNotFoundException;
+import org.acumos.workbench.common.exception.NotOwnerException;
+import org.acumos.workbench.common.exception.TargetServiceInvocationException;
+import org.acumos.workbench.common.exception.UserNotFoundException;
 import org.acumos.workbench.common.vo.Notebook;
 import org.acumos.workbench.common.vo.ServiceState;
-import org.acumos.workbench.notebookservice.exception.ArchivedException;
-import org.acumos.workbench.notebookservice.exception.AssociationNotFoundException;
 import org.acumos.workbench.notebookservice.exception.DuplicateNotebookException;
-import org.acumos.workbench.notebookservice.exception.NotOwnerException;
 import org.acumos.workbench.notebookservice.exception.NotebookNotFoundException;
-import org.acumos.workbench.notebookservice.exception.TargetServiceInvocationException;
-import org.acumos.workbench.notebookservice.exception.UserNotFoundException;
 
 public interface NotebookService {
 

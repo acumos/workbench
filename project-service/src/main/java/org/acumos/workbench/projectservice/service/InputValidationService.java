@@ -20,10 +20,10 @@
 
 package org.acumos.workbench.projectservice.service;
 
+import org.acumos.workbench.common.exception.IncorrectValueException;
+import org.acumos.workbench.common.exception.InvalidInputJSONException;
+import org.acumos.workbench.common.exception.ValueNotFoundException;
 import org.acumos.workbench.common.vo.Project;
-import org.acumos.workbench.projectservice.exception.IncorrectValueException;
-import org.acumos.workbench.projectservice.exception.InvalidInputJSONException;
-import org.acumos.workbench.projectservice.exception.ValueNotFoundException;
 
 public interface InputValidationService {
 

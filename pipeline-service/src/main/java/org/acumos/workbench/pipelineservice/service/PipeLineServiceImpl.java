@@ -32,22 +32,22 @@ import org.acumos.cds.domain.MLPProject;
 import org.acumos.cds.domain.MLPUser;
 import org.acumos.cds.transport.RestPageRequest;
 import org.acumos.cds.transport.RestPageResponse;
+import org.acumos.workbench.common.exception.ArchivedException;
+import org.acumos.workbench.common.exception.AssociationNotFoundException;
+import org.acumos.workbench.common.exception.NotOwnerException;
+import org.acumos.workbench.common.exception.TargetServiceInvocationException;
+import org.acumos.workbench.common.exception.UserNotFoundException;
+import org.acumos.workbench.common.logging.LoggingConstants;
 import org.acumos.workbench.common.util.ServiceStatus;
 import org.acumos.workbench.common.vo.Identifier;
 import org.acumos.workbench.common.vo.Pipeline;
 import org.acumos.workbench.common.vo.ServiceState;
 import org.acumos.workbench.common.vo.Version;
-import org.acumos.workbench.pipelineservice.exception.ArchivedException;
-import org.acumos.workbench.pipelineservice.exception.AssociationNotFoundException;
 import org.acumos.workbench.pipelineservice.exception.DuplicatePipeLineException;
-import org.acumos.workbench.pipelineservice.exception.NotOwnerException;
 import org.acumos.workbench.pipelineservice.exception.PipelineNotFoundException;
-import org.acumos.workbench.pipelineservice.exception.TargetServiceInvocationException;
-import org.acumos.workbench.pipelineservice.exception.UserNotFoundException;
 import org.acumos.workbench.pipelineservice.util.ConfigurationProperties;
 import org.acumos.workbench.pipelineservice.util.PipeLineServiceUtil;
 import org.acumos.workbench.pipelineservice.util.PipelineServiceConstants;
-import org.acumos.workbench.pipelineservice.util.PipelineServiceLogConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -334,7 +334,7 @@ public class PipeLineServiceImpl implements PipeLineService{
 		}
 		try {
 			//1.Delete the Pipeline
-			cdsClient.setRequestId(MDC.get(PipelineServiceLogConstants.MDCs.REQUEST_ID));
+			cdsClient.setRequestId(MDC.get(LoggingConstants.MDCs.REQUEST_ID));
 			logger.debug("CDS deletePipeline() method Begin");
 			cdsClient.deletePipeline(pipelineId);
 			logger.debug("CDS deletePipeline() method End");

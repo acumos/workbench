@@ -20,11 +20,11 @@
 
 package org.acumos.workbench.notebookservice.service;
 
+import org.acumos.workbench.common.exception.ArchivedException;
+import org.acumos.workbench.common.exception.NotProjectOwnerException;
+import org.acumos.workbench.common.exception.ProjectNotFoundException;
+import org.acumos.workbench.common.exception.ValueNotFoundException;
 import org.acumos.workbench.common.vo.Notebook;
-import org.acumos.workbench.notebookservice.exception.ArchivedException;
-import org.acumos.workbench.notebookservice.exception.NotProjectOwnerException;
-import org.acumos.workbench.notebookservice.exception.ProjectNotFoundException;
-import org.acumos.workbench.notebookservice.exception.ValueNotFoundException;
 
 public interface NotebookValidationService {
 

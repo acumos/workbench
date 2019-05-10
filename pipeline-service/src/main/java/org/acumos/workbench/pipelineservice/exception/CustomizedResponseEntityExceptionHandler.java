@@ -22,6 +22,10 @@ package org.acumos.workbench.pipelineservice.exception;
 
 import java.lang.invoke.MethodHandles;
 
+import org.acumos.workbench.common.exception.ArchivedException;
+import org.acumos.workbench.common.exception.BadRequestException;
+import org.acumos.workbench.common.exception.EntityNotFoundException;
+import org.acumos.workbench.common.exception.ForbiddenException;
 import org.acumos.workbench.common.util.ServiceStatus;
 import org.acumos.workbench.common.vo.Pipeline;
 import org.acumos.workbench.common.vo.ServiceState;

@@ -20,6 +20,8 @@
 
 package org.acumos.workbench.notebookservice.exception;
 
+import org.acumos.workbench.common.exception.BadRequestException;
+
 public class DuplicateNotebookException extends BadRequestException {
 
 	private static final long serialVersionUID = -1591533159073146327L;

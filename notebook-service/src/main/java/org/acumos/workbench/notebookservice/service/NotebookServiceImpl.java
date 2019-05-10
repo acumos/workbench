@@ -33,22 +33,22 @@ import org.acumos.cds.domain.MLPProject;
 import org.acumos.cds.domain.MLPUser;
 import org.acumos.cds.transport.RestPageRequest;
 import org.acumos.cds.transport.RestPageResponse;
+import org.acumos.workbench.common.exception.ArchivedException;
+import org.acumos.workbench.common.exception.AssociationNotFoundException;
+import org.acumos.workbench.common.exception.IncorrectValueException;
+import org.acumos.workbench.common.exception.NotOwnerException;
+import org.acumos.workbench.common.exception.TargetServiceInvocationException;
+import org.acumos.workbench.common.exception.UserNotFoundException;
+import org.acumos.workbench.common.logging.LoggingConstants;
 import org.acumos.workbench.common.util.ServiceStatus;
 import org.acumos.workbench.common.vo.Identifier;
 import org.acumos.workbench.common.vo.Notebook;
 import org.acumos.workbench.common.vo.ServiceState;
 import org.acumos.workbench.common.vo.Version;
-import org.acumos.workbench.notebookservice.exception.ArchivedException;
-import org.acumos.workbench.notebookservice.exception.AssociationNotFoundException;
 import org.acumos.workbench.notebookservice.exception.DuplicateNotebookException;
-import org.acumos.workbench.notebookservice.exception.IncorrectValueException;
-import org.acumos.workbench.notebookservice.exception.NotOwnerException;
 import org.acumos.workbench.notebookservice.exception.NotebookNotFoundException;
-import org.acumos.workbench.notebookservice.exception.TargetServiceInvocationException;
-import org.acumos.workbench.notebookservice.exception.UserNotFoundException;
 import org.acumos.workbench.notebookservice.util.ConfigurationProperties;
 import org.acumos.workbench.notebookservice.util.NotebookServiceConstants;
-import org.acumos.workbench.notebookservice.util.NotebookServiceLoggingConstants;
 import org.acumos.workbench.notebookservice.util.NotebookServiceProperties;
 import org.acumos.workbench.notebookservice.util.NotebookServiceUtil;
 import org.acumos.workbench.notebookservice.util.NotebookType;
@@ -75,10 +75,6 @@ public class NotebookServiceImpl implements NotebookService {
 	private NotebookServiceProperties props;
 	
 	@Autowired
-	@Qualifier("ProjectServiceRestClientImpl")
-	private ProjectServiceRestClient psClient;
-	
-	@Autowired
 	@Qualifier("JupyterHubRestClient")
 	private NotebookRestClient jhClient;
 	
@@ -88,7 +84,7 @@ public class NotebookServiceImpl implements NotebookService {
 		//CDS call to get MLPNotebook 
 		logger.debug("notebookExists() Begin");
 		try {
-			cdsClient.setRequestId(MDC.get(NotebookServiceLoggingConstants.MDCs.REQUEST_ID));
+			cdsClient.setRequestId(MDC.get(LoggingConstants.MDCs.REQUEST_ID));
 			MLPNotebook response = cdsClient.getNotebook(notebookId);
 			if (null == response) {
 				logger.error("Requested Notebook Not found");
@@ -132,7 +128,7 @@ public class NotebookServiceImpl implements NotebookService {
 
 		try {
 			RestPageRequest pageRequest = new RestPageRequest(0, 1);
-			cdsClient.setRequestId(MDC.get(NotebookServiceLoggingConstants.MDCs.REQUEST_ID));
+			cdsClient.setRequestId(MDC.get(LoggingConstants.MDCs.REQUEST_ID));
 			RestPageResponse<MLPNotebook> response = cdsClient.searchNotebooks(queryParameters,
 					false, pageRequest);
 			if (null != response && response.getContent().size() > 0) {
@@ -187,7 +183,7 @@ public class NotebookServiceImpl implements NotebookService {
 			if(null != serviceURL) {
 				mlpNotebook.setServiceUrl(serviceURL);
 			}
-			cdsClient.setRequestId(MDC.get(NotebookServiceLoggingConstants.MDCs.REQUEST_ID));
+			cdsClient.setRequestId(MDC.get(LoggingConstants.MDCs.REQUEST_ID));
 			responseMLPNotebook = cdsClient.createNotebook(mlpNotebook);
 		} catch (RestClientResponseException e) {
 			logger.error(props.getCdsCreateNotebookExcp());
@@ -224,7 +220,7 @@ public class NotebookServiceImpl implements NotebookService {
 			// Call to CDS to check if user is the owner of the project.
 			MLPUser mlpUser = getUserDetails(authenticatedUserId);
 			String userId = mlpUser.getUserId();
-			cdsClient.setRequestId(MDC.get(NotebookServiceLoggingConstants.MDCs.REQUEST_ID));
+			cdsClient.setRequestId(MDC.get(LoggingConstants.MDCs.REQUEST_ID));
 			MLPNotebook response = cdsClient.getNotebook(notebookId);
 			if ((null == response)) {
 				logger.error("Requested Notebook Not found");
@@ -247,7 +243,7 @@ public class NotebookServiceImpl implements NotebookService {
 		boolean result = false;
 		try {
 			// CDS call to check if project is archived 
-			cdsClient.setRequestId(MDC.get(NotebookServiceLoggingConstants.MDCs.REQUEST_ID));
+			cdsClient.setRequestId(MDC.get(LoggingConstants.MDCs.REQUEST_ID));
 			MLPNotebook mlpNotebook = cdsClient.getNotebook(notebookId);
 			if (null != mlpNotebook && !mlpNotebook.isActive()) {
 				logger.error("Specified notebook is archived");
@@ -283,7 +279,7 @@ public class NotebookServiceImpl implements NotebookService {
 		//Check if notebook name, type and version is not same as previous, if so then check for duplicate 
 		MLPNotebook oldmlpNotebook = null;
 		try {
-			cdsClient.setRequestId(MDC.get(NotebookServiceLoggingConstants.MDCs.REQUEST_ID));
+			cdsClient.setRequestId(MDC.get(LoggingConstants.MDCs.REQUEST_ID));
 			oldmlpNotebook = cdsClient.getNotebook(notebookId);
 		} catch (Exception e) { 
 			logger.error(props.getCdsGetNotebookExcp());
@@ -381,7 +377,7 @@ public class NotebookServiceImpl implements NotebookService {
 		String userId = mlpUser.getUserId();
 		try {
 			//CDS call to get MLPNotebook 
-			cdsClient.setRequestId(MDC.get(NotebookServiceLoggingConstants.MDCs.REQUEST_ID));
+			cdsClient.setRequestId(MDC.get(LoggingConstants.MDCs.REQUEST_ID));
 			MLPNotebook response = cdsClient.getNotebook(notebookId);
 			if (null == response) {
 				logger.error("Requested Notebook Not found");
@@ -408,7 +404,7 @@ public class NotebookServiceImpl implements NotebookService {
 				Map<String, Object> queryParameters = new HashMap<String, Object>();
 				queryParameters.put("userId", userId);
 				RestPageRequest pageRequest = new RestPageRequest(0, confprops.getResultsetSize());
-				cdsClient.setRequestId(MDC.get(NotebookServiceLoggingConstants.MDCs.REQUEST_ID));
+				cdsClient.setRequestId(MDC.get(LoggingConstants.MDCs.REQUEST_ID));
 				RestPageResponse<MLPNotebook> response = cdsClient.searchNotebooks(queryParameters,
 						false, pageRequest);
 				mlpNotebooks = response.getContent();
@@ -455,7 +451,7 @@ public class NotebookServiceImpl implements NotebookService {
 		
 		//Delete any association with Project
 		try {
-			cdsClient.setRequestId(MDC.get(NotebookServiceLoggingConstants.MDCs.REQUEST_ID));
+			cdsClient.setRequestId(MDC.get(LoggingConstants.MDCs.REQUEST_ID));
 			mlpProjects = cdsClient.getNotebookProjects(notebookId);
 		} catch (Exception e) { 
 			logger.error("CDS - Get Notebook Projects");
@@ -499,7 +495,7 @@ public class NotebookServiceImpl implements NotebookService {
 			Map<String, Object> queryParameters = new HashMap<String, Object>();
 			queryParameters.put("loginName", authenticatedUserId);
 			RestPageRequest pageRequest = new RestPageRequest(0, 1);
-			cdsClient.setRequestId(MDC.get(NotebookServiceLoggingConstants.MDCs.REQUEST_ID));
+			cdsClient.setRequestId(MDC.get(LoggingConstants.MDCs.REQUEST_ID));
 			RestPageResponse<MLPUser> response = cdsClient.searchUsers(queryParameters, false,
 					pageRequest);
 			List<MLPUser> mlpUsers = response.getContent();
@@ -534,7 +530,7 @@ public class NotebookServiceImpl implements NotebookService {
 		MLPUser mlpUser = getUserDetails(authenticatedUserId);
 		MLPNotebook mlpNotebook = null;
 		try {
-			cdsClient.setRequestId(MDC.get(NotebookServiceLoggingConstants.MDCs.REQUEST_ID));
+			cdsClient.setRequestId(MDC.get(LoggingConstants.MDCs.REQUEST_ID));
 			mlpNotebook = cdsClient.getNotebook(notebookId);
 		} catch (Exception e) {
 			logger.error(props.getCdsGetNotebookExcp());
@@ -574,7 +570,7 @@ public class NotebookServiceImpl implements NotebookService {
 		//TODO : Need CDS API instead
 		boolean associated = false;
 		try {
-			cdsClient.setRequestId(MDC.get(NotebookServiceLoggingConstants.MDCs.REQUEST_ID));
+			cdsClient.setRequestId(MDC.get(LoggingConstants.MDCs.REQUEST_ID));
 			List<MLPNotebook> mlpNotebooks = cdsClient.getProjectNotebooks(projectId);
 			if (null != mlpNotebooks && mlpNotebooks.size() > 0) {
 				for (MLPNotebook notebook : mlpNotebooks) {

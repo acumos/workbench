@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5555b2c8_4559ae9b",
+        "filename": "pipeline-service/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-05-14T20:13:51Z",
+      "side": 1,
+      "message": "Can we use Release version here",
+      "revId": "19d991d03ffb6fd27e986226a5d3f24594d3622d",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a705338_d874d8f1",
+        "filename": "project-service/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-05-14T20:13:51Z",
+      "side": 1,
+      "message": "Can we use Release version here",
+      "revId": "19d991d03ffb6fd27e986226a5d3f24594d3622d",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}

@@ -67,9 +67,6 @@ public class PipeLineValidationServiceImpl implements PipeLineValidationService 
 		// 4. Validate PipeLine Name & Version (for allowed special character)
 		inputValidationServiceImpl.validatePipeLineName(pipeLine.getPipelineId().getName());
 
-		if (null != pipeLine.getPipelineId().getVersionId().getLabel()) {
-			inputValidationServiceImpl.validateVersion(pipeLine.getPipelineId().getVersionId().getLabel());
-		}
 		logger.debug("validateInputData() End");
 
 	}

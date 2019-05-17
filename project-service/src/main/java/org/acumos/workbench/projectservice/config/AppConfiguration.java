@@ -21,6 +21,7 @@
 package org.acumos.workbench.projectservice.config;
 
 import org.acumos.cds.client.CommonDataServiceRestClientImpl;
+import org.acumos.workbench.common.logging.LoggingHandlerInterceptor;
 import org.acumos.workbench.projectservice.util.ConfigurationProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -35,6 +36,11 @@ public class AppConfiguration {
 	
 	@Autowired
 	ConfigurationProperties confProps;
+	
+	@Bean
+	public LoggingHandlerInterceptor loggingHandlerInterceptor() {
+		return new LoggingHandlerInterceptor();
+	}
 	
 	@Bean
 	@Lazy(value = true)

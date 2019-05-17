@@ -85,18 +85,6 @@ public class InputValidationServiceImpl implements InputValidationService {
 		logger.debug("validatePipeLineName() End");
 	}
 
-	@Override
-	public void validateVersion(String value) throws IncorrectValueException {
-		logger.debug("validateVersion() Begin");
-		boolean result = false;
-		String msg = "Pipeline Version Syntax Invalid";
-		result = validateInputValue(ValidationRule.VERSION, value);
-		if (!result) {
-			logger.error("Pipeline Version Syntax Invalid in validateVersion() method");
-			throw new IncorrectValueException(msg);
-		}
-		logger.debug("validateVersion() End");
-	}
 
 	private boolean validateInputValue(ValidationRule rule, String value) {
 		logger.debug("validateInputValue() Begin");

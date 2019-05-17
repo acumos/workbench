@@ -20,6 +20,10 @@
 Pipeline Service Release Notes
 ===============================
 
+Version 1.0.1, 2019-05-17
+---------------------------
+* ACUMOS-2850 : Move common code to workbench-common
+
 Version 0.0.1, 2019-04-27
 ---------------------------
 * Initial pipeline project commit

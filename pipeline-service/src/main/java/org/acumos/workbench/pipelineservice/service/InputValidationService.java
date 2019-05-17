@@ -56,14 +56,5 @@ public interface InputValidationService {
 	 */
 	public void validatePipeLineName(String value) throws IncorrectValueException;
 	
-	/**
-	 * This method validates the pipeline version 
-	 * @param value
-	 * 			the value to be validated.
-	 * @throws IncorrectValueException
-	 * 			throws IncorrectValueException in case pipeline version is not valid.
-	 */
-	public void validateVersion(String value) throws IncorrectValueException;
-	
 	
 }

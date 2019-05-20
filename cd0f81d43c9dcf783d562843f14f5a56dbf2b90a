@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b768caab_ec6f00b1",
+        "filename": "dashboard-webcomponent/component/src/dashboard-styles.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2019-05-20T15:38:36Z",
+      "side": 1,
+      "message": "\"!important\" is bad coding practice and most likely it would cause negative effects for longterm code maintenance. This doesn\u0027t mean that you should never use it, if there are situations you cannot avoid, then, once in a while it is OK. \n\nBut, in this case, you have applied it in every line and in multiple files, which doesn\u0027t seem right and can definitely improve it. Please architect this CSS style mechanism to avoid using \"!important\" on the styles in every file.",
+      "range": {
+        "startLine": 24,
+        "startChar": 32,
+        "endLine": 24,
+        "endChar": 42
+      },
+      "revId": "cd0f81d43c9dcf783d562843f14f5a56dbf2b90a",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    }
+  ]
+}

@@ -404,7 +404,7 @@ public class PipeLineServiceController {
 		// 3. Check if the user is the owner of the Pipeline or has the permission to archive the Pipeline.(call to CDS).
 		pipeLineService.isOwnerOfPipeline(authenticatedUserId, pipelineId);
 		// 4. Delete Notebook
-		result = pipeLineService.deletePipeline(pipelineId);
+		result = pipeLineService.deletePipeline(authenticatedUserId,pipelineId);
 		logger.debug("deletePipeLine() End");
 		return new ResponseEntity<ServiceState>(result, HttpStatus.OK);
 

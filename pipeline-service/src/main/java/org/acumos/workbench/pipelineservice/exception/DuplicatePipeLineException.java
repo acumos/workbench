@@ -34,4 +34,10 @@ public class DuplicatePipeLineException extends BadRequestException {
 		super(MSG);
 	}
 
+	public DuplicatePipeLineException(String msg) {
+		super(msg);
+	}
+	
+	
+
 }

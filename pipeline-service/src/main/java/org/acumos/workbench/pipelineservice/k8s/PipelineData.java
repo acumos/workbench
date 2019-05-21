@@ -18,26 +18,39 @@
  * ===============LICENSE_END=========================================================
  */
 
-package org.acumos.workbench.pipelineservice.exception;
+package org.acumos.workbench.pipelineservice.k8s;
 
-import org.acumos.workbench.common.exception.BadRequestException;
+public class PipelineData {
+	private boolean pipelineExists;
+	private String pipelineName;
+	private String pipelineId;
 
-public class DuplicatePipeLineException extends BadRequestException {
-
-	private static final long serialVersionUID = -6662185013150870880L;
-	private static final String MSG = "Pipeline name and version already exists";
-
-	/**
-	 * To handle Duplicate Pipeline Exception.
-	 */
-	public DuplicatePipeLineException() {
-		super(MSG);
+	public boolean isPipelineExists() {
+		return pipelineExists;
 	}
 
-	public DuplicatePipeLineException(String msg) {
-		super(msg);
+	public void setPipelineExists(boolean pipelineExists) {
+		this.pipelineExists = pipelineExists;
 	}
-	
-	
+
+	public String getPipelineName() {
+		return pipelineName;
+	}
+
+	public void setPipelineName(String pipelineName) {
+		this.pipelineName = pipelineName;
+	}
+
+	public String getPipelineId() {
+		return pipelineId;
+	}
+
+	public void setPipelineId(String pipelineId) {
+		this.pipelineId = pipelineId;
+	}
+
+	public PipelineData() {
+		// TODO Auto-generated constructor stub
+	}
 
 }

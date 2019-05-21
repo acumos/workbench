@@ -40,7 +40,6 @@ public interface PipeLineValidationService {
 	 */
 	public void validateInputData(String authenticatedUserId, Pipeline pipeLine);
 	
-	//TODO : Move method to workbench-common library module.
 		/**
 		 * Validates Project for : 
 		 * 		1. Project exists

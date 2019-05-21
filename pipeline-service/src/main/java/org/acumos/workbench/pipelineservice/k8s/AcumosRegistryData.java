@@ -18,26 +18,48 @@
  * ===============LICENSE_END=========================================================
  */
 
-package org.acumos.workbench.pipelineservice.exception;
+package org.acumos.workbench.pipelineservice.k8s;
 
-import org.acumos.workbench.common.exception.BadRequestException;
-
-public class DuplicatePipeLineException extends BadRequestException {
-
-	private static final long serialVersionUID = -6662185013150870880L;
-	private static final String MSG = "Pipeline name and version already exists";
-
-	/**
-	 * To handle Duplicate Pipeline Exception.
-	 */
-	public DuplicatePipeLineException() {
-		super(MSG);
+public class AcumosRegistryData {
+	private String registryName;
+	private String registryId;
+	private String registryUri;
+	private boolean registryConfigured;
+	
+	public String getRegistryName() {
+		return registryName;
 	}
 
-	public DuplicatePipeLineException(String msg) {
-		super(msg);
+	public void setRegistryName(String registryName) {
+		this.registryName = registryName;
 	}
+
 	
-	
+	public String getRegistryId() {
+		return registryId;
+	}
+
+	public void setRegistryId(String registryId) {
+		this.registryId = registryId;
+	}
+
+	public String getRegistryUri() {
+		return registryUri;
+	}
+
+	public void setRegistryUri(String registryUri) {
+		this.registryUri = registryUri;
+	}
+
+	public boolean isRegistryConfigured() {
+		return registryConfigured;
+	}
+
+	public void setRegistryConfigured(boolean registryConfigured) {
+		this.registryConfigured = registryConfigured;
+	}
+	public AcumosRegistryData() {
+		// TODO Auto-generated constructor stub
+	}//end-consterutor
 
 }

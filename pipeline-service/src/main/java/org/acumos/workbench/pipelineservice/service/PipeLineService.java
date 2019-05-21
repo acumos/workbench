@@ -116,7 +116,7 @@ public interface PipeLineService {
 	 * @return
 	 * 		ServiceState object
 	 */
-	public ServiceState deletePipeline(String pipelineId);
+	public ServiceState deletePipeline(String authenticatedUserId, String pipelineId);
 
 	/**
 	 * @param authenticatedUserId

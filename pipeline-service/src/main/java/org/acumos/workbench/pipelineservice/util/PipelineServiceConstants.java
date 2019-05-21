@@ -40,5 +40,21 @@ public class PipelineServiceConstants {
 	public static final String FIELD_PROJECT_ID = "Project Id";
 	public static final String FIELD_AUTHENTICATED_USER_ID = "AuthenticatedUserId";
 	
+	public static final String FLOW_REGISTRIES = "/flow/registries";
+	public static final String NIFI_API = "/nifi-api";
+	public static final String NIFI_REGISTRY_API_PATH = "/nifi-registry-api";
+	public static final String CONTROLLER_REGISTRY_CLIENTS = "/controller/registry-clients";
+	public static final String PROCESS_GROUPS_ROOT = "/process-groups/root";
+	public static final String BUCKETS = "/buckets";
+	public static final String BUCKETS_SLASH = "/buckets/";
+	public static final String POLICIES = "/policies";
+	public static final String USER_BUCKET_FLOWS = "/buckets/{userBucketId}/flows";
+	public static final String USER_BUCKET_FLOW_VERSION = "/buckets/{userBucketId}/flows/{userFlowId}/versions";
+	public static final String PROCESS_GROUPS_ROOT_PROCESSID = "/process-groups/{rootProcessGroupId}/process-groups";
+	public static final String TENANTS_USERS = "/tenants/users";
+	public static final String BUCKET_FLOWS_PIPELINE = "/buckets/{bucketId}/flows/{pipelineId}";
+	public static final String PROCESS_ROOT_COMPONENTS = "/?processGroupId=root&componentIds=";
+ 
+			
 
 }

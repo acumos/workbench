@@ -20,24 +20,12 @@
 
 package org.acumos.workbench.pipelineservice.exception;
 
-import org.acumos.workbench.common.exception.BadRequestException;
 
-public class DuplicatePipeLineException extends BadRequestException {
-
-	private static final long serialVersionUID = -6662185013150870880L;
-	private static final String MSG = "Pipeline name and version already exists";
-
-	/**
-	 * To handle Duplicate Pipeline Exception.
-	 */
-	public DuplicatePipeLineException() {
-		super(MSG);
-	}
-
-	public DuplicatePipeLineException(String msg) {
-		super(msg);
-	}
+public class SecurityValidationException extends RuntimeException {
 	
-	
+	private static final long serialVersionUID = -8642422087526416248L;
 
+	public SecurityValidationException(String message) {
+		super(message);
+	}
 }

@@ -20,9 +20,13 @@
 
 package org.acumos.workbench.pipelineservice.config;
 
+import java.lang.invoke.MethodHandles;
+
 import org.acumos.cds.client.CommonDataServiceRestClientImpl;
 import org.acumos.workbench.common.security.JWTAuthorizationFilter;
 import org.acumos.workbench.pipelineservice.util.ConfigurationProperties;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,6 +38,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 	
 	
 	@Autowired
@@ -72,7 +77,10 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Bean
 	public JWTAuthorizationFilter jwtAuthorizationFilterBean() throws Exception {
+    	logger.debug("jwtAuthorizationFilterBean() begin"); 
     	JWTAuthorizationFilter jwtAuthorizationFilter = new JWTAuthorizationFilter(authenticationManagerBean(),conf.getJwtSecretKey(), cdsClient);
+    	logger.debug("Secret Key : " + conf.getJwtSecretKey());
+    	logger.debug("jwtAuthorizationFilterBean() end"); 
 		return jwtAuthorizationFilter;
 	}
 }

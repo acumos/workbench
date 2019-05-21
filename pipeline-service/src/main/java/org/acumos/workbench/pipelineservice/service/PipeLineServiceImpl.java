@@ -70,6 +70,8 @@ public class PipeLineServiceImpl implements PipeLineService{
 	
 	@Autowired
 	private ConfigurationProperties configProps;
+	@Autowired
+	private NiFiClient nifiService;
 	
 	@Override
 	public Pipeline createPipeLine(String authenticatedUserId, String projectId, Pipeline pipeLine) throws TargetServiceInvocationException {
@@ -82,12 +84,15 @@ public class PipeLineServiceImpl implements PipeLineService{
 		MLPUser mlpUser = getUserDetails(authenticatedUserId);
 		String userId = mlpUser.getUserId();
 		
-		try{
-		mlpPipeline = PipeLineServiceUtil.getMLPPipeLine(userId, pipeLine);
-		// Call to CDS to create new PipeLine
-		logger.debug("CDS createPipeLine() method Begin");
-		responseMLPPileLine = cdsClient.createPipeline(mlpPipeline);
-		logger.debug("CDS createPipeLine() method End");
+		// Return the URL of the Nifi which stores in CDS
+		String url = nifiService.createPipeline(authenticatedUserId,pipeLine.getPipelineId().getName());
+		try {
+			mlpPipeline = PipeLineServiceUtil.getMLPPipeLine(userId, pipeLine);
+			mlpPipeline.setServiceUrl(url);
+			// Call to CDS to create new PipeLine
+			logger.debug("CDS createPipeLine() method Begin");
+			responseMLPPileLine = cdsClient.createPipeline(mlpPipeline);
+			logger.debug("CDS createPipeLine() method End");
 		} catch(RestClientResponseException e){
 			logger.error("CDS - Create Pipeline", e);
 			throw new TargetServiceInvocationException(PipelineServiceConstants.CDS_CREATE_PIPELINE);
@@ -255,7 +260,9 @@ public class PipeLineServiceImpl implements PipeLineService{
 				throw new DuplicatePipeLineException();
 			}
 		}
-
+		// Call NiFi Service to update the Pipeline Details
+		nifiService.updatePipeline(authenticatedUserId, oldMLPPipeline.getName(), newPipeLineName);
+		
 		MLPPipeline newMLPPipeline = PipeLineServiceUtil.updateMLPPipeline(oldMLPPipeline, pipeLine);
 		try {
 			logger.debug("CDS updatePipeline() method Begin");
@@ -306,7 +313,7 @@ public class PipeLineServiceImpl implements PipeLineService{
 	}
 
 	@Override
-	public ServiceState deletePipeline(String pipelineId) {
+	public ServiceState deletePipeline(String authenticatedUserId ,String pipelineId) {
 		logger.debug("deletePipeline() Begin");
 		ServiceState result = null;
 		List<MLPProject> mlpProjects = null;
@@ -332,6 +339,10 @@ public class PipeLineServiceImpl implements PipeLineService{
 			logger.error("CDS - Drop Project Pipeline", e);
 			throw new TargetServiceInvocationException(PipelineServiceConstants.CDS_DROP_PROJECT_PIPELINE);
 		}
+		Pipeline pipeline = getPipeline(authenticatedUserId, pipelineId);
+		String pipelineName = pipeline.getPipelineId().getName();
+		// Call NiFi Service to delete the Pipeline Details inside NiFi Server
+		nifiService.deletePipeline(authenticatedUserId, pipelineName);
 		try {
 			//1.Delete the Pipeline
 			cdsClient.setRequestId(MDC.get(LoggingConstants.MDCs.REQUEST_ID));

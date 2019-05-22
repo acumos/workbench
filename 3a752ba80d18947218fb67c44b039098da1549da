@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db46fad6_dc5ea8ce",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/NiFiClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-05-22T00:19:18Z",
+      "side": 1,
+      "message": "This probably need to be extracted in a constructor \n\n@Autowired\npublic NiFiClient(RestTemplateBuilder builder) {\n    //logic\n}",
+      "revId": "3a752ba80d18947218fb67c44b039098da1549da",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7e1a73bf_2fba8aae",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/NiFiClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-05-22T00:19:18Z",
+      "side": 1,
+      "message": "Probably better to initialise",
+      "revId": "3a752ba80d18947218fb67c44b039098da1549da",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "588598e0_5a846fb2",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/NiFiClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-05-22T00:19:18Z",
+      "side": 1,
+      "message": "Please check for any null values that can cause NPE in later part.",
+      "revId": "3a752ba80d18947218fb67c44b039098da1549da",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d49ab8d0_c3c2fd42",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/NiFiClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-05-22T00:19:18Z",
+      "side": 1,
+      "message": "This should probably stop from remaining logic to execute by throwing exception or stop remaining steps.",
+      "revId": "3a752ba80d18947218fb67c44b039098da1549da",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2c0f162f_b83e6be4",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/NiFiClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-05-22T00:19:18Z",
+      "side": 1,
+      "message": "check for any null elements",
+      "revId": "3a752ba80d18947218fb67c44b039098da1549da",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4070e457_cdcdbffc",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/NiFiClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-05-22T00:19:18Z",
+      "side": 1,
+      "message": "should it throw exception or stop remaining logic from proceeding?",
+      "revId": "3a752ba80d18947218fb67c44b039098da1549da",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67092fd5_61d9fd70",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/NiFiClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-05-22T00:19:18Z",
+      "side": 1,
+      "message": "Probably externalise it or create a constant",
+      "revId": "3a752ba80d18947218fb67c44b039098da1549da",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bf497cac_77ce41ef",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/NiFiClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-05-22T00:19:18Z",
+      "side": 1,
+      "message": "Externalise it",
+      "revId": "3a752ba80d18947218fb67c44b039098da1549da",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "965031a4_a91423d2",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/NiFiClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-05-22T00:19:18Z",
+      "side": 1,
+      "message": "Externalise to avoid hard codes for password",
+      "revId": "3a752ba80d18947218fb67c44b039098da1549da",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a098b8d2_e0426bb3",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/NiFiClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 87
+      },
+      "writtenOn": "2019-05-22T00:19:18Z",
+      "side": 1,
+      "message": "Remove hard coded server names and externalise this property",
+      "revId": "3a752ba80d18947218fb67c44b039098da1549da",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}

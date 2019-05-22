@@ -36,5 +36,4 @@ ML Workbench
    workbench-common-release-notes.rst
    workbench-common-doc.rst
    workbench-common-developer-guide.rst
-   mlwb-user-guide/index
    

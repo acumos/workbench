@@ -21,20 +21,11 @@ ML Workbench
 =============
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Contents:
    
-   notebook-service-release-notes.rst
-   notebook-service-api-doc.rst
-   notebook-service-developer-guide.rst
-   pipeline-service-release-notes.rst
-   pipeline-service-api-doc.rst
-   pipeline-service-developer-guide.rst
-   project-service-release-notes.rst
-   project-service-api-doc.rst
-   project-service-developer-guide.rst
-   workbench-common-release-notes.rst
-   workbench-common-doc.rst
-   workbench-common-developer-guide.rst
-   mlwb-user-guide/index
+   dashboard-component/index
+   home-webcomponent/index
+   notebook-component/index
+   project-compoenent/index
    

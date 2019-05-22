@@ -25,10 +25,10 @@ var config = {
 		projectCatalogComponent: "http://localhost:9085",
 		notebookComponent: "http://localhost:9086",
 		notebookCatalogComponent: "http://localhost:9087",
-		pipelineComponent: "http://localhost:9093",
-		pipelineCatalogComponent: "http://localhost:9091",
+		pipelineComponent: "http://localhost:9091",
+		pipelineCatalogComponent: "http://localhost:9092",
 		portalFEURL: "http://localhost:8085",
-		menuItems: '[{"title": "Dashboard", "icon": "fa fa-tachometer-alt", "link": "/pages/dashboard", "home": true}, {"title": "Projects", "icon": "fa fa-project-diagram", "link": "/pages/projects/catalog"}, {"title": "Notebooks", "icon": "fas fa-book-open", "link": "/pages/notebook/catalog"}, {"title": "AcuCompose", "icon": "fas fa-crop-alt", "link": "/pages/acuCompose"}]'
+		menuItems: '[{"title": "Dashboard", "icon": "fa fa-tachometer-alt", "link": "/pages/dashboard", "home": true}, {"title": "Projects", "icon": "fa fa-project-diagram", "link": "/pages/projects/catalog"}, {"title": "Notebooks", "icon": "fas fa-book-open", "link": "/pages/notebook/catalog"}, {"title": "Data Pipelines", "icon": "fa fa-code-branch", "link": "/pages/pipeline/catalog"}, {"title": "AcuCompose", "icon": "fas fa-crop-alt", "link": "/pages/acuCompose"}]'
 	},
 	deploy : {
 		dashboardComponent : process.env.dashboardComponent,

@@ -16,7 +16,7 @@
 #limitations under the License.
 #===============LICENSE_END=========================================================
 
-FROM node:10-alpine
+FROM node:10.15.3-alpine
 
 CMD mkdir /opt/app/home-component
 ADD . /opt/app/home-component

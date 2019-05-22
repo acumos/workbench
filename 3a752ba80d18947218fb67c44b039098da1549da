@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "70d39874_4e107c79",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/NiFiClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-05-22T12:00:25Z",
+      "side": 1,
+      "message": "If extracted in constructor, the initRestTemplate() configProps will throw NPE because the ConfigurationProperties has been autowired in it.",
+      "parentUuid": "db46fad6_dc5ea8ce",
+      "revId": "3a752ba80d18947218fb67c44b039098da1549da",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e1a73bf_2fba8aae",
         "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/NiFiClient.java",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2019-05-22T00:19:18Z",
       "side": 1,
       "message": "Probably better to initialise",
+      "revId": "3a752ba80d18947218fb67c44b039098da1549da",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1d540089_a31dd097",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/NiFiClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-05-22T12:00:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e1a73bf_2fba8aae",
       "revId": "3a752ba80d18947218fb67c44b039098da1549da",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "55f3af1e_4ab4dcfb",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/NiFiClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-05-22T12:00:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "588598e0_5a846fb2",
+      "revId": "3a752ba80d18947218fb67c44b039098da1549da",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d49ab8d0_c3c2fd42",
         "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/NiFiClient.java",
         "patchSetId": 6
@@ -64,6 +118,24 @@
       "writtenOn": "2019-05-22T00:19:18Z",
       "side": 1,
       "message": "This should probably stop from remaining logic to execute by throwing exception or stop remaining steps.",
+      "revId": "3a752ba80d18947218fb67c44b039098da1549da",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f84506ad_edb786eb",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/NiFiClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-05-22T12:00:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d49ab8d0_c3c2fd42",
       "revId": "3a752ba80d18947218fb67c44b039098da1549da",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "7e4e59a1_349cc593",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/NiFiClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-05-22T12:00:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c0f162f_b83e6be4",
+      "revId": "3a752ba80d18947218fb67c44b039098da1549da",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4070e457_cdcdbffc",
         "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/NiFiClient.java",
         "patchSetId": 6
@@ -98,6 +188,24 @@
       "writtenOn": "2019-05-22T00:19:18Z",
       "side": 1,
       "message": "should it throw exception or stop remaining logic from proceeding?",
+      "revId": "3a752ba80d18947218fb67c44b039098da1549da",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8f5f6fce_a81adc40",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/NiFiClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-05-22T12:00:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4070e457_cdcdbffc",
       "revId": "3a752ba80d18947218fb67c44b039098da1549da",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "c043a1c3_1a5ef0fc",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/NiFiClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-05-22T12:00:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67092fd5_61d9fd70",
+      "revId": "3a752ba80d18947218fb67c44b039098da1549da",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf497cac_77ce41ef",
         "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/NiFiClient.java",
         "patchSetId": 6
@@ -132,6 +258,24 @@
       "writtenOn": "2019-05-22T00:19:18Z",
       "side": 1,
       "message": "Externalise it",
+      "revId": "3a752ba80d18947218fb67c44b039098da1549da",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b8b39614_1bfa9080",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/NiFiClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-05-22T12:00:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf497cac_77ce41ef",
       "revId": "3a752ba80d18947218fb67c44b039098da1549da",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "2fe78f79_d9a3c4fa",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/NiFiClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-05-22T12:00:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "965031a4_a91423d2",
+      "revId": "3a752ba80d18947218fb67c44b039098da1549da",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a098b8d2_e0426bb3",
         "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/NiFiClient.java",
         "patchSetId": 6
@@ -166,6 +328,24 @@
       "writtenOn": "2019-05-22T00:19:18Z",
       "side": 1,
       "message": "Remove hard coded server names and externalise this property",
+      "revId": "3a752ba80d18947218fb67c44b039098da1549da",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d0c3b78f_1ccd3cf5",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/NiFiClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-05-22T12:00:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a098b8d2_e0426bb3",
       "revId": "3a752ba80d18947218fb67c44b039098da1549da",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "ea310ce6_90e296eb",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/NiFiClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 929,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-05-22T12:00:25Z",
+      "side": 1,
+      "message": "No, its P12. JKS has been used below.",
+      "parentUuid": "84d6b25b_2e97401f",
+      "revId": "3a752ba80d18947218fb67c44b039098da1549da",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d27d3a15_7557d3e3",
         "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/NiFiClient.java",
         "patchSetId": 6
@@ -200,6 +398,24 @@
       "writtenOn": "2019-05-22T00:34:29Z",
       "side": 1,
       "message": "TLS is currently at v. 1.2",
+      "revId": "3a752ba80d18947218fb67c44b039098da1549da",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ff426c0e_085b4284",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/NiFiClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-05-22T12:00:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d27d3a15_7557d3e3",
       "revId": "3a752ba80d18947218fb67c44b039098da1549da",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false

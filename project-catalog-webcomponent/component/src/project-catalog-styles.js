@@ -29,6 +29,7 @@ export const style = css`
 }
 .nav-pills .nav-link.active {
   background-color: rgb(103, 28, 157) !important;
+  color: white !important;
 }
 
 .nav-pills .nav-link {

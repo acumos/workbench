@@ -22,6 +22,30 @@
       "revId": "42f17542f0d16ab9b3fd631ccf756996c0e07ef0",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59c402c7_6d6dde1e",
+        "filename": "workbench-common/pom.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-05-24T17:13:45Z",
+      "side": 1,
+      "message": "its by mistake manoop, Revoking the SNAPSHOT, but the version needs to be bumped up as 1.0.3 and will use it for MLWB MS.",
+      "parentUuid": "3d952d37_444a39f0",
+      "range": {
+        "startLine": 27,
+        "startChar": 11,
+        "endLine": 27,
+        "endChar": 25
+      },
+      "revId": "42f17542f0d16ab9b3fd631ccf756996c0e07ef0",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
     }
   ]
 }

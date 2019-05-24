@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "008f6cad_cbef6ee8",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/common/security/JWTAuthorizationFilter.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2019-05-24T15:54:54Z",
+      "side": 1,
+      "message": "This cast is not needed. Please remove.",
+      "range": {
+        "startLine": 72,
+        "startChar": 36,
+        "endLine": 72,
+        "endChar": 54
+      },
+      "revId": "65206ae658b6a3c4f585a10b2992102e6ca27091",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dcac67c_81dbae02",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/common/security/JWTAuthorizationFilter.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2019-05-24T15:54:54Z",
+      "side": 1,
+      "message": "no reason to separate these if conditions, please merge them.",
+      "range": {
+        "startLine": 88,
+        "startChar": 3,
+        "endLine": 91,
+        "endChar": 47
+      },
+      "revId": "65206ae658b6a3c4f585a10b2992102e6ca27091",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fa1154f_b9fae114",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/common/security/JWTAuthorizationFilter.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2019-05-24T15:54:54Z",
+      "side": 1,
+      "message": "This method is put a very complex style of nested if conditions. It can be easily refactored to reduce the complexity. With such complexity flow of the logic can be easily misunderstood by any new developer can break certain cases. So, it is important to keep it simple. \"Simple is best!!\" :)\n\nRather than completely refactoring into switch cases or any other better style, at least merge the if conditions for now rather than nested.",
+      "range": {
+        "startLine": 106,
+        "startChar": 17,
+        "endLine": 106,
+        "endChar": 30
+      },
+      "revId": "65206ae658b6a3c4f585a10b2992102e6ca27091",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b216c913_67236bfe",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/common/security/JWTAuthorizationFilter.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2019-05-24T15:54:54Z",
+      "side": 1,
+      "message": "merge these to conditions rather than nested.",
+      "range": {
+        "startLine": 109,
+        "startChar": 2,
+        "endLine": 111,
+        "endChar": 70
+      },
+      "revId": "65206ae658b6a3c4f585a10b2992102e6ca27091",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4392db7_c3296039",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/common/security/JWTAuthorizationFilter.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2019-05-24T15:54:54Z",
+      "side": 1,
+      "message": "merge these two conditions",
+      "range": {
+        "startLine": 114,
+        "startChar": 4,
+        "endLine": 116,
+        "endChar": 35
+      },
+      "revId": "65206ae658b6a3c4f585a10b2992102e6ca27091",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82e06e49_c1de8a58",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/common/security/JWTAuthorizationFilter.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2019-05-24T15:54:54Z",
+      "side": 1,
+      "message": "merge these two conditions",
+      "range": {
+        "startLine": 119,
+        "startChar": 6,
+        "endLine": 120,
+        "endChar": 67
+      },
+      "revId": "65206ae658b6a3c4f585a10b2992102e6ca27091",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a928403_e07ff127",
+        "filename": "workbench-common/src/main/java/org/acumos/workbench/common/security/JwtTokenUtil.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2019-05-24T15:54:54Z",
+      "side": 1,
+      "message": "this util class contain all static members, so the class is not supposed to be instantiated. To follow good coding practices, please add a private constructor. Please copy paste below code.\n\nprivate JwtTokenUtil() {\n    throw new IllegalStateException(\"Utility class\");\n}",
+      "range": {
+        "startLine": 35,
+        "startChar": 13,
+        "endLine": 35,
+        "endChar": 25
+      },
+      "revId": "65206ae658b6a3c4f585a10b2992102e6ca27091",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    }
+  ]
+}

@@ -20,9 +20,12 @@
 
 package org.acumos.workbench.common.security;
 
-import static org.acumos.workbench.common.security.SecurityConstants.*;
+import static org.acumos.workbench.common.security.SecurityConstants.AUTHORIZATION_HEADER_KEY;
+import static org.acumos.workbench.common.security.SecurityConstants.JWT_TOKEN_HEADER_KEY;
+import static org.acumos.workbench.common.security.SecurityConstants.TOKEN_PASS_KEY;
 
 import java.io.IOException;
+import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 
 import javax.servlet.FilterChain;
@@ -32,6 +35,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.acumos.cds.client.ICommonDataServiceRestClient;
 import org.acumos.cds.domain.MLPUser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -40,6 +45,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
 	private String secretKey;
 	private UserService userService;
@@ -50,8 +56,10 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 	
 	public JWTAuthorizationFilter(AuthenticationManager authenticationManager, String secretKey, ICommonDataServiceRestClient cdsClient) {
 		super(authenticationManager);
+		logger.debug("JWTAuthorizationFilter() begin");
 		this.secretKey = secretKey;
 		this.userService = new UserService(cdsClient);
+		logger.debug("JWTAuthorizationFilter() end");
 	}
 	
 	/**
@@ -62,23 +70,26 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain chain) throws IOException, ServletException {
-		HttpServletRequest httpRequest = (HttpServletRequest) request;
+		logger.debug("doFilterInternal() begin");
+		HttpServletRequest httpRequest =  request;
 		String authToken = null;
 		authToken = httpRequest.getHeader(AUTHORIZATION_HEADER_KEY);
-		
+		logger.debug("AUTHORIZATION_HEADER_KEY : " + authToken);
 		if (authToken == null) {
 			authToken = httpRequest.getHeader(JWT_TOKEN_HEADER_KEY);
+			logger.debug("JWT_TOKEN_HEADER_KEY : " + authToken);
 		}
 		if (authToken == null) {
 			authToken = request.getParameter(JWT_TOKEN_HEADER_KEY);
+			logger.debug("JWT_TOKEN_HEADER_KEY : " + authToken);
 		}
 		if (authToken != null) {
 			authToken = authToken.replace(TOKEN_PASS_KEY, "");
+			logger.debug("TOKEN_PASS_KEY : " + authToken);
 			JWTTokenVO jwtTokenVO = JwtTokenUtil.getUserToken(authToken, secretKey);
 			if (jwtTokenVO != null
-					&& !(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)) {
-				//validate token 
-				if (validateToken(jwtTokenVO, secretKey)) {
+					&& !(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken) && validateToken(jwtTokenVO, secretKey)) {
+					//validate token 
 					MLPUser mlpUser = userService.findUserByUsername(jwtTokenVO.getUserName());
 					//TODO : Need to implement role base authority 
 					UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
@@ -86,33 +97,29 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 					authentication.setDetails(new WebAuthenticationDetailsSource()
 							.buildDetails(httpRequest));
 					SecurityContextHolder.getContext().setAuthentication(authentication);
-				}
 			}
 		}
         chain.doFilter(request, response);
+        logger.debug("doFilterInternal() End");
     }
 
 	private boolean validateToken(JWTTokenVO jwtTokenVO, String secretKey) {
+		logger.debug("validateToken() Begin");
 		Boolean isVallidToken = false;
-		if (jwtTokenVO != null) {
+		if (jwtTokenVO != null && !JwtTokenUtil.isTokenExpired(jwtTokenVO.getExpirationDate())) {
 			// check token expired or not
-			if (!JwtTokenUtil.isTokenExpired(jwtTokenVO.getExpirationDate())) {
-				String userName = jwtTokenVO.getUserName();
-				MLPUser mlpUser = userService.findUserByUsername(userName);
-				if (mlpUser != null) {
-					String authTokenFromDB = mlpUser.getAuthToken();
-					if (authTokenFromDB != null) {
-						JWTTokenVO jwtTokenVOFromDB = JwtTokenUtil.getUserToken(authTokenFromDB, secretKey);
-						MLPUser mlpUserFromDB = userService.findUserByUsername(jwtTokenVOFromDB.getUserName());
-						if (mlpUserFromDB != null) {
-							if (mlpUserFromDB.getUserId().equals(mlpUser.getUserId())) {
-								isVallidToken = true;
-							}
-						}
-					}
+			String userName = jwtTokenVO.getUserName();
+			MLPUser mlpUser = userService.findUserByUsername(userName);
+			if (mlpUser != null && null != mlpUser.getAuthToken()) {
+				String authTokenFromDB = mlpUser.getAuthToken();
+				JWTTokenVO jwtTokenVOFromDB = JwtTokenUtil.getUserToken(authTokenFromDB, secretKey);
+				MLPUser mlpUserFromDB = userService.findUserByUsername(jwtTokenVOFromDB.getUserName());
+				if (mlpUserFromDB != null && mlpUserFromDB.getUserId().equals(mlpUser.getUserId())) {
+					isVallidToken = true;
 				}
 			}
 		}
+		logger.debug("validateToken() End");
 		return isVallidToken;
 	}
 }

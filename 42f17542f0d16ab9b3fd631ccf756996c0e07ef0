@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d952d37_444a39f0",
+        "filename": "workbench-common/pom.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2019-05-24T17:05:03Z",
+      "side": 1,
+      "message": "I noticed all poms are being changed to go for release versions like 1.0.2 rather than snapshots (I assume that decision is may be made to finalize the release packages).\n\nso, are you sure, you want 1.0.3-SNAPSHOT or if it is bymistake, then do you need 1.0.3?",
+      "range": {
+        "startLine": 27,
+        "startChar": 11,
+        "endLine": 27,
+        "endChar": 25
+      },
+      "revId": "42f17542f0d16ab9b3fd631ccf756996c0e07ef0",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    }
+  ]
+}

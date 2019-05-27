@@ -99,6 +99,7 @@ public class NiFiClient {
          	nifiUrl
 	 */
 	public String createPipeline(String acumosLoginId, String pipelineName) {
+		logger.debug("NiFi createPipeline() begin");
 		String flowURL = null;
 		String nifiURL = null;
 		boolean acumosRegistryConfiguredInNiFi = false;
@@ -115,6 +116,7 @@ public class NiFiClient {
 		
 		// STEP - 0: SET UP REST CLIENT - common for all methods called from  this method
 		String nifiRegistryBaseURL = configProps.getRegistryBaseUrl();
+		logger.debug("NiFi Registry Base URL : " + nifiRegistryBaseURL);
 
 		// PART -A: CREATE NIFI INSTANCE FOR THE USER
 		// STEP-1: CHECK IF THE NIFi CONTAINER FOR THE USER IS ALREADY CREATED
@@ -190,10 +192,12 @@ public class NiFiClient {
 			throw new DuplicatePipeLineException("Request PipeLine Name : " + pipelineName + " already Exists in Both NiFi Server and NiFi Registry");
 			
 		}
+		logger.debug("NiFi createPipeline() end");
 		return flowURL;
 	}
 
 	private String getNifiURL(String acumosLoginId) {
+		logger.debug("getNifiURL() begin");
 		String nifiURL = null;
 		List<Pipeline> pipelines = plServiceImpl.getPipelines(acumosLoginId, null);
 		if(null != pipelines && pipelines.size() > 0 ) {
@@ -224,6 +228,7 @@ public class NiFiClient {
 			nifiURL = createNiFiInstance(acumosLoginId);
 		}
 		logger.debug("Nifi Server URL : " + nifiURL);
+		logger.debug("getNifiURL() end");
 		return nifiURL;
 	}
 
@@ -242,6 +247,7 @@ public class NiFiClient {
 
 	private AcumosRegistryData checkIfAcumosRegistryIsConfiguredInNiFi(RestTemplate restTemplate, String nifiBaseURL) {
 		// STEP-A: CHECK IF THE NIFI REGISTRY IS CONFIGURED IN user's NIFI INSTANCE
+		logger.debug("checkIfAcumosRegistryIsConfiguredInNiFi() Begin");
 		AcumosRegistryData acumosRegistryData = new AcumosRegistryData();
 		try {
 			acumosRegistryData.setRegistryConfigured(false);// initialize as false
@@ -305,12 +311,14 @@ public class NiFiClient {
 			logger.error("Exception occured while NiFi Registry Configuration ",e);
 			throw new TargetServiceInvocationException("Exception occured while NiFi Registry Configuration ",e);
 		}
+		logger.debug("checkIfAcumosRegistryIsConfiguredInNiFi() end");
 		return acumosRegistryData;
 	}
 
 
 	@SuppressWarnings({ "unchecked", "rawtypes", "unused"})
 	private AcumosRegistryData configureAcumosRegistryInNiFi(RestTemplate client, String nifiBaseURL) {
+		logger.debug("configureAcumosRegistryInNiFi() begin");
 		AcumosRegistryData acumosRegistryData = new AcumosRegistryData();
 
 		// Create, i.e., configure Acumos Registry in NiFi via POST request
@@ -377,10 +385,12 @@ public class NiFiClient {
 				acumosRegistryData.setRegistryUri(acumosRegistryUri);
 			}
 		}
+		logger.debug("configureAcumosRegistryInNiFi() end");
 		return acumosRegistryData;
 	}
 
 	private String getNiFiRootProcessGroupId(RestTemplate client, String nifiBaseURL) {
+		logger.debug("getNiFiRootProcessGroupId() begin");
 		//STEP-C: GET ROOT PROCESS GROUP ID
 		String rootProcessGroupId = null;
 		String url = nifiBaseURL + PipelineServiceConstants.PROCESS_GROUPS_ROOT;
@@ -410,11 +420,13 @@ public class NiFiClient {
 		JSONObject rootProcessGroupResponseJSONObject = (JSONObject) rootProcessGroupResponseObject;
 		rootProcessGroupId = (String) rootProcessGroupResponseJSONObject.get("id");
 		logger.debug("NiFi Root Process Group Id:" + rootProcessGroupId);
+		logger.debug("getNiFiRootProcessGroupId() end");
 		return rootProcessGroupId;
 	}
 
 	private BucketData checkIfBucketExistsForUserInNiFiRegistry(RestTemplate client, String nifiRegistryBaseURL,
 			String acumosLoginId) {
+		logger.debug("checkIfBucketExistsForUserInNiFiRegistry() begin");
 		BucketData bucketData = new BucketData();
 		bucketData.setBucketExists(false);
 		String url = nifiRegistryBaseURL + PipelineServiceConstants.BUCKETS; 
@@ -464,12 +476,14 @@ public class NiFiClient {
 				}
 			}
 		} 
+		logger.debug("checkIfBucketExistsForUserInNiFiRegistry() end");
 		return bucketData;
 	}
 
 	@SuppressWarnings({ "unchecked", "unused" })
 	private BucketData createUserBucketInNiFiRegistry(RestTemplate client, String nifiRegistryBaseURL,
 			String acumosLoginId) {
+		logger.debug("createUserBucketInNiFiRegistry() begin");
 		BucketData bucketData = new BucketData();
 		bucketData.setBucketExists(false);
 		// Create Bucket POST request JSON body creating JSONObject
@@ -508,11 +522,13 @@ public class NiFiClient {
 		bucketData.setBucketExists(true);
 		bucketData.setBucketName(userBucketName);
 		bucketData.setBucketId(userBucketId);
+		logger.debug("createUserBucketInNiFiRegistry() end");
 		return bucketData;
 	}
 
 	private PipelineData checkIfPipelineExistsInUserBucket(RestTemplate client, String nifiRegistryBaseURL,
 			String acumosLoginId, String userBucketId, String pipelineName) {
+		logger.debug("checkIfPipelineExistsInUserBucket() begin");
 		PipelineData pipelineData = new PipelineData();
 		pipelineData.setPipelineExists(false);
 		// 3.1 Get the list of all flows (i.e. MLWB pipelines) under the user's bucket
@@ -568,13 +584,14 @@ public class NiFiClient {
 				}
 			}
 		} 
-
+		logger.debug("checkIfPipelineExistsInUserBucket() end");
 		return pipelineData;
 	}
 
 	@SuppressWarnings({ "unchecked", "unused" })
 	private PipelineData createFlowInNiFiRegistry(RestTemplate client, String nifiRegistryBaseURL, String userBucketId,
 			String pipelineName) {
+		logger.debug("createFlowInNiFiRegistry() begin");
 		// Create Flow POST request JSON body
 		// create JSONObject
 		PipelineData pipelineData = new PipelineData();
@@ -620,12 +637,14 @@ public class NiFiClient {
 		pipelineData.setPipelineId(userFlowId);
 		logger.debug("User Flow Name : " + userFlowName);
 		logger.debug("User Flow Id : " + userFlowId);
+		logger.debug("createFlowInNiFiRegistry() end");
 		return pipelineData;
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes", "unused" })
 	private void upgradeFlowVersionInNiFiRegistry(RestTemplate client, String nifiRegistryBaseURL, String userBucketId,
 			String userFlowId) {
+		logger.debug("upgradeFlowVersionInNiFiRegistry() begin");
 		// ***STEP-5: CHANGE THE FLOW VERSION TO 1
 		// Creste JSONObject for POSTing Flow Version
 		try {
@@ -666,12 +685,14 @@ public class NiFiClient {
 		} catch (Exception e) {
 			logger.error("Exception occured in upgradeFlowVersionInNiFiRegistry()");
 		}
+		logger.debug("upgradeFlowVersionInNiFiRegistry() end");
 	}
 
 	@SuppressWarnings({ "unchecked", "unused" })
 	private String provisionFlowInNiFi(RestTemplate client, String nifiBaseURL, String rootProcessGroupId,
 			String acumosRegistryId, String userBucketId, String userFlowId, String userFlowName,
 			String acumosLoginId) {
+		logger.debug("provisionFlowInNiFi() begin");
 		
 		String flowURL = null;
 		try {
@@ -749,11 +770,13 @@ public class NiFiClient {
 			logger.error("Provision Flow in NIFI Exception",e);
 			throw new TargetServiceInvocationException("Provision Flow in NIFI Exception",e);
 		}
+		logger.debug("provisionFlowInNiFi() end");
 		return flowURL;
 	}
 	
 	@SuppressWarnings("unchecked")
 	private String createUserInNiFiRegistry(RestTemplate client, String nifiRegistryBaseURL, String acumosLoginId) {
+		logger.debug("createUserInNiFiRegistry() begin");
 		String nifiRegistryUserId = null;
 		
 		try {
@@ -792,13 +815,14 @@ public class NiFiClient {
 			logger.error("NIFIRegistry User creation Exception",e);
 			throw new TargetServiceInvocationException("NIFIRegistry User creation Exception",e);
 		}
-
+		logger.debug("createUserInNiFiRegistry() end");
 		return nifiRegistryUserId;
 	}
 	
 	@SuppressWarnings("unchecked")
 	private void updateUserPolicyInNiFiRegistry(RestTemplate client, String nifiRegistryBaseURL, String acumosLoginId, String nifiRegistryBucketId, 
 			String nifiRegistryUserId, String action) {
+		logger.debug("updateUserPolicyInNiFiRegistry() begin");
 		try {
 			// Create Policy POST request JSON body
 			// creating JSONObject
@@ -833,10 +857,12 @@ public class NiFiClient {
 			logger.error("Exception in Update UserPolicy in NIFIRegistry ",e);
 			throw new TargetServiceInvocationException("Exception in Update UserPolicy in NIFIRegistry ",e);
 		}
+		logger.debug("updateUserPolicyInNiFiRegistry() end");
 	}
 	
 	
 	public void deletePipeline(String acumosLoginId, String pipelineName) {
+		logger.debug("deletePipeline() begin");
 		if(null == restTemplate){
 			restTemplate =  initRestTemplate();
 		}
@@ -883,10 +909,12 @@ public class NiFiClient {
 			logger.error("Bucket does not exist for user: " + acumosLoginId);
 			throw new TargetServiceInvocationException("Bucket does not exist for user: " + acumosLoginId);
 		} 
+		logger.debug("deletePipeline() end");
 	}
 
 	@SuppressWarnings("unchecked")
 	public void updatePipeline(String acumosLoginId, String currentPipelineName, String newPipelineName) {
+		logger.debug("updatePipeline() begin");
 		// STEP - 0: SET UP REST Template
 		if(null == restTemplate){
 			restTemplate =  initRestTemplate();
@@ -942,13 +970,16 @@ public class NiFiClient {
 			logger.error("Bucket does not exist for user: " + acumosLoginId);
 			throw new TargetServiceInvocationException("Bucket does not exist for user: " + acumosLoginId);
 		}
+		logger.debug("updatePipeline() end");
 	}
 	
 	
 	
 	private RestTemplate initRestTemplate() {
+		logger.debug("initRestTemplate() Begin");
 		RestTemplate template = null;
 		if(!configProps.getCreatePod()){
+			logger.debug("Creating NiFi POD");
 			try {
 				KeyStore clientStore = KeyStore.getInstance("PKCS12");
 				clientStore.load(new FileInputStream(configProps.getClientCertificatePath()),
@@ -1003,11 +1034,12 @@ public class NiFiClient {
 			template = new RestTemplate();
 		}
 			
-		
+		logger.debug("initRestTemplate() end");
 		return template;
 	}
 
 	private static URI buildURI(String url, Map<String, String> uriParams) {
+		logger.debug("buildURI() begin");
 		URI resultURI = null;
 		UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(url);
 
@@ -1016,6 +1048,7 @@ public class NiFiClient {
 		} else {
 			resultURI = uriBuilder.build().encode().toUri();
 		}
+		logger.debug("buildURI() end");
 		return resultURI;
 	}
 	

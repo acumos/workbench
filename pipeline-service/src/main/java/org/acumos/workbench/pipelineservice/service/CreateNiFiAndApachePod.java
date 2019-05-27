@@ -69,6 +69,7 @@ public class CreateNiFiAndApachePod {
          	return nifiUrl
 	 */
 	public String createNiFiInstanceForUser(String acumosLognId) {
+		logger.debug("createNiFiInstanceForUser() begin");
 		// NOTE: THIS METHOD CREATES BOTH A NIFI AND APACHE INSTANCE INSIDE THE USER'S POD
 		String nifiURL = null;
 		if(confProps.getCreatePod()) { 
@@ -251,7 +252,7 @@ public class CreateNiFiAndApachePod {
 		}
 		// STEP-: CREATE USER'S POD WITH NIFI AND APACHE CONTAINERS INSIDE IT
 		nifiURL = MessageFormat.format(confProps.getServiceBaseUrl(), acumosLognId);
-		
+		logger.debug("createNiFiInstanceForUser() end");
 		return nifiURL;
 	}
 	

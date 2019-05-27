@@ -85,7 +85,9 @@ public class PipeLineServiceImpl implements PipeLineService{
 		String userId = mlpUser.getUserId();
 		
 		// Return the URL of the Nifi which stores in CDS
+		logger.debug("Calling NiFi Serivce ....");
 		String url = nifiService.createPipeline(authenticatedUserId,pipeLine.getPipelineId().getName());
+		logger.debug("NiFi Service URL : " + url);
 		try {
 			mlpPipeline = PipeLineServiceUtil.getMLPPipeLine(userId, pipeLine);
 			mlpPipeline.setServiceUrl(url);

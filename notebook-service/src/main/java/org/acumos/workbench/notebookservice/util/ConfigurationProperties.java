@@ -56,6 +56,8 @@ public class ConfigurationProperties {
 	@Value("${outputfolder}")
 	private String outputFolder;
 	
+	@Value("${jupyternotebook.url}")
+	private String jupyterNotebookURL;
 	
 	/**
 	 * @return the resultsetSize
@@ -125,6 +127,13 @@ public class ConfigurationProperties {
 	 */
 	public String getJupyterhubStorepass() {
 		return jupyterhubStorepass;
+	}
+
+	/**
+	 * @return the jupyterNotebookURL
+	 */
+	public String getJupyterNotebookURL() {
+		return jupyterNotebookURL;
 	}
 
 	

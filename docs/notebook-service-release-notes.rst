@@ -20,6 +20,13 @@
 Notebook Service Release Notes
 ===============================
 
+Version 1.0.2, 2019-05-28
+---------------------------
+* ACUMOS-2971 : IST2 - Note book requires short name and FQN
+		Fix required new configuration parameter in SPRING_APPLICATION_JSON : 
+		"jupyternotebook":{"url":"https://<hostname>:<port>"}
+* Updated to refer workbench-common-1.0.3
+
 Version 1.0.1, 2019-05-17
 ---------------------------
 * ACUMOS-2850 : Move common code to workbench-common

@@ -167,8 +167,16 @@ public class JupyterHubRestClient implements NotebookRestClient {
 			}
 		}
 		
-		//format the repository path
-		notebookURL = CommonUtil.buildURI(this.baseJHURL + JUPYTERNOTEBOOK_PATH , uriParams).toString();
+		String jupyterNotebookURL = confprops.getJupyterNotebookURL();
+		try {
+			URL url = new URL(jupyterNotebookURL);
+		} catch (MalformedURLException e) {
+			logger.error("Invalid Jupyter Notebook URL " + jupyterNotebookURL, e);
+			String msg = String.format(NotebookServiceConstants.MALFORMED_URL, REST_CLIENT_NAME, jupyterNotebookURL);
+			throw new InvalidConfiguration(msg);
+		}
+		
+		notebookURL = CommonUtil.buildURI(jupyterNotebookURL + JUPYTERNOTEBOOK_PATH , uriParams).toString();
 		
 		logger.debug("createNotebookInNotebooServer() End");
 		return notebookURL;

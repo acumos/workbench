@@ -57,7 +57,7 @@ public class PipelineServiceConstants {
 	public static final String VERSION_CHANGE = "version changed from 0 to 1 and ChangeMe process group is added";
 	public static final String PROCESS_GROUP = "PROCESS_GROUP";
 	public static final String CHANGE_ME = "ChangeMe";
- 
+	public static final String DEFULAT_PIPELINE_VERSION = "1";
 			
 
 }

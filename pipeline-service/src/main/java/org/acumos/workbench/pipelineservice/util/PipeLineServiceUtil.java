@@ -46,6 +46,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.util.UriComponentsBuilder;
 
 public class PipeLineServiceUtil {
+	
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 	
 	private final static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
@@ -70,21 +71,25 @@ public class PipeLineServiceUtil {
 			if (null != pipeLineIdentifier) {
 				mlpPipeLine.setName(pipeLineIdentifier.getName());
 				Version pipeLineVersion = pipeLineIdentifier.getVersionId();
+				Instant modifiedTime = Instant.now();
+				String versionLabel = PipelineServiceConstants.DEFULAT_PIPELINE_VERSION;
 				if (null != pipeLineVersion) {
-					mlpPipeLine.setVersion(pipeLineVersion.getLabel());
+					if(null != pipeLineVersion.getLabel()) {
+						versionLabel = pipeLineVersion.getLabel();
+					}
 					if (null != pipeLineVersion.getTimeStamp()) {
 						Date parsedDate;
 						try {
 							parsedDate = dateFormat.parse(pipeLineVersion.getTimeStamp());
 							Timestamp timeStamp = new Timestamp(parsedDate.getTime());
-							mlpPipeLine.setModified(timeStamp.toInstant());
+							modifiedTime = timeStamp.toInstant();
 						} catch (Exception e) {
 							logger.error("Exception Occured in getMLPPipeLine() mathod",e);
 						}
-					} else {
-						mlpPipeLine.setModified(Instant.now());
-					}
-				}
+					} 
+				} 
+				mlpPipeLine.setVersion(versionLabel);
+				mlpPipeLine.setModified(modifiedTime);
 			} else {
 				// TODO : Throw new exception indication mandatory field not available.
 			}

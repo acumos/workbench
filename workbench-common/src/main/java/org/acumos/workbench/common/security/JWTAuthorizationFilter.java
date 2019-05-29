@@ -109,6 +109,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 		if (jwtTokenVO != null && !JwtTokenUtil.isTokenExpired(jwtTokenVO.getExpirationDate())) {
 			// check token expired or not
 			String userName = jwtTokenVO.getUserName();
+			logger.debug("User Name : " + userName);
 			MLPUser mlpUser = userService.findUserByUsername(userName);
 			if (mlpUser != null && null != mlpUser.getAuthToken()) {
 				String authTokenFromDB = mlpUser.getAuthToken();

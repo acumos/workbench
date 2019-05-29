@@ -88,6 +88,9 @@ public class NiFiClient {
 	
 	@Autowired
 	private PipeLineServiceImpl plServiceImpl;
+	
+	@Autowired
+	private CreateNiFiAndApachePod createNiFi;
 
 	/**
 	 * 
@@ -235,7 +238,6 @@ public class NiFiClient {
 	private String createNiFiInstance(String acumosLoginId) {
 		String nifiURL = null;
 		// Call the Kubernetes API to create a NiFi Instance
-		CreateNiFiAndApachePod createNiFi = new CreateNiFiAndApachePod();
 		try {
 			nifiURL = createNiFi.createNiFiInstanceForUser(acumosLoginId);
 		} catch (Exception e) {

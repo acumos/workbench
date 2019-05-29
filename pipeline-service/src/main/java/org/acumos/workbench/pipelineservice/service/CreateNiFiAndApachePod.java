@@ -44,12 +44,14 @@ import org.apache.velocity.app.VelocityEngine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.acumos.workbench.common.exception.TargetServiceInvocationException;
 import org.acumos.workbench.pipelineservice.util.ConfigurationProperties;
 import org.acumos.workbench.pipelineservice.util.PipelineServiceConstants;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 
+@Service
 public class CreateNiFiAndApachePod {
 	/**
 	 * 

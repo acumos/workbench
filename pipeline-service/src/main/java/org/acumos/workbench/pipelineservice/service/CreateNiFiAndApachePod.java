@@ -102,7 +102,7 @@ public class CreateNiFiAndApachePod {
 				throw new TargetServiceInvocationException("Exception occured while executing shell script : "+ confProps.getTemplatePath() + File.separatorChar + confProps.getCertShellFile(), e);
 			}
 
-			String userTemplatePath = templatepath + "/conf/" + acumosLoginId + "/"; // /maven/templates/conf/$User/
+			String userTemplatePath = templatepath + "conf/" + acumosLoginId + "/"; // /maven/templates/conf/$User/
 			logger.debug(" userTemplatePath : " + userTemplatePath);
 			
 			

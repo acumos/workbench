@@ -20,8 +20,11 @@
 
 package org.acumos.workbench.pipelineservice.service;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.lang.invoke.MethodHandles;
 import java.text.MessageFormat;
@@ -93,10 +96,18 @@ public class CreateNiFiAndApachePod {
 					? templatepath + File.separatorChar : templatepath;
 			String[] cmd = { templatepath + confProps.getCertShellFile(), acumosLoginId };
 			try {
-				logger.debug("Executing shell script : " + templatepath + confProps.getCertShellFile() + " " + acumosLoginId);
+				logger.debug("Executing shell script : " + templatepath + confProps.getCertShellFile() + " "+ acumosLoginId);
 				Process process = Runtime.getRuntime().exec(cmd);
-				logger.debug("shell script executed successfully");
-			} catch (IOException e) {
+				InputStream stderr = process.getErrorStream();
+				InputStreamReader isr = new InputStreamReader(stderr);
+				BufferedReader br = new BufferedReader(isr);
+				String line = null;
+				logger.debug("<ERROR>");
+				while ((line = br.readLine()) != null)
+					logger.debug(" Line : " + line);
+				int exitVal = process.waitFor();
+				logger.debug("Process exitValue: " + exitVal);
+			} catch (IOException | InterruptedException e) {
 				error = true;
 				logger.error("Exception occured while executing shell script : " + confProps.getTemplatePath()+ File.separatorChar + confProps.getCertShellFile(), e);
 				throw new TargetServiceInvocationException("Exception occured while executing shell script : "+ confProps.getTemplatePath() + File.separatorChar + confProps.getCertShellFile(), e);
@@ -113,10 +124,16 @@ public class CreateNiFiAndApachePod {
 			velocityEngine.init(velocityProp);
 			Boolean includeUninitialized = new Boolean(true);
 			String namespace = confProps.getNamespace(); // "default"; READ THIS FROM ENV FILE
-
 			// STEP-1: CREATE ONE APACHE CONFIGMAP PER USER
 			// Read the YAML template
-			Template apacheConfigmapTemplate = velocityEngine.getTemplate(confProps.getApacheConfigMap()); // under /maven/templates/conf/$User
+			Template apacheConfigmapTemplate = null;
+			try {
+				apacheConfigmapTemplate = velocityEngine.getTemplate(confProps.getApacheConfigMap()); // under /maven/templates/conf/$User
+			} catch (Exception e) {
+				logger.error("Exception occured while creating the ApacheConfigMap",e);
+				throw new TargetServiceInvocationException("Exception occured while creating the ApacheConfigMap",e);
+			}
+			
 			// create a context and add data
 			VelocityContext apacheConfigmapContext = new VelocityContext();
 			apacheConfigmapContext.put(USER, acumosLoginId);

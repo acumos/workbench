@@ -68,8 +68,7 @@ public class CreateNiFiAndApachePod {
 	 */
 	public String createNiFiInstanceForUser(String acumosLoginId) {
 		logger.debug("createNiFiInstanceForUser() begin");
-		// NOTE: THIS METHOD CREATES BOTH A NIFI AND APACHE INSTANCE INSIDE THE
-		// USER'S POD
+		// NOTE: THIS METHOD CREATES BOTH A NIFI AND APACHE INSTANCE INSIDE THE USER'S POD
 		String nifiURL = null;
 		if (confProps.getCreatePod()) {
 			boolean error = false;
@@ -88,26 +87,25 @@ public class CreateNiFiAndApachePod {
 			CoreV1Api api = new CoreV1Api(client);
 
 			// STEP-3.7: CREATE ONE KUBERNETES SECRET PER USER
-			logger.debug(
-					"Executing Shell script to create required certificat, set the Kuberenetes secret and update the templated and store it in user template dir ."); // /maven/templaets/conf/$User
+			logger.debug("Executing Shell script to create required certificat, set the Kuberenetes secret and update the templated and store it in user template dir ."); // /maven/templaets/conf/$User
 			String templatepath = confProps.getTemplatePath();
 			templatepath = (templatepath.charAt(templatepath.length() - 1) != File.separatorChar)
 					? templatepath + File.separatorChar : templatepath;
 			String[] cmd = { templatepath + confProps.getCertShellFile(), acumosLoginId };
 			try {
-				logger.debug("Executing shell script : " + templatepath + confProps.getCertShellFile() + " "
-						+ acumosLoginId);
+				logger.debug("Executing shell script : " + templatepath + confProps.getCertShellFile() + " " + acumosLoginId);
 				Process process = Runtime.getRuntime().exec(cmd);
 				logger.debug("shell script executed successfully");
 			} catch (IOException e) {
 				error = true;
-				logger.error("Exception occured while executing shell script : " + confProps.getTemplatePath()
-						+ File.separatorChar + confProps.getCertShellFile(), e);
-				throw new TargetServiceInvocationException("Exception occured while executing shell script : "
-						+ confProps.getTemplatePath() + File.separatorChar + confProps.getCertShellFile(), e);
+				logger.error("Exception occured while executing shell script : " + confProps.getTemplatePath()+ File.separatorChar + confProps.getCertShellFile(), e);
+				throw new TargetServiceInvocationException("Exception occured while executing shell script : "+ confProps.getTemplatePath() + File.separatorChar + confProps.getCertShellFile(), e);
 			}
 
-			String userTemplatePath = templatepath + "/conf/" + acumosLoginId; // /maven/templates/conf/$User
+			String userTemplatePath = templatepath + "/conf/" + acumosLoginId + "/"; // /maven/templates/conf/$User/
+			logger.debug(" userTemplatePath : " + userTemplatePath);
+			
+			
 			// create and initialize the Velocity engine
 			VelocityEngine velocityEngine = new VelocityEngine();
 			Properties velocityProp = new Properties();
@@ -119,6 +117,202 @@ public class CreateNiFiAndApachePod {
 			// STEP-1: CREATE ONE APACHE CONFIGMAP PER USER
 			// Read the YAML template
 			Template apacheConfigmapTemplate = velocityEngine.getTemplate(confProps.getApacheConfigMap()); // under /maven/templates/conf/$User
+			// create a context and add data
+			VelocityContext apacheConfigmapContext = new VelocityContext();
+			apacheConfigmapContext.put(USER, acumosLoginId);
+			// now render the template into a StringWriter
+			StringWriter apacheConfigmapWriter = new StringWriter();
+			apacheConfigmapTemplate.merge(apacheConfigmapContext, apacheConfigmapWriter);
+			logger.debug("Writer: " + apacheConfigmapWriter.toString());
+
+			// Create configmap
+			V1ConfigMap apacheConfigmapBody = Yaml.loadAs(apacheConfigmapWriter.toString(), V1ConfigMap.class);
+			V1ConfigMap apacheConfigmap = null;
+			try {
+				apacheConfigmap = api.createNamespacedConfigMap(namespace, apacheConfigmapBody, includeUninitialized,null, null);
+			} catch (ApiException e) {
+				error = true;
+				logger.error("Exception occured while Creating the Apache ConfigMap", e);
+				throw new TargetServiceInvocationException("Exception occured while Creating the Apache ConfigMap", e);
+			}
+			logger.debug("ConfigMap Name: " + apacheConfigmap.getMetadata().getName());
+			logger.debug("ConfigMap Namespace: " + apacheConfigmap.getMetadata().getNamespace());
+			logger.debug("ConfigMap UUID: " + apacheConfigmap.getMetadata().getUid());
+			logger.debug("ConfigMap Data: " + apacheConfigmap.getData().toString());
+			// STEP-2: CREATE ONE NIFI CONFIGMAP PER USER
+			// Read the YAML template
+			Template nifiConfigmapTemplate = velocityEngine.getTemplate(confProps.getNifiConfigMap());// under /maven/templates
+			// create a context and add data
+			VelocityContext nifiConfigmapContext = new VelocityContext();
+			nifiConfigmapContext.put(USER, acumosLoginId);
+			// now render the template into a StringWriter
+			StringWriter nifiConfigmapWriter = new StringWriter();
+			nifiConfigmapTemplate.merge(nifiConfigmapContext, nifiConfigmapWriter);
+
+			// Create configmap
+			V1ConfigMap nifiConfigmapBody = Yaml.loadAs(nifiConfigmapWriter.toString(), V1ConfigMap.class);
+			V1ConfigMap nifiConfigmap = null;
+			try {
+				nifiConfigmap = api.createNamespacedConfigMap(namespace, nifiConfigmapBody, includeUninitialized, null,
+						null);
+			} catch (ApiException e) {
+				error = true;
+				logger.error("Exception occured while Creating the Nifi ConfigMap", e);
+				throw new TargetServiceInvocationException("Exception occured while Creating the Nifi ConfigMap", e);
+			}
+			logger.debug("ConfigMap Name: " + nifiConfigmap.getMetadata().getName());
+			logger.debug("ConfigMap Namespace: " + nifiConfigmap.getMetadata().getNamespace());
+			logger.debug("ConfigMap UUID: " + nifiConfigmap.getMetadata().getUid());
+			logger.debug("ConfigMap Data: " + nifiConfigmap.getData().toString());
+			// STEP-3: CREATE ONE KUBERNETES SERVICE PER USER - POINTS TO APCHE
+			// INGRESS CONTROLLER AND ANOTHER POINTS DIRECTLY TO NIFI CONTAINER IN THE POD
+			// Read the YAML template
+			Template serviceTemplate = velocityEngine.getTemplate(confProps.getService());// under /maven/templates
+			// create a context and add data
+			VelocityContext serviceContext = new VelocityContext();
+			serviceContext.put(USER, acumosLoginId);
+			/* now render the template into a StringWriter */
+			StringWriter serviceWriter = new StringWriter();
+			serviceTemplate.merge(serviceContext, serviceWriter);
+
+			// Create Service
+			V1Service serviceBody = Yaml.loadAs(serviceWriter.toString(), V1Service.class);
+			V1Service service = null;
+
+			try {
+				service = api.createNamespacedService(namespace, serviceBody, includeUninitialized, null, null);
+			} catch (ApiException e) {
+				error = true;
+				logger.error("Exception occured while Creating the service Template", e);
+				throw new TargetServiceInvocationException("Exception occured while Creating the service Template", e);
+			}
+			logger.debug("Service Name: " + service.getMetadata().getName());
+			logger.debug("Service Namespace: " + service.getMetadata().getNamespace());
+			logger.debug("Service UUID: " + service.getMetadata().getUid());
+			// STEP-3.5: CREATE ONE KUBERNETES SERVICE PER USER - POINTS TO APCHE INGRESS
+			// CONTROLLER POINTS DIRECTLY TO NIFI CONTAINER IN THE POD
+			// Read the YAML template
+			Template serviceAdminTemplate = velocityEngine.getTemplate(confProps.getServiceAdmin());// under /maven/templates
+			// create a context and add data
+			VelocityContext serviceAdminContext = new VelocityContext();
+			serviceAdminContext.put(USER, acumosLoginId);
+			// now render the template into a StringWriter
+			StringWriter serviceAdminWriter = new StringWriter();
+			serviceAdminTemplate.merge(serviceAdminContext, serviceAdminWriter);
+			// Create Service
+			V1Service serviceAdminBody = Yaml.loadAs(serviceAdminWriter.toString(), V1Service.class);
+			V1Service serviceAdmin = null;
+
+			try {
+				serviceAdmin = api.createNamespacedService(namespace, serviceAdminBody, includeUninitialized, null,null);
+			} catch (ApiException e) {
+				error = true;
+				logger.error("Exception occured while Creating the ServiceAdmin Template", e);
+				throw new TargetServiceInvocationException("Exception occured while Creating the ServiceAdmin Template",e);
+			}
+			logger.debug("Admin Service Name: " + serviceAdmin.getMetadata().getName());
+			logger.debug("Admin Service Namespace: " + serviceAdmin.getMetadata().getNamespace());
+			logger.debug("Admin Service UUID: " + serviceAdmin.getMetadata().getUid());
+
+			// STEP-4: CREATE ONE KUBERNETES INGRESS PER USER
+			// Read the YAML template
+			Template ingressTemplate = velocityEngine.getTemplate(confProps.getIngress());// under /maven/templates
+			// create a context and add data
+			VelocityContext ingressContext = new VelocityContext();
+			ingressContext.put(USER, acumosLoginId);
+			// now render the template into a StringWriter
+			StringWriter ingressWriter = new StringWriter();
+			ingressTemplate.merge(ingressContext, ingressWriter);
+
+			// Create Ingress
+			V1beta1Ingress ingressBody = Yaml.loadAs(ingressWriter.toString(), V1beta1Ingress.class);
+			V1beta1Ingress ingress = null;
+			ExtensionsV1beta1Api api3 = new ExtensionsV1beta1Api(client);
+
+			try {
+				ingress = api3.createNamespacedIngress(namespace, ingressBody, includeUninitialized, null, null);
+			} catch (ApiException e) {
+				error = true;
+				logger.error("Api Exception occured while Creating the NameSpaced Ingress", e);
+				throw new TargetServiceInvocationException("Api Exception occured while Creating the NameSpaced Ingress", e);
+			}
+
+			logger.debug("Ingress Name: " + ingress.getMetadata().getName());
+			logger.debug("Ingress Namespace: " + ingress.getMetadata().getNamespace());
+			logger.debug("Ingress UUID: " + ingress.getMetadata().getUid());
+			logger.debug("Ingress API Version: " + ingress.getApiVersion());
+			logger.debug("Ingress Status: " + ingress.getStatus().toString());
+
+			// STEP-5: CREATE ONE DEPLOYMENT WITH NIFI AND APACHE CONTAINERS IN IT
+			// Read the YAML template
+			Template deploymentTemplate = velocityEngine.getTemplate(confProps.getDeployment());// under /maven/templates
+			// create a context and add data
+			VelocityContext deploymentContext = new VelocityContext();
+			deploymentContext.put(USER, acumosLoginId);
+			// now render the template into a StringWriter
+			StringWriter deploymentWriter = new StringWriter();
+			deploymentTemplate.merge(deploymentContext, deploymentWriter);
+
+			// Create Deployment
+			V1Deployment deploymentBody = Yaml.loadAs(deploymentWriter.toString(), V1Deployment.class);
+			V1Deployment deployment = null;
+			AppsV1Api api2 = new AppsV1Api(client);
+
+			try {
+				deployment = api2.createNamespacedDeployment(namespace, deploymentBody, includeUninitialized, null,null);
+			} catch (ApiException e) {
+				error = true;
+				logger.error("Api Exception occured while Creating the NameSpaced Deployment", e);
+				throw new TargetServiceInvocationException("Api Exception occured while Creating the NameSpaced Deployment", e);
+			}
+			logger.debug("Deployment Name: " + deployment.getMetadata().getName());
+			logger.debug("Deployment Namespace: " + deployment.getMetadata().getNamespace());
+			logger.debug("Deployment UUID: " + deployment.getMetadata().getUid());
+
+		}
+		// STEP-: CREATE USER'S POD WITH NIFI AND APACHE CONTAINERS INSIDE IT
+		nifiURL = MessageFormat.format(confProps.getServiceBaseUrl(), acumosLoginId);
+		logger.debug("createNiFiInstanceForUser() end");
+		return nifiURL;
+	}
+
+	/**
+	 * 
+	 * @param acumosLoginId
+	 *            accepts acumosLognId
+	 * @return return nifiUrl
+	 */
+	public String createNiFiInstanceForUser1(String acumosLoginId) {
+		logger.debug("createNiFiInstanceForUser() begin");
+		// NOTE: THIS METHOD CREATES BOTH A NIFI AND APACHE INSTANCE INSIDE THE USER'S POD
+		String nifiURL = null;
+		if (confProps.getCreatePod()) {
+			boolean error = false;
+			// STEP-0: CREATE K8 CLIENT
+			ApiClient client = null;
+			try {
+				client = Config.defaultClient();
+				client.setDebugging(true);
+				logger.debug("Contacted API Server");
+			} catch (IOException e) {
+				error = true;
+				logger.error("Exception occured while configuring the K8S ApiClient", e);
+				throw new TargetServiceInvocationException("Exception occured while configuring the K8S ApiClient", e);
+			}
+			Configuration.setDefaultApiClient(client);
+			CoreV1Api api = new CoreV1Api(client);
+
+			// create and initialize the Velocity engine
+			VelocityEngine velocityEngine = new VelocityEngine();
+			Properties velocityProp = new Properties();
+			velocityProp.setProperty("file.resource.loader.path", confProps.getTemplatePath());
+			velocityEngine.init(velocityProp);
+			Boolean includeUninitialized = new Boolean(true);
+			String namespace = confProps.getNamespace(); // "default"; READ THIS FROM ENV FILE
+
+			// STEP-1: CREATE ONE APACHE CONFIGMAP PER USER
+			// Read the YAML template
+			Template apacheConfigmapTemplate = velocityEngine.getTemplate(confProps.getApacheConfigMap()); // under /maven/templates
 			// create a context and add data
 			VelocityContext apacheConfigmapContext = new VelocityContext();
 			apacheConfigmapContext.put(USER, acumosLoginId);
@@ -156,8 +350,7 @@ public class CreateNiFiAndApachePod {
 			V1ConfigMap nifiConfigmapBody = Yaml.loadAs(nifiConfigmapWriter.toString(), V1ConfigMap.class);
 			V1ConfigMap nifiConfigmap = null;
 			try {
-				nifiConfigmap = api.createNamespacedConfigMap(namespace, nifiConfigmapBody, includeUninitialized, null,
-						null);
+				nifiConfigmap = api.createNamespacedConfigMap(namespace, nifiConfigmapBody, includeUninitialized, null,null);
 			} catch (ApiException e) {
 				error = true;
 				logger.error("Exception occured while Creating the Nifi ConfigMap", e);
@@ -168,11 +361,9 @@ public class CreateNiFiAndApachePod {
 			logger.debug("ConfigMap UUID: " + nifiConfigmap.getMetadata().getUid());
 			logger.debug("ConfigMap Data: " + nifiConfigmap.getData().toString());
 			// STEP-3: CREATE ONE KUBERNETES SERVICE PER USER - POINTS TO APCHE
-			// INGRESS CONTROLLER AND ANOTHER POINTS DIRECTLY TO NIFI CONTAINER
-			// IN THE POD
+			// INGRESS CONTROLLER AND ANOTHER POINTS DIRECTLY TO NIFI CONTAINER IN THE POD
 			// Read the YAML template
-			Template serviceTemplate = velocityEngine.getTemplate(confProps.getService());// under
-																							// /maven/templates
+			Template serviceTemplate = velocityEngine.getTemplate(confProps.getService());// under /maven/templates
 			// create a context and add data
 			VelocityContext serviceContext = new VelocityContext();
 			serviceContext.put(USER, acumosLoginId);
@@ -194,12 +385,10 @@ public class CreateNiFiAndApachePod {
 			logger.debug("Service Name: " + service.getMetadata().getName());
 			logger.debug("Service Namespace: " + service.getMetadata().getNamespace());
 			logger.debug("Service UUID: " + service.getMetadata().getUid());
-			// STEP-3.5: CREATE ONE KUBERNETES SERVICE PER USER - POINTS TO
-			// APCHE INGRESS
+			// STEP-3.5: CREATE ONE KUBERNETES SERVICE PER USER - POINTS TO APCHE INGRESS
 			// CONTROLLER POINTS DIRECTLY TO NIFI CONTAINER IN THE POD
 			// Read the YAML template
-			Template serviceAdminTemplate = velocityEngine.getTemplate(confProps.getServiceAdmin());// under
-																									// /maven/templates
+			Template serviceAdminTemplate = velocityEngine.getTemplate(confProps.getServiceAdmin());// under /maven/templates
 			// create a context and add data
 			VelocityContext serviceAdminContext = new VelocityContext();
 			serviceAdminContext.put(USER, acumosLoginId);
@@ -216,221 +405,7 @@ public class CreateNiFiAndApachePod {
 			} catch (ApiException e) {
 				error = true;
 				logger.error("Exception occured while Creating the ServiceAdmin Template", e);
-				throw new TargetServiceInvocationException("Exception occured while Creating the ServiceAdmin Template",
-						e);
-			}
-			logger.debug("Admin Service Name: " + serviceAdmin.getMetadata().getName());
-			logger.debug("Admin Service Namespace: " + serviceAdmin.getMetadata().getNamespace());
-			logger.debug("Admin Service UUID: " + serviceAdmin.getMetadata().getUid());
-
-			// STEP-4: CREATE ONE KUBERNETES INGRESS PER USER
-			// Read the YAML template
-			Template ingressTemplate = velocityEngine.getTemplate(confProps.getIngress());// under
-																							// /maven/templates
-			// create a context and add data
-			VelocityContext ingressContext = new VelocityContext();
-			ingressContext.put(USER, acumosLoginId);
-			// now render the template into a StringWriter
-			StringWriter ingressWriter = new StringWriter();
-			ingressTemplate.merge(ingressContext, ingressWriter);
-
-			// Create Ingress
-			V1beta1Ingress ingressBody = Yaml.loadAs(ingressWriter.toString(), V1beta1Ingress.class);
-			V1beta1Ingress ingress = null;
-			ExtensionsV1beta1Api api3 = new ExtensionsV1beta1Api(client);
-
-			try {
-				ingress = api3.createNamespacedIngress(namespace, ingressBody, includeUninitialized, null, null);
-			} catch (ApiException e) {
-				error = true;
-				logger.error("Api Exception occured while Creating the NameSpaced Ingress", e);
-				throw new TargetServiceInvocationException(
-						"Api Exception occured while Creating the NameSpaced Ingress", e);
-			}
-
-			logger.debug("Ingress Name: " + ingress.getMetadata().getName());
-			logger.debug("Ingress Namespace: " + ingress.getMetadata().getNamespace());
-			logger.debug("Ingress UUID: " + ingress.getMetadata().getUid());
-			logger.debug("Ingress API Version: " + ingress.getApiVersion());
-			logger.debug("Ingress Status: " + ingress.getStatus().toString());
-
-			// STEP-5: CREATE ONE DEPLOYMENT WITH NIFI AND APACHE CONTAINERS IN
-			// IT
-			// Read the YAML template
-			Template deploymentTemplate = velocityEngine.getTemplate(confProps.getDeployment());// under
-																								// /maven/templates
-			// create a context and add data
-			VelocityContext deploymentContext = new VelocityContext();
-			deploymentContext.put(USER, acumosLoginId);
-			// now render the template into a StringWriter
-			StringWriter deploymentWriter = new StringWriter();
-			deploymentTemplate.merge(deploymentContext, deploymentWriter);
-
-			// Create Deployment
-			V1Deployment deploymentBody = Yaml.loadAs(deploymentWriter.toString(), V1Deployment.class);
-			V1Deployment deployment = null;
-			AppsV1Api api2 = new AppsV1Api(client);
-
-			try {
-				deployment = api2.createNamespacedDeployment(namespace, deploymentBody, includeUninitialized, null,
-						null);
-			} catch (ApiException e) {
-				error = true;
-				logger.error("Api Exception occured while Creating the NameSpaced Deployment", e);
-				throw new TargetServiceInvocationException(
-						"Api Exception occured while Creating the NameSpaced Deployment", e);
-			}
-			logger.debug("Deployment Name: " + deployment.getMetadata().getName());
-			logger.debug("Deployment Namespace: " + deployment.getMetadata().getNamespace());
-			logger.debug("Deployment UUID: " + deployment.getMetadata().getUid());
-
-		}
-		// STEP-: CREATE USER'S POD WITH NIFI AND APACHE CONTAINERS INSIDE IT
-		nifiURL = MessageFormat.format(confProps.getServiceBaseUrl(), acumosLoginId);
-		logger.debug("createNiFiInstanceForUser() end");
-		return nifiURL;
-	}
-
-	/**
-	 * 
-	 * @param acumosLoginId
-	 *            accepts acumosLognId
-	 * @return return nifiUrl
-	 */
-	public String createNiFiInstanceForUser1(String acumosLoginId) {
-		logger.debug("createNiFiInstanceForUser() begin");
-		// NOTE: THIS METHOD CREATES BOTH A NIFI AND APACHE INSTANCE INSIDE THE
-		// USER'S POD
-		String nifiURL = null;
-		if (confProps.getCreatePod()) {
-			boolean error = false;
-			// STEP-0: CREATE K8 CLIENT
-			ApiClient client = null;
-			try {
-				client = Config.defaultClient();
-				client.setDebugging(true);
-				logger.debug("Contacted API Server");
-			} catch (IOException e) {
-				error = true;
-				logger.error("Exception occured while configuring the K8S ApiClient", e);
-				throw new TargetServiceInvocationException("Exception occured while configuring the K8S ApiClient", e);
-			}
-			Configuration.setDefaultApiClient(client);
-			CoreV1Api api = new CoreV1Api(client);
-
-			// create and initialize the Velocity engine
-			VelocityEngine velocityEngine = new VelocityEngine();
-			Properties velocityProp = new Properties();
-			velocityProp.setProperty("file.resource.loader.path", confProps.getTemplatePath());
-			velocityEngine.init(velocityProp);
-			Boolean includeUninitialized = new Boolean(true);
-			String namespace = confProps.getNamespace(); // "default"; READ THIS
-															// FROM ENV FILE
-
-			// STEP-1: CREATE ONE APACHE CONFIGMAP PER USER
-			// Read the YAML template
-			Template apacheConfigmapTemplate = velocityEngine.getTemplate(confProps.getApacheConfigMap()); // under
-																											// /maven/templates
-			// create a context and add data
-			VelocityContext apacheConfigmapContext = new VelocityContext();
-			apacheConfigmapContext.put(USER, acumosLoginId);
-			// now render the template into a StringWriter
-			StringWriter apacheConfigmapWriter = new StringWriter();
-			apacheConfigmapTemplate.merge(apacheConfigmapContext, apacheConfigmapWriter);
-			logger.debug("Writer: " + apacheConfigmapWriter.toString());
-
-			// Create configmap
-			V1ConfigMap apacheConfigmapBody = Yaml.loadAs(apacheConfigmapWriter.toString(), V1ConfigMap.class);
-			V1ConfigMap apacheConfigmap = null;
-			try {
-				apacheConfigmap = api.createNamespacedConfigMap(namespace, apacheConfigmapBody, includeUninitialized,
-						null, null);
-			} catch (ApiException e) {
-				error = true;
-				logger.error("Exception occured while Creating the Apache ConfigMap", e);
-				throw new TargetServiceInvocationException("Exception occured while Creating the Apache ConfigMap", e);
-			}
-			logger.debug("ConfigMap Name: " + apacheConfigmap.getMetadata().getName());
-			logger.debug("ConfigMap Namespace: " + apacheConfigmap.getMetadata().getNamespace());
-			logger.debug("ConfigMap UUID: " + apacheConfigmap.getMetadata().getUid());
-			logger.debug("ConfigMap Data: " + apacheConfigmap.getData().toString());
-			// STEP-2: CREATE ONE NIFI CONFIGMAP PER USER
-			// Read the YAML template
-			Template nifiConfigmapTemplate = velocityEngine.getTemplate(confProps.getNifiConfigMap());// under
-																										// /maven/templates
-			// create a context and add data
-			VelocityContext nifiConfigmapContext = new VelocityContext();
-			nifiConfigmapContext.put(USER, acumosLoginId);
-			// now render the template into a StringWriter
-			StringWriter nifiConfigmapWriter = new StringWriter();
-			nifiConfigmapTemplate.merge(nifiConfigmapContext, nifiConfigmapWriter);
-
-			// Create configmap
-			V1ConfigMap nifiConfigmapBody = Yaml.loadAs(nifiConfigmapWriter.toString(), V1ConfigMap.class);
-			V1ConfigMap nifiConfigmap = null;
-			try {
-				nifiConfigmap = api.createNamespacedConfigMap(namespace, nifiConfigmapBody, includeUninitialized, null,
-						null);
-			} catch (ApiException e) {
-				error = true;
-				logger.error("Exception occured while Creating the Nifi ConfigMap", e);
-				throw new TargetServiceInvocationException("Exception occured while Creating the Nifi ConfigMap", e);
-			}
-			logger.debug("ConfigMap Name: " + nifiConfigmap.getMetadata().getName());
-			logger.debug("ConfigMap Namespace: " + nifiConfigmap.getMetadata().getNamespace());
-			logger.debug("ConfigMap UUID: " + nifiConfigmap.getMetadata().getUid());
-			logger.debug("ConfigMap Data: " + nifiConfigmap.getData().toString());
-			// STEP-3: CREATE ONE KUBERNETES SERVICE PER USER - POINTS TO APCHE
-			// INGRESS CONTROLLER AND ANOTHER POINTS DIRECTLY TO NIFI CONTAINER
-			// IN THE POD
-			// Read the YAML template
-			Template serviceTemplate = velocityEngine.getTemplate(confProps.getService());// under
-																							// /maven/templates
-			// create a context and add data
-			VelocityContext serviceContext = new VelocityContext();
-			serviceContext.put(USER, acumosLoginId);
-			/* now render the template into a StringWriter */
-			StringWriter serviceWriter = new StringWriter();
-			serviceTemplate.merge(serviceContext, serviceWriter);
-
-			// Create Service
-			V1Service serviceBody = Yaml.loadAs(serviceWriter.toString(), V1Service.class);
-			V1Service service = null;
-
-			try {
-				service = api.createNamespacedService(namespace, serviceBody, includeUninitialized, null, null);
-			} catch (ApiException e) {
-				error = true;
-				logger.error("Exception occured while Creating the service Template", e);
-				throw new TargetServiceInvocationException("Exception occured while Creating the service Template", e);
-			}
-			logger.debug("Service Name: " + service.getMetadata().getName());
-			logger.debug("Service Namespace: " + service.getMetadata().getNamespace());
-			logger.debug("Service UUID: " + service.getMetadata().getUid());
-			// STEP-3.5: CREATE ONE KUBERNETES SERVICE PER USER - POINTS TO
-			// APCHE INGRESS
-			// CONTROLLER POINTS DIRECTLY TO NIFI CONTAINER IN THE POD
-			// Read the YAML template
-			Template serviceAdminTemplate = velocityEngine.getTemplate(confProps.getServiceAdmin());// under
-																									// /maven/templates
-			// create a context and add data
-			VelocityContext serviceAdminContext = new VelocityContext();
-			serviceAdminContext.put(USER, acumosLoginId);
-			// now render the template into a StringWriter
-			StringWriter serviceAdminWriter = new StringWriter();
-			serviceAdminTemplate.merge(serviceAdminContext, serviceAdminWriter);
-			// Create Service
-			V1Service serviceAdminBody = Yaml.loadAs(serviceAdminWriter.toString(), V1Service.class);
-			V1Service serviceAdmin = null;
-
-			try {
-				serviceAdmin = api.createNamespacedService(namespace, serviceAdminBody, includeUninitialized, null,
-						null);
-			} catch (ApiException e) {
-				error = true;
-				logger.error("Exception occured while Creating the ServiceAdmin Template", e);
-				throw new TargetServiceInvocationException("Exception occured while Creating the ServiceAdmin Template",
-						e);
+				throw new TargetServiceInvocationException("Exception occured while Creating the ServiceAdmin Template",e);
 			}
 			logger.debug("Admin Service Name: " + serviceAdmin.getMetadata().getName());
 			logger.debug("Admin Service Namespace: " + serviceAdmin.getMetadata().getNamespace());
@@ -439,26 +414,21 @@ public class CreateNiFiAndApachePod {
 			// STEP-3.7: CREATE ONE KUBERNETES SECRET PER USER
 			logger.debug("Executing Shell script to create required certificat and set in Kuberenetes secret");
 			String templatepath = confProps.getTemplatePath();
-			templatepath = (templatepath.charAt(templatepath.length() - 1) != File.separatorChar)
-					? templatepath + File.separatorChar : templatepath;
+			templatepath = (templatepath.charAt(templatepath.length() - 1) != File.separatorChar)? templatepath + File.separatorChar : templatepath;
 			String[] cmd = { templatepath + confProps.getCertShellFile(), acumosLoginId };
 			try {
-				logger.debug("Executing shell script : " + templatepath + confProps.getCertShellFile() + " "
-						+ acumosLoginId);
+				logger.debug("Executing shell script : " + templatepath + confProps.getCertShellFile() + " "+ acumosLoginId);
 				Process process = Runtime.getRuntime().exec(cmd);
 				logger.debug("shell script executed successfully");
 			} catch (IOException e) {
 				error = true;
-				logger.error("Exception occured while executing shell script : " + confProps.getTemplatePath()
-						+ File.separatorChar + confProps.getCertShellFile(), e);
-				throw new TargetServiceInvocationException("Exception occured while executing shell script : "
-						+ confProps.getTemplatePath() + File.separatorChar + confProps.getCertShellFile(), e);
+				logger.error("Exception occured while executing shell script : " + confProps.getTemplatePath()+ File.separatorChar + confProps.getCertShellFile(), e);
+				throw new TargetServiceInvocationException("Exception occured while executing shell script : "+ confProps.getTemplatePath() + File.separatorChar + confProps.getCertShellFile(), e);
 			}
 
 			// STEP-4: CREATE ONE KUBERNETES INGRESS PER USER
 			// Read the YAML template
-			Template ingressTemplate = velocityEngine.getTemplate(confProps.getIngress());// under
-																							// /maven/templates
+			Template ingressTemplate = velocityEngine.getTemplate(confProps.getIngress());// under /maven/templates
 			// create a context and add data
 			VelocityContext ingressContext = new VelocityContext();
 			ingressContext.put(USER, acumosLoginId);
@@ -476,8 +446,7 @@ public class CreateNiFiAndApachePod {
 			} catch (ApiException e) {
 				error = true;
 				logger.error("Api Exception occured while Creating the NameSpaced Ingress", e);
-				throw new TargetServiceInvocationException(
-						"Api Exception occured while Creating the NameSpaced Ingress", e);
+				throw new TargetServiceInvocationException("Api Exception occured while Creating the NameSpaced Ingress", e);
 			}
 
 			logger.debug("Ingress Name: " + ingress.getMetadata().getName());
@@ -486,11 +455,9 @@ public class CreateNiFiAndApachePod {
 			logger.debug("Ingress API Version: " + ingress.getApiVersion());
 			logger.debug("Ingress Status: " + ingress.getStatus().toString());
 
-			// STEP-5: CREATE ONE DEPLOYMENT WITH NIFI AND APACHE CONTAINERS IN
-			// IT
+			// STEP-5: CREATE ONE DEPLOYMENT WITH NIFI AND APACHE CONTAINERS IN IT
 			// Read the YAML template
-			Template deploymentTemplate = velocityEngine.getTemplate(confProps.getDeployment());// under
-																								// /maven/templates
+			Template deploymentTemplate = velocityEngine.getTemplate(confProps.getDeployment());// under /maven/templates
 			// create a context and add data
 			VelocityContext deploymentContext = new VelocityContext();
 			deploymentContext.put(USER, acumosLoginId);
@@ -504,13 +471,11 @@ public class CreateNiFiAndApachePod {
 			AppsV1Api api2 = new AppsV1Api(client);
 
 			try {
-				deployment = api2.createNamespacedDeployment(namespace, deploymentBody, includeUninitialized, null,
-						null);
+				deployment = api2.createNamespacedDeployment(namespace, deploymentBody, includeUninitialized, null,null);
 			} catch (ApiException e) {
 				error = true;
 				logger.error("Api Exception occured while Creating the NameSpaced Deployment", e);
-				throw new TargetServiceInvocationException(
-						"Api Exception occured while Creating the NameSpaced Deployment", e);
+				throw new TargetServiceInvocationException("Api Exception occured while Creating the NameSpaced Deployment", e);
 			}
 			logger.debug("Deployment Name: " + deployment.getMetadata().getName());
 			logger.debug("Deployment Namespace: " + deployment.getMetadata().getNamespace());

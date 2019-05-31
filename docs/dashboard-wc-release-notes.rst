@@ -20,6 +20,10 @@
 ML Workbench Dashboard Web Component
 ===============================================
 
+Version 1.0.5  31st May 2019 
+=================================
+* ML Workbench facing compatibility issues with Mozilla Firefox (ACUMOS-2866)
+
 Version 1.0.3  3rd May 2019 
 =================================
 * Update Error messages (ACUMOS-2852)

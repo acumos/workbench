@@ -96,6 +96,9 @@ public class ConfigurationProperties {
 	@Value("${nifi.adminusername}")
 	private String nifiAdminUser;
 	
+	@Value("${nifi.certshellfile}")
+	private String certShellFile;
+	
 	/**
 	 * @return the namespace
 	 */
@@ -255,6 +258,13 @@ public class ConfigurationProperties {
 	 */
 	public String getNifiAdminUser() {
 		return nifiAdminUser;
+	}
+	
+	/**
+	 * @return the certShellFile
+	 */
+	public String getCertShellFile() {
+		return certShellFile;
 	}
 
 	

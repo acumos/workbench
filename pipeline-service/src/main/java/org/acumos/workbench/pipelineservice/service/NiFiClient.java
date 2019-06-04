@@ -136,16 +136,16 @@ public class NiFiClient {
 		if(null == restTemplate){
 			restTemplate =  initRestTemplate();
 		}
-		acumosRegistryData = checkIfAcumosRegistryIsConfiguredInNiFi(restTemplate, nifiURL);
+		acumosRegistryData = checkIfAcumosRegistryIsConfiguredInNiFi(restTemplate,acumosLoginId, nifiURL);
 		acumosRegistryConfiguredInNiFi = acumosRegistryData.isRegistryConfigured();
 		if (!acumosRegistryConfiguredInNiFi) {
 			// Step: 2.1 If Registry is not configured, then configure it in NiFi instance
-			acumosRegistryData = configureAcumosRegistryInNiFi(restTemplate, nifiURL);
+			acumosRegistryData = configureAcumosRegistryInNiFi(restTemplate,acumosLoginId, nifiURL);
 		}
 
 		// STEP-C: GET ROOT PROCESS GROUP ID
 		// this is required to Provision the pipeline in user’s NiFi
-		rootProcessGroupId = getNiFiRootProcessGroupId(restTemplate, nifiURL);
+		rootProcessGroupId = getNiFiRootProcessGroupId(restTemplate,acumosLoginId, nifiURL);
 
 		// STEP-1: CHECK IF THE BUCKET EXISTS FOR THIS USER IN THE NIFI REGISTRY
 		// NOTE: Each acumos user has a bucket in the NiFi-registry
@@ -247,7 +247,7 @@ public class NiFiClient {
 		return nifiURL;
 	}
 
-	private AcumosRegistryData checkIfAcumosRegistryIsConfiguredInNiFi(RestTemplate restTemplate, String nifiBaseURL) {
+	private AcumosRegistryData checkIfAcumosRegistryIsConfiguredInNiFi(RestTemplate restTemplate,String acumosLoginId, String nifiBaseURL) {
 		// STEP-A: CHECK IF THE NIFI REGISTRY IS CONFIGURED IN user's NIFI INSTANCE
 		logger.debug("checkIfAcumosRegistryIsConfiguredInNiFi() Begin");
 		AcumosRegistryData acumosRegistryData = new AcumosRegistryData();
@@ -259,7 +259,7 @@ public class NiFiClient {
 			logger.debug("PATH : " + uri);
 			
 			HttpHeaders httpHeaders = new HttpHeaders();
-			httpHeaders.set("authuser", configProps.getNifiAdminUser());
+			httpHeaders.set("authuser", acumosLoginId); 
 			
 			HttpEntity<String> entity = new HttpEntity<String>(httpHeaders);
 			// get the list of configured registries from NiFi instance Response
@@ -319,7 +319,7 @@ public class NiFiClient {
 
 
 	@SuppressWarnings({ "unchecked", "rawtypes", "unused"})
-	private AcumosRegistryData configureAcumosRegistryInNiFi(RestTemplate client, String nifiBaseURL) {
+	private AcumosRegistryData configureAcumosRegistryInNiFi(RestTemplate client,String acumosLoginId, String nifiBaseURL) {
 		logger.debug("configureAcumosRegistryInNiFi() begin");
 		AcumosRegistryData acumosRegistryData = new AcumosRegistryData();
 
@@ -339,7 +339,7 @@ public class NiFiClient {
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(new MediaType("application", "json"));
-		headers.set("authuser", configProps.getNifiAdminUser());
+		headers.set("authuser", acumosLoginId);
 		String configureRegistryInNiFiPostRequestString = new String(configureRegistryInNiFiPostRequestBody.toString());
 
 		HttpEntity<JSONObject> entity = new HttpEntity<JSONObject>(configureRegistryInNiFiPostRequestBody, headers);
@@ -391,7 +391,7 @@ public class NiFiClient {
 		return acumosRegistryData;
 	}
 
-	private String getNiFiRootProcessGroupId(RestTemplate client, String nifiBaseURL) {
+	private String getNiFiRootProcessGroupId(RestTemplate client,String acumosLoginId, String nifiBaseURL) {
 		logger.debug("getNiFiRootProcessGroupId() begin");
 		//STEP-C: GET ROOT PROCESS GROUP ID
 		String rootProcessGroupId = null;
@@ -401,7 +401,7 @@ public class NiFiClient {
 		
 		//create headers you need to send
 		HttpHeaders headers = new HttpHeaders();
-		headers.set("authuser", configProps.getNifiAdminUser());
+		headers.set("authuser", acumosLoginId);
 
 		HttpEntity<String> entity = new HttpEntity<String>(headers);
 		
@@ -722,7 +722,7 @@ public class NiFiClient {
 			
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(new MediaType("application", "json"));
-			headers.set("authuser", configProps.getNifiAdminUser());
+			headers.set("authuser", acumosLoginId);
 			
 			HttpEntity<JSONObject> entity = new HttpEntity<JSONObject>(provisionFlowInNiFiRequestBody, headers);
 

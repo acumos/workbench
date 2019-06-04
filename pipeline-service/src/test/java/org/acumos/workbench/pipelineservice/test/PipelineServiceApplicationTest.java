@@ -20,15 +20,9 @@
 
 package org.acumos.workbench.pipelineservice.test;
 
-import org.acumos.workbench.pipelineservice.PipelineServiceApplication;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
-
 //@RunWith(SpringRunner.class)
 //@SpringBootTest(classes = PipelineServiceApplication.class)
-public class PipeLineServiceControllerTest {
+public class PipelineServiceApplicationTest {
 	/*@Test
 	public void contextLoads() throws Exception {
 		PipelineServiceApplication.main(new String[0]);

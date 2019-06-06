@@ -361,7 +361,7 @@ public class CreateNiFiAndApachePod {
 			} else {
 				logger.debug("As nifi.waittime is set to greater than 0 value, pipeline-service will sleep for specified time");
 				try {
-					Thread.sleep(TimeUnit.MINUTES.toMillis(nifiWaitTime));
+					Thread.sleep(nifiWaitTime);
 				} catch (InterruptedException e) {
 					error = true;
 					logger.error("Interrupted Exception occured while Creating the K8S CreateWatch at NiFi Wait Time", e);

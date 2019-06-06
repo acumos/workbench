@@ -24,6 +24,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
+import java.net.ConnectException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
@@ -72,6 +73,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -263,8 +265,30 @@ public class NiFiClient {
 			
 			HttpEntity<String> entity = new HttpEntity<String>(httpHeaders);
 			// get the list of configured registries from NiFi instance Response
-			ResponseEntity<String> getAllRegistriesInNiFiResponse = restTemplate.exchange(uri, HttpMethod.GET, entity,
-					String.class);
+			int maxTries = configProps.getMaxTries();
+			int index = 0;
+			ResponseEntity<String> getAllRegistriesInNiFiResponse = null;
+			while(index < maxTries) {
+				try {
+					getAllRegistriesInNiFiResponse = restTemplate.exchange(uri, HttpMethod.GET, entity,
+							String.class);
+				} catch (ResourceAccessException e) {
+					Throwable t = e.getCause();
+					if (t instanceof ConnectException) {
+						logger.error("Exception occured while Checking if NifiServer is Ready for attempt : " + index, e);
+						if (index == maxTries) {
+							throw new TargetServiceInvocationException(
+									"Exception occured while Checking if NifiServer is Ready exceeded maxTries", e);
+						}
+						Thread.sleep(configProps.getSleepTime());
+					} else {
+						logger.error("Exception occured while accessing NifiServer for attempt : " + index, e);
+						throw new TargetServiceInvocationException(
+								"Exception occured while accessing NifiServer for attempt : " + index, e);
+					}
+				}
+				index = index + 1;
+			}
 			String allRegistriesInNiFiString = getAllRegistriesInNiFiResponse.getBody();
 			// Parse the registry list as JSON Object
 			Object allRegistriesInNiFiObject = null;

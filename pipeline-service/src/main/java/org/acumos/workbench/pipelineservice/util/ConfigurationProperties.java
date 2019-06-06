@@ -39,6 +39,12 @@ public class ConfigurationProperties {
 	@Value("${resultsetSize}")
 	private int resultsetSize;
 	
+	@Value("${maxtries}")
+	private int maxTries;
+	
+	@Value("${sleeptimems}")
+	private int sleepTime; 
+	
 	@Value("${projectservice.url}")
 	private String projectServiceURL;
 	
@@ -95,6 +101,9 @@ public class ConfigurationProperties {
 	
 	@Value("${nifi.adminusername}")
 	private String nifiAdminUser;
+	
+	@Value("$nifi.waittime")
+	private int nifiWaitTime;
 	
 	@Value("${nifi.certshellfile}")
 	private String certShellFile;
@@ -265,6 +274,27 @@ public class ConfigurationProperties {
 	 */
 	public String getCertShellFile() {
 		return certShellFile;
+	}
+
+	/**
+	 * @return the nifiWaitTime
+	 */
+	public int getNifiWaitTime() {
+		return nifiWaitTime;
+	}
+
+	/**
+	 * @return the maxTries
+	 */
+	public int getMaxTries() {
+		return maxTries;
+	}
+
+	/**
+	 * @return the sleepTime
+	 */
+	public int getSleepTime() {
+		return sleepTime;
 	}
 
 	

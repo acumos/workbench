@@ -276,7 +276,7 @@ public class NiFiClient {
 					Throwable t = e.getCause();
 					if (t instanceof ConnectException) {
 						logger.error("Exception occured while Checking if NifiServer is Ready for attempt : " + index, e);
-						if (index == maxTries) {
+						if (index == maxTries-1) {
 							throw new TargetServiceInvocationException(
 									"Exception occured while Checking if NifiServer is Ready exceeded maxTries", e);
 						}

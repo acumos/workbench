@@ -102,8 +102,8 @@ public class ConfigurationProperties {
 	@Value("${nifi.adminusername}")
 	private String nifiAdminUser;
 	
-	@Value("$nifi.waittime")
-	private String nifiWaitTime;
+	@Value("${nifi.waittime}")
+	private int nifiWaitTime;
 	
 	@Value("${nifi.certshellfile}")
 	private String certShellFile;
@@ -280,7 +280,7 @@ public class ConfigurationProperties {
 	 * @return the nifiWaitTime
 	 */
 	public int getNifiWaitTime() {
-		return Integer.valueOf(nifiWaitTime);
+		return nifiWaitTime;
 	}
 
 	/**

@@ -358,7 +358,7 @@ public class NiFiClient {
 
 		versionHashMap = new LinkedHashMap<String, String>(2);
 		versionHashMap.put("name", configProps.getRegistryName());
-		versionHashMap.put("uri", configProps.getRegistryBaseUrl());
+		versionHashMap.put("uri", configProps.getDirectRegistryBaseUrl());
 		configureRegistryInNiFiPostRequestBody.put("component", versionHashMap);
 
 		HttpHeaders headers = new HttpHeaders();

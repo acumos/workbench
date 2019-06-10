@@ -57,6 +57,9 @@ public class ConfigurationProperties {
 	@Value("${nifi.registryurl}")
 	private String registryBaseUrl;
 	
+	@Value("${nifi.directregistryurl}")
+	private String directRegistryBaseUrl;
+	
 	@Value("${nifi.registryname}")
 	private String registryName;
 	
@@ -295,6 +298,13 @@ public class ConfigurationProperties {
 	 */
 	public int getSleepTime() {
 		return sleepTime;
+	}
+
+	/**
+	 * @return the directRegistryBaseUrl
+	 */
+	public String getDirectRegistryBaseUrl() {
+		return directRegistryBaseUrl;
 	}
 
 	

@@ -27,7 +27,8 @@ var config = {
 		projectWikiURL : "https://wiki.acumos.org/display/TRAIN",
 		notebookWikiURL : "https://wiki.acumos.org/display/TRAIN",
 		pipelineWikiURL : "https://wiki.acumos.org/display/TRAIN",
-		pipelineFlag : "false"
+		pipelineFlag : "false",
+		createTimeout: 60000
 	},
 	deploy : {
 		ENVIRONMENT : process.env.ENVIRONMENT,
@@ -37,7 +38,8 @@ var config = {
 		projectWikiURL : process.env.projectWikiURL,
 		notebookWikiURL : process.env.notebookWikiURL,
 		pipelineWikiURL : process.env.pipelineWikiURL,
-		pipelineFlag : process.env.pipelineFlag
+		pipelineFlag : process.env.pipelineFlag,
+		createTimeout: process.env.createTimeout
 	}
 };
 

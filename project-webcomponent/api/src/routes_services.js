@@ -26,6 +26,7 @@ var request = require('request');
 module.exports = function(app) {
 	const uripath = "/users/";
 	const configENV = properties.ENVIRONMENT;
+	const createTimeout = properties.createTimeout;
 	const wiki_urls = {
 		projectWikiURL: properties.projectWikiURL,
 		notebookWikiURL: properties.notebookWikiURL,
@@ -65,7 +66,8 @@ module.exports = function(app) {
 				userName:  userName,
 				authToken: authToken,
 				wikiConfig: wiki_urls,
-				pipelineFlag: pipelineFlag
+				pipelineFlag: pipelineFlag,
+				createTimeout: createTimeout
 			};
 			res.send(res.configInfo);
 		} catch (err) {
@@ -281,6 +283,17 @@ module.exports = function(app) {
 		let newPipelineReq = req.body.newPipelineDetails;
 		let authToken = req.headers['auth'];
 		createPipeline(userName, serviceUrl, projectId, newPipelineReq, getLatestAuthToken(req, authToken)).then(function(result){
+			res.send(result);
+		});
+	});
+
+	app.post('/api/project/createPipelineStatus', function (req, res){
+		let serviceUrl = req.body.url + uripath;
+		let userName = req.body.userName;
+		let projectId = req.body.projectId;
+		let pipelineId = req.body.pipelineId;
+		let authToken = req.headers['auth'];
+		createPipelineStatus(userName, serviceUrl, projectId, pipelineId, getLatestAuthToken(req, authToken)).then(function(result){
 			res.send(result);
 		});
 	});
@@ -678,7 +691,7 @@ module.exports = function(app) {
 			};
 				
 		request.post(options, function(error, response, body) {
-				if (!error && response.statusCode == 201) {
+				if (!error && response.statusCode == 201 || response.statusCode == 202) {
 					resolve(prepRespJsonAndLogit(response, response.body, "Data Pipeline created successfully"));
 				} else if (!error) {
 					resolve(prepRespJsonAndLogit(response, response.body, "Unable to create Data Pipeline"));
@@ -686,6 +699,28 @@ module.exports = function(app) {
 					resolve(prepRespJsonAndLogit(null, null, null, error));
 				}
 		});
+		});
+	};
+
+	var createPipelineStatus = function(userName, srvcUrl, projectId, pipelineId, authToken){
+		return new Promise(function(resolve, reject) {
+			var options = {
+				method : "GET",
+				url : srvcUrl + userName + "/projects/" + projectId + "/pipelines/" + pipelineId,
+				headers : {
+					'Content-Type' : 'application/json',
+					'Authorization' : authToken,
+				},
+			};
+			request.get(options, function(error, response) {
+				if (!error && response.statusCode == 200) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Data Pipeline creation status fetched successfully"));
+				} else if (!error) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to get Data Pipeline creation status"));
+				} else {
+					resolve(prepRespJsonAndLogit(null, null, null, error));
+				}
+			});
 		});
 	};
 

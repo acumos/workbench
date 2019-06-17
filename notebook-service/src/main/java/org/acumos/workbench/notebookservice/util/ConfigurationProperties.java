@@ -50,6 +50,9 @@ public class ConfigurationProperties {
 	@Value("${jupyterhub.storepass}")
 	private String jupyterhubStorepass;
 	
+	@Value("${jupyterhub.installcert}")
+	private boolean installCert;
+	
 	@Value("${jwt.secretkey}")
 	private String jwtSecretKey;
 	
@@ -134,6 +137,13 @@ public class ConfigurationProperties {
 	 */
 	public String getJupyterNotebookURL() {
 		return jupyterNotebookURL;
+	}
+
+	/**
+	 * @return the installCert
+	 */
+	public boolean isInstallCert() {
+		return installCert;
 	}
 
 	

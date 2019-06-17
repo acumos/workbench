@@ -73,6 +73,7 @@ public class CACertUtil {
 	 * @return
 	 * 		True if certificate installed and loaded successfully.  Else false if certificate is installed but not loaded.  
 	 */
+	@Deprecated
     public boolean installCert() {
     	boolean result = false;
 		try {

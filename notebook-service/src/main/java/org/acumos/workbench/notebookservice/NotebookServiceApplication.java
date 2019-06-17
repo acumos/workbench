@@ -23,14 +23,13 @@ package org.acumos.workbench.notebookservice;
 import java.lang.invoke.MethodHandles;
 
 import org.acumos.workbench.notebookservice.util.CACertUtil;
+import org.acumos.workbench.notebookservice.util.ConfigurationProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
@@ -46,6 +45,9 @@ public class NotebookServiceApplication {
 	
 	@Autowired
 	CACertUtil caCertUtil;
+	
+	@Autowired
+	ConfigurationProperties confProp;
 	
 	/**
 	 * Starting point of ML Workbench NotebookService Application
@@ -72,10 +74,12 @@ public class NotebookServiceApplication {
 	@EventListener
     public void onApplicationEvent(ContextRefreshedEvent event) {
 		logger.debug("onApplicationEvent() Begin ");
-		ConfigurableApplicationContext context = (ConfigurableApplicationContext) event.getApplicationContext();
-		boolean certLoaded = caCertUtil.installCert();
-		if(!certLoaded) {
-			context.close();
+		if(confProp.isInstallCert()) {
+			ConfigurableApplicationContext context = (ConfigurableApplicationContext) event.getApplicationContext();
+			boolean certLoaded = caCertUtil.installCert();
+			if(!certLoaded) {
+				context.close();
+			}
 		}
 		logger.debug("onApplicationEvent() End ");
     }

@@ -54,7 +54,10 @@ export class PipelineCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
       cardShow: { type: Boolean },
       pipelineWikiURL: {type: String},
       userName: {type: String, notify: true},
-      authToken: {type: String, notify: true}
+      authToken: {type: String, notify: true},
+      createTimeout: {type: Number, notify: true},
+      pipelineCreated: [],
+      creationMessage: {type: String, notify: true}
     };
   }
 
@@ -139,7 +142,7 @@ export class PipelineCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
       .then((envVar) => {
         this.mSurl = envVar.msconfig.pipelinemSURL;
         this.pipelineWikiURL = envVar.pipelineWikiURL;
-
+        this.createTimeout = envVar.createTimeout;
         let username = envVar.userName;
         let token = envVar.authToken;
         
@@ -248,6 +251,40 @@ export class PipelineCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
     }
   }
 
+  getPipelineCreationStatus(pipelineId){
+    const url = this.componenturl + '/api/pipeline/createStatus';
+    this.resetMessage();
+    fetch(url, {
+      method: 'POST',
+      mode: 'cors',
+      cache: 'default',
+      headers: {
+        "Content-Type": "application/json",
+        "auth": this.authToken,
+      },
+      body: JSON.stringify({
+        "url": this.mSurl,
+        "pipelineId": pipelineId,
+        "userName": this.userName 
+      })
+    }).then(res => res.json())
+    .then((n) => {
+      if(n.status === 'Error'){
+        this.errorMessage = n.message;
+        this.view = 'error';
+        this.alertOpen = true;
+      } else {
+        this.pipelineCreated = n.data;
+        this.creationMessage = n.message;
+      }
+  }).catch((error) => {
+    console.info('Request failed', error);
+    this.errorMessage = 'Data Pipeline Creation Status request failed with error: '+ error;
+    this.view = 'error';
+    this.alertOpen = true;
+  });
+  }
+
   createPipeline(){
     const url = this.componenturl + '/api/pipeline/create';
     this.resetMessage();
@@ -272,8 +309,32 @@ export class PipelineCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
           this.$data.revert('newPipeline');
           this.$validations.resetValidation('newPipeline');
           this.initializeCreatePipelineForm();
+          if(n.code === '202'){
+            this.activeFilter = { status: "" };
+          } else{
+            this.activeFilter = { status: "ACTIVE" };
+          }
           this.getPipelineList();
           this.isOpenModal = false;
+          this.pipelineCreated = n.data;
+          if(n.code === '202'){  
+            var creationInterval = setInterval( () => {
+              this.getPipelineCreationStatus(this.pipelineCreated.pipelineId.uuid);
+              if(this.pipelineCreated.artifactStatus.status === "ACTIVE"){
+                this.successMessage = "The pipeline "+this.pipelineCreated.pipelineId.name+" is successfully created";
+                this.alertOpen = true;
+                this.activeFilter = { status: "ACTIVE" };
+                this.getPipelineList();
+                clearInterval(creationInterval);
+              } else if(this.pipelineCreated.artifactStatus.status === "FAILED"){
+                this.errorMessage = "Your pipeline "+this.pipelineCreated.pipelineId.name+" request got failed";
+                this.alertOpen = true;
+                this.activeFilter = { status: "" };
+                this.getPipelineList();
+                clearInterval(creationInterval);
+              } 
+            }, this.createTimeout);
+          }
         } else {
           this.$data.set('createErrorMessage', n.message);
         }
@@ -725,7 +786,13 @@ export class PipelineCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
                                   <span class="active-status">${item.status}</span>
                                 `
                                 : html`
+                                  ${item.status === "IN PROGRESS"
+                                  ? html`
+                                    <span class="inprogress-status">${item.status}</span>
+                                  `
+                                  : html`
                                   <span class="inactive-status">${item.status}</span>
+                                  `}
                                 `}
                               <br/>
                               <span><strong>Creation Date</strong>: &nbsp; ${item.createdTimestamp}</span>
@@ -754,15 +821,27 @@ export class PipelineCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
                                 </a>
                               `
                               : html`
-                                <a href="javascript:void" @click="${e => this.openRestoreDialog(item.pipelineId, item.name)}"
-                                  class="btnIcon btn btn-sm my-1 mr-1" data-toggle="tooltip" data-placement="top" title="Unarchive Data Pipeline">
-                                  <mwc-icon class="mwc-icon-gray">restore_from_trash</mwc-icon>
-                                </a>
-                                <a href="javascript:void" @click="${e => this.openDeleteDialog(item.pipelineId, item.name)}"
-                                  class="btnIcon btn btn-sm my-1 mr-1" data-toggle="tooltip" data-placement="top" title="Delete Data Pipeline" >
-                                  <mwc-icon class="mwc-icon-gray">delete</mwc-icon>
-                                </a>
-                            `}
+                                ${item.status === "ARCHIVED"
+                                ? html`
+                                  <a href="javascript:void" @click="${e => this.openRestoreDialog(item.pipelineId, item.name)}"
+                                    class="btnIcon btn btn-sm my-1 mr-1" data-toggle="tooltip" data-placement="top" title="Unarchive Data Pipeline">
+                                    <mwc-icon class="mwc-icon-gray">restore_from_trash</mwc-icon>
+                                  </a>
+                                  <a href="javascript:void" @click="${e => this.openDeleteDialog(item.pipelineId, item.name)}"
+                                    class="btnIcon btn btn-sm my-1 mr-1" data-toggle="tooltip" data-placement="top" title="Delete Data Pipeline" >
+                                    <mwc-icon class="mwc-icon-gray">delete</mwc-icon>
+                                  </a>
+                                `
+                                : html`
+                                  ${item.status === "FAILED"
+                                  ? html`
+                                    <a href="javascript:void" @click="${e => this.openDeleteDialog(item.pipelineId, item.name)}"
+                                      class="btnIcon btn btn-sm my-1 mr-1" data-toggle="tooltip" data-placement="top" title="Delete Data Pipeline" >
+                                      <mwc-icon class="mwc-icon-gray">delete</mwc-icon>
+                                    </a>
+                                  `:``}
+                                `}
+                              `}
                           </div>
                         </div>
                       </div>

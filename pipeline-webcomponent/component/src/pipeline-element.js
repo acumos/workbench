@@ -491,20 +491,42 @@ export class PipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
 											</a>&nbsp;&nbsp;&nbsp;
 											`
 										: html`
-											<a href="javascript:void" @click="${e => this.openRestoreDialog()}" class="btnIconTop btn btn-sm btn-secondary mr-1"
-												data-toggle="tooltip" data-placement="top" title="Unarchive Data Pipeline">
-												<mwc-icon class="mwc-icon-gray">
-													restore_from_trash
-												</mwc-icon>
-											</a>&nbsp;
-											<a href="javascript:void" @click="${e => this.openDeleteDialog()}" class="btnIconTop btn btn-sm btn-secondary mr-1"
-												data-toggle="tooltip" data-placement="top" title="Delete Data Pipeline">
-												<mwc-icon class="mwc-icon-gray">delete</mwc-icon>
-											</a>&nbsp;
-											<a href=${this.pipelineWikiURL} target="_blank" class="btnIconTop btn btn-sm btn-secondary mr-1"
-												data-toggle="tooltip" data-placement="top" title="Click here for wiki help"  >
-												<mwc-icon class="mwc-icon-gray">help</mwc-icon>
-											</a>&nbsp;&nbsp;&nbsp;
+											${this.data.pipeline.pipelineStatus === 'ARCHIVED'
+											? html`
+												<a href="javascript:void" @click="${e => this.openRestoreDialog()}" class="btnIconTop btn btn-sm btn-secondary mr-1"
+													data-toggle="tooltip" data-placement="top" title="Unarchive Data Pipeline">
+													<mwc-icon class="mwc-icon-gray">
+														restore_from_trash
+													</mwc-icon>
+												</a>&nbsp;
+												<a href="javascript:void" @click="${e => this.openDeleteDialog()}" class="btnIconTop btn btn-sm btn-secondary mr-1"
+													data-toggle="tooltip" data-placement="top" title="Delete Data Pipeline">
+													<mwc-icon class="mwc-icon-gray">delete</mwc-icon>
+												</a>&nbsp;
+												<a href=${this.pipelineWikiURL} target="_blank" class="btnIconTop btn btn-sm btn-secondary mr-1"
+													data-toggle="tooltip" data-placement="top" title="Click here for wiki help"  >
+													<mwc-icon class="mwc-icon-gray">help</mwc-icon>
+												</a>&nbsp;&nbsp;&nbsp;
+												`
+											: html`
+												${this.data.pipeline.pipelineStatus === 'FAILED'
+												? html`
+													<a href="javascript:void" @click="${e => this.openDeleteDialog()}" class="btnIconTop btn btn-sm btn-secondary mr-1"
+														data-toggle="tooltip" data-placement="top" title="Delete Data Pipeline">
+														<mwc-icon class="mwc-icon-gray">delete</mwc-icon>
+													</a>&nbsp;
+													<a href=${this.pipelineWikiURL} target="_blank" class="btnIconTop btn btn-sm btn-secondary mr-1"
+														data-toggle="tooltip" data-placement="top" title="Click here for wiki help"  >
+														<mwc-icon class="mwc-icon-gray">help</mwc-icon>
+													</a>&nbsp;&nbsp;&nbsp;
+													`
+												: `
+													<a href=${this.pipelineWikiURL} target="_blank" class="btnIconTop btn btn-sm btn-secondary mr-1"
+														data-toggle="tooltip" data-placement="top" title="Click here for wiki help"  >
+														<mwc-icon class="mwc-icon-gray">help</mwc-icon>
+													</a>&nbsp;&nbsp;&nbsp;
+												`}
+											`}
 										`}
 										</div>
 									</div>

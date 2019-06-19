@@ -191,6 +191,10 @@ hr {
 color: green !important;
 }
 
+.inprogress-status{
+  color: blue !important;
+}
+
 .inactive-status {
 color: red !important;
 }

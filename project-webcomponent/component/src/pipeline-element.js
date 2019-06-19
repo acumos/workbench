@@ -58,7 +58,10 @@ class ProjectPipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
 			pipelineWikiURL: {type: String},
 			cardShow: {type: Boolean},
 			userName: {type: String, notify: true},
-			authToken: {type: String, notify: true}
+			authToken: {type: String, notify: true},
+			createTimeout: {type: Number, notify: true},
+      pipelineCreated: [],
+      creationMessage: {type: String, notify: true}
 		};
 	}
 
@@ -182,7 +185,7 @@ class ProjectPipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
 			.then((envVar) => {
 			this.pipelinemSURL = envVar.msconfig.pipelinemSURL;
 			this.pipelineWikiURL = envVar.wikiConfig.pipelineWikiURL;
-
+			this.createTimeout = envVar.createTimeout;
 			let username = envVar.userName;
 			let token = envVar.authToken;
 			
@@ -265,6 +268,41 @@ class ProjectPipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
     });
     this.displayPipelines();
 	}
+
+	getPipelineCreationStatus(pipelineId){
+    const url = this.componenturl + '/api/project/createPipelineStatus';
+    this.resetMessage();
+    fetch(url, {
+      method: 'POST',
+      mode: 'cors',
+      cache: 'default',
+      headers: {
+        "Content-Type": "application/json",
+        "auth": this.authToken,
+      },
+      body: JSON.stringify({
+        "url": this.mSurl,
+				"pipelineId": pipelineId,
+				"projectId" : this.projectId,
+        "userName": this.userName 
+      })
+    }).then(res => res.json())
+    .then((n) => {
+      if(n.status === 'Error'){
+        this.errorMessage = n.message;
+        this.view = 'error';
+        this.alertOpen = true;
+      } else {
+        this.pipelineCreated = n.data;
+        this.creationMessage = n.message;
+      }
+		}).catch((error) => {
+			console.info('Request failed', error);
+			this.errorMessage = 'Data Pipeline Creation Status request failed with error: '+ error;
+			this.view = 'error';
+			this.alertOpen = true;
+		});
+  }
 	
 	createPipeline(){
 		const url = this.componenturl + '/api/project/createPipeline';
@@ -291,10 +329,25 @@ class ProjectPipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
           this.getPipelineDetailsForProject();
 					this.successMessage = n.message;
 					this.alertOpen = true;
-
-					this.$data.revert('newPipeline');
 					this.$validations.resetValidation('newPipeline');
 					this.isOpenModal = false;
+					this.pipelineCreated = n.data;
+					if(n.code === '202'){            
+            var creationInterval = setInterval( () => {
+              this.getPipelineCreationStatus(this.pipelineCreated.pipelineId.uuid);
+              if(this.pipelineCreated.artifactStatus.status === "ACTIVE"){
+                this.successMessage = "The pipeline "+this.pipelineCreated.pipelineId.name+" is successfully created";
+                this.alertOpen = true;
+                this.getPipelineDetailsForProject();
+                clearInterval(creationInterval);
+              } else if(this.pipelineCreated.artifactStatus.status === "FAILED"){
+                this.errorMessage = "Your pipeline "+this.pipelineCreated.pipelineId.name+" request got failed";
+                this.alertOpen = true;
+                this.getPipelineDetailsForProject();
+                clearInterval(creationInterval);
+              } 
+            }, this.createTimeout);
+          }
         } else {
           this.$data.set('createErrorMessage', n.message);
         }
@@ -1051,7 +1104,13 @@ class ProjectPipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
 																<span class="active-status">${item.status}</span>
 															`
 															: html`
-																<span class="inactive-status">${item.status}</span>
+																${item.status === 'IN PROGRESS'
+																? html`
+																	<span class="inprogress-status">${item.status}</span>
+																`
+																: html`
+																	<span class="inactive-status">${item.status}</span>
+																`}
 															`
 														}
 													</td>
@@ -1070,13 +1129,26 @@ class ProjectPipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
 														</a>
 														`
 														: html`
-															<a href="javascript:void" @click="${e => this.openRestoreDialog(item.pipelineId, item.name)}"
-																class="btnIcon btn btn-sm btn-secondary my-1 mr-1" data-toggle="tooltip" data-placement="top" title="Unarchive Data Data Pipeline">
-																<mwc-icon class="mwc-icon-secondary">restore_from_trash</mwc-icon>
-															</a>
-															<a href="javascript:void" @click=${(e) => this.openDeleteDialog(item.pipelineId, item.name)} class="btnIcon btn btn-sm btn-secondary my-1 mr-1" data-toggle="tooltip" data-placement="top" title="Delete Data Pipeline">
-																<mwc-icon class="mwc-icon-secondary">delete</mwc-icon>
-															</a>
+															${item.status == 'ARCHIVED' 
+															? html`
+																<a href="javascript:void" @click="${e => this.openRestoreDialog(item.pipelineId, item.name)}"
+																	class="btnIcon btn btn-sm btn-secondary my-1 mr-1" data-toggle="tooltip" data-placement="top" title="Unarchive Data Data Pipeline">
+																	<mwc-icon class="mwc-icon-secondary">restore_from_trash</mwc-icon>
+																</a>
+																<a href="javascript:void" @click=${(e) => this.openDeleteDialog(item.pipelineId, item.name)} class="btnIcon btn btn-sm btn-secondary my-1 mr-1" data-toggle="tooltip" data-placement="top" title="Delete Data Pipeline">
+																	<mwc-icon class="mwc-icon-secondary">delete</mwc-icon>
+																</a>
+															`
+															: html`
+																${item.status == "FAILED"
+																? html`
+																	<a href="javascript:void" @click=${(e) => this.openDeleteDialog(item.pipelineId, item.name)} class="btnIcon btn btn-sm btn-secondary my-1 mr-1" data-toggle="tooltip" data-placement="top" title="Delete Data Pipeline">
+																		<mwc-icon class="mwc-icon-secondary">delete</mwc-icon>
+																	</a>
+																`
+																: ``}
+															`
+															}
 														`}
 													</td>
 												</tr>

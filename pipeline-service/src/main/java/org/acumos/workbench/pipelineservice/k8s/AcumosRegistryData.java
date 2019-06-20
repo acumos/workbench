@@ -58,8 +58,7 @@ public class AcumosRegistryData {
 	public void setRegistryConfigured(boolean registryConfigured) {
 		this.registryConfigured = registryConfigured;
 	}
-	public AcumosRegistryData() {
-		// TODO Auto-generated constructor stub
-	}//end-consterutor
 
+	public AcumosRegistryData() {
+	}
 }

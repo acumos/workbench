@@ -18,38 +18,45 @@
  * ===============LICENSE_END=========================================================
  */
 
-package org.acumos.workbench.pipelineservice.k8s;
+package org.acumos.workbench.pipelineservice.exception;
 
-public class PipelineData {
-	private boolean pipelineExists;
-	private String pipelineName;
-	private String pipelineId;
-
-	public boolean isPipelineExists() {
-		return pipelineExists;
+/**
+ *This exception is thrown for duplicate Request
+ *
+ */
+public class DuplicateRequestException extends RuntimeException {
+	
+	
+	private static final long serialVersionUID = 3201749226392634066L;
+	
+	private static final String MSG = "Duplicate Request";
+	
+	/**
+	 * Default Constructor
+	 */
+	public DuplicateRequestException() {
+		super(MSG);
 	}
 
-	public void setPipelineExists(boolean pipelineExists) {
-		this.pipelineExists = pipelineExists;
+	/**
+	 Parameterized Constructor
+	 * @param msg
+	 * 		Message to be listed in log.
+	 */
+	public DuplicateRequestException(String msg) {
+		super(msg);
 	}
-
-	public String getPipelineName() {
-		return pipelineName;
-	}
-
-	public void setPipelineName(String pipelineName) {
-		this.pipelineName = pipelineName;
-	}
-
-	public String getPipelineId() {
-		return pipelineId;
-	}
-
-	public void setPipelineId(String pipelineId) {
-		this.pipelineId = pipelineId;
-	}
-
-	public PipelineData() {
-	}
-
+	
+	
+	/**
+	 * Parameterized Constructor 
+	 * @param msg
+	 * 		Message to be listed in log.
+	 * @param cause
+	 * 		Root Exception
+	 * 		
+	 */
+	public DuplicateRequestException(String msg, Throwable cause) {
+        super(msg, cause);
+    }
 }

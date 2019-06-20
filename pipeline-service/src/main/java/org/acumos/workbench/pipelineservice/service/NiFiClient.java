@@ -35,6 +35,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -51,6 +52,7 @@ import org.acumos.workbench.common.exception.TargetServiceInvocationException;
 import org.acumos.workbench.common.vo.Pipeline;
 import org.acumos.workbench.pipelineservice.exception.DataParsingException;
 import org.acumos.workbench.pipelineservice.exception.DuplicatePipeLineException;
+import org.acumos.workbench.pipelineservice.exception.NiFiInstnaceCreationException;
 import org.acumos.workbench.pipelineservice.exception.SecurityValidationException;
 import org.acumos.workbench.pipelineservice.k8s.AcumosRegistryData;
 import org.acumos.workbench.pipelineservice.k8s.BucketData;
@@ -103,10 +105,9 @@ public class NiFiClient {
 	 * @return
          	nifiUrl
 	 */
-	public String createPipeline(String acumosLoginId, String pipelineName) {
+	public String createPipeline(String acumosLoginId, String pipelineName, String nifiURL) {
 		logger.debug("NiFi createPipeline() begin");
 		String flowURL = null;
-		String nifiURL = null;
 		boolean acumosRegistryConfiguredInNiFi = false;
 		boolean userBucketExistsInRegistry = false;
 		boolean pipelineNameExistsInBucket = false;
@@ -123,11 +124,10 @@ public class NiFiClient {
 		String nifiRegistryBaseURL = configProps.getRegistryBaseUrl();
 		logger.debug("NiFi Registry Base URL : " + nifiRegistryBaseURL);
 
-		// PART -A: CREATE NIFI INSTANCE FOR THE USER
-		// STEP-1: CHECK IF THE NIFi CONTAINER FOR THE USER IS ALREADY CREATED
-		// Get the list of pipelines for user.  If pipeline with service URL exists then NIFI container exists else create new one.
-		nifiURL = getNifiURL(acumosLoginId);
-				
+		if(null == restTemplate){
+			restTemplate =  initRestTemplate();
+		}
+		
 		// PART - B: CHECK IF THE NIFI REGISTRY IS CONFIGURED IN user's NIFI INSTANCE
 		// STEP - 2: CHECK IF ACUMOS REGISTRY IS CONFIGGURED IN NIFI
 		// Note that ideally this step needs to be done only once after the NiFi
@@ -135,9 +135,6 @@ public class NiFiClient {
 		// delete the NiFi Registry from his NiFi instance, and the newly created
 		// pipeline will not be configured in the NiFi.
 		
-		if(null == restTemplate){
-			restTemplate =  initRestTemplate();
-		}
 		acumosRegistryData = checkIfAcumosRegistryIsConfiguredInNiFi(restTemplate,acumosLoginId, nifiURL);
 		acumosRegistryConfiguredInNiFi = acumosRegistryData.isRegistryConfigured();
 		if (!acumosRegistryConfiguredInNiFi) {
@@ -201,51 +198,25 @@ public class NiFiClient {
 		return flowURL;
 	}
 
-	private String getNifiURL(String acumosLoginId) {
-		logger.debug("getNifiURL() begin");
-		String nifiURL = null;
-		List<Pipeline> pipelines = plServiceImpl.getPipelines(acumosLoginId, null);
-		if(null != pipelines && pipelines.size() > 0 ) {
-			String serviceURL = null;
-			URL url = null;
-			String nifihost = null;
-			int nifiport;
-			String nifiProtocol = null;
-			for(Pipeline pipeline :  pipelines) {
-				serviceURL = pipeline.getPipelineId().getServiceUrl();
-				if(null != serviceURL && !serviceURL.trim().equals("")){
-					try {
-						url = buildURI(serviceURL, null).toURL();
-						nifihost = url.getHost();
-						nifiport = url.getPort();
-						nifiProtocol = url.getProtocol();
-						nifiURL = String.format("%s://%s:%d%s", nifiProtocol, nifihost, nifiport,PipelineServiceConstants.NIFI_API);
-						break;
-					} catch (MalformedURLException e) {
-						logger.error("MalformedURLException while constructing NIFI URL from NIFI flow URL ", e);
-						throw new TargetServiceInvocationException("MalformedURLException while constructing NIFI URL from NIFI flow URL",e);
-					}
-				}
-			}
-		}
-		if (nifiURL == null) {
-			// Step-1.1 Create NiFi instance for the user
-			nifiURL = createNiFiInstance(acumosLoginId);
-		}
-		logger.debug("Nifi Server URL : " + nifiURL);
-		logger.debug("getNifiURL() end");
-		return nifiURL;
+	public boolean checkifNifiPodRunning(String acumosLoginId) {
+		boolean nifiPodRunning = false;
+		logger.debug("checkifNifiPodRunning() begin");
+		nifiPodRunning = createNiFi.checkifNifiPodRunning(acumosLoginId);
+		logger.debug("checkifNifiPodRunning() End");
+		return nifiPodRunning;
 	}
 
-	private String createNiFiInstance(String acumosLoginId) {
+	public String createNiFiInstance(String acumosLoginId) {
+		logger.debug("createNiFiInstance() Begin");
 		String nifiURL = null;
 		// Call the Kubernetes API to create a NiFi Instance
 		try {
 			nifiURL = createNiFi.createNiFiInstanceForUser(acumosLoginId);
-		} catch (Exception e) {
-			logger.error("Exception occured while creating NiFi Indtance for User",e);
-			throw new TargetServiceInvocationException("Exception occured while creating NiFi Indtance for User",e);
+		} catch (NiFiInstnaceCreationException e) {
+			logger.error("Exception occured while creating NiFi Instance for User",e);
+			throw new NiFiInstnaceCreationException("Exception occured while creating NiFi Instance for User ");
 		}
+		logger.debug("createNiFiInstance() End");
 		return nifiURL;
 	}
 
@@ -1032,7 +1003,7 @@ public class NiFiClient {
 				HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
 				requestFactory.setHttpClient(httpClient);
 				template = new RestTemplate(requestFactory);
-				template.exchange(requestRestApiUri, HttpMethod.GET, null, String.class);
+				//template.exchange(requestRestApiUri, HttpMethod.GET, null, String.class);
 				
 			} catch (NoSuchAlgorithmException e) {
 				logger.error("NIFI Security : NoSuch Algorithm Exception Occured",e);

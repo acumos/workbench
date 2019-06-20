@@ -21,10 +21,12 @@
 package org.acumos.workbench.pipelineservice.service;
 
 import java.lang.invoke.MethodHandles;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 import org.acumos.cds.client.CommonDataServiceRestClientImpl;
 import org.acumos.cds.domain.MLPPipeline;
@@ -44,6 +46,7 @@ import org.acumos.workbench.common.vo.Pipeline;
 import org.acumos.workbench.common.vo.ServiceState;
 import org.acumos.workbench.common.vo.Version;
 import org.acumos.workbench.pipelineservice.exception.DuplicatePipeLineException;
+import org.acumos.workbench.pipelineservice.exception.NiFiInstnaceCreationException;
 import org.acumos.workbench.pipelineservice.exception.PipelineNotFoundException;
 import org.acumos.workbench.pipelineservice.util.ConfigurationProperties;
 import org.acumos.workbench.pipelineservice.util.PipeLineServiceUtil;
@@ -60,8 +63,6 @@ public class PipeLineServiceImpl implements PipeLineService{
 	
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 	
-	private static final String STATUS_CODE = "SU";
-	private static final String TASK_NAME = "Pipeline : ";
 	private static final String UNARCHIVE = "UA";
 	private static final String ARCHIVE = "A";
 	
@@ -74,49 +75,93 @@ public class PipeLineServiceImpl implements PipeLineService{
 	private NiFiClient nifiService;
 	
 	@Override
-	public Pipeline createPipeLine(String authenticatedUserId, String projectId, Pipeline pipeLine) throws TargetServiceInvocationException {
+	public Pipeline createPipeLine(String authenticatedUserId, String projectId, Pipeline pipeLine)
+			throws TargetServiceInvocationException {
 		logger.debug("createPipeLine() Begin");
-		
+
 		Pipeline result = null;
 		MLPPipeline responseMLPPileLine = null;
 		MLPPipeline mlpPipeline = null;
-		
+
 		MLPUser mlpUser = getUserDetails(authenticatedUserId);
 		String userId = mlpUser.getUserId();
-		
-		// Return the URL of the Nifi which stores in CDS
-		logger.debug("Calling NiFi Serivce ....");
-		String url = nifiService.createPipeline(authenticatedUserId,pipeLine.getPipelineId().getName());
-		logger.debug("NiFi Service URL : " + url);
+		// Create Pipeline in DB
 		try {
 			mlpPipeline = PipeLineServiceUtil.getMLPPipeLine(userId, pipeLine);
-			mlpPipeline.setServiceUrl(url);
 			// Call to CDS to create new PipeLine
 			logger.debug("CDS createPipeLine() method Begin");
 			responseMLPPileLine = cdsClient.createPipeline(mlpPipeline);
 			logger.debug("CDS createPipeLine() method End");
-		} catch(RestClientResponseException e){
+		} catch (RestClientResponseException e) {
 			logger.error("CDS - Create Pipeline", e);
 			throw new TargetServiceInvocationException(PipelineServiceConstants.CDS_CREATE_PIPELINE);
-			
 		}
 		try {
-			if(null != projectId){
+			if (null != projectId) {
 				logger.debug("CDS addProjectPipeline() method Begin");
 				cdsClient.addProjectPipeline(projectId, responseMLPPileLine.getPipelineId());
 				logger.debug("CDS addProjectPipeline() method End");
 			}
 		} catch (Exception e) {
-			logger.error("CDS - Create Pipeline", e);
-			throw new TargetServiceInvocationException(PipelineServiceConstants.CDS_CREATE_PIPELINE);
+			logger.error("CDS - addProjectPipeline ", e);
+			throw new TargetServiceInvocationException(PipelineServiceConstants.CDS_ADD_PROJECT_PIPELINE);
 		}
-		
-		mlpPipeline.setServiceStatusCode(ServiceStatus.COMPLETED.getServiceStatusCode());
-		result = PipeLineServiceUtil.getPipeLineVO(responseMLPPileLine,mlpUser);
-		
+
+		final MLPPipeline newMLPPipeline = responseMLPPileLine;
+		// Create Pipeline in NiFi Server
+		String nifiURL = MessageFormat.format(configProps.getServiceBaseUrl(), authenticatedUserId);
+		logger.debug(" NiFi URL : " + nifiURL);
+		// If Nifi Pod already exits and running then
+		boolean nifiPodRunning = false;
+		// check if nifi Pod exists for the user or not
+		nifiPodRunning = nifiService.checkifNifiPodRunning(authenticatedUserId);
+		logger.debug("NiFi POD is Running ? : " + nifiPodRunning);
+		// PART -A: CREATE NIFI INSTANCE FOR THE USER
+		// STEP-1: CHECK IF THE NIFi CONTAINER FOR THE USER IS ALREADY CREATED
+		if (!nifiPodRunning) {
+			try {
+				// Async Call
+				CompletableFuture.supplyAsync(() -> {
+					try {
+						logger.debug(" Calling createPipelineAsync() ");
+						createPipelineAsync(authenticatedUserId, newMLPPipeline);
+					} catch (NiFiInstnaceCreationException e) {
+						logger.error("NiFiInstnaceCreationException while creating Nifi Instance ", e);
+						newMLPPipeline.setServiceStatusCode(ServiceStatus.FAILED.getServiceStatusCode());
+						try {
+							// Call to CDS to update PipeLine with URL and Status
+							logger.debug("CDS updatePipeLine() method Begin");
+							cdsClient.updatePipeline(newMLPPipeline);
+							logger.debug("CDS updatePipeLine() method End");
+						} catch (RestClientResponseException re) {
+							logger.error("CDS - Update Pipeline", re);
+							throw new TargetServiceInvocationException(PipelineServiceConstants.CDS_UPDATE_PIPELINE);
+						}
+					}
+					return null;
+				});
+			} catch (Exception e) {
+				logger.error("Async Call failed", e);
+				newMLPPipeline.setServiceStatusCode(ServiceStatus.FAILED.getServiceStatusCode());
+				try {
+					// Call to CDS to update PipeLine with URL and Status
+					logger.debug("CDS updatePipeLine() method Begin");
+					cdsClient.updatePipeline(newMLPPipeline);
+					logger.debug("CDS updatePipeLine() method End");
+				} catch (RestClientResponseException re) {
+					logger.error("CDS - Update Pipeline", re);
+					throw new TargetServiceInvocationException(PipelineServiceConstants.CDS_UPDATE_PIPELINE);
+				}
+
+			}
+		} else {
+			logger.debug("Calling createPipelineInNifiInstance() .....");
+			createPipelineInNifiInstance(authenticatedUserId, newMLPPipeline, nifiURL);
+		}
+		result = PipeLineServiceUtil.getPipeLineVO(newMLPPipeline, mlpUser);
 		// Add success or error message to Notification. (Call to CDS)
 		String resultMsg = result.getPipelineId().getName() + " created successfully";
-		//saveNotification(authenticatedUserId, STATUS_CODE, TASK_NAME, resultMsg);
+		// saveNotification(authenticatedUserId, STATUS_CODE, TASK_NAME, resultMsg);
 		logger.debug("createPipeLine() Begin");
 		return result;
 	}
@@ -133,12 +178,6 @@ public class PipeLineServiceImpl implements PipeLineService{
 		if (null != pipeLine.getPipelineId()) {
 			Identifier pipeLineIdentifier = pipeLine.getPipelineId();
 			queryParams.put("name", pipeLineIdentifier.getName());
-			if (null != pipeLineIdentifier.getVersionId()) {
-				Version pipeLineVersion = pipeLineIdentifier.getVersionId();
-				if (null != pipeLineVersion.getLabel() && !pipeLineVersion.getLabel().trim().equals("")) {
-					queryParams.put("version", pipeLineVersion.getLabel());
-				}
-			}
 		}
 		queryParams.put("userId", userId);
 		RestPageRequest pageRequest = new RestPageRequest(0, 1);
@@ -406,27 +445,6 @@ public class PipeLineServiceImpl implements PipeLineService{
 	}
 	
 
-	private MLPUser getUserDetails(String authenticatedUserId) throws UserNotFoundException {
-		logger.debug("getUserDetails() Begin");
-		Map<String, Object> queryParams = new HashMap<String, Object>();
-		queryParams.put("loginName", authenticatedUserId);
-		RestPageRequest pageRequest = new RestPageRequest(0, 1);
-		logger.debug("CDS searchUsers() method Begin");
-		RestPageResponse<MLPUser> response = cdsClient.searchUsers(queryParams, false, pageRequest);
-		logger.debug("CDS searchUsers() method End");
-		List<MLPUser> mlpUsers = response.getContent();
-		MLPUser mlpUser = null;
-		if (null != mlpUsers && mlpUsers.size() > 0) {
-			mlpUser = mlpUsers.get(0);
-		} else {
-			logger.warn(authenticatedUserId + " User not found");
-			throw new UserNotFoundException(authenticatedUserId);
-		}
-		logger.debug("getUserDetails() End");
-		return mlpUser;
-	}
-
-
 	@Override
 	public void isPipelineArchived(String pipelineId) throws ArchivedException{
 		logger.debug("isPipelineArchived() Begin");
@@ -468,7 +486,52 @@ public class PipeLineServiceImpl implements PipeLineService{
 		}
 
 	}
+	
 
+	private void createPipelineAsync(String authenticatedUserId, MLPPipeline responseMLPPileLine) {
+		logger.debug(" CreatePipelineAsync() Begin " );
+		String nifiURL = nifiService.createNiFiInstance(authenticatedUserId);
+		createPipelineInNifiInstance(authenticatedUserId, responseMLPPileLine, nifiURL);
+		logger.debug(" CreatePipelineAsync() End " );
+	}
+
+	private void createPipelineInNifiInstance(String acumosLoginId, MLPPipeline mlpPileLine, String nifiURL) {
+		logger.debug("CreatePipelineInNifiInstance() Begin ");
+		String url = nifiService.createPipeline(acumosLoginId, mlpPileLine.getName(), nifiURL);
+		logger.debug("NiFi Service URL : " + url);
+		mlpPileLine.setServiceUrl(url);		
+		mlpPileLine.setServiceStatusCode(ServiceStatus.COMPLETED.getServiceStatusCode());
+		try {
+			// Call to CDS to update PipeLine with URL and Status
+			logger.debug("CDS updatePipeLine() method Begin");
+			cdsClient.updatePipeline(mlpPileLine);
+			logger.debug("CDS updatePipeLine() method End");
+		} catch(RestClientResponseException e){
+			logger.error("CDS - Update Pipeline", e);
+			throw new TargetServiceInvocationException(PipelineServiceConstants.CDS_UPDATE_PIPELINE);
+		}
+		logger.debug("CreatePipelineInNifiInstance() End ");
+	}
+
+	private MLPUser getUserDetails(String authenticatedUserId) throws UserNotFoundException {
+		logger.debug("getUserDetails() Begin");
+		Map<String, Object> queryParams = new HashMap<String, Object>();
+		queryParams.put("loginName", authenticatedUserId);
+		RestPageRequest pageRequest = new RestPageRequest(0, 1);
+		logger.debug("CDS searchUsers() method Begin");
+		RestPageResponse<MLPUser> response = cdsClient.searchUsers(queryParams, false, pageRequest);
+		logger.debug("CDS searchUsers() method End");
+		List<MLPUser> mlpUsers = response.getContent();
+		MLPUser mlpUser = null;
+		if (null != mlpUsers && mlpUsers.size() > 0) {
+			mlpUser = mlpUsers.get(0);
+		} else {
+			logger.warn(authenticatedUserId + " User not found");
+			throw new UserNotFoundException(authenticatedUserId);
+		}
+		logger.debug("getUserDetails() End");
+		return mlpUser;
+	}
 
 	
 }

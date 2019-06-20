@@ -35,6 +35,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -51,6 +52,7 @@ import org.acumos.workbench.common.exception.TargetServiceInvocationException;
 import org.acumos.workbench.common.vo.Pipeline;
 import org.acumos.workbench.pipelineservice.exception.DataParsingException;
 import org.acumos.workbench.pipelineservice.exception.DuplicatePipeLineException;
+import org.acumos.workbench.pipelineservice.exception.NiFiInstanceCreationException;
 import org.acumos.workbench.pipelineservice.exception.SecurityValidationException;
 import org.acumos.workbench.pipelineservice.k8s.AcumosRegistryData;
 import org.acumos.workbench.pipelineservice.k8s.BucketData;
@@ -103,10 +105,9 @@ public class NiFiClient {
 	 * @return
          	nifiUrl
 	 */
-	public String createPipeline(String acumosLoginId, String pipelineName) {
+	public String createPipeline(String acumosLoginId, String pipelineName, String nifiURL) {
 		logger.debug("NiFi createPipeline() begin");
 		String flowURL = null;
-		String nifiURL = null;
 		boolean acumosRegistryConfiguredInNiFi = false;
 		boolean userBucketExistsInRegistry = false;
 		boolean pipelineNameExistsInBucket = false;
@@ -123,11 +124,10 @@ public class NiFiClient {
 		String nifiRegistryBaseURL = configProps.getRegistryBaseUrl();
 		logger.debug("NiFi Registry Base URL : " + nifiRegistryBaseURL);
 
-		// PART -A: CREATE NIFI INSTANCE FOR THE USER
-		// STEP-1: CHECK IF THE NIFi CONTAINER FOR THE USER IS ALREADY CREATED
-		// Get the list of pipelines for user.  If pipeline with service URL exists then NIFI container exists else create new one.
-		nifiURL = getNifiURL(acumosLoginId);
-				
+		if(null == restTemplate){
+			restTemplate =  initRestTemplate();
+		}
+		
 		// PART - B: CHECK IF THE NIFI REGISTRY IS CONFIGURED IN user's NIFI INSTANCE
 		// STEP - 2: CHECK IF ACUMOS REGISTRY IS CONFIGGURED IN NIFI
 		// Note that ideally this step needs to be done only once after the NiFi
@@ -135,9 +135,6 @@ public class NiFiClient {
 		// delete the NiFi Registry from his NiFi instance, and the newly created
 		// pipeline will not be configured in the NiFi.
 		
-		if(null == restTemplate){
-			restTemplate =  initRestTemplate();
-		}
 		acumosRegistryData = checkIfAcumosRegistryIsConfiguredInNiFi(restTemplate,acumosLoginId, nifiURL);
 		acumosRegistryConfiguredInNiFi = acumosRegistryData.isRegistryConfigured();
 		if (!acumosRegistryConfiguredInNiFi) {
@@ -201,54 +198,171 @@ public class NiFiClient {
 		return flowURL;
 	}
 
-	private String getNifiURL(String acumosLoginId) {
-		logger.debug("getNifiURL() begin");
-		String nifiURL = null;
-		List<Pipeline> pipelines = plServiceImpl.getPipelines(acumosLoginId, null);
-		if(null != pipelines && pipelines.size() > 0 ) {
-			String serviceURL = null;
-			URL url = null;
-			String nifihost = null;
-			int nifiport;
-			String nifiProtocol = null;
-			for(Pipeline pipeline :  pipelines) {
-				serviceURL = pipeline.getPipelineId().getServiceUrl();
-				if(null != serviceURL && !serviceURL.trim().equals("")){
-					try {
-						url = buildURI(serviceURL, null).toURL();
-						nifihost = url.getHost();
-						nifiport = url.getPort();
-						nifiProtocol = url.getProtocol();
-						nifiURL = String.format("%s://%s:%d%s", nifiProtocol, nifihost, nifiport,PipelineServiceConstants.NIFI_API);
-						break;
-					} catch (MalformedURLException e) {
-						logger.error("MalformedURLException while constructing NIFI URL from NIFI flow URL ", e);
-						throw new TargetServiceInvocationException("MalformedURLException while constructing NIFI URL from NIFI flow URL",e);
-					}
-				}
-			}
-		}
-		if (nifiURL == null) {
-			// Step-1.1 Create NiFi instance for the user
-			nifiURL = createNiFiInstance(acumosLoginId);
-		}
-		logger.debug("Nifi Server URL : " + nifiURL);
-		logger.debug("getNifiURL() end");
-		return nifiURL;
+	/**
+	 * This method will check if the NiFi POD is running or not
+	 * @param acumosLoginId
+	 * 		Accepts acumosLoginId as parameter
+	 * @return
+	 * 		boolean as true/false
+	 */
+	public boolean checkifNifiPodRunning(String acumosLoginId) {
+		boolean nifiPodRunning = false;
+		logger.debug("checkifNifiPodRunning() begin");
+		nifiPodRunning = createNiFi.checkifNifiPodRunning(acumosLoginId);
+		logger.debug("checkifNifiPodRunning() End");
+		return nifiPodRunning;
 	}
 
-	private String createNiFiInstance(String acumosLoginId) {
+	/**
+	 * This method will create the Instance of NiFi
+	 * @param acumosLoginId
+	 * 		Accepts acumosLoginId as parameter
+	 * @return
+	 * 		NiFi URL
+	 */
+	public String createNiFiInstance(String acumosLoginId) {
+		logger.debug("createNiFiInstance() Begin");
 		String nifiURL = null;
 		// Call the Kubernetes API to create a NiFi Instance
 		try {
 			nifiURL = createNiFi.createNiFiInstanceForUser(acumosLoginId);
-		} catch (Exception e) {
-			logger.error("Exception occured while creating NiFi Indtance for User",e);
-			throw new TargetServiceInvocationException("Exception occured while creating NiFi Indtance for User",e);
+		} catch (NiFiInstanceCreationException e) {
+			logger.error("Exception occured while creating NiFi Instance for User",e);
+			throw new NiFiInstanceCreationException("Exception occured while creating NiFi Instance for User ");
 		}
+		logger.debug("createNiFiInstance() End");
 		return nifiURL;
 	}
 
+	/**
+	 * This method will delete the Pipeline Details
+	 * @param acumosLoginId
+	 * 		Accepts the Acumos Login Id
+	 * @param pipelineName
+	 * 		Accepts the Pipeline Name
+	 */
+	public void deletePipeline(String acumosLoginId, String pipelineName) {
+		logger.debug("deletePipeline() begin");
+		if(null == restTemplate){
+			restTemplate =  initRestTemplate();
+		}
+		// STEP - 0: SET UP REST Template
+		String nifiRegistryBaseURL = configProps.getRegistryBaseUrl(); // Retreive NiFI registry url from properties file
+		// STEP- 1: Get the bucket Id of the user (acumosLoginId) from NiFi-Registry
+		BucketData bucketData = checkIfBucketExistsForUserInNiFiRegistry(restTemplate, nifiRegistryBaseURL,
+				acumosLoginId);
+		if (bucketData.isBucketExists()) {
+			String userBucketId = bucketData.getBucketId();
+			// STEP-2: Get flow Id for the given pipeline name from NiFi Registry
+			PipelineData pipelineData = checkIfPipelineExistsInUserBucket(restTemplate, nifiRegistryBaseURL,
+					acumosLoginId, userBucketId, pipelineName);
+			if (pipelineData.isPipelineExists()) {
+				String pipelineId = pipelineData.getPipelineId();// flow Id
+				// STEP-3: Delete the pipeline (aka flow) from bucket
+				String url = nifiRegistryBaseURL + PipelineServiceConstants.BUCKET_FLOWS_PIPELINE; 
+				
+				Map<String, String> uriParams = new HashMap<String, String>();
+				uriParams.put("bucketId", userBucketId);
+				uriParams.put("pipelineId", pipelineId);
+				URI uri = buildURI(url, uriParams);
+				logger.debug("PATH : " + uri); 
+				try {
+					//create headers you need to send
+					HttpHeaders headers = new HttpHeaders();
+					headers.set("authuser", configProps.getNifiAdminUser());
+					HttpEntity<String> entity = new HttpEntity<String>(headers);
+					
+					ResponseEntity<String> deleteFlowResponse = restTemplate.exchange(uri, HttpMethod.DELETE, entity, String.class);
+					String deleteFlowString = deleteFlowResponse.getBody();
+					logger.debug("Flow Details :" + deleteFlowString);
+					
+				} catch (Exception e) {
+					logger.error("Exception while deleting Pipeline from NIFI ", e);
+					throw new TargetServiceInvocationException("Exception while deleting Pipeline from NIFI");
+				}
+				logger.debug("Pipeline: " + pipelineName + " deleted" + " for user " + acumosLoginId);
+			} else {
+				logger.error("Pipeline does not exist for user: " + acumosLoginId);
+				throw new TargetServiceInvocationException("Pipeline does not exist for user: " + acumosLoginId);
+			} 
+		} else {
+			logger.error("Bucket does not exist for user: " + acumosLoginId);
+			throw new TargetServiceInvocationException("Bucket does not exist for user: " + acumosLoginId);
+		} 
+		logger.debug("deletePipeline() end");
+	}
+
+	/**
+	 * This method will update the Pipeline Details
+	 * @param acumosLoginId
+	 * 			Accepts the Acumos Login Id as parameter
+	 * @param currentPipelineName
+	 * 			Accepts the Current Pipeline Name as parameter
+	 * @param newPipelineName
+	 * 			Accepts the New Pipeline Name as parameter
+	 * 		
+	 */
+	@SuppressWarnings("unchecked")
+	public void updatePipeline(String acumosLoginId, String currentPipelineName, String newPipelineName) {
+		logger.debug("updatePipeline() begin");
+		// STEP - 0: SET UP REST Template
+		if(null == restTemplate){
+			restTemplate =  initRestTemplate();
+		}
+		String nifiRegistryBaseURL = configProps.getRegistryBaseUrl(); 
+		// STEP- 1: Get the bucket Id of the user (acumosLoginId) from NiFi-Registry
+		BucketData bucketData = checkIfBucketExistsForUserInNiFiRegistry(restTemplate, nifiRegistryBaseURL,
+				acumosLoginId);
+		if (bucketData.isBucketExists()) {
+			String userBucketId = bucketData.getBucketId();
+			// STEP-2: Get flow Id of the current pipeline name from NiFi Registry
+			PipelineData pipelineData = checkIfPipelineExistsInUserBucket(restTemplate, nifiRegistryBaseURL,
+					acumosLoginId, userBucketId, currentPipelineName);
+			if (pipelineData.isPipelineExists()) {
+				String pipelineId = pipelineData.getPipelineId();// flow Id
+				// STEP-3: Update the pipeline (aka flow) in bucket
+				JSONObject updatePipleineNameRequestBody = new JSONObject();
+				// Put data inside JSON object
+				updatePipleineNameRequestBody.put("name", newPipelineName);
+				updatePipleineNameRequestBody.put("type", "Flow");
+
+				String updateFlowPutRequestObject = new String(updatePipleineNameRequestBody.toString());
+				logger.debug("Updated Flow Request Object : " + updateFlowPutRequestObject);
+				
+				HttpHeaders headers = new HttpHeaders();
+				headers.setContentType(new MediaType("application", "json"));
+				headers.set("authuser", configProps.getNifiAdminUser());
+				HttpEntity<JSONObject> entity = new HttpEntity<JSONObject>(updatePipleineNameRequestBody, headers);
+				
+				String url = nifiRegistryBaseURL + PipelineServiceConstants.BUCKET_FLOWS_PIPELINE; 
+				
+				Map<String, String> uriParams = new HashMap<String, String>();
+				uriParams.put("bucketId", userBucketId);
+				uriParams.put("pipelineId", pipelineId);
+				URI uri = buildURI(url, uriParams);
+				logger.debug("PATH : " + uri); 
+				
+				try {
+					ResponseEntity<String> updateFlowResponse = restTemplate.exchange(uri, HttpMethod.PUT, entity, String.class);
+					String updateFlowString = updateFlowResponse.getBody();
+					logger.debug("Update Flow : " + updateFlowString);
+				} catch (Exception e) {
+					logger.error("Exception while updating Pipeline from NIFI ", e);
+					throw new TargetServiceInvocationException("Exception while updating Pipeline from NIFI");
+				}
+				logger.debug("Pipeline: " + currentPipelineName + " updated" + " for user " + acumosLoginId
+						+ " to " + newPipelineName);
+			} else {
+				logger.error("Pipeline does not exist for user: " + acumosLoginId);
+				throw new TargetServiceInvocationException("Pipeline does not exist for user: " + acumosLoginId);
+			}
+		} else {
+			logger.error("Bucket does not exist for user: " + acumosLoginId);
+			throw new TargetServiceInvocationException("Bucket does not exist for user: " + acumosLoginId);
+		}
+		logger.debug("updatePipeline() end");
+	}
+	
 	private AcumosRegistryData checkIfAcumosRegistryIsConfiguredInNiFi(RestTemplate restTemplate,String acumosLoginId, String nifiBaseURL) {
 		// STEP-A: CHECK IF THE NIFI REGISTRY IS CONFIGURED IN user's NIFI INSTANCE
 		logger.debug("checkIfAcumosRegistryIsConfiguredInNiFi() Begin");
@@ -887,117 +1001,7 @@ public class NiFiClient {
 	}
 	
 	
-	public void deletePipeline(String acumosLoginId, String pipelineName) {
-		logger.debug("deletePipeline() begin");
-		if(null == restTemplate){
-			restTemplate =  initRestTemplate();
-		}
-		// STEP - 0: SET UP REST Template
-		String nifiRegistryBaseURL = configProps.getRegistryBaseUrl(); // Retreive NiFI registry url from properties file
-		// STEP- 1: Get the bucket Id of the user (acumosLoginId) from NiFi-Registry
-		BucketData bucketData = checkIfBucketExistsForUserInNiFiRegistry(restTemplate, nifiRegistryBaseURL,
-				acumosLoginId);
-		if (bucketData.isBucketExists()) {
-			String userBucketId = bucketData.getBucketId();
-			// STEP-2: Get flow Id for the given pipeline name from NiFi Registry
-			PipelineData pipelineData = checkIfPipelineExistsInUserBucket(restTemplate, nifiRegistryBaseURL,
-					acumosLoginId, userBucketId, pipelineName);
-			if (pipelineData.isPipelineExists()) {
-				String pipelineId = pipelineData.getPipelineId();// flow Id
-				// STEP-3: Delete the pipeline (aka flow) from bucket
-				String url = nifiRegistryBaseURL + PipelineServiceConstants.BUCKET_FLOWS_PIPELINE; 
-				
-				Map<String, String> uriParams = new HashMap<String, String>();
-				uriParams.put("bucketId", userBucketId);
-				uriParams.put("pipelineId", pipelineId);
-				URI uri = buildURI(url, uriParams);
-				logger.debug("PATH : " + uri); 
-				try {
-					//create headers you need to send
-					HttpHeaders headers = new HttpHeaders();
-					headers.set("authuser", configProps.getNifiAdminUser());
-					HttpEntity<String> entity = new HttpEntity<String>(headers);
-					
-					ResponseEntity<String> deleteFlowResponse = restTemplate.exchange(uri, HttpMethod.DELETE, entity, String.class);
-					String deleteFlowString = deleteFlowResponse.getBody();
-					logger.debug("Flow Details :" + deleteFlowString);
-					
-				} catch (Exception e) {
-					logger.error("Exception while deleting Pipeline from NIFI ", e);
-					throw new TargetServiceInvocationException("Exception while deleting Pipeline from NIFI");
-				}
-				logger.debug("Pipeline: " + pipelineName + " deleted" + " for user " + acumosLoginId);
-			} else {
-				logger.error("Pipeline does not exist for user: " + acumosLoginId);
-				throw new TargetServiceInvocationException("Pipeline does not exist for user: " + acumosLoginId);
-			} 
-		} else {
-			logger.error("Bucket does not exist for user: " + acumosLoginId);
-			throw new TargetServiceInvocationException("Bucket does not exist for user: " + acumosLoginId);
-		} 
-		logger.debug("deletePipeline() end");
-	}
-
-	@SuppressWarnings("unchecked")
-	public void updatePipeline(String acumosLoginId, String currentPipelineName, String newPipelineName) {
-		logger.debug("updatePipeline() begin");
-		// STEP - 0: SET UP REST Template
-		if(null == restTemplate){
-			restTemplate =  initRestTemplate();
-		}
-		String nifiRegistryBaseURL = configProps.getRegistryBaseUrl(); 
-		// STEP- 1: Get the bucket Id of the user (acumosLoginId) from NiFi-Registry
-		BucketData bucketData = checkIfBucketExistsForUserInNiFiRegistry(restTemplate, nifiRegistryBaseURL,
-				acumosLoginId);
-		if (bucketData.isBucketExists()) {
-			String userBucketId = bucketData.getBucketId();
-			// STEP-2: Get flow Id of the current pipeline name from NiFi Registry
-			PipelineData pipelineData = checkIfPipelineExistsInUserBucket(restTemplate, nifiRegistryBaseURL,
-					acumosLoginId, userBucketId, currentPipelineName);
-			if (pipelineData.isPipelineExists()) {
-				String pipelineId = pipelineData.getPipelineId();// flow Id
-				// STEP-3: Update the pipeline (aka flow) in bucket
-				JSONObject updatePipleineNameRequestBody = new JSONObject();
-				// Put data inside JSON object
-				updatePipleineNameRequestBody.put("name", newPipelineName);
-				updatePipleineNameRequestBody.put("type", "Flow");
-
-				String updateFlowPutRequestObject = new String(updatePipleineNameRequestBody.toString());
-				logger.debug("Updated Flow Request Object : " + updateFlowPutRequestObject);
-				
-				HttpHeaders headers = new HttpHeaders();
-				headers.setContentType(new MediaType("application", "json"));
-				headers.set("authuser", configProps.getNifiAdminUser());
-				HttpEntity<JSONObject> entity = new HttpEntity<JSONObject>(updatePipleineNameRequestBody, headers);
-				
-				String url = nifiRegistryBaseURL + PipelineServiceConstants.BUCKET_FLOWS_PIPELINE; 
-				
-				Map<String, String> uriParams = new HashMap<String, String>();
-				uriParams.put("bucketId", userBucketId);
-				uriParams.put("pipelineId", pipelineId);
-				URI uri = buildURI(url, uriParams);
-				logger.debug("PATH : " + uri); 
-				
-				try {
-					ResponseEntity<String> updateFlowResponse = restTemplate.exchange(uri, HttpMethod.PUT, entity, String.class);
-					String updateFlowString = updateFlowResponse.getBody();
-					logger.debug("Update Flow : " + updateFlowString);
-				} catch (Exception e) {
-					logger.error("Exception while updating Pipeline from NIFI ", e);
-					throw new TargetServiceInvocationException("Exception while updating Pipeline from NIFI");
-				}
-				logger.debug("Pipeline: " + currentPipelineName + " updated" + " for user " + acumosLoginId
-						+ " to " + newPipelineName);
-			} else {
-				logger.error("Pipeline does not exist for user: " + acumosLoginId);
-				throw new TargetServiceInvocationException("Pipeline does not exist for user: " + acumosLoginId);
-			}
-		} else {
-			logger.error("Bucket does not exist for user: " + acumosLoginId);
-			throw new TargetServiceInvocationException("Bucket does not exist for user: " + acumosLoginId);
-		}
-		logger.debug("updatePipeline() end");
-	}
+	
 	
 	
 	
@@ -1032,7 +1036,7 @@ public class NiFiClient {
 				HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
 				requestFactory.setHttpClient(httpClient);
 				template = new RestTemplate(requestFactory);
-				template.exchange(requestRestApiUri, HttpMethod.GET, null, String.class);
+				//template.exchange(requestRestApiUri, HttpMethod.GET, null, String.class);
 				
 			} catch (NoSuchAlgorithmException e) {
 				logger.error("NIFI Security : NoSuch Algorithm Exception Occured",e);

@@ -96,7 +96,7 @@ public class PipeLineServiceUtil {
 			if (null != pipeLine.getServiceStatus() && null != pipeLine.getServiceStatus().getStatus()) {
 				mlpPipeLine.setServiceStatusCode(pipeLine.getServiceStatus().getStatus().getServiceStatusCode());
 			} else {
-				mlpPipeLine.setServiceStatusCode(ServiceStatus.ACTIVE.getServiceStatusCode());
+				mlpPipeLine.setServiceStatusCode(ServiceStatus.INPROGRESS.getServiceStatusCode());
 			}
 			mlpPipeLine.setDescription(pipeLine.getDescription());
 			mlpPipeLine.setUserId(userId);

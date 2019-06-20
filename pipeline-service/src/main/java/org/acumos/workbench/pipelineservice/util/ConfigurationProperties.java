@@ -20,6 +20,8 @@
 
 package org.acumos.workbench.pipelineservice.util;
 
+import java.io.File;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -111,6 +113,27 @@ public class ConfigurationProperties {
 	@Value("${nifi.certshellfile}")
 	private String certShellFile;
 	
+	@Value("${k8s.nifisecretname}")
+	private String nifiSecretName;
+	
+	@Value("${k8s.nifiapacheconfigmapname}")
+	private String nifiApacheConfigMapName;
+	
+	@Value("${k8s.nificonfigmapname}")
+	private String nifiConfigMapName;
+	
+	@Value("${k8s.nifiServicename}")
+	private String nifiServiceName;
+	
+	@Value("${k8s.nifiserviceadminname}")
+	private String nifiServiceAdminName;
+	
+	@Value("${k8s.nifiingressname}")
+	private String nifiIngressName;
+	
+	@Value("${k8s.nifideploymentname}")
+	private String nifiDeploymentName;
+	
 	/**
 	 * @return the namespace
 	 */
@@ -185,6 +208,8 @@ public class ConfigurationProperties {
 	 * @return the templatePath
 	 */
 	public String getTemplatePath() {
+		templatePath = (templatePath.charAt(templatePath.length() - 1) != File.separatorChar)
+				? templatePath + File.separatorChar : templatePath;
 		return templatePath;
 	}
 
@@ -294,6 +319,41 @@ public class ConfigurationProperties {
 	}
 
 	/**
+	 * @return the nifiSecretName
+	 */
+	public String getNifiSecretName() {
+		return nifiSecretName;
+	}
+
+	/**
+	 * @return the nifiApacheConfigMapName
+	 */
+	public String getNifiApacheConfigMapName() {
+		return nifiApacheConfigMapName;
+	}
+
+	/**
+	 * @return the nifiConfigMapName
+	 */
+	public String getNifiConfigMapName() {
+		return nifiConfigMapName;
+	}
+
+	/**
+	 * @return the nifiServiceName
+	 */
+	public String getNifiServiceName() {
+		return nifiServiceName;
+	}
+
+	/**
+	 * @return the nifiServiceAdminName
+	 */
+	public String getNifiServiceAdminName() {
+		return nifiServiceAdminName;
+	}
+
+	/**
 	 * @return the sleepTime
 	 */
 	public int getSleepTime() {
@@ -305,6 +365,20 @@ public class ConfigurationProperties {
 	 */
 	public String getDirectRegistryBaseUrl() {
 		return directRegistryBaseUrl;
+	}
+
+	/**
+	 * @return the nifiIngressName
+	 */
+	public String getNifiIngressName() {
+		return nifiIngressName;
+	}
+
+	/**
+	 * @return the nifiDeploymentName
+	 */
+	public String getNifiDeploymentName() {
+		return nifiDeploymentName;
 	}
 
 	

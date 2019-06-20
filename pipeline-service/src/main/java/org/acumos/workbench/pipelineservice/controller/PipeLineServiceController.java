@@ -20,20 +20,26 @@
 
 package org.acumos.workbench.pipelineservice.controller;
 
-import static org.acumos.workbench.common.security.SecurityConstants.*;
-import static org.acumos.workbench.pipelineservice.util.PipelineServiceConstants.*;
-
+import static org.acumos.workbench.common.security.SecurityConstants.AUTHORIZATION_HEADER_KEY;
+import static org.acumos.workbench.common.security.SecurityConstants.JWT_TOKEN_HEADER_KEY;
+import static org.acumos.workbench.pipelineservice.util.PipelineServiceConstants.FIELD_AUTHENTICATED_USER_ID;
+import static org.acumos.workbench.pipelineservice.util.PipelineServiceConstants.FIELD_PIPELINE_ID;
+import static org.acumos.workbench.pipelineservice.util.PipelineServiceConstants.FIELD_PROJECT_ID;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
 import java.lang.invoke.MethodHandles;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.acumos.workbench.common.logging.LoggingConstants;
+import org.acumos.workbench.common.util.ServiceStatus;
 import org.acumos.workbench.common.vo.Pipeline;
 import org.acumos.workbench.common.vo.ServiceState;
 import org.acumos.workbench.pipelineservice.service.InputValidationService;
+import org.acumos.workbench.pipelineservice.service.PipeLineCacheService;
 import org.acumos.workbench.pipelineservice.service.PipeLineService;
 import org.acumos.workbench.pipelineservice.service.PipeLineValidationService;
 import org.slf4j.Logger;
@@ -53,6 +59,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/")
 public class PipeLineServiceController {
 
+	/**
+	 * 
+	 */
+	private static final String PIPELINE_INPROGRESS = "IP";
+
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
 	@Autowired
@@ -66,6 +77,9 @@ public class PipeLineServiceController {
 	@Autowired
 	@Qualifier("PipeLineServiceImpl")
 	private PipeLineService pipeLineService;
+	
+	@Autowired
+	private PipeLineCacheService pipelineCacheService;
 	
 	/**
 	 * Creates new independent Pipeline for a user.
@@ -82,16 +96,21 @@ public class PipeLineServiceController {
 	@RequestMapping(value = "users/{authenticatedUserId}/pipelines", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<?> createIndependentPipeline(
+			HttpServletRequest request,
 			@ApiParam(value = "The Acumos Login Id", required = true) @PathVariable("authenticatedUserId") String authenticatedUserId,
 			@ApiParam(value = "Pipeline Details", required = true) @RequestBody Pipeline pipeLine) {
 
 		logger.debug("createIndependentPipeline() Begin");
 
-		Pipeline result = createPipeline(authenticatedUserId, null, pipeLine, null);
-
+		Pipeline result = createPipeline(authenticatedUserId, null, pipeLine, request);
+		String serviceStatus = result.getServiceStatus().getStatus().getServiceStatusCode();
 		logger.debug("createIndependentPipeline() End");
-
-		return new ResponseEntity<Pipeline>(result, HttpStatus.CREATED);
+		
+		if(serviceStatus.equals(PIPELINE_INPROGRESS)){
+			return new ResponseEntity<Pipeline>(result, HttpStatus.ACCEPTED);
+		}else {
+			return new ResponseEntity<Pipeline>(result, HttpStatus.CREATED);
+		}
 	}
 	
 	/**
@@ -115,8 +134,11 @@ public class PipeLineServiceController {
 			@ApiParam(value = "Pipeline Details", required = true) @RequestBody Pipeline pipeLine) {
 
 		logger.debug("createPipelineUnderProject() Begin");
+		String requestId = defaultToUUID(request.getHeader(LoggingConstants.Headers.REQUEST_ID));
+		pipelineCacheService.putCreateRequest(requestId, pipeLine);
+		
 		String authToken = getAuthJWTToken(request);
-		Pipeline result = createPipeline(authenticatedUserId, projectId, pipeLine, authToken);
+		Pipeline result = createPipeline(authenticatedUserId, projectId, pipeLine, request);
 
 		logger.debug("createPipelineUnderProject() End");
 
@@ -295,6 +317,9 @@ public class PipeLineServiceController {
 			@ApiParam(value = "Pipeline Details", required = true) @RequestBody Pipeline pipeLine) {
 		logger.debug("updatePipelineUnderProject() Begin");
 		Pipeline result = null;
+		String requestId = defaultToUUID(request.getHeader(LoggingConstants.Headers.REQUEST_ID));
+		pipelineCacheService.putUpdateRequest(requestId, pipeLine);
+		
 		String authToken = getAuthJWTToken(request);
 		inputValidationService.isValueExists("projectId", projectId);
 		// validate project
@@ -305,8 +330,8 @@ public class PipeLineServiceController {
 
 		// Check if authenticated user is the owner of the Pipeline. (Call to CDS)
 		pipeLineService.isOwnerOfPipeline(authenticatedUserId, pipelineId);
-
 		result = pipeLineService.updatePipeline(authenticatedUserId, projectId, pipelineId, pipeLine);
+		pipelineCacheService.removeUpdateRequest(requestId, pipeLine);
 		logger.debug("updatePipelineUnderProject() End");
 		return new ResponseEntity<Pipeline>(result, HttpStatus.OK);
 
@@ -327,11 +352,14 @@ public class PipeLineServiceController {
 	@RequestMapping(value = "users/{authenticatedUserId}/pipelines/{pipelineId}", method = RequestMethod.PUT)
 	@ResponseBody
 	public ResponseEntity<?> updatePipeline(
+			HttpServletRequest request,
 			@ApiParam(value = "The Acumos Login Id", required = true) @PathVariable("authenticatedUserId") String authenticatedUserId,
 			@ApiParam(value = "pipelineId", required = true) @PathVariable("pipelineId") String pipelineId,
 			@ApiParam(value = "Pipeline Details", required = true) @RequestBody Pipeline pipeLine) {
 		logger.debug("updatePipeline() Begin");
-
+		String requestId = defaultToUUID(request.getHeader(LoggingConstants.Headers.REQUEST_ID));
+		pipelineCacheService.putUpdateRequest(requestId, pipeLine);
+		
 		Pipeline result = null;
 		// Validation
 		pipeLineValidationService.validateInputData(authenticatedUserId, pipeLine);
@@ -340,7 +368,7 @@ public class PipeLineServiceController {
 		pipeLineService.isOwnerOfPipeline(authenticatedUserId, pipelineId);
 
 		result = pipeLineService.updatePipeline(authenticatedUserId, null, pipelineId, pipeLine);
-
+		pipelineCacheService.removeUpdateRequest(requestId, pipeLine);
 		logger.debug("updatePipeline() End");
 		return new ResponseEntity<Pipeline>(result, HttpStatus.OK);
 
@@ -394,9 +422,12 @@ public class PipeLineServiceController {
 	@ApiOperation(value = "Delete Pipeline")
 	@RequestMapping(value = "/users/{authenticatedUserId}/pipeliens/{pipelineId}", method = RequestMethod.DELETE)
 	public ResponseEntity<?> deletePipeLine(
+			HttpServletRequest request,
 			@ApiParam(value = "The Acumos Login Id", required = true) @PathVariable("authenticatedUserId") String authenticatedUserId,
 			@ApiParam(value = "pipelineId", required = true) @PathVariable("pipelineId") String pipelineId) {
 		logger.debug("deletePipeLine() Begin");
+		String requestId = defaultToUUID(request.getHeader(LoggingConstants.Headers.REQUEST_ID));
+		pipelineCacheService.putDeleteRequest(requestId, pipelineId);
 		ServiceState result = null;
 		// 1. Validate the input
 		// 2. Check authenticatedUserId should be present
@@ -405,6 +436,7 @@ public class PipeLineServiceController {
 		pipeLineService.isOwnerOfPipeline(authenticatedUserId, pipelineId);
 		// 4. Delete Notebook
 		result = pipeLineService.deletePipeline(authenticatedUserId,pipelineId);
+		pipelineCacheService.removeDeleteRequest(requestId, pipelineId);
 		logger.debug("deletePipeLine() End");
 		return new ResponseEntity<ServiceState>(result, HttpStatus.OK);
 
@@ -432,19 +464,33 @@ public class PipeLineServiceController {
 			@ApiParam(value = "pipelineId", required = true) @PathVariable("pipelineId") String pipelineId,
 			@ApiParam(value = "actionType", allowableValues = "A,UA", required = true) @PathVariable("actionType") String actionType) {
 		logger.debug("archivePipelineUnderProject() Begin");
-		String authToken = getAuthJWTToken(request);
+		
 		Pipeline result = null;
 		// Archive the pipeline
-		result = archivePipeline(authenticatedUserId, null, pipelineId, actionType, authToken);
+		result = archivePipeline(authenticatedUserId, null, pipelineId, actionType, request);
 
 		logger.debug("archivePipelineUnderProject() End");
 		return new ResponseEntity<Pipeline>(result, HttpStatus.OK);
 
 	}
 	
+	/**
+	 * Archive or UnArchive Independent Pipeline
+	 * @param request
+	 * 			Accepts HttpServletRequest
+	 * @param authenticatedUserId
+	 * 			Accepts authenticatedUserId
+	 * @param pipelineId
+	 * 			Accepts pipelineId
+	 * @param actionType
+	 * 			Accepts actionType
+	 * @return
+	 * 			ResponseEntity<Pipeline>
+	 */
 	@ApiOperation(value = "Archive/UnArchive Independent Pipeline")
 	@RequestMapping(value = "/users/{authenticatedUserId}/pipelines/{pipelineId}/{actionType}", method = RequestMethod.PUT)
 	public ResponseEntity<?> archivePipeline(
+			HttpServletRequest request,
 			@ApiParam(value = "The Acumos Login Id", required = true) @PathVariable("authenticatedUserId") String authenticatedUserId,
 			@ApiParam(value = "pipelineId", required = true) @PathVariable("pipelineId") String pipelineId,
 			@ApiParam(value = "actionType", allowableValues = "A,UA", required = true) @PathVariable("actionType") String actionType) {
@@ -452,17 +498,118 @@ public class PipeLineServiceController {
 
 		Pipeline result = null;
 		// Archive the pipeline
-		result = archivePipeline(authenticatedUserId, null, pipelineId, actionType, null);
+		result = archivePipeline(authenticatedUserId, null, pipelineId, actionType, request);
 
 		logger.debug("archivePipelineUnderProject() End");
 		return new ResponseEntity<Pipeline>(result, HttpStatus.OK);
 
 	}
 	
+	/**
+	 * Check the Pipeline Creation Status With Project
+	 * @param request
+	 * 			Accepts HttpServletRequest
+	 * @param authenticatedUserId
+	 * 			Accepts authenticatedUserId
+	 * @param projectId
+	 * 			Accepts projectId
+	 * @param pipelineId
+	 * 			Accepts pipelineId
+	 * @return
+	 * 			Returns ResponseEntity<Pipeline>
+	 */
+	@ApiOperation(value = "Check Pipeline Creation Status which Associated with Project")
+	@RequestMapping(value = "users/{authenticatedUserId}/projects/{projectId}/pipelines/{pipelineId}", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<?> checkPipelineCreationStatusWithProject(HttpServletRequest request,
+			@ApiParam(value = "The Acumos Login Id", required = true) @PathVariable("authenticatedUserId") String authenticatedUserId,
+			@ApiParam(value = "The Project Id", required = true) @PathVariable("projectId") String projectId,
+			@ApiParam(value = "The Pipeline Id", required = true) @PathVariable("pipelineId") String pipelineId) {
+
+		logger.debug("checkPipelineCreationStatusWithProject() Begin");
+		String authToken = getAuthJWTToken(request);
+		Pipeline result = checkPipelineCreationStatus(authenticatedUserId, projectId, authToken, pipelineId);
+		logger.debug("checkPipelineCreationStatusWithProject() End");
+		return new ResponseEntity<Pipeline>(result,
+				getServiceStatus(result.getServiceStatus().getStatus().getServiceStatusCode()));
+
+	}
+	
+	/**
+	 * Checks the Independent Pipeline Creation Status
+	 * @param request
+	 * 			Accepts HttpServletRequest
+	 * @param authenticatedUserId
+	 * 			Accepts authenticatedUserId
+	 * @param pipelineId
+	 * 			Accepts pipelineId
+	 * @return
+	 * 			returns ResponseEntity<Pipeline>
+	 */
+	@ApiOperation(value = "Check Independent Pipeline Creation Status")
+	@RequestMapping(value = "users/{authenticatedUserId}/pipelines/{pipelineId}", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<?> checkIndependentPipelineCreationStatus(HttpServletRequest request,
+			@ApiParam(value = "The Acumos Login Id", required = true) @PathVariable("authenticatedUserId") String authenticatedUserId,
+			@ApiParam(value = "The Pipeline Id", required = true) @PathVariable("pipelineId") String pipelineId) {
+
+		logger.debug("checkIndependentPipelineCreationStatus() Begin");
+		String authToken = getAuthJWTToken(request);
+		Pipeline result = checkPipelineCreationStatus(authenticatedUserId, null, authToken, pipelineId);
+		logger.debug("checkIndependentPipelineCreationStatus() End");
+		return new ResponseEntity<Pipeline>(result,
+				getServiceStatus(result.getServiceStatus().getStatus().getServiceStatusCode()));
+	}
+	
+	private Pipeline checkPipelineCreationStatus(String authenticatedUserId, String projectId, String authToken,
+			String pipelineId) {
+		logger.debug("checkPipelineCreationStatus() Begin");
+		// 1. Check authenticatedUserId should be present
+		inputValidationService.isValueExists(FIELD_AUTHENTICATED_USER_ID, authenticatedUserId);
+		// 2. pipelineId should be present
+		inputValidationService.isValueExists(FIELD_PIPELINE_ID, pipelineId);
+		// 3. Check if authenticated user is the owner of the Pipeline and PipeLineExists or not. (Call to CDS)
+		pipeLineService.isOwnerOfPipeline(authenticatedUserId, pipelineId);
+		// 4. pipeline should not be archived
+		pipeLineService.isPipelineArchived(pipelineId);
+		if (null != projectId) {
+			// 5. Check if the project exists or not and project is archived or not.
+			pipeLineValidationService.validateProject(authenticatedUserId, projectId, authToken);
+			// 6. check if pipeline is associated to a project.
+			pipeLineService.isPipelineAssociatedUnderProject(projectId, pipelineId);
+		}
+		// 7. Service call to check PipeLine Creation Status (Call to CDS)
+		Pipeline result = pipeLineService.getPipeline(authenticatedUserId, pipelineId);
+		logger.debug("checkPipelineCreationStatus() End");
+		return result;
+	}
+
+	private HttpStatus getServiceStatus(String serviceStatusCode) {
+		logger.debug("getServiceStatus() Begin");
+		HttpStatus httpStatus = null;
+		ServiceStatus serviceStatus = ServiceStatus.get(serviceStatusCode);
+		switch (serviceStatus) {
+		case ACTIVE:
+		case COMPLETED:
+			httpStatus = HttpStatus.CREATED;
+			break;
+		case INPROGRESS:
+			httpStatus = HttpStatus.OK;
+			break;
+		default:
+			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		logger.debug("getServiceStatus() End");
+		return httpStatus;
+	}
+	
 	private Pipeline archivePipeline(String authenticatedUserId, String projectId, String pipelineId,
-			String actionType, String authToken) {
+			String actionType, HttpServletRequest request) {
 		logger.debug("archivePipeline() Begin");
 		Pipeline result;
+		String requestId = defaultToUUID(request.getHeader(LoggingConstants.Headers.REQUEST_ID));
+		pipelineCacheService.putArchiveRequest(requestId, pipelineId);
+		
 		// 1. Validate the input
 		// Check authenticatedUserId should be present
 		inputValidationService.isValueExists(FIELD_AUTHENTICATED_USER_ID, authenticatedUserId);
@@ -470,6 +617,7 @@ public class PipeLineServiceController {
 		if (null != projectId) {
 			inputValidationService.isValueExists(FIELD_PROJECT_ID, projectId);
 			// Check if the project exists or not and archived or not
+			String authToken = getAuthJWTToken(request);
 			pipeLineValidationService.validateProject(authenticatedUserId, projectId, authToken);
 		}
 		// Check pipelineId is present
@@ -481,23 +629,31 @@ public class PipeLineServiceController {
 		// TODO : Check if the Pipeline is referenced by other Users or in Other Projects(Out of Boreas). Need to discuss how to get this done.
 		// 4. Mark the pipeline as archived/un archived (call to CDS).
 		result = pipeLineService.archivePipeline(authenticatedUserId, projectId, pipelineId, actionType);
+		pipelineCacheService.removeArchiveRequest(requestId, pipelineId);
 		logger.debug("archivePipeline() End");
 		return result;
 	}
 
-	private Pipeline createPipeline(String authenticatedUserId, String projectId, Pipeline pipeLine, String authToken) {
+	private Pipeline createPipeline(String authenticatedUserId, String projectId, Pipeline pipeLine, HttpServletRequest request) {
 		logger.debug("createPipeline() Begin");
+
+		String requestId = defaultToUUID(request.getHeader(LoggingConstants.Headers.REQUEST_ID));
+		pipelineCacheService.putCreateRequest(requestId, pipeLine);
+		
 		// 1. Validation for the Input Data
 		pipeLineValidationService.validateInputData(authenticatedUserId, pipeLine);
 		if (null != projectId) {
 			// 2. Check if the project exists or not and project is archived or not.
+			String authToken = getAuthJWTToken(request);
 			pipeLineValidationService.validateProject(authenticatedUserId, projectId, authToken);
 		}
-		// 3. Check if the pipeline Name and Version already present for the userId in Workspace. (Call to CDS)
+		// 3. Check if the pipeline Name a nd Version already present for the userId in Workspace. (Call to CDS)
 		pipeLineService.pipeLineExists(authenticatedUserId, projectId, pipeLine);
-
+		
 		// 4. Service call to create new pipeline (Call to CDS)
 		Pipeline result = pipeLineService.createPipeLine(authenticatedUserId, projectId, pipeLine);
+		
+		pipelineCacheService.removeCreateRequest(requestId, pipeLine);
 		logger.debug("createPipeline() End");
 		return result;
 	}
@@ -515,5 +671,11 @@ public class PipeLineServiceController {
 		}
 		return authToken;
 	}
-
+	
+	private String defaultToUUID(final String in) {
+		if (in == null) {
+			return UUID.randomUUID().toString();
+		}
+		return in;
+	}
 }

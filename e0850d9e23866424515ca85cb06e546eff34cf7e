@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "20715ef7_7b43b7c9",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/controller/PipeLineServiceController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-06-20T14:24:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ea1ab29_9ed16ab4",
+      "range": {
+        "startLine": 62,
+        "startChar": 1,
+        "endLine": 64,
+        "endChar": 3
+      },
+      "revId": "e0850d9e23866424515ca85cb06e546eff34cf7e",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31ffdcac_270a0e0d",
         "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/NiFiClient.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2019-06-20T13:35:02Z",
       "side": 1,
       "message": "Java Doc is missingc",
+      "range": {
+        "startLine": 201,
+        "startChar": 1,
+        "endLine": 201,
+        "endChar": 7
+      },
+      "revId": "e0850d9e23866424515ca85cb06e546eff34cf7e",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "01d491a2_26c8ff27",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/NiFiClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-06-20T14:24:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31ffdcac_270a0e0d",
       "range": {
         "startLine": 201,
         "startChar": 1,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a1553457_6375539e",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/NiFiClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-06-20T14:24:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba175061_1d517604",
+      "range": {
+        "startLine": 209,
+        "startChar": 1,
+        "endLine": 209,
+        "endChar": 7
+      },
+      "revId": "e0850d9e23866424515ca85cb06e546eff34cf7e",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8bdb1f34_faa8fba9",
         "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/PipeLineCacheService.java",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2019-06-20T13:35:02Z",
       "side": 1,
       "message": "Java Doc missing",
+      "range": {
+        "startLine": 41,
+        "startChar": 1,
+        "endLine": 41,
+        "endChar": 7
+      },
+      "revId": "e0850d9e23866424515ca85cb06e546eff34cf7e",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63a50022_b9aa6722",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/PipeLineCacheService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-06-20T14:24:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8bdb1f34_faa8fba9",
       "range": {
         "startLine": 41,
         "startChar": 1,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "d57a5a2f_b1819c82",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/PipeLineCacheService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-06-20T14:24:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "043253c0_829ed5e5",
+      "range": {
+        "startLine": 53,
+        "startChar": 1,
+        "endLine": 53,
+        "endChar": 7
+      },
+      "revId": "e0850d9e23866424515ca85cb06e546eff34cf7e",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a334d6fd_d847c83a",
         "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/PipeLineCacheService.java",
         "patchSetId": 3
@@ -128,6 +248,30 @@
       "writtenOn": "2019-06-20T13:35:02Z",
       "side": 1,
       "message": "Java Doc missing",
+      "range": {
+        "startLine": 58,
+        "startChar": 1,
+        "endLine": 58,
+        "endChar": 7
+      },
+      "revId": "e0850d9e23866424515ca85cb06e546eff34cf7e",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e399525f_e9532af0",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/PipeLineCacheService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-06-20T14:24:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a334d6fd_d847c83a",
       "range": {
         "startLine": 58,
         "startChar": 1,
@@ -186,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "05f95392_c38224af",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/PipeLineCacheService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-06-20T14:24:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d82c7c2_ff317380",
+      "range": {
+        "startLine": 70,
+        "startChar": 1,
+        "endLine": 70,
+        "endChar": 7
+      },
+      "revId": "e0850d9e23866424515ca85cb06e546eff34cf7e",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57814546_00ebc7e3",
         "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/PipeLineCacheService.java",
         "patchSetId": 3
@@ -197,6 +365,30 @@
       "writtenOn": "2019-06-20T13:35:02Z",
       "side": 1,
       "message": "Java Doc missing",
+      "range": {
+        "startLine": 74,
+        "startChar": 1,
+        "endLine": 74,
+        "endChar": 7
+      },
+      "revId": "e0850d9e23866424515ca85cb06e546eff34cf7e",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a175ded_ffe1e0a1",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/PipeLineCacheService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-06-20T14:24:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57814546_00ebc7e3",
       "range": {
         "startLine": 74,
         "startChar": 1,
@@ -232,6 +424,30 @@
     },
     {
       "key": {
+        "uuid": "fad6a965_3ea61b77",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/util/MLWBRequestCache.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-06-20T14:24:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8aa5dad2_a0881b06",
+      "range": {
+        "startLine": 41,
+        "startChar": 1,
+        "endLine": 41,
+        "endChar": 7
+      },
+      "revId": "e0850d9e23866424515ca85cb06e546eff34cf7e",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a51723c_771222d2",
         "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/util/MLWBRequestCache.java",
         "patchSetId": 3
@@ -243,6 +459,30 @@
       "writtenOn": "2019-06-20T13:35:02Z",
       "side": 1,
       "message": "Java Doc missing",
+      "range": {
+        "startLine": 48,
+        "startChar": 1,
+        "endLine": 48,
+        "endChar": 7
+      },
+      "revId": "e0850d9e23866424515ca85cb06e546eff34cf7e",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "096b5669_d06656a3",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/util/MLWBRequestCache.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-06-20T14:24:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a51723c_771222d2",
       "range": {
         "startLine": 48,
         "startChar": 1,

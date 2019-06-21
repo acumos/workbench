@@ -120,7 +120,8 @@ public class PipeLineServiceImpl implements PipeLineService{
 		// STEP-1: CHECK IF THE NIFi CONTAINER FOR THE USER IS ALREADY CREATED
 		if (!nifiPodRunning) {
 			try {
-				// Async Call
+				// Async Call for NiFi Service
+				//Async Call for NiFi Service
 				CompletableFuture.supplyAsync(() -> {
 					try {
 						logger.debug(" Calling createPipelineAsync() ");
@@ -152,7 +153,6 @@ public class PipeLineServiceImpl implements PipeLineService{
 					logger.error("CDS - Update Pipeline", re);
 					throw new TargetServiceInvocationException(PipelineServiceConstants.CDS_UPDATE_PIPELINE);
 				}
-
 			}
 		} else {
 			logger.debug("Calling createPipelineInNifiInstance() .....");

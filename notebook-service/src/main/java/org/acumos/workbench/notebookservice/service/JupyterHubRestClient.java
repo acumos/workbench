@@ -34,6 +34,8 @@ import java.lang.invoke.MethodHandles;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,7 +49,6 @@ import org.acumos.workbench.common.vo.Notebook;
 import org.acumos.workbench.notebookservice.util.ConfigurationProperties;
 import org.acumos.workbench.notebookservice.util.NotebookServiceConstants;
 import org.acumos.workbench.notebookservice.util.NotebookServiceProperties;
-import org.acumos.workbench.notebookservice.util.NotebookServiceUtil;
 import org.acumos.workbench.notebookservice.vo.jupyterHub.JupyterHubUser;
 import org.acumos.workbench.notebookservice.vo.jupyternotebook.JNModel;
 import org.acumos.workbench.notebookservice.vo.jupyternotebook.JNModels;
@@ -61,6 +62,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClientResponseException;
@@ -102,8 +105,19 @@ public class JupyterHubRestClient implements NotebookRestClient {
 			String msg = String.format(NotebookServiceConstants.MALFORMED_URL, REST_CLIENT_NAME, jhurl);
 			throw new InvalidConfiguration(msg);
 		}
-		logger.debug("initializeRestClient() End");
-		restTemplate = new RestTemplate();
+		List<HttpMessageConverter<?>> messageConverters = new ArrayList<HttpMessageConverter<?>>();        
+        //Add the Jackson Message converter
+        MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
+
+        // Note: here we are making this converter to process any kind of response, 
+        // not only application/*json, which is the default behaviour
+        converter.setSupportedMediaTypes(Collections.singletonList(MediaType.ALL));        
+        messageConverters.add(converter); 
+        
+        restTemplate = new RestTemplate();
+        restTemplate.setMessageConverters(messageConverters); 
+        logger.debug("initializeRestClient() End");
+
 	}
 
 	@Override

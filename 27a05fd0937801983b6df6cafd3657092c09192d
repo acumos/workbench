@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dcf2bd81_181495ef",
+        "filename": "pipeline-service/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-06-24T16:50:26Z",
+      "side": 1,
+      "message": "Lets keep it 1.0.1-SNAPSHOT as we have not release pipeline-service to IST.",
+      "range": {
+        "startLine": 27,
+        "startChar": 33,
+        "endLine": 27,
+        "endChar": 34
+      },
+      "revId": "27a05fd0937801983b6df6cafd3657092c09192d",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e55226de_3137bcdb",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/util/PipeLineServiceUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-06-24T16:50:26Z",
+      "side": 1,
+      "message": "You can directly pass on the serviceStatus value to ArtifactStatus enum, not need of IF condition",
+      "range": {
+        "startLine": 163,
+        "startChar": 31,
+        "endLine": 163,
+        "endChar": 40
+      },
+      "revId": "27a05fd0937801983b6df6cafd3657092c09192d",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}

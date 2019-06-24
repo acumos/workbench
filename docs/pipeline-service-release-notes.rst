@@ -19,6 +19,9 @@
 ===============================
 Pipeline Service Release Notes
 ===============================
+Version 1.0.2, 2019-06-24
+---------------------------
+* Added the new Artifact Status codes(viz., INPROGRESS & FAILED) in MLWB PLS code.
 
 Version 1.0.1, 2019-05-30
 ---------------------------

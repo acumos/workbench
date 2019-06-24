@@ -21,14 +21,12 @@
 package org.acumos.workbench.pipelineservice.util;
 
 import java.lang.invoke.MethodHandles;
-import java.net.URI;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import org.acumos.cds.domain.MLPPipeline;
 import org.acumos.cds.domain.MLPUser;
@@ -43,10 +41,13 @@ import org.acumos.workbench.common.vo.User;
 import org.acumos.workbench.common.vo.Version;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.util.UriComponentsBuilder;
 
 public class PipeLineServiceUtil {
 	
+	private static final String FAILED = "FA";
+
+	private static final String INPROGRESS = "IP";
+
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 	
 	private final static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
@@ -156,10 +157,15 @@ public class PipeLineServiceUtil {
 		} else {
 			artifactStatus.setStatus(ArtifactStatus.ARCHIVED);
 		}
-		result.setArtifactStatus(artifactStatus);
 		ServiceState serviceStatus = new ServiceState();
 		serviceStatus.setStatus(ServiceStatus.get(responseMLPPileLine.getServiceStatusCode()));
 		result.setServiceStatus(serviceStatus);
+		if(responseMLPPileLine.getServiceStatusCode().equals(INPROGRESS)){
+		artifactStatus.setStatus(ArtifactStatus.INPROGRESS);
+		} else if(responseMLPPileLine.getServiceStatusCode().equals(FAILED)){
+			artifactStatus.setStatus(ArtifactStatus.FAILED);
+		}
+		result.setArtifactStatus(artifactStatus);
 		logger.debug("getPipeLineVO() End");
 		return result;
 

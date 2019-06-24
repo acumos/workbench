@@ -19,6 +19,13 @@
 ================================
 Workbench Common Release Notes
 ================================
+Version 1.0.4, 2019-06-24
+---------------------------
+Added the two artifact status codes in workbench commons enum
+
+Version 1.0.3, 2019-05-29
+---------------------------
+Added the loggers in workbench commons code for MLWB PLS Integration purpose
 
 Version 1.0.2, 2019-04-02
 ---------------------------

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab7f7442_0f344c23",
+        "filename": "docs/workbench-common-release-notes.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-06-24T14:14:01Z",
+      "side": 1,
+      "message": "Please mention the added status.",
+      "range": {
+        "startLine": 24,
+        "startChar": 57,
+        "endLine": 24,
+        "endChar": 61
+      },
+      "revId": "f0d8de90920abc2635c7458f0d3ad25778a8f829",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}

@@ -22,6 +22,8 @@ package org.acumos.workbench.common.util;
 
 public enum ArtifactStatus {
 	ACTIVE, // READY FOR USE
-	ARCHIVED; // Can be Made Active again
+	ARCHIVED, // Can be Made Active again
+	INPROGRESS, // INPROGRESS
+	FAILED; // FAILED
 	
 }

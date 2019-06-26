@@ -487,6 +487,34 @@ public class PipeLineServiceImpl implements PipeLineService{
 
 	}
 	
+	@Override
+	public Pipeline launchPipeline(String authenticatedUserId, String projectId, String pipelineId) {
+		logger.debug(" LaunchPipeline() Begin " );
+		Pipeline result = null;
+		MLPPipeline mlpPipeline = null;
+		MLPUser mlpUser = getUserDetails(authenticatedUserId);
+		try {
+			logger.debug("CDS getPipeline() method Begin");
+			mlpPipeline = cdsClient.getPipeline(pipelineId);
+			logger.debug("CDS getPipeline() method End");
+		} catch (Exception e) {
+			logger.error("CDS - Get Pipeline", e);
+			throw new TargetServiceInvocationException(PipelineServiceConstants.CDS_GET_PIPELINE);
+		}
+		if(null != mlpPipeline.getServiceUrl()){
+			// TODO : Raman Need to uncomment after confirmation
+			//String latestServiceURL = mlpPipeline.getServiceUrl().substring(0, mlpPipeline.getServiceUrl().indexOf("?")); //https://localhost:8443/nifi/
+			//mlpPipeline.setServiceUrl(latestServiceURL); 
+			result = PipeLineServiceUtil.getPipeLineVO(mlpPipeline, mlpUser);
+		}else {
+			logger.error("Can not launch the Pipeline still its not ready to launch");
+			throw new TargetServiceInvocationException("Can not launch the Pipeline still its not ready to launch");
+		}
+		logger.debug(" LaunchPipeline() End " );
+		return result;
+	}
+
+	
 
 	private void createPipelineAsync(String authenticatedUserId, MLPPipeline responseMLPPileLine) {
 		logger.debug(" CreatePipelineAsync() Begin " );
@@ -533,6 +561,6 @@ public class PipeLineServiceImpl implements PipeLineService{
 		return mlpUser;
 	}
 
-	
+
 }
 

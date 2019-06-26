@@ -189,7 +189,7 @@ public class PipeLineServiceController {
 		pipeLineService.isPipelineAssociatedUnderProject(projectId,pipelineId);
 		
 		// 7. Call Nifi Server to start an instance of the Pipeline Server for the user
-		//result = pipeLineService.launchPipeline(authenticatedUserId, projectId, pipelineId);
+		result = pipeLineService.launchPipeline(authenticatedUserId, projectId, pipelineId);
 		logger.debug("launchPipelineUnderProject() End");
 
 		return new ResponseEntity<Pipeline>(result, HttpStatus.OK);
@@ -227,7 +227,7 @@ public class PipeLineServiceController {
 		pipeLineService.isPipelineArchived(pipelineId);
 		
 		// 5. Call Nifi Server to start an instance of the Pipeline Server for the user
-		//result = pipeLineService.launchPipeline(authenticatedUserId, null, pipelineId);
+		result = pipeLineService.launchPipeline(authenticatedUserId, null, pipelineId);
 		
 		logger.debug("launchPipeline() End");
 		

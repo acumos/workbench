@@ -146,6 +146,18 @@ public interface PipeLineService {
 	 */
 	public void isPipelineAssociatedUnderProject(String projectId, String pipelineId);
 
+	/**
+	 * @param authenticatedUserId
+	 * 			the authenticated user Id
+	 * @param projectId
+	 * 			the projectId
+	 * @param pipelineId
+	 * 			the projectId
+	 * @return
+	 * 			Pipeline object
+	 */
+	public Pipeline launchPipeline(String authenticatedUserId, String projectId, String pipelineId);
+
 
 	
 

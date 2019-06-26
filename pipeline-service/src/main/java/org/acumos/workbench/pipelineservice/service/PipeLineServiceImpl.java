@@ -502,9 +502,8 @@ public class PipeLineServiceImpl implements PipeLineService{
 			throw new TargetServiceInvocationException(PipelineServiceConstants.CDS_GET_PIPELINE);
 		}
 		if(null != mlpPipeline.getServiceUrl()){
-			// TODO : Raman Need to uncomment after confirmation
-			//String latestServiceURL = mlpPipeline.getServiceUrl().substring(0, mlpPipeline.getServiceUrl().indexOf("?")); //https://localhost:8443/nifi/
-			//mlpPipeline.setServiceUrl(latestServiceURL); 
+			String latestServiceURL = mlpPipeline.getServiceUrl().substring(0, mlpPipeline.getServiceUrl().indexOf("?")); //https://localhost:8443/nifi/
+			mlpPipeline.setServiceUrl(latestServiceURL); 
 			result = PipeLineServiceUtil.getPipeLineVO(mlpPipeline, mlpUser);
 		}else {
 			logger.error("Can not launch the Pipeline still its not ready to launch");

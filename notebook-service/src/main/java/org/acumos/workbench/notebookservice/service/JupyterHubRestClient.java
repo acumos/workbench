@@ -31,11 +31,11 @@ import static org.acumos.workbench.notebookservice.util.NotebookServiceConstants
 
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
+import java.net.ConnectException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,7 +62,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
@@ -105,14 +107,11 @@ public class JupyterHubRestClient implements NotebookRestClient {
 			String msg = String.format(NotebookServiceConstants.MALFORMED_URL, REST_CLIENT_NAME, jhurl);
 			throw new InvalidConfiguration(msg);
 		}
-		List<HttpMessageConverter<?>> messageConverters = new ArrayList<HttpMessageConverter<?>>();        
-        //Add the Jackson Message converter
-        MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
-
-        // Note: here we are making this converter to process any kind of response, 
-        // not only application/*json, which is the default behaviour
-        converter.setSupportedMediaTypes(Collections.singletonList(MediaType.ALL));        
-        messageConverters.add(converter); 
+		List<HttpMessageConverter<?>> messageConverters = new ArrayList<HttpMessageConverter<?>>();
+		
+		messageConverters.add(new FormHttpMessageConverter());
+		messageConverters.add(new StringHttpMessageConverter());
+		messageConverters.add(new MappingJackson2HttpMessageConverter());
         
         restTemplate = new RestTemplate();
         restTemplate.setMessageConverters(messageConverters); 
@@ -317,6 +316,22 @@ public class JupyterHubRestClient implements NotebookRestClient {
 			
 			try {
 				ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.POST, entity, String.class);
+				//In Kubernetes environment, its takes time to start the container in the Pod.  So need to wait for configured time period. 
+				
+				boolean k8sEnabled = props.isKubernetesEnabled();
+				int waitTime = props.getKubernetesWaitTime();
+				if(k8sEnabled) {
+					logger.debug("As K8s Environment notebook-service will sleep for configured wait time");
+					try {
+						Thread.sleep(waitTime);
+					} catch (InterruptedException e) {
+						logger.error("Interrupted Exception occured while Creating the K8S CreateWatch at NiFi Wait Time", e);
+						throw new TargetServiceInvocationException("Interrupted Exception occured while Creating the K8S Pod for JupyterNotebook Server");
+					}
+				} else { 
+					logger.debug("Not on K8s Environment, so notebook-service will not wait");
+				}
+				
 				if(HttpStatus.CREATED.equals(response.getStatusCode()) || HttpStatus.ACCEPTED.equals(response.getStatusCode())) {
 					result = CommonUtil.buildURI(this.baseJHURL + JUPYTERNOTEBOOK_SERVER_PATH, uriParams).toString() + NotebookServiceConstants.QUESTION_MARK;
 				} else {
@@ -416,28 +431,45 @@ public class JupyterHubRestClient implements NotebookRestClient {
 		//Create entity to pass on to restTemplate
 		HttpEntity<String> entity = new HttpEntity<String>(httpHeaders);
 		ResponseEntity<JNModels> response = null;
-		try {
-			response = restTemplate.exchange(uri, HttpMethod.GET, entity, JNModels.class);
-		} catch (RestClientResponseException e) {
-			logger.error(JUPYTERNOTEBOOK_SERVER_CONTENT_EXCEPTION_MSG, e);
-			throw new TargetServiceInvocationException(JUPYTERNOTEBOOK_SERVER_CONTENT_EXCEPTION_MSG);
-		}
 		
-		if (null != response) {
-			JNModels jnModels = response.getBody();
-			if (null != jnModels) {
-				if (null != jnModels.getContent() && jnModels.getContent().size() > 0) {
-					List<JNModel> models = jnModels.getContent();
-					for (JNModel model : models) {
-						if (null != model.getType() && model.getType().equals("notebook")
-								&& model.getName().equals(notebookName)) {
-							logger.debug("Notebook with name exist in JupyterNotbook server");
-							result = true;
-							break;
+		
+		
+		int maxTries = props.getMaxTries();
+		int index = 0;
+		
+		try {
+			while(index < maxTries) {
+				try {
+					response = restTemplate.exchange(uri, HttpMethod.GET, entity, JNModels.class);
+				} catch (Exception e) {
+						logger.error("Exception occured while checking if Notebook Exists for attempt : " + index, e);
+						if (index == maxTries-1) {
+							throw new TargetServiceInvocationException(JUPYTERNOTEBOOK_SERVER_CONTENT_EXCEPTION_MSG, e);
+						}
+						Thread.sleep(props.getKubernetesWaitTime());
+				}
+				index++;
+				
+			}
+			if (null != response) {
+				JNModels jnModels = response.getBody();
+				if (null != jnModels) {
+					if (null != jnModels.getContent() && jnModels.getContent().size() > 0) {
+						List<JNModel> models = jnModels.getContent();
+						for (JNModel model : models) {
+							if (null != model.getType() && model.getType().equals("notebook")
+									&& model.getName().equals(notebookName)) {
+								logger.debug("Notebook with name exist in JupyterNotbook server");
+								result = true;
+								break;
+							}
 						}
 					}
 				}
 			}
+		} catch (Exception e) { 
+			logger.error("Exception occured while checking if Notebook Exists",e);
+			throw new TargetServiceInvocationException("Exception occured while checking if Notebook Exists",e);
 		}
 		
 		return result;

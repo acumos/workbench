@@ -97,6 +97,16 @@ public class NotebookServiceProperties implements Serializable {
 	@Value("${cds.delete.notebook.excp}")
 	private String cdsDeleteNotebookExcp; 
 	
+	
+	@Value("${kubernetes.enabled}")
+	private boolean kubernetesEnabled;
+	
+	@Value("${kubernetes.waittime}")
+	private int kubernetesWaitTime;
+	
+	@Value("${maxtries}")
+	private int maxTries;
+	
 	/**
 	 * @return the invalidNotebookName
 	 */
@@ -251,6 +261,26 @@ public class NotebookServiceProperties implements Serializable {
 		return cdsDeleteNotebookExcp;
 	}
 
-	
+	/**
+	 * @return the kubernetesEnabled
+	 */
+	public boolean isKubernetesEnabled() {
+		return kubernetesEnabled;
+	}
+
+	/**
+	 * @return the kubernetesWaitTime
+	 */
+	public int getKubernetesWaitTime() {
+		return kubernetesWaitTime;
+	}
+
+	/**
+	 * @return the maxTries
+	 */
+	public int getMaxTries() {
+		return maxTries;
+	}
+
 	
 }

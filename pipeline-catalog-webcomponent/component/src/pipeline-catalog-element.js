@@ -336,7 +336,7 @@ export class PipelineCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
             }, this.createTimeout);
           }
         } else {
-          this.$data.set('createErrorMessage', n.message);
+          this.$data.set('createErrorMessage', n.message.description);
         }
     }).catch((error) => {
       console.error('Request failed', error);

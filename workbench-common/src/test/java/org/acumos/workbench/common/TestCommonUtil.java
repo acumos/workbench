@@ -112,7 +112,8 @@ public class TestCommonUtil {
 	 */
 	public static Version getVersion(String version, String comment) { 
 		Version result = new Version();
-		result = new Version(comment, version, null, null);
+		result = new Version(comment, version, null, null, null);
+		//result = new Version(comment, version, null, null);
 		return result;
 	}
 	

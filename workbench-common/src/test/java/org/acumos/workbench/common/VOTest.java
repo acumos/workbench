@@ -60,11 +60,14 @@ public class VOTest {
 	@Test
 	public void testVersion() { 
 		Version version = TestCommonUtil.getVersion(TestConstants.VERSION, TestConstants.COMMENT);
-		version.setTimeStamp(TestConstants.TIMESTAMP);
+		//version.setTimeStamp(TestConstants.TIMESTAMP);
+		version.setCreationTimeStamp(TestConstants.TIMESTAMP);
+		version.setModifiedTimeStamp(TestConstants.TIMESTAMP);
 		version.setUser(TestConstants.USER_NAME);
 		Assert.assertEquals(TestConstants.VERSION,version.getLabel());
 		Assert.assertEquals(TestConstants.COMMENT, version.getComment());
-		Assert.assertEquals(TestConstants.TIMESTAMP, version.getTimeStamp());
+		Assert.assertEquals(TestConstants.TIMESTAMP, version.getCreationTimeStamp());
+		Assert.assertEquals(TestConstants.TIMESTAMP, version.getModifiedTimeStamp());
 		Assert.assertEquals(TestConstants.USER_NAME, TestConstants.USER_NAME);
 		
 	}

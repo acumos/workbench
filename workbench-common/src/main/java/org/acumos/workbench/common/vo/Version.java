@@ -21,7 +21,6 @@
 package org.acumos.workbench.common.vo;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -32,27 +31,30 @@ public class Version implements Serializable {
 	private static final long serialVersionUID = 1752785438676531467L;
 	private String comment;
 	private String label;
-	private String timeStamp;
+	private String creationTimeStamp;
+	private String modifiedTimeStamp;
 	private String user;
-	
 	
 	
 	/**
 	 * Parameterized Constructor
 	 * @param comment
-	 * 		Comment on Version
+	 * 			Comment on Version
 	 * @param label
-	 * 		Version label for e.g., 1 or 0.0.1 or V1.1
-	 * @param timeStamp
-	 * 		Timestame
+	 * 			Version label for e.g., 1 or 0.0.1 or V1.1
+	 * @param creationTimeStamp
+	 * 			Creation TimeStamp
+	 * @param modifiedTimeStamp
+	 * 			ModifiedTimeStamp
 	 * @param user
-	 * 		user
+	 * 			user
 	 */
-	public Version(String comment, String label, String timeStamp, String user) {
+	public Version(String comment, String label, String creationTimeStamp, String modifiedTimeStamp, String user) {
 		super();
 		this.comment = comment;
 		this.label = label;
-		this.timeStamp = timeStamp;
+		this.creationTimeStamp = creationTimeStamp;
+		this.modifiedTimeStamp = modifiedTimeStamp;
 		this.user = user;
 	}
 	
@@ -87,19 +89,34 @@ public class Version implements Serializable {
 	public void setLabel(String label) {
 		this.label = label;
 	}
+	
 
 	/**
-	 * @return the timeStamp
+	 * @return the creationTimeStamp
 	 */
-	public String getTimeStamp() {
-		return timeStamp;
+	public String getCreationTimeStamp() {
+		return creationTimeStamp;
 	}
 
 	/**
-	 * @param timeStamp the timeStamp to set
+	 * @param creationTimeStamp the creationTimeStamp to set
 	 */
-	public void setTimeStamp(String timeStamp) {
-		this.timeStamp = timeStamp;
+	public void setCreationTimeStamp(String creationTimeStamp) {
+		this.creationTimeStamp = creationTimeStamp;
+	}
+
+	/**
+	 * @return the modifiedTimeStamp
+	 */
+	public String getModifiedTimeStamp() {
+		return modifiedTimeStamp;
+	}
+
+	/**
+	 * @param modifiedTimeStamp the modifiedTimeStamp to set
+	 */
+	public void setModifiedTimeStamp(String modifiedTimeStamp) {
+		this.modifiedTimeStamp = modifiedTimeStamp;
 	}
 
 	/**
@@ -116,61 +133,40 @@ public class Version implements Serializable {
 		this.user = user;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
 	@Override
 	public int hashCode() {
-		return Objects.hash(
-				((comment == null) ? 0 : comment),
-				((label == null) ? 0 : label),
-				((timeStamp == null) ? 0 : timeStamp),
-				((user == null) ? 0 : user));
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((comment == null) ? 0 : comment.hashCode());
+		result = prime * result + ((label == null) ? 0 : label.hashCode());
+		result = prime * result + ((user == null) ? 0 : user.hashCode());
+		return result;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
+		if (this == obj)
 			return true;
-		}
-		if (obj == null) {
+		if (obj == null)
 			return false;
-		}
-		if (!(obj instanceof Version)) {
+		if (getClass() != obj.getClass())
 			return false;
-		}
 		Version other = (Version) obj;
 		if (comment == null) {
-			if (other.comment != null) {
+			if (other.comment != null)
 				return false;
-			}
-		} else if (!comment.equals(other.comment)) {
+		} else if (!comment.equals(other.comment))
 			return false;
-		}
 		if (label == null) {
-			if (other.label != null) {
+			if (other.label != null)
 				return false;
-			}
-		} else if (!label.equals(other.label)) {
+		} else if (!label.equals(other.label))
 			return false;
-		}
-		if (timeStamp == null) {
-			if (other.timeStamp != null) {
-				return false;
-			}
-		} else if (!timeStamp.equals(other.timeStamp)) {
-			return false;
-		}
 		if (user == null) {
-			if (other.user != null) {
+			if (other.user != null)
 				return false;
-			}
-		} else if (!user.equals(other.user)) {
+		} else if (!user.equals(other.user))
 			return false;
-		}
 		return true;
 	}
 	

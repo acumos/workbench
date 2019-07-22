@@ -1,0 +1,320 @@
+2019-07-22T14:08:52.921Z	main	DEBUG	org.acumos.workbench.modelservice.ModelServiceApplication			main: successfully parsed configuration from environment SPRING_APPLICATION_JSON		
+2019-07-22T14:08:53.703Z	main	INFO	org.acumos.workbench.modelservice.ModelServiceApplication			Starting ModelServiceApplication on INPUHJPC09744 with PID 12708 (D:\RP00490596\TechM\Ram\CognitaWorkSpace\model-service\target\classes started by RP00490596 in D:\RP00490596\TechM\Ram\CognitaWorkSpace\model-service)		
+2019-07-22T14:08:53.703Z	main	DEBUG	org.acumos.workbench.modelservice.ModelServiceApplication			Running with Spring Boot v2.1.3.RELEASE, Spring v5.1.5.RELEASE		
+2019-07-22T14:08:53.703Z	main	INFO	org.acumos.workbench.modelservice.ModelServiceApplication			No active profile set, falling back to default profiles: default		
+2019-07-22T14:08:55.265Z	main	INFO	org.springframework.boot.web.embedded.tomcat.TomcatWebServer			Tomcat initialized with port(s): 9091 (http)		
+2019-07-22T14:08:55.270Z	main	INFO	org.apache.coyote.http11.Http11NioProtocol			Initializing ProtocolHandler ["http-nio-9091"]		
+2019-07-22T14:08:55.285Z	main	INFO	org.apache.catalina.core.StandardService			Starting service [Tomcat]		
+2019-07-22T14:08:55.285Z	main	INFO	org.apache.catalina.core.StandardEngine			Starting Servlet engine: [Apache Tomcat/9.0.16]		
+2019-07-22T14:08:55.301Z	main	INFO	org.apache.catalina.core.AprLifecycleListener			The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [C:\Program Files\Java\jdk1.8.0_66\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files\Java\jdk1.8.0_66\jre\bin;C:/Program Files/Java/jdk1.8.0_66/bin/../jre/bin/server;C:/Program Files/Java/jdk1.8.0_66/bin/../jre/bin;C:/Program Files/Java/jdk1.8.0_66/bin/../jre/lib/amd64;C:\Python27\;C:\Python27\Scripts;C:\Program Files\Docker\Docker\Resources\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\TortoiseSVN\bin;C:\Program Files\Java\jdk1.8.0_66\bin;D:\RP00490596\TechM\Cognita setup\apache-maven-3.5.4-bin\apache-maven-3.5.4\bin;D:\RP00490596\TechM\Cognita setup\Anaconda;D:\RP00490596\NodeJs\;C:\Program Files\Git\cmd;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Program Files (x86)\Webex\Webex\Applications;C:\WINDOWS\System32\OpenSSH\;D:\RP00490596\TechM\Cognita setup\Anaconda;D:\RP00490596\TechM\Cognita setup\Anaconda\Library\mingw-w64\bin;D:\RP00490596\TechM\Cognita setup\Anaconda\Library\usr\bin;D:\RP00490596\TechM\Cognita setup\Anaconda\Library\bin;D:\RP00490596\TechM\Cognita setup\Anaconda\Scripts;C:\Users\RP00490596\AppData\Local\Programs\Python\Python35-32\Scripts\;C:\Users\RP00490596\AppData\Local\Programs\Python\Python35-32\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\TortoiseSVN\bin;C:\Program Files\Java\jdk1.8.0_66\bin;D:\RP00490596\TechM\WPWCM\WPWCM\apache-maven-3.3.9\bin;D:\RP00490596\TechM\Cognita\Protobuf\protoc-3.3.0-win32\bin;C:\Users\RP00490596\AppData\Local\Microsoft\WindowsApps;C:\Users\RP00490596\AppData\Roaming\npm;D:\RP00490596\TechM\Cognita\NiFi\nifi-toolkit-1.9.2\bin;D:\RP00490596\TechM\Cognita\Java 1.8.0_66\jdk1.8.0_66\jdk1.8.0_66\bin;;D:\RP00490596\TechM\sts-bundle\sts-3.7.3.RELEASE;;.]		
+2019-07-22T14:08:55.500Z	main	INFO	org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/mlWorkbench/v1/modelservice]			Initializing Spring embedded WebApplicationContext		
+2019-07-22T14:08:55.500Z	main	INFO	org.springframework.web.context.ContextLoader			Root WebApplicationContext: initialization completed in 1750 ms		
+2019-07-22T14:08:56.265Z	main	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWTAuthorizationFilter() begin		
+2019-07-22T14:08:56.265Z	main	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWTAuthorizationFilter() end		
+2019-07-22T14:08:56.296Z	main	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			Filter 'jwtAuthorizationFilterBean' configured for use		
+2019-07-22T14:08:57.171Z	main	INFO	springfox.documentation.spring.web.PropertySourcedRequestMappingHandlerMapping			Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]		
+2019-07-22T14:08:57.359Z	main	INFO	org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor			Initializing ExecutorService 'applicationTaskExecutor'		
+2019-07-22T14:08:57.563Z	main	INFO	org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration			\n\nUsing generated security password: 107b6689-3e14-4804-a1aa-649efb7b3a70\n		
+2019-07-22T14:08:57.657Z	main	INFO	org.springframework.security.web.DefaultSecurityFilterChain			Creating filter chain: Ant [pattern='/v2/api-docs'], []		
+2019-07-22T14:08:57.657Z	main	INFO	org.springframework.security.web.DefaultSecurityFilterChain			Creating filter chain: Ant [pattern='/swagger-resources/configuration/ui'], []		
+2019-07-22T14:08:57.657Z	main	INFO	org.springframework.security.web.DefaultSecurityFilterChain			Creating filter chain: Ant [pattern='/swagger-resources'], []		
+2019-07-22T14:08:57.657Z	main	INFO	org.springframework.security.web.DefaultSecurityFilterChain			Creating filter chain: Ant [pattern='/swagger-resources/configuration/security'], []		
+2019-07-22T14:08:57.657Z	main	INFO	org.springframework.security.web.DefaultSecurityFilterChain			Creating filter chain: Ant [pattern='/swagger-ui.html'], []		
+2019-07-22T14:08:57.657Z	main	INFO	org.springframework.security.web.DefaultSecurityFilterChain			Creating filter chain: Ant [pattern='/csrf'], []		
+2019-07-22T14:08:57.657Z	main	INFO	org.springframework.security.web.DefaultSecurityFilterChain			Creating filter chain: Ant [pattern='/webjars/**'], []		
+2019-07-22T14:08:57.657Z	main	INFO	org.springframework.security.web.DefaultSecurityFilterChain			Creating filter chain: Ant [pattern='/error'], []		
+2019-07-22T14:08:57.688Z	main	INFO	org.springframework.security.web.DefaultSecurityFilterChain			Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@4813d0, org.springframework.security.web.context.SecurityContextPersistenceFilter@573a078, org.springframework.security.web.header.HeaderWriterFilter@55e91e61, org.springframework.security.web.authentication.logout.LogoutFilter@61957d9c, org.acumos.workbench.common.security.JWTAuthorizationFilter@4aed311e, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@660296d5, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3348c987, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@702096ef, org.springframework.security.web.session.SessionManagementFilter@5597ca3, org.springframework.security.web.access.ExceptionTranslationFilter@47198524, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@b70fa38]		
+2019-07-22T14:08:57.750Z	main	INFO	springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper			Context refreshed		
+2019-07-22T14:08:57.797Z	main	INFO	springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper			Found 1 custom documentation plugin(s)		
+2019-07-22T14:08:57.813Z	main	INFO	springfox.documentation.spring.web.scanners.ApiListingReferenceScanner			Scanning for api listing references		
+2019-07-22T14:08:57.954Z	main	INFO	org.apache.coyote.http11.Http11NioProtocol			Starting ProtocolHandler ["http-nio-9091"]		
+2019-07-22T14:08:58.187Z	main	INFO	org.springframework.boot.web.embedded.tomcat.TomcatWebServer			Tomcat started on port(s): 9091 (http) with context path '/mlWorkbench/v1/modelservice'		
+2019-07-22T14:08:58.187Z	main	INFO	org.acumos.workbench.modelservice.ModelServiceApplication			Started ModelServiceApplication in 5.125 seconds (JVM running for 6.144)		
+2019-07-22T14:09:01.699Z	http-nio-9091-exec-2	INFO	org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/mlWorkbench/v1/modelservice]			Initializing Spring DispatcherServlet 'dispatcherServlet'		
+2019-07-22T14:09:01.699Z	http-nio-9091-exec-2	INFO	org.springframework.web.servlet.DispatcherServlet			Initializing Servlet 'dispatcherServlet'		
+2019-07-22T14:09:01.705Z	http-nio-9091-exec-2	INFO	org.springframework.web.servlet.DispatcherServlet			Completed initialization in 1 ms		
+2019-07-22T14:09:01.736Z	http-nio-9091-exec-2	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() begin		
+2019-07-22T14:09:01.736Z	http-nio-9091-exec-2	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			AUTHORIZATION_HEADER_KEY : null		
+2019-07-22T14:09:01.736Z	http-nio-9091-exec-2	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:09:01.736Z	http-nio-9091-exec-2	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:09:01.768Z	http-nio-9091-exec-2	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() End		
+2019-07-22T14:09:01.815Z	http-nio-9091-exec-1	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() begin		
+2019-07-22T14:09:01.815Z	http-nio-9091-exec-1	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			AUTHORIZATION_HEADER_KEY : null		
+2019-07-22T14:09:01.815Z	http-nio-9091-exec-1	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:09:01.815Z	http-nio-9091-exec-1	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:09:01.815Z	http-nio-9091-exec-1	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() End		
+2019-07-22T14:09:01.815Z	http-nio-9091-exec-1	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() begin		
+2019-07-22T14:09:01.815Z	http-nio-9091-exec-1	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			AUTHORIZATION_HEADER_KEY : null		
+2019-07-22T14:09:01.815Z	http-nio-9091-exec-1	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:09:01.815Z	http-nio-9091-exec-1	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:09:01.815Z	http-nio-9091-exec-1	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() End		
+2019-07-22T14:09:01.846Z	http-nio-9091-exec-4	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() begin		
+2019-07-22T14:09:01.846Z	http-nio-9091-exec-4	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			AUTHORIZATION_HEADER_KEY : null		
+2019-07-22T14:09:01.846Z	http-nio-9091-exec-4	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:09:01.846Z	http-nio-9091-exec-4	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:09:01.846Z	http-nio-9091-exec-4	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() End		
+2019-07-22T14:09:01.846Z	http-nio-9091-exec-6	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() begin		
+2019-07-22T14:09:01.846Z	http-nio-9091-exec-6	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			AUTHORIZATION_HEADER_KEY : null		
+2019-07-22T14:09:01.846Z	http-nio-9091-exec-6	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:09:01.846Z	http-nio-9091-exec-6	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:09:01.861Z	http-nio-9091-exec-6	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() End		
+2019-07-22T14:09:01.861Z	http-nio-9091-exec-5	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() begin		
+2019-07-22T14:09:01.861Z	http-nio-9091-exec-5	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			AUTHORIZATION_HEADER_KEY : null		
+2019-07-22T14:09:01.861Z	http-nio-9091-exec-5	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:09:01.861Z	http-nio-9091-exec-5	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:09:01.861Z	http-nio-9091-exec-5	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() End		
+2019-07-22T14:09:02.265Z	http-nio-9091-exec-8	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() begin		
+2019-07-22T14:09:02.265Z	http-nio-9091-exec-8	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			AUTHORIZATION_HEADER_KEY : null		
+2019-07-22T14:09:02.265Z	http-nio-9091-exec-8	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:09:02.265Z	http-nio-9091-exec-8	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:09:02.359Z	http-nio-9091-exec-8	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() End		
+2019-07-22T14:09:02.359Z	http-nio-9091-exec-10	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() begin		
+2019-07-22T14:09:02.359Z	http-nio-9091-exec-10	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			AUTHORIZATION_HEADER_KEY : null		
+2019-07-22T14:09:02.359Z	http-nio-9091-exec-10	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:09:02.359Z	http-nio-9091-exec-10	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:09:02.374Z	http-nio-9091-exec-10	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() End		
+2019-07-22T14:09:02.374Z	http-nio-9091-exec-9	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() begin		
+2019-07-22T14:09:02.374Z	http-nio-9091-exec-9	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			AUTHORIZATION_HEADER_KEY : null		
+2019-07-22T14:09:02.374Z	http-nio-9091-exec-9	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:09:02.374Z	http-nio-9091-exec-9	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:09:02.374Z	http-nio-9091-exec-9	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() End		
+2019-07-22T14:09:02.477Z	http-nio-9091-exec-7	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() begin		
+2019-07-22T14:09:02.478Z	http-nio-9091-exec-7	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			AUTHORIZATION_HEADER_KEY : null		
+2019-07-22T14:09:02.479Z	http-nio-9091-exec-7	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:09:02.479Z	http-nio-9091-exec-7	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:09:02.493Z	http-nio-9091-exec-7	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() End		
+2019-07-22T14:09:02.508Z	http-nio-9091-exec-2	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() begin		
+2019-07-22T14:09:02.508Z	http-nio-9091-exec-2	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			AUTHORIZATION_HEADER_KEY : null		
+2019-07-22T14:09:02.508Z	http-nio-9091-exec-2	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:09:02.508Z	http-nio-9091-exec-2	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:09:02.578Z	http-nio-9091-exec-3	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() begin		
+2019-07-22T14:09:02.578Z	http-nio-9091-exec-3	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			AUTHORIZATION_HEADER_KEY : null		
+2019-07-22T14:09:02.578Z	http-nio-9091-exec-3	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:09:02.578Z	http-nio-9091-exec-3	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:09:02.578Z	http-nio-9091-exec-3	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() End		
+2019-07-22T14:09:02.625Z	http-nio-9091-exec-2	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() End		
+2019-07-22T14:09:59.491Z	RMI TCP Connection(9)-10.20.44.11	INFO	org.springframework.boot.admin.SpringApplicationAdminMXBeanRegistrar$SpringApplicationAdmin			Application shutdown requested.		
+2019-07-22T14:09:59.510Z	RMI TCP Connection(9)-10.20.44.11	INFO	org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor			Shutting down ExecutorService 'applicationTaskExecutor'		
+2019-07-22T14:10:04.937Z	main	DEBUG	org.acumos.workbench.modelservice.ModelServiceApplication			main: successfully parsed configuration from environment SPRING_APPLICATION_JSON		
+2019-07-22T14:10:05.687Z	main	INFO	org.acumos.workbench.modelservice.ModelServiceApplication			Starting ModelServiceApplication on INPUHJPC09744 with PID 9628 (D:\RP00490596\TechM\Ram\CognitaWorkSpace\model-service\target\classes started by RP00490596 in D:\RP00490596\TechM\Ram\CognitaWorkSpace\model-service)		
+2019-07-22T14:10:05.687Z	main	DEBUG	org.acumos.workbench.modelservice.ModelServiceApplication			Running with Spring Boot v2.1.3.RELEASE, Spring v5.1.5.RELEASE		
+2019-07-22T14:10:05.687Z	main	INFO	org.acumos.workbench.modelservice.ModelServiceApplication			No active profile set, falling back to default profiles: default		
+2019-07-22T14:10:07.232Z	main	INFO	org.springframework.boot.web.embedded.tomcat.TomcatWebServer			Tomcat initialized with port(s): 9091 (http)		
+2019-07-22T14:10:07.235Z	main	INFO	org.apache.coyote.http11.Http11NioProtocol			Initializing ProtocolHandler ["http-nio-9091"]		
+2019-07-22T14:10:07.251Z	main	INFO	org.apache.catalina.core.StandardService			Starting service [Tomcat]		
+2019-07-22T14:10:07.251Z	main	INFO	org.apache.catalina.core.StandardEngine			Starting Servlet engine: [Apache Tomcat/9.0.16]		
+2019-07-22T14:10:07.266Z	main	INFO	org.apache.catalina.core.AprLifecycleListener			The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [C:\Program Files\Java\jdk1.8.0_66\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files\Java\jdk1.8.0_66\jre\bin;C:/Program Files/Java/jdk1.8.0_66/bin/../jre/bin/server;C:/Program Files/Java/jdk1.8.0_66/bin/../jre/bin;C:/Program Files/Java/jdk1.8.0_66/bin/../jre/lib/amd64;C:\Python27\;C:\Python27\Scripts;C:\Program Files\Docker\Docker\Resources\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\TortoiseSVN\bin;C:\Program Files\Java\jdk1.8.0_66\bin;D:\RP00490596\TechM\Cognita setup\apache-maven-3.5.4-bin\apache-maven-3.5.4\bin;D:\RP00490596\TechM\Cognita setup\Anaconda;D:\RP00490596\NodeJs\;C:\Program Files\Git\cmd;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Program Files (x86)\Webex\Webex\Applications;C:\WINDOWS\System32\OpenSSH\;D:\RP00490596\TechM\Cognita setup\Anaconda;D:\RP00490596\TechM\Cognita setup\Anaconda\Library\mingw-w64\bin;D:\RP00490596\TechM\Cognita setup\Anaconda\Library\usr\bin;D:\RP00490596\TechM\Cognita setup\Anaconda\Library\bin;D:\RP00490596\TechM\Cognita setup\Anaconda\Scripts;C:\Users\RP00490596\AppData\Local\Programs\Python\Python35-32\Scripts\;C:\Users\RP00490596\AppData\Local\Programs\Python\Python35-32\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\TortoiseSVN\bin;C:\Program Files\Java\jdk1.8.0_66\bin;D:\RP00490596\TechM\WPWCM\WPWCM\apache-maven-3.3.9\bin;D:\RP00490596\TechM\Cognita\Protobuf\protoc-3.3.0-win32\bin;C:\Users\RP00490596\AppData\Local\Microsoft\WindowsApps;C:\Users\RP00490596\AppData\Roaming\npm;D:\RP00490596\TechM\Cognita\NiFi\nifi-toolkit-1.9.2\bin;D:\RP00490596\TechM\Cognita\Java 1.8.0_66\jdk1.8.0_66\jdk1.8.0_66\bin;;D:\RP00490596\TechM\sts-bundle\sts-3.7.3.RELEASE;;.]		
+2019-07-22T14:10:07.480Z	main	INFO	org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/mlWorkbench/v1/modelservice]			Initializing Spring embedded WebApplicationContext		
+2019-07-22T14:10:07.481Z	main	INFO	org.springframework.web.context.ContextLoader			Root WebApplicationContext: initialization completed in 1732 ms		
+2019-07-22T14:10:07.858Z	main	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWTAuthorizationFilter() begin		
+2019-07-22T14:10:07.873Z	main	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWTAuthorizationFilter() end		
+2019-07-22T14:10:07.905Z	main	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			Filter 'jwtAuthorizationFilterBean' configured for use		
+2019-07-22T14:10:08.249Z	main	INFO	springfox.documentation.spring.web.PropertySourcedRequestMappingHandlerMapping			Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]		
+2019-07-22T14:10:08.435Z	main	INFO	org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor			Initializing ExecutorService 'applicationTaskExecutor'		
+2019-07-22T14:10:08.693Z	main	INFO	org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration			\n\nUsing generated security password: 388d3810-fc04-464c-b363-ddb962ba5161\n		
+2019-07-22T14:10:08.789Z	main	INFO	org.springframework.security.web.DefaultSecurityFilterChain			Creating filter chain: Ant [pattern='/v2/api-docs'], []		
+2019-07-22T14:10:08.789Z	main	INFO	org.springframework.security.web.DefaultSecurityFilterChain			Creating filter chain: Ant [pattern='/swagger-resources/configuration/ui'], []		
+2019-07-22T14:10:08.789Z	main	INFO	org.springframework.security.web.DefaultSecurityFilterChain			Creating filter chain: Ant [pattern='/swagger-resources'], []		
+2019-07-22T14:10:08.791Z	main	INFO	org.springframework.security.web.DefaultSecurityFilterChain			Creating filter chain: Ant [pattern='/swagger-resources/configuration/security'], []		
+2019-07-22T14:10:08.793Z	main	INFO	org.springframework.security.web.DefaultSecurityFilterChain			Creating filter chain: Ant [pattern='/swagger-ui.html'], []		
+2019-07-22T14:10:08.793Z	main	INFO	org.springframework.security.web.DefaultSecurityFilterChain			Creating filter chain: Ant [pattern='/csrf'], []		
+2019-07-22T14:10:08.793Z	main	INFO	org.springframework.security.web.DefaultSecurityFilterChain			Creating filter chain: Ant [pattern='/webjars/**'], []		
+2019-07-22T14:10:08.794Z	main	INFO	org.springframework.security.web.DefaultSecurityFilterChain			Creating filter chain: Ant [pattern='/error'], []		
+2019-07-22T14:10:08.833Z	main	INFO	org.springframework.security.web.DefaultSecurityFilterChain			Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3982206a, org.springframework.security.web.context.SecurityContextPersistenceFilter@22aefae0, org.springframework.security.web.header.HeaderWriterFilter@1ddf42dd, org.springframework.security.web.authentication.logout.LogoutFilter@277bc3a5, org.acumos.workbench.common.security.JWTAuthorizationFilter@22cb3d59, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7440265c, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@311a0b3e, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@3e9fb485, org.springframework.security.web.session.SessionManagementFilter@56b05bd7, org.springframework.security.web.access.ExceptionTranslationFilter@318e3942, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@13dc6649]		
+2019-07-22T14:10:08.890Z	main	INFO	springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper			Context refreshed		
+2019-07-22T14:10:08.920Z	main	INFO	springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper			Found 1 custom documentation plugin(s)		
+2019-07-22T14:10:08.961Z	main	INFO	springfox.documentation.spring.web.scanners.ApiListingReferenceScanner			Scanning for api listing references		
+2019-07-22T14:10:09.061Z	main	INFO	org.apache.coyote.http11.Http11NioProtocol			Starting ProtocolHandler ["http-nio-9091"]		
+2019-07-22T14:10:09.106Z	main	INFO	org.springframework.boot.web.embedded.tomcat.TomcatWebServer			Tomcat started on port(s): 9091 (http) with context path '/mlWorkbench/v1/modelservice'		
+2019-07-22T14:10:09.111Z	main	INFO	org.acumos.workbench.modelservice.ModelServiceApplication			Started ModelServiceApplication in 4.02 seconds (JVM running for 4.932)		
+2019-07-22T14:10:20.286Z	http-nio-9091-exec-1	INFO	org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/mlWorkbench/v1/modelservice]			Initializing Spring DispatcherServlet 'dispatcherServlet'		
+2019-07-22T14:10:20.286Z	http-nio-9091-exec-1	INFO	org.springframework.web.servlet.DispatcherServlet			Initializing Servlet 'dispatcherServlet'		
+2019-07-22T14:10:20.292Z	http-nio-9091-exec-1	INFO	org.springframework.web.servlet.DispatcherServlet			Completed initialization in 6 ms		
+2019-07-22T14:10:20.308Z	http-nio-9091-exec-1	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() begin		
+2019-07-22T14:10:20.308Z	http-nio-9091-exec-1	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			AUTHORIZATION_HEADER_KEY : null		
+2019-07-22T14:10:20.308Z	http-nio-9091-exec-1	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:10:20.308Z	http-nio-9091-exec-1	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:10:20.330Z	http-nio-9091-exec-1	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() End		
+2019-07-22T14:10:20.360Z	http-nio-9091-exec-2	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() begin		
+2019-07-22T14:10:20.360Z	http-nio-9091-exec-2	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			AUTHORIZATION_HEADER_KEY : null		
+2019-07-22T14:10:20.360Z	http-nio-9091-exec-2	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:10:20.360Z	http-nio-9091-exec-2	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:10:20.361Z	http-nio-9091-exec-3	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() begin		
+2019-07-22T14:10:20.361Z	http-nio-9091-exec-3	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			AUTHORIZATION_HEADER_KEY : null		
+2019-07-22T14:10:20.361Z	http-nio-9091-exec-3	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:10:20.361Z	http-nio-9091-exec-3	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:10:20.363Z	http-nio-9091-exec-2	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() End		
+2019-07-22T14:10:20.363Z	http-nio-9091-exec-3	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() End		
+2019-07-22T14:10:20.603Z	http-nio-9091-exec-4	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() begin		
+2019-07-22T14:10:20.604Z	http-nio-9091-exec-4	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			AUTHORIZATION_HEADER_KEY : null		
+2019-07-22T14:10:20.604Z	http-nio-9091-exec-6	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() begin		
+2019-07-22T14:10:20.604Z	http-nio-9091-exec-6	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			AUTHORIZATION_HEADER_KEY : null		
+2019-07-22T14:10:20.604Z	http-nio-9091-exec-6	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:10:20.605Z	http-nio-9091-exec-6	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:10:20.607Z	http-nio-9091-exec-6	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() End		
+2019-07-22T14:10:20.608Z	http-nio-9091-exec-5	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() begin		
+2019-07-22T14:10:20.605Z	http-nio-9091-exec-4	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:10:20.609Z	http-nio-9091-exec-5	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			AUTHORIZATION_HEADER_KEY : null		
+2019-07-22T14:10:20.609Z	http-nio-9091-exec-5	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:10:20.609Z	http-nio-9091-exec-4	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:10:20.609Z	http-nio-9091-exec-5	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:10:20.611Z	http-nio-9091-exec-4	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() End		
+2019-07-22T14:10:20.612Z	http-nio-9091-exec-5	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() End		
+2019-07-22T14:10:20.958Z	http-nio-9091-exec-10	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() begin		
+2019-07-22T14:10:20.959Z	http-nio-9091-exec-10	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			AUTHORIZATION_HEADER_KEY : null		
+2019-07-22T14:10:20.959Z	http-nio-9091-exec-10	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:10:20.959Z	http-nio-9091-exec-10	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:10:21.035Z	http-nio-9091-exec-10	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() End		
+2019-07-22T14:10:21.040Z	http-nio-9091-exec-8	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() begin		
+2019-07-22T14:10:21.041Z	http-nio-9091-exec-8	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			AUTHORIZATION_HEADER_KEY : null		
+2019-07-22T14:10:21.041Z	http-nio-9091-exec-8	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:10:21.041Z	http-nio-9091-exec-8	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:10:21.047Z	http-nio-9091-exec-8	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() End		
+2019-07-22T14:10:21.052Z	http-nio-9091-exec-7	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() begin		
+2019-07-22T14:10:21.053Z	http-nio-9091-exec-7	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			AUTHORIZATION_HEADER_KEY : null		
+2019-07-22T14:10:21.053Z	http-nio-9091-exec-7	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:10:21.053Z	http-nio-9091-exec-7	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:10:21.058Z	http-nio-9091-exec-7	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() End		
+2019-07-22T14:10:21.147Z	http-nio-9091-exec-9	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() begin		
+2019-07-22T14:10:21.148Z	http-nio-9091-exec-9	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			AUTHORIZATION_HEADER_KEY : null		
+2019-07-22T14:10:21.149Z	http-nio-9091-exec-9	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:10:21.149Z	http-nio-9091-exec-9	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:10:21.152Z	http-nio-9091-exec-1	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() begin		
+2019-07-22T14:10:21.153Z	http-nio-9091-exec-1	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			AUTHORIZATION_HEADER_KEY : null		
+2019-07-22T14:10:21.153Z	http-nio-9091-exec-1	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:10:21.153Z	http-nio-9091-exec-1	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:10:21.175Z	http-nio-9091-exec-9	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() End		
+2019-07-22T14:10:21.208Z	http-nio-9091-exec-9	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() begin		
+2019-07-22T14:10:21.209Z	http-nio-9091-exec-9	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			AUTHORIZATION_HEADER_KEY : null		
+2019-07-22T14:10:21.209Z	http-nio-9091-exec-9	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:10:21.209Z	http-nio-9091-exec-9	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:10:21.212Z	http-nio-9091-exec-9	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() End		
+2019-07-22T14:10:21.254Z	http-nio-9091-exec-1	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() End		
+2019-07-22T14:11:10.049Z	RMI TCP Connection(6)-10.20.44.11	INFO	org.springframework.boot.admin.SpringApplicationAdminMXBeanRegistrar$SpringApplicationAdmin			Application shutdown requested.		
+2019-07-22T14:11:10.053Z	RMI TCP Connection(6)-10.20.44.11	INFO	org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor			Shutting down ExecutorService 'applicationTaskExecutor'		
+2019-07-22T14:11:15.018Z	main	DEBUG	org.acumos.workbench.modelservice.ModelServiceApplication			main: successfully parsed configuration from environment SPRING_APPLICATION_JSON		
+2019-07-22T14:11:15.778Z	main	INFO	org.acumos.workbench.modelservice.ModelServiceApplication			Starting ModelServiceApplication on INPUHJPC09744 with PID 16516 (D:\RP00490596\TechM\Ram\CognitaWorkSpace\model-service\target\classes started by RP00490596 in D:\RP00490596\TechM\Ram\CognitaWorkSpace\model-service)		
+2019-07-22T14:11:15.778Z	main	DEBUG	org.acumos.workbench.modelservice.ModelServiceApplication			Running with Spring Boot v2.1.3.RELEASE, Spring v5.1.5.RELEASE		
+2019-07-22T14:11:15.779Z	main	INFO	org.acumos.workbench.modelservice.ModelServiceApplication			No active profile set, falling back to default profiles: default		
+2019-07-22T14:11:17.683Z	main	INFO	org.springframework.boot.web.embedded.tomcat.TomcatWebServer			Tomcat initialized with port(s): 9091 (http)		
+2019-07-22T14:11:17.711Z	main	INFO	org.apache.coyote.http11.Http11NioProtocol			Initializing ProtocolHandler ["http-nio-9091"]		
+2019-07-22T14:11:17.725Z	main	INFO	org.apache.catalina.core.StandardService			Starting service [Tomcat]		
+2019-07-22T14:11:17.725Z	main	INFO	org.apache.catalina.core.StandardEngine			Starting Servlet engine: [Apache Tomcat/9.0.16]		
+2019-07-22T14:11:17.735Z	main	INFO	org.apache.catalina.core.AprLifecycleListener			The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [C:\Program Files\Java\jdk1.8.0_66\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files\Java\jdk1.8.0_66\jre\bin;C:/Program Files/Java/jdk1.8.0_66/bin/../jre/bin/server;C:/Program Files/Java/jdk1.8.0_66/bin/../jre/bin;C:/Program Files/Java/jdk1.8.0_66/bin/../jre/lib/amd64;C:\Python27\;C:\Python27\Scripts;C:\Program Files\Docker\Docker\Resources\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\TortoiseSVN\bin;C:\Program Files\Java\jdk1.8.0_66\bin;D:\RP00490596\TechM\Cognita setup\apache-maven-3.5.4-bin\apache-maven-3.5.4\bin;D:\RP00490596\TechM\Cognita setup\Anaconda;D:\RP00490596\NodeJs\;C:\Program Files\Git\cmd;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Program Files (x86)\Webex\Webex\Applications;C:\WINDOWS\System32\OpenSSH\;D:\RP00490596\TechM\Cognita setup\Anaconda;D:\RP00490596\TechM\Cognita setup\Anaconda\Library\mingw-w64\bin;D:\RP00490596\TechM\Cognita setup\Anaconda\Library\usr\bin;D:\RP00490596\TechM\Cognita setup\Anaconda\Library\bin;D:\RP00490596\TechM\Cognita setup\Anaconda\Scripts;C:\Users\RP00490596\AppData\Local\Programs\Python\Python35-32\Scripts\;C:\Users\RP00490596\AppData\Local\Programs\Python\Python35-32\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\TortoiseSVN\bin;C:\Program Files\Java\jdk1.8.0_66\bin;D:\RP00490596\TechM\WPWCM\WPWCM\apache-maven-3.3.9\bin;D:\RP00490596\TechM\Cognita\Protobuf\protoc-3.3.0-win32\bin;C:\Users\RP00490596\AppData\Local\Microsoft\WindowsApps;C:\Users\RP00490596\AppData\Roaming\npm;D:\RP00490596\TechM\Cognita\NiFi\nifi-toolkit-1.9.2\bin;D:\RP00490596\TechM\Cognita\Java 1.8.0_66\jdk1.8.0_66\jdk1.8.0_66\bin;;D:\RP00490596\TechM\sts-bundle\sts-3.7.3.RELEASE;;.]		
+2019-07-22T14:11:18.013Z	main	INFO	org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/mlWorkbench/v1/modelservice]			Initializing Spring embedded WebApplicationContext		
+2019-07-22T14:11:18.014Z	main	INFO	org.springframework.web.context.ContextLoader			Root WebApplicationContext: initialization completed in 2137 ms		
+2019-07-22T14:11:18.414Z	main	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWTAuthorizationFilter() begin		
+2019-07-22T14:11:18.415Z	main	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWTAuthorizationFilter() end		
+2019-07-22T14:11:18.452Z	main	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			Filter 'jwtAuthorizationFilterBean' configured for use		
+2019-07-22T14:11:18.766Z	main	INFO	springfox.documentation.spring.web.PropertySourcedRequestMappingHandlerMapping			Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]		
+2019-07-22T14:11:18.953Z	main	INFO	org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor			Initializing ExecutorService 'applicationTaskExecutor'		
+2019-07-22T14:11:19.168Z	main	INFO	org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration			\n\nUsing generated security password: 9028b8e1-2b21-4dfc-bf0a-932f8e91ec96\n		
+2019-07-22T14:11:19.237Z	main	INFO	org.springframework.security.web.DefaultSecurityFilterChain			Creating filter chain: Ant [pattern='/v2/api-docs'], []		
+2019-07-22T14:11:19.237Z	main	INFO	org.springframework.security.web.DefaultSecurityFilterChain			Creating filter chain: Ant [pattern='/swagger-resources/configuration/ui'], []		
+2019-07-22T14:11:19.237Z	main	INFO	org.springframework.security.web.DefaultSecurityFilterChain			Creating filter chain: Ant [pattern='/swagger-resources'], []		
+2019-07-22T14:11:19.237Z	main	INFO	org.springframework.security.web.DefaultSecurityFilterChain			Creating filter chain: Ant [pattern='/swagger-resources/configuration/security'], []		
+2019-07-22T14:11:19.238Z	main	INFO	org.springframework.security.web.DefaultSecurityFilterChain			Creating filter chain: Ant [pattern='/swagger-ui.html'], []		
+2019-07-22T14:11:19.238Z	main	INFO	org.springframework.security.web.DefaultSecurityFilterChain			Creating filter chain: Ant [pattern='/csrf'], []		
+2019-07-22T14:11:19.238Z	main	INFO	org.springframework.security.web.DefaultSecurityFilterChain			Creating filter chain: Ant [pattern='/webjars/**'], []		
+2019-07-22T14:11:19.238Z	main	INFO	org.springframework.security.web.DefaultSecurityFilterChain			Creating filter chain: Ant [pattern='/error'], []		
+2019-07-22T14:11:19.267Z	main	INFO	org.springframework.security.web.DefaultSecurityFilterChain			Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@46c662f2, org.springframework.security.web.context.SecurityContextPersistenceFilter@6dcf7b6a, org.springframework.security.web.header.HeaderWriterFilter@e07b4db, org.springframework.security.web.authentication.logout.LogoutFilter@42cc420b, org.acumos.workbench.common.security.JWTAuthorizationFilter@67688110, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@247bbfba, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@38022758, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@4afdfc0f, org.springframework.security.web.session.SessionManagementFilter@184de357, org.springframework.security.web.access.ExceptionTranslationFilter@44eb2452, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@45297e7]		
+2019-07-22T14:11:19.322Z	main	INFO	springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper			Context refreshed		
+2019-07-22T14:11:19.353Z	main	INFO	springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper			Found 1 custom documentation plugin(s)		
+2019-07-22T14:11:19.387Z	main	INFO	springfox.documentation.spring.web.scanners.ApiListingReferenceScanner			Scanning for api listing references		
+2019-07-22T14:11:19.482Z	main	INFO	org.apache.coyote.http11.Http11NioProtocol			Starting ProtocolHandler ["http-nio-9091"]		
+2019-07-22T14:11:19.520Z	main	INFO	org.springframework.boot.web.embedded.tomcat.TomcatWebServer			Tomcat started on port(s): 9091 (http) with context path '/mlWorkbench/v1/modelservice'		
+2019-07-22T14:11:19.524Z	main	INFO	org.acumos.workbench.modelservice.ModelServiceApplication			Started ModelServiceApplication in 4.325 seconds (JVM running for 5.408)		
+2019-07-22T14:11:28.099Z	http-nio-9091-exec-1	INFO	org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/mlWorkbench/v1/modelservice]			Initializing Spring DispatcherServlet 'dispatcherServlet'		
+2019-07-22T14:11:28.100Z	http-nio-9091-exec-1	INFO	org.springframework.web.servlet.DispatcherServlet			Initializing Servlet 'dispatcherServlet'		
+2019-07-22T14:11:28.107Z	http-nio-9091-exec-1	INFO	org.springframework.web.servlet.DispatcherServlet			Completed initialization in 7 ms		
+2019-07-22T14:11:28.120Z	http-nio-9091-exec-1	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() begin		
+2019-07-22T14:11:28.121Z	http-nio-9091-exec-1	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			AUTHORIZATION_HEADER_KEY : null		
+2019-07-22T14:11:28.121Z	http-nio-9091-exec-1	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:11:28.121Z	http-nio-9091-exec-1	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:11:28.139Z	http-nio-9091-exec-1	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() End		
+2019-07-22T14:11:28.161Z	http-nio-9091-exec-2	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() begin		
+2019-07-22T14:11:28.162Z	http-nio-9091-exec-2	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			AUTHORIZATION_HEADER_KEY : null		
+2019-07-22T14:11:28.162Z	http-nio-9091-exec-2	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:11:28.162Z	http-nio-9091-exec-2	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:11:28.166Z	http-nio-9091-exec-2	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() End		
+2019-07-22T14:11:28.168Z	http-nio-9091-exec-7	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() begin		
+2019-07-22T14:11:28.169Z	http-nio-9091-exec-4	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() begin		
+2019-07-22T14:11:28.170Z	http-nio-9091-exec-7	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			AUTHORIZATION_HEADER_KEY : null		
+2019-07-22T14:11:28.171Z	http-nio-9091-exec-7	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:11:28.171Z	http-nio-9091-exec-6	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() begin		
+2019-07-22T14:11:28.171Z	http-nio-9091-exec-7	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:11:28.171Z	http-nio-9091-exec-6	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			AUTHORIZATION_HEADER_KEY : null		
+2019-07-22T14:11:28.171Z	http-nio-9091-exec-6	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:11:28.171Z	http-nio-9091-exec-6	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:11:28.172Z	http-nio-9091-exec-4	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			AUTHORIZATION_HEADER_KEY : null		
+2019-07-22T14:11:28.172Z	http-nio-9091-exec-4	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:11:28.172Z	http-nio-9091-exec-4	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:11:28.173Z	http-nio-9091-exec-7	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() End		
+2019-07-22T14:11:28.174Z	http-nio-9091-exec-4	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() End		
+2019-07-22T14:11:28.168Z	http-nio-9091-exec-5	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() begin		
+2019-07-22T14:11:28.175Z	http-nio-9091-exec-6	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() End		
+2019-07-22T14:11:28.176Z	http-nio-9091-exec-5	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			AUTHORIZATION_HEADER_KEY : null		
+2019-07-22T14:11:28.176Z	http-nio-9091-exec-5	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:11:28.176Z	http-nio-9091-exec-5	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:11:28.178Z	http-nio-9091-exec-5	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() End		
+2019-07-22T14:11:28.523Z	http-nio-9091-exec-10	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() begin		
+2019-07-22T14:11:28.523Z	http-nio-9091-exec-10	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			AUTHORIZATION_HEADER_KEY : null		
+2019-07-22T14:11:28.523Z	http-nio-9091-exec-10	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:11:28.523Z	http-nio-9091-exec-10	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:11:28.612Z	http-nio-9091-exec-10	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() End		
+2019-07-22T14:11:28.619Z	http-nio-9091-exec-8	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() begin		
+2019-07-22T14:11:28.620Z	http-nio-9091-exec-8	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			AUTHORIZATION_HEADER_KEY : null		
+2019-07-22T14:11:28.620Z	http-nio-9091-exec-8	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:11:28.620Z	http-nio-9091-exec-8	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:11:28.628Z	http-nio-9091-exec-8	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() End		
+2019-07-22T14:11:28.634Z	http-nio-9091-exec-9	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() begin		
+2019-07-22T14:11:28.634Z	http-nio-9091-exec-9	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			AUTHORIZATION_HEADER_KEY : null		
+2019-07-22T14:11:28.634Z	http-nio-9091-exec-9	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:11:28.634Z	http-nio-9091-exec-9	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:11:28.645Z	http-nio-9091-exec-9	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() End		
+2019-07-22T14:11:28.749Z	http-nio-9091-exec-3	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() begin		
+2019-07-22T14:11:28.751Z	http-nio-9091-exec-3	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			AUTHORIZATION_HEADER_KEY : null		
+2019-07-22T14:11:28.751Z	http-nio-9091-exec-3	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:11:28.751Z	http-nio-9091-exec-3	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:11:28.757Z	http-nio-9091-exec-1	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() begin		
+2019-07-22T14:11:28.757Z	http-nio-9091-exec-1	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			AUTHORIZATION_HEADER_KEY : null		
+2019-07-22T14:11:28.757Z	http-nio-9091-exec-1	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:11:28.757Z	http-nio-9091-exec-1	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:11:28.770Z	http-nio-9091-exec-3	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() End		
+2019-07-22T14:11:28.798Z	http-nio-9091-exec-3	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() begin		
+2019-07-22T14:11:28.798Z	http-nio-9091-exec-3	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			AUTHORIZATION_HEADER_KEY : null		
+2019-07-22T14:11:28.799Z	http-nio-9091-exec-3	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:11:28.799Z	http-nio-9091-exec-3	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			JWT_TOKEN_HEADER_KEY : null		
+2019-07-22T14:11:28.801Z	http-nio-9091-exec-3	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() End		
+2019-07-22T14:11:28.882Z	http-nio-9091-exec-1	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() End		
+2019-07-22T14:11:45.601Z	http-nio-9091-exec-7	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() begin		
+2019-07-22T14:11:45.601Z	http-nio-9091-exec-7	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			AUTHORIZATION_HEADER_KEY : Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZWNobWRldiIsInJvbGUiOlt7InBlcm1pc3Npb25MaXN0IjpudWxsLCJyb2xlQ291bnQiOjAsInJvbGVJZCI6IjEyMzQ1Njc4LWFiY2QtOTBhYi1jZGVmLTEyMzQ1Njc4OTBhYiIsIm5hbWUiOiJNTFAgU3lzdGVtIFVzZXIiLCJhY3RpdmUiOnRydWUsImNyZWF0ZWQiOnsibmFubyI6MCwiZXBvY2hTZWNvbmQiOjE1NDU0MDQzNjJ9LCJtb2RpZmllZCI6bnVsbH1dLCJjcmVhdGVkIjoxNTYzODA0NjgyMDA3LCJleHAiOjE1NjM4ODQ2ODIsIm1scHVzZXIiOnsiY3JlYXRlZCI6eyJuYW5vIjowLCJlcG9jaFNlY29uZCI6MTU0ODM1NjAyNH0sIm1vZGlmaWVkIjp7Im5hbm8iOjU0MTAwMDAwMCwiZXBvY2hTZWNvbmQiOjE1NjM4MDQ2ODF9LCJ1c2VySWQiOiIxOWE1NTRiMS00YjAwLTQxMzUtYTEyMi0yYjYwNjE0ODAxODUiLCJmaXJzdE5hbWUiOiJNdWtlc2giLCJtaWRkbGVOYW1lIjpudWxsLCJsYXN0TmFtZSI6Ik1hbnRhbiIsIm9yZ05hbWUiOm51bGwsImVtYWlsIjoiTU0wMDU0MjIzN0BUZWNoTWFoaW5kcmEuY29tIiwibG9naW5OYW1lIjoidGVjaG1kZXYiLCJsb2dpbkhhc2giOm51bGwsImxvZ2luUGFzc0V4cGlyZSI6bnVsbCwiYXV0aFRva2VuIjpudWxsLCJhY3RpdmUiOnRydWUsImxhc3RMb2dpbiI6eyJuYW5vIjo1MzkwMDAwMDAsImVwb2NoU2Vjb25kIjoxNTYzODA0NjgxfSwibG9naW5GYWlsQ291bnQiOm51bGwsImxvZ2luRmFpbERhdGUiOm51bGwsInBpY3R1cmUiOm51bGwsImFwaVRva2VuIjoiMjEzZGIxMGY4NjU1NDQ2ODkzNzkxMDRlMzQxYTJjNzMiLCJ2ZXJpZnlUb2tlbkhhc2giOm51bGwsInZlcmlmeUV4cGlyYXRpb24iOm51bGwsInRhZ3MiOltdfX0.LRLE781OhBmVzZTgxUdrV_5HHnH3jcf2NTZmHIoY_sNl6si1IrbNdrI4Cfg9VFDZoAOfkvklBsxTZlYCFNSXzg		
+2019-07-22T14:11:45.601Z	http-nio-9091-exec-7	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			TOKEN_PASS_KEY : eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZWNobWRldiIsInJvbGUiOlt7InBlcm1pc3Npb25MaXN0IjpudWxsLCJyb2xlQ291bnQiOjAsInJvbGVJZCI6IjEyMzQ1Njc4LWFiY2QtOTBhYi1jZGVmLTEyMzQ1Njc4OTBhYiIsIm5hbWUiOiJNTFAgU3lzdGVtIFVzZXIiLCJhY3RpdmUiOnRydWUsImNyZWF0ZWQiOnsibmFubyI6MCwiZXBvY2hTZWNvbmQiOjE1NDU0MDQzNjJ9LCJtb2RpZmllZCI6bnVsbH1dLCJjcmVhdGVkIjoxNTYzODA0NjgyMDA3LCJleHAiOjE1NjM4ODQ2ODIsIm1scHVzZXIiOnsiY3JlYXRlZCI6eyJuYW5vIjowLCJlcG9jaFNlY29uZCI6MTU0ODM1NjAyNH0sIm1vZGlmaWVkIjp7Im5hbm8iOjU0MTAwMDAwMCwiZXBvY2hTZWNvbmQiOjE1NjM4MDQ2ODF9LCJ1c2VySWQiOiIxOWE1NTRiMS00YjAwLTQxMzUtYTEyMi0yYjYwNjE0ODAxODUiLCJmaXJzdE5hbWUiOiJNdWtlc2giLCJtaWRkbGVOYW1lIjpudWxsLCJsYXN0TmFtZSI6Ik1hbnRhbiIsIm9yZ05hbWUiOm51bGwsImVtYWlsIjoiTU0wMDU0MjIzN0BUZWNoTWFoaW5kcmEuY29tIiwibG9naW5OYW1lIjoidGVjaG1kZXYiLCJsb2dpbkhhc2giOm51bGwsImxvZ2luUGFzc0V4cGlyZSI6bnVsbCwiYXV0aFRva2VuIjpudWxsLCJhY3RpdmUiOnRydWUsImxhc3RMb2dpbiI6eyJuYW5vIjo1MzkwMDAwMDAsImVwb2NoU2Vjb25kIjoxNTYzODA0NjgxfSwibG9naW5GYWlsQ291bnQiOm51bGwsImxvZ2luRmFpbERhdGUiOm51bGwsInBpY3R1cmUiOm51bGwsImFwaVRva2VuIjoiMjEzZGIxMGY4NjU1NDQ2ODkzNzkxMDRlMzQxYTJjNzMiLCJ2ZXJpZnlUb2tlbkhhc2giOm51bGwsInZlcmlmeUV4cGlyYXRpb24iOm51bGwsInRhZ3MiOltdfX0.LRLE781OhBmVzZTgxUdrV_5HHnH3jcf2NTZmHIoY_sNl6si1IrbNdrI4Cfg9VFDZoAOfkvklBsxTZlYCFNSXzg		
+2019-07-22T14:11:45.602Z	http-nio-9091-exec-7	DEBUG	org.acumos.workbench.common.security.JwtTokenUtil			getUserToken() Begin		
+2019-07-22T14:11:45.602Z	http-nio-9091-exec-7	DEBUG	org.acumos.workbench.common.security.JwtTokenUtil			JWT Bearer Token : eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZWNobWRldiIsInJvbGUiOlt7InBlcm1pc3Npb25MaXN0IjpudWxsLCJyb2xlQ291bnQiOjAsInJvbGVJZCI6IjEyMzQ1Njc4LWFiY2QtOTBhYi1jZGVmLTEyMzQ1Njc4OTBhYiIsIm5hbWUiOiJNTFAgU3lzdGVtIFVzZXIiLCJhY3RpdmUiOnRydWUsImNyZWF0ZWQiOnsibmFubyI6MCwiZXBvY2hTZWNvbmQiOjE1NDU0MDQzNjJ9LCJtb2RpZmllZCI6bnVsbH1dLCJjcmVhdGVkIjoxNTYzODA0NjgyMDA3LCJleHAiOjE1NjM4ODQ2ODIsIm1scHVzZXIiOnsiY3JlYXRlZCI6eyJuYW5vIjowLCJlcG9jaFNlY29uZCI6MTU0ODM1NjAyNH0sIm1vZGlmaWVkIjp7Im5hbm8iOjU0MTAwMDAwMCwiZXBvY2hTZWNvbmQiOjE1NjM4MDQ2ODF9LCJ1c2VySWQiOiIxOWE1NTRiMS00YjAwLTQxMzUtYTEyMi0yYjYwNjE0ODAxODUiLCJmaXJzdE5hbWUiOiJNdWtlc2giLCJtaWRkbGVOYW1lIjpudWxsLCJsYXN0TmFtZSI6Ik1hbnRhbiIsIm9yZ05hbWUiOm51bGwsImVtYWlsIjoiTU0wMDU0MjIzN0BUZWNoTWFoaW5kcmEuY29tIiwibG9naW5OYW1lIjoidGVjaG1kZXYiLCJsb2dpbkhhc2giOm51bGwsImxvZ2luUGFzc0V4cGlyZSI6bnVsbCwiYXV0aFRva2VuIjpudWxsLCJhY3RpdmUiOnRydWUsImxhc3RMb2dpbiI6eyJuYW5vIjo1MzkwMDAwMDAsImVwb2NoU2Vjb25kIjoxNTYzODA0NjgxfSwibG9naW5GYWlsQ291bnQiOm51bGwsImxvZ2luRmFpbERhdGUiOm51bGwsInBpY3R1cmUiOm51bGwsImFwaVRva2VuIjoiMjEzZGIxMGY4NjU1NDQ2ODkzNzkxMDRlMzQxYTJjNzMiLCJ2ZXJpZnlUb2tlbkhhc2giOm51bGwsInZlcmlmeUV4cGlyYXRpb24iOm51bGwsInRhZ3MiOltdfX0.LRLE781OhBmVzZTgxUdrV_5HHnH3jcf2NTZmHIoY_sNl6si1IrbNdrI4Cfg9VFDZoAOfkvklBsxTZlYCFNSXzg		
+2019-07-22T14:11:45.603Z	http-nio-9091-exec-7	DEBUG	org.acumos.workbench.common.security.JwtTokenUtil			JWT Secret Key : secret		
+2019-07-22T14:11:45.603Z	http-nio-9091-exec-7	DEBUG	org.acumos.workbench.common.security.JwtTokenUtil			getClaimsFromToken() Begin		
+2019-07-22T14:11:45.992Z	http-nio-9091-exec-7	DEBUG	org.acumos.workbench.common.security.JwtTokenUtil			getClaimsFromToken() End		
+2019-07-22T14:11:45.993Z	http-nio-9091-exec-7	DEBUG	org.acumos.workbench.common.security.JwtTokenUtil			getUsernameFromToken() Begin		
+2019-07-22T14:11:45.993Z	http-nio-9091-exec-7	DEBUG	org.acumos.workbench.common.security.JwtTokenUtil			isTokenExpired() End		
+2019-07-22T14:11:45.993Z	http-nio-9091-exec-7	DEBUG	org.acumos.workbench.common.security.JwtTokenUtil			getExpirationDateFromToken() Begin		
+2019-07-22T14:11:45.993Z	http-nio-9091-exec-7	DEBUG	org.acumos.workbench.common.security.JwtTokenUtil			getExpirationDateFromToken() End		
+2019-07-22T14:11:45.993Z	http-nio-9091-exec-7	DEBUG	org.acumos.workbench.common.security.JwtTokenUtil			getUserToken() End		
+2019-07-22T14:11:45.994Z	http-nio-9091-exec-7	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			validateToken() Begin		
+2019-07-22T14:11:45.994Z	http-nio-9091-exec-7	DEBUG	org.acumos.workbench.common.security.JwtTokenUtil			isTokenExpired() Begin		
+2019-07-22T14:11:45.994Z	http-nio-9091-exec-7	DEBUG	org.acumos.workbench.common.security.JwtTokenUtil			isTokenExpired() End		
+2019-07-22T14:11:45.994Z	http-nio-9091-exec-7	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			User Name : techmdev		
+2019-07-22T14:11:47.172Z	http-nio-9091-exec-7	DEBUG	org.acumos.workbench.common.security.JwtTokenUtil			getUserToken() Begin		
+2019-07-22T14:11:47.173Z	http-nio-9091-exec-7	DEBUG	org.acumos.workbench.common.security.JwtTokenUtil			JWT Bearer Token : eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZWNobWRldiIsInJvbGUiOlt7InBlcm1pc3Npb25MaXN0IjpudWxsLCJyb2xlQ291bnQiOjAsInJvbGVJZCI6IjEyMzQ1Njc4LWFiY2QtOTBhYi1jZGVmLTEyMzQ1Njc4OTBhYiIsIm5hbWUiOiJNTFAgU3lzdGVtIFVzZXIiLCJhY3RpdmUiOnRydWUsImNyZWF0ZWQiOnsibmFubyI6MCwiZXBvY2hTZWNvbmQiOjE1NDU0MDQzNjJ9LCJtb2RpZmllZCI6bnVsbH1dLCJjcmVhdGVkIjoxNTYzODA0NjgyMDA3LCJleHAiOjE1NjM4ODQ2ODIsIm1scHVzZXIiOnsiY3JlYXRlZCI6eyJuYW5vIjowLCJlcG9jaFNlY29uZCI6MTU0ODM1NjAyNH0sIm1vZGlmaWVkIjp7Im5hbm8iOjU0MTAwMDAwMCwiZXBvY2hTZWNvbmQiOjE1NjM4MDQ2ODF9LCJ1c2VySWQiOiIxOWE1NTRiMS00YjAwLTQxMzUtYTEyMi0yYjYwNjE0ODAxODUiLCJmaXJzdE5hbWUiOiJNdWtlc2giLCJtaWRkbGVOYW1lIjpudWxsLCJsYXN0TmFtZSI6Ik1hbnRhbiIsIm9yZ05hbWUiOm51bGwsImVtYWlsIjoiTU0wMDU0MjIzN0BUZWNoTWFoaW5kcmEuY29tIiwibG9naW5OYW1lIjoidGVjaG1kZXYiLCJsb2dpbkhhc2giOm51bGwsImxvZ2luUGFzc0V4cGlyZSI6bnVsbCwiYXV0aFRva2VuIjpudWxsLCJhY3RpdmUiOnRydWUsImxhc3RMb2dpbiI6eyJuYW5vIjo1MzkwMDAwMDAsImVwb2NoU2Vjb25kIjoxNTYzODA0NjgxfSwibG9naW5GYWlsQ291bnQiOm51bGwsImxvZ2luRmFpbERhdGUiOm51bGwsInBpY3R1cmUiOm51bGwsImFwaVRva2VuIjoiMjEzZGIxMGY4NjU1NDQ2ODkzNzkxMDRlMzQxYTJjNzMiLCJ2ZXJpZnlUb2tlbkhhc2giOm51bGwsInZlcmlmeUV4cGlyYXRpb24iOm51bGwsInRhZ3MiOltdfX0.LRLE781OhBmVzZTgxUdrV_5HHnH3jcf2NTZmHIoY_sNl6si1IrbNdrI4Cfg9VFDZoAOfkvklBsxTZlYCFNSXzg		
+2019-07-22T14:11:47.173Z	http-nio-9091-exec-7	DEBUG	org.acumos.workbench.common.security.JwtTokenUtil			JWT Secret Key : secret		
+2019-07-22T14:11:47.173Z	http-nio-9091-exec-7	DEBUG	org.acumos.workbench.common.security.JwtTokenUtil			getClaimsFromToken() Begin		
+2019-07-22T14:11:47.175Z	http-nio-9091-exec-7	DEBUG	org.acumos.workbench.common.security.JwtTokenUtil			getClaimsFromToken() End		
+2019-07-22T14:11:47.175Z	http-nio-9091-exec-7	DEBUG	org.acumos.workbench.common.security.JwtTokenUtil			getUsernameFromToken() Begin		
+2019-07-22T14:11:47.176Z	http-nio-9091-exec-7	DEBUG	org.acumos.workbench.common.security.JwtTokenUtil			isTokenExpired() End		
+2019-07-22T14:11:47.176Z	http-nio-9091-exec-7	DEBUG	org.acumos.workbench.common.security.JwtTokenUtil			getExpirationDateFromToken() Begin		
+2019-07-22T14:11:47.176Z	http-nio-9091-exec-7	DEBUG	org.acumos.workbench.common.security.JwtTokenUtil			getExpirationDateFromToken() End		
+2019-07-22T14:11:47.176Z	http-nio-9091-exec-7	DEBUG	org.acumos.workbench.common.security.JwtTokenUtil			getUserToken() End		
+2019-07-22T14:11:47.427Z	http-nio-9091-exec-7	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			validateToken() End		
+2019-07-22T14:11:47.662Z	http-nio-9091-exec-7	DEBUG	org.acumos.workbench.common.security.JWTAuthorizationFilter			doFilterInternal() End		
+2019-07-22T14:12:16.937Z	RMI TCP Connection(9)-10.20.44.11	INFO	org.springframework.boot.admin.SpringApplicationAdminMXBeanRegistrar$SpringApplicationAdmin			Application shutdown requested.		
+2019-07-22T14:12:16.940Z	RMI TCP Connection(9)-10.20.44.11	INFO	org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor			Shutting down ExecutorService 'applicationTaskExecutor'		

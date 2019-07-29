@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82fa385a_5d0c6615",
+        "filename": "model-service/src/main/java/org/acumos/workbench/modelservice/config/SwaggerConfiguration.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-07-29T10:26:13Z",
+      "side": 1,
+      "message": "Class is not formatted.",
+      "range": {
+        "startLine": 50,
+        "startChar": 34,
+        "endLine": 50,
+        "endChar": 35
+      },
+      "revId": "67ea094c6d6e7bb9106ca32b0dc1486de8fa2a81",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e2a730dd_d5c6099d",
+        "filename": "model-service/src/main/java/org/acumos/workbench/modelservice/config/WebSecurityConfiguration.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-07-29T10:26:13Z",
+      "side": 1,
+      "message": "Please format the code.",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 10
+      },
+      "revId": "67ea094c6d6e7bb9106ca32b0dc1486de8fa2a81",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6520bf0e_76a06522",
+        "filename": "model-service/src/main/java/org/acumos/workbench/modelservice/config/WebSecurityConfiguration.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-07-29T10:26:13Z",
+      "side": 1,
+      "message": "Please format the code",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 1
+      },
+      "revId": "67ea094c6d6e7bb9106ca32b0dc1486de8fa2a81",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}

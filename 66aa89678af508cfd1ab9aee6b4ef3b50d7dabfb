@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "08b3e01f_da3b5bc7",
+        "filename": "model-service/pom.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-07-30T14:38:21Z",
+      "side": 1,
+      "message": "As of now we are not making any calls to CDS. So removing the dependency.",
+      "parentUuid": "a54e7e9c_f12e2dd6",
+      "range": {
+        "startLine": 56,
+        "startChar": 12,
+        "endLine": 56,
+        "endChar": 17
+      },
+      "revId": "66aa89678af508cfd1ab9aee6b4ef3b50d7dabfb",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ac2b427_499a6da4",
         "filename": "model-service/pom.xml",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2019-07-30T13:23:39Z",
       "side": 1,
       "message": "You should begin with Java 11",
+      "range": {
+        "startLine": 149,
+        "startChar": 16,
+        "endLine": 149,
+        "endChar": 24
+      },
+      "revId": "66aa89678af508cfd1ab9aee6b4ef3b50d7dabfb",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6885d2a9_58bb974f",
+        "filename": "model-service/pom.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-07-30T14:38:21Z",
+      "side": 1,
+      "message": "Java 11 is not installed on our machines, its common call for the remaining modules like portal, So using the same.",
+      "parentUuid": "9ac2b427_499a6da4",
       "range": {
         "startLine": 149,
         "startChar": 16,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ffdd057f_30eaf6ee",
+        "filename": "model-service/pom.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-07-30T14:38:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "128a3500_1a5fed36",
+      "range": {
+        "startLine": 232,
+        "startChar": 22,
+        "endLine": 232,
+        "endChar": 27
+      },
+      "revId": "66aa89678af508cfd1ab9aee6b4ef3b50d7dabfb",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "049b23ae_53ddeb8b",
         "filename": "model-service/src/main/java/org/acumos/workbench/modelservice/service/ModelValidationService.java",
         "patchSetId": 7
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "864a676b_933919e3",
+        "filename": "model-service/src/main/java/org/acumos/workbench/modelservice/service/ModelValidationService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-07-30T14:38:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "049b23ae_53ddeb8b",
+      "range": {
+        "startLine": 29,
+        "startChar": 1,
+        "endLine": 29,
+        "endChar": 10
+      },
+      "revId": "66aa89678af508cfd1ab9aee6b4ef3b50d7dabfb",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3c975db4_ddfefc37",
         "filename": "model-service/src/main/java/org/acumos/workbench/modelservice/util/ConfigurationProperties.java",
         "patchSetId": 7
@@ -105,6 +201,30 @@
       "writtenOn": "2019-07-30T13:23:39Z",
       "side": 1,
       "message": "This is a truly horrible method name",
+      "range": {
+        "startLine": 51,
+        "startChar": 15,
+        "endLine": 51,
+        "endChar": 39
+      },
+      "revId": "66aa89678af508cfd1ab9aee6b4ef3b50d7dabfb",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f149e24f_6c05fcba",
+        "filename": "model-service/src/main/java/org/acumos/workbench/modelservice/util/ConfigurationProperties.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-07-30T14:38:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c975db4_ddfefc37",
       "range": {
         "startLine": 51,
         "startChar": 15,

@@ -20,18 +20,30 @@
 
 package org.acumos.workbench.modelservice.service;
 
+import java.lang.invoke.MethodHandles;
+
 import org.acumos.workbench.common.vo.Model;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-public interface ModelValidationService {
+@Service("ModelValidationServiceImpl")
+public class ModelValidationServiceImpl implements ModelValidationService{
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+	
+	@Autowired
+	private InputValidationService inputValidationService;
 
-	/**
-	 * To Validate the Input data for Model
-	 * 
-	 * @param authenticatedUserId
-	 * 			Acumos User Id 
-	 * @param model
-	 * 			model input
-	 */
-	public void validateInputData(String authenticatedUserId, Model model);
+	@Override
+	public void validateInputData(String authenticatedUserId, Model model) {
+		logger.debug("validateInputData() begins");
+		// The Model Service must check the Acumos User Id is exists or not
+		inputValidationService.isValuePresent("Acumos User Id",authenticatedUserId);
+		// Check all the mandatory fields exists or not in Json structure
+		inputValidationService.validateModelInputJson(model);
+		logger.debug("validateInputData() begins");
+		
+	}
 
 }

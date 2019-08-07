@@ -18,20 +18,10 @@
  * ===============LICENSE_END=========================================================
  */
 
-package org.acumos.workbench.modelservice.service;
+package org.acumos.workbench.modelservice.util;
 
-import org.acumos.workbench.common.vo.Model;
-
-public interface ModelValidationService {
-
-	/**
-	 * To Validate the Input data for Model
-	 * 
-	 * @param authenticatedUserId
-	 * 			Acumos User Id 
-	 * @param model
-	 * 			model input
-	 */
-	public void validateInputData(String authenticatedUserId, Model model);
+public class ModelServiceConstants {
+	
+	public static final String MODEL_AUTHENTICATED_USER_ID = "AuthenticatedUserId";
 
 }

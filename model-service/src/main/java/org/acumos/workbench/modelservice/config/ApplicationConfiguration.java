@@ -46,7 +46,7 @@ public class ApplicationConfiguration {
 	@Bean
 	@Lazy(value = true)
 	public CommonDataServiceRestClientImpl commonDataServiceRestClientImpl() {
-		CommonDataServiceRestClientImpl cdsClient = (CommonDataServiceRestClientImpl) CommonDataServiceRestClientImpl.getInstance(confProps.getCmndatasvcendpointurl(), confProps.getCmndatasvcuser(), confProps.getCmndatasvcpwd());
+		CommonDataServiceRestClientImpl cdsClient = (CommonDataServiceRestClientImpl) CommonDataServiceRestClientImpl.getInstance(confProps.getCmndatasvcurl(), confProps.getCmndatasvcuser(), confProps.getCmndatasvcpwd());
 		return cdsClient;
 	}
 	

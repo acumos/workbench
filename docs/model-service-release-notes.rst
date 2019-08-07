@@ -20,4 +20,12 @@
 Model Service Release Notes
 ===============================
 
-** Coming Soon **
+Version 1.0.0, 2019-08-07
+---------------------------
+* Initial model-service project commit
+* ACUMOS-3274 : Create new MS module : Model Service
+* ACUMOS-3289 : Model Service to expose API to Create, List, Update and Delete the Project Model Association
+* ACUMOS-3290 : Model Service MS should expose API to create Project Model association
+* ACUMOS-3291 : Model Service MS should expose API to list the models associated to a Project or only to User
+* ACUMOS-3292 : Model Service MS should expose API to update the Project Model association
+* ACUMOS-3293 : Model Service MS should expose API to delete the Project Model association

@@ -20,18 +20,32 @@
 
 package org.acumos.workbench.modelservice.service;
 
+import org.acumos.workbench.common.exception.InvalidInputJSONException;
+import org.acumos.workbench.common.exception.ValueNotFoundException;
 import org.acumos.workbench.common.vo.Model;
+import org.acumos.workbench.common.vo.Models;
 
-public interface ModelValidationService {
-
+public interface InputValidationService {
+	
 	/**
-	 * To Validate the Input data for Model
+	 * This method check if value is present i.e, value is not null or Empty. 
 	 * 
-	 * @param authenticatedUserId
-	 * 			Acumos User Id 
-	 * @param model
-	 * 			model input
+	 * @param fieldName
+	 * 		The name of the filed to be shown in the error message. 
+	 * @param value
+	 * 		The value to be validated
+	 * @throws ValueNotFoundException
+	 * 		throws ValueNotFoundException in case value is null or empty.
 	 */
-	public void validateInputData(String authenticatedUserId, Model model);
-
+	public void isValuePresent(String fieldName, String value) throws ValueNotFoundException;
+	
+	/**
+	 * This method will validates the input Json value of Model
+	 * @param model
+	 * 			the model object with input values
+	 * @throws InvalidInputJSONException
+	 * 			throws InvalidInputJSONException in case of error in the input JSON
+	 */
+	public void validateModelInputJson(Model model) throws InvalidInputJSONException;
+	
 }

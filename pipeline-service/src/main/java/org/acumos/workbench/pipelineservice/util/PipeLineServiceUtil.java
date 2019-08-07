@@ -78,10 +78,10 @@ public class PipeLineServiceUtil {
 					if(null != pipeLineVersion.getLabel()) {
 						versionLabel = pipeLineVersion.getLabel();
 					}
-					if (null != pipeLineVersion.getTimeStamp()) {
+					if (null != pipeLineVersion.getModifiedTimeStamp()) {
 						Date parsedDate;
 						try {
-							parsedDate = dateFormat.parse(pipeLineVersion.getTimeStamp());
+							parsedDate = dateFormat.parse(pipeLineVersion.getModifiedTimeStamp());
 							Timestamp timeStamp = new Timestamp(parsedDate.getTime());
 							modifiedTime = timeStamp.toInstant();
 						} catch (Exception e) {
@@ -132,11 +132,12 @@ public class PipeLineServiceUtil {
 		Timestamp timeStamp = null;
 		if (null == responseMLPPileLine.getModified()) {
 			timeStamp = Timestamp.from(responseMLPPileLine.getCreated());
+			version.setModifiedTimeStamp(timeStamp.toString());
 		} else {
-			timeStamp = Timestamp.from(responseMLPPileLine.getCreated());
+			timeStamp = Timestamp.from(responseMLPPileLine.getModified());
+			version.setModifiedTimeStamp(timeStamp.toString());
 		}
-
-		version.setTimeStamp(timeStamp.toString());
+		version.setCreationTimeStamp(responseMLPPileLine.getCreated().toString());
 		version.setUser(responseMLPPileLine.getUserId());
 		version.setLabel(responseMLPPileLine.getVersion());
 

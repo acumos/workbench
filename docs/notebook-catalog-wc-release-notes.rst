@@ -20,6 +20,11 @@
 ML Workbench NoteBook-Catalog Web Component
 ===============================================
 
+Version 1.0.5  31st May 2019 
+=================================
+* ML Workbench facing compatibility issues with Mozilla Firefox (ACUMOS-2866)
+* IST2 | MLWB | Validation message showing some garbage values in pop-up for creation of notebook and projects (ACUMOS-2983)
+
 Version 1.0.3  3rd May 2019 
 =================================
 * Update Error messages (ACUMOS-2852)

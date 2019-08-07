@@ -20,6 +20,10 @@
 ML Workbench Home Web Component
 ===============================================
 
+Version 1.0.5  31st May 2019 
+=================================
+* ML Workbench facing compatibility issues with Mozilla Firefox (ACUMOS-2866)
+
 Version 1.0.4  3rd May 2019 
 =================================
 * Update Error messages (ACUMOS-2852)

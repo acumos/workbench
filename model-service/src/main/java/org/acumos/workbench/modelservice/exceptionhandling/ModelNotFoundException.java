@@ -18,20 +18,18 @@
  * ===============LICENSE_END=========================================================
  */
 
-package org.acumos.workbench.modelservice.service;
+package org.acumos.workbench.modelservice.exceptionhandling;
 
-import org.acumos.workbench.common.vo.Model;
+import org.acumos.workbench.common.exception.EntityNotFoundException;
 
-public interface ModelValidationService {
+public class ModelNotFoundException extends EntityNotFoundException {
 
-	/**
-	 * To Validate the Input data for Model
-	 * 
-	 * @param authenticatedUserId
-	 * 			Acumos User Id 
-	 * @param model
-	 * 			model input
-	 */
-	public void validateInputData(String authenticatedUserId, Model model);
+	private static final long serialVersionUID = -1543305952401729904L;
+	
+	private static final String MSG = "Solution and Version does not exists";
+
+	public ModelNotFoundException() {
+		super(MSG);
+	}
 
 }

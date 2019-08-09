@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a92f062_7b179dfd",
+        "filename": "model-service/src/main/java/org/acumos/workbench/modelservice/controller/ModelServiceController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-08-09T15:07:40Z",
+      "side": 1,
+      "message": "need to rephrase the API operation",
+      "range": {
+        "startLine": 73,
+        "startChar": 28,
+        "endLine": 73,
+        "endChar": 29
+      },
+      "revId": "677b701517ebdc447afc73c1cdc4f141df985009",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "565d2ff1_ab74c813",
+        "filename": "model-service/src/main/java/org/acumos/workbench/modelservice/service/InputValidationServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-08-09T15:07:40Z",
+      "side": 1,
+      "message": "License is missing",
+      "range": {
+        "startLine": 2,
+        "startChar": 2,
+        "endLine": 2,
+        "endChar": 3
+      },
+      "revId": "677b701517ebdc447afc73c1cdc4f141df985009",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cdd9d8a9_8b7f755b",
+        "filename": "model-service/src/main/java/org/acumos/workbench/modelservice/service/ModelServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-08-09T15:07:40Z",
+      "side": 1,
+      "message": "Pleas include a line between import and start of the class definition.",
+      "revId": "677b701517ebdc447afc73c1cdc4f141df985009",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}

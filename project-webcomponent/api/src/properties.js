@@ -24,10 +24,13 @@ var config = {
 		projectmSURL : "http://localhost:9088/mlWorkbench/v1/project",
 		notebookmSURL : "http://localhost:9089/mlWorkbench/v1/notebook",
 		pipelinemSURL : "http://localhost:9090/mlWorkbench/v1/pipeline",
+		modelmSURL : "http://localhost:9091/mlWorkbench/v1/modelservice",
 		projectWikiURL : "https://wiki.acumos.org/display/TRAIN",
 		notebookWikiURL : "https://wiki.acumos.org/display/TRAIN",
 		pipelineWikiURL : "https://wiki.acumos.org/display/TRAIN",
-		pipelineFlag : "false",
+		modelWikiURL : "https://wiki.acumos.org/display/TRAIN",
+		portalBEURL : "http://localhost:8083",
+		pipelineFlag : "true",
 		createTimeout: 60000
 	},
 	deploy : {
@@ -35,9 +38,12 @@ var config = {
 		projectmSURL : process.env.projectmSURL,
 		notebookmSURL : process.env.notebookmSURL,
 		pipelinemSURL : process.env.pipelinemSURL,
+		modelmSURL : process.env.modelmSURL,
 		projectWikiURL : process.env.projectWikiURL,
 		notebookWikiURL : process.env.notebookWikiURL,
 		pipelineWikiURL : process.env.pipelineWikiURL,
+		modelWikiURL : process.env.modelWikiURL,
+		portalBEURL : process.env.portalBEURL,
 		pipelineFlag : process.env.pipelineFlag,
 		createTimeout: process.env.createTimeout
 	}

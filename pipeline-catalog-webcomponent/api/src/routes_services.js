@@ -308,7 +308,7 @@ module.exports = function(app) {
 		try {
 			if (!isNull(httpResponse)) {
 				code = httpResponse.statusCode;
-				if (code === 200 || code === 201) {
+				if (code === 200 || code === 201 || code === 202) {
 					errorFlag = false;
 				} else if (code === 500){
 					message = "Unknown server Error: " + message;

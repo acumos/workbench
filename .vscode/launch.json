@@ -1,0 +1,38 @@
+{
+  "configurations": [
+
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Run Api",
+      "cwd":"${workspaceFolder}/project-catalog-webcomponent/api",
+      "program": "${workspaceFolder}/project-catalog-webcomponent/api/src/server.js",
+    },
+    {
+      "type": "java",
+      "name": "project-service",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "mainClass": "org.acumos.workbench.projectservice.ProjectServiceApplication",
+      "projectName": "project-service",
+      "env": {
+        "SPRING_APPLICATION_JSON": "{\"server\":{\"port\":9088},\"resultsetSize\":\"2000\",\"cmndatasvc\" : {\"cmndatasvcendpointurl\":\"http://cognita-dev1-vm01-core.eastus.cloudapp.azure.com:8000/ccds\",\"cmndatasvcuser\":\"ccds_client\",\"cmndatasvcpwd\":\"ccds_client\"},\"jwt\":{\"secretkey\":\"secret\"}}"
+      },
+      "args": ""
+    },
+    {
+      "type": "java",
+      "name": "notebook-service",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "mainClass": "org.acumos.workbench.notebook.NotebookServiceApplication",
+      "projectName": "notebook-service",
+      "env": {
+        "SPRING_APPLICATION_JSON": "{\"server\":{\"port\":9089},\"dateformat\": \"yyyy-MM-dd-HH-mm-ss-SSS\",\"resultsetSize\" : 2000,\"cmndatasvc\": {\"endpointurl\": \"http://cognita-dev1-vm01-core.eastus.cloudapp.azure.com:8000/ccds\",\"user\": \"ccds_client\",\"pwd\": \"ccds_client\"},\"projectservice\": {\"url\": \"http://cognita-dev1-vm01-core.eastus.cloudapp.azure.com:9088/mlWorkbench/v1/project\"},\"jupyterhub\": {\"url\" : \"https://cognita-dev1-vm01-core.eastus.cloudapp.azure.com:8086\",\"token\" : \"8589637a0bfa46708966412fe2f0d200\",\"storepass\": \"changeit\",\"installcert\":false},\"jupyternotebook\":{\"url\":\"https://cognita-dev1-vm01-core.eastus.cloudapp.azure.com:8086\"},\"jwt\":{\"secretkey\":\"secret\"}}"
+      },
+      "args": ""
+    }
+  ]
+}

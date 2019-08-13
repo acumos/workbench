@@ -1,0 +1,19 @@
+{
+  "configurations": [
+      
+    {
+      "type": "java",
+      "name": "notebook-service",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "mainClass": "org.acumos.workbench.notebookservice.NotebookServiceApplication",
+      "projectName": "notebook-service",
+      "args": "",
+      "env": {
+        "SPRING_APPLICATION_JSON": "{\"server\":{\"port\":9089},\"dateformat\": \"yyyy-MM-dd-HH-mm-ss-SSS\",\"resultsetSize\" : 2000,\"cmndatasvc\": {\"endpointurl\": \"http://cognita-dev1-vm01-core.eastus.cloudapp.azure.com:8000/ccds\",\"user\": \"ccds_client\",\"pwd\": \"ccds_client\"},\"projectservice\": {\"url\": \"http://localhost:9088/mlWorkbench/v1/project\"},\"jupyterhub\": {\"url\" : \"https://cognita-dev1-vm01-core.eastus.cloudapp.azure.com:8086\",\"token\" : \"8589637a0bfa46708966412fe2f0d200\",\"storepass\": \"changeit\",\"installcert\":false},\"jupyternotebook\":{\"url\":\"https://cognita-dev1-vm01-core.eastus.cloudapp.azure.com:8086\"},\"jwt\":{\"secretkey\":\"secret\"}}"
+      }
+
+    }
+  ]
+}

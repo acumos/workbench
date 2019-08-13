@@ -1,0 +1,17 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "project-service",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "mainClass": "org.acumos.workbench.projectservice.ProjectServiceApplication",
+      "projectName": "project-service",
+      "args": "",
+      "env": {
+        "SPRING_APPLICATION_JSON": "{\"server\":{\"port\":9088},\"resultsetSize\":\"2000\",\"cmndatasvc\" : {\"cmndatasvcendpointurl\":\"http://cognita-dev1-vm01-core.eastus.cloudapp.azure.com:8000/ccds\",\"cmndatasvcuser\":\"ccds_client\",\"cmndatasvcpwd\":\"ccds_client\"},\"jwt\":{\"secretkey\":\"secret\"}}"
+      }
+    },
+  ]
+}

@@ -771,12 +771,12 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
                           <div>
                             <a href="javascript:void" @click=${e => this.userAction("view-notebook", item.noteBookId, item.name)}>
                               <h4 class="notebook-name">${item.name}</h4>
-                              <span><strong>Notebook Type</strong>: &nbsp; ${item.notebookType}</span>
+                              <span><strong>Type</strong>: &nbsp; ${item.notebookType}</span>
                               <br />
-                              <span><strong>Notebook Version</strong>: &nbsp;
+                              <span><strong>Version</strong>: &nbsp;
                                 ${item.version}</span>
                               <br />
-                              <strong>Notebook Status</strong>: &nbsp;
+                              <strong>Status</strong>: &nbsp;
                               ${item.status === "ACTIVE"
                   ? html`
                                   <span class="active-status">${item.status}</span>

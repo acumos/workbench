@@ -1,0 +1,31 @@
+{
+	"folders": [
+		{
+			"path": "pipeline-service"
+		},
+		{
+			"path": "project-service"
+		},
+		{
+			"path": "notebook-service"
+		},
+		{
+			"path": "project-webcomponent"
+		},
+		{
+			"path": "project-catalog-webcomponent"
+		},
+		{
+			"path": "notebook-webcomponent"
+		},
+		{
+			"path": "notebook-catalog-webcomponent"
+		},
+		{
+			"path": "pipeline-catalog-webcomponent"
+		},
+		{
+			"path": "pipeline-webcomponent"
+		}
+	]
+}

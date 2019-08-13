@@ -20,32 +20,30 @@ limitations under the License.
 
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <!-- Load polyfills -->
-    <script src="node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js" defer>
-    </script>
+    <script src="node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js" defer></script>
     <!-- Load components via WebComponents.waitFor -->
     <script type="module">
-        window.WebComponents = window.WebComponents || {
-            waitFor(cb) { addEventListener('WebComponentsReady', cb) }
+      window.WebComponents = window.WebComponents || {
+        waitFor(cb) {
+          addEventListener("WebComponentsReady", cb);
         }
-        WebComponents.waitFor(async () => {
-			import("./src/independent-runtime.js");
-            import('./src/pipeline-catalog-element.js');
-        });
+      };
+      WebComponents.waitFor(async () => {
+        import("./src/independent-runtime.js");
+        import("./src/pipeline-catalog-element.js");
+      });
     </script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Workbench - Pipeline Catalog</title>
-</head>
+  </head>
 
-<body>
-	<independent-runtime>
-	    <pipeline-catalog-element>
-	    </pipeline-catalog-element>
+  <body>
+    <independent-runtime>
+      <pipeline-catalog-element componenturl="http://localhost:9092" userName="techmdev" authToken="Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZWNobWRldiIsInJvbGUiOlt7InBlcm1pc3Npb25MaXN0IjpudWxsLCJyb2xlQ291bnQiOjAsInJvbGVJZCI6IjEyMzQ1Njc4LWFiY2QtOTBhYi1jZGVmLTEyMzQ1Njc4OTBhYiIsIm5hbWUiOiJNTFAgU3lzdGVtIFVzZXIiLCJhY3RpdmUiOnRydWUsImNyZWF0ZWQiOnsiZXBvY2hTZWNvbmQiOjE1NDU0MDQzNjIsIm5hbm8iOjB9LCJtb2RpZmllZCI6bnVsbH1dLCJjcmVhdGVkIjoxNTY1NzA4NDk3MTI0LCJleHAiOjE1NjU3ODg0OTcsIm1scHVzZXIiOnsiY3JlYXRlZCI6eyJlcG9jaFNlY29uZCI6MTU0ODM1NjAyNCwibmFubyI6MH0sIm1vZGlmaWVkIjp7ImVwb2NoU2Vjb25kIjoxNTY1NzA4NDk2LCJuYW5vIjo3MTMwMDAwMDB9LCJ1c2VySWQiOiIxOWE1NTRiMS00YjAwLTQxMzUtYTEyMi0yYjYwNjE0ODAxODUiLCJmaXJzdE5hbWUiOiJNdWtlc2giLCJtaWRkbGVOYW1lIjpudWxsLCJsYXN0TmFtZSI6Ik1hbnRhbiIsIm9yZ05hbWUiOm51bGwsImVtYWlsIjoiTU0wMDU0MjIzN0BUZWNoTWFoaW5kcmEuY29tIiwibG9naW5OYW1lIjoidGVjaG1kZXYiLCJsb2dpbkhhc2giOm51bGwsImxvZ2luUGFzc0V4cGlyZSI6bnVsbCwiYXV0aFRva2VuIjpudWxsLCJhY3RpdmUiOnRydWUsImxhc3RMb2dpbiI6eyJlcG9jaFNlY29uZCI6MTU2NTcwODQ5NiwibmFubyI6NzEyMDAwMDAwfSwibG9naW5GYWlsQ291bnQiOm51bGwsImxvZ2luRmFpbERhdGUiOm51bGwsInBpY3R1cmUiOm51bGwsImFwaVRva2VuIjoiMjEzZGIxMGY4NjU1NDQ2ODkzNzkxMDRlMzQxYTJjNzMiLCJ2ZXJpZnlUb2tlbkhhc2giOm51bGwsInZlcmlmeUV4cGlyYXRpb24iOm51bGwsInRhZ3MiOltdfX0.fI45TNtUUi6-dkeO98TgOthoBcxdzEx6vExFOFUpNiD3p7hLtMy8dacMh4sQr5qEmkduWgc3SNZ9RYj4RmARHg"> </pipeline-catalog-element>
     </independent-runtime>
-</body>
-
+  </body>
 </html>

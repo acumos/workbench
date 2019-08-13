@@ -21,6 +21,7 @@ limitations under the License.
 import { LitElement, html } from "lit-element";
 import './pipeline-element.js';
 import './notebook-element.js';
+import './models-element';
 import { OmniModal, OmniDialog } from "./@workbenchcommon/components";
 
 import { ValidationMixin, DataMixin, BaseElementMixin } from "./@workbenchcommon/mixins";
@@ -638,7 +639,7 @@ export class ProjectLitElement extends DataMixin(ValidationMixin(BaseElementMixi
               </div>
             </div>
           </div>
-          
+          <project-models-element componenturl=${this.componenturl} projectId=${this.projectId} userName=${this.userName} authToken=${this.authToken}></project-models-element>
           ${this.data.project.projectStatus === "ACTIVE"
         	? html`
              <project-notebook-element componenturl=${this.componenturl} projectId=${this.projectId} userName=${this.userName} authToken=${this.authToken}></project-notebook-element>
@@ -647,7 +648,7 @@ export class ProjectLitElement extends DataMixin(ValidationMixin(BaseElementMixi
                 <project-pipeline-element componenturl=${this.componenturl} projectId=${this.projectId} userName=${this.userName} authToken=${this.authToken}></project-pipeline-element> 
               `
               : ``
-            }
+            }            
              
         	`
         	:``

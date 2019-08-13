@@ -1,0 +1,17 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "pipeline-service",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "org.acumos.workbench.pipelineservice.PipelineServiceApplication",
+            "projectName": "pipeline-service",
+            "args": "",
+            "env": {
+                "SPRING_APPLICATION_JSON": "{\"server\":{\"port\":9090},\"resultsetSize\":\"2000\",\"dateformat\":\"yyyy-MM-dd-HH-mm-ss-SSS\", \"cmndatasvc\" : {\"url\":\"http://cognita-dev1-vm01-core.eastus.cloudapp.azure.com:8000/ccds\",\"user\":\"ccds_client\",\"pwd\":\"ccds_client\"},\"projectservice\": {\"url\": \"http://cognita-dev1-vm01-core.eastus.cloudapp.azure.com:9088/mlWorkbench/v1/project\"},\"jwt\": {\"secretkey\":\"secret\"},\"nifi\":{\"waitime\":3000,\"adminusername\":\"ADMIN\",\"clientpassword\":\"d1v+6r2lC1EwLu4brfAhourvyz+aQklSSnxamKsA5yc\",\"clientcertificatepath\":\"D:/RP00490596/TechM/Cognita/NiFi/Senthils_nifi-registry-0.3.0/conf/CN=ADMIN_OU=NIFI.p12\",\"truststorepath\":\"D:/RP00490596/TechM/Cognita/NiFi/Senthils_nifi-registry-0.3.0/conf/truststore.jks\",\"truststorepassword\":\"yHuccuIwjwCaU0y79rHIomGMHuesVUXDpMS891OmepI\",\"createpod\":false,\"adminusername\":\"ADMIN\",\"serviceurl\":\"https://localhost:8443\",\"registryurl\":\"https://localhost:18443\",\"registryname\":\"Acumos-NiFi-Registry\",\"namespace\":\"default\",\"certshellfile\":\"\"}}"
+            }
+        }
+    ]
+}

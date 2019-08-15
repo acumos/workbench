@@ -22,7 +22,7 @@ import { LitElement, html } from "lit-element";
 import { filter, get } from "lodash-es";
 import { OmniModal, OmniDialog } from "./@workbenchcommon/components";
 import { Forms, DataSource } from "./@workbenchcommon/core";
-
+import moment from 'moment';
 import { ValidationMixin, DataMixin, BaseElementMixin } from "./@workbenchcommon/mixins";
 import { style } from "./pipeline-catalog-styles.js";
 
@@ -213,7 +213,8 @@ export class PipelineCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
       tempPipeline.pipelineId = item.pipelineId.uuid;
       tempPipeline.name = item.pipelineId.name;
       tempPipeline.version = item.pipelineId.versionId.label;
-      tempPipeline.createdTimestamp = item.pipelineId.versionId.timeStamp;
+      tempPipeline.createdTimestamp = item.pipelineId.versionId.creationTimeStamp;
+      tempPipeline.modifiedTimeStamp = item.pipelineId.versionId.modifiedTimeStamp;
       tempPipeline.createdBy = item.owner.authenticatedUserId;
       tempPipeline.description = item.description;
       tempPipeline.status = item.artifactStatus.status;
@@ -775,12 +776,12 @@ export class PipelineCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
                           <div>
                             <a href="javascript:void" @click=${e => this.userAction("view-pipeline", item.pipelineId, item.name)}>
                               <h4 class="pipeline-name">${item.name}</h4>
-                              <span><strong>Data Pipeline ID</strong>: &nbsp; ${item.pipelineId}</span>
+                              <span><strong>ID</strong>: &nbsp; ${item.pipelineId}</span>
                               <br />
-                              <span><strong>Data Pipeline Version</strong>: &nbsp;
+                              <span><strong>Version</strong>: &nbsp;
                                 ${item.version}</span>
                               <br />
-                              <strong>Data Pipeline Status</strong>: &nbsp;
+                              <strong>Status</strong>: &nbsp;
                               ${item.status === "ACTIVE"
                                 ? html`
                                   <span class="active-status">${item.status}</span>
@@ -795,9 +796,9 @@ export class PipelineCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
                                   `}
                                 `}
                               <br/>
-                              <span><strong>Creation Date</strong>: &nbsp; ${item.createdTimestamp}</span>
+                              <span><strong>Creation Date</strong>: &nbsp; ${moment(item.createdTimestamp).format('YYYY-MM-DD')}</span>
                               <br/>
-                              <span><strong>Modified Date</strong>: &nbsp; ${item.createdTimestamp}</span>
+                              <span><strong>Modified Date</strong>: &nbsp; ${moment(item.modifiedTimeStamp).format('YYYY-MM-DD')}</span>
                               <br/><br/>
                             </a>
                           </div>

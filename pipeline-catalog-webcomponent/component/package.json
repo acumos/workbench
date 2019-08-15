@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "@webcomponents/webcomponentsjs": "2.2.7",
     "@material/mwc-icon": "^0.3.6",
+    "@webcomponents/webcomponentsjs": "2.2.7",
     "lit-element": "^2.0.1",
-    "lodash-es": "^4.17.11"
+    "lodash-es": "^4.17.11",
+    "moment": "^2.24.0"
   },
   "scripts": {
     "start:dev": "polymer serve --port=9089",

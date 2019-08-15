@@ -24,6 +24,8 @@ import { OmniModal, OmniDialog } from "./@workbenchcommon/components";
 import { ValidationMixin, DataMixin, BaseElementMixin } from "./@workbenchcommon/mixins";
 import {style} from './pipeline-styles.js';
 import { Forms, DataSource } from "./@workbenchcommon/core";
+import moment from 'moment';
+
 
 export class PipelineLitElement extends DataMixin(ValidationMixin(BaseElementMixin(LitElement)))  {
 		get dependencies() {
@@ -640,11 +642,11 @@ export class PipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
 											</tr>
 											<tr>
 												<td class="highlight">Data Pipeline Creation Date</td>
-												<td>${this.data.pipeline.pipelineCreateDate}</td>
+												<td>${moment(this.data.pipeline.pipelineCreateDate).format('YYYY-MM-DD')}</td>
 											</tr>
 											<tr>
 												<td class="highlight">Data Modification Date</td>
-												<td>${this.data.pipeline.pipelineCreateDate}</td>
+												<td>${moment(this.data.pipeline.pipelineCreateDate).format('YYYY-MM-DD')}</td>
 											</tr>
 											<tr>
 												<td class="highlight">Data Pipeline Description</td>

@@ -22,6 +22,7 @@ import { LitElement, html } from "lit-element";
 import { filter, get } from "lodash-es";
 import { OmniModal, OmniDialog } from "./@workbenchcommon/components";
 import { Forms, DataSource } from "./@workbenchcommon/core";
+import moment from 'moment';
 
 import { ValidationMixin, DataMixin, BaseElementMixin } from "./@workbenchcommon/mixins";
 import { style } from "./project-catalog-styles.js";
@@ -720,12 +721,12 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
                             <div>
                               <a href="javascript:void" @click=${e => this.userAction("view-project", item.projectId, item.name)}>
                                 <h4 class="project-name">${item.name}</h4>
-                                <span><strong>Project ID</strong>: &nbsp; ${item.projectId}</span>
+                                <span><strong>ID</strong>: &nbsp; ${item.projectId}</span>
                                 <br />
-                                <span><strong>Project Version</strong>: &nbsp;
+                                <span><strong>Version</strong>: &nbsp;
                                   ${item.version}</span>
                                 <br />
-                                <strong>Project Status</strong>: &nbsp;
+                                <strong>Status</strong>: &nbsp;
                                 ${item.status === "ACTIVE"
                                   ? html`
                                     <span class="active-status">${item.status}</span>
@@ -734,9 +735,9 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
                                     <span class="inactive-status">${item.status}</span>
                                   `}
                                 <br />
-                                <span><strong>Creation Date</strong>: &nbsp; ${item.createdTimestamp}</span>
+                                <span><strong>Creation Date</strong>: &nbsp; ${moment(item.createdTimestamp).format('YYYY-MM-DD')}</span>
                                 <br />
-                                <span><strong>Modified Date</strong>: &nbsp; ${item.createdTimestamp}</span>
+                                <span><strong>Modified Date</strong>: &nbsp; ${moment(item.createdTimestamp).format('YYYY-MM-DD')}</span>
                                 <br />
                                 <br />
                               </a>

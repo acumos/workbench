@@ -14,3 +14,9 @@
 /**/build/
 /**/.git/
 /**/.idea
+/**/.factorypath
+/**/.settings
+/**/.env
+/**/.npmrc
+.vscode
+/**/.vscode

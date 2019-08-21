@@ -18,37 +18,17 @@
  * ===============LICENSE_END=========================================================
  */
 
-package org.acumos.workbench.modelservice.service;
+package org.acumos.workbench.modelservice.exceptionhandling;
 
-import org.acumos.workbench.common.vo.Model;
 
-public interface ModelValidationService {
+public class AssociationException extends RuntimeException {
 
-	/**
-	 * To Validate the Input data for Model
-	 * 
-	 * @param authenticatedUserId
-	 * 			Acumos User Id 
-	 * @param model
-	 * 			model input
-	 */
-	public void validateInputData(Model model);
+	private static final long serialVersionUID = -5880009456629591542L;
+
+	public AssociationException(String message) {
+		super(message);
+	}
+
 	
-	/**
-	 * To Validate the Project
-	 * @param authenticatedUserId
-	 * 			Acumos User Id 
-	 * @param projectId
-	 * 			projectId
-	 * @param authToken
-	 * 			authenticated JWT Token
-	 */
-	public void validateProject(String authenticatedUserId, String projectId, String authToken);
 	
-	/**
-	 * To check mandatory fields
-	 * @param model
-	 */
-	public void checkMandatoryFields(Model model);
-
 }

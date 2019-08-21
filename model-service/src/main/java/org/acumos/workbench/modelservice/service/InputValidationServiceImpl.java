@@ -26,8 +26,8 @@ import java.util.List;
 
 import org.acumos.workbench.common.exception.InvalidInputJSONException;
 import org.acumos.workbench.common.exception.ValueNotFoundException;
+import org.acumos.workbench.common.vo.KVPair;
 import org.acumos.workbench.common.vo.Model;
-import org.acumos.workbench.common.vo.Models;
 import org.acumos.workbench.common.vo.Version;
 import org.acumos.workbench.modelservice.util.ModelServiceProperties;
 import org.slf4j.Logger;
@@ -64,10 +64,15 @@ public class InputValidationServiceImpl implements InputValidationService{
 		boolean result = false;
 		if (null != model) {
 			if (null != model.getModelId()) {
-				if (null != model.getModelId().getVersionId()) {
-					Version version = model.getModelId().getVersionId();
-					if (null != version.getLabel()) {
-						result = true;
+				if (null != model.getModelId().getMetrics().getKv()) {
+					List<KVPair> kvPair = model.getModelId().getMetrics().getKv();
+					if (null != kvPair && !kvPair.isEmpty()) {
+						if (null != model.getModelId().getVersionId()) {
+							Version version = model.getModelId().getVersionId();
+							if (null != version.getLabel()) {
+								result = true;
+							}
+						}
 					}
 				}
 			}

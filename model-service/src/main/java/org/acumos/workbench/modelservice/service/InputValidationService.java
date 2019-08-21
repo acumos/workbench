@@ -23,7 +23,6 @@ package org.acumos.workbench.modelservice.service;
 import org.acumos.workbench.common.exception.InvalidInputJSONException;
 import org.acumos.workbench.common.exception.ValueNotFoundException;
 import org.acumos.workbench.common.vo.Model;
-import org.acumos.workbench.common.vo.Models;
 
 public interface InputValidationService {
 	

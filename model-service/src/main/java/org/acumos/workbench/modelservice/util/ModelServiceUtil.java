@@ -23,12 +23,18 @@ package org.acumos.workbench.modelservice.util;
 import java.lang.invoke.MethodHandles;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.acumos.cds.domain.MLPCatalog;
 import org.acumos.cds.domain.MLPSolution;
 import org.acumos.cds.domain.MLPSolutionRevision;
+import org.acumos.cds.domain.MLPTask;
+import org.acumos.cds.domain.MLPTaskStepResult;
 import org.acumos.cds.domain.MLPUser;
+import org.acumos.cds.transport.RestPageRequest;
+import org.acumos.cds.transport.RestPageResponse;
 import org.acumos.workbench.common.util.ArtifactStatus;
 import org.acumos.workbench.common.util.IdentifierType;
 import org.acumos.workbench.common.util.ServiceStatus;
@@ -136,6 +142,7 @@ public class ModelServiceUtil {
 	}
 
 	private static KVPairs getKVPairDetails(MLPSolution mlpSolution, List<MLPCatalog> mlpCatalogs) {
+		logger.debug("getKVPairDetails() Begin");
 		// MODEL_TYPE_CODE
 		KVPair modelCategory = new KVPair();
 		modelCategory.setKey(MODEL_TYPE_CODE);
@@ -161,7 +168,7 @@ public class ModelServiceUtil {
 			modelCatalogNames.setValue(StringUtils.join(strList));
 			modelPublishStatus.setValue("true");
 		}else {
-			modelCatalogNames.setValue("null");
+			modelCatalogNames.setValue("None");
 			modelPublishStatus.setValue("false");
 		}
 		List<KVPair> kvPairList = new ArrayList<KVPair>();
@@ -171,7 +178,8 @@ public class ModelServiceUtil {
 		kvPairList.add(toolKitTypeCode);
 		KVPairs kvPairs = new KVPairs();
 		kvPairs.setKv(kvPairList);
+		logger.debug("getKVPairDetails() End");
 		return kvPairs;
 	}
-
+	
 }

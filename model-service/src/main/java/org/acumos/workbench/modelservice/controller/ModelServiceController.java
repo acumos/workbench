@@ -68,13 +68,11 @@ public class ModelServiceController {
 	@Qualifier("ModelServiceImpl")
 	private ModelService modelService;
 	
-	
-	
 	@ApiOperation(value = "List out all the Models that belongs to user")
 	@RequestMapping(value = "/users/{authenticatedUserId}/models/", method = RequestMethod.GET)
-	public ResponseEntity<?> listModels(HttpServletRequest request,@ApiParam(value="Acumos User login Id",required = true)@PathVariable("authenticatedUserId") String authenticatedUserId){
+	public ResponseEntity<?> listModels(HttpServletRequest request,
+			@ApiParam(value = "Acumos User login Id", required = true) @PathVariable("authenticatedUserId") String authenticatedUserId) {
 		logger.debug("listModels() Begin");
-		String authToken = getAuthJWTToken(request);
 		//1.  Check the Authenticated User Id is present or not
 		inputValidationService.isValuePresent(ModelServiceConstants.MODEL_AUTHENTICATED_USER_ID, authenticatedUserId);
 		//2.  Service call to get existing Models (active and archive both). (Call to CDS)
@@ -86,16 +84,19 @@ public class ModelServiceController {
 	
 	@ApiOperation(value = "List out all the Models that belongs to User under the Project")
 	@RequestMapping(value = "/users/{authenticatedUserId}/projects/{projectId}/models/", method = RequestMethod.GET)
-	public ResponseEntity<?> listModelsUnderProject(HttpServletRequest request,@ApiParam(value = "Acumos User login Id",required = true)@PathVariable ("authenticatedUserId") String authenticatedUserId,
+	public ResponseEntity<?> listModelsAssociatedToProject(HttpServletRequest request,
+			@ApiParam(value = "Acumos User login Id", required = true) @PathVariable("authenticatedUserId") String authenticatedUserId,
 			@ApiParam(value = "ProjectId", required = true) @PathVariable("projectId") String projectId) {
 		logger.debug("listModelsUnderProject() Begin");
 		String authToken = getAuthJWTToken(request);
-		//1.  Check the Authenticated User Id is present or not
+		// 1. Check the Authenticated User Id is present or not
 		inputValidationService.isValuePresent(ModelServiceConstants.MODEL_AUTHENTICATED_USER_ID, authenticatedUserId);
-		//2.  Check if the user is authorized to request this operation
-		modelService.isOwnerOfProject(authenticatedUserId, projectId);
-		//3.  Check if the Project Id exists in CDS
-		modelService.projectExists(projectId);
+		
+		//check if project id is present
+		inputValidationService.isValuePresent(ModelServiceConstants.PROJECT_ID, projectId);
+		// Validate the Project, and check the user can access the project or not.
+		modelValidationService.validateProject(authenticatedUserId, projectId, authToken);
+		
 		List<Model> result = modelService.getModels(authenticatedUserId, projectId);
 		return new ResponseEntity<List<Model>>(result, HttpStatus.OK);
 
@@ -109,21 +110,16 @@ public class ModelServiceController {
 			@ApiParam(value = "modelId",required = true) @PathVariable("modelId") String modelId,
 			@RequestBody(required = true) Model model) {
 		logger.debug("associateModeltoProject() Begin");
+		// The Model Service must check if the request JSON structure is valid or not and Check for the User Id Missing or not
+		modelValidationService.validateInputData(model);
+		// The Model Service must call CDS to check if the Acumos User Id is the owner of the project or not
+		// Check if the projectId and Version already exists or not by calling the Project Service.
+		// Check if the Project is Archived or not
 		// Get the Authentication Token from the HttpHeaders
 		String authToken = getAuthJWTToken(request);
-		// The Model Service must check if the request JSON structure is valid or not and Check for the User Id Missing or not
-		modelValidationService.validateInputData(authenticatedUserId, model);
-		// The Model Service must call CDS to check if the Acumos User Id is the owner of the model or not
-		modelService.isOwnerofModel(authenticatedUserId, modelId);
-		// The Model Service must call CDS to check if the Acumos User Id is the owner of the project or not
-		modelService.isOwnerOfProject(authenticatedUserId, projectId);
-		// Check if the projectId and Version already exists or not by calling the Project Service.
-		// Need to Work on Check if the Project is Archived or not
-		modelService.checkProjectDetails(authenticatedUserId, projectId, authToken);
+		modelValidationService.validateProject(authenticatedUserId, projectId, authToken);
 		// Check if the SolutionId and the version already exists in CDS
-		modelService.checkModelExistsinCDS(modelId);
-		// Insert Project Model Association by calling CDS
-		// TODO : CDS Dependency
+		// Insert Project Model Association by calling LightCouch DB
 		Model result = modelService.insertProjectModelAssociation(authenticatedUserId,projectId,modelId,model);
 		logger.debug("associateModeltoProject() End");
         return new ResponseEntity<Model>(result, HttpStatus.OK);
@@ -140,11 +136,11 @@ public class ModelServiceController {
 		logger.debug("updateModelAssociationWithProject() Begin");
 		String authToken = getAuthJWTToken(request);
 		// The Model Service must check if the request JSON structure is valid or not
-		modelValidationService.validateInputData(authenticatedUserId, model);
+		modelValidationService.validateInputData(model);
 		// The Model Service must call CDS to check if the Acumos User Id is the owner of the project or not
-		modelService.isOwnerOfProject(authenticatedUserId, projectId);
+		modelService.isUserAccessibleProject(authenticatedUserId, projectId);
 		// The Model Service must call CDS to check if the Acumos User Id is the owner of the model or not
-		modelService.isOwnerofModel(authenticatedUserId, modelId);
+		modelService.userAccessableModel(authenticatedUserId, modelId);
 		// Update the Association between the Project and Model
 		// Model Service must call the CDS to update the project model association
 		Model result = modelService.updateProjectModelAssociation(authenticatedUserId,projectId,modelId,model);
@@ -163,11 +159,11 @@ public class ModelServiceController {
 		logger.debug("deleteModelAssociationWithProject() Begin");
 		String authToken = getAuthJWTToken(request);
 		// The Model Service must check if the request JSON structure is valid or not
-		modelValidationService.validateInputData(authenticatedUserId, model);
+		modelValidationService.validateInputData(model);
 		// The Model Service must call CDS to check if the Acumos User Id is the owner of the project or not
-		modelService.isOwnerOfProject(authenticatedUserId, projectId);
+		modelService.isUserAccessibleProject(authenticatedUserId, projectId);
 		// The Model Service must call CDS to check if the Acumos User Id is the owner of the model or not
-		modelService.isOwnerofModel(authenticatedUserId, modelId);
+		modelService.userAccessableModel(authenticatedUserId, modelId);
 		// Delete the Association between project and model
 		// Model Service must call the CDS to delete project model association
 		ServiceState result = modelService.deleteProjectModelAssociation(authenticatedUserId,projectId,modelId,model);

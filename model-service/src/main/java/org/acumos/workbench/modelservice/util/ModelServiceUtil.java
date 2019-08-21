@@ -23,12 +23,18 @@ package org.acumos.workbench.modelservice.util;
 import java.lang.invoke.MethodHandles;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.acumos.cds.domain.MLPCatalog;
 import org.acumos.cds.domain.MLPSolution;
 import org.acumos.cds.domain.MLPSolutionRevision;
+import org.acumos.cds.domain.MLPTask;
+import org.acumos.cds.domain.MLPTaskStepResult;
 import org.acumos.cds.domain.MLPUser;
+import org.acumos.cds.transport.RestPageRequest;
+import org.acumos.cds.transport.RestPageResponse;
 import org.acumos.workbench.common.util.ArtifactStatus;
 import org.acumos.workbench.common.util.IdentifierType;
 import org.acumos.workbench.common.util.ServiceStatus;
@@ -83,7 +89,6 @@ public class ModelServiceUtil {
 	 * 			Returns Model VO instance corresponding to input MLPModel, with some additional details
 	 */
 	public static Model getModelVO(MLPSolution mlpSolution,MLPSolutionRevision mlpSolRevision,List<MLPCatalog> mlpCatalogs, MLPUser mlpUser) {
-		logger.debug("getModelVO() Begin");
 		Model model = null;
 		if(null != mlpSolution) { 
 			model = new Model();
@@ -130,7 +135,6 @@ public class ModelServiceUtil {
 			serviceStatus.setStatus(ServiceStatus.ACTIVE);
 			model.setServiceStatus(serviceStatus);
 		}
-		logger.debug("getModelVO() End");
 		return model;
 		
 	}
@@ -139,7 +143,12 @@ public class ModelServiceUtil {
 		// MODEL_TYPE_CODE
 		KVPair modelCategory = new KVPair();
 		modelCategory.setKey(MODEL_TYPE_CODE);
-		modelCategory.setValue(mlpSolution.getModelTypeCode());
+		if(null == mlpSolution.getModelTypeCode()){
+			modelCategory.setValue("None");
+		}else {
+			modelCategory.setValue(mlpSolution.getModelTypeCode());
+		}
+		
 		// TOOLKIT_TYPE_CODE
 		// Need to set the solution is Model or Composite Solution 
 		KVPair toolKitTypeCode = new KVPair();
@@ -151,6 +160,7 @@ public class ModelServiceUtil {
 		// CATALOG_NAMES
 		KVPair modelCatalogNames = new KVPair();
 		modelCatalogNames.setKey(CATALOG_NAMES);
+		
 		List<String> strList = new ArrayList<>();
 		// Need to get the model is published/restricted or not and club the catalog names as well.
 		if(null != mlpCatalogs && !mlpCatalogs.isEmpty()){
@@ -161,7 +171,7 @@ public class ModelServiceUtil {
 			modelCatalogNames.setValue(StringUtils.join(strList));
 			modelPublishStatus.setValue("true");
 		}else {
-			modelCatalogNames.setValue("null");
+			modelCatalogNames.setValue("None");
 			modelPublishStatus.setValue("false");
 		}
 		List<KVPair> kvPairList = new ArrayList<KVPair>();
@@ -173,5 +183,5 @@ public class ModelServiceUtil {
 		kvPairs.setKv(kvPairList);
 		return kvPairs;
 	}
-
+	
 }

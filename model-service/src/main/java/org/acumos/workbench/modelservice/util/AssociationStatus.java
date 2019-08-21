@@ -18,31 +18,26 @@
  * ===============LICENSE_END=========================================================
  */
 
-package org.acumos.workbench.modelservice.service;
+package org.acumos.workbench.modelservice.util;
 
-import org.acumos.workbench.common.vo.Model;
-
-public interface ModelValidationService {
-
-	/**
-	 * To Validate the Input data for Model
-	 * 
-	 * @param authenticatedUserId
-	 * 			Acumos User Id 
-	 * @param model
-	 * 			model input
-	 */
-	public void validateInputData(Model model);
+public enum AssociationStatus {
+	ACTIVE("AC"), // READY FOR USE
+	INVALID("IN"),
+	DELETED("DL");
 	
+	private final String code;
+
+	private AssociationStatus(String code) {
+		this.code = code;
+	}
+
 	/**
-	 * To Validate the Project
-	 * @param authenticatedUserId
-	 * 			Acumos User Id 
-	 * @param projectId
-	 * 			projectId
-	 * @param authToken
-	 * 			authenticated JWT Token
+	 * @return the serviceStatusCode
 	 */
-	public void validateProject(String authenticatedUserId, String projectId, String authToken);
+	public String getAssociationStatusCode() {
+		return code;
+	}
+	
+	
 
 }

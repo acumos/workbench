@@ -22,12 +22,10 @@ package org.acumos.workbench.modelservice.service;
 
 import java.lang.invoke.MethodHandles;
 import java.text.MessageFormat;
-import java.util.List;
 
 import org.acumos.workbench.common.exception.InvalidInputJSONException;
 import org.acumos.workbench.common.exception.ValueNotFoundException;
 import org.acumos.workbench.common.vo.Model;
-import org.acumos.workbench.common.vo.Models;
 import org.acumos.workbench.common.vo.Version;
 import org.acumos.workbench.modelservice.util.ModelServiceProperties;
 import org.slf4j.Logger;
@@ -62,6 +60,7 @@ public class InputValidationServiceImpl implements InputValidationService{
 	public void validateModelInputJson(Model model) throws InvalidInputJSONException {
 		logger.debug("validateModelInputJson() Begin");
 		boolean result = false;
+		//TODO : Raman - correct the validation logic and also include condition to check if all required KVPairs are present.
 		if (null != model) {
 			if (null != model.getModelId()) {
 				if (null != model.getModelId().getVersionId()) {
@@ -71,6 +70,7 @@ public class InputValidationServiceImpl implements InputValidationService{
 					}
 				}
 			}
+
 		}
 		if (!result) {
 			logger.error("InvalidInputJSONException occured in validateProjectInputJson()");

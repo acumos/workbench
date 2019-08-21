@@ -928,7 +928,7 @@ module.exports = function(app) {
 			};
 			request.get(options, function(error, response) {
 				if (!error && response.statusCode == 200) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Data Pipeline launched successfully"));
+					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Data Pipeline launched successfully"));
 				} else if (!error) {
 					resolve(prepRespJsonAndLogit(response, response.body, "Unable to launch Data Pipeline"));
 				} else {

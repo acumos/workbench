@@ -150,7 +150,7 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 							}		
 						]
 					}
-				},
+				}
 			},
 			editModel:{
 				modelId: {
@@ -159,10 +159,28 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 					versionId : {
 						comment : "",
 						label : ""
+					},
+					metrics: {
+						kv: [
+							{
+								key: "MODEL_TYPE_CODE",
+								value: ""
+							},
+							{
+								key: "MODEL_PUBLISH_STATUS",
+								value: ""
+							},
+							{
+								key: "CATALOG_NAMES",
+								value: ""
+							},
+							{
+								key: "ASSOCIATION_ID",
+								value: ""
+							}	
+						]
 					}
-				},
-				modelCatalog: "",
-				modelType: ""
+				}
 			},
 			deleteModel:{
 				modelId: {
@@ -171,30 +189,59 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 					versionId: {
 						comment : "",
 						label : ""
+					},
+					metrics: {
+						kv: [
+							{
+								key: "MODEL_TYPE_CODE",
+								value: ""
+							},
+							{
+								key: "MODEL_PUBLISH_STATUS",
+								value: ""
+							},
+							{
+								key: "CATALOG_NAMES",
+								value: ""
+							},
+							{
+								key: "ASSOCIATION_ID",
+								value: ""
+							}	
+						]
 					}
-				},
-				modelType : ""
+				}
 			}
 		};
 
 		this.$data.snapshot('linkModel');
 		this.$data.snapshot('editModel');
+		this.$data.snapshot('deleteModel');
 
 		this.$data.set('associateErrorMessage', '');
 		this.$data.set('editErrorMessage', '');
+		
 		this.$data.set('linkModel.modelId.name', '');
 		this.$data.set('linkModel.modelId.versionId.label', '');
-		this.$data.set('linkModel.modelId.metrics.kv[2].value', '');
 		this.$data.set('linkModel.modelId.metrics.kv[0].value', '');
+		this.$data.set('linkModel.modelId.metrics.kv[1].value', '');
+		this.$data.set('linkModel.modelId.metrics.kv[2].value', '');
+		
 		this.$data.set('editModel.modelId.name', '');
 		this.$data.set('editModel.modelId.uuid', '');
 		this.$data.set('editModel.modelId.versionId.label', '');
-		this.$data.set('editModel.modelCatalog', '');
-		this.$data.set('editModel.modelType', '');
+		this.$data.set('editModel.modelId.metrics.kv[0].value', '');
+		this.$data.set('editModel.modelId.metrics.kv[1].value', '');
+		this.$data.set('editModel.modelId.metrics.kv[2].value', '');
+		this.$data.set('editModel.modelId.metrics.kv[3].value', '');
+
 		this.$data.set('deleteModel.modelId.name', '');
 		this.$data.set('deleteModel.modelId.uuid', '');
     this.$data.set('deleteModel.modelId.versionId.label', '');
-		this.$data.set('deleteModel.modelType', '');
+		this.$data.set('deleteModel.modelId.metrics.kv[0].value', '');
+		this.$data.set('deleteModel.modelId.metrics.kv[1].value', '');
+		this.$data.set('deleteModel.modelId.metrics.kv[2].value', '');
+		this.$data.set('deleteModel.modelId.metrics.kv[3].value', '');
   }
 	
 	connectedCallback() {
@@ -334,8 +381,7 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 				if(response.status === 'Error'){
           this.errorMessage = response.message;
 					this.alertOpen = true;
-					//change
-					this.view = 'add';
+					this.view = 'error';
         } else {
           this.modelsList = [];
 					this.models = [];
@@ -359,8 +405,8 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
       tempModel.version = item.modelId.versionId.label;
       tempModel.createdTimestamp = item.modelId.versionId.timeStamp;
       tempModel.createdBy = item.owner.authenticatedUserId;
-      tempModel.description = item.description;
 			tempModel.status = item.artifactStatus.status;
+			//need to check for others case
 			if(item.modelId.metrics.kv[0].value === undefined){
 				tempModel.modelType = "Others";
 			} else{
@@ -368,12 +414,13 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 					return category.code === item.modelId.metrics.kv[0].value;
 				});
 			}
-			if(item.modelId.metrics.kv[2].value === "null"){
+			if(item.modelId.metrics.kv[2].value === "null" || item.modelId.metrics.kv[2].value === "None"){
 				tempModel.modelCatalog = "None";
 			} else{
 				tempModel.modelCatalog = item.modelId.metrics.kv[2].value;
 			}
 			tempModel.publishStatus = item.modelId.metrics.kv[1].value;
+			tempModel.associationId = item.modelId.metrics.kv[3].value;
       this.modelsList.push(tempModel);
     });
     this.displayModels();
@@ -430,14 +477,21 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
       },
       body: JSON.stringify({
         "url": this.modelmSURL,
-        "modelId" : this.selectedModelId,
-        "userName": this.userName      		  
+				"userName": this.userName,  
+				"projectId" : this.projectId,
+				"modelId" : this.selectedModelId,
+				"modelPayload": this.data.deleteModel    		  
       })
     }).then(res => res.json())
       .then((n) => {
         if(n.status === 'Success'){
           this.successMessage = n.message;
+          this.alertOpen = true;
+          this.initializeAssociateModelForm();
           this.getModelDetailsForProject();
+					this.$data.revert('deleteModel');
+					this.$validations.resetValidation('deleteModel');
+					this.isOpenModalLink = false;
         } else {
           this.errorMessage = n.message;
         }
@@ -468,10 +522,8 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
       .then((n) => {
         if(n.status === 'Error'){
           this.errorMessage = n.message;
-          this.view = 'error';
           this.alertOpen = true;
         } else {
-          this.allModelss = [];
           this.convertAllModelObject(n.data);
 				}
     }).catch((error) => {
@@ -496,6 +548,7 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 			body: JSON.stringify({
 				"userName": this.userName,
 				"url": this.modelmSURL,
+				"projectId" : this.projectId,
 				"modelId" : this.selectedModelId,
 				"modelPayload": this.data.editModel
 			})
@@ -530,7 +583,6 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
       tempModel.version = item.modelId.versionId.label;
       tempModel.createdTimestamp = item.modelId.versionId.creationTimeStamp;
       tempModel.createdBy = item.owner.authenticatedUserId;
-      tempModel.description = item.description;
       tempModel.status = item.artifactStatus.status;
       if(item.modelId.metrics.kv[0].value === undefined){
 				tempModel.modelType = "Others";
@@ -539,7 +591,11 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 					return category.code === item.modelId.metrics.kv[0].value;
 				});
 			}
-			tempModel.modelCatalog = item.modelId.metrics.kv[2].value;
+			if(item.modelId.metrics.kv[2].value === "null" || item.modelId.metrics.kv[2].value === "None"){
+				tempModel.modelCatalog = "None";
+			} else{
+				tempModel.modelCatalog = item.modelId.metrics.kv[2].value;
+			}
 			tempModel.publishStatus = item.modelId.metrics.kv[1].value;
       allModels.push(tempModel);
     });
@@ -554,7 +610,7 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 
 	filterModelsFromCatalog(selectedModelCatalog){
 		this.selectedCatalog = selectedModelCatalog;
-		if(selectedModelCatalog !== "null"){
+		if(selectedModelCatalog !== "None" && selectedModelCatalog !== "null"){
 			this.modelsDropdown = this.unassociatedModels.filter(model => {
 				if(model.modelCatalog !== "null"){
 					model.modelCatalog = model.modelCatalog.split(",");
@@ -566,12 +622,13 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 			});
 		} else{
 			this.modelsDropdown = this.unassociatedModels.filter(model => {
-				return model.modelCatalog === "null";
+				return model.modelCatalog === "null" || model.modelCatalog === "None";
 			});
 		}
 	}
 
 	filterModelsToSelect(selectedModelCategory){
+		//need to check for others
 		this.modelsDropdown = this.modelsDropdown.filter(model => {
 			return model.modelType[0].name === selectedModelCategory;
 		});
@@ -591,8 +648,8 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 		this.selectedModelId = selectedModel[0].modelId;
 		this.$data.set('linkModel.modelId.name', selectedModel[0].name);
     this.$data.set('linkModel.modelId.versionId.label', selectedModel[0].version);
-		this.$data.set('linkModel.description', selectedModel[0].description);
 		this.$data.set('linkModel.modelId.metrics.kv[0].value', selectedModel[0].modelType[0].code);
+		this.$data.set('linkModel.modelId.metrics.kv[1].value', selectedModel[0].publishStatus);
 	}
 
 	userAction(action, modelId, modelName) {
@@ -678,6 +735,9 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 		this.$data.revert('linkModel');
 		this.$validations.resetValidation('linkModel');
 
+		this.$data.revert('deleteModel');
+		this.$validations.resetValidation('deleteModel');
+
 		this.$data.set('associateErrorMessage', '');
 		this.$data.set('editErrorMessage', '');
 
@@ -705,8 +765,10 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 	  this.$data.set('editModel.modelId.name', item.name, true);
 		this.$data.set('editModel.modelId.versionId.label', item.version, true);
 		this.$data.set('editModel.modelId.uuid', item.modelId, true);
-	  this.$data.set('editModel.description', item.description, true);
-		this.$data.set('editModel.modelType', item.modelType, true);
+		this.$data.set('editModel.modelId.metrics.kv[0].value', item.modelType[0].code, true);
+		this.$data.set('editModel.modelId.metrics.kv[1].value', item.publishStatus, true);
+		this.$data.set('editModel.modelId.metrics.kv[2].value', item.modelCatalog, true);
+		this.$data.set('editModel.modelId.metrics.kv[3].value', item.associationId, true)
 		
 		this.modelVersionsArray = this.unassociatedModels.filter(model => {
 			return model.name === item.name;
@@ -719,9 +781,17 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
     this.isOpenDeleteAssociationDialog = false;
   }
 
-	openDeleteAssociationDialog(modelId, modelName){
-		this.selectedModelId = modelId;
-		this.selectedModelName = modelName;
+	openDeleteAssociationDialog(item){
+		this.selectedModelId = item.modelId;
+	  this.$data.set('deleteModel.modelId.name', item.name, true);
+		this.$data.set('deleteModel.modelId.versionId.label', item.version, true);
+		this.$data.set('deleteModel.modelId.uuid', item.modelId, true);
+		this.$data.set('deleteModel.modelId.metrics.kv[0].value', item.modelType[0].code, true);
+		this.$data.set('deleteModel.modelId.metrics.kv[1].value', item.publishStatus, true);
+		this.$data.set('deleteModel.modelId.metrics.kv[2].value', item.modelCatalog, true);
+		this.$data.set('deleteModel.modelId.metrics.kv[3].value', item.associationId, true)
+		
+		this.selectedModelName = item.name;
 		this.isOpenDeleteAssociationDialog = true;
 	}
 
@@ -771,7 +841,7 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 			is-open="${this.isAssociateModelModalOpen}" @omni-modal-dimissed="${this.modalDismissed}" @omni-modal-closed="${this.modalClosedLink}"
 			canClose="">
 			<form novalidate>
-				<p class="text-danger">{{error}}</p>
+				<p class="text-danger">${this.data.associateErrorMessage}</p>
 				<div class="row">
 					<div class="col">
 						<div class="form-group">
@@ -787,7 +857,7 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 										<option value="${item.name}">${item.name}</option>
 									`
 								)} 
-								<option value="null">None</option>                 	
+								<option value="None">None</option>                 	
 							</select>
 							${
 								this.$validations.getValidationErrors('linkModel.modelId.metrics.kv[2].value').map(error => {
@@ -900,7 +970,7 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 									}
 							`
 							: html`
-								<input type="text" class="form-control" placeholder="Model Version" value="${this.data.linkModel.modelId.versionId.label}"  disabled/>
+								<input type="text" class="form-control" placeholder="Model Version"  disabled/>
 								`
 		}
 						</div>
@@ -1093,7 +1163,7 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 														<a href="javascript:void" @click=${e => this.userAction(item)} class="btnIcon btn btn-sm btn-secondary my-1 mr-1 " data-toggle="tooltip" data-placement="top" title="view Model" disabled>
 																<mwc-icon class="mwc-icon-secondary">visibility</mwc-icon>
 														</a>&nbsp;
-														<a href="javascript:void" @click=${(e) => this.openDeleteAssociationDialog(item.modelId, item.name)} class="btnIcon btn btn-sm btn-secondary my-1 mr-1" data-toggle="tooltip" data-placement="top" title="Delete Model Association">
+														<a href="javascript:void" @click=${(e) => this.openDeleteAssociationDialog(item)} class="btnIcon btn btn-sm btn-secondary my-1 mr-1" data-toggle="tooltip" data-placement="top" title="Delete Model Association">
 																<mwc-icon class="mwc-icon-secondary">link_off</mwc-icon>
 														</a>
 														`

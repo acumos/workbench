@@ -36,8 +36,8 @@ public class ModelServiceProperties implements Serializable{
 	@Value("${cds.get.user.excp}")
 	private String cdsGetUserExcp;
 	
-	@Value("${cds.search.models.excp}")
-	private String cdsSearchModelsExcp;
+	@Value("${cds.find.usersolutions.excp}")
+	private String cdsFindUserSolutionsExcp;
 	
 	@Value("${cds.get.project.modles.excp}")
 	private String cdsGetProjectModelsExcp;
@@ -56,11 +56,12 @@ public class ModelServiceProperties implements Serializable{
 		return cdsGetUserExcp;
 	}
 
+
 	/**
-	 * @return the cdsSearchModelsExcp
+	 * @return the cdsFindUserSolutionsExcp
 	 */
-	public String getCdsSearchModelsExcp() {
-		return cdsSearchModelsExcp;
+	public String getCdsFindUserSolutionsExcp() {
+		return cdsFindUserSolutionsExcp;
 	}
 
 	/**

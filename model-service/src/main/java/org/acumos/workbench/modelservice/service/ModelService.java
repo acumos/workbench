@@ -70,7 +70,7 @@ public interface ModelService {
 	 * 			throws NotOwnerException if user is not owner of the projectId
 	 */
 	
-	public boolean isOwnerOfProject(String authenticatedUserId, String projectId)throws NotOwnerException;
+	public boolean isUserAccessibleProject(String authenticatedUserId, String projectId)throws NotOwnerException;
 	
 	/**
 	 * This method check if Project exists for input projectId.
@@ -88,26 +88,14 @@ public interface ModelService {
 	 * @param modelId
 	 * 			the model Id
 	 */
-	public boolean isOwnerofModel(String authenticatedUserId, String modelId)throws NotOwnerException;
-
-	/**
-	 * To Check the Project Details which are exists in Project Service
-	 * 
-	 * @param authenticatedUserId
-	 * 			the Acumos user login id.
-	 * @param projectId
-	 * 			the Project Id 
-	 * @param authToken
-	 * 			the Authentication Token
-	 */
-	public void checkProjectDetails(String authenticatedUserId, String projectId, String authToken);
+	public boolean userAccessableModel(String authenticatedUserId, String modelId)throws NotOwnerException;
 
 	/**
 	 * To Check Model(Soluition) exists in CDS or not
 	 * @param modelId
 	 * 			the model Id
 	 */
-	public void checkModelExistsinCDS(String modelId);
+	public void checkModelExists(String modelId);
 
 	/**
 	 * To Insert the Project Model Association in CDS ProjectModelAssociation Table
@@ -120,7 +108,7 @@ public interface ModelService {
 	 * @param model
 	 * 			the Model object
 	 * @return Model
-	 * 			returns Model
+	 * 			returns Model 
 	 */
 	public Model insertProjectModelAssociation(String authenticatedUserId, String projectId, String modelId, Model model);
 
@@ -141,7 +129,7 @@ public interface ModelService {
 	public Model updateProjectModelAssociation(String authenticatedUserId, String projectId, String modelId, Model model);
 
 	/**
-	 * TO delete the Project Model Association in CDS
+	 * To delete the Project Model Association in CDS
 	 * @param authenticatedUserId
 	 * 			the Acumos user login id.
 	 * @param projectId
@@ -154,5 +142,7 @@ public interface ModelService {
 	 * 			returns ServiceState object
 	 */
 	public ServiceState deleteProjectModelAssociation(String authenticatedUserId, String projectId, String modelId, Model model);
+
+
 
 }

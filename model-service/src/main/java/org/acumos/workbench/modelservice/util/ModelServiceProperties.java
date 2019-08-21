@@ -36,11 +36,19 @@ public class ModelServiceProperties implements Serializable{
 	@Value("${cds.get.user.excp}")
 	private String cdsGetUserExcp;
 	
-	@Value("${cds.search.models.excp}")
-	private String cdsSearchModelsExcp;
+	@Value("${cds.find.usersolutions.excp}")
+	private String cdsFindUserSolutionsExcp;
 	
 	@Value("${cds.get.project.modles.excp}")
 	private String cdsGetProjectModelsExcp;
+	
+	@Value("${cds.get.solution.excp}")
+	private String cdsGetSolutionException;
+	
+	@Value("${cds.get.solution.revision.excp}")
+	private String cdsGetSolutionRevisionException;
+	
+	
 	
 	/**
 	 * @return the missingFieldValue
@@ -56,11 +64,12 @@ public class ModelServiceProperties implements Serializable{
 		return cdsGetUserExcp;
 	}
 
+
 	/**
-	 * @return the cdsSearchModelsExcp
+	 * @return the cdsFindUserSolutionsExcp
 	 */
-	public String getCdsSearchModelsExcp() {
-		return cdsSearchModelsExcp;
+	public String getCdsFindUserSolutionsExcp() {
+		return cdsFindUserSolutionsExcp;
 	}
 
 	/**
@@ -69,6 +78,21 @@ public class ModelServiceProperties implements Serializable{
 	public String getCdsGetProjectModelsExcp() {
 		return cdsGetProjectModelsExcp;
 	}
+
+	/**
+	 * @return the cdsGetSolutionException
+	 */
+	public String getCdsGetSolutionException() {
+		return cdsGetSolutionException;
+	}
+
+	/**
+	 * @return the cdsGetSolutionRevisionException
+	 */
+	public String getCdsGetSolutionRevisionException() {
+		return cdsGetSolutionRevisionException;
+	}
+
 	
 	
 

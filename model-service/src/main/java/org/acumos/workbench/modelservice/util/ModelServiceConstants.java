@@ -22,6 +22,17 @@ package org.acumos.workbench.modelservice.util;
 
 public class ModelServiceConstants {
 	
-	public static final String MODEL_AUTHENTICATED_USER_ID = "AuthenticatedUserId";
-
+	public static final String MODELAUTHENTICATEDUSERID = "AuthenticatedUserId";
+	public static final String DELETED = "DELETED";
+	public static final String MODELISACTIVE = "Model is Active";
+	public static final String CATALOGNAMES = "CATALOG_NAMES";
+	public static final String UNARCHIVE = "UA";
+	public static final String ARCHIVE = "A";
+	public static final String PROJECTID = "projectId";
+	public static final String ASSOCIATIONID = "ASSOCIATION_ID";
+	public static final String MODELTYPECODE = "MODEL_TYPE_CODE";
+	public static final String MODELPUBLISHSTATUS = "MODEL_PUBLISH_STATUS";
+	public static final String ASSOCIATIONEXISTSINCOUCHQUERY = "{\"selector\":{\"$and\":[{\"ProjectId\":{\"$eq\":\"%s\"}},{\"SolutionId\":{\"$eq\":\"%s\"}},{\"RevisionId\":{\"$eq\":\"%s\"}},{\"status\":{\"$eq\":\"%s\"}}]}}";
+	public static final String GETMODELSASSOCIATEDTOPROJECTQUERY = "{\"selector\":{\"$and\":[{\"ProjectId\":{\"$eq\":\"%s\"}},{\"status\":{\"$ne\":\"%s\"}}]}}";
+	public static final String GETDOCUMENTSQUERY = "{\"selector\":{\"$and\":[{\"_id\":{\"$eq\":\"%s\"}},{\"_rev\":{\"$eq\":\"%s\"}}]}}";
 }

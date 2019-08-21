@@ -26,9 +26,11 @@ import java.util.List;
 
 import org.acumos.workbench.common.exception.InvalidInputJSONException;
 import org.acumos.workbench.common.exception.ValueNotFoundException;
+import org.acumos.workbench.common.vo.KVPair;
+import org.acumos.workbench.common.vo.KVPairs;
 import org.acumos.workbench.common.vo.Model;
-import org.acumos.workbench.common.vo.Models;
 import org.acumos.workbench.common.vo.Version;
+import org.acumos.workbench.modelservice.util.ModelServiceConstants;
 import org.acumos.workbench.modelservice.util.ModelServiceProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -71,13 +73,44 @@ public class InputValidationServiceImpl implements InputValidationService{
 					}
 				}
 			}
+			if (null != model.getModelId().getMetrics()) {
+				KVPairs kvPairs = model.getModelId().getMetrics();
+				if (null != kvPairs) {
+					List<KVPair> kvPairList = kvPairs.getKv();
+					if (null != kvPairList && !kvPairList.isEmpty()) {
+						for (KVPair kvPair : kvPairList) {
+							if (null != kvPair.getKey() && kvPair.getKey().equals("") && null != kvPair.getValue()
+									&& kvPair.getValue().equals("")) {
+								if (kvPair.getKey().equals(ModelServiceConstants.CATALOGNAMES)) {
+									result = true;
+								}
+								if (kvPair.getKey().equals(ModelServiceConstants.MODELPUBLISHSTATUS)) {
+									result = true;
+								}
+								if (kvPair.getKey().equals(ModelServiceConstants.MODELTYPECODE)) {
+									result = true;
+								} else {
+									result = false;
+								}
+							} else {
+								result = false;
+							}
+						}
+					} else {
+						result = false;
+					}
+				} else {
+					result = false;
+				}
+			} else {
+				result = false;
+			}
 		}
 		if (!result) {
 			logger.error("InvalidInputJSONException occured in validateProjectInputJson()");
 			throw new InvalidInputJSONException();
 		}
 		logger.debug("validateModelInputJson() End");
-
 	}
 
 }

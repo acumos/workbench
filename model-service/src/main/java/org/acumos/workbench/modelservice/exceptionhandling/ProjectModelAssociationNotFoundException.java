@@ -18,37 +18,19 @@
  * ===============LICENSE_END=========================================================
  */
 
-package org.acumos.workbench.modelservice.service;
+package org.acumos.workbench.modelservice.exceptionhandling;
 
-import org.acumos.workbench.common.vo.Model;
+public class ProjectModelAssociationNotFoundException extends RuntimeException {
 
-public interface ModelValidationService {
-
-	/**
-	 * To Validate the Input data for Model
-	 * 
-	 * @param authenticatedUserId
-	 * 			Acumos User Id 
-	 * @param model
-	 * 			model input
-	 */
-	public void validateInputData(Model model);
+	private static final long serialVersionUID = -5626063312582110511L;
 	
-	/**
-	 * To Validate the Project
-	 * @param authenticatedUserId
-	 * 			Acumos User Id 
-	 * @param projectId
-	 * 			projectId
-	 * @param authToken
-	 * 			authenticated JWT Token
-	 */
-	public void validateProject(String authenticatedUserId, String projectId, String authToken);
+	private static final String MSG = "Project Model Association Not exists";
+
+	public ProjectModelAssociationNotFoundException() {
+		super(MSG);
+	}
+
 	
-	/**
-	 * To check mandatory fields
-	 * @param model
-	 */
-	public void checkMandatoryFields(Model model);
+	
 
 }

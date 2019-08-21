@@ -18,37 +18,17 @@
  * ===============LICENSE_END=========================================================
  */
 
-package org.acumos.workbench.modelservice.service;
+package org.acumos.workbench.modelservice.exceptionhandling;
 
-import org.acumos.workbench.common.vo.Model;
 
-public interface ModelValidationService {
+public class AssociationExistsException extends RuntimeException {
 
-	/**
-	 * To Validate the Input data for Model
-	 * 
-	 * @param authenticatedUserId
-	 * 			Acumos User Id 
-	 * @param model
-	 * 			model input
-	 */
-	public void validateInputData(Model model);
-	
-	/**
-	 * To Validate the Project
-	 * @param authenticatedUserId
-	 * 			Acumos User Id 
-	 * @param projectId
-	 * 			projectId
-	 * @param authToken
-	 * 			authenticated JWT Token
-	 */
-	public void validateProject(String authenticatedUserId, String projectId, String authToken);
-	
-	/**
-	 * To check mandatory fields
-	 * @param model
-	 */
-	public void checkMandatoryFields(Model model);
+	private static final long serialVersionUID = -5880009456629591542L;
+
+	private static final String MSG = "Project Model Association already exists";
+
+	public AssociationExistsException() {
+		super(MSG);
+	}
 
 }

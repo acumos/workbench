@@ -34,10 +34,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+@ControllerAdvice
+@RestController
 public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 	
@@ -103,6 +107,53 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 		Model model = getModelWithErrorStatus(ex);
 		return new ResponseEntity<Model>(model, HttpStatus.NOT_FOUND);
 	}
+	
+	/**
+	 * To handle AssociationExistsException and returns appropriate response to UI. 
+	 * @param ex
+	 * 			the exception thrown by the service method
+	 * @param request
+	 * 			the WebRequest
+	 * @return ResponseEntitiy<Model> 
+	 * 			returns Model with ServiceStatus indicating error
+	 */
+	@ExceptionHandler(AssociationExistsException.class)
+	public final ResponseEntity<?> handleAssociationExistsException(AssociationExistsException ex, WebRequest request) {
+		Model model = getModelWithErrorStatus(ex);
+		return new ResponseEntity<Model>(model, HttpStatus.NOT_FOUND);
+	}
+	
+	
+	/**
+	 * To handle AssociationNotFoundException and returns appropriate response to UI. 
+	 * @param ex
+	 * 			the exception thrown by the service method
+	 * @param request
+	 * 			the WebRequest
+	 * @return ResponseEntitiy<Model> 
+	 * 			returns Model with ServiceStatus indicating error
+	 */
+	@ExceptionHandler(ProjectModelAssociationNotFoundException.class)
+	public final ResponseEntity<?> handleAssociationNotFoundException(ProjectModelAssociationNotFoundException ex, WebRequest request) {
+		Model model = getModelWithErrorStatus(ex);
+		return new ResponseEntity<Model>(model, HttpStatus.NOT_FOUND);
+	}
+	
+	/**
+	 * To handle CouchDBException and returns appropriate response to UI. 
+	 * @param ex
+	 * 			the exception thrown by the service method
+	 * @param request
+	 * 			the WebRequest
+	 * @return ResponseEntitiy<Model> 
+	 * 			returns Model with ServiceStatus indicating error
+	 */
+	@ExceptionHandler(CouchDBException.class)
+	public final ResponseEntity<?> handleCouchDBException(CouchDBException ex, WebRequest request) {
+		Model model = getModelWithErrorStatus(ex);
+		return new ResponseEntity<Model>(model, HttpStatus.NOT_FOUND);
+	}
+	
 	
 	/**
 	 * To handle TargetServiceInvocationException from CDS

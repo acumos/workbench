@@ -66,6 +66,8 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 			modelCatalogs : [],
 			selectedCatalog : {type: String },
 			selectedCategory : {type: String },
+      selectedVersionModel: [],
+      modelCatalogsDropdown: [],
 		};
 	}
 
@@ -83,6 +85,8 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 		this.unassociatedModels = [];
 		this.modelVersionsArray = [];
 		this.selectedModelArray = [];
+		this.selectedVersionModel = [];
+		this.modelCatalogsDropdown = [];
 		this.initializeAssociateModelForm();
     this.$validations.init({
       validations: {
@@ -406,19 +410,17 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
       tempModel.createdTimestamp = item.modelId.versionId.timeStamp;
       tempModel.createdBy = item.owner.authenticatedUserId;
 			tempModel.status = item.artifactStatus.status;
-			//need to check for others case
-			if(item.modelId.metrics.kv[0].value === undefined){
-				tempModel.modelType = "Others";
+
+			if(item.modelId.metrics.kv[0].value === "None"){
+				tempModel.modelType = "None";
 			} else{
-				tempModel.modelType = this.modelCategories.filter(category => {
-					return category.code === item.modelId.metrics.kv[0].value;
-				});
+				for(let cat in this.modelCategories){
+					if(cat.code === item.modelId.metrics.kv[0].value){
+						tempModel.modelType = cat.name;
+					}
+				}
 			}
-			if(item.modelId.metrics.kv[2].value === "null" || item.modelId.metrics.kv[2].value === "None"){
-				tempModel.modelCatalog = "None";
-			} else{
-				tempModel.modelCatalog = item.modelId.metrics.kv[2].value;
-			}
+			tempModel.modelCatalog = item.modelId.metrics.kv[2].value;
 			tempModel.publishStatus = item.modelId.metrics.kv[1].value;
 			tempModel.associationId = item.modelId.metrics.kv[3].value;
       this.modelsList.push(tempModel);
@@ -582,19 +584,18 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
       tempModel.version = item.modelId.versionId.label;
       tempModel.createdTimestamp = item.modelId.versionId.creationTimeStamp;
       tempModel.createdBy = item.owner.authenticatedUserId;
-      tempModel.status = item.artifactStatus.status;
-      if(item.modelId.metrics.kv[0].value === undefined){
-				tempModel.modelType = "Others";
+			tempModel.status = item.artifactStatus.status;
+			if(item.modelId.metrics.kv[0].value === "None"){
+				tempModel.modelType = "None";
 			} else{
-				tempModel.modelType = this.modelCategories.filter(category => {
-					return category.code === item.modelId.metrics.kv[0].value;
-				});
+				for(let cat in this.modelCategories){
+					if(cat.code === item.modelId.metrics.kv[0].value){
+						tempModel.modelType = cat.name;
+					}
+				}
 			}
-			if(item.modelId.metrics.kv[2].value === "null" || item.modelId.metrics.kv[2].value === "None"){
-				tempModel.modelCatalog = "None";
-			} else{
-				tempModel.modelCatalog = item.modelId.metrics.kv[2].value;
-			}
+			
+			tempModel.modelCatalog = item.modelId.metrics.kv[2].value;
 			tempModel.publishStatus = item.modelId.metrics.kv[1].value;
       allModels.push(tempModel);
     });
@@ -607,29 +608,9 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 		});
 	}
 
-	filterModelsFromCatalog(selectedModelCatalog){
-		this.selectedCatalog = selectedModelCatalog;
-		if(selectedModelCatalog !== "None" && selectedModelCatalog !== "null"){
-			this.modelsDropdown = this.unassociatedModels.filter(model => {
-				if(model.modelCatalog !== "null"){
-					model.modelCatalog = model.modelCatalog.split(",");
-					for (let catalog of model.modelCatalog){
-						if(catalog === selectedModelCatalog)
-							return true;
-					}
-				} 
-			});
-		} else{
-			this.modelsDropdown = this.unassociatedModels.filter(model => {
-				return model.modelCatalog === "null" || model.modelCatalog === "None";
-			});
-		}
-	}
-
 	filterModelsToSelect(selectedModelCategory){
-		//need to check for others
-		this.modelsDropdown = this.modelsDropdown.filter(model => {
-			return model.modelType[0].name === selectedModelCategory;
+		this.modelsDropdown = this.unassociatedModels.filter(model => {
+			return model.modelType === selectedModelCategory;
 		});
 	}
 
@@ -639,16 +620,25 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 		});
 	}
 
-	linkModel(versionSelected){
-		let selectedModel = this.selectedModelArray.filter(model => {
+	filterCatalogsToSelect(versionSelected){
+
+		this.selectedVersionModel = this.selectedModelArray.filter(model => {
 			return model.version === versionSelected;
 		});
+
+		this.modelCatalogsDropdown = this.selectedVersionModel.modelCatalog.split(",");
+
+	}
+
+	linkModel(catalogSelected){
+		let selectedModel = this.selectedVersionModel;
 		
 		this.selectedModelId = selectedModel[0].modelId;
 		this.$data.set('linkModel.modelId.name', selectedModel[0].name);
     this.$data.set('linkModel.modelId.versionId.label', selectedModel[0].version);
-		this.$data.set('linkModel.modelId.metrics.kv[0].value', selectedModel[0].modelType[0].code);
+		this.$data.set('linkModel.modelId.metrics.kv[0].value', selectedModel[0].modelType);
 		this.$data.set('linkModel.modelId.metrics.kv[1].value', selectedModel[0].publishStatus);
+		this.$data.set('linkModel.modelId.metrics.kv[2].value', catalogSelected);
 	}
 
 	userAction(action, modelId, modelName) {
@@ -764,7 +754,7 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 	  this.$data.set('editModel.modelId.name', item.name, true);
 		this.$data.set('editModel.modelId.versionId.label', item.version, true);
 		this.$data.set('editModel.modelId.uuid', item.modelId, true);
-		this.$data.set('editModel.modelId.metrics.kv[0].value', item.modelType[0].code, true);
+		this.$data.set('editModel.modelId.metrics.kv[0].value', item.modelType, true);
 		this.$data.set('editModel.modelId.metrics.kv[1].value', item.publishStatus, true);
 		this.$data.set('editModel.modelId.metrics.kv[2].value', item.modelCatalog, true);
 		this.$data.set('editModel.modelId.metrics.kv[3].value', item.associationId, true)
@@ -776,6 +766,10 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 	  this.isAssociateModelModalOpen = false;
   }
 
+	editModelAssociation(editVersionSelected){
+		this.$data.set('editModel.modelId.versionId.label', editVersionSelected, true);
+	}
+
   deleteAssociationDialogDismissed(){
     this.isOpenDeleteAssociationDialog = false;
   }
@@ -785,7 +779,7 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 	  this.$data.set('deleteModel.modelId.name', item.name, true);
 		this.$data.set('deleteModel.modelId.versionId.label', item.version, true);
 		this.$data.set('deleteModel.modelId.uuid', item.modelId, true);
-		this.$data.set('deleteModel.modelId.metrics.kv[0].value', item.modelType[0].code, true);
+		this.$data.set('deleteModel.modelId.metrics.kv[0].value', item.modelType, true);
 		this.$data.set('deleteModel.modelId.metrics.kv[1].value', item.publishStatus, true);
 		this.$data.set('deleteModel.modelId.metrics.kv[2].value', item.modelCatalog, true);
 		this.$data.set('deleteModel.modelId.metrics.kv[3].value', item.associationId, true)
@@ -844,64 +838,28 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 				<div class="row">
 					<div class="col">
 						<div class="form-group">
-							<label>Model Catalog <small class="text-danger">*</small></label>
-							<select class="form-control" id="mySelectCatalog" @change="${e => {
-								this.filterModelsFromCatalog(e.target.value);
-								this.$data.set('linkModel.modelId.metrics.kv[2].value', e.target.value);
-								this.$validations.validate('linkModel.modelId.metrics.kv[2].value');
+							<label>Model Category <small class="text-danger">*</small></label>
+							<select class="form-control" id="mySelect" @change="${e => {
+								this.filterModelsToSelect(e.target.value);
+								this.$data.set('linkModel.modelId.metrics.kv[0].value', e.target.value);
+								this.$validations.validate('linkModel.modelId.metrics.kv[0].value');
 								}}">
-								<option value="">Select Model Catalog</option>	
-								${this.modelCatalogs.map((item, index) =>
+								<option value="">Select Model Category</option>	
+								${this.modelCategories.map((item, index) =>
 									html`															
 										<option value="${item.name}">${item.name}</option>
 									`
 								)} 
-								<option value="None">None</option>                 	
+								<option value="None">Others</option>                 	
 							</select>
 							${
-								this.$validations.getValidationErrors('linkModel.modelId.metrics.kv[2].value').map(error => {
+								this.$validations.getValidationErrors('linkModel.modelId.metrics.kv[0].value').map(error => {
 									switch (error) {
 										case 'isNotEmpty':
-											return html`<div class="invalid-feedback d-block">Model Catalog is required</div>`
+											return html`<div class="invalid-feedback d-block">Model Category is required</div>`
 									}
 								})
 							}
-						</div>
-					</div>
-				</div>
-				<br/>
-				<div class="row">
-					<div class="col">
-						<div class="form-group">
-							<label>Model Category <small class="text-danger">*</small></label>
-							${(this.data.linkModel.modelId.metrics.kv[2].value !== undefined && this.data.linkModel.modelId.metrics.kv[2].value !== '')
-							? html`
-								<select class="form-control" id="mySelect" @change="${e => {
-									this.filterModelsToSelect(e.target.value);
-									this.$data.set('linkModel.modelId.metrics.kv[0].value', e.target.value);
-									this.$validations.validate('linkModel.modelId.metrics.kv[0].value');
-									}}">
-									<option value="">Select Model Category</option>	
-									${this.modelCategories.map((item, index) =>
-										html`															
-											<option value="${item.name}">${item.name}</option>
-										`
-									)} 
-									<option value="Others">Others</option>                 	
-								</select>
-								${
-									this.$validations.getValidationErrors('linkModel.modelId.metrics.kv[0].value').map(error => {
-										switch (error) {
-											case 'isNotEmpty':
-												return html`<div class="invalid-feedback d-block">Model Category is required</div>`
-										}
-									})
-								}
-							`
-								: html`
-								<select class="form-control" id="mySelect" disabled/>
-							`
-						}
 						</div>
 					</div>
 				</div>
@@ -917,7 +875,7 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 									this.$data.set('linkModel.modelId.name', e);
 									this.$validations.validate('')
 								}}">
-									<option value="">Enter Model Name</option>
+									<option value="">Select Model Name</option>
 									${this.modelsDropdown.map((item, index) =>
 										html`															
 											<option value="${item.name}">${item.name}</option>
@@ -935,7 +893,7 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 										}
 								`
 								: html`
-								<select class="form-control" id="selectModel" disabled/>
+								<select class="form-control" id="selectModel" placeholder="Model Name" disabled/>
 							`
 						}
 					</div>
@@ -947,11 +905,11 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 							${(this.data.linkModel.modelId.name !== undefined && this.data.linkModel.modelId.name !== "null" && this.data.linkModel.modelId.name !== '')
 							? html`
 							<select class="form-control" id="selectVersion" @change="${e => { 
-								this.linkModel(e.target.value);
+								this.filterCatalogsToSelect(e.target.value);
 								this.$data.set('linkModel.modelId.versionId.label', e);
 								this.$validations.validate('')
 							}}">
-								<option value="">Enter Model Version</option>
+								<option value="">Select Model Version</option>
 								${this.selectedModelArray.map((item, index) =>
 									html`															
 										<option value="${item.version}">${item.version}</option>
@@ -971,10 +929,52 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 							: html`
 								<input type="text" class="form-control" placeholder="Model Version"  disabled/>
 								`
-		}
+							}
 						</div>
 					</div>
-				</div>	
+				</div>
+				<br/>
+				<div class="row">
+					<div class="col">
+						<div class="form-group">
+							<label>Model Catalog <small class="text-danger">*</small></label>
+							${(this.data.linkModel.modelId.versionId.label !== undefined && this.data.linkModel.modelId.versionId.label !== "null" && this.data.linkModel.modelId.versionId.label !== '')
+							? html`
+								<select class="form-control" id="mySelectCatalog" @change="${e => {
+									this.linkModel(e.target.value);
+									this.$data.set('linkModel.modelId.metrics.kv[2].value', e.target.value);
+									this.$validations.validate('linkModel.modelId.metrics.kv[2].value');
+									}}">
+									<option value="">Select Model Catalog</option>	
+									${this.modelCatalogsDropdown.map((item, index) =>
+										html`
+											${(item === "None")
+											? html`
+												<option value="None">Private Catalog</option>
+											`
+											: html`
+												<option value="${item}">${item}</option>
+											`
+											}															
+										`
+									)}                	
+								</select>
+								${
+									this.$validations.getValidationErrors('linkModel.modelId.metrics.kv[2].value').map(error => {
+										switch (error) {
+											case 'isNotEmpty':
+												return html`<div class="invalid-feedback d-block">Model Catalog is required</div>`
+										}
+									})
+								}
+							`
+							:  html`
+								<input type="text" class="form-control" placeholder="Model Catalog"  disabled/>
+								`
+							}
+						</div>
+					</div>
+				</div>
 			</form>
 		</omni-modal>
 
@@ -982,12 +982,12 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 		is-open="${this.isAssociateEditModalOpen}" @omni-modal-dimissed="${this.modalDismissed}" @omni-modal-closed="${this.modalClosedEdit}"
 		canClose="${this.$validations.$valid('editModel') && this.$validations.$dirty}">
 		<form novalidate>
-			<p class="text-danger">{{error}}</p>
+			<p class="text-danger">${this.data.editErrorMessage}</p>
 			<div class="row">
 			<div class="col">
 				<div class="form-group">
 					<label>Model Catalog <small class="text-danger">*</small></label>
-					<input type="text" class="form-control" placeholder="Model Catalog" value="${this.data.editModel.modelCatalog}"  disabled/>
+					<input type="text" class="form-control" placeholder="Model Catalog" value="${this.data.editModel.modelId.metrics.kv[2].value}"  disabled/>
 				</div>
 			</div>
 		</div>
@@ -996,7 +996,7 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 				<div class="col">
 					<div class="form-group">
 						<label>Model Category <small class="text-danger">*</small></label>
-						<input type="text" class="form-control" placeholder="Model Category" value="${this.data.editModel.modelType}"  disabled/>
+						<input type="text" class="form-control" placeholder="Model Category" value="${this.data.editModel.modelId.metrics.kv[0].value}"  disabled/>
 					</div>
 				</div>
 			</div>
@@ -1012,12 +1012,11 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 				<div class="col">
 					<div class="form-group">
 						<label>Model Version <small class="text-danger">*</small></label>
-						<select class="form-control" id="selectVersion" @change="${e => { 
+						<select class="form-control" id="selectVersion" placeholder="${this.data.editModel.modelId.versionId.label}" @change="${e => { 
 							this.editModelAssociation(e.target.value);
 							this.$data.set('linkModel.modelId.versionId.label', e);
 							this.$validations.validate('')
 						}}">
-							<option value="">Enter Model Version</option>
 							${this.modelVersionsArray.map((item, index) =>
 								html`															
 									<option value="${item.version}">${item.version}</option>
@@ -1143,7 +1142,7 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 													<td class="col-1">${(this.currentPage-1) * 5 + ++index}</td>
 													<td class="col-2">${item.name}</td>
 													<td class="col-1">${item.status}</td>
-													<td class="col-2">${item.modelType[0].name}</td>
+													<td class="col-2">${item.modelType}</td>
 													<td class="col-2">${item.version}</td>
 													<td class="col-2">${item.publishStatus === 'true'
 													? html`

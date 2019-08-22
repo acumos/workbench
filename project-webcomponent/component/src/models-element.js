@@ -68,6 +68,8 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 			selectedCategory : {type: String },
       selectedVersionModel: [],
       modelCatalogsDropdown: [],
+      modelsFilteredCategory:[],
+			modelsDropdown: [],
 		};
 	}
 
@@ -80,6 +82,7 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 		this.cardShow = true;
 		this.view = '';
 		this.models = [];
+		this.modelsDropdown = [];
 		this.modelCategories = [];
 		this.modelCatalogs = [];
 		this.unassociatedModels = [];
@@ -87,6 +90,7 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 		this.selectedModelArray = [];
 		this.selectedVersionModel = [];
 		this.modelCatalogsDropdown = [];
+		this.modelsFilteredCategory = [];
 		this.initializeAssociateModelForm();
     this.$validations.init({
       validations: {
@@ -414,9 +418,9 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 			if(item.modelId.metrics.kv[0].value === "None"){
 				tempModel.modelType = "None";
 			} else{
-				for(let cat in this.modelCategories){
-					if(cat.code === item.modelId.metrics.kv[0].value){
-						tempModel.modelType = cat.name;
+				for(let i = 0; i < this.modelCategories.length; i++){
+					if(this.modelCategories[i].code === item.modelId.metrics.kv[0].value){
+						tempModel.modelType = this.modelCategories[i].name;
 					}
 				}
 			}
@@ -588,9 +592,9 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 			if(item.modelId.metrics.kv[0].value === "None"){
 				tempModel.modelType = "None";
 			} else{
-				for(let cat in this.modelCategories){
-					if(cat.code === item.modelId.metrics.kv[0].value){
-						tempModel.modelType = cat.name;
+				for(let i = 0; i < this.modelCategories.length; i++){
+					if(this.modelCategories[i].code === item.modelId.metrics.kv[0].value){
+						tempModel.modelType = this.modelCategories[i].name;
 					}
 				}
 			}
@@ -609,15 +613,36 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 	}
 
 	filterModelsToSelect(selectedModelCategory){
-		this.modelsDropdown = this.unassociatedModels.filter(model => {
+		this.modelsFilteredCategory = this.unassociatedModels.filter(model => {
 			return model.modelType === selectedModelCategory;
 		});
+
+		let i=0;let j=1;
+		this.modelsDropdown = [];
+		while(j<this.modelsFilteredCategory.length){
+			if(this.modelsFilteredCategory[i].name !== this.modelsFilteredCategory[j].name){
+				this.modelsDropdown.push(this.modelsFilteredCategory[i]);
+				i=j;
+				if(j === this.modelsFilteredCategory.length-1){
+					this.modelsDropdown.push(this.modelsFilteredCategory[j]);
+				}
+			} 
+			j++;
+		}
+
+		this.$data.set('linkModel.modelId.name', '');
+		this.$data.set('linkModel.modelId.versionId.label', '');
+		this.$data.set('linkModel.modelId.metrics.kv[2].value', '');
+
 	}
 
 	filterVersionsToSelect(modelSelected){
-		this.selectedModelArray = this.modelsDropdown.filter(model => {
+		this.selectedModelArray = this.modelsFilteredCategory.filter(model => {
 			return model.name === modelSelected;
 		});
+
+		this.$data.set('linkModel.modelId.versionId.label', '');
+		this.$data.set('linkModel.modelId.metrics.kv[2].value', '');
 	}
 
 	filterCatalogsToSelect(versionSelected){
@@ -626,8 +651,9 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 			return model.version === versionSelected;
 		});
 
-		this.modelCatalogsDropdown = this.selectedVersionModel.modelCatalog.split(",");
+		this.modelCatalogsDropdown = this.selectedVersionModel[0].modelCatalog.split(",");
 
+		this.$data.set('linkModel.modelId.metrics.kv[2].value', '');
 	}
 
 	linkModel(catalogSelected){
@@ -893,7 +919,7 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 										}
 								`
 								: html`
-								<select class="form-control" id="selectModel" placeholder="Model Name" disabled/>
+								<input type="text" class="form-control" id="selectModel" placeholder="Model Name" disabled/>
 							`
 						}
 					</div>
@@ -1012,19 +1038,26 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 				<div class="col">
 					<div class="form-group">
 						<label>Model Version <small class="text-danger">*</small></label>
-						<select class="form-control" id="selectVersion" placeholder="${this.data.editModel.modelId.versionId.label}" @change="${e => { 
+						<select class="form-control" id="selectVersion" @change="${e => { 
 							this.editModelAssociation(e.target.value);
-							this.$data.set('linkModel.modelId.versionId.label', e);
+							this.$data.set('editModel.modelId.versionId.label', e);
 							this.$validations.validate('')
 						}}">
+							<option value="${this.data.editModel.modelId.versionId.label}">${this.data.editModel.modelId.versionId.label}</option>
 							${this.modelVersionsArray.map((item, index) =>
-								html`															
-									<option value="${item.version}">${item.version}</option>
+								html`
+									${item.version !== this.data.editModel.modelId.versionId.label
+									?	html`
+										 <option value="${item.version}">${item.version}</option>
+										`
+										:html``
+									}															
+									
 								`
 							)}
 						</select>
 						${
-							this.$validations.getValidationErrors('linkModel.modelId.versionId.label').map(error => {
+							this.$validations.getValidationErrors('editModel.modelId.versionId.label').map(error => {
 									switch (error) {
 										case 'isNotEmpty':
 											return html`<div class="invalid-feedback d-block">Please select Model version from dropdown</div>`
@@ -1142,14 +1175,7 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 													<td class="col-1">${(this.currentPage-1) * 5 + ++index}</td>
 													<td class="col-2">${item.name}</td>
 													<td class="col-1">${item.status}</td>
-													<td class="col-2">${item.modelType === "None"
-													? html`
-														Private Catalog
-													`
-													: html`
-														${item.modelType}
-													`
-													}</td>
+													<td class="col-2">${item.modelType}</td>
 													<td class="col-2">${item.version}</td>
 													<td class="col-2">${item.publishStatus === 'true'
 													? html`

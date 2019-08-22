@@ -453,7 +453,7 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
           this.getModelDetailsForProject();
 					this.$data.revert('linkModel');
 					this.$validations.resetValidation('linkModel');
-					this.isOpenModalLink = false;
+					this.isAssociateModelModalOpen = false;
         } else {
           this.$data.set('associateErrorMessage', n.message);
         }
@@ -491,12 +491,11 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
           this.getModelDetailsForProject();
 					this.$data.revert('deleteModel');
 					this.$validations.resetValidation('deleteModel');
-					this.isOpenModalLink = false;
         } else {
           this.errorMessage = n.message;
         }
         this.alertOpen = true;
-        this.isOpenDeleteDialog = false;
+        this.isOpenDeleteAssociationDialog = false;
     }).catch((error) => {
       console.error('Request failed', error);
       this.errorMessage = 'Model delete request failed with error: '+ error;
@@ -561,7 +560,7 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 					
 					this.$data.revert('editModel');
 					this.$validations.resetValidation('editModel');
-					this.isOpenModalEdit = false;
+					this.isAssociateEditModalOpen = false;
 				} else{
 					this.$data.set('editErrorMessage', n.message);
 				}
@@ -773,7 +772,7 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 		this.modelVersionsArray = this.unassociatedModels.filter(model => {
 			return model.name === item.name;
 		});
-	  this.isOpenModalEdit = true;
+	  this.isAssociateEditModalOpen = true;
 	  this.isAssociateModelModalOpen = false;
   }
 

@@ -1200,7 +1200,7 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 														`
 														: html`
 															
-															<a href="javascript:void" @click="${e => this.openDeleteAssociationDialog(item.modelId, item.name)}"
+															<a href="javascript:void" @click="${e => this.openDeleteAssociationDialog(item)}"
 																class="btnIcon btn btn-sm btn-secondary my-1 mr-1" data-toggle="tooltip" data-placement="top" title="Delete Model Association">
 																<mwc-icon class="mwc-icon-secondary">link_off</mwc-icon>
 															</a>

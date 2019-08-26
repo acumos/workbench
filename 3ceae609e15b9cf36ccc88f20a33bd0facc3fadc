@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d899fbe_aa52165a",
+        "filename": "model-service/pom.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-08-26T13:32:40Z",
+      "side": 1,
+      "message": "Add -SNAPSHOT till the time we release workbench-common to release repository",
+      "range": {
+        "startLine": 62,
+        "startChar": 16,
+        "endLine": 62,
+        "endChar": 17
+      },
+      "revId": "3ceae609e15b9cf36ccc88f20a33bd0facc3fadc",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a588dbb_90a57425",
+        "filename": "model-service/src/main/java/org/acumos/workbench/modelservice/exceptionhandling/CustomizedResponseEntityExceptionHandler.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-08-26T13:32:40Z",
+      "side": 1,
+      "message": "Use AssociationException instead.",
+      "range": {
+        "startLine": 120,
+        "startChar": 19,
+        "endLine": 120,
+        "endChar": 45
+      },
+      "revId": "3ceae609e15b9cf36ccc88f20a33bd0facc3fadc",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "685cf380_4bf15fac",
+        "filename": "model-service/src/main/java/org/acumos/workbench/modelservice/exceptionhandling/CustomizedResponseEntityExceptionHandler.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-08-26T13:32:40Z",
+      "side": 1,
+      "message": "Remove this",
+      "revId": "3ceae609e15b9cf36ccc88f20a33bd0facc3fadc",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9fac7075_f67372d9",
+        "filename": "model-service/src/main/java/org/acumos/workbench/modelservice/lightcouch/DataSetModel.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-08-26T13:32:40Z",
+      "side": 1,
+      "message": "License is missing, please add license to new files.",
+      "revId": "3ceae609e15b9cf36ccc88f20a33bd0facc3fadc",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bc4c3bad_a02be648",
+        "filename": "model-service/src/main/java/org/acumos/workbench/modelservice/service/InputValidationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-08-26T13:32:40Z",
+      "side": 1,
+      "message": "Remove text \"This method will\" and stat with \"To validate the.....\"",
+      "revId": "3ceae609e15b9cf36ccc88f20a33bd0facc3fadc",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f70957af_a81c640a",
+        "filename": "model-service/src/main/java/org/acumos/workbench/modelservice/util/ModelServiceConstants.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-08-26T13:32:40Z",
+      "side": 1,
+      "message": "No underscore in name please.",
+      "range": {
+        "startLine": 31,
+        "startChar": 34,
+        "endLine": 31,
+        "endChar": 36
+      },
+      "revId": "3ceae609e15b9cf36ccc88f20a33bd0facc3fadc",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}

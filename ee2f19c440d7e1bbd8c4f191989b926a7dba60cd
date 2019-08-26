@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f950d1f_fb721083",
+        "filename": "notebook-catalog-webcomponent/component/src/notebook-catalog-element.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2019-08-26T16:03:23Z",
+      "side": 1,
+      "message": "Notice only formatting, but no code changes. Is it possible to remove these commented lines?",
+      "revId": "ee2f19c440d7e1bbd8c4f191989b926a7dba60cd",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "48c09652_ff060f12",
+        "filename": "pipeline-catalog-webcomponent/api/src/server.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2019-08-26T16:03:23Z",
+      "side": 1,
+      "message": "Just a comment - I assume this is needed to support the iFrame and to make backend api calls. Appreciate the clean up and use the cors in right way.",
+      "revId": "ee2f19c440d7e1bbd8c4f191989b926a7dba60cd",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8c49d8ea_cbc314d6",
+        "filename": "project-webcomponent/api/package.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2019-08-26T16:03:23Z",
+      "side": 1,
+      "message": "Best practices comment: tilde (~) is to install specified version or the latest patch version and caret (^) is to install specified version or the latest minor or patch version. Are you sure with tilde? I see a pattern in the current code that we are mostly using caret, let us try to keep it that way, unless there is a specific justification to use tilde.",
+      "range": {
+        "startLine": 16,
+        "startChar": 24,
+        "endLine": 16,
+        "endChar": 30
+      },
+      "revId": "ee2f19c440d7e1bbd8c4f191989b926a7dba60cd",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}

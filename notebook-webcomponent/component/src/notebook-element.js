@@ -24,6 +24,8 @@ import { OmniModal, OmniDialog } from "./@workbenchcommon/components";
 import { ValidationMixin, DataMixin, BaseElementMixin } from "./@workbenchcommon/mixins";
 import {style} from './notebook-styles.js';
 import { Forms, DataSource } from "./@workbenchcommon/core";
+import moment from 'moment';
+
 
 export class NotebookLitElement extends DataMixin(ValidationMixin(BaseElementMixin(LitElement)))  {
 		get dependencies() {
@@ -652,11 +654,11 @@ export class NotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 											</tr>
 											<tr>
 												<td class="highlight">Notebook Creation Date</td>
-												<td>${this.data.notebook.notebookCreateDate}</td>
+												<td>${moment(this.data.notebook.notebookCreateDate).format('YYYY-MM-DD')}</td>
 											</tr>
 											<tr>
 												<td class="highlight">Modification Date</td>
-												<td>${this.data.notebook.notebookCreateDate}</td>
+												<td>${moment(this.data.notebook.notebookCreateDate).format('YYYY-MM-DD')}</td>
 											</tr>
 											<tr>
 												<td class="highlight">Notebook Description</td>

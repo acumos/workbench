@@ -20,9 +20,7 @@ limitations under the License.
 var env = process.env.ENVIRONMENT || "local";
 
 var properties = require('./properties.js').get(env);
-var https = require("https");
 var request = require('request');
-
 module.exports = function(app) {
 	
 	const uripath = "/users/";
@@ -50,9 +48,10 @@ module.exports = function(app) {
 	}
 
 	app.get('/api/config', function(req, res) {
+		
 		try {
-			let userName = getUserName(req);
-			let authToken = getLatestAuthToken(req, '');
+			let userName = process.env.AUTH_USER || getUserName(req);
+			let authToken = process.env.AUTH_TOKEN || getLatestAuthToken(req, '');
 
 			res.configInfo = {
 				configENV : configENV,

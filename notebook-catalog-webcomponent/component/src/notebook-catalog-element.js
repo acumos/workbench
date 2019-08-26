@@ -25,7 +25,9 @@ import { Forms, DataSource } from "./@workbenchcommon/core";
 
 import { ValidationMixin, DataMixin, BaseElementMixin } from "./@workbenchcommon/mixins";
 import { style } from "./notebook-catalog-styles.js";
-
+// import * as dayjs from 'dayjs/esm/index';
+// import * as moment from 'moment';
+import moment from 'moment';
 export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseElementMixin(LitElement))) {
   get dependencies() {
     return [OmniModal, OmniDialog];
@@ -42,19 +44,19 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
       activeSort: "",
       currentPage: 0,
       totalPages: 0,
-      mSurl: {type: String},
-      view: {type: String},
-      zeppelinNotebookCount: {type: Number},
-      jupyterNotebookCount: {type: Number},
-      allNotebookCount: {type: Number},
+      mSurl: { type: String },
+      view: { type: String },
+      zeppelinNotebookCount: { type: Number },
+      jupyterNotebookCount: { type: Number },
+      allNotebookCount: { type: Number },
       alertOpen: { type: Boolean },
       successMessage: { type: String },
       errorMessage: { type: String },
       cardShow: { type: Boolean },
-      notebookWikiURL: {type: String},
-      componenturl: {type: String, notify: true},
-      userName: {type: String, notify: true},
-      authToken: {type: String, notify: true}
+      notebookWikiURL: { type: String },
+      componenturl: { type: String, notify: true },
+      userName: { type: String, notify: true },
+      authToken: { type: String, notify: true }
     };
   }
 
@@ -80,7 +82,7 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
               isNotEmpty: Forms.validators.isNotEmpty,
               pattern: Forms.validators.pattern('^[a-zA-Z][a-zA-Z0-9_]{5,29}$')
             },
-            versionId : {
+            versionId: {
               label: {
                 isNotEmpty: Forms.validators.isNotEmpty,
                 pattern: Forms.validators.pattern('^[a-zA-Z0-9_.]{1,14}$')
@@ -100,23 +102,23 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
     this.cardShow = false;
     this.requestUpdate().then(() => {
       this.onLoad();
-      this.componenturl = (this.componenturl === undefined || this.componenturl === null)? '' : this.componenturl;
+      this.componenturl = (this.componenturl === undefined || this.componenturl === null) ? '' : this.componenturl;
       this.getConfig();
     })
   }
 
-  initializeCreateNotebookForm(){
+  initializeCreateNotebookForm() {
     this.data = {
-      createErrorMessage : "",
-      newNotebook:{
-        noteBookId : {    
-          name : "",    
-          versionId : {         
-            label : ""    
-          }  
-        },  
-        description : "",
-        notebookType : "JUPYTER"
+      createErrorMessage: "",
+      newNotebook: {
+        noteBookId: {
+          name: "",
+          versionId: {
+            label: ""
+          }
+        },
+        description: "",
+        notebookType: "JUPYTER"
       }
     };
     this.$data.snapshot('newNotebook');
@@ -136,12 +138,12 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
     super.disconnectedCallback();
     window.removeEventListener('hashchange', this._boundListener);
   }
-	
-  getConfig(){
+
+  getConfig() {
     const url = this.componenturl + '/api/config';
     this.resetMessage();
-	  fetch(url, {
-		  method: 'GET',
+    fetch(url, {
+      method: 'GET',
       mode: 'cors',
       cache: 'default'
     }).then(res => res.json())
@@ -151,11 +153,11 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
 
         let username = envVar.userName;
         let token = envVar.authToken;
-        
-        if(this.userName && this.userName !== '' && this.authToken && this.authToken !== '') {
+
+        if (this.userName && this.userName !== '' && this.authToken && this.authToken !== '') {
           this.resetActiveFilter = true;
           this.getNotebookList();
-        } else if(username && username !== '' && token && token !== '') {
+        } else if (username && username !== '' && token && token !== '') {
           this.authToken = token;
           this.userName = username;
           this.resetActiveFilter = true;
@@ -163,30 +165,30 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
         } else {
           this.errorMessage = 'Acumos session details are unavailable in browser cookies. Pls login to Acumos portal and come back here..';
           this.alertOpen = true;
-          this.view = 'error';        
+          this.view = 'error';
         }
-    }).catch((error) => {
-      console.info('Request failed', error);
-      this.errorMessage = 'Unable to retrive configuration information. Error is: '+ error;
-      this.alertOpen = true;
-      this.view = 'error';
-    });
+      }).catch((error) => {
+        console.info('Request failed', error);
+        this.errorMessage = 'Unable to retrive configuration information. Error is: ' + error;
+        this.alertOpen = true;
+        this.view = 'error';
+      });
   }
 
-  resetMessage(){
+  resetMessage() {
     this.successMessage = '';
     this.errorMessage = '';
   }
 
-  getNotebookList(){
+  getNotebookList() {
     const url = this.componenturl + '/api/notebooks';
-	  fetch(url, {
-		  method: 'POST',
+    fetch(url, {
+      method: 'POST',
       mode: 'cors',
       cache: 'default',
       headers: {
-          "Content-Type": "application/json",
-          "auth": this.authToken,
+        "Content-Type": "application/json",
+        "auth": this.authToken,
       },
       body: JSON.stringify({
         "url": this.mSurl,
@@ -194,7 +196,7 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
       })
     }).then(res => res.json())
       .then((n) => {
-        if(n.status === 'Error'){
+        if (n.status === 'Error') {
           this.errorMessage = n.message;
           this.view = 'error';
           this.alertOpen = true;
@@ -204,15 +206,15 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
           this.cardShow = true;
           this.convertNotebookObject(n.data);
         }
-    }).catch((error) => {
-      console.info('Request failed', error);
-      this.errorMessage = 'Notebook fetch request failed with error: '+ error;
-      this.view = 'error';
-      this.alertOpen = true;
-    });
+      }).catch((error) => {
+        console.info('Request failed', error);
+        this.errorMessage = 'Notebook fetch request failed with error: ' + error;
+        this.view = 'error';
+        this.alertOpen = true;
+      });
   }
 
-  convertNotebookObject(notebooksInfo){
+  convertNotebookObject(notebooksInfo) {
     let tempNotebook;
     notebooksInfo.forEach(item => {
       tempNotebook = {};
@@ -230,7 +232,7 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
   }
 
   displayNotebooks() {
-    if(this.resetActiveFilter) {
+    if (this.resetActiveFilter) {
       this.resetActiveFilter = false;
       this.activeFilter = { notebookType: "JUPYTER" };
     }
@@ -242,7 +244,7 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
       sort: this.activeSort,
       pageSize: 8
     });
-    this.sortNotebooks( this.activeSort);
+    this.sortNotebooks(this.activeSort);
     this.notebooks = this.dataSource.data;
     this.currentPage = this.dataSource.page + 1;
     this.totalPages = this.dataSource.totalPages;
@@ -251,18 +253,18 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
     this.zeppelinNotebookCount = this.getFilteredCount({ notebookType: "ZEPPELIN" });
     this.jupyterNotebookCount = this.getFilteredCount({ notebookType: "JUPYTER" });
 
-    if(this.totalNotebooks > 0){
+    if (this.totalNotebooks > 0) {
       this.view = 'view';
-    }else {
+    } else {
       this.view = 'add';
     }
   }
 
-  createNotebook(){
+  createNotebook() {
     const url = this.componenturl + '/api/notebook/create';
     this.resetMessage();
-	  fetch(url, {
-		  method: 'POST',
+    fetch(url, {
+      method: 'POST',
       mode: 'cors',
       cache: 'default',
       headers: {
@@ -276,7 +278,7 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
       })
     }).then(res => res.json())
       .then((n) => {
-        if(n.status === 'Success'){
+        if (n.status === 'Success') {
           this.successMessage = n.message;
           this.alertOpen = true;
           this.$data.revert('newNotebook');
@@ -287,31 +289,31 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
         } else {
           this.$data.set('createErrorMessage', n.message);
         }
-    }).catch((error) => {
-      console.error('Request failed', error);
-      this.$data.set('createErrorMessage', 'Notebook create request failed with error: '+ error);
-    });
+      }).catch((error) => {
+        console.error('Request failed', error);
+        this.$data.set('createErrorMessage', 'Notebook create request failed with error: ' + error);
+      });
   }
-  
+
   deleteNotebook() {
     const url = this.componenturl + '/api/notebook/delete';
     this.resetMessage();
-	  fetch(url, {
-		  method: 'DELETE',
+    fetch(url, {
+      method: 'DELETE',
       mode: 'cors',
       cache: 'default',
       headers: {
-          "Content-Type": "application/json",
-          "auth": this.authToken,
+        "Content-Type": "application/json",
+        "auth": this.authToken,
       },
       body: JSON.stringify({
         "url": this.mSurl,
-        "noteBookId" : this.selectedNotebookId,
-        "userName": this.userName      		  
+        "noteBookId": this.selectedNotebookId,
+        "userName": this.userName
       })
     }).then(res => res.json())
       .then((n) => {
-        if(n.status === 'Success'){
+        if (n.status === 'Success') {
           this.successMessage = n.message;
           this.getNotebookList();
         } else {
@@ -319,109 +321,109 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
         }
         this.alertOpen = true;
         this.isOpenDeleteDialog = false;
-    }).catch((error) => {
-      console.error('Request failed', error);
-      this.errorMessage = 'Notebook delete request failed with error: '+ error;
-      this.alertOpen = true;
-    });
+      }).catch((error) => {
+        console.error('Request failed', error);
+        this.errorMessage = 'Notebook delete request failed with error: ' + error;
+        this.alertOpen = true;
+      });
   }
 
   archiveNotebook() {
     const url = this.componenturl + '/api/notebook/archive';
     this.resetMessage();
-	  fetch(url, {
-		  method: 'PUT',
+    fetch(url, {
+      method: 'PUT',
       mode: 'cors',
       cache: 'default',
       headers: {
-          "Content-Type": "application/json",
-          "auth": this.authToken,
+        "Content-Type": "application/json",
+        "auth": this.authToken,
       },
       body: JSON.stringify({
         "url": this.mSurl,
-        "noteBookId" : this.selectedNotebookId,
-        "userName": this.userName      		  
+        "noteBookId": this.selectedNotebookId,
+        "userName": this.userName
       })
     }).then(res => res.json())
       .then((n) => {
-        if(n.status === 'Success'){
+        if (n.status === 'Success') {
           this.successMessage = n.message;
           this.getNotebookList();
         } else {
           this.errorMessage = n.message;
         }
         this.alertOpen = true;
-        this.isOpenArchiveDialog = false;         
-    }).catch((error) => {
-      console.error('Request failed', error);
-      this.errorMessage = 'Notebook archive request failed with error: '+ error;
-      this.alertOpen = true;
-    });
+        this.isOpenArchiveDialog = false;
+      }).catch((error) => {
+        console.error('Request failed', error);
+        this.errorMessage = 'Notebook archive request failed with error: ' + error;
+        this.alertOpen = true;
+      });
   }
 
   restoreNotebook() {
     const url = this.componenturl + '/api/notebook/restore';
     this.resetMessage();
-	  fetch(url, {
-		  method: 'PUT',
+    fetch(url, {
+      method: 'PUT',
       mode: 'cors',
       cache: 'default',
       headers: {
-          "Content-Type": "application/json",
-          "auth": this.authToken,
+        "Content-Type": "application/json",
+        "auth": this.authToken,
       },
       body: JSON.stringify({
         "url": this.mSurl,
-        "noteBookId" : this.selectedNotebookId,
-        "userName": this.userName      		  
+        "noteBookId": this.selectedNotebookId,
+        "userName": this.userName
       })
     }).then(res => res.json())
       .then((n) => {
-        if(n.status === 'Success'){
+        if (n.status === 'Success') {
           this.successMessage = n.message;
           this.getNotebookList();
         } else {
           this.errorMessage = n.message;
         }
         this.alertOpen = true;
-        this.isOpenRestoreDialog = false;        
-    }).catch((error) => {
-      console.error('Request failed', error);
-      this.errorMessage = 'Notebook unarchive request failed with error: '+ error;
-      this.alertOpen = true;
-    });
+        this.isOpenRestoreDialog = false;
+      }).catch((error) => {
+        console.error('Request failed', error);
+        this.errorMessage = 'Notebook unarchive request failed with error: ' + error;
+        this.alertOpen = true;
+      });
   }
 
   launchNotebook(noteBookId) {
     const url = this.componenturl + '/api/notebook/launch';
     this.resetMessage();
-	  fetch(url, {
-		  method: 'POST',
+    fetch(url, {
+      method: 'POST',
       mode: 'cors',
       cache: 'default',
       headers: {
-          "Content-Type": "application/json",
-          "auth": this.authToken,
+        "Content-Type": "application/json",
+        "auth": this.authToken,
       },
       body: JSON.stringify({
         "url": this.mSurl,
-        "noteBookId" : noteBookId,
-        "userName": this.userName      		  
+        "noteBookId": noteBookId,
+        "userName": this.userName
       })
     }).then(res => res.json())
       .then((n) => {
-        if(n.status === 'Success'){
+        if (n.status === 'Success') {
           let launchURL = n.data.noteBookId.serviceUrl;
           window.open(launchURL, '_blank');
         } else {
           this.errorMessage = n.message;
-          this.alertOpen = true; 
-        }      
-    }).catch((error) => {
-      console.error('Request failed', error);
-      this.errorMessage = 'Notebook launch request failed with error: '+ error;
-      this.alertOpen = true;
-    });
+          this.alertOpen = true;
+        }
+      }).catch((error) => {
+        console.error('Request failed', error);
+        this.errorMessage = 'Notebook launch request failed with error: ' + error;
+        this.alertOpen = true;
+      });
   }
 
   filterNotebooks(criteria) {
@@ -493,36 +495,36 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
     this.isOpenModal = true;
   }
 
-  archiveDialogDismissed(){
+  archiveDialogDismissed() {
     this.isOpenArchiveDialog = false;
   }
-  
-  restoreDialogDismissed(){
+
+  restoreDialogDismissed() {
     this.isOpenRestoreDialog = false;
   }
 
-  deleteDialogDismissed(){
+  deleteDialogDismissed() {
     this.isOpenDeleteDialog = false;
   }
 
-  openArchiveDialog(noteBookId, notebookName) { 
+  openArchiveDialog(noteBookId, notebookName) {
     this.selectedNotebookId = noteBookId;
     this.selectedNotebookName = notebookName;
     this.isOpenArchiveDialog = true;
   }
-  
-  openRestoreDialog(noteBookId, notebookName) { 
+
+  openRestoreDialog(noteBookId, notebookName) {
     this.selectedNotebookId = noteBookId;
     this.selectedNotebookName = notebookName;
     this.isOpenRestoreDialog = true;
   }
 
-  openDeleteDialog(noteBookId, notebookName) { 
+  openDeleteDialog(noteBookId, notebookName) {
     this.selectedNotebookId = noteBookId;
     this.selectedNotebookName = notebookName;
     this.isOpenDeleteDialog = true;
   }
-  
+
   userAction(action, noteBookId, notebookName) {
     this.dispatchEvent(
       new CustomEvent("catalog-notebook-event", {
@@ -580,21 +582,21 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
                 <input type="text" class="form-control" placeholder="Enter Notebook Name" 
                   .value="${this.data.newNotebook.noteBookId.name}"
                   @keyup="${ e => {
-                    this.$data.set('newNotebook.noteBookId.name', e);
-                    this.$validations.validate('newNotebook.noteBookId.name');
-                  }
-                }"
+        this.$data.set('newNotebook.noteBookId.name', e);
+        this.$validations.validate('newNotebook.noteBookId.name');
+      }
+      }"
                 />
                 ${
-                  this.$validations.getValidationErrors('newNotebook.noteBookId.name').map(error => {
-                    switch (error) {
-                      case 'isNotEmpty':
-                        return html`<div class="invalid-feedback d-block">Notebook Name is required</div>`
-                      case 'pattern':
-                        return html`<div class="invalid-feedback d-block">Notebook Name should contain only 6-30 alphanumeric characters, may include "_" and should not begin with number</div>`
-                    }
-                  })
-                }
+      this.$validations.getValidationErrors('newNotebook.noteBookId.name').map(error => {
+        switch (error) {
+          case 'isNotEmpty':
+            return html`<div class="invalid-feedback d-block">Notebook Name is required</div>`
+          case 'pattern':
+            return html`<div class="invalid-feedback d-block">Notebook Name should contain only 6-30 alphanumeric characters, may include "_" and should not begin with number</div>`
+        }
+      })
+      }
               </div>
             </div>
             <div class="col">
@@ -603,21 +605,21 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
                 <input type="text" class="form-control" placeholder="Enter Notebook Version" 
                   .value="${this.data.newNotebook.noteBookId.versionId.label}"
                   @keyup="${ e => {
-                      this.$data.set('newNotebook.noteBookId.versionId.label', e);
-                      this.$validations.validate('newNotebook.noteBookId.versionId.label');
-                    }
-                  }"
+        this.$data.set('newNotebook.noteBookId.versionId.label', e);
+        this.$validations.validate('newNotebook.noteBookId.versionId.label');
+      }
+      }"
                 />
                 ${
-                  this.$validations.getValidationErrors('newNotebook.noteBookId.versionId.label').map(error => {
-                    switch (error) {
-                      case 'isNotEmpty':
-                        return html`<div class="invalid-feedback d-block">Notebook Version is required</div>`
-                      case 'pattern':
-                        return html`<div class="invalid-feedback d-block">Notebook Version should contain only 1-14 numeric characters, may include "_" and "."</div>`
-                    }
-                  })
-                }
+      this.$validations.getValidationErrors('newNotebook.noteBookId.versionId.label').map(error => {
+        switch (error) {
+          case 'isNotEmpty':
+            return html`<div class="invalid-feedback d-block">Notebook Version is required</div>`
+          case 'pattern':
+            return html`<div class="invalid-feedback d-block">Notebook Version should contain only 1-14 numeric characters, may include "_" and "."</div>`
+        }
+      })
+      }
               </div>
             </div>
           </div>
@@ -650,27 +652,27 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
               <div class="row">
                 <div class="col-lg-12">
                   ${this.successMessage !== ''
-                    ? html`
+            ? html`
                       <div class="alert alert-success ${this.alertOpen ? 'show' : 'hide'}">
-                        <a  class="close" @click=${e => this.alertOpen=false}>
+                        <a  class="close" @click=${e => this.alertOpen = false}>
                           <span aria-hidden="true">&nbsp;&times;</span>
                         </a>
                         <mwc-icon>done_outline</mwc-icon>&nbsp;&nbsp;<span class="span-message">${this.successMessage}</span>
                       </div>
                     `
-                    :``
-                  }
+            : ``
+          }
                   ${this.errorMessage !== ''
-                    ? html`
+            ? html`
                       <div class="alert alert-danger ${this.alertOpen ? 'show' : 'hide'}">
-                        <a class="close" @click=${e => this.alertOpen=false}>
+                        <a class="close" @click=${e => this.alertOpen = false}>
                             <span aria-hidden="true">&nbsp;&times;</span>
                         </a>
                         <mwc-icon>error</mwc-icon>&nbsp;&nbsp;<span class="span-message">${this.errorMessage}</span>
                       </div>
                     `
-                    :``
-                  }
+            : ``
+          }
                 </div>
               </div>
               <div class="row" style="margin:15px 0;">
@@ -696,53 +698,53 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
               <div class="row" style="margin:5px 0; margin-top:20px;">
                 <div class="btn-toolbar mb-2 mb-md-0">
                   <ul class="nav nav-pills mb-3">
-                    ${ false ? 
-                      html`
+                    ${ false ?
+            html`
                         <li class="nav-item mr-2">
                           <a href="javascript:void" @click=${e => this.filterNotebooks({ notebookType: "ZEPPELIN" })}
-                            class="nav-link ${get(this.activeFilter, "notebookType", "") === "ZEPPELIN"? "active" : ""}" disabled>
+                            class="nav-link ${get(this.activeFilter, "notebookType", "") === "ZEPPELIN" ? "active" : ""}" disabled>
                             Zeppelin Notebooks&nbsp;&nbsp;
-                            <span class="badge ${get(this.activeFilter, "notebookType", "") === "ZEPPELIN"? "badge-light" : "badge-secondary"}"">
+                            <span class="badge ${get(this.activeFilter, "notebookType", "") === "ZEPPELIN" ? "badge-light" : "badge-secondary"}"">
                               ${this.zeppelinNotebookCount}</span>
                           </a>
                         </li>
                       `
-                      :``
-                    }
+            : ``
+          }
                     <li class="nav-item mr-2">
                       <a href="javascript:void"  @click=${e => this.filterNotebooks({ notebookType: "JUPYTER" })}
-                        class="nav-link ${get(this.activeFilter,"notebookType", "") === "JUPYTER"? "active": ""}">
+                        class="nav-link ${get(this.activeFilter, "notebookType", "") === "JUPYTER" ? "active" : ""}">
                         Jupyter Notebooks&nbsp;&nbsp;
                         
-                        <span class="badge ${get(this.activeFilter, "notebookType", "") === "JUPYTER"? "badge-light" : "badge-secondary"}"">
+                        <span class="badge ${get(this.activeFilter, "notebookType", "") === "JUPYTER" ? "badge-light" : "badge-secondary"}"">
                           ${this.jupyterNotebookCount}</span>
                       </a>
                     </li>
-                    ${ false ? 
-                      html`
+                    ${ false ?
+            html`
                         <li class="nav-item mr-2">
                           <a href="javascript:void" @click=${e => this.filterNotebooks()}
-                            class="nav-link ${get(this.activeFilter, "notebookType","") === ""? "active": ""}">
+                            class="nav-link ${get(this.activeFilter, "notebookType", "") === "" ? "active" : ""}">
                             All Notebooks&nbsp;&nbsp;
-                            <span class="badge ${get(this.activeFilter, "notebookType", "") === ""? "badge-light" : "badge-secondary"}"">
+                            <span class="badge ${get(this.activeFilter, "notebookType", "") === "" ? "badge-light" : "badge-secondary"}"">
                               ${this.allNotebookCount}</span>
                           </a>
                         </li>
                       `
-                      :``
-                    }
+            : ``
+          }
                   </ul>
                   <div class="btn-toolbar mb-2 mb-md-0" style="position: absolute; right:0;">
                     <div class="dropdown">
                       <select class="custom-select mr-sm-2" id="template" @change=${e => this.sortNotebooks(e.target.value)}>
                         ${this.sortOptions.map(item => item.value === this.activeSort
-                          ? html`
+            ? html`
                             <option value="${item.value}" selected>${item.label}</option>
                           `
-                          : html`
+            : html`
                             <option value="${item.value}">${item.label}</option>
                           `
-                        )}
+          )}
                       </select>
                     </div>
                     <div class="btn-group mr-2">
@@ -761,31 +763,31 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
 
               <div class="row" style="margin-top:10px;">
                 ${this.notebooks.map(
-                  item =>
-                    html`
+            item =>
+              html`
                     <div class="col-md-3">
                       <div class="card-shadow card card-link mb-3 mb-5 bg-white">
                         <div class="card-body">
                           <div>
                             <a href="javascript:void" @click=${e => this.userAction("view-notebook", item.noteBookId, item.name)}>
                               <h4 class="notebook-name">${item.name}</h4>
-                              <span><strong>Notebook Type</strong>: &nbsp; ${item.notebookType}</span>
+                              <span><strong>Type</strong>: &nbsp; ${item.notebookType}</span>
                               <br />
-                              <span><strong>Notebook Version</strong>: &nbsp;
+                              <span><strong>Version</strong>: &nbsp;
                                 ${item.version}</span>
                               <br />
-                              <strong>Notebook Status</strong>: &nbsp;
+                              <strong>Status</strong>: &nbsp;
                               ${item.status === "ACTIVE"
-                                ? html`
+                  ? html`
                                   <span class="active-status">${item.status}</span>
                                 `
-                                : html`
+                  : html`
                                   <span class="inactive-status">${item.status}</span>
                                 `}
                               <br/>
-                              <span><strong>Creation Date</strong>: &nbsp; ${item.createdTimestamp}</span>
+                              <span><strong>Creation Date</strong>: &nbsp; ${moment(item.createdTimestamp).format('YYYY-MM-DD')}</span>
                               <br/>
-                              <span><strong>Modified Date</strong>: &nbsp; ${item.createdTimestamp}</span>
+                              <span><strong>Modified Date</strong>: &nbsp; ${moment(item.createdTimestamp).format('YYYY-MM-DD')}</span>
                               <br/><br/>
                             </a>
                           </div>
@@ -798,7 +800,7 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
                               </div>
                             <div>
                             ${item.status === "ACTIVE"
-                              ? html`
+                  ? html`
                                 <a href="javascript:void" @click="${e => this.launchNotebook(item.noteBookId)}"
                                   class="btnIcon btn btn-sm my-1 mr-1" data-toggle="tooltip" data-placement="top" title="Launch Notebook">
                                   <mwc-icon class="mwc-icon-gray">launch</mwc-icon>
@@ -808,7 +810,7 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
                                   <mwc-icon class="mwc-icon-gray">archive</mwc-icon>
                                 </a>
                               `
-                              : html`
+                  : html`
                                 <a href="javascript:void" @click="${e => this.openRestoreDialog(item.noteBookId, item.name)}"
                                   class="btnIcon btn btn-sm my-1 mr-1" data-toggle="tooltip" data-placement="top" title="Unarchive Notebook">
                                   <mwc-icon class="mwc-icon-gray">restore_from_trash</mwc-icon>
@@ -823,7 +825,7 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
                       </div>
                     </div>
                   `
-                )}
+          )}
               </div>
 
               <div class="row">
@@ -833,18 +835,18 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
                     <ul class="pagination justify-content-end">
                       <li class="page-item">
                         <a href="javascript:void" @click=${e => this.navigatePage("first")}
-                          class="page-link ${this.currentPage !== 1? "active" : "inactive"}">First</a>                          
+                          class="page-link ${this.currentPage !== 1 ? "active" : "inactive"}">First</a>                          
                       </li>
                       <li class="page-item">
-                        <a class="page-link ${this.currentPage !== 1? "active" : "inactive"}" href="javascript:void" 
+                        <a class="page-link ${this.currentPage !== 1 ? "active" : "inactive"}" href="javascript:void" 
                           @click=${e => this.navigatePage("previous")} >Previous</a>
                       </li>
                       <li class="page-item">
-                        <a class="page-link ${this.currentPage < this.totalPages? "active" : "inactive"}" href="javascript:void" 
+                        <a class="page-link ${this.currentPage < this.totalPages ? "active" : "inactive"}" href="javascript:void" 
                           @click=${e => this.navigatePage("next")} >Next</a>
                       </li>
                       <li class="page-item">
-                        <a class="page-link ${this.currentPage < this.totalPages? "active" : "inactive"}" href="javascript:void" 
+                        <a class="page-link ${this.currentPage < this.totalPages ? "active" : "inactive"}" href="javascript:void" 
                           @click=${e => this.navigatePage("last")} >Last</a>
                       </li>
                       &nbsp;&nbsp;&nbsp;&nbsp;
@@ -856,7 +858,7 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
             </div>
           </div>
         `
-      : html`
+        : html`
       `}
       
       ${this.view === 'add'
@@ -866,23 +868,23 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
             <div class="row">
               <div class="col-lg-12">
                 ${this.successMessage !== ''
-                  ? html`
+            ? html`
                     <div class="alert alert-success ${this.alertOpen ? 'show' : 'hide'}">
                       <a class="close" @click=${e => this.alertOpen = false}>
                         <span aria-hidden="true">&nbsp;&times;</span>
                       </a> <mwc-icon>done_outline</mwc-icon>&nbsp;&nbsp;<span class="span-message">${this.successMessage}</span>
                     </div>
                   `: ``
-                }
+          }
                 ${this.errorMessage !== ''
-                  ? html`
+            ? html`
                     <div class="alert alert-danger ${this.alertOpen ? 'show' : 'hide'}">
                       <a class="close" @click=${e => this.alertOpen = false}>
                           <span aria-hidden="true">&nbsp;&times;</span>
                       </a>  <mwc-icon>error</mwc-icon>&nbsp;&nbsp;<span class="span-message">${this.errorMessage}</span>
                     </div>
                   `: ``
-                }
+          }
               </div>
             </div>
             <div class="row" style="margin:5px 0">
@@ -907,18 +909,18 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
                       <h4 class="textColor card-title">Notebooks</h4>
                       <div style="position: absolute; right:0">
                         ${
-                          this.cardShow === false
-                          ? html`
+          this.cardShow === false
+            ? html`
                             <a class="toggle-a btn btn-sm btn-secondary my-2" @click=${e => this.cardShow = true}>
                               <span class="toggle-plus-span toggle-span">+</span>
                             </a>
                           `
-                          : html`
+            : html`
                             <a class="toggle-a btn btn-sm btn-secondary my-2" @click=${e => this.cardShow = false}>
                               <span class="toggle-span">-</span>
                             </a>
                           `
-                        }
+          }
                         &nbsp;&nbsp;&nbsp;&nbsp;
                       </div>
                     </div>

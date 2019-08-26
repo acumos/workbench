@@ -17,23 +17,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ===============LICENSE_END=========================================================
 */
-
+require('dotenv').config();
 var express = require("express");
 var https = require("https");
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var methodOverride = require('method-override');
+var cors = require('cors')
 
 var app = express();
-var port = process.env.PORT || 9087;
-
-//To allow cross origin requests
-app.use(function(req, res, next) {
-	res.setHeader("Access-Control-Allow-Methods", "POST, PUT, OPTIONS, DELETE, GET");
-	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, auth");
-	res.header("Access-Control-Allow-Origin", "*");
-	next();
-});
+var port = process.env.PORT;
+app.use(cors());
 
 app.use(express.static("../component/build/default"));
 app.use(cookieParser());
@@ -44,7 +38,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.raw());
 
 app.use(bodyParser.urlencoded({
-	extended : true,
+	extended: true,
 }));
 
 app.use(bodyParser.text());
@@ -52,8 +46,8 @@ app.use(bodyParser.text());
 require('./routes_services.js')(app);
 
 
-var server = app.listen(port, function() {
-	console.info('running on ...'+ port);
+var server = app.listen(port, function () {
+	console.info('running on ...' + port);
 });
 
-server.timeout = process.env.timeout || 840000; 
+server.timeout = parseInt(process.env.TIMEOUT) || 840000; 

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4c80624_8162888e",
+        "filename": "model-service/pom.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-08-27T08:31:20Z",
+      "side": 1,
+      "message": "replace NEXUS3 with CONTAINER",
+      "range": {
+        "startLine": 45,
+        "startChar": 30,
+        "endLine": 45,
+        "endChar": 36
+      },
+      "revId": "c19a21ea69f6e070604bab96c5bf5a3ae7b23f40",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}

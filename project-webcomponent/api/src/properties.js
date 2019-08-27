@@ -30,6 +30,7 @@ var config = {
 		pipelineWikiURL : "https://wiki.acumos.org/display/TRAIN",
 		modelWikiURL : "https://wiki.acumos.org/display/TRAIN",
 		portalBEURL : "http://localhost:8083",
+		portalFEURL: "http://localhost:8085",
 		pipelineFlag : "true",
 		createTimeout: 60000
 	},
@@ -44,6 +45,7 @@ var config = {
 		pipelineWikiURL : process.env.pipelineWikiURL,
 		modelWikiURL : process.env.modelWikiURL,
 		portalBEURL : process.env.portalBEURL,
+		portalFEURL : process.env.portalFEURL,
 		pipelineFlag : process.env.pipelineFlag,
 		createTimeout: process.env.createTimeout
 	}

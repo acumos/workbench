@@ -23,17 +23,12 @@ var https = require("https");
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var methodOverride = require('method-override');
+var cors = require('cors');
 
 var app = express();
 var port = process.env.PORT || 9082;
 
-//To allow cross origin requests
-app.use(function(req, res, next) {
-	res.setHeader("Access-Control-Allow-Methods", "POST, PUT, OPTIONS, DELETE, GET");
-	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-	res.header("Access-Control-Allow-Origin", "*");
-	next();
-});
+app.use(cors());
 
 app.use(express.static("../component/dist"));
 app.use(cookieParser());

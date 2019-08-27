@@ -24,7 +24,6 @@ import { filter, differenceWith } from "lodash-es";
 import { OmniModal, OmniDialog } from "./@workbenchcommon/components";
 import { Forms, DataSource } from "./@workbenchcommon/core";
 import { ValidationMixin, DataMixin, BaseElementMixin } from "./@workbenchcommon/mixins";
-import { dayjs } from 'dayjs';
 
 class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMixin(LitElement))) {
 	get dependencies() {
@@ -72,8 +71,6 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 	}
 
 	constructor() {
-		var d = dayjs;
-		debugger;
 		super();
 		this.view = '';
 		this.notebooks = [];

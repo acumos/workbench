@@ -41,6 +41,7 @@ module.exports = function(app) {
 	};
 	const pipelineFlag = properties.pipelineFlag;
 	const portalBEUrl = properties.portalBEURL;
+	const portalFEUrl = properties.portalFEURL;
 
 	var getUserName = function (req){
 		let userName = '';
@@ -61,8 +62,8 @@ module.exports = function(app) {
 	
 	app.get('/api/config', function(req, res) {
 		try {
-			let userName = process.env.AUTH_USER || getUserName(req);
-			let authToken = process.env.AUTH_TOKEN || getLatestAuthToken(req, '');
+			let userName = getUserName(req);
+			let authToken = getLatestAuthToken(req, '');
 			
 			res.configInfo = {
 				configENV : configENV,
@@ -71,6 +72,7 @@ module.exports = function(app) {
 				authToken: authToken,
 				wikiConfig: wiki_urls,
 				portalBEUrl: portalBEUrl,
+				portalFEUrl: portalFEUrl,
 				pipelineFlag: pipelineFlag,
 				createTimeout: createTimeout
 			};

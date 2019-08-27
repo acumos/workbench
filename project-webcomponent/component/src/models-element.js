@@ -66,9 +66,10 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 			modelCatalogs : [],
 			selectedCatalog : {type: String },
 			selectedCategory : {type: String },
-      selectedVersionModel: [],
-      modelCatalogsDropdown: [],
-      modelsFilteredCategory:[],
+			parentMsg: {type: String },
+			selectedVersionModel: [],
+			modelCatalogsDropdown: [],
+			modelsFilteredCategory:[],
 			modelsDropdown: [],
 		};
 	}
@@ -126,7 +127,8 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 		this.models = [];
 		this.modalDismissed();
 		this.requestUpdate().then(() => {
-		  this.componenturl = (this.componenturl === undefined || this.componenturl === null) ? '' : this.componenturl;
+			this.componenturl = (this.componenturl === undefined || this.componenturl === null) ? '' : this.componenturl;
+			this.parentMsg = (this.parentMsg === undefined || this.parentMsg === null)? '' : this.parentMsg;
 			this.getConfig();
 		});
 	}
@@ -274,6 +276,7 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 			this.modelmSURL = envVar.msconfig.modelmSURL;
 			this.modelWikiURL = envVar.wikiConfig.modelWikiURL;
 			this.portalBEUrl = envVar.portalBEUrl;
+			this.portalFEUrl = envVar.portalFEUrl;
 			let username = envVar.userName;
 			let token = envVar.authToken;
 			this.getModelList();
@@ -427,6 +430,7 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 			tempModel.modelCatalog = item.modelId.metrics.kv[2].value;
 			tempModel.publishStatus = item.modelId.metrics.kv[1].value;
 			tempModel.associationId = item.modelId.metrics.kv[3].value;
+			tempModel.revisionId = item.modelId.metrics.kv[4].value;
       this.modelsList.push(tempModel);
     });
     this.displayModels();
@@ -601,6 +605,7 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 			
 			tempModel.modelCatalog = item.modelId.metrics.kv[2].value;
 			tempModel.publishStatus = item.modelId.metrics.kv[1].value;
+			tempModel.revisionId = item.modelId.metrics.kv[4].value;
       allModels.push(tempModel);
     });
     this.getAllModels(allModels);
@@ -819,6 +824,16 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
     this.deleteModelAssociation();
 	}
 
+	navigateToModelDetails(item){
+    if(this.parentMsg === "iframeMsg"){
+	    window.top.postMessage('navigateToMyModelDetails?'+item.modelId+'?'+item.revisionId, '*');
+    } else{
+      this.myModelDetailsUrl = this.portalFEUrl + '/#/marketSolutions?solutionId='+item.solutionId+'&revisionId='+item.revisionId+'&parentUrl=mymodel';
+      window.open(this.myModelDetailsUrl, '_blank');
+    }
+  }
+
+
 	getStatusView(state) {
 		switch (state.type) {
 			case 'error':
@@ -1010,15 +1025,6 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 		<form novalidate>
 			<p class="text-danger">${this.data.editErrorMessage}</p>
 			<div class="row">
-			<div class="col">
-				<div class="form-group">
-					<label>Model Catalog <small class="text-danger">*</small></label>
-					<input type="text" class="form-control" placeholder="Model Catalog" value="${this.data.editModel.modelId.metrics.kv[2].value}"  disabled/>
-				</div>
-			</div>
-		</div>
-		<br/>
-			<div class="row">
 				<div class="col">
 					<div class="form-group">
 						<label>Model Category <small class="text-danger">*</small></label>
@@ -1068,6 +1074,23 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 					</div>
 				</div>
 			</div>	
+			<br/>
+			<div class="row">
+			<div class="col">
+				<div class="form-group">
+					<label>Model Catalog <small class="text-danger">*</small></label>
+					${(this.data.editModel.modelId.metrics.kv[2].value === "None")
+					? html`
+						<input type="text" class="form-control" placeholder="Model Catalog" value="Private Catalog"  disabled/>
+					`
+					: html`
+						<input type="text" class="form-control" placeholder="Model Catalog" value="${this.data.editModel.modelId.metrics.kv[2].value}"  disabled/>
+					`
+					}															
+			
+				</div>
+			</div>
+		</div>
 		</form>
 	</omni-modal>
 
@@ -1159,10 +1182,11 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 										<tr class="d-flex">
 											<th class="col-1" >#</th>
 											<th class="col-2" >Model Name</th>
-											<th class="col-1" >Status</th>
+											<th class="col-1" >Model Catalog</th>
 											<th class="col-2" >Model Category</th>
-											<th class="col-2" >Version</th>
-											<th class="col-2" >Model Publish Status</th>
+											<th class="col-1" >Status</th>
+											<th class="col-1" >Version</th>
+											<th class="col-2" >Publish Status</th>
 											<th class="col-2">Actions</th>
 										</tr>
 									</thead>
@@ -1174,9 +1198,18 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 												<tr class="d-flex">
 													<td class="col-1">${(this.currentPage-1) * 5 + ++index}</td>
 													<td class="col-2">${item.name}</td>
-													<td class="col-1">${item.status}</td>
+													<td class="col-1">${item.modelCatalog === 'None'
+														? html`
+														Private Catalog
+														`
+														: html`
+														${item.modelCatalog}
+														`
+														}
+													</td>
 													<td class="col-2">${item.modelType}</td>
-													<td class="col-2">${item.version}</td>
+													<td class="col-1">${item.status}</td>
+													<td class="col-1">${item.version}</td>
 													<td class="col-2">${item.publishStatus === 'true'
 													? html`
 													<mwc-icon class="mwc-icon-primary">backup</mwc-icon>
@@ -1191,7 +1224,7 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 														<a href="javascript:void" @click=${(e) => this.openModalEdit(item)}   class="btnIcon btn btn-sm btn-primary my-1 mr-1" data-toggle="tooltip" data-placement="top" title="Edit Model Association">
 																<mwc-icon class="mwc-icon-primary">edit</mwc-icon>
 														</a>&nbsp;
-														<a href="javascript:void" @click=${e => this.userAction(item)} class="btnIcon btn btn-sm btn-secondary my-1 mr-1 " data-toggle="tooltip" data-placement="top" title="view Model" disabled>
+														<a href="javascript:void" @click=${e => this.navigateToModelDetails(item)} class="btnIcon btn btn-sm btn-secondary my-1 mr-1 " data-toggle="tooltip" data-placement="top" title="view Model" disabled>
 																<mwc-icon class="mwc-icon-secondary">visibility</mwc-icon>
 														</a>&nbsp;
 														<a href="javascript:void" @click=${(e) => this.openDeleteAssociationDialog(item)} class="btnIcon btn btn-sm btn-secondary my-1 mr-1" data-toggle="tooltip" data-placement="top" title="Delete Model Association">

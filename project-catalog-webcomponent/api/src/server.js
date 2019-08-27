@@ -18,7 +18,6 @@ limitations under the License.
 ===============LICENSE_END=========================================================
 */
 
-require('dotenv').config();
 var express = require("express");
 var https = require("https");
 var bodyParser = require('body-parser');
@@ -27,11 +26,9 @@ var methodOverride = require('method-override');
 var cors = require('cors')
 
 var app = express();
-var port = process.env.PORT;
+var port = process.env.PORT || 9085;
 
-var cors = require('cors')
-
-
+app.use(cors());
 app.use(express.static("../component/build/default"));
 app.use(cookieParser());
 app.use(methodOverride());
@@ -52,4 +49,4 @@ var server = app.listen(port, function() {
 	console.info('running on ...'+ port);
 });
 
-server.timeout = parseInt(process.env.TIMEOUT) || 840000; 
+server.timeout = process.env.timeout || 840000; 

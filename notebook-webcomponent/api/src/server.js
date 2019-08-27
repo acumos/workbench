@@ -17,7 +17,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ===============LICENSE_END=========================================================
 */
-require('dotenv').config();
+
 var express = require("express");
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
@@ -25,7 +25,7 @@ var methodOverride = require('method-override');
 var cors = require('cors')
 
 var app = express();
-var port = process.env.PORT;
+var port = process.env.PORT || 9086;
 
 app.use(cors());
 

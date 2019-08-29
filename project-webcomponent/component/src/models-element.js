@@ -605,7 +605,6 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 			
 			tempModel.modelCatalog = item.modelId.metrics.kv[2].value;
 			tempModel.publishStatus = item.modelId.metrics.kv[1].value;
-			tempModel.revisionId = item.modelId.metrics.kv[4].value;
       allModels.push(tempModel);
     });
     this.getAllModels(allModels);

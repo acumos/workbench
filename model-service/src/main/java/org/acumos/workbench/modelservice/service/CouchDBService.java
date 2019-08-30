@@ -43,12 +43,14 @@ import org.acumos.workbench.modelservice.exceptionhandling.AssociationException;
 import org.acumos.workbench.modelservice.exceptionhandling.CouchDBException;
 import org.acumos.workbench.modelservice.lightcouch.DataSetModel;
 import org.acumos.workbench.modelservice.util.AssociationStatus;
+import org.acumos.workbench.modelservice.util.ConfigurationProperties;
 import org.acumos.workbench.modelservice.util.ModelServiceConstants;
 import org.lightcouch.CouchDbClient;
 import org.lightcouch.NoDocumentException;
 import org.lightcouch.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -57,6 +59,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class CouchDBService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+	
+	@Autowired
+	private ConfigurationProperties configurationProperties;
 
 	/**
 	 * To Insert Project Model Association in Couch DB
@@ -71,9 +76,8 @@ public class CouchDBService {
 	 */
 	public DataSetModel insertProjectModelAssociation(DataSetModel modelData, Model model, MLPUser mlpUser) {
 		logger.debug("InsertProjectModelAssociation() Begin");
-		
+		CouchDbClient dbClient = getLightCouchdbClient();
 		DataSetModel dataSetModel = new DataSetModel();
-		CouchDbClient dbClient = new CouchDbClient();
 		// Need to check the ProjectId and SolutionId, RevisionId already exists in Cocuh DB or not if exists then throw the error
 		associationExistsInCouch(modelData.getProjectId(), modelData.getSolutionId(), modelData.getRevisionId());
 		Response response = new Response();
@@ -123,7 +127,7 @@ public class CouchDBService {
 	 */
 	public Model insertProjectModelAssociation(DataSetModel modelData, String modelName, Model model, MLPUser mlpUser) {
 		logger.debug("InsertProjectModelAssociation() Begin");
-		CouchDbClient dbClient = new CouchDbClient();
+		CouchDbClient dbClient = getLightCouchdbClient();
 		Model modelDetails = null;
 		DataSetModel metaData = new DataSetModel();
 		metaData.setAssociationID(UUID.randomUUID().toString());
@@ -173,8 +177,10 @@ public class CouchDBService {
 		logger.debug("getModelsAssociatedToProject() Begin");
 		String jsonQuery = String.format(ModelServiceConstants.GETMODELSASSOCIATEDTOPROJECTQUERY, projectId, AssociationStatus.DELETED.getAssociationStatusCode());
 		List<DataSetModel> dataSetModelList = null;
-		CouchDbClient dbClient = new CouchDbClient();
+		CouchDbClient dbClient = null;
+		
 		try {
+			 dbClient = getLightCouchdbClient();
 			dataSetModelList = dbClient.findDocs(jsonQuery, DataSetModel.class);
 		} catch (Exception e) {
 			logger.error("Exception occured while finding the documents in couchDB");
@@ -201,10 +207,10 @@ public class CouchDBService {
 	 */
 	public DataSetModel getAssociatedModel(String associatedId) {
 		logger.debug("getAssociatedModel() Begin");
-		CouchDbClient dbClient = null;
+		CouchDbClient dbClient = getLightCouchdbClient();
 		DataSetModel association = null;
 		try {
-			dbClient = new CouchDbClient();
+			
 			association = dbClient.find(DataSetModel.class, associatedId);
 		} catch (NoDocumentException e) {
 			logger.error("Association not found in Couch DB");
@@ -232,7 +238,7 @@ public class CouchDBService {
 	 */
 	public void deleteAssocaitedModel(String _id, String _rev) {
 		logger.debug("deleteAssocaitedModel() Begin");
-		CouchDbClient dbClient = new CouchDbClient();
+		CouchDbClient dbClient = getLightCouchdbClient();
 		try {
 			dbClient.remove(_id, _rev);
 		} catch (Exception e) {
@@ -257,7 +263,7 @@ public class CouchDBService {
 	 */
 	public void updateAssocaitedModel(DataSetModel dataSetModel) {
 		logger.debug("updateAssocaitedModel() Begin");
-		CouchDbClient dbClient = new CouchDbClient();
+		CouchDbClient dbClient = getLightCouchdbClient();
 		try {
 			dbClient.update(dataSetModel);
 		} catch (Exception e) {
@@ -279,7 +285,7 @@ public class CouchDBService {
 			String modelId, Model transportModel, MLPUser mlpUser) {
 		logger.debug("getDocuments() Begin");
 		String jsonQuery = String.format(ModelServiceConstants.GETDOCUMENTSQUERY, id,rev);
-		CouchDbClient dbClient = new CouchDbClient();
+		CouchDbClient dbClient = getLightCouchdbClient();
 		
 		// Return the Model VO to the end user.
 		Model model = new Model();
@@ -353,7 +359,7 @@ public class CouchDBService {
 	private void associationExistsInCouch(String projectId, String solutionId, String revisionId)
 			throws AssociationException {
 		logger.debug("associationExistsInCouch() Begin");
-		CouchDbClient dbClient = new CouchDbClient();
+		CouchDbClient dbClient = getLightCouchdbClient();
 		List<DataSetModel> dataSetModels = null;
 		String jsonQuery = String.format(ModelServiceConstants.ASSOCIATIONEXISTSINCOUCHQUERY, projectId, solutionId,revisionId,AssociationStatus.ACTIVE.getAssociationStatusCode());
 		try {
@@ -376,6 +382,12 @@ public class CouchDBService {
 			}
 		}
 		logger.debug("associationExistsInCouch() End");
+	}
+	
+	private CouchDbClient getLightCouchdbClient() {
+		return new CouchDbClient(configurationProperties.getCouchDbName(),
+				configurationProperties.isCreateIfnotExists(), configurationProperties.getCouchdbProtocol(),
+				configurationProperties.getCouchdbHost(), configurationProperties.getCouchdbPort(), null, null);
 	}
 
 }

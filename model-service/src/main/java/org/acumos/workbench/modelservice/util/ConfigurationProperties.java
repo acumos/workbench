@@ -25,7 +25,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ConfigurationProperties {
-	
+
 	@Value("${cmndatasvc.url}")
 	private String cmndatasvcurl;
 
@@ -34,16 +34,30 @@ public class ConfigurationProperties {
 
 	@Value("${cmndatasvc.pwd}")
 	private String cmndatasvcpwd;
-	
+
 	@Value("${resultsetSize}")
 	private int resultsetSize;
-	
+
 	@Value("${jwt.secretkey}")
 	private String jwtSecretKey;
-	
+
 	@Value("${projectservice.url}")
 	private String projectServiceURL;
-	
+
+	@Value("${couchdb.name}")
+	private String couchDbName;
+
+	@Value("${couchdb.createdb.if-not-exist}")
+	private boolean createIfnotExists;
+
+	@Value("${couchdb.protocol}")
+	private String couchdbProtocol;
+
+	@Value("${couchdb.host}")
+	private String couchdbHost;
+
+	@Value("${couchdb.port}")
+	private int couchdbPort;
 
 	/**
 	 * @return the cmndatasvcurl
@@ -86,7 +100,41 @@ public class ConfigurationProperties {
 	public String getProjectServiceURL() {
 		return projectServiceURL;
 	}
-	
-	
+
+	/**
+	 * 
+	 * @return the couchdbname
+	 */
+	public String getCouchDbName() {
+		return couchDbName;
+	}
+
+	public boolean isCreateIfnotExists() {
+		return createIfnotExists;
+	}
+
+	/**
+	 * 
+	 * @return the couchdbProtocol
+	 */
+	public String getCouchdbProtocol() {
+		return couchdbProtocol;
+	}
+
+	/**
+	 * 
+	 * @return the couchdbHost
+	 */
+	public String getCouchdbHost() {
+		return couchdbHost;
+	}
+
+	/**
+	 * 
+	 * @return the couchdbPort
+	 */
+	public int getCouchdbPort() {
+		return couchdbPort;
+	}
 
 }

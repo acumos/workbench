@@ -827,7 +827,7 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
     if(this.parentMsg === "iframeMsg"){
 	    window.top.postMessage('navigateToMyModelDetails?'+item.modelId+'?'+item.revisionId, '*');
     } else{
-      this.myModelDetailsUrl = this.portalFEUrl + '/#/marketSolutions?solutionId='+item.solutionId+'&revisionId='+item.revisionId+'&parentUrl=mymodel';
+      this.myModelDetailsUrl = this.portalFEUrl + '/#/marketSolutions?solutionId='+item.modelId+'&revisionId='+item.revisionId+'&parentUrl=mymodel';
       window.open(this.myModelDetailsUrl, '_blank');
     }
   }
@@ -870,7 +870,7 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
         <form><P>Are you sure want to delete ${this.selectedModelName} Association?</p></form>
 			</omni-dialog>
 			
-		<omni-modal title="Associate Model" close-string="Associate Model" dismiss-string="Reset"
+		<omni-modal title="Associate Model" close-string="Associate Model" dismiss-string="Cancel"
 			is-open="${this.isAssociateModelModalOpen}" @omni-modal-dimissed="${this.modalDismissed}" @omni-modal-closed="${this.modalClosedLink}"
 			canClose="">
 			<form novalidate>
@@ -1181,11 +1181,11 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 										<tr class="d-flex">
 											<th class="col-1" >#</th>
 											<th class="col-2" >Model Name</th>
-											<th class="col-1" >Model Catalog</th>
+											<th class="col-2" >Model Catalog</th>
 											<th class="col-2" >Model Category</th>
 											<th class="col-1" >Status</th>
 											<th class="col-1" >Version</th>
-											<th class="col-2" >Publish Status</th>
+											<th class="col-1" >Publish Status</th>
 											<th class="col-2">Actions</th>
 										</tr>
 									</thead>
@@ -1197,7 +1197,7 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 												<tr class="d-flex">
 													<td class="col-1">${(this.currentPage-1) * 5 + ++index}</td>
 													<td class="col-2">${item.name}</td>
-													<td class="col-1">${item.modelCatalog === 'None'
+													<td class="col-2">${item.modelCatalog === 'None'
 														? html`
 														Private Catalog
 														`
@@ -1206,10 +1206,18 @@ class ProjectModelsLitElement extends DataMixin(ValidationMixin(BaseElementMixin
 														`
 														}
 													</td>
-													<td class="col-2">${item.modelType}</td>
+													<td class="col-2">${item.modelType === 'None'
+														? html`
+														Others
+														`
+														: html`
+														${item.modelType}
+														`
+														}
+													</td>
 													<td class="col-1">${item.status}</td>
 													<td class="col-1">${item.version}</td>
-													<td class="col-2">${item.publishStatus === 'true'
+													<td class="col-1">${item.publishStatus === 'true'
 													? html`
 													<mwc-icon class="mwc-icon-primary">backup</mwc-icon>
 													`

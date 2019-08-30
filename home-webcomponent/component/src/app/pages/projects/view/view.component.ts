@@ -21,12 +21,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ScriptService } from '../../../@core/utils/script.service';
 import { BreadcrumbsService } from '../../../@core/utils/breadcrumbs.service';
 import { BaseComponent } from '../../base/base.component';
+import { Globals } from '../../../globals';
 
 @Component({
   templateUrl: './view.component.html',
 })
 export class ViewComponent extends BaseComponent implements OnInit {
 
+  public parentMsg: any;
+  public retry: number;
   public id: string;
   public name: string;
   public router: Router;
@@ -42,7 +45,7 @@ export class ViewComponent extends BaseComponent implements OnInit {
     { name: 'ML Workbench', sref: '/pages/dashboard' },
     { name: 'Projects', sref: '/pages/projects/catalog' }];
 
-  constructor(private route: ActivatedRoute, router: Router, script: ScriptService, breadcrumbsService: BreadcrumbsService) {
+  constructor(private route: ActivatedRoute, router: Router, script: ScriptService, breadcrumbsService: BreadcrumbsService, private globals: Globals) {
     super(router, script, breadcrumbsService);
   }
 
@@ -59,6 +62,19 @@ export class ViewComponent extends BaseComponent implements OnInit {
     this.id = this.route.snapshot.paramMap.get('id');
     this.name = this.route.snapshot.paramMap.get('name');
     this.breadCrumbs.push({ name: this.name });
-    this.loadComponent('projectComponent', 'project-element', this.breadCrumbs);
+    this.retry = 0;
+    this.getGlobalMsg();
+  }
+
+  getGlobalMsg() {
+    if (this.retry === 5 || this.globals.parentMsg !== undefined) {
+      this.parentMsg = this.globals.parentMsg;
+      this.loadComponent('projectComponent', 'project-element', this.breadCrumbs);
+      return;
+    }
+    setTimeout( () => {
+      ++this.retry;
+      this.getGlobalMsg();
+    }, 1000);
   }
 }

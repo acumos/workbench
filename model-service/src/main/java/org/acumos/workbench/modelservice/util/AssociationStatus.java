@@ -18,33 +18,26 @@
  * ===============LICENSE_END=========================================================
  */
 
-package org.acumos.workbench.modelservice.service;
+package org.acumos.workbench.modelservice.util;
 
-import org.acumos.workbench.common.exception.InvalidInputJSONException;
-import org.acumos.workbench.common.exception.ValueNotFoundException;
-import org.acumos.workbench.common.vo.Model;
+public enum AssociationStatus {
+	ACTIVE("AC"), // READY FOR USE
+	INVALID("IN"),
+	DELETED("DL");
+	
+	private final String code;
 
-public interface InputValidationService {
-	
+	private AssociationStatus(String code) {
+		this.code = code;
+	}
+
 	/**
-	 * To check if value is present i.e, value is not null or Empty. 
-	 * 
-	 * @param fieldName
-	 * 		The name of the filed to be shown in the error message. 
-	 * @param value
-	 * 		The value to be validated
-	 * @throws ValueNotFoundException
-	 * 		throws ValueNotFoundException in case value is null or empty.
+	 * @return the serviceStatusCode
 	 */
-	public void isValuePresent(String fieldName, String value) throws ValueNotFoundException;
+	public String getAssociationStatusCode() {
+		return code;
+	}
 	
-	/**
-	 * To validate the input Json value of Model
-	 * @param model
-	 * 			the model object with input values
-	 * @throws InvalidInputJSONException
-	 * 			throws InvalidInputJSONException in case of error in the input JSON
-	 */
-	public void validateModelInputJson(Model model) throws InvalidInputJSONException;
 	
+
 }

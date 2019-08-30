@@ -182,7 +182,7 @@ public class CouchDBService {
 		try {
 			 dbClient = getLightCouchdbClient();
 			dataSetModelList = dbClient.findDocs(jsonQuery, DataSetModel.class);
-		} catch (Exception e) {
+		} catch (CouchDBException e) {
 			logger.error("Exception occured while finding the documents in couchDB");
 			throw new CouchDBException("Exception occured while finding the documents in couchDB");
 		} finally {
@@ -387,7 +387,8 @@ public class CouchDBService {
 	private CouchDbClient getLightCouchdbClient() {
 		return new CouchDbClient(configurationProperties.getCouchDbName(),
 				configurationProperties.isCreateIfnotExists(), configurationProperties.getCouchdbProtocol(),
-				configurationProperties.getCouchdbHost(), configurationProperties.getCouchdbPort(), null, null);
+				configurationProperties.getCouchdbHost(), configurationProperties.getCouchdbPort(),
+				configurationProperties.getCouchdbUser(), configurationProperties.getCouchdbPwd());
 	}
 
 }

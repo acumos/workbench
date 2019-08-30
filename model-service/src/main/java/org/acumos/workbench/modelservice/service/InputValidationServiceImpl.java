@@ -72,14 +72,12 @@ public class InputValidationServiceImpl implements InputValidationService{
 						result = true;
 					}
 				}
-			}
-			if (null != model.getModelId().getMetrics()) {
-				KVPairs kvPairs = model.getModelId().getMetrics();
-				if (null != kvPairs) {
+				if (null != model.getModelId().getMetrics()) {
+					KVPairs kvPairs = model.getModelId().getMetrics();
 					List<KVPair> kvPairList = kvPairs.getKv();
 					if (null != kvPairList && !kvPairList.isEmpty()) {
 						for (KVPair kvPair : kvPairList) {
-							if (null != kvPair.getKey() && !kvPair.getKey().equals("") && null != kvPair.getValue()
+							if (null != kvPair.getKey() && null != kvPair.getValue() && !kvPair.getKey().equals("")
 									&& !kvPair.getValue().equals("")) {
 								if (kvPair.getKey().equals(ModelServiceConstants.CATALOGNAMES)) {
 									result = true;
@@ -100,8 +98,6 @@ public class InputValidationServiceImpl implements InputValidationService{
 				} else {
 					result = false;
 				}
-			} else {
-				result = false;
 			}
 		}
 		if (!result) {

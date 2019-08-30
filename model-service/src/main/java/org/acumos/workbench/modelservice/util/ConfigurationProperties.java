@@ -43,6 +43,12 @@ public class ConfigurationProperties {
 
 	@Value("${projectservice.url}")
 	private String projectServiceURL;
+	
+	@Value("${couchdb.user}")
+	private String couchdbUser;
+	
+	@Value("${couchdb.pwd}")
+	private String couchdbPwd;
 
 	@Value("${couchdb.name}")
 	private String couchDbName;
@@ -99,6 +105,21 @@ public class ConfigurationProperties {
 	 */
 	public String getProjectServiceURL() {
 		return projectServiceURL;
+	}
+	
+
+	/**
+	 * @return the couchdbUser
+	 */
+	public String getCouchdbUser() {
+		return couchdbUser;
+	}
+
+	/**
+	 * @return the couchdbPwd
+	 */
+	public String getCouchdbPwd() {
+		return couchdbPwd;
 	}
 
 	/**

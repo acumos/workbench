@@ -269,7 +269,7 @@ public class ModelServiceImpl implements ModelService {
 						result.add(associatedModel);
 					}
 				}
-			} catch (Exception e) {
+			} catch (TargetServiceInvocationException e) {
 				logger.error(props.getCdsGetProjectModelsExcp());
 				throw new TargetServiceInvocationException(props.getCdsGetProjectModelsExcp());
 			}

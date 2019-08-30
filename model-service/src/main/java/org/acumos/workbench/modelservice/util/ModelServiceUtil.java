@@ -84,7 +84,6 @@ public class ModelServiceUtil {
 	 * 			Returns Model VO instance corresponding to input MLPModel, with some additional details
 	 */
 	public static Model getModelVO(MLPSolution mlpSolution,MLPSolutionRevision mlpSolRevision,List<MLPCatalog> mlpCatalogs, MLPUser mlpUser) {
-		logger.debug("getModelVO() Begin");
 		Model model = null;
 		if(null != mlpSolution) { 
 			model = new Model();
@@ -131,13 +130,11 @@ public class ModelServiceUtil {
 			serviceStatus.setStatus(ServiceStatus.ACTIVE);
 			model.setServiceStatus(serviceStatus);
 		}
-		logger.debug("getModelVO() End");
 		return model;
 		
 	}
 
 	private static KVPairs getKVPairDetails(MLPSolution mlpSolution, List<MLPCatalog> mlpCatalogs) {
-		logger.debug("getKVPairDetails() Begin");
 		// MODEL_TYPE_CODE
 		KVPair modelCategory = new KVPair();
 		modelCategory.setKey(MODEL_TYPE_CODE);
@@ -179,7 +176,6 @@ public class ModelServiceUtil {
 		kvPairList.add(toolKitTypeCode);
 		KVPairs kvPairs = new KVPairs();
 		kvPairs.setKv(kvPairList);
-		logger.debug("getKVPairDetails() End");
 		return kvPairs;
 	}
 	

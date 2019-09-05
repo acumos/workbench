@@ -216,6 +216,7 @@ public class NotebookServiceUtil {
 			result.setVersion(version.getLabel());
 		}
 		result.setModified(Instant.now());
+		result.setServiceUrl(notebook.getNoteBookId().getServiceUrl());
 		logger.debug("updateMLPNotebook() End");
 		return result;
 	}

@@ -27,6 +27,8 @@ module.exports = function(app) {
 	const uripath = "/users/";
 	const configENV = properties.ENVIRONMENT;
 	const createTimeout = properties.createTimeout;
+	const useExternalNotebook = properties.useExternalNotebook;
+	const useExternalPipeline = properties.useExternalPipeline;
 	const wiki_urls = {
 		projectWikiURL: properties.projectWikiURL,
 		notebookWikiURL: properties.notebookWikiURL,
@@ -74,7 +76,9 @@ module.exports = function(app) {
 				portalBEUrl: portalBEUrl,
 				portalFEUrl: portalFEUrl,
 				pipelineFlag: pipelineFlag,
-				createTimeout: createTimeout
+				createTimeout: createTimeout,
+				useExternalNotebook: useExternalNotebook,
+				useExternalPipeline: useExternalPipeline
 			};
 			res.send(res.configInfo);
 		} catch (err) {

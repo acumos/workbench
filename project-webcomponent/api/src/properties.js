@@ -32,7 +32,9 @@ var config = {
 		portalBEURL : "http://localhost:8083",
 		portalFEURL: "http://localhost:8085",
 		pipelineFlag : "true",
-		createTimeout: 60000
+		createTimeout: 60000,
+		useExternalNotebook: "true",
+		useExternalPipeline: "true"
 	},
 	deploy : {
 		ENVIRONMENT : process.env.ENVIRONMENT,
@@ -47,7 +49,9 @@ var config = {
 		portalBEURL : process.env.portalBEURL,
 		portalFEURL : process.env.portalFEURL,
 		pipelineFlag : process.env.pipelineFlag,
-		createTimeout: process.env.createTimeout
+		createTimeout: process.env.createTimeout,
+		useExternalNotebook: process.env.useExternalNotebook,
+		useExternalPipeline: process.env.useExternalPipeline
 	}
 };
 

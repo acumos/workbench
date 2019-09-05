@@ -49,6 +49,7 @@ export class NotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 				authToken: {type: String, notify: true},
 				noteBookId: { type: String, notify: true },
 				notebookName: { type: String, notify: true },
+				useExternalNotebook: { type: String }
 			};
 		}
 		
@@ -66,20 +67,7 @@ export class NotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 		constructor() {
 			super();
 
-			this.$validations.init({
-        validations: {
-          notebook: {
-            notebookName: { 
-							isNotEmpty: Forms.validators.isNotEmpty,
-              pattern: Forms.validators.pattern('^[a-zA-Z][a-zA-Z0-9_]{5,29}$')
-						},
-            notebookVersion: { 
-							isNotEmpty: Forms.validators.isNotEmpty,
-							pattern: Forms.validators.pattern('^[a-zA-Z0-9_.]{1,14}$')
-						},
-          }
-        }
-			})
+			this.initializeValidations();
 			
 			this.data = {
 				notebook: {
@@ -89,7 +77,8 @@ export class NotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 					notebookStatus: '',
           noteBookId: '',
           notebookCreateDate: '',
-          notebookModifyDate: ''
+					notebookModifyDate: '',
+					serviceUrl: ''
 				}
 			}
 
@@ -103,6 +92,31 @@ export class NotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 			})
 		}
 			
+		initializeValidations() {
+			this.$validations.init({
+				validations: {
+					newNotebook: {
+						noteBookId: {
+							name: {
+								isNotEmpty: Forms.validators.isNotEmpty,
+								pattern: Forms.validators.pattern('^[a-zA-Z][a-zA-Z0-9_]{5,29}$')
+							},
+							versionId: {
+								label: {
+									isNotEmpty: Forms.validators.isNotEmpty,
+									pattern: Forms.validators.pattern('^[a-zA-Z0-9_.]{1,14}$')
+								}
+							},
+							serviceUrl: this.useExternalNotebook === 'true' ? {
+								isNotEmpty: Forms.validators.isNotEmpty,
+								pattern: Forms.validators.pattern('https://.*')
+							} : {}
+						}
+					}
+				}
+			});
+		}
+
 		connectedCallback() {
 			super.connectedCallback();			
 			window.addEventListener('hashchange', this._boundListener);
@@ -126,7 +140,8 @@ export class NotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 					let username = envVar.userName;
         	let token = envVar.authToken;
 					this.notebookWikiURL = envVar.notebookWikiURL;
-
+					this.useExternalNotebook = envVar.useExternalNotebook;
+					this.initializeValidations();
 					if(this.userName && this.userName !== '' && this.authToken && this.authToken !== '') {
 						this.resetActiveFilter = true;
 						this.getNotebookDetails(true);
@@ -200,10 +215,11 @@ export class NotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
       this.$data.set('notebook.notebookStatus', notebook.artifactStatus.status, true);
 			this.$data.set('notebook.noteBookId', notebook.noteBookId.uuid, true);
 			this.$data.set('notebook.notebookType', notebook.notebookType, true);
+			this.$data.set('notebook.serviceUrl', notebook.noteBookId.serviceUrl, true);
 			this.notebookName = this.data.notebook.notebookName;
 		}
 		
-		createUdpateFormData(){
+		createUpdateFormData(){
 			let notebook = {};
 			notebook.noteBookId = {};
 			notebook.artifactStatus = {};
@@ -215,6 +231,7 @@ export class NotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 			notebook.noteBookId.versionId.timeStamp = this.data.notebook.notebookCreateDate ;
 			notebook.noteBookId.versionId.label = this.data.notebook.notebookVersion;
 			notebook.artifactStatus.status = this.data.notebook.notebookStatus;
+			notebook.noteBookId.serviceUrl = this.data.notebook.serviceUrl;
 			return notebook;
 		}
 
@@ -245,7 +262,7 @@ export class NotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 					"userName": this.userName,
 					"url": this.notebookmSURL,
 					"noteBookId" : this.noteBookId,
-					"notebookPayload": this.createUdpateFormData()
+					"notebookPayload": this.createUpdateFormData()
 				})
 			}).then(res => res.json())
 				.then((n) => {
@@ -675,6 +692,40 @@ export class NotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 													`
 												}
 											</tr>
+											${this.useExternalNotebook === "true"
+											? html`
+												<tr>
+													<td class="highlight">Notebook URL</td>
+													${this.isEdit 
+														? html`
+															<td>
+																<input type="url" value=${this.data.notebook.serviceUrl} class="form-control" id="serviceUrl" 
+																	placeholder="Enter notebook URL"
+																	@keyup=${(e) => {
+																		this.$data.set('notebook.serviceUrl', e);
+																		this.$validations.validate('notebook.serviceUrl');
+																	}}
+																>
+																${
+																	this.$validations.getValidationErrors('notebook.serviceUrl').map(error => {
+																		switch (error) {
+																			case 'isNotEmpty':
+																				return html`<div class="invalid-feedback d-block">Notebook URL is required</div>`
+																			case 'pattern':
+																				return html`<div class="invalid-feedback d-block">Notebook URL should begin with https://</div>`
+																		}
+																	})
+																}
+															</td>
+														`
+														: html`
+															<td>${this.data.notebook.serviceUrl}</td>
+														`
+													}
+												</tr>
+											`
+											: ``
+										}
 										</tbody>
 									</table>  					
 								</div>

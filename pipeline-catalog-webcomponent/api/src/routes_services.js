@@ -29,6 +29,7 @@ module.exports = function(app) {
 	const configENV = properties.ENVIRONMENT;
 	const pipelineWikiURL = properties.pipelineWikiURL;
 	const createTimeout = properties.createTimeout;
+	const useExternalPipeline = properties.useExternalPipeline;
 	const ms_urls = {
 		projectmSURL : properties.projectmSURL,
 		pipelinemSURL : properties.pipelinemSURL,
@@ -63,7 +64,8 @@ module.exports = function(app) {
 				userName:  userName,
 				authToken: authToken,
 				pipelineWikiURL: pipelineWikiURL,
-				createTimeout: createTimeout
+				createTimeout: createTimeout,
+				useExternalPipeline: useExternalPipeline
 			};
 			res.send(res.configInfo);
 		} catch (err) {

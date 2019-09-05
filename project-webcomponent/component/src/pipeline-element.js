@@ -61,7 +61,8 @@ class ProjectPipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
 			authToken: {type: String, notify: true},
 			createTimeout: {type: Number, notify: true},
       pipelineCreated: [],
-      creationMessage: {type: String, notify: true}
+			creationMessage: {type: String, notify: true},
+			useExternalPipeline: { type: String }
 		};
 	}
 
@@ -75,33 +76,8 @@ class ProjectPipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
 		this.pipelines = [];
 		this.unassociatedPipelines = [];
 		this.initializeCreatePipelineForm();
-		this.$validations.init({
-		validations: {
-			newPipeline: {
-				pipelineId: {
-					name: {
-						isNotEmpty: Forms.validators.isNotEmpty,
-						pattern: Forms.validators.pattern('^[a-zA-Z][a-zA-Z0-9_]{5,29}$')
-					}
-				}
-			},
-			linkPipeline: {
-				pipelineId: {
-					name: {
-						isNotEmpty: Forms.validators.isNotEmpty,
-					}
-				}
-			},
-			editPipeline: {
-				pipelineId: {
-					name: {
-						isNotEmpty: Forms.validators.isNotEmpty,
-						pattern: Forms.validators.pattern('^[a-zA-Z][a-zA-Z0-9_]{5,29}$')
-					}
-				}
-			}
-		}
-    });
+		this.initializeValidations();
+		
     this.sortOptions = [
       { value: "created", label: "Sort By Created Date" },
       { value: "name", label: "Sort By Name" },
@@ -114,6 +90,44 @@ class ProjectPipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
 		})
 	}
 
+	initializeValidations() {
+		this.$validations.init({
+			validations: {
+				newPipeline: {
+					pipelineId: {
+						name: {
+							isNotEmpty: Forms.validators.isNotEmpty,
+							pattern: Forms.validators.pattern('^[a-zA-Z][a-zA-Z0-9_]{5,29}$')
+						},
+						serviceUrl: this.useExternalPipeline === 'true' ? {
+							isNotEmpty: Forms.validators.isNotEmpty,
+							pattern: Forms.validators.pattern('https://.*')
+						} : {}
+					}
+				},
+				linkPipeline: {
+					pipelineId: {
+						name: {
+							isNotEmpty: Forms.validators.isNotEmpty,
+						}
+					}
+				},
+				editPipeline: {
+					pipelineId: {
+						name: {
+							isNotEmpty: Forms.validators.isNotEmpty,
+							pattern: Forms.validators.pattern('^[a-zA-Z][a-zA-Z0-9_]{5,29}$')
+						},
+						serviceUrl: this.useExternalPipeline === 'true' ? {
+							isNotEmpty: Forms.validators.isNotEmpty,
+							pattern: Forms.validators.pattern('https://.*')
+						} : {}
+					}
+				}
+			}
+		});
+	}
+
 	initializeCreatePipelineForm(){
     this.data = {
       createErrorMessage : "",
@@ -121,7 +135,8 @@ class ProjectPipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
       editErrorMessage : "",
       newPipeline:{
         pipelineId : {    
-          name : ""
+					name : "",
+					serviceUrl : ""
         },
         description : ""
 			},
@@ -141,7 +156,8 @@ class ProjectPipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
 					versionId : {
 						comment : "",
 						label : ""
-					}
+					},
+					serviceUrl : ""
 				},
 				description : ""
 			}
@@ -155,12 +171,14 @@ class ProjectPipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
 		this.$data.set('associateErrorMessage', '');
 		this.$data.set('editErrorMessage', '');
 		this.$data.set('newPipeline.pipelineId.name', '');
+		this.$data.set('newPipeline.pipelineId.serviceUrl', '');
 		this.$data.set('newPipeline.description', '');
 		this.$data.set('linkPipeline.pipelineId.name', '');
 		this.$data.set('linkPipeline.pipelineId.versionId.label', '');
 		this.$data.set('linkPipeline.description', '');
 		this.$data.set('editPipeline.pipelineId.name', '');
 		this.$data.set('editPipeline.pipelineId.versionId.label', '');
+		this.$data.set('editPipeline.pipelineId.serviceUrl', '');
 		this.$data.set('editPipeline.description', '');
   }
 	
@@ -188,7 +206,8 @@ class ProjectPipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
 			this.createTimeout = envVar.createTimeout;
 			let username = envVar.userName;
 			let token = envVar.authToken;
-			
+			this.useExternalPipeline = envVar.useExternalPipeline;
+			this.initializeValidations();
 			if(this.userName && this.userName !== '' && this.authToken && this.authToken !== '') {
 				this.getPipelineDetailsForProject(true);
 			} else if(username && username !== '' && token && token !== '') {
@@ -263,7 +282,8 @@ class ProjectPipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
       tempPipeline.createdBy = item.owner.authenticatedUserId;
       tempPipeline.description = item.description;
       tempPipeline.status = item.artifactStatus.status;
-      tempPipeline.pipelineType = item.pipelineType;
+			tempPipeline.pipelineType = item.pipelineType;
+			tempPipeline.serviceUrl = item.pipelineId.serviceUrl;
       this.pipelinesList.push(tempPipeline);
     });
     this.displayPipelines();
@@ -614,7 +634,8 @@ class ProjectPipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
       tempPipeline.createdTimestamp = item.pipelineId.versionId.timeStamp;
       tempPipeline.createdBy = item.owner.authenticatedUserId;
       tempPipeline.description = item.description;
-      tempPipeline.status = item.artifactStatus.status;
+			tempPipeline.status = item.artifactStatus.status;
+			tempPipeline.serviceUrl = item.pipelineId.serviceUrl;
       allPipelines.push(tempPipeline);
     });
     this.getAllPipelines(allPipelines);
@@ -783,6 +804,7 @@ class ProjectPipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
 	  this.$data.set('editPipeline.pipelineId.name', item.name, true);
     this.$data.set('editPipeline.pipelineId.versionId.label', item.version, true);
 		this.$data.set('editPipeline.description', item.description, true);
+		this.$data.set('editPipeline.pipelineId.serviceUrl', item.serviceUrl, true);
 
 	  this.isOpenModalEdit = true;
 	  this.isOpenModalLink = false;
@@ -877,6 +899,37 @@ class ProjectPipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
               </div>
             </div>
 					</div>
+					${this.useExternalPipeline === "true"
+          ? html`
+            <br/>
+            <div class="row">
+              <div class="col">
+                <div class="form-group">
+                  <label>Pipeline URL <small class="text-danger">*</small></label>
+                  <input type="url" class="form-control" placeholder="Enter Pipeline URL" 
+                    .value="${this.data.newPipeline.pipelineId.serviceUrl}"
+                    @keyup="${ e => {
+                    this.$data.set('newPipeline.pipelineId.serviceUrl', e);
+                    this.$validations.validate('newPipeline.pipelineId.serviceUrl');
+                  }
+                  }"
+                            />
+                            ${
+                  this.$validations.getValidationErrors('newPipeline.pipelineId.serviceUrl').map(error => {
+                    switch (error) {
+                      case 'isNotEmpty':
+                        return html`<div class="invalid-feedback d-block">Pipeline URL is required</div>`
+                      case 'pattern':
+                        return html`<div class="invalid-feedback d-block">Pipeline URL should begin with https://</div>`
+                    }
+                  })
+                  }
+                </div>
+              </div>
+            </div>
+            `
+          : ``
+          }
 					<br/>
           <div class="row">
             <div class="col">
@@ -890,7 +943,7 @@ class ProjectPipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
 								</textarea>
               </div>
             </div>
-          </div>
+					</div>
         </form>
       </omni-modal>
       
@@ -975,6 +1028,37 @@ class ProjectPipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
 							</div>
 						</div>
 					</div>
+					${this.useExternalPipeline === "true"
+          ? html`
+            <br/>
+            <div class="row">
+              <div class="col">
+                <div class="form-group">
+                  <label>Pipeline URL <small class="text-danger">*</small></label>
+                  <input type="url" class="form-control" placeholder="Enter Pipeline URL" 
+                    .value="${this.data.editPipeline.pipelineId.serviceUrl}"
+                    @keyup="${ e => {
+                    this.$data.set('editPipeline.pipelineId.serviceUrl', e);
+                    this.$validations.validate('editPipeline.pipelineId.serviceUrl');
+                  }
+                  }"
+                            />
+                            ${
+                  this.$validations.getValidationErrors('editPipeline.pipelineId.serviceUrl').map(error => {
+                    switch (error) {
+                      case 'isNotEmpty':
+                        return html`<div class="invalid-feedback d-block">Pipeline URL is required</div>`
+                      case 'pattern':
+                        return html`<div class="invalid-feedback d-block">Pipeline URL should begin with https://</div>`
+                    }
+                  })
+                  }
+                </div>
+              </div>
+            </div>
+            `
+          : ``
+          }
 					<br/>
           <div class="row">
             <div class="col">

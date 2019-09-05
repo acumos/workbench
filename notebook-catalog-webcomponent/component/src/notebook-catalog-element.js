@@ -56,7 +56,8 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
       notebookWikiURL: { type: String },
       componenturl: { type: String, notify: true },
       userName: { type: String, notify: true },
-      authToken: { type: String, notify: true }
+      authToken: { type: String, notify: true },
+      useExternalNotebook: { type: String }
     };
   }
 
@@ -74,24 +75,7 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
   constructor() {
     super();
     this.initializeCreateNotebookForm();
-    this.$validations.init({
-      validations: {
-        newNotebook: {
-          noteBookId: {
-            name: {
-              isNotEmpty: Forms.validators.isNotEmpty,
-              pattern: Forms.validators.pattern('^[a-zA-Z][a-zA-Z0-9_]{5,29}$')
-            },
-            versionId: {
-              label: {
-                isNotEmpty: Forms.validators.isNotEmpty,
-                pattern: Forms.validators.pattern('^[a-zA-Z0-9_.]{1,14}$')
-              }
-            }
-          }
-        }
-      }
-    });
+    this.initializeValidations();
     this.sortOptions = [
       { value: "created", label: "Sort By Created Date" },
       { value: "name", label: "Sort By Name" },
@@ -107,6 +91,31 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
     })
   }
 
+  initializeValidations() {
+    this.$validations.init({
+      validations: {
+        newNotebook: {
+          noteBookId: {
+            name: {
+              isNotEmpty: Forms.validators.isNotEmpty,
+              pattern: Forms.validators.pattern('^[a-zA-Z][a-zA-Z0-9_]{5,29}$')
+            },
+            versionId: {
+              label: {
+                isNotEmpty: Forms.validators.isNotEmpty,
+                pattern: Forms.validators.pattern('^[a-zA-Z0-9_.]{1,14}$')
+              }
+            },
+            serviceUrl: this.useExternalNotebook === 'true' ? {
+              isNotEmpty: Forms.validators.isNotEmpty,
+              pattern: Forms.validators.pattern('https://.*')
+            } : {}
+          }
+        }
+      }
+    });
+  }
+
   initializeCreateNotebookForm() {
     this.data = {
       createErrorMessage: "",
@@ -115,7 +124,8 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
           name: "",
           versionId: {
             label: ""
-          }
+          },
+          serviceUrl: ""
         },
         description: "",
         notebookType: "JUPYTER"
@@ -125,6 +135,7 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
     this.$data.set('createErrorMessage', '');
     this.$data.set('newNotebook.noteBookId.name', '');
     this.$data.set('newNotebook.noteBookId.versionId.label', '');
+    this.$data.set('newNotebook.noteBookId.serviceUrl', '');
     this.$data.set('newNotebook.description', '');
     this.$data.set('newNotebook.notebookType', 'JUPYTER');
   }
@@ -150,10 +161,10 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
       .then((envVar) => {
         this.mSurl = envVar.msconfig.notebookmSURL;
         this.notebookWikiURL = envVar.notebookWikiURL;
-
+        this.useExternalNotebook = envVar.useExternalNotebook;
         let username = envVar.userName;
         let token = envVar.authToken;
-
+        this.initializeValidations();
         if (this.userName && this.userName !== '' && this.authToken && this.authToken !== '') {
           this.resetActiveFilter = true;
           this.getNotebookList();
@@ -642,6 +653,37 @@ export class NotebookCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
               </div>
             </div>
           </div>
+          ${this.useExternalNotebook === "true"
+          ? html`
+            <br/>
+            <div class="row">
+              <div class="col">
+                <div class="form-group">
+                  <label>Notebook URL <small class="text-danger">*</small></label>
+                  <input type="text" class="form-control" placeholder="Enter Notebook URL" 
+                    .value="${this.data.newNotebook.noteBookId.serviceUrl}"
+                    @keyup="${ e => {
+                    this.$data.set('newNotebook.noteBookId.serviceUrl', e);
+                    this.$validations.validate('newNotebook.noteBookId.serviceUrl');
+                  }
+                  }"
+                            />
+                            ${
+                  this.$validations.getValidationErrors('newNotebook.noteBookId.serviceUrl').map(error => {
+                    switch (error) {
+                      case 'isNotEmpty':
+                        return html`<div class="invalid-feedback d-block">Notebook URL is required</div>`
+                      case 'pattern':
+                        return html`<div class="invalid-feedback d-block">Notebook URL should begin with https://</div>`
+                    }
+                  })
+                  }
+                </div>
+              </div>
+            </div>
+            `
+          : ``
+          }
         </form>
       </omni-modal>
 

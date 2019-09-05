@@ -23,11 +23,13 @@ var config = {
 		ENVIRONMENT : "dev",
 		pipelinemSURL : "http://localhost:9090/mlWorkbench/v1/pipeline",
 		pipelineWikiURL : "https://wiki.acumos.org/display/TRAIN",
+		useExternalPipeline : "true",
 	},
 	deploy : {
 		ENVIRONMENT : process.env.ENVIRONMENT,
 		pipelinemSURL : process.env.pipelinemSURL,
 		pipelineWikiURL : process.env.pipelineWikiURL,
+		useExternalPipeline : process.env.useExternalPipeline,
 	}
 };
 

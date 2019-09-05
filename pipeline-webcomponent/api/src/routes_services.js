@@ -28,6 +28,7 @@ module.exports = function(app) {
 	const uripath = "/users/";
 	const configENV = properties.ENVIRONMENT;
 	const pipelineWikiURL = properties.pipelineWikiURL;
+	const useExternalPipeline = properties.useExternalPipeline;
 	const ms_urls = {
 		pipelinemSURL : properties.pipelinemSURL
 	};
@@ -59,7 +60,8 @@ module.exports = function(app) {
 				msconfig : ms_urls,
 				userName:  userName,
 				authToken: authToken,
-				pipelineWikiURL: pipelineWikiURL
+				pipelineWikiURL: pipelineWikiURL,
+				useExternalPipeline: useExternalPipeline
 			};
 			res.send(res.configInfo);
 		} catch (err) {

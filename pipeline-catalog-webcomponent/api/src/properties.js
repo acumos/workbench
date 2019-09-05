@@ -25,7 +25,8 @@ var config = {
 		notebookmSURL : "http://localhost:9089/mlWorkbench/v1/notebook",
 		pipelinemSURL : "http://localhost:9090/mlWorkbench/v1/pipeline",
 		pipelineWikiURL : "https://wiki.acumos.org/display/TRAIN",
-		createTimeout: 60000
+		createTimeout: 60000,
+		useExternalPipeline: "true",
 	},
 	deploy : {
 		ENVIRONMENT : process.env.ENVIRONMENT,
@@ -33,7 +34,8 @@ var config = {
 		notebookmSURL : process.env.notebookmSURL,
 		pipelinemSURL : process.env.pipelinemSURL,
 		pipelineWikiURL : process.env.pipelineWikiURL,
-		createTimeout: process.env.createTimeout
+		createTimeout: process.env.createTimeout,
+		useExternalPipeline: process.env.useExternalPipeline,
 	}
 };
 

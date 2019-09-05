@@ -51,7 +51,8 @@ export class ProjectLitElement extends DataMixin(ValidationMixin(BaseElementMixi
         userName: {type: String, notify: true},
         authToken: {type: String, notify: true},
         projectId: { type: String, notify: true },
-        pipelineFlag: { type: String }
+        pipelineFlag: { type: String },
+        parentMsg: {type: String },
       };
     }
     
@@ -101,6 +102,7 @@ export class ProjectLitElement extends DataMixin(ValidationMixin(BaseElementMixi
       this.requestUpdate().then(() => {
         this.onLoad();
         this.componenturl = (this.componenturl === undefined || this.componenturl === null) ? '' : this.componenturl;
+        this.parentMsg = (this.parentMsg === undefined || this.parentMsg === null)? '' : this.parentMsg;
         this.$data.set('project.projectId', this.projectId, true);
         this.getConfig();
       })
@@ -649,7 +651,7 @@ export class ProjectLitElement extends DataMixin(ValidationMixin(BaseElementMixi
               `
               : ``
             }
-            <project-models-element componenturl=${this.componenturl} projectId=${this.projectId} userName=${this.userName} authToken=${this.authToken}></project-models-element>
+            <project-models-element componenturl=${this.componenturl} projectId=${this.projectId} userName=${this.userName} authToken=${this.authToken} parentMsg=${this.parentMsg}></project-models-element>
         	`
         	:``
           }

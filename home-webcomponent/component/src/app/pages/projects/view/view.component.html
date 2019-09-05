@@ -21,4 +21,4 @@ limitations under the License.
 <ngx-base-component [alertOpen]="alertOpen" [showSpinner]="showSpinner" [sessionError]="sessionError"></ngx-base-component>
 
 <project-element *ngIf="loadHtml" attr.projectId="{{ id }}" [attr.componenturl]="url" (on-load-event)="this.stopSpinner()" 
-     (project-event)="this.OnViewProjectEvent($event)" [attr.userName]="userName" [attr.authToken]="authToken"> </project-element>
+     (project-event)="this.OnViewProjectEvent($event)" [attr.userName]="userName" [attr.authToken]="authToken" [attr.parentMsg]="parentMsg"> </project-element>

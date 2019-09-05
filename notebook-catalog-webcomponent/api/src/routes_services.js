@@ -28,6 +28,7 @@ module.exports = function(app) {
 	const uripath = "/users/";
 	const configENV = properties.ENVIRONMENT;
 	const notebookWikiURL = properties.notebookWikiURL;
+	const useExternalNotebook = properties.useExternalNotebook;
 	const ms_urls = {
 		projectmSURL : properties.projectmSURL,
 		pipelinemSURL : properties.pipelinemSURL,
@@ -61,7 +62,8 @@ module.exports = function(app) {
 				msconfig : ms_urls,
 				userName:  userName,
 				authToken: authToken,
-				notebookWikiURL: notebookWikiURL
+				notebookWikiURL: notebookWikiURL,
+				useExternalNotebook: useExternalNotebook
 			};
 			res.send(res.configInfo);
 		} catch (err) {

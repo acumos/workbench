@@ -57,7 +57,8 @@ export class PipelineCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
       authToken: {type: String, notify: true},
       createTimeout: {type: Number, notify: true},
       pipelineCreated: [],
-      creationMessage: {type: String, notify: true}
+      creationMessage: {type: String, notify: true},
+      useExternalPipeline : { type: String },
     };
   }
 
@@ -76,18 +77,8 @@ export class PipelineCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
     super();
     this.view = '';
     this.initializeCreatePipelineForm();
-    this.$validations.init({
-      validations: {
-        newPipeline: {
-	        pipelineId: {
-            name: {
-              isNotEmpty: Forms.validators.isNotEmpty,
-              pattern: Forms.validators.pattern('^[a-zA-Z][a-zA-Z0-9_]{5,29}$')
-            }
-          }
-        }
-     }
-    });
+    this.initializeValidations();
+    
     this.alertOpen = false;
     this.sortOptions = [
       { value: "created", label: "Sort By Created Date" },
@@ -105,12 +96,32 @@ export class PipelineCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
     })
   }
 
+  initializeValidations() {
+    this.$validations.init({
+      validations: {
+        newPipeline: {
+	        pipelineId: {
+            name: {
+              isNotEmpty: Forms.validators.isNotEmpty,
+              pattern: Forms.validators.pattern('^[a-zA-Z][a-zA-Z0-9_]{5,29}$')
+            },
+            serviceUrl: this.useExternalPipeline === 'true' ? {
+              isNotEmpty: Forms.validators.isNotEmpty,
+              pattern: Forms.validators.pattern('https://.*')
+            } : {}
+          }
+        }
+     }
+    });
+  }
+  
   initializeCreatePipelineForm(){
     this.data = {
       createErrorMessage : "",
       newPipeline:{
         pipelineId : {    
-          name : ""
+          name : "",
+          serviceUrl: ""
         },  
         description : ""
       }
@@ -118,6 +129,7 @@ export class PipelineCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
     this.$data.snapshot('newPipeline');
     this.$data.set('createErrorMessage', '');
     this.$data.set('newPipeline.pipelineId.name', '');
+    this.$data.set('newPipeline.pipelineId.serviceUrl', '');
     this.$data.set('newPipeline.description', '');
   }
 
@@ -145,7 +157,8 @@ export class PipelineCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
         this.createTimeout = envVar.createTimeout;
         let username = envVar.userName;
         let token = envVar.authToken;
-        
+        this.useExternalPipeline = envVar.useExternalPipeline;
+        this.initializeValidations();
         if(this.userName && this.userName !== '' && this.authToken && this.authToken !== '') {
           this.resetActiveFilter = true;
           this.getPipelineList();
@@ -647,6 +660,37 @@ export class PipelineCatalogLitElement extends DataMixin(ValidationMixin(BaseEle
               </div>
             </div>
           </div>
+          ${this.useExternalPipeline === "true"
+          ? html`
+            <br/>
+            <div class="row">
+              <div class="col">
+                <div class="form-group">
+                  <label>Pipeline URL <small class="text-danger">*</small></label>
+                  <input type="url" class="form-control" placeholder="Enter Pipeline URL" 
+                    .value="${this.data.newPipeline.pipelineId.serviceUrl}"
+                    @keyup="${ e => {
+                    this.$data.set('newPipeline.pipelineId.serviceUrl', e);
+                    this.$validations.validate('newPipeline.pipelineId.serviceUrl');
+                  }
+                  }"
+                            />
+                            ${
+                  this.$validations.getValidationErrors('newPipeline.pipelineId.serviceUrl').map(error => {
+                    switch (error) {
+                      case 'isNotEmpty':
+                        return html`<div class="invalid-feedback d-block">Pipeline URL is required</div>`
+                      case 'pattern':
+                        return html`<div class="invalid-feedback d-block">Pipeline URL should begin with https://</div>`
+                    }
+                  })
+                  }
+                </div>
+              </div>
+            </div>
+            `
+          : ``
+          }
           <br/>
           <div class="row">
             <div class="col">

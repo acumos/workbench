@@ -62,7 +62,8 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 			notebookWikiURL: { type: String },
 			cardShow: { type: Boolean },
 			userName: { type: String, notify: true },
-			authToken: { type: String, notify: true }
+			authToken: { type: String, notify: true },
+			useExternalNotebook: { type: String }
 		};
 	}
 
@@ -78,6 +79,20 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 		this.jupyterNotebooks = [];
 		this.unassociatedNotebooks = [];
 		this.initializeCreateNotebookForm();
+		this.initializeValidations();
+		this.sortOptions = [
+			{ value: "created", label: "Sort By Created Date" },
+			{ value: "name", label: "Sort By Name" },
+			{ value: "id", label: "Sort By ID" }
+		];
+		this.modalDismissed();
+		this.requestUpdate().then(() => {
+			this.componenturl = (this.componenturl === undefined || this.componenturl === null) ? '' : this.componenturl;
+			this.getConfig();
+		})
+	}
+
+	initializeValidations() {
 		this.$validations.init({
 			validations: {
 				newNotebook: {
@@ -91,7 +106,11 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 								isNotEmpty: Forms.validators.isNotEmpty,
 								pattern: Forms.validators.pattern('^[a-zA-Z0-9_.]{1,14}$')
 							}
-						}
+						},
+						serviceUrl: this.useExternalNotebook === 'true' ? {
+							isNotEmpty: Forms.validators.isNotEmpty,
+							pattern: Forms.validators.pattern('https://.*')
+						} : {}
 					}
 				},
 				linkNotebook: {
@@ -112,21 +131,15 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 								isNotEmpty: Forms.validators.isNotEmpty,
 								pattern: Forms.validators.pattern('^[a-zA-Z0-9_.]{1,14}$')
 							}
-						}
+						},
+						serviceUrl: this.useExternalNotebook === 'true' ? {
+							isNotEmpty: Forms.validators.isNotEmpty,
+							pattern: Forms.validators.pattern('https://.*')
+						} : {}
 					}
 				}
 			}
 		});
-		this.sortOptions = [
-			{ value: "created", label: "Sort By Created Date" },
-			{ value: "name", label: "Sort By Name" },
-			{ value: "id", label: "Sort By ID" }
-		];
-		this.modalDismissed();
-		this.requestUpdate().then(() => {
-			this.componenturl = (this.componenturl === undefined || this.componenturl === null) ? '' : this.componenturl;
-			this.getConfig();
-		})
 	}
 
 	initializeCreateNotebookForm() {
@@ -140,7 +153,8 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 					versionId: {
 						comment: "",
 						label: ""
-					}
+					},
+					serviceUrl: ""
 				},
 				notebookType: "JUPYTER",
 				description: ""
@@ -162,7 +176,8 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 					versionId: {
 						comment: "",
 						label: ""
-					}
+					},
+					serviceUrl: ""
 				},
 				description: ""
 			}
@@ -177,6 +192,7 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 		this.$data.set('editErrorMessage', '');
 		this.$data.set('newNotebook.noteBookId.name', '');
 		this.$data.set('newNotebook.noteBookId.versionId.label', '');
+		this.$data.set('newNotebook.noteBookId.serviceUrl', '');
 		this.$data.set('newNotebook.description', '');
 		this.$data.set('newNotebook.notebookType', 'JUPYTER');
 		this.$data.set('linkNotebook.noteBookId.name', '');
@@ -186,6 +202,7 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 		this.$data.set('editNotebook.noteBookId.name', '');
 		this.$data.set('editNotebook.noteBookId.uuid', '');
 		this.$data.set('editNotebook.noteBookId.versionId.label', '');
+		this.$data.set('editNotebook.noteBookId.serviceUrl', '');
 		this.$data.set('editNotebook.description', '');
 
 	}
@@ -211,10 +228,10 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 			.then((envVar) => {
 				this.notebookmSURL = envVar.msconfig.notebookmSURL;
 				this.notebookWikiURL = envVar.wikiConfig.notebookWikiURL;
-
+				this.useExternalNotebook = envVar.useExternalNotebook;
 				let username = envVar.userName;
 				let token = envVar.authToken;
-
+				this.initializeValidations();
 				if (this.userName && this.userName !== '' && this.authToken && this.authToken !== '') {
 					this.getNotebookDetailsForProject(true);
 				} else if (username && username !== '' && token && token !== '') {
@@ -290,6 +307,7 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 			tempNotebook.description = item.description;
 			tempNotebook.status = item.artifactStatus.status;
 			tempNotebook.notebookType = item.notebookType;
+			tempNotebook.serviceUrl = item.noteBookId.serviceUrl;
 			this.notebooksList.push(tempNotebook);
 		});
 		this.displayNotebooks();
@@ -589,6 +607,7 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 			tempNotebook.description = item.description;
 			tempNotebook.status = item.artifactStatus.status;
 			tempNotebook.notebookType = item.notebookType;
+			tempNotebook.serviceUrl = item.noteBookId.serviceUrl;
 			allNotebooks.push(tempNotebook);
 		});
 		this.getAllNotebooks(allNotebooks);
@@ -768,6 +787,7 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 		this.$data.set('editNotebook.noteBookId.uuid', item.noteBookId, true);
 		this.$data.set('editNotebook.description', item.description, true);
 		this.$data.set('editNotebook.notebookType', item.notebookType, true);
+		this.$data.set('editNotebook.noteBookId.serviceUrl', item.serviceUrl, true);
 		this.isOpenModalEdit = true;
 		this.isOpenModalLink = false;
 		this.isOpenModal = false;
@@ -905,7 +925,38 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 								</textarea>
               </div>
             </div>
-          </div>
+					</div>
+					${this.useExternalNotebook === "true"
+          ? html`
+            <br/>
+            <div class="row">
+              <div class="col">
+                <div class="form-group">
+                  <label>Notebook URL <small class="text-danger">*</small></label>
+                  <input type="url" class="form-control" placeholder="Enter Notebook URL" 
+                    .value="${this.data.newNotebook.noteBookId.serviceUrl}"
+                    @keyup="${ e => {
+                    this.$data.set('newNotebook.noteBookId.serviceUrl', e);
+                    this.$validations.validate('newNotebook.noteBookId.serviceUrl');
+                  }
+                  }"
+                            />
+                            ${
+                  this.$validations.getValidationErrors('newNotebook.noteBookId.serviceUrl').map(error => {
+                    switch (error) {
+                      case 'isNotEmpty':
+                        return html`<div class="invalid-feedback d-block">Notebook URL is required</div>`
+                      case 'pattern':
+                        return html`<div class="invalid-feedback d-block">Notebook URL should begin with https://</div>`
+                    }
+                  })
+                  }
+                </div>
+              </div>
+            </div>
+            `
+          : ``
+          }
         </form>
       </omni-modal>
       
@@ -1080,7 +1131,38 @@ class ProjectNotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 								</textarea>
               </div>
             </div>
-          </div>
+					</div>
+					${this.useExternalNotebook === "true"
+          ? html`
+            <br/>
+            <div class="row">
+              <div class="col">
+                <div class="form-group">
+                  <label>Notebook URL <small class="text-danger">*</small></label>
+                  <input type="url" class="form-control" placeholder="Enter Notebook URL" 
+                    .value="${this.data.editNotebook.noteBookId.serviceUrl}"
+                    @keyup="${ e => {
+                    this.$data.set('editNotebook.noteBookId.serviceUrl', e);
+                    this.$validations.validate('editNotebook.noteBookId.serviceUrl');
+                  }
+                  }"
+                            />
+                            ${
+                  this.$validations.getValidationErrors('editNotebook.noteBookId.serviceUrl').map(error => {
+                    switch (error) {
+                      case 'isNotEmpty':
+                        return html`<div class="invalid-feedback d-block">Notebook URL is required</div>`
+                      case 'pattern':
+                        return html`<div class="invalid-feedback d-block">Notebook URL should begin with https://</div>`
+                    }
+                  })
+                  }
+                </div>
+              </div>
+            </div>
+            `
+          : ``
+          }
         </form>
       </omni-modal>
       

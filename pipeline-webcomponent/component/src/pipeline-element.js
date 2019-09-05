@@ -49,7 +49,8 @@ export class PipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
 				userName: {type: String, notify: true},
 				authToken: {type: String, notify: true},
 				pipelineId: { type: String, notify: true },
-				pipelineName: { type: String, notify: true }
+				pipelineName: { type: String, notify: true },
+				useExternalPipeline: { type: String }
 			};
 		}
 		
@@ -66,16 +67,7 @@ export class PipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
 
 		constructor() {
 			super();
-			this.$validations.init({
-        validations: {
-          pipeline: {
-            pipelineName: { 
-							isNotEmpty: Forms.validators.isNotEmpty,
-              pattern: Forms.validators.pattern('^[a-zA-Z][a-zA-Z0-9_]{5,29}$')
-						}
-          }
-        }
-			})
+			this.initializeValidations();
 			
 			this.data = {
 				pipeline: {
@@ -85,7 +77,8 @@ export class PipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
 					pipelineStatus: '',
           pipelineId: '',
           pipelineCreateDate: '',
-          pipelineModifyDate: ''
+					pipelineModifyDate: '',
+					serviceUrl: ''
 				}
 			}
 
@@ -98,7 +91,26 @@ export class PipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
 				this.getConfig();
 			})
 		}
-			
+		
+		initializeValidations() {
+			this.$validations.init({
+				validations: {
+					newPipeline: {
+						pipelineId: {
+							name: {
+								isNotEmpty: Forms.validators.isNotEmpty,
+								pattern: Forms.validators.pattern('^[a-zA-Z][a-zA-Z0-9_]{5,29}$')
+							},
+							serviceUrl: this.useExternalPipeline === 'true' ? {
+								isNotEmpty: Forms.validators.isNotEmpty,
+								pattern: Forms.validators.pattern('https://.*')
+							} : {}
+						}
+					}
+			 }
+			});
+		}
+
 		connectedCallback() {
 			super.connectedCallback();			
 			window.addEventListener('hashchange', this._boundListener);
@@ -120,10 +132,10 @@ export class PipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
 				.then((envVar) => {
 					this.pipelinemSURL = envVar.msconfig.pipelinemSURL;
 					this.pipelineWikiURL = envVar.pipelineWikiURL;
-
+					this.useExternalPipeline = envVar.useExternalPipeline;
 					let username = envVar.userName;
 					let token = envVar.authToken;
-					
+					this.initializeValidations();
 					if(this.userName && this.userName !== '' && this.authToken && this.authToken !== '') {
 						this.getPipelineDetails(true);
 					} else if(username && username !== '' && token && token !== '') {
@@ -193,11 +205,12 @@ export class PipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
 	    this.$data.set('pipeline.pipelineModifyDate', pipeline.pipelineId.versionId.timeStamp, true);
       this.$data.set('pipeline.pipelineVersion', pipeline.pipelineId.versionId.label, true);
       this.$data.set('pipeline.pipelineStatus', pipeline.artifactStatus.status, true);
-      this.$data.set('pipeline.pipelineId', pipeline.pipelineId.uuid, true);
+			this.$data.set('pipeline.pipelineId', pipeline.pipelineId.uuid, true);
+			this.$data.set('pipeline.serviceUrl', pipeline.pipelineId.serviceUrl, true);
 			this.pipelineName = this.data.pipeline.pipelineName;
 		}
 		
-		createUdpateFormData(){
+		createUpdateFormData(){
 			let pipeline = {};
 			pipeline.pipelineId = {};
 			pipeline.artifactStatus = {};
@@ -209,6 +222,7 @@ export class PipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
 			pipeline.pipelineId.versionId.timeStamp = this.data.pipeline.pipelineCreateDate ;
 			pipeline.pipelineId.versionId.label = this.data.pipeline.pipelineVersion;
 			pipeline.artifactStatus.status = this.data.pipeline.pipelineStatus;
+			pipeline.pipelineId.serviceUrl = this.data.pipeline.serviceUrl;
 			return pipeline;
 		}
 
@@ -239,7 +253,7 @@ export class PipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
 					"userName": this.userName,
 					"url": this.pipelinemSURL,
 					"pipelineId" : this.pipelineId,
-					"pipelinePayload": this.createUdpateFormData()
+					"pipelinePayload": this.createUpdateFormData()
 				})
 			}).then(res => res.json())
 				.then((n) => {
@@ -663,6 +677,40 @@ export class PipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
 													`
 												}
 											</tr>
+											${this.useExternalPipeline === "true"
+											? html`
+												<tr>
+													<td class="highlight">Pipeline URL</td>
+													${this.isEdit 
+														? html`
+															<td>
+																<input type="url" value=${this.data.pipeline.serviceUrl} class="form-control" id="serviceUrl" 
+																	placeholder="Enter pipeline URL"
+																	@keyup=${(e) => {
+																		this.$data.set('pipeline.serviceUrl', e);
+																		this.$validations.validate('pipeline.serviceUrl');
+																	}}
+																>
+																${
+																	this.$validations.getValidationErrors('pipeline.serviceUrl').map(error => {
+																		switch (error) {
+																			case 'isNotEmpty':
+																				return html`<div class="invalid-feedback d-block">Pipeline URL is required</div>`
+																			case 'pattern':
+																				return html`<div class="invalid-feedback d-block">Pipeline URL should begin with https://</div>`
+																		}
+																	})
+																}
+															</td>
+														`
+														: html`
+															<td>${this.data.pipeline.serviceUrl}</td>
+														`
+													}
+												</tr>
+											`
+											: ``
+										}
 										</tbody>
 									</table>  					
 								</div>

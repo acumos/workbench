@@ -56,7 +56,8 @@ public abstract class NotebookCommons {
 		Version version = new Version();
 		version.setComment("comment");
 		version.setLabel("Label");
-		version.setTimeStamp(Instant.now().toString());
+		version.setCreationTimeStamp(Instant.now().toString());
+		version.setModifiedTimeStamp(Instant.now().toString());
 		version.setUser("123");
 		identifier.setVersionId(version);
 		notebook.setNoteBookId(identifier);

@@ -83,10 +83,10 @@ public class NotebookServiceUtil {
 				Version notebookVersion = notebookIdentifier.getVersionId();
 				if(null != notebookVersion) { 
 					mlpNotebook.setVersion(notebookVersion.getLabel());
-					if(null != notebookVersion.getTimeStamp()) {
+					if(null != notebookVersion.getModifiedTimeStamp()) {
 						Date parsedDate;
 						try {
-							parsedDate = dateFormat.parse(notebookVersion.getTimeStamp());
+							parsedDate = dateFormat.parse(notebookVersion.getModifiedTimeStamp());
 							Timestamp timestamp = new Timestamp(parsedDate.getTime());
 							mlpNotebook.setModified(timestamp.toInstant());
 						} catch (ParseException e) {
@@ -164,10 +164,12 @@ public class NotebookServiceUtil {
 			Timestamp timestamp =  null;
 			if(null == mlpnotebook.getModified()) { 
 				timestamp = Timestamp.from(mlpnotebook.getCreated());
+				version.setModifiedTimeStamp(timestamp.toString());
 			} else { 
 				timestamp = Timestamp.from(mlpnotebook.getModified());
+				version.setModifiedTimeStamp(timestamp.toString());
 			}
-			version.setTimeStamp(timestamp.toString());
+			version.setCreationTimeStamp(mlpnotebook.getCreated().toString());
 			version.setUser(mlpUser.getLoginName());
 			notebookIdentifier.setVersionId(version);
 			notebook.setNoteBookId(notebookIdentifier);
@@ -216,6 +218,7 @@ public class NotebookServiceUtil {
 			result.setVersion(version.getLabel());
 		}
 		result.setModified(Instant.now());
+		result.setServiceUrl(notebook.getNoteBookId().getServiceUrl());
 		logger.debug("updateMLPNotebook() End");
 		return result;
 	}

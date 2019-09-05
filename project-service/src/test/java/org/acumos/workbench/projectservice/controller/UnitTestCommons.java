@@ -20,6 +20,7 @@
 
 package org.acumos.workbench.projectservice.controller;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,7 +81,8 @@ public abstract class UnitTestCommons {
 		Version version = new Version();
 		version.setComment("comment");
 		version.setLabel("Label");
-		version.setTimeStamp("");
+		version.setCreationTimeStamp(Instant.now().toString());
+		version.setModifiedTimeStamp(Instant.now().toString());
 		version.setUser("123");
 		identifier.setVersionId(version);
 		project.setProjectId(identifier);

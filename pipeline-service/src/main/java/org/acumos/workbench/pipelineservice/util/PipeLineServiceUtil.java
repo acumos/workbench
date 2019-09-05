@@ -101,6 +101,7 @@ public class PipeLineServiceUtil {
 			}
 			mlpPipeLine.setDescription(pipeLine.getDescription());
 			mlpPipeLine.setUserId(userId);
+			mlpPipeLine.setServiceUrl(pipeLine.getPipelineId().getServiceUrl());
 		}
 		logger.debug("getMLPPipeLine() End");
 		return mlpPipeLine;

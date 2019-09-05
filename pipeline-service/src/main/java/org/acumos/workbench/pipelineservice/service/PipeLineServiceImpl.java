@@ -21,6 +21,8 @@
 package org.acumos.workbench.pipelineservice.service;
 
 import java.lang.invoke.MethodHandles;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,6 +38,7 @@ import org.acumos.cds.transport.RestPageRequest;
 import org.acumos.cds.transport.RestPageResponse;
 import org.acumos.workbench.common.exception.ArchivedException;
 import org.acumos.workbench.common.exception.AssociationNotFoundException;
+import org.acumos.workbench.common.exception.IncorrectValueException;
 import org.acumos.workbench.common.exception.NotOwnerException;
 import org.acumos.workbench.common.exception.TargetServiceInvocationException;
 import org.acumos.workbench.common.exception.UserNotFoundException;
@@ -277,7 +280,7 @@ public class PipeLineServiceImpl implements PipeLineService{
 			logger.error("CDS - Get Pipeline", e);
 			throw new TargetServiceInvocationException(PipelineServiceConstants.CDS_GET_PIPELINE);
 		}
-		
+
 		if (!newPipeLineName.equals(oldMLPPipeline.getName()) || (null != newPipeLineVersion
 				&& null != oldMLPPipeline.getVersion() && !newPipeLineVersion.equals(oldMLPPipeline.getVersion()))) {
 			Map<String, Object> queryParameters = new HashMap<String, Object>();
@@ -294,7 +297,7 @@ public class PipeLineServiceImpl implements PipeLineService{
 				logger.error("CDS - Search Pipelines", e);
 				throw new TargetServiceInvocationException(PipelineServiceConstants.CDS_SEARCH_PIPELINES);
 			}
-			
+
 			List<MLPPipeline> pipelines = response.getContent();
 			if (null != pipelines && pipelines.size() > 0) {
 				logger.error("Pipeline name and version already exists");
@@ -302,9 +305,28 @@ public class PipeLineServiceImpl implements PipeLineService{
 			}
 		}
 		// Call NiFi Service to update the Pipeline Details
-		nifiService.updatePipeline(authenticatedUserId, oldMLPPipeline.getName(), newPipeLineName);
-		
+		if (!configProps.isUseexternalpipeline()) { // old nifi url
+			nifiService.updatePipeline(authenticatedUserId, oldMLPPipeline.getName(), newPipeLineName);
+		}
+
 		MLPPipeline newMLPPipeline = PipeLineServiceUtil.updateMLPPipeline(oldMLPPipeline, pipeLine);
+
+		if (configProps.isUseexternalpipeline()) {// external pipelineUrl
+			try {
+				if (null == pipeLine.getPipelineId().getServiceUrl()) {
+					throw new IncorrectValueException("Exception occured : PipeLine URL is null ");
+				} else {
+					new URL(pipeLine.getPipelineId().getServiceUrl());
+					newMLPPipeline.setServiceUrl(pipeLine.getPipelineId().getServiceUrl());
+				}
+
+			} catch (MalformedURLException ex) {
+				throw new IncorrectValueException("Exception occured : Invalid PipelineURL ");
+			}
+		} else{
+			newMLPPipeline.setServiceUrl(pipeLine.getPipelineId().getServiceUrl());
+		}
+
 		try {
 			logger.debug("CDS updatePipeline() method Begin");
 			cdsClient.updatePipeline(newMLPPipeline);
@@ -312,19 +334,21 @@ public class PipeLineServiceImpl implements PipeLineService{
 		} catch (Exception e) {
 			logger.error("CDS - Update Pipeline", e);
 			throw new TargetServiceInvocationException(PipelineServiceConstants.CDS_UPDATE_PIPELINE);
-		}try {
-			if(null != projectId){
+		}
+		try {
+			if (null != projectId) {
 				cdsClient.addProjectPipeline(projectId, newMLPPipeline.getPipelineId());
 			}
 		} catch (Exception e) {
 			throw new TargetServiceInvocationException(PipelineServiceConstants.CDS_ADD_PROJECT_PIPELINE);
 		}
-		
+
 		newMLPPipeline.setServiceStatusCode(ServiceStatus.COMPLETED.getServiceStatusCode());
 		result = PipeLineServiceUtil.getPipeLineVO(newMLPPipeline, mlpUser);
 		// Add success or error message to Notification. (Call to CDS)
 		String resultMsg = result.getPipelineId().getName() + " updated successfully";
-		// saveNotification(authenticatedUserId, STATUS_CODE, TASK_NAME, resultMsg);
+		// saveNotification(authenticatedUserId, STATUS_CODE, TASK_NAME,
+		// resultMsg);
 		logger.debug("updatePipeline() End");
 		return result;
 	}
@@ -502,7 +526,10 @@ public class PipeLineServiceImpl implements PipeLineService{
 			throw new TargetServiceInvocationException(PipelineServiceConstants.CDS_GET_PIPELINE);
 		}
 		if(null != mlpPipeline.getServiceUrl()){
-			String latestServiceURL = mlpPipeline.getServiceUrl().substring(0, mlpPipeline.getServiceUrl().indexOf("?")); //https://localhost:8443/nifi/
+			String latestServiceURL = mlpPipeline.getServiceUrl();
+			if(!configProps.isUseexternalpipeline()){
+				latestServiceURL = mlpPipeline.getServiceUrl().substring(0, mlpPipeline.getServiceUrl().indexOf("?")); //https://localhost:8443/nifi/
+			} 
 			mlpPipeline.setServiceUrl(latestServiceURL); 
 			result = PipeLineServiceUtil.getPipeLineVO(mlpPipeline, mlpUser);
 		}else {
@@ -516,24 +543,54 @@ public class PipeLineServiceImpl implements PipeLineService{
 	
 
 	private void createPipelineAsync(String authenticatedUserId, MLPPipeline responseMLPPileLine) {
-		logger.debug(" CreatePipelineAsync() Begin " );
-		String nifiURL = nifiService.createNiFiInstance(authenticatedUserId);
+		logger.debug(" CreatePipelineAsync() Begin ");
+		String nifiURL = null;
+		if (configProps.isUseexternalpipeline()) { // external pipelineUrl
+			try {
+				if (null == responseMLPPileLine.getServiceUrl()) {
+					throw new IncorrectValueException("Exception occured : Pipeline URL is null ");
+				} else {
+					new URL(responseMLPPileLine.getServiceUrl());
+					nifiURL = responseMLPPileLine.getServiceUrl();
+				}
+			} catch (MalformedURLException ex) {
+				throw new IncorrectValueException("Exception occured : Invalid PipelineURL ");
+			}
+		} else {
+			nifiURL = nifiService.createNiFiInstance(authenticatedUserId);
+		}
 		createPipelineInNifiInstance(authenticatedUserId, responseMLPPileLine, nifiURL);
-		logger.debug(" CreatePipelineAsync() End " );
+		logger.debug(" CreatePipelineAsync() End ");
 	}
 
 	private void createPipelineInNifiInstance(String acumosLoginId, MLPPipeline mlpPileLine, String nifiURL) {
 		logger.debug("CreatePipelineInNifiInstance() Begin ");
-		String url = nifiService.createPipeline(acumosLoginId, mlpPileLine.getName(), nifiURL);
-		logger.debug("NiFi Service URL : " + url);
-		mlpPileLine.setServiceUrl(url);		
+		String url = null;
+		if (!configProps.isUseexternalpipeline()) {
+			url = nifiService.createPipeline(acumosLoginId, mlpPileLine.getName(), nifiURL);
+			logger.debug("NiFi Service URL : " + url);
+		} else {
+			String lastestUrl = mlpPileLine.getServiceUrl();
+			try {
+				if (null == lastestUrl) {
+					throw new IncorrectValueException("Exception occured : Pipeline URL is null ");
+				} else {
+					new URL(lastestUrl);
+					url = lastestUrl;
+				}
+			} catch (MalformedURLException ex) {
+				throw new IncorrectValueException("Exception occured : Invalid PipelineURL ");
+			}
+		}
+
+		mlpPileLine.setServiceUrl(url);
 		mlpPileLine.setServiceStatusCode(ServiceStatus.COMPLETED.getServiceStatusCode());
 		try {
 			// Call to CDS to update PipeLine with URL and Status
 			logger.debug("CDS updatePipeLine() method Begin");
 			cdsClient.updatePipeline(mlpPileLine);
 			logger.debug("CDS updatePipeLine() method End");
-		} catch(RestClientResponseException e){
+		} catch (RestClientResponseException e) {
 			logger.error("CDS - Update Pipeline", e);
 			throw new TargetServiceInvocationException(PipelineServiceConstants.CDS_UPDATE_PIPELINE);
 		}

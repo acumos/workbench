@@ -134,6 +134,9 @@ public class ConfigurationProperties {
 	@Value("${k8s.nifideploymentname}")
 	private String nifiDeploymentName;
 	
+	@Value("${useexternalpipeline}")
+	private boolean useExternalPipeline;
+	
 	/**
 	 * @return the namespace
 	 */
@@ -381,5 +384,12 @@ public class ConfigurationProperties {
 		return nifiDeploymentName;
 	}
 
+	/**
+	 * 
+	 * @return if Useexternalpipeline is true or false
+	 */
+	public boolean isUseexternalpipeline() {
+		return useExternalPipeline;
+	}
 	
 }

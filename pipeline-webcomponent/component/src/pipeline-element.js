@@ -94,20 +94,18 @@ export class PipelineLitElement extends DataMixin(ValidationMixin(BaseElementMix
 		
 		initializeValidations() {
 			this.$validations.init({
-				validations: {
-					newPipeline: {
-						pipelineId: {
-							name: {
-								isNotEmpty: Forms.validators.isNotEmpty,
-								pattern: Forms.validators.pattern('^[a-zA-Z][a-zA-Z0-9_]{5,29}$')
-							},
-							serviceUrl: this.useExternalPipeline === 'true' ? {
-								isNotEmpty: Forms.validators.isNotEmpty,
-								pattern: Forms.validators.pattern('https://.*')
-							} : {}
-						}
-					}
-			 }
+        validations: {
+          pipeline: {
+            pipelineName: { 
+							isNotEmpty: Forms.validators.isNotEmpty,
+              pattern: Forms.validators.pattern('^[a-zA-Z][a-zA-Z0-9_]{5,29}$')
+						},
+						serviceUrl: this.useExternalPipeline === 'true' ? {
+							isNotEmpty: Forms.validators.isNotEmpty,
+							pattern: Forms.validators.pattern('https://.*')
+						} : {}
+          }
+        }
 			});
 		}
 

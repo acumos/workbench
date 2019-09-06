@@ -94,26 +94,22 @@ export class NotebookLitElement extends DataMixin(ValidationMixin(BaseElementMix
 			
 		initializeValidations() {
 			this.$validations.init({
-				validations: {
-					newNotebook: {
-						noteBookId: {
-							name: {
-								isNotEmpty: Forms.validators.isNotEmpty,
-								pattern: Forms.validators.pattern('^[a-zA-Z][a-zA-Z0-9_]{5,29}$')
-							},
-							versionId: {
-								label: {
-									isNotEmpty: Forms.validators.isNotEmpty,
-									pattern: Forms.validators.pattern('^[a-zA-Z0-9_.]{1,14}$')
-								}
-							},
-							serviceUrl: this.useExternalNotebook === 'true' ? {
-								isNotEmpty: Forms.validators.isNotEmpty,
-								pattern: Forms.validators.pattern('https://.*')
-							} : {}
-						}
-					}
-				}
+        validations: {
+          notebook: {
+            notebookName: { 
+							isNotEmpty: Forms.validators.isNotEmpty,
+              pattern: Forms.validators.pattern('^[a-zA-Z][a-zA-Z0-9_]{5,29}$')
+						},
+            notebookVersion: { 
+							isNotEmpty: Forms.validators.isNotEmpty,
+							pattern: Forms.validators.pattern('^[a-zA-Z0-9_.]{1,14}$')
+						},
+						serviceUrl: this.useExternalNotebook === 'true' ? {
+							isNotEmpty: Forms.validators.isNotEmpty,
+							pattern: Forms.validators.pattern('https://.*')
+						} : {}
+          }
+        }
 			});
 		}
 

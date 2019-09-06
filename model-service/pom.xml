@@ -59,7 +59,7 @@
 		<dependency>
 			<groupId>org.acumos.workbench</groupId>
 			<artifactId>workbench-common</artifactId>
-			<version>1.0.4-SNAPSHOT</version>
+			<version>1.0.4</version>
 		</dependency>
 
 		<dependency>
@@ -117,14 +117,39 @@
 			<artifactId>logback-core</artifactId>
 			<!-- Spring chooses <version>${logback.version}</version> -->
 		</dependency>
+		
 		<dependency>
 			<groupId>org.lightcouch</groupId>
 			<artifactId>lightcouch</artifactId>
 			<version>0.2.0</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-couchbase</artifactId>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.powermock/powermock-api-mockito -->
+		<dependency>
+   			 <groupId>org.powermock</groupId>
+    		<artifactId>powermock-api-mockito</artifactId>
+   			<version>1.7.4</version>
+   			<scope>test</scope>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.powermock/powermock-module-junit4 -->
+		<dependency>
+   		 	<groupId>org.powermock</groupId>
+    		<artifactId>powermock-module-junit4</artifactId>
+   			<version>1.5.1</version>
+    		<scope>test</scope>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.powermock/powermock-modules -->
+		<dependency>
+   		 	<groupId>org.powermock</groupId>
+    		<artifactId>powermock-modules</artifactId>
+    		<version>1.6.6</version>
+    		<type>pom</type>
 		</dependency>
 		
 	</dependencies>

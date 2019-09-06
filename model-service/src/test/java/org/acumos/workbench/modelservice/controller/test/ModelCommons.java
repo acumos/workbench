@@ -33,8 +33,13 @@ import org.acumos.workbench.common.vo.Identifier;
 import org.acumos.workbench.common.vo.KVPair;
 import org.acumos.workbench.common.vo.KVPairs;
 import org.acumos.workbench.common.vo.Model;
+import org.acumos.workbench.common.vo.Models;
+import org.acumos.workbench.common.vo.Notebooks;
+import org.acumos.workbench.common.vo.Organization;
+import org.acumos.workbench.common.vo.Pipelines;
 import org.acumos.workbench.common.vo.Project;
 import org.acumos.workbench.common.vo.Projects;
+import org.acumos.workbench.common.vo.Role;
 import org.acumos.workbench.common.vo.ServiceState;
 import org.acumos.workbench.common.vo.User;
 import org.acumos.workbench.common.vo.Users;
@@ -79,7 +84,7 @@ public abstract class ModelCommons {
 		// Set the Service URL
 		identifier.setServiceUrl("");
 		// Set the UUID
-		identifier.setUuid(UUID.randomUUID().toString());
+		identifier.setUuid("123");
 		// Set the Version Details
 		Version version = new Version();
 		version.setComment("New Comment");
@@ -135,6 +140,58 @@ public abstract class ModelCommons {
 
 		return model;
 
+	}
+	
+	protected Project buildProject() {
+		Project project = new Project();
+		ArtifactState artifactState = new ArtifactState();
+		artifactState.setStatus(ArtifactStatus.ACTIVE);
+		project.setArtifactStatus(artifactState);
+		project.setDescription("Project Description");
+		Models models = new Models();
+		project.setModels(models);
+		Notebooks notebooks = new Notebooks();
+		project.setNotebooks(notebooks);
+		User owner = new User();
+		owner.setAuthenticatedUserId("123");
+		owner.setModels(models);
+		owner.setNotebooks(notebooks);
+		Organization organization = new Organization();
+		owner.setOrganization(organization);
+		Pipelines pipelines = new Pipelines();
+		owner.setPipelines(pipelines);
+		List<Role> roles = new ArrayList<Role>();
+		owner.setRoles(roles);
+		Identifier userId = new Identifier();
+		userId.setUuid("123");
+		userId.setName("TechMDev");
+		userId.setServiceUrl("https://acumos.org");
+		userId.setIdentifierType(IdentifierType.PIPELINE);
+		owner.setUserId(userId);
+		List<Project> projectList = new ArrayList<Project>();
+		projectList.add(project);
+		Projects projects = new Projects();
+		projects.setProjects(projectList);
+		owner.setProjects(projects);
+		project.setOwner(owner);
+		Identifier identifier = new Identifier();
+		identifier.setIdentifierType(IdentifierType.PIPELINE);
+		identifier.setName("IdentifierName");
+		identifier.setServiceUrl("https://acumos.org");
+		identifier.setRepositoryUrl("https://acumos.org");
+		identifier.setUuid("123");
+		Version version = new Version();
+		version.setComment("comment");
+		version.setLabel("Label");
+		version.setCreationTimeStamp(Instant.now().toString());
+		version.setModifiedTimeStamp(Instant.now().toString());
+		version.setUser("123");
+		identifier.setVersionId(version);
+		project.setProjectId(identifier);
+		ServiceState state = new ServiceState();
+		state.setStatus(ServiceStatus.ACTIVE);
+		project.setServiceStatus(state);
+		return project;
 	}
 
 }

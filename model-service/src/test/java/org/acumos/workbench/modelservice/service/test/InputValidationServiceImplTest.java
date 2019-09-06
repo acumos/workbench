@@ -18,7 +18,7 @@
  * ===============LICENSE_END=========================================================
  */
 
-package org.acumos.workbench.modelservice.controller.service;
+package org.acumos.workbench.modelservice.service.test;
 
 import static org.mockito.Mockito.when;
 

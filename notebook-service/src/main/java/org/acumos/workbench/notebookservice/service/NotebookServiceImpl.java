@@ -167,6 +167,7 @@ public class NotebookServiceImpl implements NotebookService {
 		//First Launch the notebook
 		String notebookName = notebook.getNoteBookId().getName()+"_"+ notebook.getNoteBookId().getVersionId().getLabel();
 		NotebookRestClient notebookRestClient = getNotebookRestClient(notebook.getNotebookType());
+		
 		String url =  notebookRestClient.launchNotebookServer(authenticatedUserId);
 		String serviceURL = null;
 		if(null != url) { 

@@ -21,6 +21,8 @@
 package org.acumos.workbench.notebookservice.service;
 
 import java.lang.invoke.MethodHandles;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -149,8 +151,11 @@ public class NotebookServiceImpl implements NotebookService {
 		String url = null;
 		result = getNotebook(authenticatedUserId, notebookId);
 		if (null != result) {
-			NotebookRestClient restClient = getNotebookRestClient(result.getNotebookType());	
-			url = restClient.launchNotebook(authenticatedUserId, projectId, result);
+			url = result.getNoteBookId().getServiceUrl();
+			if(!confprops.isUseExternalNotebook()){
+				NotebookRestClient restClient = getNotebookRestClient(result.getNotebookType());	
+				url = restClient.launchNotebook(authenticatedUserId, projectId, result);
+			}
 			result.getNoteBookId().setServiceUrl(url);
 		}
 		logger.debug("launchNotebook() End");
@@ -162,27 +167,42 @@ public class NotebookServiceImpl implements NotebookService {
 		logger.debug("createNotebook() Begin");
 		MLPUser mlpUser = getUserDetails(authenticatedUserId);
 		String userId = mlpUser.getUserId();
-
-		//Create notebook in Notebook server 
-		//First Launch the notebook
-		String notebookName = notebook.getNoteBookId().getName()+"_"+ notebook.getNoteBookId().getVersionId().getLabel();
-		NotebookRestClient notebookRestClient = getNotebookRestClient(notebook.getNotebookType());
-		String url =  notebookRestClient.launchNotebookServer(authenticatedUserId);
 		String serviceURL = null;
-		if(null != url) { 
-			//Create notebook 
-			serviceURL = notebookRestClient.createNotebookInNotebookServer(authenticatedUserId, notebookName);
+
+		if (confprops.isUseExternalNotebook()) {
+			// External Notebook URL , No need to create notebook.
+			try {
+				if (null == notebook.getNoteBookId().getServiceUrl()) {
+					throw new IncorrectValueException("Exception occured : NotebookURL is null ");
+				} else {
+					new URL(notebook.getNoteBookId().getServiceUrl());
+					serviceURL = notebook.getNoteBookId().getServiceUrl();
+				}
+			} catch (MalformedURLException ex) {
+				throw new IncorrectValueException("Exception occured : Invalid URL ");
+			}
+
+		} else {
+			// Create notebook in Notebook server
+			// First Launch the notebook
+			String notebookName = notebook.getNoteBookId().getName() + "_"
+					+ notebook.getNoteBookId().getVersionId().getLabel();
+			NotebookRestClient notebookRestClient = getNotebookRestClient(notebook.getNotebookType());
+			String url = notebookRestClient.launchNotebookServer(authenticatedUserId);
+			if (null != url) {
+				// Create notebook
+				serviceURL = notebookRestClient.createNotebookInNotebookServer(authenticatedUserId, notebookName);
+				 //TODO : Once JupyterHub is integrated with Git, stop the launched notebook server after creating notebook in it. notebookRestClient.stopNotebookServer(authenticatedUserId)
+			}
 		}
-		//TODO : Once JupyterHub is integrated with Git, stop the launched notebook server after creating notebook in it. notebookRestClient.stopNotebookServer(authenticatedUserId)
-				
 		Notebook result = null;
 		MLPNotebook responseMLPNotebook = null;
 		MLPNotebook mlpNotebook = null;
 		try {
 			mlpNotebook = NotebookServiceUtil.getMLPNotebook(userId, notebook);
-			if(null != serviceURL) {
-				mlpNotebook.setServiceUrl(serviceURL);
-			}
+			 if(null != serviceURL) {
+				 mlpNotebook.setServiceUrl(serviceURL);
+			 }
 			cdsClient.setRequestId(MDC.get(LoggingConstants.MDCs.REQUEST_ID));
 			responseMLPNotebook = cdsClient.createNotebook(mlpNotebook);
 		} catch (RestClientResponseException e) {
@@ -285,13 +305,10 @@ public class NotebookServiceImpl implements NotebookService {
 			logger.error(props.getCdsGetNotebookExcp());
 			throw new TargetServiceInvocationException(props.getCdsGetNotebookExcp());
 		}
-		
 		if(!newnotebookTypeCode.equals(oldmlpNotebook.getNotebookTypeCode())) {
 			logger.error("Notebook Type cannot be changed");
 			throw new IncorrectValueException("Notebook Type cannot be changed");
 		}
-		
-		
 		if (!newNotebookName.equals(oldmlpNotebook.getName())
 				|| (null != newNotebookVersion && null != oldmlpNotebook.getVersion() && !newNotebookVersion
 						.equals(oldmlpNotebook.getVersion()))) {
@@ -313,22 +330,34 @@ public class NotebookServiceImpl implements NotebookService {
 				logger.error("Notebook name and type [and version] already exists");
 				throw new DuplicateNotebookException();
 			}
-			
-			//Create notebook in Notebook server 
-			//First Launch the notebook
-			String notebookName = newNotebookName+"_"+ newNotebookVersion;
-			String oldNotebookName = oldmlpNotebook.getName() + "_" + oldmlpNotebook.getVersion();
-			NotebookRestClient notebookRestClient = getNotebookRestClient(notebook.getNotebookType());
-			String url =  notebookRestClient.launchNotebookServer(authenticatedUserId);
-			
-			if(null != url) { 
-				//Create notebook 
-				serviceURL = notebookRestClient.updateNotebookInNotebookServer(authenticatedUserId, notebookName, oldNotebookName);
-				nameVersionChanged = true;
+			if (confprops.isUseExternalNotebook()) {
+				// External Notebook URL , No need to create notebook.
+				try {
+					if (null == notebook.getNoteBookId().getServiceUrl()) {
+						throw new IncorrectValueException("Exception occured : Notebook URL is null ");
+					} else {
+						new URL(notebook.getNoteBookId().getServiceUrl());
+						serviceURL = notebook.getNoteBookId().getServiceUrl();
+					}
+				} catch (MalformedURLException ex) {
+					throw new IncorrectValueException("Exception occured : Invalid URL ");
+				}
+			} else {
+				// Create notebook in Notebook server
+				// First Launch the notebook
+				String notebookName = newNotebookName + "_" + newNotebookVersion;
+				String oldNotebookName = oldmlpNotebook.getName() + "_" + oldmlpNotebook.getVersion();
+				NotebookRestClient notebookRestClient = getNotebookRestClient(notebook.getNotebookType());
+				String url = notebookRestClient.launchNotebookServer(authenticatedUserId);
+				if (null != url) {
+					// Create notebook
+					serviceURL = notebookRestClient.updateNotebookInNotebookServer(authenticatedUserId, notebookName,
+							oldNotebookName);
+					nameVersionChanged = true;
+				}
+				//TODO : Once JupyterHub is integrated with Git, stop the launched notebook server after updating notebook in it. notebookRestClient.stopNotebookServer(authenticatedUserId)
+				
 			}
-			//TODO : Once JupyterHub is integrated with Git, stop the launched notebook server after updating notebook in it. notebookRestClient.stopNotebookServer(authenticatedUserId)
-			
-			
 		}
 		MLPNotebook newMLPNotebook = NotebookServiceUtil.updateMLPNotebook(oldmlpNotebook, notebook);
 		if(nameVersionChanged && null != serviceURL) {
@@ -342,7 +371,6 @@ public class NotebookServiceImpl implements NotebookService {
 			logger.error("CDS - Update Notebook");
 			throw new TargetServiceInvocationException(props.getCdsUpdateNotebookExcp());
 		}
-		
 		try {
 			if (null != projectId) {
 				logger.debug("addProjectNotebook() Begin");

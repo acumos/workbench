@@ -26,6 +26,7 @@ import org.acumos.workbench.common.exception.ArchivedException;
 import org.acumos.workbench.common.exception.BadRequestException;
 import org.acumos.workbench.common.exception.EntityNotFoundException;
 import org.acumos.workbench.common.exception.ForbiddenException;
+import org.acumos.workbench.common.exception.IncorrectValueException;
 import org.acumos.workbench.common.logging.LoggingConstants;
 import org.acumos.workbench.common.util.ServiceStatus;
 import org.acumos.workbench.common.vo.Pipeline;
@@ -154,6 +155,22 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 	 */
 	@ExceptionHandler(DuplicateRequestException.class)
 	public final ResponseEntity<?> handleDuplicateRequestException(DuplicateRequestException ex, WebRequest request) {
+		removeRequestFromCache(request);
+		Pipeline pipeline = getPipeline(ex);
+		return new ResponseEntity<Pipeline>(pipeline, HttpStatus.BAD_REQUEST);
+	}
+	/**
+	 * The method to handle IncorrectValueException and return the appropriate response to UI. 
+	 * 
+	 * @param ex
+	 * 		the exception thrown 
+	 * @param request
+	 * 		the Web request. 
+	 * @return ResponseEntitiy<Pipeline> 
+	 * 		returns Pipeline with ServiceStatus indicating error 
+	 */
+	@ExceptionHandler(IncorrectValueException.class)
+	public final ResponseEntity<?> handleIncorrectValueException(IncorrectValueException ex, WebRequest request) {
 		removeRequestFromCache(request);
 		Pipeline pipeline = getPipeline(ex);
 		return new ResponseEntity<Pipeline>(pipeline, HttpStatus.BAD_REQUEST);

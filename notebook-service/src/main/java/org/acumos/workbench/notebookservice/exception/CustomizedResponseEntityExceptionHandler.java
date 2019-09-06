@@ -26,6 +26,7 @@ import org.acumos.workbench.common.exception.ArchivedException;
 import org.acumos.workbench.common.exception.BadRequestException;
 import org.acumos.workbench.common.exception.EntityNotFoundException;
 import org.acumos.workbench.common.exception.ForbiddenException;
+import org.acumos.workbench.common.exception.IncorrectValueException;
 import org.acumos.workbench.common.exception.TargetServiceInvocationException;
 import org.acumos.workbench.common.util.ServiceStatus;
 import org.acumos.workbench.common.vo.Notebook;
@@ -105,6 +106,21 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 	 */
 	@ExceptionHandler(EntityNotFoundException.class)
 	public final ResponseEntity<?> handleArtifactNotFoundException(EntityNotFoundException ex, WebRequest request) {
+		Notebook notebook = getNotebokWithErroStatus(ex);
+		return new ResponseEntity<Notebook>(notebook, HttpStatus.NOT_FOUND);
+	}
+	
+	/**
+	 * To handle IncorrectValueException and returns appropriate response to UI. 
+	 * @param ex
+	 * 		the exception thrown by the service method
+	 * @param request
+	 * 		the WebRequest
+	 * @return ResponseEntitiy<Notebook> 
+	 * 		returns Notebook with ServiceStatus indicating error
+	 */
+	@ExceptionHandler(IncorrectValueException.class)
+	public final ResponseEntity<?> handleIncorrectValueException(IncorrectValueException ex, WebRequest request) {
 		Notebook notebook = getNotebokWithErroStatus(ex);
 		return new ResponseEntity<Notebook>(notebook, HttpStatus.NOT_FOUND);
 	}

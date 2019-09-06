@@ -99,11 +99,12 @@ public class ProjectServiceUtil {
 		Timestamp timestamp =  null;
 		if(null == mlpProject.getModified()) { 
 			timestamp = Timestamp.from(mlpProject.getCreated());
+			version.setModifiedTimeStamp(timestamp.toString());
 		} else { 
 			timestamp = Timestamp.from(mlpProject.getModified());
+			version.setModifiedTimeStamp(timestamp.toString());
 		}
-		
-		version.setTimeStamp(timestamp.toString());
+		version.setCreationTimeStamp(mlpProject.getCreated().toString());
 		version.setUser(mlpProject.getUserId());
 		version.setLabel(mlpProject.getVersion());
 		projectIdentifier.setIdentifierType(IdentifierType.PROJECT);

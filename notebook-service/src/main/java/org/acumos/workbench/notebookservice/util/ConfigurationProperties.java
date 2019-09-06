@@ -62,6 +62,11 @@ public class ConfigurationProperties {
 	@Value("${jupyternotebook.url}")
 	private String jupyterNotebookURL;
 	
+	@Value("${useexternalnotebook}")
+	private boolean useExternalNotebook;
+	
+	
+
 	/**
 	 * @return the resultsetSize
 	 */
@@ -145,6 +150,11 @@ public class ConfigurationProperties {
 	public boolean isInstallCert() {
 		return installCert;
 	}
-
-	
+	/**
+	 * 
+	 * @return true or false
+	 */
+	public boolean isUseExternalNotebook() {
+		return useExternalNotebook;
+	}
 }

@@ -51,96 +51,98 @@
 		<protobuf.java.jar.name>protobuf-java-${protobuf.java.version}.jar</protobuf.java.jar.name>
 		<mockito.version>1.10.19</mockito.version>
 	</properties>
+	
 	<dependencies>
-		<dependency>
-			<groupId>org.acumos.common-dataservice</groupId>
-			<artifactId>cmn-data-svc-client</artifactId>
-			<version>2.2.2</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.acumos.workbench</groupId>
-			<artifactId>workbench-common</artifactId>
-			<version>1.0.4-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<!-- Setup Spring Boot -->
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-		<!-- Test dependencies -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
 
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger2</artifactId>
-			<version>2.9.2</version>
-		</dependency>
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger-ui</artifactId>
-			<version>2.9.2</version>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<!-- Spring chooses <version>${slf4j.version}</version> -->
-		</dependency>
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-			<!-- Spring chooses <version>${logback.version}</version> -->
-		</dependency>
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-core</artifactId>
-			<!-- Spring chooses <version>${logback.version}</version> -->
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<!-- Spring sets the <version>4.11</version> -->
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.googlecode.owasp-java-html-sanitizer</groupId>
-			<artifactId>owasp-java-html-sanitizer</artifactId>
-			<version>20180219.1</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>io.kubernetes</groupId>
-			<artifactId>client-java</artifactId>
-			<version>4.0.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.glassfish.jersey.core</groupId>
-			<artifactId>jersey-client</artifactId>
-			<version>2.28</version>
-		</dependency>
-		<dependency>
-			<groupId>org.glassfish.jersey.inject</groupId>
-			<artifactId>jersey-hk2</artifactId>
-			<version>2.28</version>
-		</dependency>
-		<dependency>
-			<groupId>com.googlecode.json-simple</groupId>
-			<artifactId>json-simple</artifactId>
-			<version>1.1.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.velocity</groupId>
-			<artifactId>velocity</artifactId>
-			<version>1.7</version>
-		</dependency>
+	<dependency>
+		<groupId>org.acumos.common-dataservice</groupId>
+		<artifactId>cmn-data-svc-client</artifactId>
+		<version>2.2.2</version>
+	</dependency>
+
+	<dependency>
+		<groupId>org.acumos.workbench</groupId>
+		<artifactId>workbench-common</artifactId>
+		<version>1.0.4</version>
+	</dependency>
+	<dependency>
+		<!-- Setup Spring Boot -->
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter</artifactId>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-web</artifactId>
+	</dependency>
+	<!-- Test dependencies -->
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-test</artifactId>
+		<scope>test</scope>
+	</dependency>
+
+	<dependency>
+		<groupId>io.springfox</groupId>
+		<artifactId>springfox-swagger2</artifactId>
+		<version>2.9.2</version>
+	</dependency>
+	<dependency>
+		<groupId>io.springfox</groupId>
+		<artifactId>springfox-swagger-ui</artifactId>
+		<version>2.9.2</version>
+	</dependency>
+	<dependency>
+		<groupId>org.slf4j</groupId>
+		<artifactId>slf4j-api</artifactId>
+		<!-- Spring chooses <version>${slf4j.version}</version> -->
+	</dependency>
+	<dependency>
+		<groupId>ch.qos.logback</groupId>
+		<artifactId>logback-classic</artifactId>
+		<!-- Spring chooses <version>${logback.version}</version> -->
+	</dependency>
+	<dependency>
+		<groupId>ch.qos.logback</groupId>
+		<artifactId>logback-core</artifactId>
+		<!-- Spring chooses <version>${logback.version}</version> -->
+	</dependency>
+	<dependency>
+		<groupId>junit</groupId>
+		<artifactId>junit</artifactId>
+		<!-- Spring sets the <version>4.11</version> -->
+		<scope>test</scope>
+	</dependency>
+	<dependency>
+		<groupId>com.googlecode.owasp-java-html-sanitizer</groupId>
+		<artifactId>owasp-java-html-sanitizer</artifactId>
+		<version>20180219.1</version>
+	</dependency>
+
+	<dependency>
+		<groupId>io.kubernetes</groupId>
+		<artifactId>client-java</artifactId>
+		<version>4.0.0</version>
+	</dependency>
+	<dependency>
+		<groupId>org.glassfish.jersey.core</groupId>
+		<artifactId>jersey-client</artifactId>
+		<version>2.28</version>
+	</dependency>
+	<dependency>
+		<groupId>org.glassfish.jersey.inject</groupId>
+		<artifactId>jersey-hk2</artifactId>
+		<version>2.28</version>
+	</dependency>
+	<dependency>
+		<groupId>com.googlecode.json-simple</groupId>
+		<artifactId>json-simple</artifactId>
+		<version>1.1.1</version>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.velocity</groupId>
+		<artifactId>velocity</artifactId>
+		<version>1.7</version>
+	</dependency>
 		
 	</dependencies>
 	<build>

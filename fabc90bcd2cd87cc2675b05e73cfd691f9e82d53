@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "590fe65e_44274fe6",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-06T08:44:16Z",
+      "side": 1,
+      "message": "incorrect exception thrown",
+      "range": {
+        "startLine": 173,
+        "startChar": 15,
+        "endLine": 173,
+        "endChar": 47
+      },
+      "revId": "fabc90bcd2cd87cc2675b05e73cfd691f9e82d53",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0480b627_be2f9d8a",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-06T08:44:16Z",
+      "side": 1,
+      "message": "Please correct the thrown exception.  Doesn\u0027t make sense to throw TargetServiceInvocationException for Malformed URL.",
+      "range": {
+        "startLine": 179,
+        "startChar": 14,
+        "endLine": 179,
+        "endChar": 46
+      },
+      "revId": "fabc90bcd2cd87cc2675b05e73cfd691f9e82d53",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e76fdeb4_946a2f1e",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-06T08:44:16Z",
+      "side": 1,
+      "message": "Incorrect exception thrown",
+      "range": {
+        "startLine": 334,
+        "startChar": 16,
+        "endLine": 334,
+        "endChar": 48
+      },
+      "revId": "fabc90bcd2cd87cc2675b05e73cfd691f9e82d53",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "736a7ca4_e9ff0a7e",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-06T08:44:16Z",
+      "side": 1,
+      "message": "Incorrect exception thrown",
+      "range": {
+        "startLine": 340,
+        "startChar": 15,
+        "endLine": 340,
+        "endChar": 47
+      },
+      "revId": "fabc90bcd2cd87cc2675b05e73cfd691f9e82d53",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cec3594d_b3389b21",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/PipeLineServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-06T08:44:16Z",
+      "side": 1,
+      "message": "Incorrect Exception thrown",
+      "range": {
+        "startLine": 316,
+        "startChar": 15,
+        "endLine": 316,
+        "endChar": 47
+      },
+      "revId": "fabc90bcd2cd87cc2675b05e73cfd691f9e82d53",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "37d94f04_29455c1c",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/PipeLineServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-06T08:44:16Z",
+      "side": 1,
+      "message": "Incorrect Exception thrown",
+      "range": {
+        "startLine": 323,
+        "startChar": 14,
+        "endLine": 323,
+        "endChar": 46
+      },
+      "revId": "fabc90bcd2cd87cc2675b05e73cfd691f9e82d53",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b2b4b8cd_526bd2c6",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/PipeLineServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-06T08:44:16Z",
+      "side": 1,
+      "message": "Incorrect Exception thrown",
+      "range": {
+        "startLine": 547,
+        "startChar": 15,
+        "endLine": 547,
+        "endChar": 47
+      },
+      "revId": "fabc90bcd2cd87cc2675b05e73cfd691f9e82d53",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07feeeec_fb8223b7",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/PipeLineServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-06T08:44:16Z",
+      "side": 1,
+      "message": "Incorrect Exception thrown",
+      "range": {
+        "startLine": 553,
+        "startChar": 14,
+        "endLine": 553,
+        "endChar": 46
+      },
+      "revId": "fabc90bcd2cd87cc2675b05e73cfd691f9e82d53",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4aab1bc2_1521ee2d",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/PipeLineServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-06T08:44:16Z",
+      "side": 1,
+      "message": "Incorrect Exception thrown",
+      "range": {
+        "startLine": 572,
+        "startChar": 15,
+        "endLine": 572,
+        "endChar": 47
+      },
+      "revId": "fabc90bcd2cd87cc2675b05e73cfd691f9e82d53",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0ea097e5_332080e0",
+        "filename": "pipeline-service/src/main/java/org/acumos/workbench/pipelineservice/service/PipeLineServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-06T08:44:16Z",
+      "side": 1,
+      "message": "Incorrect Exception thrown",
+      "range": {
+        "startLine": 578,
+        "startChar": 14,
+        "endLine": 578,
+        "endChar": 46
+      },
+      "revId": "fabc90bcd2cd87cc2675b05e73cfd691f9e82d53",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}

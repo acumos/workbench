@@ -20,6 +20,12 @@
 Notebook Service Release Notes
 ===============================
 
+Version 1.0.2, 2019-09-09
+---------------------------
+ACUMOS-3390 : allow users to create external URL for enterprise pipeline and notebook support
+ACUMOS-3408	: Allow users to enter external URL for enterprise Notebook while creating new Notebook
+ACUMOS-3414 : Modify Notebook MS to accept URL of external enterprise Pipeline
+
 Version 1.0.1, 2019-05-30
 ---------------------------
 * ACUMOS-2850 : Move common code to workbench-common

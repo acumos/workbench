@@ -20,6 +20,10 @@
 ML Workbench Home Web Component
 ===============================================
 
+Version 1.0.6  9th September 2019
+==================================
+* Develop and integrate Project Service UI to allow user to facilitate User to get Models associated to a Project (ACUMOS-3217)
+
 Version 1.0.5  31st May 2019 
 =================================
 * ML Workbench facing compatibility issues with Mozilla Firefox (ACUMOS-2866)

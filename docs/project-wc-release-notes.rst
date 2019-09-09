@@ -20,6 +20,15 @@
 ML Workbench Project Web Component
 ===============================================
 
+Version 1.0.6  9th September 2019
+==================================
+* Service URL is not being picked up right (ACUMOS-3235)
+* Notebook UI Web Component to defile property at application level configuration to allow user to enter URL (ACUMOS-3412)
+* User should be able to enter enterprise notebook url while creating new Notebook (ACUMOS-3413)
+* Develop and integrate Project Service UI to allow user to facilitate User to get Models associated to a Project (ACUMOS-3217)
+* Develop and Integrate Project Service UI to allow user to associate Model(s) to a Project (ACUMOS-3215)
+* MLWB UI Changes for displaying details for  Project (ACUMOS-3282)
+
 Version 1.0.5  31st May 2019 
 =================================
 * ML Workbench facing compatibility issues with Mozilla Firefox (ACUMOS-2866)

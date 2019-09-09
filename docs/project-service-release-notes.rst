@@ -20,6 +20,10 @@
 Project Service Release Notes
 ===============================
 
+Version 1.0.2, 2019-09-09
+---------------------------
+* Update to refer workbench-common 1.0.4
+
 Version 1.0.1, 2019-05-30
 ---------------------------
 * ACUMOS-2850 : Move common code to workbench-common

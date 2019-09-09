@@ -24,9 +24,22 @@ import { retry } from 'rxjs/operators';
 export class AppConfigService {
   private appConfig;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   loadAppConfig() {
+    // return {
+    //   dashboardComponent: 'http://localhost:9083',
+    //   projectComponent: 'http://localhost:9084',
+    //   projectCatalogComponent: 'http://localhost:9085',
+    //   notebookComponent: 'http://localhost:9086',
+    //   notebookCatalogComponent: 'http://localhost:9087',
+    //   pipelineComponent: 'http://localhost:9091',
+    //   pipelineCatalogComponent: 'http://localhost:9092',
+    //   portalFEURL: 'http://localhost:8085',
+    //   // tslint:disable-next-line:max-line-length
+    //   menuItems: '[{"title": "Dashboard", "icon": "fa fa-tachometer-alt", "link": "/pages/dashboard", "home": true}, {"title": "Projects", "icon": "fa fa-project-diagram", "link": "/pages/projects/catalog"}, {"title": "Notebooks", "icon": "fas fa-book-open", "link": "/pages/notebook/catalog"}, {"title": "Data Pipelines", "icon": "fa fa-code-branch", "link": "/pages/pipeline/catalog"}, {"title": "AcuCompose", "icon": "fas fa-crop-alt", "link": "/pages/acuCompose"}]',
+    // };
+
     return this.http
       .get('config')
       .pipe(retry(2))

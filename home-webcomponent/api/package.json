@@ -13,7 +13,6 @@
     "method-override": "~2.1.2",
     "https": "^1.0.0",
     "request": "^2.75.0",
-    "request-cookies": "^1.1.0",
-    "cors": "^2.8.5"
+    "request-cookies": "^1.1.0"
   }
 }

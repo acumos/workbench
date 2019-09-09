@@ -19,10 +19,14 @@
 ===============================
 Pipeline Service Release Notes
 ===============================
-Version 1.0.2, 2019-08-07
+
+Version 1.0.2, 2019-09-09
 ---------------------------
 * Added the new Artifact Status codes(viz., INPROGRESS & FAILED) in MLWB PLS code.
 * ACUMOS-2986 : IST2 | MLWB | Update Project and Notebook | Creation date getting updated along with modified date
+* ACUMOS-3390 : allow users to create external URL for enterprise pipeline and notebook support
+* ACUMOS-3407 : Allow users to enter external URL for enterprise pipeline while creating new pipeline
+* ACUMOS-3411 : Modify Pipeline MS to accept URL of external enterprise Pipeline
 
 Version 1.0.1, 2019-05-30
 ---------------------------

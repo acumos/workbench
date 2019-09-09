@@ -20,6 +20,12 @@
 ML Workbench NoteBook Web Component
 ===============================================
 
+Version 1.0.6  9th September 2019
+==================================
+* Notebook UI Web Component to defile property at application level configuration to allow user to enter URL (ACUMOS-3412)
+* User should be able to enter enterprise notebook url while creating new Notebook (ACUMOS-3413)
+* MLWB UI Changes for displaying details for Notebook (ACUMOS-3283)
+
 Version 1.0.5  31st May 2019 
 =================================
 * ML Workbench facing compatibility issues with Mozilla Firefox (ACUMOS-2866)

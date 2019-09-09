@@ -26,7 +26,7 @@
   <!-- FixMe Values are for template -->
   <groupId>org.acumos.workbench</groupId>
   <artifactId>project-service</artifactId>
-  <version>1.0.1-SNAPSHOT</version>
+  <version>1.0.2-SNAPSHOT</version>
   <name>projectservice</name>
   
   <parent>

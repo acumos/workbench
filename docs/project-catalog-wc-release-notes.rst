@@ -20,6 +20,10 @@
 ML Workbench Project-Catalog Web Component
 ===============================================
 
+Version 1.0.6  9th September 2019
+==================================
+* MLWB UI Changes for displaying details for  Project (ACUMOS-3282)
+
 Version 1.0.5  31st May 2019 
 =================================
 * ML Workbench facing compatibility issues with Mozilla Firefox (ACUMOS-2866)

@@ -46,6 +46,6 @@ export class CatalogComponent extends BaseComponent implements OnInit {
     this.loadHtml = false;
     this.showSpinner = true;
     this.alertOpen = false;
-    this.loadComponent('projectCatalogComponent', 'project-catalog-element', this.breadCrumbs);
+    this.loadComponent('projectCatalogComponent', 'src/project-catalog-element', this.breadCrumbs);
   }
 }

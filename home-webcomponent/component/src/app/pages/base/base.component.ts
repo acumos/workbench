@@ -35,7 +35,7 @@ export class BaseComponent implements OnInit {
   public loadHtml: boolean;
   public showSpinner: boolean;
 
-  constructor(public router: Router, public script: ScriptService, 
+  constructor(public router: Router, public script: ScriptService,
     public breadcrumbsService: BreadcrumbsService) {
   }
 
@@ -57,7 +57,7 @@ export class BaseComponent implements OnInit {
         this.userId = res.userId;
 
         this.alertOpen = false;
-        this.script.load(componentName, '/src/' + componentFileName + '.js');
+        this.script.load(componentName, '/' + componentFileName + '.js');
         this.loadHtml = true;
       } else {
         this.sessionError = 'Acumos session details are unavailable in browser cookies. Pls login to Acumos portal and come back here..';

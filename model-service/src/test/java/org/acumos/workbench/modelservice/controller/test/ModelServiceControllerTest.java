@@ -215,8 +215,4 @@ public class ModelServiceControllerTest extends ModelCommons{
 		assertNotNull(result);
 	}
 	
-	@Test
-	public void getAuthJWTTokenTest(){
-		when(request.getHeader("Authorization")).thenReturn("123");
-	}
 }

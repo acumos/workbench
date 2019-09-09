@@ -65,7 +65,7 @@ public class ModelValidationServiceImpl implements ModelValidationService{
 	public void validateProject(String authenticatedUserId, String projectId, String authToken) {
 		logger.debug("checkProjectDetails() Begin");
 		ResponseEntity<Project> response = psClient.getProject(authenticatedUserId, projectId, authToken);
-		if(null != response) { 
+		if(null != response) {
 			Project project = response.getBody();
 			if(null != project) { 
 				if(!ServiceStatus.ERROR.equals(project.getServiceStatus().getStatus())) {

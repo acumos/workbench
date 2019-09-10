@@ -17,8 +17,5 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ===============LICENSE_END=========================================================
 -->
-
-<ngx-base-component [alertOpen]="alertOpen" [showSpinner]="showSpinner" [sessionError]="sessionError"></ngx-base-component>
-
-<project-element *ngIf="loadHtml" attr.projectId="{{ id }}" [attr.componenturl]="url" (on-load-event)="this.stopSpinner()" 
-     (project-event)="this.OnViewProjectEvent($event)" [attr.userName]="userName" [attr.authToken]="authToken" [attr.parentMsg]="parentMsg"> </project-element>
+<project-webcomponent-element *ngIf="loadHtml" attr.projectId="{{ id }}" [attr.componenturl]="url" (on-load-event)="this.stopSpinner()" 
+     (project-event)="this.OnViewProjectEvent($event)" [attr.userName]="userName" [attr.authToken]="authToken"> </project-webcomponent-element>

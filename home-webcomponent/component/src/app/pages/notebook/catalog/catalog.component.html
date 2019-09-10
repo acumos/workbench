@@ -18,8 +18,6 @@ limitations under the License.
 ===============LICENSE_END=========================================================
 -->
 
-<ngx-base-component [alertOpen]="alertOpen" [showSpinner]="showSpinner" [sessionError]="sessionError"></ngx-base-component>
-
 <notebook-catalog-element *ngIf="loadHtml" (catalog-notebook-event)="this.OnCatalogNotebookEvent($event)" [attr.componenturl]="url"
 [attr.userName]="userName" [attr.authToken]="authToken" (on-load-event)="this.stopSpinner()">
 </notebook-catalog-element>

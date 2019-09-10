@@ -59,7 +59,7 @@ export class DashboardComponent extends BaseComponent implements OnInit {
   getGlobalMsg() {
     if (this.retry === 5 || this.globals.parentMsg !== undefined) {
       this.parentMsg = this.globals.parentMsg;
-      this.loadComponent('dashboardComponent', 'dashboard-element', this.breadCrumbs);
+      this.loadComponent('dashboardComponent', 'src/dashboard-element', this.breadCrumbs);
       return;
     }
     setTimeout( () => {

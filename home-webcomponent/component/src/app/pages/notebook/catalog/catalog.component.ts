@@ -46,6 +46,6 @@ export class NotebookCatalogComponent extends BaseComponent implements OnInit {
     this.loadHtml = false;
     this.showSpinner = true;
     this.alertOpen = false;
-    this.loadComponent('notebookCatalogComponent', 'notebook-catalog-element', this.breadCrumbs);
+    this.loadComponent('notebookCatalogComponent', 'src/notebook-catalog-element', this.breadCrumbs);
   }
 }

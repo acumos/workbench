@@ -28,6 +28,9 @@ Version 1.0.6  9th September 2019
 * Develop and integrate Project Service UI to allow user to facilitate User to get Models associated to a Project (ACUMOS-3217)
 * Develop and Integrate Project Service UI to allow user to associate Model(s) to a Project (ACUMOS-3215)
 * MLWB UI Changes for displaying details for  Project (ACUMOS-3282)
+* Pipeline UI Web Component to defile property at application level configuration to allow user to enter URL (ACUMOS-3409)
+* User should be able to enter enterprise pipeline url while creating new pipeline (ACUMOS-3410)
+* Service URL is not being picked up right (ACUMOS-3235)
 
 Version 1.0.5  31st May 2019 
 =================================

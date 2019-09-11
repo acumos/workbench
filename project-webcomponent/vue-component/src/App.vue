@@ -46,7 +46,7 @@ export default {
   name: "app",
   components: { ProjectDetails, NotebookList, PipelineList, ModelList },
   mixins: [Vue2Filters.mixin],
-  props: ["projectId", "componenturl", "authToken", "userName", "parentMsg"],
+  props: ["projectid", "componenturl", "authtoken", "username", "parentMsg"],
   computed: {
     ...mapState("app", ["wikiConfig"]),
     project() {
@@ -64,17 +64,17 @@ export default {
   },
   async created() {
     this.setComponentUrl(this.componenturl || process.env.VUE_APP_API);
-    this.setUserName(this.userName);
-    this.setAuthToken(this.authToken);
+    this.setUserName(this.username);
+    this.setAuthToken(this.authtoken);
 
-    this.projectId = this.projectId
-      ? this.projectId
+    this.projectid = this.projectid
+      ? this.projectid
       : process.env.VUE_APP_MOCK_PROJECT_ID;
 
     await this.getConfig();
-    await this.getDetails(this.projectId);
-    await this.getProjectNotebooks(this.projectId);
-    await this.getProjectPipelines(this.projectId);
+    await this.getDetails(this.projectid);
+    await this.getProjectNotebooks(this.projectid);
+    await this.getProjectPipelines(this.projectid);
   },
   methods: {
     ...mapMutations("app", ["setComponentUrl", "setAuthToken", "setUserName"]),

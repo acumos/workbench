@@ -131,10 +131,7 @@ public class PipeLineServiceController {
 			@ApiParam(value = "Pipeline Details", required = true) @RequestBody Pipeline pipeLine) {
 
 		logger.debug("createPipelineUnderProject() Begin");
-		String requestId = defaultToUUID(request.getHeader(LoggingConstants.Headers.REQUEST_ID));
-		pipelineCacheService.putCreateRequest(requestId, pipeLine);
-		
-		String authToken = getAuthJWTToken(request);
+	
 		Pipeline result = createPipeline(authenticatedUserId, projectId, pipeLine, request);
 
 		logger.debug("createPipelineUnderProject() End");

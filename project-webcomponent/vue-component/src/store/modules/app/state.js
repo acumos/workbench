@@ -7,6 +7,7 @@ export default {
   },
   msConfig: null,
   userName: null,
+  authToken: null,
   error: null,
   message: ""
 };

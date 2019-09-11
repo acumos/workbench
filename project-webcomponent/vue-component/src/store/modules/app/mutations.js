@@ -11,6 +11,9 @@ export default {
   setUserName(state, userName) {
     state.userName = userName;
   },
+  setAuthToken(state, authToken) {
+    state.authToken = authToken;
+  },
   setError(state, error) {
     state.error = error;
   },

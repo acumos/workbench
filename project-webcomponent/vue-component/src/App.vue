@@ -63,20 +63,21 @@ export default {
     }
   },
   async created() {
-    if (this.componenturl) {
-      this.setComponentUrl(this.componenturl);
-    } else {
-      const componentUrl = process.env.VUE_APP_API;
-      this.setComponentUrl(componentUrl);
-    }
+    this.setComponentUrl(this.componenturl || process.env.VUE_APP_API);
+    this.setUserName(this.userName);
+    this.setAuthToken(this.authToken);
+
+    this.projectId = this.projectId
+      ? this.projectId
+      : process.env.VUE_APP_MOCK_PROJECT_ID;
 
     await this.getConfig();
-    await this.getDetails("1ea5c88b-aadf-49bf-8ad7-38df3a0f201a");
-    await this.getProjectNotebooks("1ea5c88b-aadf-49bf-8ad7-38df3a0f201a");
-    await this.getProjectPipelines("1ea5c88b-aadf-49bf-8ad7-38df3a0f201a");
+    await this.getDetails(this.projectId);
+    await this.getProjectNotebooks(this.projectId);
+    await this.getProjectPipelines(this.projectId);
   },
   methods: {
-    ...mapMutations("app", ["setComponentUrl"]),
+    ...mapMutations("app", ["setComponentUrl", "setAuthToken", "setUserName"]),
     ...mapActions("app", ["getConfig"]),
     ...mapActions("project", [
       "getDetails",

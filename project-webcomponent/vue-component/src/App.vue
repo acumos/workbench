@@ -27,15 +27,15 @@
 </template>
 
 <script>
+import { dom } from "@fortawesome/fontawesome-svg-core";
+import { mapState, mapActions, mapMutations } from "vuex";
+import { isUndefined } from "lodash-es";
+import Vue2Filters from "vue2-filters";
+
 import Project from "./store/entities/project.entity";
 import Notebook from "./store/entities/notebook.entity";
 import Pipeline from "./store/entities/pipeline.entity";
 import Model from "./store/entities/model.entity";
-
-import { dom } from "@fortawesome/fontawesome-svg-core";
-import { mapState, mapActions, mapMutations } from "vuex";
-// import { mapFields } from "vuex-map-fields";
-import Vue2Filters from "vue2-filters";
 
 import ProjectDetails from "./components/project.details";
 import NotebookList from "./components/notebook.list";
@@ -48,7 +48,8 @@ export default {
   mixins: [Vue2Filters.mixin],
   props: ["projectid", "componenturl", "authtoken", "username", "parentMsg"],
   computed: {
-    ...mapState("app", ["wikiConfig"]),
+    ...mapState("app", ["wikiConfig", "componentUrl", "authToken", "userName"]),
+    ...mapState("project", ["activeProjct"]),
     project() {
       return Project.query().first();
     },
@@ -62,22 +63,53 @@ export default {
       return Model.all();
     }
   },
-  async created() {
-    this.setComponentUrl(this.componenturl || process.env.VUE_APP_API);
-    this.setUserName(this.username);
-    this.setAuthToken(this.authtoken);
-
-    this.projectid = this.projectid
-      ? this.projectid
-      : process.env.VUE_APP_MOCK_PROJECT_ID;
-
-    await this.getConfig();
-    await this.getDetails(this.projectid);
-    await this.getProjectNotebooks(this.projectid);
-    await this.getProjectPipelines(this.projectid);
+  watch: {
+    componenturl(componenturl) {
+      this.setComponentUrl(componenturl);
+      this.init();
+    },
+    username(username) {
+      this.setUserName(username);
+      this.init();
+    },
+    authtoken(authtoken) {
+      this.setAuthToken(authtoken);
+      this.init();
+    },
+    projectid(projectid) {
+      this.setActiveProject(projectid);
+      this.init();
+    }
+  },
+  created() {
+    this.init();
   },
   methods: {
-    ...mapMutations("app", ["setComponentUrl", "setAuthToken", "setUserName"]),
+    async init() {
+      if (isUndefined(this.username) || isUndefined(this.authtoken)) {
+        return;
+      }
+
+      this.setComponentUrl(this.componenturl || process.env.VUE_APP_API);
+      this.setUserName(this.username);
+      this.setAuthToken(this.authtoken);
+      this.setActiveProject(this.projectid || process.env.VUE_APP_PROJECT_ID);
+
+      console.log(this.componenturl);
+      console.log(this.username);
+
+      await this.getConfig();
+      await this.getDetails(this.projectid);
+      await this.getProjectNotebooks(this.projectid);
+      await this.getProjectPipelines(this.projectid);
+    },
+    ...mapMutations("app", [
+      "setComponentUrl",
+      "setAuthToken",
+      "setUserName",
+      "resetAppState"
+    ]),
+    ...mapMutations("project", ["setActiveProject"]),
     ...mapActions("app", ["getConfig"]),
     ...mapActions("project", [
       "getDetails",
@@ -90,6 +122,7 @@ export default {
       await this.getDetails(project.id);
     }
   },
+
   mounted() {
     if (process.env.NODE_ENV === "production") {
       // This will only work on your root Vue component since it's using $parent
@@ -104,6 +137,9 @@ export default {
         }
       }
     }
+  },
+  destroyed() {
+    this.resetAppState();
   }
 };
 </script>

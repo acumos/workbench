@@ -16,8 +16,10 @@ limitations under the License.
 ===============LICENSE_END=========================================================
 */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, ViewChild, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { isUndefined } from 'lodash';
+
 import { ScriptService } from '../../@core/utils/script.service';
 import { BreadcrumbsService } from '../../@core/utils/breadcrumbs.service';
 
@@ -25,7 +27,9 @@ import { BreadcrumbsService } from '../../@core/utils/breadcrumbs.service';
   template: '',
 })
 
-export class BaseComponent implements OnInit {
+export class BaseComponent implements OnDestroy {
+  @ViewChild('webComponent') webComponent: ElementRef;
+
   public url: string;
   public userName: string;
   public authToken: string;
@@ -39,13 +43,17 @@ export class BaseComponent implements OnInit {
     public breadcrumbsService: BreadcrumbsService) {
   }
 
-  ngOnInit() {
+  ngOnDestroy() {
+    if (!isUndefined(this.webComponent)) {
+      this.webComponent.nativeElement.vueComponent.$destroy();
+
+    }
   }
 
   public loadComponent(componentName: string, componentFileName: string, breadCrumbs: any[]) {
     this.url = this.script.getConfig(componentName);
     this.script.getUserSession().subscribe((res: any) => {
-      if ( res.userName !== '' && res.authToken !== '') {
+      if (res.userName !== '' && res.authToken !== '') {
         let portalFEURL: any;
         portalFEURL = this.script.getConfig('portalFEURL');
         breadCrumbs[0].href = portalFEURL;
@@ -76,5 +84,4 @@ export class BaseComponent implements OnInit {
   public stopSpinner() {
     this.showSpinner = false;
   }
-
 }

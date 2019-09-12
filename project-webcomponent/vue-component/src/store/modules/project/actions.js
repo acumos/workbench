@@ -2,7 +2,7 @@ import axios from "axios";
 import { get, map } from "lodash-es";
 import Project from "../../entities/project.entity";
 import Notebook from "../../entities/notebook.entity";
-import Pipeline from '../../entities/pipeline.entity';
+import Pipeline from "../../entities/pipeline.entity";
 
 export default {
   async getDetails({ rootState }, projectId) {

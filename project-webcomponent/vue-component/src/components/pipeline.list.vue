@@ -8,7 +8,10 @@
         <div class="flex flex-col">
           <span class="my-5">No Data Pipelines.</span>
           <div class="flex">
-            <button class="btn btn-secondary btn-sm mr-2">
+            <button
+              class="btn btn-secondary btn-sm mr-2"
+              @click="associatePipeline()"
+            >
               Associate Data Pipeline
             </button>
             <button class="btn btn-primary btn-sm" @click="editPipeline()">
@@ -21,14 +24,18 @@
     <modal-ui
       :title="(activePipeline ? 'Edit' : 'Create') + ' Data Pipeline'"
       size="md"
-      v-show="isEdittingPipeline"
+      v-if="isEdittingPipeline"
       @onDismiss="isEdittingPipeline = false"
     >
       <edit-pipeline-form :data="activePipeline" />
-      <div slot="footer" class="inline-flex justify-between w-full">
-        <button class="btn btn-sm btn-secondary">Reset</button>
-        <button class="btn btn-sm btn-primary">Create Data Pipeline</button>
-      </div>
+    </modal-ui>
+    <modal-ui
+      title="Associate Data Pipeline"
+      size="md"
+      v-if="isAssociatingPipeline"
+      @onDismiss="isAssociatingPipeline = false"
+    >
+      <associate-pipeline-form :data="activePipeline" />
     </modal-ui>
   </div>
 </template>
@@ -37,16 +44,19 @@
 import CollapsableUi from "../components/ui/collapsable.ui";
 import ModalUi from "../components/ui/modal.ui";
 import EditPipelineForm from "./forms/pipeline/edit-pipeline.form";
+import AssociatePipelineForm from "./forms/pipeline/associate-pipeline.form";
 
 export default {
   components: {
     CollapsableUi,
     ModalUi,
-    EditPipelineForm
+    EditPipelineForm,
+    AssociatePipelineForm
   },
   data() {
     return {
       isEdittingPipeline: false,
+      isAssociatingPipeline: false,
       activePipeline: null
     };
   },
@@ -54,6 +64,9 @@ export default {
     editPipeline(pipeline) {
       this.activePipeline = pipeline;
       this.isEdittingPipeline = true;
+    },
+    associatePipeline() {
+      this.isAssociatingPipeline = true;
     }
   }
 };

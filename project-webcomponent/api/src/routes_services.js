@@ -27,24 +27,17 @@ module.exports = function(app) {
 	const uripath = "/users/";
 	const configENV = properties.ENVIRONMENT;
 	const createTimeout = properties.createTimeout;
-	const useExternalNotebook = properties.useExternalNotebook;
-	const useExternalPipeline = properties.useExternalPipeline;
 	const wiki_urls = {
 		projectWikiURL: properties.projectWikiURL,
 		notebookWikiURL: properties.notebookWikiURL,
-		pipelineWikiURL: properties.pipelineWikiURL,
-		modelWikiURL: properties.modelWikiURL
+		pipelineWikiURL: properties.pipelineWikiURL
 	};
 	const ms_urls = {
 		projectmSURL : properties.projectmSURL,
 		notebookmSURL : properties.notebookmSURL,
-		pipelinemSURL : properties.pipelinemSURL,
-		modelmSURL : properties.modelmSURL
+		pipelinemSURL : properties.pipelinemSURL
 	};
 	const pipelineFlag = properties.pipelineFlag;
-	const portalBEUrl = properties.portalBEURL;
-	const portalFEUrl = properties.portalFEURL;
-
 	var getUserName = function (req){
 		let userName = '';
 		if(req.cookies !== undefined && req.cookies.userDetail !== undefined && req.cookies.userDetail !== null) {
@@ -64,8 +57,8 @@ module.exports = function(app) {
 	
 	app.get('/api/config', function(req, res) {
 		try {
-			let userName = getUserName(req);
-			let authToken = getLatestAuthToken(req, '');
+			let userName = process.env.AUTH_USER || getUserName(req);
+			let authToken = process.env.AUTH_TOKEN || getLatestAuthToken(req, '');
 			
 			res.configInfo = {
 				configENV : configENV,
@@ -73,12 +66,8 @@ module.exports = function(app) {
 				userName:  userName,
 				authToken: authToken,
 				wikiConfig: wiki_urls,
-				portalBEUrl: portalBEUrl,
-				portalFEUrl: portalFEUrl,
 				pipelineFlag: pipelineFlag,
-				createTimeout: createTimeout,
-				useExternalNotebook: useExternalNotebook,
-				useExternalPipeline: useExternalPipeline
+				createTimeout: createTimeout
 			};
 			res.send(res.configInfo);
 		} catch (err) {
@@ -108,8 +97,8 @@ module.exports = function(app) {
 	});
 	
 	app.put('/api/project/archive', function (req, res){
-		let serviceUrl = req.body.url + uripath;
 		let userName = req.body.userName;
+		let serviceUrl = req.body.url + uripath;
 		let projectId = req.body.projectId;
 		let authToken = req.headers['auth'];
 		archiveProject(userName, serviceUrl, projectId, getLatestAuthToken(req, authToken)).then(function(result){
@@ -340,78 +329,6 @@ module.exports = function(app) {
 		});
 	});
 	
-	app.post('/api/models/getProjectModels', function (req, res){
-		let userName = req.body.userName;
-		let serviceUrl = req.body.url + uripath;
-		let projectId = req.body.projectId;
-		let authToken = req.headers['auth'];
-		getSelectedProjectModels(userName, serviceUrl, projectId, getLatestAuthToken(req, authToken)).then(function(result){
-			res.send(result);
-		});
-	});
-
-	app.post('/api/models/associateModel', function (req, res){
-		let userName = req.body.userName;
-		let serviceUrl = req.body.url + uripath;
-		let projectId = req.body.projectId;
-		let modelId = req.body.modelId;
-		let authToken = req.headers['auth'];
-		let modelPayload = req.body.modelPayload;
-		associateModelProject(userName, serviceUrl, projectId, modelId, modelPayload, getLatestAuthToken(req, authToken)).then(function(result){
-			res.send(result);
-		});
-	});
-
-	app.put('/api/models/updateAssociateModel', function (req, res){
-		let userName = req.body.userName;
-		let serviceUrl = req.body.url + uripath;
-		let projectId = req.body.projectId;
-		let modelId = req.body.modelId;
-		let authToken = req.headers['auth'];
-		let modelPayload = req.body.modelPayload;
-		updateModelAssociation(userName, serviceUrl, projectId, modelId, modelPayload, getLatestAuthToken(req, authToken)).then(function(result){
-			res.send(result);
-		});
-	});
-
-	app.delete('/api/models/deleteAssociateModel', function (req, res){
-		let userName = req.body.userName;
-		let serviceUrl = req.body.url + uripath;
-		let projectId = req.body.projectId;
-		let modelId = req.body.modelId;
-		let authToken = req.headers['auth'];
-		let modelPayload = req.body.modelPayload;
-		deleteModelAssociation(userName, serviceUrl, projectId, modelId, modelPayload, getLatestAuthToken(req, authToken)).then(function(result){
-			res.send(result);
-		});
-	});
-
-	app.post('/api/models/getAllModels', function (req, res){
-		let userName = req.body.userName;
-		let serviceUrl = req.body.url + uripath;
-		let authToken = req.headers['auth'];
-		fetchAllModels(userName, serviceUrl,getLatestAuthToken(req, authToken)).then(function(result){
-			res.send(result);
-		});
-	});
-
-	app.post('/api/models/category', function (req, res){
-		let serviceUrl = req.body.url;
-		let authToken = req.headers['auth'];
-		getModelCategories(serviceUrl, getLatestAuthToken(req, authToken)).then(function(result){
-			res.send(result);
-		});
-	});
-
-	app.post('/api/models/catalog', function (req, res){
-		let serviceUrl = req.body.url;
-		let authToken = req.headers['auth'];
-		let reqBody = req.body.request_body;
-		getModelCatalogs(serviceUrl, reqBody, getLatestAuthToken(req, authToken)).then(function(result){
-			res.send(result);
-		});
-	});
-
 	var getSelectedProjectDetails = function(userName, srvcUrl, projectId, authToken){
     	return new Promise(function(resolve, reject) {
             var options = {
@@ -934,7 +851,7 @@ module.exports = function(app) {
 			};
 			request.get(options, function(error, response) {
 				if (!error && response.statusCode == 200) {
-					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Data Pipeline launched successfully"));
+					resolve(prepRespJsonAndLogit(response, response.body, "Data Pipeline launched successfully"));
 				} else if (!error) {
 					resolve(prepRespJsonAndLogit(response, response.body, "Unable to launch Data Pipeline"));
 				} else {
@@ -968,185 +885,7 @@ module.exports = function(app) {
 			});
 		});
 	};
-	
-	var getSelectedProjectModels = function(userName, srvcUrl, projectId, authToken){
-		return new Promise(function(resolve, reject){
-			var options = {
-				method : "GET",
-				url : srvcUrl + userName + "/projects/" + projectId + "/models/",
-				headers : {
-					'Content-Type' : 'application/json',
-					'Authorization' : authToken,
-				}
-			};
-			
-			request.get(options, function(error, response) {
-				if (!error && response.statusCode == 200) {						
-					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Models for the project retrieved successfully"));
-				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to retrieve Models"));
-				} else {
-					resolve(prepRespJsonAndLogit(null, null, null, error));
-				}
-			});
-
-		});
-	};
-
-	var associateModelProject = function(userName, srvcUrl, projectId, modelId, modelPayload, authToken){
-		return new Promise(function(resolve, reject) {
-			var options = {
-				method : "POST",
-				url : srvcUrl + userName + "/projects/" + projectId + "/models/" + modelId,
-				headers : {
-					'Content-Type' : 'application/json',
-					'Authorization' : authToken,
-				},
-				body: modelPayload,
-				json: true
-			};
-
-			request.post(options, function(error, response) {
-				if (!error && response.statusCode == 200) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Model associated successfully"));
-				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to associate Model"));
-				} else {
-					resolve(prepRespJsonAndLogit(null, null, null, error));
-				}
-			});
-		});
-	};
-
-	var updateModelAssociation = function(userName, srvcUrl, projectId, modelId, modelPayload, authToken){
-		return new Promise(function(resolve, reject) {
-			var options = {
-				method : "PUT",
-				url : srvcUrl + userName + "/projects/" + projectId + "/models/" + modelId,
-				headers : {
-					'Content-Type' : 'application/json',
-					'Authorization' : authToken,
-				},
-				body: modelPayload,
-				json: true
-			};
-
-			request.put(options, function(error, response) {
-				if (!error && response.statusCode == 200) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Model association updated successfully"));
-				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to update Model association"));
-				} else {
-					resolve(prepRespJsonAndLogit(null, null, null, error));
-				}
-			});
-		});
-	};
-
-	var deleteModelAssociation = function(userName, srvcUrl, projectId, modelId, modelPayload, authToken){
-		return new Promise(function(resolve, reject) {
-			var options = {
-				method : "DELETE",
-				url : srvcUrl + userName + "/projects/" + projectId + "/models/" + modelId,
-				headers : {
-					'Content-Type' : 'application/json',
-					'Authorization' : authToken,
-				},
-				body: modelPayload,
-				json: true
-			};
-
-			request.delete(options, function(error, response) {
-				if (!error && response.statusCode == 200) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Model association deleted successfully"));
-				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to delete Model association"));
-				} else {
-					resolve(prepRespJsonAndLogit(null, null, null, error));
-				}
-			});
-		});
-	};
-
-	var fetchAllModels = function(userName, srvcUrl, authToken){
-		return new Promise(function(resolve, reject) {
-			var options = {
-				method : "GET",
-				url : srvcUrl + userName + "/models/",
-				headers : {
-					'Content-Type' : 'application/json',
-					'Authorization' : authToken,
-				},
-				json: true
-			};
-
-			request.get(options, function(error, response) {
-				if (!error && response.statusCode == 200) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Models fetched successfully"));
-				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to fetch Models"));
-				} else {
-					resolve(prepRespJsonAndLogit(null, null, null, error));
-				}
-			});
-		});
-	};
-	
-	var getModelCategories = function(srvcUrl, authToken){
-		return new Promise(function(resolve, reject) {
-			var options = {
-				method : "GET",
-				url : srvcUrl + "/filter/modeltype",
-				headers : {
-					'Content-Type' : 'application/json',
-					'Authorization' : authToken,
-				}
-			};
-
-			request.get(options, function(error, response) {
-				if (!error && response.statusCode === 200 && response.body !== undefined) {
-					let modelCategoryResponse = JSON.parse(response.body);
-					if(modelCategoryResponse.response_body !== null)
-						modelCategory = modelCategoryResponse.response_body;
-
-					resolve(prepRespJsonAndLogit(response, modelCategory, "Model Categories fetched successfully"));
-				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to fetch Model Categories"));
-				} else {
-					resolve(prepRespJsonAndLogit(null, null, null, error));
-				}
-			});
-		});
-	};
-
-	var getModelCatalogs = function(srvcUrl, reqBody, authToken){
-		return new Promise(function(resolve, reject) {
-			var options = {
-				method : "POST",
-				url : srvcUrl + "/catalogs",
-				headers : {
-					'Content-Type' : 'application/json',
-					'Authorization' : authToken,
-				},
-				body : JSON.stringify(reqBody)
-			};
-
-			request.post(options, function(error, response) {
-				if (!error && response.statusCode === 200 && response.body !== undefined) {
-					let modelCatalogResponse = JSON.parse(response.body);
-					if(modelCatalogResponse.response_body !== null)
-						modelCategory = modelCatalogResponse.response_body.content;
-
-					resolve(prepRespJsonAndLogit(response, modelCategory, "Model Categories fetched successfully"));
-				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to fetch Model Categories"));
-				} else {
-					resolve(prepRespJsonAndLogit(null, null, null, error));
-				}
-			});
-		});
-	}
-
+  
 	var prepRespJsonAndLogit = function(httpResponse, responseData, message, error) {
 		let r = {};
 		let errorFlag = true;

@@ -12,7 +12,9 @@ import Project from "./entities/project.entity";
 /** Modules */
 import AppModule from "./modules/app";
 import ProjectModule from "./modules/project";
-
+import NotebookModule from "./modules/notebook";
+import PipelineModule from "./modules/pipeline";
+import ModelModule from "./modules/model";
 const database = new VuexORM.Database();
 
 database.register(Model);
@@ -26,7 +28,10 @@ VuexORM.use(VuexORMAxios, { database });
 export default new Vuex.Store({
   modules: {
     app: AppModule,
-    project: ProjectModule
+    project: ProjectModule,
+    notebook: NotebookModule,
+    pipeline: PipelineModule,
+    model: ModelModule
   },
   plugins: [VuexORM.install(database)]
 });

@@ -8,6 +8,22 @@ export default {
   msConfig: null,
   userName: null,
   authToken: null,
-  error: null,
-  message: ""
+  portalBEUrl: null,
+  portalFEUrl: null,
+  pipelineFlag: null,
+  createTimeout: null,
+  useExternalNotebook: null,
+  useExternalPipeline: null,
+  toast: {
+    id: "",
+    enabled: false,
+    type: "",
+    message: ""
+  },
+  confirm: {
+    enabled: false,
+    message: "",
+    onOk: null,
+    okDismiss: null
+  }
 };

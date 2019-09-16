@@ -19,7 +19,7 @@ table.vgt-table {
         }
     }
     tr {
-        @apply text-gray-700;
+        @apply text-black;
 
         td { 
             @apply border border-gray-400;

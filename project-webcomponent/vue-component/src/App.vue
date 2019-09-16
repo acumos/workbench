@@ -1,14 +1,37 @@
 <template>
   <div class="flex flex-col font-sans">
+    <ToastUI id="global"></ToastUI>
+    <ConfirmUI></ConfirmUI>
     <div class="flex flex-wrap m-2">
       <div class="flex w-full justify-end">
-        <div>
-          <a
-            class="btn btn-secondary text-black ml-2"
+        <div v-if="project">
+          <button
+            class="btn btn-secondary ml-2"
             @click="archiveProject(project)"
+            v-if="project.status === 'ACTIVE'"
+            v-tooltip="'Archive'"
+            :disabled="!loginAsOwner"
           >
-            <FAIcon icon="archive"></FAIcon>
-          </a>
+            <FAIcon icon="box"></FAIcon>
+          </button>
+          <template v-if="project.status === 'ARCHIVED'">
+            <button
+              class="btn btn-secondary ml-2"
+              v-tooltip="'Unarchive'"
+              @click="unarchiveProject(project)"
+              :disabled="!loginAsOwner"
+            >
+              <FAIcon icon="box-open"></FAIcon>
+            </button>
+            <button
+              class="btn btn-secondary ml-2 text-red-600"
+              v-tooltip="'Delete Project'"
+              @click="projectDelete(project)"
+              :disabled="!loginAsOwner"
+            >
+              <FAIcon icon="trash-alt"></FAIcon>
+            </button>
+          </template>
           <a
             :href="wikiConfig.projectWikiURL"
             target="_blank"
@@ -19,9 +42,14 @@
         </div>
       </div>
       <ProjectDetails :project="project" class="my-5" />
-      <NotebookList :notebooks="notebooks" class="my-5" />
-      <PipelineList :pipelines="pipelines" class="my-5" />
-      <ModelList :models="models" class="my-5" />
+      <template v-if="project.status !== 'ARCHIVED'">
+        <NotebookList :notebooks="notebooks" class="my-5" />
+        <template v-if="pipelineFlag === 'true'">
+          <PipelineList :pipelines="pipelines" class="my-5" />
+        </template>
+        <ModelList :models="models" class="my-5" />
+        <PredictorList :predictors="predictors" class="my-5" />
+      </template>
     </div>
   </div>
 </template>
@@ -29,7 +57,7 @@
 <script>
 import { dom } from "@fortawesome/fontawesome-svg-core";
 import { mapState, mapActions, mapMutations } from "vuex";
-import { isUndefined } from "lodash-es";
+import { isUndefined, isNull } from "lodash-es";
 import Vue2Filters from "vue2-filters";
 
 import Project from "./store/entities/project.entity";
@@ -37,21 +65,41 @@ import Notebook from "./store/entities/notebook.entity";
 import Pipeline from "./store/entities/pipeline.entity";
 import Model from "./store/entities/model.entity";
 
+// UI Elements
+import ToastUI from "./components/ui/Toast.ui";
+import ConfirmUI from "./components/ui/Confirm.ui";
 import ProjectDetails from "./components/project.details";
 import NotebookList from "./components/notebook.list";
 import PipelineList from "./components/pipeline.list";
 import ModelList from "./components/model.list";
+import PredictorList from "./components/predictor.list.vue";
 
 export default {
   name: "app",
-  components: { ProjectDetails, NotebookList, PipelineList, ModelList },
+  components: {
+    ToastUI,
+    ConfirmUI,
+    ProjectDetails,
+    NotebookList,
+    PipelineList,
+    ModelList,
+    PredictorList
+  },
   mixins: [Vue2Filters.mixin],
   props: ["projectid", "componenturl", "authtoken", "username", "parentMsg"],
   computed: {
-    ...mapState("app", ["wikiConfig", "componentUrl", "authToken", "userName"]),
-    ...mapState("project", ["activeProjct"]),
+    ...mapState("app", [
+      "wikiConfig",
+      "componentUrl",
+      "authToken",
+      "userName",
+      "pipelineFlag"
+    ]),
+    ...mapState("project", ["activeProject", "loginAsOwner"]),
     project() {
-      return Project.query().first();
+      const project = Project.query().first();
+
+      return isNull(project) ? new Project() : project;
     },
     notebooks() {
       return Notebook.all();
@@ -61,23 +109,16 @@ export default {
     },
     models() {
       return Model.all();
+    },
+    predictors() {
+      return [];
     }
   },
   watch: {
-    componenturl(componenturl) {
-      this.setComponentUrl(componenturl);
+    username() {
       this.init();
     },
-    username(username) {
-      this.setUserName(username);
-      this.init();
-    },
-    authtoken(authtoken) {
-      this.setAuthToken(authtoken);
-      this.init();
-    },
-    projectid(projectid) {
-      this.setActiveProject(projectid);
+    authtoken() {
       this.init();
     }
   },
@@ -86,40 +127,122 @@ export default {
   },
   methods: {
     async init() {
-      if (isUndefined(this.username) || isUndefined(this.authtoken)) {
-        return;
+      // If running locally use environment config
+      if (process.env.VUE_APP_ENV === "local") {
+        this.setComponentUrl(process.env.VUE_APP_COMPONENT_API);
+        this.setUserName(process.env.VUE_APP_USERNAME);
+        this.setAuthToken(process.env.VUE_APP_AUTHTOKEN);
+        this.setActiveProject(process.env.VUE_APP_PROJECT_ID);
+      } else if (!isUndefined(this.username) && !isUndefined(this.authtoken)) {
+        this.setComponentUrl(this.componenturl);
+        this.setUserName(this.username);
+        this.setAuthToken(this.authtoken);
+        this.setActiveProject(this.projectid);
       }
 
-      this.setComponentUrl(this.componenturl || process.env.VUE_APP_API);
-      this.setUserName(this.username);
-      this.setAuthToken(this.authtoken);
-      this.setActiveProject(this.projectid || process.env.VUE_APP_PROJECT_ID);
-
-      console.log(this.componenturl);
-      console.log(this.username);
-
       await this.getConfig();
-      await this.getDetails(this.projectid);
-      await this.getProjectNotebooks(this.projectid);
-      await this.getProjectPipelines(this.projectid);
+      await this.getDetails();
+      await this.getProjectNotebooks();
+      await this.getProjectPipelines();
+
+      await this.getModelCategories();
+      await this.getModelDetailsForProject();
     },
     ...mapMutations("app", [
       "setComponentUrl",
       "setAuthToken",
       "setUserName",
-      "resetAppState"
+      "confirm"
     ]),
     ...mapMutations("project", ["setActiveProject"]),
-    ...mapActions("app", ["getConfig"]),
+    ...mapActions("app", ["getConfig", "showToastMessage"]),
     ...mapActions("project", [
       "getDetails",
       "archive",
+      "unarchive",
+      "deleteProject",
       "getProjectNotebooks",
       "getProjectPipelines"
     ]),
+    ...mapActions("model", ["getModelCategories", "getModelDetailsForProject"]),
+    async unarchiveProject(project) {
+      this.confirm({
+        title: "Unarchive "+project.name,
+        body: "Are you sure you want to unarchive " + project.name + "?",
+        options: {
+           okLabel: "Unarchive Project",
+           dismissLabel: "Cancel"
+        },
+        onOk: async () => {
+          const response = await this.unarchive(project.id);
+          if (response.data.status === "Success") {
+            await this.getDetails();
+            this.showToastMessage({
+              id: "global",
+              message: `${response.data.message}`,
+              type: "success"
+            });
+          } else {
+            this.showToastMessage({
+              id: "global",
+              message: `${response.data.message}`,
+              type: "error"
+            });
+          }
+        }
+      });
+    },
+
     async archiveProject(project) {
-      await this.archive(project.id);
-      await this.getDetails(project.id);
+      this.confirm({
+        title: "Archive "+project.name,
+        body: "Are you sure you want to archive " + project.name + "?",
+        options: {
+           okLabel: "Archive Project",
+           dismissLabel: "Cancel"
+        },
+        onOk: async () => {
+          const response = await this.archive(project.id);
+          if (response.data.status === "Success") {
+            await this.getDetails();
+            this.showToastMessage({
+              id: "global",
+              message: `${response.data.message}`,
+              type: "success"
+            });
+          } else {
+            this.showToastMessage({
+              id: "global",
+              message: `${response.data.message}`,
+              type: "error"
+            });
+          }
+        }
+      });
+    },
+    async projectDelete(project) {
+      this.confirm({
+        title: "Delete "+project.name,
+        body: "Are you sure you want to delete " + project.name + "?",
+        options: {
+           okLabel: "Delete Project",
+           dismissLabel: "Cancel"
+        },
+        onOk: async () => {
+          const response = await this.deleteProject(project.id);
+          if (response.data.status === "Success") {
+            this.$emit("project-event", {
+                data: "catalog-project"
+            });
+          } else {
+            this.showToastMessage({
+              id: "global",
+              message: `${response.data.message}`,
+              type: "error"
+            });
+          }
+        }
+      });
     }
   },
 
@@ -137,13 +260,11 @@ export default {
         }
       }
     }
-  },
-  destroyed() {
-    this.resetAppState();
   }
 };
 </script>
 
 <style>
+@import "~vue-select/dist/vue-select.css";
 @import "./assets/style/style.css";
 </style>

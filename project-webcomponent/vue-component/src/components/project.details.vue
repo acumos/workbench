@@ -1,28 +1,48 @@
 <template>
   <div class="flex w-full" v-if="project">
-    <collapsable-ui
-      title="Test Project"
-      icon="project-diagram"
-      :collapse-border="true"
-    >
+    <collapsable-ui title="Test Project" icon="project-diagram" :collapse-border="true">
       <div class="inline-flex" slot="left-actions">
         <button
           class="btn btn-xs py-1 px-2 btn-primary"
-          v-if="!isEditing"
-          @click="isEditing = true"
+          v-if="!isEditing && !isArchived"
+          @click="editProject()"
+          :disabled="!loginAsOwner"
         >
           <FAIcon icon="pencil-alt"></FAIcon>
         </button>
+        <button
+          class="btn btn-xs btn-primary py-1 ml-2"
+          v-if="!isEditing && !isArchived"
+          @click="isManagingCollaborators = true"
+          :disabled="!loginAsOwner"
+        >
+          <FAIcon icon="users"></FAIcon>
+        </button>
         <div v-if="isEditing">
-          <button
-            class="btn btn-xs py-1 px-2 btn-primary rounded-0"
-            @click="save(updatedProject)"
-          >
+          <button class="btn btn-xs py-1 px-2 btn-primary rounded-0" @click="save(updatedProject)">
             <FAIcon icon="save"></FAIcon>
           </button>
-          <button class="ml-2 text-base" @click="revert(project)">
-            Cancel
-          </button>
+          <button class="ml-2 text-base" @click="revert(project)">Cancel</button>
+        </div>
+      </div>
+      <div slot="right-actions" class="flex mr-3">
+        <template v-if="collaborators.length > 3">
+          <div class="inline-flex items-center text-gray-500 text-base mr-2">
+            <div class="mx-2 text-xs">{{ collaborators.length - 3 }} more</div>
+            <FAIcon icon="ellipsis-h" class="text-xs"></FAIcon>
+          </div>
+        </template>
+        <div class="flex">
+          <div
+            v-tooltip="{
+              content: item.name
+            }"
+            v-for="(item, index) in firstThreeCollaborators"
+            :key="index"
+            class="w-8 h-8 border rounded-full inline-flex items-center justify-around shadow-md bg-gray-100 text-gray-400 -mr-2"
+          >
+            <FAIcon icon="user"></FAIcon>
+          </div>
         </div>
       </div>
       <table class="project-table">
@@ -30,11 +50,7 @@
           <td>Project Name</td>
           <td v-if="!isEditing">{{ project.name }}</td>
           <td v-if="isEditing">
-            <input
-              class="form-input w-2/6"
-              type="text"
-              v-model="updatedProject.name"
-            />
+            <input class="form-input w-2/6" type="text" v-model="updatedProject.name" />
           </td>
         </tr>
         <tr>
@@ -45,19 +61,17 @@
           <td>Project Version</td>
           <td v-if="!isEditing">{{ project.version }}</td>
           <td v-if="isEditing">
-            <input
-              class="form-input w-2/6"
-              type="text"
-              v-model="updatedProject.version"
-            />
+            <input class="form-input w-2/6" type="text" v-model="updatedProject.version" />
           </td>
         </tr>
         <tr>
           <td>Project Status</td>
           <td>
-            <span class="font-semibold" :class="statusClass">{{
+            <span class="font-semibold" :class="statusClass">
+              {{
               project.status
-            }}</span>
+              }}
+            </span>
           </td>
         </tr>
         <tr>
@@ -68,22 +82,34 @@
           <td>Project Description</td>
           <td v-if="!isEditing">{{ project.description }}</td>
           <td v-if="isEditing">
-            <textarea
-              class="form-textarea w-2/6"
-              v-model="updatedProject.description"
-            ></textarea>
+            <textarea class="form-textarea w-2/6" v-model="updatedProject.description"></textarea>
           </td>
         </tr>
       </table>
     </collapsable-ui>
+    <modal-ui
+      title="Manage Collaborators"
+      size="md"
+      v-if="isManagingCollaborators"
+      @onDismiss="isManagingCollaborators = false"
+    >
+      <CollaboratorsList
+        :initialCollaborators="collaborators"
+        @onClose="isManagingCollaborators = false"
+      />
+    </modal-ui>
   </div>
 </template>
 
 <script>
 import dayjs from "dayjs";
+import { mapActions, mapState } from "vuex";
 
 import Project from "../store/entities/project.entity.js";
 import CollapsableUi from "../components/ui/collapsable.ui";
+import ModalUi from "./ui/modal.ui";
+import CollaboratorsList from "./collaborators.list";
+import Collaborator from "../store/entities/collaborator.entity.js";
 
 export default {
   props: {
@@ -91,19 +117,35 @@ export default {
       type: Object
     }
   },
-  components: { CollapsableUi },
+  components: { CollapsableUi, ModalUi, CollaboratorsList },
   watch: {
     project(currentProject) {
       this.updatedProject = new Project(currentProject);
+      if (
+        this.updatedProject.collaborators !== [] &&
+        this.updatedProject.collaborators !== null
+      )
+        this.collaborators = this.updatedProject.collaborators.users.map(user =>
+          Collaborator.$fromJson(user)
+        );
     }
   },
   data() {
     return {
       updatedProject: new Project(),
-      isEditing: false
+      isEditing: false,
+      isManagingCollaborators: false,
+      isHoveringOverCollaborators: false,
+      collaborators: []
     };
   },
   computed: {
+    ...mapState("project", {
+      loginAsOwner: state => state.loginAsOwner
+    }),
+    firstThreeCollaborators() {
+      return this.collaborators.slice(0, 3);
+    },
     statusClass() {
       let _class = "";
       switch (this.project.status) {
@@ -121,13 +163,44 @@ export default {
       return this.project.status === "ARCHIVED";
     },
     created() {
-      return dayjs(this.creationDate).format("YYYY-MM-DD");
+      return dayjs(this.project.creationDate).format("YYYY-MM-DD");
     }
   },
+  created() {
+    this.updatedProject = new Project(this.project);
+    if (
+      this.updatedProject.collaborators !== [] &&
+      this.updatedProject.collaborators !== null
+    )
+      this.collaborators = this.updatedProject.collaborators.users.map(user =>
+        Collaborator.$fromJson(user)
+      );
+  },
   methods: {
-    save(updatedProject) {
-      updatedProject.$save();
-      this.isEditing = false;
+    ...mapActions("project", ["updateProject", "getDetails"]),
+    ...mapActions("app", ["showToastMessage"]),
+    editProject() {
+      this.updatedProject = this.project;
+      this.isEditing = true;
+    },
+
+    async save(updatedProject) {
+      const response = await this.updateProject(updatedProject.$toJson());
+      if (response.data.status === "Success") {
+        await this.getDetails();
+        this.isEditing = false;
+        this.showToastMessage({
+          id: "global",
+          message: `${response.data.message}`,
+          type: "success"
+        });
+      } else {
+        this.showToastMessage({
+          id: "global",
+          message: `${response.data.message}`,
+          type: "error"
+        });
+      }
     },
     revert(project) {
       this.updatedProject = new Project(project);
@@ -144,12 +217,12 @@ table.project-table {
   tr {
     td {
       &:first-child {
-        @apply text-right font-bold bg-gray-300 text-gray-800;
+        @apply text-right font-bold bg-gray-300 text-black;
         @apply border-r border-b border-gray-600;
         @apply w-2/12 p-2;
       }
       &:nth-child(2) {
-        @apply text-gray-800;
+        @apply text-black;
         @apply border-b border-gray-600;
         @apply pl-2;
       }

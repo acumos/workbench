@@ -44,23 +44,22 @@
         @apply rounded-l;
     }
 
-
     .btn:last-child {
         @apply border-r rounded-r;
     }
 }
 
 .btn-primary {
-    @apply bg-purple-800 text-white;
+    @apply bg-purple-500 text-white;
 
     &:hover:not(:disabled) {
-        @apply bg-purple-900;
+        @apply bg-purple-600;
     }
 }
 
 .btn-secondary {
-    @apply bg-white text-purple-800;
-    @apply border border-gray-600;
+    @apply bg-white text-black;
+    @apply border border-gray-400;
 
     &:hover {
         @apply bg-gray-100;
@@ -69,6 +68,6 @@
 
 .btn-link {
     @apply pb-0 px-0 mx-2;
-    @apply text-purple-800;
-    @apply border-b border-purple-800 rounded-none border-dashed;
+    @apply text-purple-500;
+    @apply border-b border-purple-500 rounded-none border-dashed;
 }

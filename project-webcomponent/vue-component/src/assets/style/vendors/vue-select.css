@@ -1,0 +1,6 @@
+.v-select {
+    .vs__dropdown-toggle {
+        @apply border-gray-300;
+        @apply h-10;
+    }
+}

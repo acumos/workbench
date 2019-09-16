@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col w-full border">
     <div class="flex items-center text-xl p-2 border-b">
-      <div class="flex-grow inline-flex items-center text-purple-800">
+      <div class="flex-grow inline-flex items-center text-purple-500">
         <FAIcon class="mr-2" v-if="icon" :icon="icon"></FAIcon>
         <span>{{ title }}</span>
         <div class="ml-2">

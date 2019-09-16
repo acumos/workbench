@@ -7,18 +7,14 @@ export default {
       .then(({ data }) => {
         commit("setWikiConfig", data.wikiConfig);
         commit("setMsConfig", data.msconfig);
-        if (!rootState.app.userName) {
-          commit("setUserName", data.userName);
-        }
-
-        let authToken = rootState.app.authToken;
-
-        if (!authToken) {
-          commit("setAuthToken", data.authToken);
-          authToken = data.authToken;
-        }
+        commit("setPortalBEUrl", data.portalBEUrl);
+        commit("setPortalFEUrl", data.portalFEUrl);
+        commit("setPipelineFlag", data.pipelineFlag);
+        commit("setCreateTimeout", data.createTimeout);
+        commit("setUseExternalNotebook", data.useExternalNotebook);
+        commit("setUseExternalPipeline", data.useExternalPipeline);
         // Set auth token
-        axios.defaults.headers.common["auth"] = authToken;
+        axios.defaults.headers.common["auth"] = rootState.app.authToken;
       });
   }
 };

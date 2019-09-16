@@ -27,13 +27,17 @@
       <div class="flex flex-col">
         <div class="flex justify-end my-3" v-if="!isEmpty">
           <div class="flex inline-flex items-center">
-            <select class="form-select mr-2 py-1">
-              <option>Sort By</option>
+            <select class="form-select mr-2 py-1" v-model="sortBy">
+              <option value="">Sort By</option>
+              <option value="createdAt">Created</option>
+              <option value="name">Name</option>
+              <option value="id">ID</option>
             </select>
             <input
               type="text"
               class="form-input mr-2 py-1"
               placeholder="Search Notebooks"
+              v-model="searchTerm"
             />
             <button
               class="btn btn-sm btn-primary text-white mr-2"
@@ -55,6 +59,8 @@
           :rows="notebooks"
           :line-numbers="true"
           :pagination-options="{ enabled: true, perPage: 5 }"
+          :search-options="{ enabled: true, externalQuery: searchTerm }"
+          :sort-options="sortOptions"
         >
           <template slot="table-row" slot-scope="props">
             <div
@@ -74,7 +80,10 @@
             </div>
             <div v-else-if="props.column.field === 'actions'">
               <div class="flex justify-center">
-                <button class="btn btn-xs btn-primary text-white mx-1">
+                <button
+                  class="btn btn-xs btn-primary text-white mx-1"
+                  @click="notebookLaunch(props.row)"
+                >
                   <FAIcon icon="external-link-alt" />
                 </button>
                 <button
@@ -83,8 +92,12 @@
                 >
                   <FAIcon icon="pencil-alt" />
                 </button>
-                <button class="btn btn-xs btn-secondary text-black mx-1">
-                  <FAIcon icon="trash" />
+                <button
+                  class="btn btn-xs btn-secondary text-black mx-1"
+                  v-tooltip="'Archive'"
+                  @click="archiveNotebook(props.row)"
+                >
+                  <FAIcon icon="box" />
                 </button>
               </div>
             </div>
@@ -105,37 +118,37 @@
     <modal-ui
       :title="(activeNotebook ? 'Edit' : 'Create') + ' Notebook'"
       size="md"
-      v-show="isEdittingNotebook"
+      v-if="isEdittingNotebook"
       @onDismiss="isEdittingNotebook = false"
     >
-      <edit-notebook-form :data="activeNotebook" />
-      <div slot="footer" class="inline-flex justify-between w-full">
-        <button class="btn btn-sm btn-secondary">Reset</button>
-        <button class="btn btn-sm btn-primary">Create Notebook</button>
-      </div>
+      <edit-notebook-form
+        :data="activeNotebook"
+        @onSuccess="isEdittingNotebook = false"
+      />
     </modal-ui>
     <modal-ui
       title="Associate Notebook"
       size="md"
-      v-show="isAssociatingNotebook"
+      v-if="isAssociatingNotebook"
       @onDismiss="isAssociatingNotebook = false"
     >
-      <associate-notebook-form :data="activeNotebook" />
-      <div slot="footer" class="inline-flex justify-between w-full">
-        <button class="btn btn-sm btn-secondary">Reset</button>
-        <button class="btn btn-sm btn-primary">Associate Notebook</button>
-      </div>
+      <associate-notebook-form
+        :data="activeNotebook"
+        @onSuccess="isAssociatingNotebook = false"
+      />
     </modal-ui>
   </div>
 </template>
 
 <script>
+import dayjs from "dayjs";
 import CollapsableUi from "../components/ui/collapsable.ui";
 import PaginationUi from "../components/ui/pagination.ui";
 import ModalUi from "./ui/modal.ui";
 import EditNotebookForm from "./forms/notebook/edit-notebook.form";
 import AssociateNotebookForm from "./forms/notebook/associate-notebook.form";
 
+import { mapActions } from "vuex";
 export default {
   props: ["notebooks"],
   components: {
@@ -148,6 +161,16 @@ export default {
   computed: {
     isEmpty() {
       return this.notebooks.length === 0;
+    },
+    sortOptions() {
+      if (this.sortBy === "") {
+        return {};
+      }
+
+      return {
+        enabled: true,
+        initialSortBy: { field: this.sortBy, type: "desc" }
+      };
     }
   },
   data() {
@@ -172,6 +195,20 @@ export default {
           field: "url"
         },
         {
+          label: "Status",
+          field: "status"
+        },
+        {
+          label: "Created At",
+          field: "createdAt",
+          sortFn(dateA, dateB) {
+            return dayjs(dateA).isBefore(dayjs(dateB)) ? 1 : -1;
+          },
+          formatFn(value) {
+            return dayjs(value).format("YYYY-MM-DD");
+          }
+        },
+        {
           label: "Actions",
           field: "actions",
           width: "100px"
@@ -179,16 +216,26 @@ export default {
       ],
       activeNotebook: null,
       isEdittingNotebook: false,
-      isAssociatingNotebook: false
+      isAssociatingNotebook: false,
+      sortBy: "",
+      searchTerm: ""
     };
   },
   methods: {
+    ...mapActions("notebook", ["launchNotebook"]),
     editNotebook(notebook) {
       this.activeNotebook = notebook;
       this.isEdittingNotebook = true;
     },
     associateNotebook() {
       this.isAssociatingNotebook = true;
+    },
+    async notebookLaunch(notebook) {
+      const statusMessage = await this.launchNotebook(notebook);
+      if (statusMessage.data.status === "Success") {
+        let launchURL = statusMessage.data.data.noteBookId.serviceUrl;
+        window.open(launchURL, "_blank");
+      }
     }
   }
 };

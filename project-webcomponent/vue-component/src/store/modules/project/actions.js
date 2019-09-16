@@ -20,7 +20,7 @@ export default {
         name: get(data, "data.projectId.name"),
         version: get(data, "data.projectId.versionId.label"),
         status: get(data, "data.artifactStatus.status"),
-        creationDate: get(data, "data.projectId.versionId.timeStamp"),
+        creationDate: get(data, "data.projectId.versionId.creationTimeStamp"),
         description: get(data, "data.description")
       }
     });
@@ -34,15 +34,9 @@ export default {
         projectId
       }
     );
-    const notebooks = map(data.data, notebook => ({
-      id: notebook.noteBookId.uuid,
-      name: notebook.noteBookId.name,
-      version: notebook.noteBookId.versionId.label,
-      type: notebook.notebookType,
-      creationDate: notebook.noteBookId.versionId.timeStamp
-    }));
+
     Notebook.create({
-      data: notebooks
+      data: map(data.data, notebook => Notebook.$fromJson(notebook))
     });
   },
   async getProjectPipelines({ rootState }, projectId) {
@@ -54,28 +48,28 @@ export default {
         projectId
       }
     );
-    const pipelines = map(data.data, notebook => ({
-      id: notebook.noteBookId.uuid,
-      name: notebook.noteBookId.name,
-      version: notebook.noteBookId.versionId.label,
-      type: notebook.notebookType,
-      creationDate: notebook.noteBookId.versionId.timeStamp
-    }));
 
     Pipeline.create({
-      data: pipelines
+      data: map(data.data, pipeline => Pipeline.$fromJson(pipeline))
     });
   },
-  async update({ rootState }, project) {
-    await axios.put(`${rootState.app.componentUrl}/api/project/update`, {
+  async updateProject({ rootState }, project) {
+    return await axios.put(`${rootState.app.componentUrl}/api/project/update`, {
       userName: rootState.app.userName,
       url: rootState.app.msConfig.projectmSURL,
-      projectId: project.id,
+      projectId: rootState.project.activeProject,
       projectPayload: project
     });
   },
   async archive({ rootState }, projectId) {
     await axios.put(`${rootState.app.componentUrl}/api/project/archive`, {
+      userName: rootState.app.userName,
+      url: rootState.app.msConfig.projectmSURL,
+      projectId
+    });
+  },
+  async unarchive({ rootState }, projectId) {
+    await axios.put(`${rootState.app.componentUrl}/api/project/restore`, {
       userName: rootState.app.userName,
       url: rootState.app.msConfig.projectmSURL,
       projectId

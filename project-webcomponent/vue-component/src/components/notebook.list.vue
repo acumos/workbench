@@ -29,6 +29,9 @@
           <div class="flex inline-flex items-center">
             <select class="form-select mr-2 py-1">
               <option>Sort By</option>
+              <option value="createdAt">Created</option>
+              <option value="name">Name</option>
+              <option value="id">ID</option>
             </select>
             <input
               type="text"
@@ -83,8 +86,11 @@
                 >
                   <FAIcon icon="pencil-alt" />
                 </button>
-                <button class="btn btn-xs btn-secondary text-black mx-1">
-                  <FAIcon icon="trash" />
+                <button
+                  class="btn btn-xs btn-secondary text-black mx-1"
+                  v-tooltip="'Archive'"
+                >
+                  <FAIcon icon="box" />
                 </button>
               </div>
             </div>
@@ -105,26 +111,18 @@
     <modal-ui
       :title="(activeNotebook ? 'Edit' : 'Create') + ' Notebook'"
       size="md"
-      v-show="isEdittingNotebook"
+      v-if="isEdittingNotebook"
       @onDismiss="isEdittingNotebook = false"
     >
       <edit-notebook-form :data="activeNotebook" />
-      <div slot="footer" class="inline-flex justify-between w-full">
-        <button class="btn btn-sm btn-secondary">Reset</button>
-        <button class="btn btn-sm btn-primary">Create Notebook</button>
-      </div>
     </modal-ui>
     <modal-ui
       title="Associate Notebook"
       size="md"
-      v-show="isAssociatingNotebook"
+      v-if="isAssociatingNotebook"
       @onDismiss="isAssociatingNotebook = false"
     >
       <associate-notebook-form :data="activeNotebook" />
-      <div slot="footer" class="inline-flex justify-between w-full">
-        <button class="btn btn-sm btn-secondary">Reset</button>
-        <button class="btn btn-sm btn-primary">Associate Notebook</button>
-      </div>
     </modal-ui>
   </div>
 </template>
@@ -170,6 +168,10 @@ export default {
         {
           label: "Notebook URL",
           field: "url"
+        },
+        {
+          label: "Status",
+          field: "status"
         },
         {
           label: "Actions",

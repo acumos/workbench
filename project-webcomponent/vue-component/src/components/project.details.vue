@@ -8,10 +8,17 @@
       <div class="inline-flex" slot="left-actions">
         <button
           class="btn btn-xs py-1 px-2 btn-primary"
-          v-if="!isEditing"
+          v-if="!isEditing && isArchived"
           @click="isEditing = true"
         >
           <FAIcon icon="pencil-alt"></FAIcon>
+        </button>
+        <button
+          class="btn btn-xs btn-primary py-1 ml-2"
+          v-if="!isEditing"
+          @click="isManagingCollaborators = true"
+        >
+          <FAIcon icon="users"></FAIcon>
         </button>
         <div v-if="isEditing">
           <button
@@ -23,6 +30,29 @@
           <button class="ml-2 text-base" @click="revert(project)">
             Cancel
           </button>
+        </div>
+      </div>
+      <div slot="right-actions" class="flex mr-3">
+        <div class="inline-flex items-center text-gray-500 text-base mr-2">
+          <template v-if="collaborators.length > 3">
+            <div class="mx-2 text-xs">
+              {{ collaborators.length - 3 }} more
+              <!-- <FAIcon icon="plus" /> -->
+            </div>
+            <FAIcon icon="ellipsis-h" class="text-xs"></FAIcon>
+          </template>
+        </div>
+        <div class="flex">
+          <div
+            v-tooltip="{
+              content: item.name
+            }"
+            v-for="(item, index) in firstThreeCollaborators"
+            :key="index"
+            class="w-8 h-8 border rounded-full inline-flex items-center justify-around shadow-md bg-gray-100 text-gray-400 -mr-2"
+          >
+            <FAIcon icon="user"></FAIcon>
+          </div>
         </div>
       </div>
       <table class="project-table">
@@ -76,14 +106,25 @@
         </tr>
       </table>
     </collapsable-ui>
+    <modal-ui
+      title="Manage Collaborators"
+      size="md"
+      v-if="isManagingCollaborators"
+      @onDismiss="isManagingCollaborators = false"
+    >
+      <CollaboratorsList />
+    </modal-ui>
   </div>
 </template>
 
 <script>
 import dayjs from "dayjs";
+import { mapActions } from "vuex";
 
 import Project from "../store/entities/project.entity.js";
 import CollapsableUi from "../components/ui/collapsable.ui";
+import ModalUi from "./ui/modal.ui";
+import CollaboratorsList from "./collaborators.list";
 
 export default {
   props: {
@@ -91,7 +132,7 @@ export default {
       type: Object
     }
   },
-  components: { CollapsableUi },
+  components: { CollapsableUi, ModalUi, CollaboratorsList },
   watch: {
     project(currentProject) {
       this.updatedProject = new Project(currentProject);
@@ -100,10 +141,21 @@ export default {
   data() {
     return {
       updatedProject: new Project(),
-      isEditing: false
+      isEditing: false,
+      isManagingCollaborators: false,
+      isHoveringOverCollaborators: false,
+      collaborators: [
+        { name: "John Doe" },
+        { name: "Jane Doe" },
+        { name: "Jane Doe" },
+        { name: "Eugen" }
+      ]
     };
   },
   computed: {
+    firstThreeCollaborators() {
+      return this.collaborators.slice(0, 3);
+    },
     statusClass() {
       let _class = "";
       switch (this.project.status) {
@@ -121,12 +173,16 @@ export default {
       return this.project.status === "ARCHIVED";
     },
     created() {
-      return dayjs(this.creationDate).format("YYYY-MM-DD");
+      return dayjs(this.updatedProject.creationDate).format("YYYY-MM-DD");
     }
   },
   methods: {
-    save(updatedProject) {
-      updatedProject.$save();
+    ...mapActions("project", ["updateProject"]),
+    async save(updatedProject) {
+      const result = await this.updateProject(updatedProject.$toJson());
+
+      // debugger;
+
       this.isEditing = false;
     },
     revert(project) {

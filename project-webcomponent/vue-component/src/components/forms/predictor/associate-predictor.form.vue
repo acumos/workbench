@@ -4,20 +4,19 @@
       <div class="flex mb-2">
         <div class="flex-1 flex flex-col mr-2">
           <label class="mt-2"
-            >Notebook Name: <span class="text-red-500">*</span></label
+            >Predictor Name <span class="text-red-500">*</span></label
           >
           <ValidationProvider
             class="flex flex-col"
-            name="Notebook type"
+            name="Predictor Name"
             rules="required"
             v-slot="{ errors, classes }"
           >
             <input
               type="text"
               class="form-input"
-              :class="classes"
-              v-model="updatedNotebook.name"
-              placeholder="Enter Notebook Name"
+              v-model="updatedPredictor.name"
+              placeholder="Enter Predictor Name"
             />
             <span
               class="text-sm text-red-700 flex items-center"
@@ -29,49 +28,41 @@
           </ValidationProvider>
         </div>
         <div class="flex-1 flex flex-col">
-          <label class="mt-2"
-            >Notebok Version <span class="text-red-500">*</span></label
-          >
+          <label class="mt-2">Predictor Engine Key</label>
           <input
-            class="form-input"
             type="text"
-            v-model="updatedNotebook.version"
+            class="form-input"
+            v-model="updatedPredictor.key"
+            placeholder="Enter Predictor Engine Key"
           />
         </div>
       </div>
       <div class="flex mb-2">
-        <div class="flex-1 flex flex-col">
-          <label class="mt-2"
-            >Notebok URL <span class="text-red-500">*</span></label
-          >
+        <div class="flex-1 flex flex-col mr-2">
+          <label class="mt-2">Predictor Engine Base URL</label>
           <input
             type="text"
             class="form-input"
-            v-model="updatedNotebook.url"
-            placeholder="Enter Notebook URL"
+            v-model="updatedPredictor.baseUrl"
+            placeholder="Enter Predictor Engine Base URL"
           />
         </div>
-      </div>
-      <div class="flex flex-col">
-        <label class="mt-2">Notebok Description</label>
-        <textarea
-          class="form-textarea"
-          rows="4"
-          maxlength="2000"
-          v-model="updatedNotebook.description"
-          placeholder="Enter Notebook Description"
-        ></textarea>
-        <span class="leading-none text-right text-gray-600 mt-1"
-          >{{ 2000 - updatedNotebook.description.length }} Chars</span
-        >
+        <div class="flex-1 flex flex-col">
+          <label class="mt-2">Predictor Engine Version</label>
+          <input
+            type="text"
+            class="form-input"
+            placeholder="Enter Predictor Engine Version"
+          />
+        </div>
       </div>
     </div>
     <div
       class="flex justify-between py-3 px-2 bg-gray-100 border-gray-200 border-t"
     >
       <button class="btn btn-sm btn-secondary" @click="reset()">Reset</button>
-      <button class="btn btn-sm btn-primary" @click="save(updatedNotebook)">
-        {{ isNew ? "Create" : "Save" }} Notebook
+      <button class="btn btn-sm btn-primary" @click="save(updatedPredictor)">
+        {{ isNew ? "Associate Predictor" : "Save Predictor Association" }}
       </button>
     </div>
   </ValidationObserver>
@@ -80,40 +71,42 @@
 <script>
 import { isUndefined } from "lodash-es";
 
-import Notebook from "../../../store/entities/notebook.entity";
+import Predictor from "../../../store/entities/predictor.entity";
 
 export default {
   props: {
-    data: {
+    model: {
       type: Object
     }
   },
   data() {
     return {
-      updatedNotebook: new Notebook()
+      updatedPredictor: new Predictor()
     };
   },
   watch: {
-    data(selectedNotebook) {
-      this.updatedNotebook = new Notebook(selectedNotebook);
+    model(selectedPredictor) {
+      this.updatedPredictor = new Predictor(selectedPredictor);
     }
   },
   computed: {
     isNew() {
-      return isUndefined(this.data);
+      return isUndefined(this.model);
     }
   },
   methods: {
-    async save(notebook) {
+    async save(predictor) {
       const isValid = await this.$refs.form.validate();
 
       if (isValid) {
         //save data
-        const data = notebook.$toJson();
+
+        // cleanup
+        this.reset();
       }
     },
     reset() {
-      this.updatedNotebook = new Notebook();
+      this.updatedPredictor = new Predictor();
       this.$refs.form.reset();
     }
   }

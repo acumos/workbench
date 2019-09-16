@@ -29,21 +29,45 @@
           </ValidationProvider>
         </div>
         <div class="flex-1 flex flex-col">
-          <label class="mt-2"
-            >Notebok Version <span class="text-red-500">*</span></label
-          >
+          <label class="mt-2">Notebok Version</label>
           <input
             class="form-input"
             type="text"
             v-model="updatedNotebook.version"
+            disabled
           />
         </div>
       </div>
       <div class="flex mb-2">
-        <div class="flex-1 flex flex-col">
+        <div class="flex-1 flex flex-col mr-2">
           <label class="mt-2"
-            >Notebok URL <span class="text-red-500">*</span></label
+            >Notebook Type <span class="text-red-500">*</span></label
           >
+          <ValidationProvider
+            class="flex flex-col"
+            name="Notebook Type"
+            rules="required"
+            v-slot="{ errors, classes }"
+          >
+            <select
+              class="form-select"
+              :class="classes"
+              v-model="updatedNotebook.type"
+            >
+              <option value="">Select Notebook type</option>
+              <option value="asdf">new</option>
+            </select>
+            <span
+              class="text-sm text-red-700 flex items-center"
+              v-if="errors[0]"
+            >
+              <FAIcon icon="exclamation-triangle" />
+              <span class="ml-1 my-1">{{ errors[0] }}</span>
+            </span>
+          </ValidationProvider>
+        </div>
+        <div class="flex-1 flex flex-col">
+          <label class="mt-2">Notebok URL</label>
           <input
             type="text"
             class="form-input"

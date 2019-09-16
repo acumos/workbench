@@ -3,10 +3,7 @@
     <div class="flex flex-wrap m-2">
       <div class="flex w-full justify-end">
         <div>
-          <a
-            class="btn btn-secondary text-black ml-2"
-            @click="archiveProject(project)"
-          >
+          <a class="btn btn-secondary ml-2" @click="archiveProject(project)">
             <FAIcon icon="archive"></FAIcon>
           </a>
           <a
@@ -22,6 +19,7 @@
       <NotebookList :notebooks="notebooks" class="my-5" />
       <PipelineList :pipelines="pipelines" class="my-5" />
       <ModelList :models="models" class="my-5" />
+      <PredictorList :predictors="predictors" class="my-5" />
     </div>
   </div>
 </template>
@@ -41,15 +39,22 @@ import ProjectDetails from "./components/project.details";
 import NotebookList from "./components/notebook.list";
 import PipelineList from "./components/pipeline.list";
 import ModelList from "./components/model.list";
+import PredictorList from "./components/predictor.list.vue";
 
 export default {
   name: "app",
-  components: { ProjectDetails, NotebookList, PipelineList, ModelList },
+  components: {
+    ProjectDetails,
+    NotebookList,
+    PipelineList,
+    ModelList,
+    PredictorList
+  },
   mixins: [Vue2Filters.mixin],
   props: ["projectid", "componenturl", "authtoken", "username", "parentMsg"],
   computed: {
     ...mapState("app", ["wikiConfig", "componentUrl", "authToken", "userName"]),
-    ...mapState("project", ["activeProjct"]),
+    ...mapState("project", ["activeProject"]),
     project() {
       return Project.query().first();
     },
@@ -61,23 +66,16 @@ export default {
     },
     models() {
       return Model.all();
+    },
+    predictors() {
+      return [];
     }
   },
   watch: {
-    componenturl(componenturl) {
-      this.setComponentUrl(componenturl);
+    username() {
       this.init();
     },
-    username(username) {
-      this.setUserName(username);
-      this.init();
-    },
-    authtoken(authtoken) {
-      this.setAuthToken(authtoken);
-      this.init();
-    },
-    projectid(projectid) {
-      this.setActiveProject(projectid);
+    authtoken() {
       this.init();
     }
   },
@@ -86,29 +84,25 @@ export default {
   },
   methods: {
     async init() {
-      if (isUndefined(this.username) || isUndefined(this.authtoken)) {
-        return;
+      // If running locally use environment config
+      if (process.env.VUE_APP_ENV === "local") {
+        this.setComponentUrl(process.env.VUE_APP_COMPONENT_API);
+        this.setUserName(process.env.VUE_APP_USERNAME);
+        this.setAuthToken(process.env.VUE_APP_AUTHTOKEN);
+        this.setActiveProject(process.env.VUE_APP_PROJECT_ID);
+      } else if (!isUndefined(this.username) && !isUndefined(this.authtoken)) {
+        this.setComponentUrl(this.componenturl);
+        this.setUserName(this.username);
+        this.setAuthToken(this.authtoken);
+        this.setActiveProject(this.projectid);
       }
 
-      this.setComponentUrl(this.componenturl || process.env.VUE_APP_API);
-      this.setUserName(this.username);
-      this.setAuthToken(this.authtoken);
-      this.setActiveProject(this.projectid || process.env.VUE_APP_PROJECT_ID);
-
-      console.log(this.componenturl);
-      console.log(this.username);
-
       await this.getConfig();
-      await this.getDetails(this.projectid);
-      await this.getProjectNotebooks(this.projectid);
-      await this.getProjectPipelines(this.projectid);
+      await this.getDetails(this.activeProject);
+      await this.getProjectNotebooks(this.activeProject);
+      await this.getProjectPipelines(this.activeProject);
     },
-    ...mapMutations("app", [
-      "setComponentUrl",
-      "setAuthToken",
-      "setUserName",
-      "resetAppState"
-    ]),
+    ...mapMutations("app", ["setComponentUrl", "setAuthToken", "setUserName"]),
     ...mapMutations("project", ["setActiveProject"]),
     ...mapActions("app", ["getConfig"]),
     ...mapActions("project", [
@@ -137,9 +131,6 @@ export default {
         }
       }
     }
-  },
-  destroyed() {
-    this.resetAppState();
   }
 };
 </script>

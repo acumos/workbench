@@ -1,18 +1,18 @@
 <template>
   <div class="flex w-full">
-    <collapsable-ui title="Models" icon="cube" :collapseBorder="true">
+    <collapsable-ui title="Predictors" icon="cubes" :collapseBorder="true">
       <div slot="right-actions" class="inline-flex">
         <a href="#" class="text-sm text-gray-500 underline">Learn More</a>
       </div>
       <div v-if="rows.length === 0">
         <div class="flex flex-col p-2">
-          <span class="my-5">No Models.</span>
+          <span class="my-5">No Predictors.</span>
           <div class="flex">
             <button
               class="btn btn-secondary btn-sm mr-2"
-              @click="isAssociatingModel = true"
+              @click="isAssociatingPredictor = true"
             >
-              Associate Models
+              Associate Predictors
             </button>
           </div>
         </div>
@@ -82,12 +82,12 @@
       </div>
     </collapsable-ui>
     <modal-ui
-      title="Associate Model"
+      title="Associate Predictor"
       size="md"
-      v-if="isAssociatingModel"
-      @onDismiss="isAssociatingModel = false"
+      v-if="isAssociatingPredictor"
+      @onDismiss="isAssociatingPredictor = false"
     >
-      <associate-model-form :data="activeModel" />
+      <AssociatePredictorForm :data="activePredictor" />
     </modal-ui>
   </div>
 </template>
@@ -96,19 +96,19 @@
 import CollapsableUi from "../components/ui/collapsable.ui";
 import ModalUi from "../components/ui/modal.ui";
 import PaginationUi from "../components/ui/pagination.ui";
-import AssociateModelForm from "../components/forms/model/associate-model.form";
+import AssociatePredictorForm from "../components/forms/predictor/associate-predictor.form";
 
 export default {
   components: {
     CollapsableUi,
     ModalUi,
     PaginationUi,
-    AssociateModelForm
+    AssociatePredictorForm
   },
   data() {
     return {
-      isAssociatingModel: false,
-      activeModel: null,
+      isAssociatingPredictor: false,
+      activePredictor: null,
       columns: [
         {
           label: "#",

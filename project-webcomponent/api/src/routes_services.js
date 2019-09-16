@@ -64,8 +64,8 @@ module.exports = function(app) {
 	
 	app.get('/api/config', function(req, res) {
 		try {
-			let userName = getUserName(req);
-			let authToken = getLatestAuthToken(req, '');
+			let userName = process.env.AUTH_USER || getUserName(req);
+			let authToken = process.env.AUTH_TOKEN || getLatestAuthToken(req, '');
 			
 			res.configInfo = {
 				configENV : configENV,
@@ -108,8 +108,8 @@ module.exports = function(app) {
 	});
 	
 	app.put('/api/project/archive', function (req, res){
-		let serviceUrl = req.body.url + uripath;
 		let userName = req.body.userName;
+		let serviceUrl = req.body.url + uripath;
 		let projectId = req.body.projectId;
 		let authToken = req.headers['auth'];
 		archiveProject(userName, serviceUrl, projectId, getLatestAuthToken(req, authToken)).then(function(result){

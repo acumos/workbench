@@ -4,21 +4,20 @@
       <div class="flex mb-2">
         <div class="flex-1 flex flex-col mr-2">
           <label class="mt-2"
-            >Data Pipeline Name: <span class="text-red-500">*</span></label
+            >Predictor Name <span class="text-red-500">*</span></label
           >
           <ValidationProvider
             class="flex flex-col"
-            name="Data Pipeline Name"
+            name="Predictor Name"
             rules="required"
             v-slot="{ errors, classes }"
           >
             <input
               type="text"
               class="form-input"
-              v-model="updatedPipeline.name"
-              placeholder="Select Data Pipeline Name"
+              v-model="updatedPredictor.name"
+              placeholder="Enter Predictor Name"
             />
-
             <span
               class="text-sm text-red-700 flex items-center"
               v-if="errors[0]"
@@ -29,24 +28,31 @@
           </ValidationProvider>
         </div>
         <div class="flex-1 flex flex-col">
-          <label class="mt-2">Data Pipeline Version </label>
+          <label class="mt-2">Predictor Engine Key</label>
           <input
-            disabled
             type="text"
             class="form-input"
-            v-model="updatedPipeline.version"
-            placeholder="Data Pipeline Version"
+            v-model="updatedPredictor.key"
+            placeholder="Enter Predictor Engine Key"
           />
         </div>
       </div>
       <div class="flex mb-2">
         <div class="flex-1 flex flex-col mr-2">
-          <label class="mt-2">Notebok URL</label>
+          <label class="mt-2">Predictor Engine Base URL</label>
           <input
             type="text"
             class="form-input"
-            v-model="updatedPipeline.url"
-            placeholder="Enter Notebook URL"
+            v-model="updatedPredictor.baseUrl"
+            placeholder="Enter Predictor Engine Base URL"
+          />
+        </div>
+        <div class="flex-1 flex flex-col">
+          <label class="mt-2">Predictor Engine Version</label>
+          <input
+            type="text"
+            class="form-input"
+            placeholder="Enter Predictor Engine Version"
           />
         </div>
       </div>
@@ -55,10 +61,8 @@
       class="flex justify-between py-3 px-2 bg-gray-100 border-gray-200 border-t"
     >
       <button class="btn btn-sm btn-secondary" @click="reset()">Reset</button>
-      <button class="btn btn-sm btn-primary" @click="save(updatedPipeline)">
-        {{
-          isNew ? "Associate Data Pipeline" : "Save Data Pipeline Association"
-        }}
+      <button class="btn btn-sm btn-primary" @click="save(updatedPredictor)">
+        {{ isNew ? "Associate Predictor" : "Save Predictor Association" }}
       </button>
     </div>
   </ValidationObserver>
@@ -67,39 +71,42 @@
 <script>
 import { isUndefined } from "lodash-es";
 
-import Pipeline from "../../../store/entities/pipeline.entity";
+import Predictor from "../../../store/entities/predictor.entity";
 
 export default {
   props: {
-    data: {
+    model: {
       type: Object
     }
   },
   data() {
     return {
-      updatedPipeline: new Pipeline()
+      updatedPredictor: new Predictor()
     };
   },
   watch: {
-    data(selectedPipeline) {
-      this.updatedPipeline = new Pipeline(selectedPipeline);
+    model(selectedPredictor) {
+      this.updatedPredictor = new Predictor(selectedPredictor);
     }
   },
   computed: {
     isNew() {
-      return isUndefined(this.notebook);
+      return isUndefined(this.model);
     }
   },
   methods: {
-    async save(pipeline) {
+    async save(predictor) {
       const isValid = await this.$refs.form.validate();
 
       if (isValid) {
+        //save data
+
+        // cleanup
         this.reset();
       }
     },
     reset() {
-      this.updatedPipeline = new Pipeline();
+      this.updatedPredictor = new Predictor();
       this.$refs.form.reset();
     }
   }

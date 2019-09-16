@@ -29,6 +29,9 @@
           <div class="flex inline-flex items-center">
             <select class="form-select mr-2 py-1">
               <option>Sort By</option>
+              <option value="createdAt">Created</option>
+              <option value="name">Name</option>
+              <option value="id">ID</option>
             </select>
             <input
               type="text"
@@ -74,7 +77,7 @@
             </div>
             <div v-else-if="props.column.field === 'actions'">
               <div class="flex justify-center">
-                <button class="btn btn-xs btn-primary text-white mx-1">
+                <button class="btn btn-xs btn-primary text-white mx-1" @click="notebookLaunch(props.row)"> 
                   <FAIcon icon="external-link-alt" />
                 </button>
                 <button
@@ -83,8 +86,11 @@
                 >
                   <FAIcon icon="pencil-alt" />
                 </button>
-                <button class="btn btn-xs btn-secondary text-black mx-1">
-                  <FAIcon icon="trash" />
+                <button
+                  class="btn btn-xs btn-secondary text-black mx-1"
+                  v-tooltip="'Archive'" @click="archiveNotebook(props.row)"
+                >
+                  <FAIcon icon="box" />
                 </button>
               </div>
             </div>
@@ -105,26 +111,18 @@
     <modal-ui
       :title="(activeNotebook ? 'Edit' : 'Create') + ' Notebook'"
       size="md"
-      v-show="isEdittingNotebook"
+      v-if="isEdittingNotebook"
       @onDismiss="isEdittingNotebook = false"
     >
-      <edit-notebook-form :data="activeNotebook" />
-      <div slot="footer" class="inline-flex justify-between w-full">
-        <button class="btn btn-sm btn-secondary">Reset</button>
-        <button class="btn btn-sm btn-primary">Create Notebook</button>
-      </div>
+      <edit-notebook-form :data="activeNotebook" @onSuccess="isEdittingNotebook = false"/>
     </modal-ui>
     <modal-ui
       title="Associate Notebook"
       size="md"
-      v-show="isAssociatingNotebook"
+      v-if="isAssociatingNotebook"
       @onDismiss="isAssociatingNotebook = false"
     >
-      <associate-notebook-form :data="activeNotebook" />
-      <div slot="footer" class="inline-flex justify-between w-full">
-        <button class="btn btn-sm btn-secondary">Reset</button>
-        <button class="btn btn-sm btn-primary">Associate Notebook</button>
-      </div>
+      <associate-notebook-form :data="activeNotebook" @onSuccess="isAssociatingNotebook = false"/>
     </modal-ui>
   </div>
 </template>
@@ -136,6 +134,7 @@ import ModalUi from "./ui/modal.ui";
 import EditNotebookForm from "./forms/notebook/edit-notebook.form";
 import AssociateNotebookForm from "./forms/notebook/associate-notebook.form";
 
+import { mapActions } from "vuex";
 export default {
   props: ["notebooks"],
   components: {
@@ -172,6 +171,10 @@ export default {
           field: "url"
         },
         {
+          label: "Status",
+          field: "status"
+        },
+        {
           label: "Actions",
           field: "actions",
           width: "100px"
@@ -183,12 +186,20 @@ export default {
     };
   },
   methods: {
+    ...mapActions("notebook", ["launchNotebook"]),
     editNotebook(notebook) {
       this.activeNotebook = notebook;
       this.isEdittingNotebook = true;
     },
     associateNotebook() {
       this.isAssociatingNotebook = true;
+    },
+    async notebookLaunch(notebook){
+      const statusMessage = await this.launchNotebook(notebook);
+      if(statusMessage.data.status === "Success"){
+        let launchURL = statusMessage.data.data.noteBookId.serviceUrl;
+        window.open(launchURL, '_blank');
+      }
     }
   }
 };

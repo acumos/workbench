@@ -3,27 +3,6 @@
     <div class="p-3">
       <div class="flex mb-2">
         <div class="flex-1 flex flex-col mr-2">
-          <label class="mt-2">
-            Notebook Type:
-            <span class="text-red-500">*</span>
-          </label>
-          <ValidationProvider
-            class="flex flex-col"
-            name="notebook type"
-            rules="required"
-            v-slot="{ errors, classes }"
-          >
-            <select class="form-select" v-model="updatedNotebook.type">
-              <option value>Select Notebook Type</option>
-              <option value="jupyter">Jupyter</option>
-            </select>
-            <span class="text-sm text-red-700 flex items-center" v-if="errors[0]">
-              <FAIcon icon="exclamation-triangle" />
-              <span class="ml-1 my-1">{{ errors[0] }}</span>
-            </span>
-          </ValidationProvider>
-        </div>
-        <div class="flex-1 flex flex-col mr-2">
           <label class="mt-2"
             >Notebook Name: <span class="text-red-500">*</span></label
           >
@@ -50,21 +29,45 @@
           </ValidationProvider>
         </div>
         <div class="flex-1 flex flex-col">
-          <label class="mt-2"
-            >Notebook Version <span class="text-red-500">*</span></label
-          >
+          <label class="mt-2">Notebok Version</label>
           <input
             class="form-input"
             type="text"
             v-model="updatedNotebook.version"
+            disabled
           />
         </div>
       </div>
       <div class="flex mb-2">
-        <div class="flex-1 flex flex-col">
+        <div class="flex-1 flex flex-col mr-2">
           <label class="mt-2"
-            >Notebook URL <span class="text-red-500">*</span></label
+            >Notebook Type <span class="text-red-500">*</span></label
           >
+          <ValidationProvider
+            class="flex flex-col"
+            name="Notebook Type"
+            rules="required"
+            v-slot="{ errors, classes }"
+          >
+            <select
+              class="form-select"
+              :class="classes"
+              v-model="updatedNotebook.type"
+            >
+              <option value="">Select Notebook type</option>
+              <option value="asdf">new</option>
+            </select>
+            <span
+              class="text-sm text-red-700 flex items-center"
+              v-if="errors[0]"
+            >
+              <FAIcon icon="exclamation-triangle" />
+              <span class="ml-1 my-1">{{ errors[0] }}</span>
+            </span>
+          </ValidationProvider>
+        </div>
+        <div class="flex-1 flex flex-col">
+          <label class="mt-2">Notebok URL</label>
           <input
             type="text"
             class="form-input"
@@ -74,7 +77,7 @@
         </div>
       </div>
       <div class="flex flex-col">
-        <label class="mt-2">Notebook Description</label>
+        <label class="mt-2">Notebok Description</label>
         <textarea
           class="form-textarea"
           rows="4"
@@ -102,7 +105,6 @@
 import { isUndefined } from "lodash-es";
 
 import Notebook from "../../../store/entities/notebook.entity";
-import { mapActions } from "vuex";
 
 export default {
   props: {
@@ -112,8 +114,7 @@ export default {
   },
   data() {
     return {
-      updatedNotebook: new Notebook(),
-      newForm: false
+      updatedNotebook: new Notebook()
     };
   },
   watch: {
@@ -126,29 +127,13 @@ export default {
       return isUndefined(this.data);
     }
   },
-  created() {
-    this.newForm = isUndefined(this.data);
-    if(!this.newForm){
-      this.updatedNotebook = new Notebook(this.data);
-    }
-  },
   methods: {
-    ...mapActions("notebook", ["createNotebook"]),
-    ...mapActions("project", ["getProjectNotebooks"]),
     async save(notebook) {
       const isValid = await this.$refs.form.validate();
 
       if (isValid) {
-        if(this.newForm){
-          const notebookCreation = notebook.$toJson();
-          delete notebookCreation.noteBookId.uuid;
-          const statusMessage = await this.createNotebook(notebookCreation);
-        }else{
-          const statusMessage = await this.updateNotebook(notebook.$toJson());
-        }
-        await this.getProjectNotebooks();
-        this.$emit("onSuccess");
-        this.reset();
+        //save data
+        const data = notebook.$toJson();
       }
     },
     reset() {

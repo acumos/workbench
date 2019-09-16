@@ -64,8 +64,8 @@ module.exports = function(app) {
 	
 	app.get('/api/config', function(req, res) {
 		try {
-			let userName = getUserName(req);
-			let authToken = getLatestAuthToken(req, '');
+			let userName = process.env.AUTH_USER || getUserName(req);
+			let authToken = process.env.AUTH_TOKEN || getLatestAuthToken(req, '');
 			
 			res.configInfo = {
 				configENV : configENV,
@@ -108,8 +108,8 @@ module.exports = function(app) {
 	});
 	
 	app.put('/api/project/archive', function (req, res){
-		let serviceUrl = req.body.url + uripath;
 		let userName = req.body.userName;
+		let serviceUrl = req.body.url + uripath;
 		let projectId = req.body.projectId;
 		let authToken = req.headers['auth'];
 		archiveProject(userName, serviceUrl, projectId, getLatestAuthToken(req, authToken)).then(function(result){
@@ -127,7 +127,7 @@ module.exports = function(app) {
 		});
 	});
 	
-	app.delete('/api/project/delete', function (req, res){
+	app.post('/api/project/delete', function (req, res){
 		let serviceUrl = req.body.url + uripath;
 		let userName = req.body.userName;
 		let projectId = req.body.projectId;
@@ -181,7 +181,7 @@ module.exports = function(app) {
 		});
 	});
 
-	app.delete('/api/project/deleteNotebook', function (req, res){
+	app.post('/api/project/deleteNotebook', function (req, res){
 		let serviceUrl = req.body.url + uripath;
 		let userName = req.body.userName;
 		let noteBookId = req.body.noteBookId;
@@ -277,7 +277,7 @@ module.exports = function(app) {
 		});
 	});
 	
-	app.delete('/api/pipeline/delete', function (req, res){
+	app.post('/api/pipeline/delete', function (req, res){
 		let serviceUrl = req.body.url + uripath;
 		let userName = req.body.userName;
 		let pipelineId = req.body.pipelineId;
@@ -374,7 +374,7 @@ module.exports = function(app) {
 		});
 	});
 
-	app.delete('/api/models/deleteAssociateModel', function (req, res){
+	app.post('/api/models/deleteAssociateModel', function (req, res){
 		let userName = req.body.userName;
 		let serviceUrl = req.body.url + uripath;
 		let projectId = req.body.projectId;
@@ -408,6 +408,45 @@ module.exports = function(app) {
 		let authToken = req.headers['auth'];
 		let reqBody = req.body.request_body;
 		getModelCatalogs(serviceUrl, reqBody, getLatestAuthToken(req, authToken)).then(function(result){
+			res.send(result);
+		});
+	});
+
+	app.post('/api/project/addUser', function (req, res){
+		let serviceUrl = req.body.url+uripath;
+		let authToken = req.headers['auth'];
+		let userName = req.body.userName;
+		let projectId = req.body.projectId;
+		let users = req.body.users;
+		shareProjectToUsers(serviceUrl, userName, projectId, users, getLatestAuthToken(req, authToken)).then(function(result){
+			res.send(result);
+		});
+	});
+
+	app.post('/api/project/removeUser', function (req, res){
+		let serviceUrl = req.body.url+uripath;
+		let authToken = req.headers['auth'];
+		let userName = req.body.userName;
+		let projectId = req.body.projectId;
+		let user = req.body.user;
+		deleteSharedUserFromProject(serviceUrl, userName, projectId, user, getLatestAuthToken(req, authToken)).then(function(result){
+			res.send(result);
+		});
+	});
+
+	app.post('/api/project/sharedProjects', function (req, res){
+		let serviceUrl = req.body.url+uripath;
+		let authToken = req.headers['auth'];
+		let userName = req.body.userName;
+		sharedProjectsForUser(serviceUrl, userName, getLatestAuthToken(req, authToken)).then(function(result){
+			res.send(result);
+		});
+	});
+
+	app.post('/api/users/userList', function (req, res){
+		let serviceUrl = req.body.url;
+		let authToken = req.headers['auth'];
+		getUsersList(serviceUrl, getLatestAuthToken(req, authToken)).then(function(result){
 			res.send(result);
 		});
 	});
@@ -884,10 +923,9 @@ module.exports = function(app) {
 				headers : {
 					'Content-Type' : 'application/json',
 					'Authorization' : authToken,
-				},
+				}
 			};
 			request.delete(options, function(error, response, body) {
-				console.log(response.body);
 				if (!error && response.statusCode == 200) {
 					resolve(prepRespJsonAndLogit(response, response.body, "Data Pipeline Deleted successfully"));
 				} else if (!error) {
@@ -1135,9 +1173,9 @@ module.exports = function(app) {
 				if (!error && response.statusCode === 200 && response.body !== undefined) {
 					let modelCatalogResponse = JSON.parse(response.body);
 					if(modelCatalogResponse.response_body !== null)
-						modelCategory = modelCatalogResponse.response_body.content;
+						modelCatalog = modelCatalogResponse.response_body.content;
 
-					resolve(prepRespJsonAndLogit(response, modelCategory, "Model Categories fetched successfully"));
+					resolve(prepRespJsonAndLogit(response, modelCatalog, "Model Categories fetched successfully"));
 				} else if (!error) {
 					resolve(prepRespJsonAndLogit(response, response.body, "Unable to fetch Model Categories"));
 				} else {
@@ -1145,7 +1183,107 @@ module.exports = function(app) {
 				}
 			});
 		});
-	}
+	};
+
+	var shareProjectToUsers = function(srvcUrl, userName, projectId, users, authToken){
+		return new Promise(function(resolve, reject) {
+			var options = {
+				method : "POST",
+				url : srvcUrl + userName + "/projects/" + projectId + "/collaborators",
+				headers : {
+					'Content-Type' : 'application/json',
+					'Authorization' : authToken,
+				},
+				body: users,
+				json: true
+			};
+
+			request.post(options, function(error, response) {
+				if (!error && (response.statusCode == 200 || response.statusCode == 201)) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Project shared to users successfully"));
+				} else if (!error) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to share project to users"));
+				} else {
+					resolve(prepRespJsonAndLogit(null, null, null, error));
+				}
+			});
+		});
+	};
+
+	var deleteSharedUserFromProject = function(srvcUrl, userName, projectId, user, authToken){
+		return new Promise(function(resolve, reject) {
+			var options = {
+				method : "DELETE",
+				url : srvcUrl + userName + "/projects/" + projectId + "/collaborators",
+				headers : {
+					'Content-Type' : 'application/json',
+					'Authorization' : authToken,
+				},
+				body: user,
+				json: true
+			};
+			
+			request.delete(options, function(error, response) {
+				if (!error && response.statusCode == 200) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Deleted shared user from project successfully"));
+				} else if (!error) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to delete shared user from project"));
+				} else {
+					resolve(prepRespJsonAndLogit(null, null, null, error));
+				}
+			});
+		});
+	};
+
+	var sharedProjectsForUser = function(srvcUrl, userName, authToken){
+		return new Promise(function(resolve, reject) {
+			var options = {
+				method : "GET",
+				url : srvcUrl + userName + "/projects/shared",
+				headers : {
+					'Content-Type' : 'application/json',
+					'Authorization' : authToken,
+				}
+			};
+			
+			request.post(options, function(error, response) {
+				if (!error && response.statusCode == 200) {
+					resolve(prepRespJsonAndLogit(response, response.body, "List of shared projects for user retrieved successfully"));
+				} else if (!error) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to retrieve shared projects for user"));
+				} else {
+					resolve(prepRespJsonAndLogit(null, null, null, error));
+				}
+			});
+		});
+	};
+
+	var getUsersList = function(srvcUrl, authToken){
+		return new Promise(function(resolve, reject) {
+			var options = {
+				method : "GET",
+				url : srvcUrl + "/api/users/userDetails",
+				headers : {
+					'Content-Type' : 'application/json',
+					'Authorization' : authToken,
+				}
+			};
+
+			request.get(options, function(error, response) {
+				if (!error && response.statusCode === 200 && response.body !== undefined) {
+					let userDetailsResponse = JSON.parse(response.body);
+					if(userDetailsResponse.response_body !== null)
+						userDetails = userDetailsResponse.response_body;
+
+					resolve(prepRespJsonAndLogit(response, userDetails, "Users list fetched successfully"));
+				} else if (!error) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to fetch users list"));
+				} else {
+					resolve(prepRespJsonAndLogit(null, null, null, error));
+				}
+			});
+		});
+	};
 
 	var prepRespJsonAndLogit = function(httpResponse, responseData, message, error) {
 		let r = {};

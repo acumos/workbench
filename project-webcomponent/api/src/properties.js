@@ -24,34 +24,22 @@ var config = {
 		projectmSURL : "http://localhost:9088/mlWorkbench/v1/project",
 		notebookmSURL : "http://localhost:9089/mlWorkbench/v1/notebook",
 		pipelinemSURL : "http://localhost:9090/mlWorkbench/v1/pipeline",
-		modelmSURL : "http://localhost:9091/mlWorkbench/v1/modelservice",
 		projectWikiURL : "https://wiki.acumos.org/display/TRAIN",
 		notebookWikiURL : "https://wiki.acumos.org/display/TRAIN",
 		pipelineWikiURL : "https://wiki.acumos.org/display/TRAIN",
-		modelWikiURL : "https://wiki.acumos.org/display/TRAIN",
-		portalBEURL : "http://localhost:8083",
-		portalFEURL: "http://localhost:8085",
-		pipelineFlag : "true",
-		createTimeout: 60000,
-		useExternalNotebook: "true",
-		useExternalPipeline: "true"
+		pipelineFlag : "false",
+		createTimeout: 60000
 	},
 	deploy : {
 		ENVIRONMENT : process.env.ENVIRONMENT,
 		projectmSURL : process.env.projectmSURL,
 		notebookmSURL : process.env.notebookmSURL,
 		pipelinemSURL : process.env.pipelinemSURL,
-		modelmSURL : process.env.modelmSURL,
 		projectWikiURL : process.env.projectWikiURL,
 		notebookWikiURL : process.env.notebookWikiURL,
 		pipelineWikiURL : process.env.pipelineWikiURL,
-		modelWikiURL : process.env.modelWikiURL,
-		portalBEURL : process.env.portalBEURL,
-		portalFEURL : process.env.portalFEURL,
 		pipelineFlag : process.env.pipelineFlag,
-		createTimeout: process.env.createTimeout,
-		useExternalNotebook: process.env.useExternalNotebook,
-		useExternalPipeline: process.env.useExternalPipeline
+		createTimeout: process.env.createTimeout
 	}
 };
 

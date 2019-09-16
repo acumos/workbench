@@ -1,7 +1,7 @@
 import { Model } from "@vuex-orm/core";
 
 export default class Project extends Model {
-  static entity = "projects";
+  static entity = "project";
 
   static fields() {
     return {

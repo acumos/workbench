@@ -105,26 +105,18 @@
     <modal-ui
       :title="(activeNotebook ? 'Edit' : 'Create') + ' Notebook'"
       size="md"
-      v-show="isEdittingNotebook"
+      v-if="isEdittingNotebook"
       @onDismiss="isEdittingNotebook = false"
     >
       <edit-notebook-form :data="activeNotebook" />
-      <div slot="footer" class="inline-flex justify-between w-full">
-        <button class="btn btn-sm btn-secondary">Reset</button>
-        <button class="btn btn-sm btn-primary">Create Notebook</button>
-      </div>
     </modal-ui>
     <modal-ui
       title="Associate Notebook"
       size="md"
-      v-show="isAssociatingNotebook"
+      v-if="isAssociatingNotebook"
       @onDismiss="isAssociatingNotebook = false"
     >
       <associate-notebook-form :data="activeNotebook" />
-      <div slot="footer" class="inline-flex justify-between w-full">
-        <button class="btn btn-sm btn-secondary">Reset</button>
-        <button class="btn btn-sm btn-primary">Associate Notebook</button>
-      </div>
     </modal-ui>
   </div>
 </template>

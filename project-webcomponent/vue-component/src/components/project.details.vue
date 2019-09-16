@@ -13,6 +13,12 @@
         >
           <FAIcon icon="pencil-alt"></FAIcon>
         </button>
+        <button
+          class="btn btn-xs btn-primary py-1 ml-2"
+          @click="isManagingCollaborators = true"
+        >
+          <FAIcon icon="users"></FAIcon>
+        </button>
         <div v-if="isEditing">
           <button
             class="btn btn-xs py-1 px-2 btn-primary rounded-0"
@@ -23,6 +29,27 @@
           <button class="ml-2 text-base" @click="revert(project)">
             Cancel
           </button>
+        </div>
+      </div>
+      <div slot="right-actions" class="flex mr-3">
+        <div class="inline-flex items-center text-gray-500 text-base mr-2">
+          <div class="mx-2 text-xs">
+            13 more
+            <!-- <FAIcon icon="plus" /> -->
+          </div>
+          <FAIcon icon="ellipsis-h" class="text-xs"></FAIcon>
+        </div>
+        <div class="flex">
+          <div
+            v-tooltip="{
+              content: item.name
+            }"
+            v-for="(item, index) in collaborators"
+            :key="index"
+            class="w-8 h-8 border rounded-full inline-flex items-center justify-around shadow-md bg-gray-100 text-gray-400 -mr-2"
+          >
+            <FAIcon icon="user"></FAIcon>
+          </div>
         </div>
       </div>
       <table class="project-table">
@@ -76,6 +103,14 @@
         </tr>
       </table>
     </collapsable-ui>
+    <modal-ui
+      title="Manage Collaborators"
+      size="md"
+      v-if="isManagingCollaborators"
+      @onDismiss="isManagingCollaborators = false"
+    >
+      <CollaboratorsList />
+    </modal-ui>
   </div>
 </template>
 
@@ -84,6 +119,8 @@ import dayjs from "dayjs";
 
 import Project from "../store/entities/project.entity.js";
 import CollapsableUi from "../components/ui/collapsable.ui";
+import ModalUi from "./ui/modal.ui";
+import CollaboratorsList from "./collaborators.list";
 
 export default {
   props: {
@@ -91,7 +128,7 @@ export default {
       type: Object
     }
   },
-  components: { CollapsableUi },
+  components: { CollapsableUi, ModalUi, CollaboratorsList },
   watch: {
     project(currentProject) {
       this.updatedProject = new Project(currentProject);
@@ -100,7 +137,14 @@ export default {
   data() {
     return {
       updatedProject: new Project(),
-      isEditing: false
+      isEditing: false,
+      isManagingCollaborators: false,
+      isHoveringOverCollaborators: false,
+      collaborators: [
+        { name: "John Doe" },
+        { name: "Jane Doe" },
+        { name: "Bill Doe" }
+      ]
     };
   },
   computed: {

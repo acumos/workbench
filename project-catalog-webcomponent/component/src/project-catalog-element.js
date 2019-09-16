@@ -56,7 +56,11 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
       cardShow: { type: Boolean },
       projectWikiURL: {type: String},
       userName: {type: String, notify: true},
-      authToken: {type: String, notify: true}
+      authToken: {type: String, notify: true},
+      allProjects: [],
+      sharedFilter: { type: Boolean },
+      sharedProjectsList: [],
+      sharedProjectCount: { type: Number },
     };
   }
 
@@ -95,7 +99,8 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
     ];
 
     this.projectLists = [];
-
+    this.allProjects = [];
+    this.sharedProjectsList = [];
     this.requestUpdate().then(() => {
       this.onLoad();
       this.componenturl = (this.componenturl === undefined || this.componenturl === null) ? '' : this.componenturl;
@@ -201,7 +206,9 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
           this.projectLists = [];
           this.projects = [];
           this.cardShow = true;
-          this.convertProjectObject(n.data);
+          this.allProjects = this.convertProjectObject(n.data);
+          this.getSharedProjects();
+          //this.convertProjectObject(n.data);
         }
       }).catch((error) => {
         console.info('Request failed', error);
@@ -211,8 +218,46 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
       });
   }
 
+  getSharedProjects(){
+    const url = this.componenturl + '/api/project/sharedProjects';
+    fetch(url, {
+      method: 'POST',
+      mode: 'cors',
+      cache: 'default',
+      headers: {
+        "Content-Type": "application/json",
+        "auth": this.authToken,
+      },
+      body: JSON.stringify({
+        "url": this.mSurl,
+        "userName": this.userName
+      })
+    }).then(res => res.json())
+      .then((n) => {
+        if (n.status === 'Error') {
+          this.errorMessage = n.message;
+          this.alertOpen = true;
+          this.view = 'error';
+        } else {
+          this.projectLists = [];
+          this.projects = [];
+          this.cardShow = true;
+          this.sharedProjectsList = this.convertProjectObject(n.data);
+          this.projectLists = this.allProjects.concat(this.sharedProjectsList);
+        }
+        this.displayProjects();
+        //this.convertProjectObject(this.allprojects);
+      }).catch((error) => {
+        console.info('Request failed', error);
+        this.errorMessage = 'Shared Project fetch request failed with error: ' + error;
+        this.alertOpen = true;
+        this.view = 'error';
+      });
+  }
+
   convertProjectObject(projectsInfo) {
     let tempProject;
+    let projectLists = [];
     projectsInfo.forEach(item => {
       tempProject = {};
       tempProject.projectId = item.projectId.uuid;
@@ -222,9 +267,17 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
       tempProject.createdBy = item.owner.authenticatedUserId;
       tempProject.description = item.description;
       tempProject.status = item.artifactStatus.status;
-      this.projectLists.push(tempProject);
+      if(item.collaborators !== undefined){
+        if(item.collaborators.users.length > 0){
+          tempProject.collaborators = item.collaborators.users;
+        }else{
+          tempProject.collaborators = [];
+        }
+      }
+      projectLists.push(tempProject);
     });
-    this.displayProjects();
+    //this.displayProjects();
+    return projectLists;
   }
 
   displayProjects() {
@@ -248,6 +301,7 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
     this.allProjectCount = this.getFilteredCount();
     this.activeProjectCount = this.getFilteredCount({ status: "ACTIVE" });
     this.archiveProjectCount = this.getFilteredCount({ status: "ARCHIVED" });
+    this.sharedProjectCount = this.sharedProjectsList.length;
 
     if (this.totalProjects > 0) {
       this.view = 'view';
@@ -391,7 +445,17 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
       });
   }
 
+  sharedProjects(){
+    this.sharedFilter = true;
+    this.activeFilter = "";
+    this.dataSource.page = 0;
+    this.currentPage = this.dataSource.page + 1;
+    this.projects = this.sharedProjectsList;
+    this.totalPages = this.projects.length % 8 !== 0 ? Math.floor(this.projects.length/8) + 1 : this.projects.length/8;
+  }
+
   filterProjects(criteria) {
+    this.sharedFilter = false;
     this.activeFilter = criteria;
     this.dataSource.page = 0;
     this.currentPage = this.dataSource.page + 1;
@@ -661,27 +725,35 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
                     <ul class="nav nav-pills mb-3">
                       <li class="nav-item mr-2">
                         <a href="javascript:void" @click=${e => this.filterProjects({ status: "ACTIVE" })}
-                          class="nav-link ${get(this.activeFilter, "status", "") === "ACTIVE"? "active" : ""}">
+                          class="nav-link ${(get(this.activeFilter, "status", "") === "ACTIVE" && !this.sharedFilter)? "active" : ""}">
                           Active Projects&nbsp;&nbsp;
-                          <span class="badge ${get(this.activeFilter, "status", "") === "ACTIVE"? "badge-light" : "badge-secondary"}"">
+                          <span class="badge ${(get(this.activeFilter, "status", "") === "ACTIVE" && !this.sharedFilter)? "badge-light" : "badge-secondary"}"">
                             ${this.activeProjectCount}</span>
                         </a>
                       </li>
                       <li class="nav-item mr-2">
                         <a href="javascript:void"  @click=${e => this.filterProjects({ status: "ARCHIVED" })}
-                          class="nav-link ${get(this.activeFilter,"status", "") === "ARCHIVED"? "active": ""}">
+                          class="nav-link ${(get(this.activeFilter,"status", "") === "ARCHIVED" && !this.sharedFilter)? "active": ""}">
                           Archived Projects&nbsp;&nbsp;
-                          <span class="badge ${get(this.activeFilter, "status", "") === "ARCHIVED"? "badge-light" : "badge-secondary"}"">
+                          <span class="badge ${(get(this.activeFilter, "status", "") === "ARCHIVED" && !this.sharedFilter)? "badge-light" : "badge-secondary"}"">
                             ${this.archiveProjectCount}</span>
 
                         </a>
                       </li>
                       <li class="nav-item mr-2">
                         <a href="javascript:void" @click=${e => this.filterProjects()}
-                          class="nav-link ${get(this.activeFilter, "status","") === ""? "active": ""}">
+                          class="nav-link ${(get(this.activeFilter, "status","") === "" && !this.sharedFilter)? "active": ""}">
                           All Projects&nbsp;&nbsp;
-                          <span class="badge ${get(this.activeFilter, "status", "") === ""? "badge-light" : "badge-secondary"}"">
+                          <span class="badge ${(get(this.activeFilter, "status", "") === "" && !this.sharedFilter)? "badge-light" : "badge-secondary"}"">
                             ${this.allProjectCount}</span>
+                        </a>
+                      </li>
+                      <li class="nav-item mr-2">
+                        <a href="javascript:void" @click=${e => this.sharedProjects()}
+                          class="nav-link ${(get(this.activeFilter, "status","") === "" && this.sharedFilter)? "active": ""}">
+                          Shared Projects&nbsp;&nbsp;
+                          <span class="badge ${(get(this.activeFilter, "status","") === "" && this.sharedFilter)? "badge-light" : "badge-secondary"}"">
+                            ${this.sharedProjectCount}</span>
                         </a>
                       </li>
                     </ul>
@@ -720,7 +792,18 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
                           <div class="card-body">
                             <div>
                               <a href="javascript:void" @click=${e => this.userAction("view-project", item.projectId, item.name)}>
-                                <h4 class="project-name">${item.name}</h4>
+                                <h4 class="project-name">${item.name}
+                                &nbsp;
+                                ${item.collaborators !== undefined && item.collaborators.length > 0
+                                  ? html`
+                                    <a href="javascript:void"
+                                      class="btnIcon btn btn-sm my-1 mr-1" data-toggle="tooltip" data-placement="top" title="Shared" >
+                                      <mwc-icon class="mwc-icon-gray">group</mwc-icon>
+                                    </a>
+                                    `
+                                    :``
+                                  }
+                                  </h4>
                                 <span><strong>ID</strong>: &nbsp; ${item.projectId}</span>
                                 <br />
                                 <span><strong>Version</strong>: &nbsp;
@@ -746,10 +829,22 @@ export class ProjectCatalogLitElement extends DataMixin(ValidationMixin(BaseElem
                             <div class="gray-light pt-2 pb-2 pl-2 pr-2">
                               <div class="d-flex justify-content-between align-middle">
                                 <div style="margin-top:8px;">
+                                  ${item.createdBy !== this.userName
+                                  ? html`
                                   <span title="${item.createdBy}"><mwc-icon class="mwc-icon-gray">account_circle</mwc-icon>
                                   </span>
+                                  <span title="${this.userName}"><mwc-icon class="mwc-icon-gray">account_circle</mwc-icon>
+                                  </span>
+                                    `
+                                    :html`
+                                    <span title="${item.createdBy}"><mwc-icon class="mwc-icon-gray">account_circle</mwc-icon>
+                                  </span>
+                                  `
+                                }
+                                  
                                 </div>
                               <div>
+                              
                               ${item.status === "ACTIVE"
                                 ? html`
                                   <a href="javascript:void" @click="${e => this.openArchiveDialog(item.projectId, item.name)}"

@@ -8,6 +8,12 @@ export default {
   msConfig: null,
   userName: null,
   authToken: null,
+  portalBEUrl: null,
+  portalFEUrl: null,
+  pipelineFlag: null,
+	createTimeout: null,
+	useExternalNotebook: null,
+	useExternalPipeline: null,
   error: null,
   message: ""
 };

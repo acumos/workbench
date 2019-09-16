@@ -23,4 +23,22 @@ export default {
   setStatus(state, status) {
     state.status = status;
   },
+  setPortalBEUrl(state, portalBEUrl){
+    state.portalBEUrl = portalBEUrl;
+  },
+  setPortalFEUrl(state, portalFEUrl){
+    state.portalFEUrl = portalFEUrl;
+  },
+  setPipelineFlag(state, pipelineFlag){
+    state.pipelineFlag = pipelineFlag;
+  },
+  setCreateTimeout(state, createTimeout){
+    state.createTimeout = createTimeout;
+  },
+  setUseExternalNotebook(state, useExternalNotebook){
+    state.useExternalNotebook = useExternalNotebook;
+  },
+  setUseExternalPipeline(state, useExternalPipeline){
+    state.useExternalPipeline = useExternalPipeline;
+  }
 };

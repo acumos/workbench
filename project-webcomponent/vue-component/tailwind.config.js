@@ -8,19 +8,29 @@ module.exports = {
         input: {
           "&:focus": {
             boxShadow: theme("boxShadow.none"),
-            borderColor: theme("borderWidt.default")
+            borderColor: theme("colors.gray.400")
+          },
+          "&:disabled": {
+            backgroundColor: theme("colors.gray.300"),
+            color: theme("colors.gray.600"),
+            borderColor: theme("colors.gray.400")
           }
         },
         textarea: {
           "&:focus": {
             boxShadow: theme("boxShadow.none"),
-            borderColor: theme("borderWidt.default")
+            borderColor: theme("colors.gray.400")
           }
         },
         select: {
           "&:focus": {
             boxShadow: theme("boxShadow.none"),
-            borderColor: theme("borderWidt.default")
+            borderColor: theme("colors.gray.400")
+          },
+          "&:disabled": {
+            backgroundColor: theme("colors.gray.300"),
+            color: theme("colors.gray.600"),
+            borderColor: theme("colors.gray.400")
           }
         }
       }
@@ -68,7 +78,8 @@ module.exports = {
         600: "#dd6b20",
         700: "#c05621",
         800: "#9c4221",
-        900: "#7b341e"
+        900: "#7b341e",
+        1000: "#000000"
       },
       yellow: {
         100: "#fffff0",
@@ -126,15 +137,11 @@ module.exports = {
         900: "#3c366b"
       },
       purple: {
-        100: "#faf5ff",
-        200: "#e9d8fd",
         300: "#d6bcfa",
         400: "#b794f4",
-        500: "#9f7aea",
-        600: "#805ad5",
-        700: "#6b46c1",
-        800: "#553c9a",
-        900: "#44337a"
+        500: "#5e2897",
+        600: "#4f248a",
+        700: "#6b46c1"
       },
       pink: {
         100: "#fff5f7",
@@ -193,6 +200,7 @@ module.exports = {
     }),
     borderRadius: {
       none: "0",
+      xs: "0.025rem",
       sm: "0.125rem",
       default: "0.25rem",
       lg: "0.5rem",

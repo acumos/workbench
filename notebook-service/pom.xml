@@ -26,7 +26,7 @@
   <!-- FixMe Values are for template -->
   <groupId>org.acumos.workbench</groupId>
   <artifactId>notebook-service</artifactId>
-  <version>1.0.2-SNAPSHOT</version>
+  <version>1.0.3-SNAPSHOT</version>
   <name>NotebookService</name>
   
   <parent>
@@ -62,7 +62,7 @@
 	<dependency>
 		<groupId>org.acumos.common-dataservice</groupId>
 		<artifactId>cmn-data-svc-client</artifactId>
-		<version>2.2.2</version>
+		<version>3.0.0</version>
 	</dependency>
 
 	<dependency>

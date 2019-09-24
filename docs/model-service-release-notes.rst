@@ -19,6 +19,9 @@
 ===============================
 Model Service Release Notes
 ===============================
+Version 1.0.1, 2019-09-25
+---------------------------
+* ACUMOS-3450 : Update MLWB MS to point to CDS 3.0.0
 
 Version 1.0.0, 2019-09-09
 ---------------------------
@@ -31,3 +34,5 @@ Version 1.0.0, 2019-09-09
 * ACUMOS-3292 Model Service MS should expose API to update the Project Model association
 * ACUMOS-3293 Model Service MS should expose API to delete the Project Model association
 * ACUMOS-3290 Model Service MS should expose API to create Project Model association
+
+

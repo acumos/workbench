@@ -588,7 +588,6 @@ public class ModelServiceImpl implements ModelService {
 	}
 
 	private boolean checkErrorInModel(String solutionId, String string) {
-		logger.debug("checkErrorInModel() Begin");
 		boolean errorInModel = false;
 		String stepStatusFailed = "FA";
 		Map<String, Object> queryParameters = new HashMap<String, Object>();
@@ -611,7 +610,6 @@ public class ModelServiceImpl implements ModelService {
 				}
 			}
 		}
-		logger.debug("checkErrorInModel() End");
 		return errorInModel;
 	}
 

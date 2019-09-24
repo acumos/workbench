@@ -19,6 +19,10 @@
 ================================
 Workbench Common Release Notes
 ================================
+Version 1.0.5, 2019-09-25
+---------------------------
+* ACUMOS-3450 : Update MLWB MS to point to CDS 3.0.0
+
 Version 1.0.4, 2019-06-24
 ---------------------------
 Added the two artifact status codes(viz., FAILED & INPROGRESS) in workbench commons enum

@@ -22,9 +22,12 @@ package org.acumos.workbench.modelservice.controller.test;
 
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import java.util.UUID;
+import java.util.Set;
 
+import org.acumos.cds.domain.MLPTag;
+import org.acumos.cds.domain.MLPUser;
 import org.acumos.workbench.common.util.ArtifactStatus;
 import org.acumos.workbench.common.util.IdentifierType;
 import org.acumos.workbench.common.util.ServiceStatus;
@@ -193,5 +196,39 @@ public abstract class ModelCommons {
 		project.setServiceStatus(state);
 		return project;
 	}
+	
+	protected MLPUser buildMLPUSer() {
+        MLPUser mlpUser = new MLPUser();
+        mlpUser.setActive(true);
+        mlpUser.setApiToken("test");
+        mlpUser.setAuthToken("test");
+        mlpUser.setCreated(Instant.now());
+        mlpUser.setEmail("test");
+        mlpUser.setFirstName("test");
+        mlpUser.setLastLogin(Instant.now());
+        mlpUser.setLastName("test");
+        Short loginFailCount = 10;
+        mlpUser.setLoginFailCount(loginFailCount);
+        mlpUser.setLoginFailDate(Instant.now());
+        mlpUser.setLoginHash("test");
+        mlpUser.setLoginName("test");
+        mlpUser.setLoginPassExpire(Instant.now());
+        mlpUser.setMiddleName("test");
+        mlpUser.setModified(Instant.now());
+        mlpUser.setOrgName("test");
+        byte[] picture = "test".getBytes();
+        mlpUser.setPicture(picture);
+        mlpUser.setUserId("test");
+        mlpUser.setVerifyExpiration(Instant.now());
+        mlpUser.setVerifyTokenHash("test");
+        MLPTag mlpTag = new MLPTag();
+        mlpTag.setTag("test");
+        Set<MLPTag> tags = new HashSet<>();
+        tags.add(mlpTag);
+        mlpUser.setTags(tags);
+        return mlpUser;
+
+}
+
 
 }

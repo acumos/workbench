@@ -104,6 +104,49 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 		return new ResponseEntity<Project>(project, HttpStatus.NOT_FOUND);
 	}
 	
+	/**
+	 * To handle DuplicateCollaboratorException and return appropriate response to UI. 
+	 * @param ex
+	 * 		the exception thrown by the service method
+	 * @param request
+	 * 		the WebRequest
+	 * @return ResponseEntitiy<Project> 
+	 * 		returns Project with ServiceStatus indicating error
+	 */
+	@ExceptionHandler(DuplicateCollaboratorException.class)
+	public final ResponseEntity<?> handleDuplicateCollaboratorException(DuplicateCollaboratorException ex, WebRequest request) {
+		Project project = getProject(ex);
+		return new ResponseEntity<Project>(project, HttpStatus.NOT_FOUND);
+	}
+	/**
+	 * To handle ProjectNotActiveException and return appropriate response to UI. 
+	 * @param ex
+	 * 		the exception thrown by the service method
+	 * @param request
+	 * 		the WebRequest
+	 * @return ResponseEntitiy<Project> 
+	 * 		returns Project with ServiceStatus indicating error
+	 */
+	@ExceptionHandler(ProjectNotActiveException.class)
+	public final ResponseEntity<?> handleProjectNotActiveException(ProjectNotActiveException ex, WebRequest request) {
+		Project project = getProject(ex);
+		return new ResponseEntity<Project>(project, HttpStatus.NOT_FOUND);
+	}
+	/**
+	 * To handle ProjectNotActiveException and return appropriate response to UI. 
+	 * @param ex
+	 * 		the exception thrown by the service method
+	 * @param request
+	 * 		the WebRequest
+	 * @return ResponseEntitiy<Project> 
+	 * 		returns Project with ServiceStatus indicating error
+	 */
+	@ExceptionHandler(CouchDBException.class)
+	public final ResponseEntity<?> handleCouchDBException(CouchDBException ex, WebRequest request) {
+		Project project = getProject(ex);
+		return new ResponseEntity<Project>(project, HttpStatus.NOT_FOUND);
+	}
+	
 	@ExceptionHandler(RestClientResponseException.class)
 	public final ResponseEntity<?> handleRestClientResponseException(RestClientResponseException ex, WebRequest request) { 
 		//TODO : Include logger to log the CDS error details.

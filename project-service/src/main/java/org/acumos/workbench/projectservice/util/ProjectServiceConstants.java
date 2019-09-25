@@ -18,36 +18,11 @@
  * ===============LICENSE_END=========================================================
  */
 
-package org.acumos.workbench.projectservice.exception;
+package org.acumos.workbench.projectservice.util;
 
-import org.acumos.workbench.common.exception.BadRequestException;
-
-public class DuplicateProjectException extends BadRequestException {
-
+public class ProjectServiceConstants {
 	
-	private static final long serialVersionUID = -3640899745060073706L;
+	public static final String GETALLSHAREDPROJECTS="{\"selector\":{\"projectCollaborator\":{\"$gt\":null}},\"fields\":[\"projectCollaborator\",\"projectId\"]}";
+	public static final String GETPROJECTCOLLABORATION="{\"selector\":{\"$and\":[{\"projectId\":{\"$eq\":\"%s\"}},{\"projectCollaborator\":{\"$gte\":null}}]}}";
 
-	private static final String MSG = "Project name and version already exists";
-	
-	/**
-	 * To handle Duplicate Project Exception.
-	 * 
-	 * @param message 
-	 * 				the message
-	 */
-	
-	public DuplicateProjectException() {
-		super(MSG);
-	}
-	
-	/**
-	 * To handle Duplicate Project Exception.
-	 * 
-	 * @param message 
-	 * 				the message
-	 */
-
-	public DuplicateProjectException(String message) {
-		super(message);
-	}
 }

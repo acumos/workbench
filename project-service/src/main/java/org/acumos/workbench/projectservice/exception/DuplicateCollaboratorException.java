@@ -20,23 +20,27 @@
 
 package org.acumos.workbench.projectservice.exception;
 
-import org.acumos.workbench.common.exception.BadRequestException;
+public class DuplicateCollaboratorException extends RuntimeException {
 
-public class DuplicateProjectException extends BadRequestException {
+	private static final long serialVersionUID = -2465319370717804174L;
 
-	
-	private static final long serialVersionUID = -3640899745060073706L;
-
-	private static final String MSG = "Project name and version already exists";
-	
 	/**
-	 * To handle Duplicate Project Exception. 
+	 * 
+	 * @param message
+	 *            the message
 	 */
-	public DuplicateProjectException() {
-		super(MSG);
-	}
-	
-	public DuplicateProjectException(String message) {
+	public DuplicateCollaboratorException(String message) {
 		super(message);
+	}
+
+	/**
+	 * 
+	 * @param message
+	 *            the message
+	 * @param object
+	 *            the Throwable object
+	 */
+	public DuplicateCollaboratorException(String message, Throwable object) {
+		super(message, object);
 	}
 }

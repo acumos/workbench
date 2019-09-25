@@ -63,7 +63,7 @@ public interface ProjectService {
 	 * @param authenticatedUserId
 	 * 		the authenticated user Id. 
 	 * @param project
-	 * 		the Poject object 
+	 * 		the project object 
 	 * @return Project
 	 * 		returns Project object with additional details. 
 	 */
@@ -173,5 +173,14 @@ public interface ProjectService {
 	 * 		in case if user is not found throws UserNotFoundException.
 	 */
 	public MLPUser getUserDetails(String authenticatedUserId) throws UserNotFoundException;
+
+	/**
+	 * To check if user is owner or a collaborator
+	 * 
+	 * @param authenticatedUserId the authenticatedUserId
+	 * @param projectId           the projectId
+	 * @throws NotOwnerException
+	 */
+	public void isOwnerOrCollaboratorOfProject(String authenticatedUserId, String projectId) throws NotOwnerException;
 	
 }

@@ -40,17 +40,17 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @RestController
 public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
-	
 	/**
-	 * The method to handle BadRequestException and return the appropriate response to UI. 
+	 * The method to handle BadRequestException and return the appropriate
+	 * response to UI.
 	 * 
 	 * @param ex
-	 * 		the exception thrown by the service methods. 
+	 *            the exception thrown by the service methods.
 	 * @param request
-	 * 		the Web request. 
-	 * @return ResponseEntitiy<Project> 
-	 * 		returns Project with ServiceStatus indicating error 
+	 *            the Web request.
+	 * @return ResponseEntitiy<Project> returns Project with ServiceStatus indicating error
 	 */
+
 	@ExceptionHandler(BadRequestException.class)
 	public final ResponseEntity<?> handleBadRequestException(BadRequestException ex, WebRequest request) {
 		Project project = getProject(ex);
@@ -58,15 +58,16 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 	}
 	
 	/**
-	 * The method to handle ForbiddenException and return the appropriate response to UI.
+	 * The method to handle ForbiddenException and return the appropriate
+	 * response to UI.
 	 * 
 	 * @param ex
-	 * 		the exception thrown by the service methods. 
+	 *            the exception thrown by the service methods.
 	 * @param request
-	 * 		the Web request. 
-	 * @return ResponseEntitiy<Project> 
-	 * 		returns Project with ServiceStatus indicating error 
+	 *            the Web request.
+	 * @return ResponseEntitiy<Project> returns Project with ServiceStatus indicating error
 	 */
+
 	@ExceptionHandler(ForbiddenException.class)
 	public final ResponseEntity<?> handleForbiddenException(ForbiddenException ex, WebRequest request) {
 		Project project = getProject(ex);
@@ -74,15 +75,16 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 	}
 	
 	/**
-	 * The method to handle ArchivedException and return the appropriate response to UI.
+	 * The method to handle ArchivedException and return the appropriate
+	 * response to UI.
 	 * 
 	 * @param ex
-	 * 		the exception thrown by the service methods. 
+	 *            the exception thrown by the service methods.
 	 * @param request
-	 * 		the Web request. 
-	 * @return ResponseEntitiy<Project> 
-	 * 		returns Project with ServiceStatus indicating error 
+	 *            the Web request.
+	 * @return ResponseEntitiy<Project> returns Project with ServiceStatus indicating error
 	 */
+
 	@ExceptionHandler(ArchivedException.class)
 	public final ResponseEntity<?> handleArchivedException(ArchivedException ex, WebRequest request) {
 		Project project = getProject(ex);
@@ -90,7 +92,23 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 	}
 
 	/**
-	 * To handle EntityNotFoundException and resturn appropriate response to UI. 
+	 * To handle EntityNotFoundException and resturn appropriate response to UI.
+	 * 
+	 * @param ex
+	 *            the exception thrown by the service method
+	 * @param request
+	 *            the WebRequest
+	 * @return ResponseEntitiy<Project> returns Project with ServiceStatus indicating error
+	 */
+
+	@ExceptionHandler(EntityNotFoundException.class)
+	public final ResponseEntity<?> handleArtifactNotFoundException(EntityNotFoundException ex, WebRequest request) {
+		Project project = getProject(ex);
+		return new ResponseEntity<Project>(project, HttpStatus.NOT_FOUND);
+	}
+	
+	/**
+	 * To handle DuplicateCollaboratorException and return appropriate response to UI. 
 	 * @param ex
 	 * 		the exception thrown by the service method
 	 * @param request
@@ -98,8 +116,51 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 	 * @return ResponseEntitiy<Project> 
 	 * 		returns Project with ServiceStatus indicating error
 	 */
-	@ExceptionHandler(EntityNotFoundException.class)
-	public final ResponseEntity<?> handleArtifactNotFoundException(EntityNotFoundException ex, WebRequest request) {
+	@ExceptionHandler(DuplicateCollaboratorException.class)
+	public final ResponseEntity<?> handleDuplicateCollaboratorException(DuplicateCollaboratorException ex, WebRequest request) {
+		Project project = getProject(ex);
+		return new ResponseEntity<Project>(project, HttpStatus.NOT_FOUND);
+	}
+	/**
+	 * To handle ProjectNotActiveException and return appropriate response to UI. 
+	 * @param ex
+	 * 		the exception thrown by the service method
+	 * @param request
+	 * 		the WebRequest
+	 * @return ResponseEntitiy<Project> 
+	 * 		returns Project with ServiceStatus indicating error
+	 */
+	@ExceptionHandler(ProjectNotActiveException.class)
+	public final ResponseEntity<?> handleProjectNotActiveException(ProjectNotActiveException ex, WebRequest request) {
+		Project project = getProject(ex);
+		return new ResponseEntity<Project>(project, HttpStatus.NOT_FOUND);
+	}
+	/**
+	 * To handle CouchDBException and return appropriate response to UI. 
+	 * @param ex
+	 * 		the exception thrown by the service method
+	 * @param request
+	 * 		the WebRequest
+	 * @return ResponseEntitiy<Project> 
+	 * 		returns Project with ServiceStatus indicating error
+	 */
+	@ExceptionHandler(CouchDBException.class)
+	public final ResponseEntity<?> handleCouchDBException(CouchDBException ex, WebRequest request) {
+		Project project = getProject(ex);
+		return new ResponseEntity<Project>(project, HttpStatus.NOT_FOUND);
+	}
+	
+	/**
+	 * To handle CollaboratorNotExistsException and return appropriate response to UI. 
+	 * @param ex
+	 * 		the exception thrown by the service method
+	 * @param request
+	 * 		the WebRequest
+	 * @return ResponseEntitiy<Project> 
+	 * 		returns Project with ServiceStatus indicating error
+	 */
+	@ExceptionHandler(CollaboratorNotExistsException.class)
+	public final ResponseEntity<?> handleCollaboratorNotExistsException(CollaboratorNotExistsException ex, WebRequest request) {
 		Project project = getProject(ex);
 		return new ResponseEntity<Project>(project, HttpStatus.NOT_FOUND);
 	}

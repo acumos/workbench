@@ -46,7 +46,10 @@ import org.acumos.workbench.common.vo.Identifier;
 import org.acumos.workbench.common.vo.Project;
 import org.acumos.workbench.common.vo.ServiceState;
 import org.acumos.workbench.common.vo.Version;
+import org.acumos.workbench.projectservice.exception.CollaboratorNotExistsException;
+import org.acumos.workbench.projectservice.exception.DuplicateCollaboratorException;
 import org.acumos.workbench.projectservice.exception.DuplicateProjectException;
+import org.acumos.workbench.projectservice.lightcouch.DatasetCollaborator;
 import org.acumos.workbench.projectservice.util.ConfigurationProperties;
 import org.acumos.workbench.projectservice.util.ProjectServiceUtil;
 import org.slf4j.Logger;
@@ -68,6 +71,12 @@ public class ProjectServiceImpl implements ProjectService {
 	
 	@Autowired
 	private ConfigurationProperties confprops;
+	
+	@Autowired
+	private ProjectSharingServiceImpl projectSharingServiceImpl;
+	
+	@Autowired
+	private CouchDBService couchDBService;
 	
 	
 	@Override 
@@ -129,21 +138,48 @@ public class ProjectServiceImpl implements ProjectService {
 	public boolean isOwnerOfProject(String authenticatedUserId, String projectId) throws NotOwnerException {
 		logger.debug("isOwnerOfProject() Begin");
 		// Call to CDS to check if user is the owner of the project.
-		MLPUser mlpUser = getUserDetails(authenticatedUserId);
-		String userId = mlpUser.getUserId();
-		Map<String, Object> queryParameters = new HashMap<String, Object>();
-		queryParameters.put("projectId",projectId);
-		queryParameters.put("userId",userId);
-		RestPageRequest pageRequest = new RestPageRequest(0, 1);
 		cdsClient.setRequestId(MDC.get(LoggingConstants.MDCs.REQUEST_ID));
-		RestPageResponse<MLPProject> response = cdsClient.searchProjects(queryParameters, false, pageRequest);
-		
-		if((null == response) || (null != response && response.getContent().size() == 0 )) {
-			logger.warn("Permission denied");
-			throw new NotOwnerException();
+		MLPProject mlpProject = cdsClient.getProject(projectId);
+		if(null != mlpProject) {
+			MLPUser mlpUser = cdsClient.getUser(mlpProject.getUserId());
+			if(!authenticatedUserId.equals(mlpUser.getLoginName())) {
+				logger.warn("Permission denied");
+				throw new NotOwnerException();
+			}
 		}
 		logger.debug("isOwnerOfProject() End");
 		return true;
+	}
+	@Override
+	public void isOwnerOrCollaboratorOfProject(String authenticatedUserId, String projectId) throws NotOwnerException,CollaboratorNotExistsException { 
+		// Call to CDS to check if user is the owner of the project.
+		boolean isOwner = true;
+		MLPUser mlpAuthUser = null;
+		cdsClient.setRequestId(MDC.get(LoggingConstants.MDCs.REQUEST_ID));
+		MLPProject mlpProject = cdsClient.getProject(projectId);
+		mlpAuthUser = getUserDetails(authenticatedUserId);
+		if (null != mlpProject) {
+			// Check if owner
+			MLPUser mlpUser = cdsClient.getUser(mlpProject.getUserId());
+			if (!authenticatedUserId.equals(mlpUser.getLoginName())) {
+				logger.warn("Permission denied");
+				isOwner = false;
+			}
+			// Check if Collaborator
+			if (!isOwner) {
+				DatasetCollaborator datasetCollaborator = null;
+				datasetCollaborator = couchDBService.getProjectCollaboration(mlpProject.getProjectId());
+				HashMap<String, String> collaboratorList = datasetCollaborator.getProjectCollaborator();
+				collaboratorList = datasetCollaborator.getProjectCollaborator();
+				if (!collaboratorList.containsKey(mlpAuthUser.getUserId())) {
+					logger.error("User is not a collaborator");
+					throw new CollaboratorNotExistsException("User is not a collaborator");
+				}
+
+			}
+
+		}
+
 	}
 	
 	@Override
@@ -209,13 +245,17 @@ public class ProjectServiceImpl implements ProjectService {
 	public Project getProject(String authenticatedUserId, String projectId) throws ProjectNotFoundException {
 		logger.debug("getProject() Begin");
 		Project result = null;
+		DatasetCollaborator datasetCollaborator=null;
 		MLPUser mlpUser = getUserDetails(authenticatedUserId);
 		String userId = mlpUser.getUserId();
 		//CDS call to get the project details. 
 		cdsClient.setRequestId(MDC.get(LoggingConstants.MDCs.REQUEST_ID));
 		MLPProject mlpProject = cdsClient.getProject(projectId);
-		if(null != mlpProject) { 
-			result = ProjectServiceUtil.getProjectVO(mlpProject, mlpUser);
+		
+		if(null != mlpProject ) { 
+			//result = ProjectServiceUtil.getProjectVO(mlpProject, mlpUser);
+			 datasetCollaborator = couchDBService.getProjectCollaboration(mlpProject.getProjectId());
+			result=projectSharingServiceImpl.getSharedProjectsVO(authenticatedUserId, mlpProject.getProjectId(), datasetCollaborator);
 		}
 		
 		if(null == result) { 
@@ -229,7 +269,9 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public List<Project> getProjects(String authenticatedUserId) {
 		logger.debug("getProjects() Begin");
-		List<Project> result = new ArrayList<Project>();
+		List<Project> projectList = new ArrayList<Project>();
+		Project result=null;
+		DatasetCollaborator datasetCollaborator =null;
 		MLPUser mlpUser = getUserDetails(authenticatedUserId);
 		String userId = mlpUser.getUserId();
 		//CDS call to get all the projects for a user
@@ -240,10 +282,14 @@ public class ProjectServiceImpl implements ProjectService {
 		RestPageResponse<MLPProject> response = cdsClient.searchProjects(queryParameters, false, pageRequest);
 		List<MLPProject> mlpProjects = response.getContent();
 		if(null != mlpProjects && mlpProjects.size() > 0 ){
-			result = ProjectServiceUtil.getMLPProjects(mlpProjects, mlpUser);
+			for (MLPProject mlpProject : mlpProjects) {
+				datasetCollaborator=couchDBService.getProjectCollaboration(mlpProject.getProjectId());
+				result=projectSharingServiceImpl.getSharedProjectsVO(authenticatedUserId, mlpProject.getProjectId(), datasetCollaborator);
+				projectList.add(result);
+			}
 		}
 		logger.debug("getProjects() End");
-		return result;
+		return projectList;
 	}
 	
 	@Override

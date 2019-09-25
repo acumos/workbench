@@ -63,7 +63,7 @@ public interface ProjectService {
 	 * @param authenticatedUserId
 	 * 		the authenticated user Id. 
 	 * @param project
-	 * 		the Poject object 
+	 * 		the project object 
 	 * @return Project
 	 * 		returns Project object with additional details. 
 	 */

@@ -47,6 +47,7 @@ import org.acumos.workbench.common.vo.Project;
 import org.acumos.workbench.common.vo.ServiceState;
 import org.acumos.workbench.common.vo.Version;
 import org.acumos.workbench.projectservice.exception.DuplicateProjectException;
+import org.acumos.workbench.projectservice.lightcouch.DatasetCollaborator;
 import org.acumos.workbench.projectservice.util.ConfigurationProperties;
 import org.acumos.workbench.projectservice.util.ProjectServiceUtil;
 import org.slf4j.Logger;
@@ -68,6 +69,12 @@ public class ProjectServiceImpl implements ProjectService {
 	
 	@Autowired
 	private ConfigurationProperties confprops;
+	
+	@Autowired
+	private ProjectSharingServiceImpl projectSharingServiceImpl;
+	
+	@Autowired
+	private CouchDBService couchDBService;
 	
 	
 	@Override 
@@ -209,13 +216,16 @@ public class ProjectServiceImpl implements ProjectService {
 	public Project getProject(String authenticatedUserId, String projectId) throws ProjectNotFoundException {
 		logger.debug("getProject() Begin");
 		Project result = null;
+		DatasetCollaborator datasetCollaborator=null;
 		MLPUser mlpUser = getUserDetails(authenticatedUserId);
 		String userId = mlpUser.getUserId();
 		//CDS call to get the project details. 
 		cdsClient.setRequestId(MDC.get(LoggingConstants.MDCs.REQUEST_ID));
 		MLPProject mlpProject = cdsClient.getProject(projectId);
 		if(null != mlpProject) { 
-			result = ProjectServiceUtil.getProjectVO(mlpProject, mlpUser);
+			//result = ProjectServiceUtil.getProjectVO(mlpProject, mlpUser);
+			 datasetCollaborator = couchDBService.getProjectCollaboration(mlpProject.getProjectId());
+			result=projectSharingServiceImpl.getSharedProjectsVO(authenticatedUserId, mlpProject.getProjectId(), datasetCollaborator);
 		}
 		
 		if(null == result) { 
@@ -229,7 +239,9 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public List<Project> getProjects(String authenticatedUserId) {
 		logger.debug("getProjects() Begin");
-		List<Project> result = new ArrayList<Project>();
+		List<Project> projectList = new ArrayList<Project>();
+		Project result=null;
+		DatasetCollaborator datasetCollaborator =null;
 		MLPUser mlpUser = getUserDetails(authenticatedUserId);
 		String userId = mlpUser.getUserId();
 		//CDS call to get all the projects for a user
@@ -240,10 +252,14 @@ public class ProjectServiceImpl implements ProjectService {
 		RestPageResponse<MLPProject> response = cdsClient.searchProjects(queryParameters, false, pageRequest);
 		List<MLPProject> mlpProjects = response.getContent();
 		if(null != mlpProjects && mlpProjects.size() > 0 ){
-			result = ProjectServiceUtil.getMLPProjects(mlpProjects, mlpUser);
+			for (MLPProject mlpProject : mlpProjects) {
+				datasetCollaborator=couchDBService.getProjectCollaboration(mlpProject.getProjectId());
+				result=projectSharingServiceImpl.getSharedProjectsVO(authenticatedUserId, mlpProject.getProjectId(), datasetCollaborator);
+				projectList.add(result);
+			}
 		}
 		logger.debug("getProjects() End");
-		return result;
+		return projectList;
 	}
 	
 	@Override

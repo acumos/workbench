@@ -37,11 +37,15 @@ import org.acumos.workbench.common.vo.Project;
 import org.acumos.workbench.common.vo.ServiceState;
 import org.acumos.workbench.common.vo.User;
 import org.acumos.workbench.common.vo.Version;
+import org.acumos.workbench.projectservice.service.CouchDBService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 public class ProjectServiceUtil {
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+	
 	
 	/**
 	 * Converts Project View Object input to MLPProject CDS Domain Object.
@@ -126,6 +130,9 @@ public class ProjectServiceUtil {
 		ServiceState serviceStatus = new ServiceState();
 		serviceStatus.setStatus(ServiceStatus.get(mlpProject.getServiceStatusCode()));
 		result.setServiceStatus(serviceStatus);
+		//Getting collaborator for Project from couchdb
+		
+		
 		logger.debug("getProjectVO() End");
 		return result;
 	}

@@ -41,6 +41,27 @@ public class ConfigurationProperties {
 	@Value("${jwt.secretkey}")
 	private String jwtSecretKey;
 	
+	@Value("${couchdb.user}")
+	private String couchdbUser;
+	
+	@Value("${couchdb.pwd}")
+	private String couchdbPwd;
+
+	@Value("${couchdb.name}")
+	private String couchDbName;
+
+	@Value("${couchdb.createdb.if-not-exist}")
+	private boolean createIfnotExists;
+
+	@Value("${couchdb.protocol}")
+	private String couchdbProtocol;
+
+	@Value("${couchdb.host}")
+	private String couchdbHost;
+
+	@Value("${couchdb.port}")
+	private int couchdbPort;
+	
 	/**
 	 * @return the resultsetSize
 	 */
@@ -75,5 +96,54 @@ public class ConfigurationProperties {
 	public String getJwtSecretKey() {
 		return jwtSecretKey;
 	}
-	
+
+	/**
+	 * @return the couchdbUser
+	 */
+	public String getCouchdbUser() {
+		return couchdbUser;
+	}
+
+	/**
+	 * @return the couchdbPwd
+	 */
+	public String getCouchdbPwd() {
+		return couchdbPwd;
+	}
+
+	/**
+	 * @return the couchDbName
+	 */
+	public String getCouchDbName() {
+		return couchDbName;
+	}
+
+	/**
+	 * @return the createIfnotExists
+	 */
+	public boolean isCreateIfnotExists() {
+		return createIfnotExists;
+	}
+
+	/**
+	 * @return the couchdbProtocol
+	 */
+	public String getCouchdbProtocol() {
+		return couchdbProtocol;
+	}
+
+	/**
+	 * @return the couchdbHost
+	 */
+	public String getCouchdbHost() {
+		return couchdbHost;
+	}
+
+	/**
+	 * @return the couchdbPort
+	 */
+	public int getCouchdbPort() {
+		return couchdbPort;
+	}
+
 }

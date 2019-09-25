@@ -54,9 +54,10 @@
 		<protobuf.java.version>3.4.0</protobuf.java.version>
 		<protobuf.java.jar.name>protobuf-java-${protobuf.java.version}.jar</protobuf.java.jar.name>
 		<mockito.version>1.10.19</mockito.version>
+	
 	</properties>
 
-  <dependencies>
+	<dependencies>
     
     <dependency>
 		<groupId>org.acumos.common-dataservice</groupId>
@@ -140,6 +141,12 @@
 		<artifactId>powermock-api-mockito</artifactId>
 		<version>1.7.4</version>
 		<scope>test</scope>
+	</dependency>
+	<!-- Lightcouch dependency -->
+	<dependency>
+		<groupId>org.lightcouch</groupId>
+		<artifactId>lightcouch</artifactId>
+		<version>0.2.0</version>
 	</dependency>
 	
   </dependencies>

@@ -141,6 +141,12 @@
 		<version>1.7.4</version>
 		<scope>test</scope>
 	</dependency>
+	<!-- Lightcouch dependency -->
+	<dependency>
+		<groupId>org.lightcouch</groupId>
+		<artifactId>lightcouch</artifactId>
+		<version>0.2.0</version>
+	</dependency>
 	
   </dependencies>
 

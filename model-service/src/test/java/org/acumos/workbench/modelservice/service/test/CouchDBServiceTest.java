@@ -150,7 +150,7 @@ public class CouchDBServiceTest extends ModelCommons {
 		assertNotNull(result);
 	}
 	
-	@Test(expected = NullPointerException.class)
+	@Test(expected = CouchDbException.class)
 	public void getModelsAssociatedToProjectTest(){
 		List<DataSetModel> dataSetModel = new ArrayList<DataSetModel>();
 		when(configProps.getCouchDbName()).thenReturn("couchtestdb");
@@ -167,7 +167,7 @@ public class CouchDBServiceTest extends ModelCommons {
 		assertNotNull(dataSetModel);
 	}
 	
-	@Test(expected = NullPointerException.class)
+	@Test(expected = CouchDbException.class)
 	public void getModelsAssociatedToProjectExceptionTest(){
 		List<DataSetModel> dataSetModel = new ArrayList<DataSetModel>();
 		when(configProps.getCouchDbName()).thenReturn("couchtestdb");

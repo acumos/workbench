@@ -100,13 +100,8 @@ public class CouchDBService {
 			logger.error("Exception occured while saving in DB");
 			throw new CouchDBException("Exception occured while saving");
 		} finally {
-			try {
-				// closing the resources
-				dbClient.close();
-			} catch (IOException e) {
-				logger.error("IOException occured while closing the lightcouch client");
-				throw new CouchDBException("IOException occured while closing the lightcouch client");
-			}
+			closeLightCouchdbClient(dbClient);
+			
 		}
 		logger.debug("InsertProjectModelAssociation() End");
 		return dataSetModel;
@@ -148,13 +143,7 @@ public class CouchDBService {
 			logger.error("Exception occured while saving in DB");
 			throw new CouchDBException("Exception occured while saving in DB");
 		} finally {
-			try {
-				// closing the resources
-				dbClient.close();
-			} catch (IOException e) {
-				logger.error("IOException occured while closing the lightcouch client");
-				throw new CouchDBException("IOException occured while closing the lightcouch client");
-			}
+			closeLightCouchdbClient(dbClient);
 		}
 		// Need to get the ModelId and SolutionId and ProjectId to check the duplicates.
 		// Need to get the details of the document and populate over Model Object and return it.
@@ -186,13 +175,7 @@ public class CouchDBService {
 			logger.error("Exception occured while finding the documents in couchDB");
 			throw new CouchDBException("Exception occured while finding the documents in couchDB");
 		} finally {
-			try {
-				// closing the resources
-				dbClient.close();
-			} catch (IOException e) {
-				logger.error("IOException occured while closing the lightcouch client");
-				throw new CouchDBException("IOException occured while closing the lightcouch client");
-			}
+			closeLightCouchdbClient(dbClient);
 		}
 		logger.debug("getModelsAssociatedToProject() End");
 		return dataSetModelList;
@@ -216,13 +199,7 @@ public class CouchDBService {
 			logger.error("Association not found in Couch DB");
 			throw new AssociationException("Association not found in Couch DB");
 		} finally {
-			try {
-				// closing the resources
-				dbClient.close();
-			} catch (IOException e) {
-				logger.error("IOException occured while closing the lightcouch client");
-				throw new CouchDBException("IOException occured while closing the lightcouch client");
-			}
+			closeLightCouchdbClient(dbClient);
 		}
 		logger.debug("getAssociatedModel() End");
 		return association;
@@ -245,13 +222,7 @@ public class CouchDBService {
 			logger.error("Exception occured while deleting the Document from Couch DB");
 			throw new CouchDBException("Exception occured while deleting the Document from Couch DB");
 		} finally {
-			try {
-				// closing the resources
-				dbClient.close();
-			} catch (IOException e) {
-				logger.error("IOException occured while closing the lightcouch client");
-				throw new CouchDBException("IOException occured while closing the lightcouch client");
-			}
+			closeLightCouchdbClient(dbClient);
 		}
 		logger.debug("deleteAssocaitedModel() End");
 	}
@@ -270,13 +241,7 @@ public class CouchDBService {
 			logger.error("Exception occured while updating the document in Couch DB");
 			throw new CouchDBException("Exception occured while updating the document in Couch DB");
 		} finally {
-			try {
-				// closing the resources
-				dbClient.close();
-			} catch (IOException e) {
-				logger.error("IOException occured while closing the lightcouch client");
-				throw new CouchDBException("IOException occured while closing the lightcouch client");
-			}
+			closeLightCouchdbClient(dbClient);
 		}
 		logger.debug("updateAssocaitedModel() End");
 	}
@@ -343,13 +308,7 @@ public class CouchDBService {
 			logger.error("Error while fetching association details from CouchDB");
 			throw new CouchDBException("Error while fetching association details from CouchDB");
 		} finally {
-			try {
-				// closing the resources
-				dbClient.close();
-			} catch (IOException e) {
-				logger.error("IOException occured while closing the lightcouch client");
-				throw new CouchDBException("IOException occured while closing the lightcouch client");
-			}
+			closeLightCouchdbClient(dbClient);
 		}
 		logger.debug("getDocuments() Begin");
 		return model;
@@ -373,15 +332,20 @@ public class CouchDBService {
 			logger.error("Exception occured while finding the documents in couchDB");
 			throw new CouchDBException("Exception occured while finding the documents in couchDB");
 		} finally {
+			closeLightCouchdbClient(dbClient);
+		}
+		logger.debug("associationExistsInCouch() End");
+	}
+
+	private void closeLightCouchdbClient(CouchDbClient dbClient) {
+		if (null != dbClient) {
 			try {
 				// closing the resources
 				dbClient.close();
 			} catch (IOException e) {
 				logger.error("IOException occured while closing the lightcouch client");
-				throw new CouchDBException("IOException occured while closing the lightcouch client");
 			}
 		}
-		logger.debug("associationExistsInCouch() End");
 	}
 	
 	private CouchDbClient getLightCouchdbClient() {

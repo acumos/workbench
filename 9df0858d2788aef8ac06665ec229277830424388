@@ -1,0 +1,837 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3287feaa_33858f05",
+        "filename": "predictor-service/predictor-service/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-26T11:45:01Z",
+      "side": 1,
+      "message": "What for you are using protobuf ?",
+      "range": {
+        "startLine": 47,
+        "startChar": 3,
+        "endLine": 47,
+        "endChar": 11
+      },
+      "revId": "9df0858d2788aef8ac06665ec229277830424388",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c300229c_338ee988",
+        "filename": "predictor-service/predictor-service/src/main/java/org/acumos/workbench/predictorservice/PredictorServiceApplication.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-26T11:45:01Z",
+      "side": 1,
+      "message": "Please provide java doc for public method",
+      "revId": "9df0858d2788aef8ac06665ec229277830424388",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ea66c203_53a90773",
+        "filename": "predictor-service/predictor-service/src/main/java/org/acumos/workbench/predictorservice/config/ApplicationConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-26T11:45:01Z",
+      "side": 1,
+      "message": "Not aligned properly",
+      "revId": "9df0858d2788aef8ac06665ec229277830424388",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8807592b_33f9f927",
+        "filename": "predictor-service/predictor-service/src/main/java/org/acumos/workbench/predictorservice/exception/CustomizedResponseEntityExceptionHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-26T11:45:01Z",
+      "side": 1,
+      "message": "Please correct the java doc comment.",
+      "range": {
+        "startLine": 74,
+        "startChar": 14,
+        "endLine": 74,
+        "endChar": 32
+      },
+      "revId": "9df0858d2788aef8ac06665ec229277830424388",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ec48fe55_4e1f7a91",
+        "filename": "predictor-service/predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/CouchDBService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-26T11:45:01Z",
+      "side": 1,
+      "message": "Change method name to savePredictorProjectAssociation",
+      "range": {
+        "startLine": 64,
+        "startChar": 36,
+        "endLine": 64,
+        "endChar": 63
+      },
+      "revId": "9df0858d2788aef8ac06665ec229277830424388",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "655a9f51_66e883b8",
+        "filename": "predictor-service/predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/CouchDBService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-26T11:45:01Z",
+      "side": 1,
+      "message": "No need to pass authenticatedUserId, predictorId, projectId",
+      "range": {
+        "startLine": 64,
+        "startChar": 64,
+        "endLine": 64,
+        "endChar": 128
+      },
+      "revId": "9df0858d2788aef8ac06665ec229277830424388",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b5b9fc2b_a5b83480",
+        "filename": "predictor-service/predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/CouchDBService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-26T11:45:01Z",
+      "side": 1,
+      "message": "association.setPredcitorId(predictorId);\n\t\t\tassociation.setProjectId(projectId);\n\n: should be done prior before sending PredictorProjectAssociation to the CouchDBService.",
+      "range": {
+        "startLine": 77,
+        "startChar": 3,
+        "endLine": 78,
+        "endChar": 39
+      },
+      "revId": "9df0858d2788aef8ac06665ec229277830424388",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ec12bea_44e59d71",
+        "filename": "predictor-service/predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/CouchDBService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-26T11:45:01Z",
+      "side": 1,
+      "message": "No need to throw the exception",
+      "revId": "9df0858d2788aef8ac06665ec229277830424388",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a838fa2_efea7b30",
+        "filename": "predictor-service/predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/CouchDBService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-26T11:45:01Z",
+      "side": 1,
+      "message": "Make it complete as : \n\"Returns the Predictors for a specified Project.  If no predictor are associated then returns null\"\n\nSo that caller methods has to do null handling.",
+      "revId": "9df0858d2788aef8ac06665ec229277830424388",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "394efec5_4c8260eb",
+        "filename": "predictor-service/predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/CouchDBService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-26T11:45:01Z",
+      "side": 1,
+      "message": "what will dbClient.findDocs() return if no document found in the DB.",
+      "revId": "9df0858d2788aef8ac06665ec229277830424388",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed228592_010414ed",
+        "filename": "predictor-service/predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/CouchDBService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-26T11:45:01Z",
+      "side": 1,
+      "message": "No need to throw the exception",
+      "revId": "9df0858d2788aef8ac06665ec229277830424388",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d39b5a22_78245713",
+        "filename": "predictor-service/predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/CouchDBService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-26T11:45:01Z",
+      "side": 1,
+      "message": "Make it as : \n\"Modifies Predictor Project Association\"",
+      "revId": "9df0858d2788aef8ac06665ec229277830424388",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7638e16b_89215675",
+        "filename": "predictor-service/predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/CouchDBService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-26T11:45:01Z",
+      "side": 1,
+      "message": "change method name to : updatePredictorProjectAssociation",
+      "revId": "9df0858d2788aef8ac06665ec229277830424388",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "62e47990_db08f97c",
+        "filename": "predictor-service/predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/CouchDBService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-26T11:45:01Z",
+      "side": 1,
+      "message": "Remove commented code.",
+      "revId": "9df0858d2788aef8ac06665ec229277830424388",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "15aa4d4f_adb15d05",
+        "filename": "predictor-service/predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/CouchDBService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-26T11:45:01Z",
+      "side": 1,
+      "message": "Make it : \n\"Returns Predictor Project Association for specified associationId",
+      "revId": "9df0858d2788aef8ac06665ec229277830424388",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fd26e3f3_9c6e89e7",
+        "filename": "predictor-service/predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/CouchDBService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-26T11:45:01Z",
+      "side": 1,
+      "message": "change associationID to associationId",
+      "range": {
+        "startLine": 173,
+        "startChar": 66,
+        "endLine": 173,
+        "endChar": 79
+      },
+      "revId": "9df0858d2788aef8ac06665ec229277830424388",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "26269ccb_9332903a",
+        "filename": "predictor-service/predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/CouchDBService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-26T11:45:01Z",
+      "side": 1,
+      "message": "change method name to : getPredictorProjectAssociation",
+      "range": {
+        "startLine": 173,
+        "startChar": 36,
+        "endLine": 173,
+        "endChar": 58
+      },
+      "revId": "9df0858d2788aef8ac06665ec229277830424388",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4e55f0fd_b80b7146",
+        "filename": "predictor-service/predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/CouchDBService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-26T11:45:01Z",
+      "side": 1,
+      "message": "Make it : \"Deletes the Predictor Project Association\"",
+      "revId": "9df0858d2788aef8ac06665ec229277830424388",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1386aa51_09146491",
+        "filename": "predictor-service/predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/CouchDBService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-26T11:45:01Z",
+      "side": 1,
+      "message": "change _id to associationId and rev_id to revId",
+      "range": {
+        "startLine": 202,
+        "startChar": 38,
+        "endLine": 202,
+        "endChar": 41
+      },
+      "revId": "9df0858d2788aef8ac06665ec229277830424388",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8df32fe3_b814aaeb",
+        "filename": "predictor-service/predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/CouchDBService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-26T11:45:01Z",
+      "side": 1,
+      "message": "Make it : \"Checks if the Predictor exists\"",
+      "revId": "9df0858d2788aef8ac06665ec229277830424388",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5c3d6052_f1cfbe32",
+        "filename": "predictor-service/predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/CouchDBService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-26T11:45:01Z",
+      "side": 1,
+      "message": "Don\u0027t intermix the functionality.  Instead use the Model-service API for this.  Remove the method.",
+      "range": {
+        "startLine": 269,
+        "startChar": 13,
+        "endLine": 269,
+        "endChar": 49
+      },
+      "revId": "9df0858d2788aef8ac06665ec229277830424388",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1fd45abd_ea51b5d0",
+        "filename": "predictor-service/predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/CouchDBService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-26T11:45:01Z",
+      "side": 1,
+      "message": "Remove empty lines.",
+      "range": {
+        "startLine": 332,
+        "startChar": 1,
+        "endLine": 340,
+        "endChar": 1
+      },
+      "revId": "9df0858d2788aef8ac06665ec229277830424388",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1d3645f9_42571aec",
+        "filename": "predictor-service/predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/InputValidationService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-26T11:45:01Z",
+      "side": 1,
+      "message": "Update the method comment.",
+      "revId": "9df0858d2788aef8ac06665ec229277830424388",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0db3e91d_46400995",
+        "filename": "predictor-service/predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/InputValidationService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-26T11:45:01Z",
+      "side": 1,
+      "message": "Update method comment",
+      "revId": "9df0858d2788aef8ac06665ec229277830424388",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3515f451_b5f355d2",
+        "filename": "predictor-service/predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/InputValidationServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-26T11:45:01Z",
+      "side": 1,
+      "message": "I am not sure about this condition.  As per the current logic all the fields should be null.",
+      "revId": "9df0858d2788aef8ac06665ec229277830424388",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a876686_a74c6be9",
+        "filename": "predictor-service/predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/InputValidationServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-26T11:45:01Z",
+      "side": 1,
+      "message": "Incorrect logic. Please test it with void main.\nAlso if condition should start on new line as it not \"else if\"",
+      "revId": "9df0858d2788aef8ac06665ec229277830424388",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d0e74448_9389144c",
+        "filename": "predictor-service/predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/InputValidationServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-26T11:45:01Z",
+      "side": 1,
+      "message": "take it to next line.",
+      "revId": "9df0858d2788aef8ac06665ec229277830424388",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5a7e11_0f98eb60",
+        "filename": "predictor-service/predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/ModelServiceRestClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-26T11:45:01Z",
+      "side": 1,
+      "message": "Change the method comment.",
+      "revId": "9df0858d2788aef8ac06665ec229277830424388",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ab02aa3b_c52e4956",
+        "filename": "predictor-service/predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/ModelServiceRestClientImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-26T11:45:01Z",
+      "side": 1,
+      "message": "Instead of defining constant, define new property in application.properties",
+      "range": {
+        "startLine": 52,
+        "startChar": 29,
+        "endLine": 52,
+        "endChar": 43
+      },
+      "revId": "9df0858d2788aef8ac06665ec229277830424388",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7d7d6558_0ee21388",
+        "filename": "predictor-service/predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/ModelServiceRestClientImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-26T11:45:01Z",
+      "side": 1,
+      "message": "Java Doc is missing for constructor.",
+      "revId": "9df0858d2788aef8ac06665ec229277830424388",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f8b820bc_eb54d757",
+        "filename": "predictor-service/predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/ModelServiceRestClientImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-26T11:45:01Z",
+      "side": 1,
+      "message": "I assume you have tested on local.",
+      "revId": "9df0858d2788aef8ac06665ec229277830424388",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a4f141c9_3e447d99",
+        "filename": "predictor-service/predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/PredictorProjectAssociationService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-26T11:45:01Z",
+      "side": 1,
+      "message": "Update method comment.  start with \"Returns the user...\". Also please update the similar occurrences.",
+      "revId": "9df0858d2788aef8ac06665ec229277830424388",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ac5cadbc_b995b8cd",
+        "filename": "predictor-service/predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/PredictorProjectAssociationService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-26T11:45:01Z",
+      "side": 1,
+      "message": "change method name : editPredictorProjectAssociation",
+      "revId": "9df0858d2788aef8ac06665ec229277830424388",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "090da695_15fd9519",
+        "filename": "predictor-service/predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/PredictorProjectAssociationServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-26T11:45:01Z",
+      "side": 1,
+      "message": "Delete the commented code and remove TODO",
+      "revId": "9df0858d2788aef8ac06665ec229277830424388",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "648475ba_ebb2fa04",
+        "filename": "predictor-service/predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/PredictorProjectAssociationServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-26T11:45:01Z",
+      "side": 1,
+      "message": "This is all not required.  Check if the new version and the version from oldAssociation is not same then update the version in oldAssociation and save it.",
+      "range": {
+        "startLine": 164,
+        "startChar": 4,
+        "endLine": 183,
+        "endChar": 51
+      },
+      "revId": "9df0858d2788aef8ac06665ec229277830424388",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "18024af4_4733840e",
+        "filename": "predictor-service/predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/PredictorProjectAssociationServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-26T11:45:01Z",
+      "side": 1,
+      "message": "Please remove empty lines",
+      "revId": "9df0858d2788aef8ac06665ec229277830424388",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "89be368e_d3c1238b",
+        "filename": "predictor-service/predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/PredictorValidationImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-26T11:45:01Z",
+      "side": 1,
+      "message": "Repeated code : PredictorProjectAssociationServiceImpl.getUserDetails",
+      "range": {
+        "startLine": 78,
+        "startChar": 3,
+        "endLine": 90,
+        "endChar": 4
+      },
+      "revId": "9df0858d2788aef8ac06665ec229277830424388",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2dd91cf8_11f8b591",
+        "filename": "predictor-service/predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/PredictorValidationImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-26T11:45:01Z",
+      "side": 1,
+      "message": "instead of logger.error make it logger.debug",
+      "range": {
+        "startLine": 126,
+        "startChar": 10,
+        "endLine": 126,
+        "endChar": 15
+      },
+      "revId": "9df0858d2788aef8ac06665ec229277830424388",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9bcb5c66_3621134b",
+        "filename": "predictor-service/predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/PredictorValidationImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-26T11:45:01Z",
+      "side": 1,
+      "message": "method should be getPredictors instead of predictorExists",
+      "range": {
+        "startLine": 138,
+        "startChar": 69,
+        "endLine": 138,
+        "endChar": 84
+      },
+      "revId": "9df0858d2788aef8ac06665ec229277830424388",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "89819bec_b366b3b1",
+        "filename": "predictor-service/predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/PredictorValidationImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-26T11:45:01Z",
+      "side": 1,
+      "message": "Remove commented lines other than description",
+      "revId": "9df0858d2788aef8ac06665ec229277830424388",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "14d7c58f_60279ee4",
+        "filename": "predictor-service/predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/PredictorValidationImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-26T11:45:01Z",
+      "side": 1,
+      "message": "Method name should be getModelsAssociatedToProject",
+      "range": {
+        "startLine": 160,
+        "startChar": 55,
+        "endLine": 160,
+        "endChar": 64
+      },
+      "revId": "9df0858d2788aef8ac06665ec229277830424388",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7bcfae5a_a4474ab7",
+        "filename": "predictor-service/predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/PredictorValidationImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-26T11:45:01Z",
+      "side": 1,
+      "message": "I am not sure whether you should use REV_ID or RevisionId.  Please verify once",
+      "range": {
+        "startLine": 166,
+        "startChar": 30,
+        "endLine": 166,
+        "endChar": 36
+      },
+      "revId": "9df0858d2788aef8ac06665ec229277830424388",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b69db435_18e7361f",
+        "filename": "predictor-service/predictor-service/src/main/java/org/acumos/workbench/predictorservice/utils/PredicotrServiceProperties.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-26T11:45:01Z",
+      "side": 1,
+      "message": "Remove empty lines",
+      "revId": "9df0858d2788aef8ac06665ec229277830424388",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}

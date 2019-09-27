@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b1d89f2_98883c4d",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/exception/AssociationException.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-27T16:54:33Z",
+      "side": 1,
+      "message": "Missing Java Doc",
+      "revId": "e0b48f3e88d6be7bce0f4a8509dac1236e69f5b2",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "89b8f773_9cc9c4cc",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/exception/CouchDBException.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-27T16:54:33Z",
+      "side": 1,
+      "message": "Java doc is missing",
+      "revId": "e0b48f3e88d6be7bce0f4a8509dac1236e69f5b2",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6cd2c3ef_4052d3c9",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/exception/CouchDBException.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-27T16:54:33Z",
+      "side": 1,
+      "message": "Java doc is missing",
+      "revId": "e0b48f3e88d6be7bce0f4a8509dac1236e69f5b2",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bd4dd6ff_e43c3c52",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/exception/InputValidationException.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-27T16:54:33Z",
+      "side": 1,
+      "message": "Java doc is missing",
+      "revId": "e0b48f3e88d6be7bce0f4a8509dac1236e69f5b2",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c0aaa110_eee31488",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/exception/InputValidationException.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-27T16:54:33Z",
+      "side": 1,
+      "message": "Java doc is missing",
+      "revId": "e0b48f3e88d6be7bce0f4a8509dac1236e69f5b2",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e074d5e6_c9188465",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/exception/PredictorException.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-27T16:54:33Z",
+      "side": 1,
+      "message": "Java doc is missing",
+      "revId": "e0b48f3e88d6be7bce0f4a8509dac1236e69f5b2",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a882c66_b60e60e7",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/exception/PredictorException.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-27T16:54:33Z",
+      "side": 1,
+      "message": "Java doc is missing",
+      "revId": "e0b48f3e88d6be7bce0f4a8509dac1236e69f5b2",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ff3f2e1d_3fffda5c",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/utils/PredictorServiceConstants.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-27T16:54:33Z",
+      "side": 1,
+      "message": "Remove empty lines",
+      "revId": "e0b48f3e88d6be7bce0f4a8509dac1236e69f5b2",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "695083ba_78afd3a2",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/utils/PredictorServiceProperties.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-27T16:54:33Z",
+      "side": 1,
+      "message": "Description is missing",
+      "revId": "e0b48f3e88d6be7bce0f4a8509dac1236e69f5b2",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}

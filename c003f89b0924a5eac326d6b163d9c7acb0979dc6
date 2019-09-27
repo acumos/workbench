@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f232fda1_9ae91d20",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/lightcouch/DatasetCollaborator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-27T08:34:19Z",
+      "side": 1,
+      "message": "Include line as a separator",
+      "revId": "c003f89b0924a5eac326d6b163d9c7acb0979dc6",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cdf1f479_1b2ffa13",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/lightcouch/DatasetCollaborator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-27T08:34:19Z",
+      "side": 1,
+      "message": "Generate Java doc while defining getters and setters.",
+      "revId": "c003f89b0924a5eac326d6b163d9c7acb0979dc6",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d0b01fdd_0b67ff66",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/service/CouchDBService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-27T08:34:19Z",
+      "side": 1,
+      "message": "Include blank line as separator",
+      "revId": "c003f89b0924a5eac326d6b163d9c7acb0979dc6",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6f1b0a0d_89babdd9",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/service/CouchDBService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-27T08:34:19Z",
+      "side": 1,
+      "message": "Java doc is missing for public method.  Please check for other methods too.",
+      "revId": "c003f89b0924a5eac326d6b163d9c7acb0979dc6",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "66e4a363_a44e691f",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/util/ProjectServiceConstants.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-27T08:34:19Z",
+      "side": 1,
+      "message": "Include blank line a separator.",
+      "revId": "c003f89b0924a5eac326d6b163d9c7acb0979dc6",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}

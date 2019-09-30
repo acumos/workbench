@@ -1,0 +1,299 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a7ac629_34e38b67",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/exception/CollaboratorNotExistsException.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-30T16:33:26Z",
+      "side": 1,
+      "message": "Remove empty java doc",
+      "revId": "7d92544432c82f131247fa76cdda773d4f4608d6",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3dbae64a_5c78e6d6",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/exception/CollaboratorNotExistsException.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-30T16:33:26Z",
+      "side": 1,
+      "message": "Provide java doc description for constructor",
+      "revId": "7d92544432c82f131247fa76cdda773d4f4608d6",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "81a9b5ce_1da09de2",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/exception/CollaboratorNotExistsException.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-30T16:33:26Z",
+      "side": 1,
+      "message": "In correct java doc comments",
+      "revId": "7d92544432c82f131247fa76cdda773d4f4608d6",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "06a5eba2_d5224072",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/exception/CouchDBException.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-30T16:33:26Z",
+      "side": 1,
+      "message": "Same java doc description is missing",
+      "revId": "7d92544432c82f131247fa76cdda773d4f4608d6",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e8b2b1ec_46f1f631",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/exception/CouchDBException.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-30T16:33:26Z",
+      "side": 1,
+      "message": "Same java doc description is missing",
+      "revId": "7d92544432c82f131247fa76cdda773d4f4608d6",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c08cc5cb_1b90ba65",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/exception/CustomizedResponseEntityExceptionHandler.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-30T16:33:26Z",
+      "side": 1,
+      "message": "Put one empty line as separator",
+      "revId": "7d92544432c82f131247fa76cdda773d4f4608d6",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "839df7d9_7822cf98",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/exception/CustomizedResponseEntityExceptionHandler.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-30T16:33:26Z",
+      "side": 1,
+      "message": "same",
+      "revId": "7d92544432c82f131247fa76cdda773d4f4608d6",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ebd791b_a6236d55",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/exception/DuplicateCollaboratorException.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-30T16:33:26Z",
+      "side": 1,
+      "message": "Same java doc description is missing",
+      "revId": "7d92544432c82f131247fa76cdda773d4f4608d6",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e02df8fe_8e6533f6",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/exception/DuplicateCollaboratorException.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-30T16:33:26Z",
+      "side": 1,
+      "message": "Same java doc description is missing",
+      "revId": "7d92544432c82f131247fa76cdda773d4f4608d6",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c1827888_ed609e76",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/exception/DuplicateProjectException.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-30T16:33:26Z",
+      "side": 1,
+      "message": "Java Doc is missing",
+      "revId": "7d92544432c82f131247fa76cdda773d4f4608d6",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "49c8b265_221bbf5a",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/exception/ProjectNotActiveException.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-30T16:33:26Z",
+      "side": 1,
+      "message": "Same java doc description is missing",
+      "revId": "7d92544432c82f131247fa76cdda773d4f4608d6",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5907796_1349b9ed",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/exception/ProjectNotActiveException.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-30T16:33:26Z",
+      "side": 1,
+      "message": "Same java doc description is missing",
+      "revId": "7d92544432c82f131247fa76cdda773d4f4608d6",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2b98dfc2_ea7399d4",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/lightcouch/DatasetCollaborator.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-30T16:33:26Z",
+      "side": 1,
+      "message": "Same java doc description is missing",
+      "revId": "7d92544432c82f131247fa76cdda773d4f4608d6",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ee337826_43e005bc",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/lightcouch/DatasetCollaborator.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-30T16:33:26Z",
+      "side": 1,
+      "message": "Same java doc description is missing.  Please fix all missing java doc.",
+      "revId": "7d92544432c82f131247fa76cdda773d4f4608d6",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa203449_a62bbfba",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/service/ProjectSharingServiceImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-30T16:33:26Z",
+      "side": 1,
+      "message": "One empty line",
+      "revId": "7d92544432c82f131247fa76cdda773d4f4608d6",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d2b1c4fc_26ad90d4",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/service/ProjectSharingServiceImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-30T16:33:26Z",
+      "side": 1,
+      "message": "If its no override method then provide java doc",
+      "revId": "7d92544432c82f131247fa76cdda773d4f4608d6",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "59cfcf9e_35686271",
+        "filename": "project-service/src/main/java/org/acumos/workbench/projectservice/service/ProjectSharingValidationSercviceImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-09-30T16:33:26Z",
+      "side": 1,
+      "message": "Please format",
+      "range": {
+        "startLine": 41,
+        "startChar": 1,
+        "endLine": 49,
+        "endChar": 55
+      },
+      "revId": "7d92544432c82f131247fa76cdda773d4f4608d6",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}

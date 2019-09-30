@@ -23,7 +23,7 @@ var config = {
 		ENVIRONMENT : "dev",
 		projectmSURL : "http://localhost:9088/mlWorkbench/v1/project",
 		notebookmSURL : "http://localhost:9089/mlWorkbench/v1/notebook",
-		pipelinemSURL : "http://localhost:9083/mlWorkbench/v1/pipeline",
+		pipelinemSURL : "http://localhost:9090/mlWorkbench/v1/pipeline",
 		projectWikiURL : "https://wiki.acumos.org/display/TRAIN",
 	},
 	deploy : {

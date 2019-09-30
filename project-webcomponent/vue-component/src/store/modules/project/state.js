@@ -1,3 +1,4 @@
 export default {
-  activeProject: null
+  activeProject: null,
+  loginAsOwner: null
 };

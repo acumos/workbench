@@ -1,23 +1,20 @@
 <template>
   <div
-    class="fixed flex h-full items-center justify-around m-0 p-0 w-full top-0 left-0"
+    class="fixed flex h-full items-center justify-around m-0 p-0 w-full top-0 left-0 text-gray-800"
   >
     <div class="flex flex-col shadow-2xl z-10" :class="_size">
       <div
-        class="flex bg-purple-700 text-white py-3 px-3 justify-between rounded-t-lg border border-purple-800 border-b-0"
+        class="flex bg-purple-500 text-white py-3 px-3 justify-between rounded-t-lg border border-purple-500 border-b-0"
       >
         <span class="font-bold">{{ title }}</span>
-        <span>
+        <span class="mx-1">
           <a class="cursor-pointer" @click="$emit('onDismiss')">
             <FAIcon icon="times"></FAIcon>
           </a>
         </span>
       </div>
-      <div class="flex p-3 border border-t-0 border-b-0 bg-white">
+      <div class="flex border border-t-0 border-b-0 bg-white">
         <slot></slot>
-      </div>
-      <div class="px-3 py-2 border bg-gray-100">
-        <slot name="footer"></slot>
       </div>
     </div>
     <div class="bg-black fixed flex h-full opacity-50 w-full z-0"></div>

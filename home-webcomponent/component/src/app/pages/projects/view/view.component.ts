@@ -47,7 +47,7 @@ export class ViewComponent extends BaseComponent implements OnInit {
   }
 
   OnViewProjectEvent(e) {
-    if (e.detail.data === 'catalog-project') {
+    if (e.detail[0].data === 'catalog-project') {
       this.router.navigateByUrl('/pages/projects/catalog');
     }
   }

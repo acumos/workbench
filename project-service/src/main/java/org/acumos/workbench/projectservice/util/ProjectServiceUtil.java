@@ -39,9 +39,9 @@ import org.acumos.workbench.common.vo.User;
 import org.acumos.workbench.common.vo.Version;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 public class ProjectServiceUtil {
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+	
 	
 	/**
 	 * Converts Project View Object input to MLPProject CDS Domain Object.
@@ -85,8 +85,10 @@ public class ProjectServiceUtil {
 	public static Project getProjectVO(MLPProject mlpProject, MLPUser mlpUser) {
 		logger.debug("getProjectVO() Begin");
 		//TODO : Include null checks
+		if (mlpUser.getUserId().equals(mlpProject.getUserId())) {
+			
+		}
 		Project result = new Project(); 
-		
 		Identifier userIdentifier = new Identifier();
 		userIdentifier.setIdentifierType(IdentifierType.USER);
 		userIdentifier.setName(mlpUser.getFirstName() + " " + mlpUser.getLastName());
@@ -126,6 +128,9 @@ public class ProjectServiceUtil {
 		ServiceState serviceStatus = new ServiceState();
 		serviceStatus.setStatus(ServiceStatus.get(mlpProject.getServiceStatusCode()));
 		result.setServiceStatus(serviceStatus);
+		//Getting collaborator for Project from couchdb
+		
+		
 		logger.debug("getProjectVO() End");
 		return result;
 	}

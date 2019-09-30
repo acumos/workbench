@@ -152,9 +152,11 @@ public class ProjectServiceController {
 		
 		// Check if project exists
 		projectService.projectExists(projectId);
-				
 		// 4. Check if authenticated user is the owner of the Project. (Call to CDS)
-		projectService.isOwnerOfProject(authenticatedUserId, projectId);
+//		projectService.isOwnerOfProject(authenticatedUserId, projectId);
+		
+		// To check if user is owner or collaborator of project
+		projectService.isOwnerOrCollaboratorOfProject(authenticatedUserId, projectId);
 		
 		// 5. Service call to get existing project (Call to CDS)
 		Project result = projectService.getProject(authenticatedUserId, projectId);

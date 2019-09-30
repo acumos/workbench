@@ -20,34 +20,29 @@
 
 package org.acumos.workbench.projectservice.exception;
 
-import org.acumos.workbench.common.exception.BadRequestException;
+public class CouchDBException extends RuntimeException{
 
-public class DuplicateProjectException extends BadRequestException {
+	private static final long serialVersionUID = -5293055248369353933L;
 
-	
-	private static final long serialVersionUID = -3640899745060073706L;
-
-	private static final String MSG = "Project name and version already exists";
-	
-	/**
-	 * To handle Duplicate Project Exception.
+	/** To throw CouchDBException (If exception occurs while doing couchdb operations)
 	 * 
-	 * @param message 
-	 * 				the message
+	 * @param message
+	 *            the message
 	 */
-	
-	public DuplicateProjectException() {
-		super(MSG);
-	}
-	
-	/**
-	 * To handle Duplicate Project Exception.
-	 * 
-	 * @param message 
-	 * 				the message
-	 */
-
-	public DuplicateProjectException(String message) {
+	public CouchDBException(String message) {
 		super(message);
 	}
+
+	/**
+	 * To throw CouchDBException (If exception occurs while doing couchdb operations)
+	 * 
+	 * @param message
+	 *            the message
+	 * @param Throwable
+	 *            object
+	 */
+	public CouchDBException(String message, Throwable object) {
+		super(message, object);
+	}
+
 }

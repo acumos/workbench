@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @JsonInclude(Include.NON_NULL)
-public class PredictorManager implements Serializable{
+public class DataSetPredictor implements Serializable{
 	
 	private static final long serialVersionUID = -3151260834226542723L;
 	
@@ -17,7 +17,7 @@ public class PredictorManager implements Serializable{
 	private String updateTimestamp; 			
 	private String modelStatus;
 	private String predictorDeploymentStatus; 
-	private String predcitorId;	
+	private String predictorId;	
 	private String predictorName; 	
 	private String predictorDescription;		
 	private String predictorVersion;			
@@ -114,13 +114,13 @@ public class PredictorManager implements Serializable{
 	 * @return the predcitorId
 	 */
 	public String getPredcitorId() {
-		return predcitorId;
+		return predictorId;
 	}
 	/**
 	 * @param predcitorId the predcitorId to set
 	 */
 	public void setPredcitorId(String predcitorId) {
-		this.predcitorId = predcitorId;
+		this.predictorId = predcitorId;
 	}
 	/**
 	 * @return the predictorName

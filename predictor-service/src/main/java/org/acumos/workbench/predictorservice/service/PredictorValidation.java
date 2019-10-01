@@ -56,6 +56,18 @@ public interface PredictorValidation {
 	 * 			The Auth Token
 	 */
 	public void isModelAssociatedToProject(String authenticatedUserId, String projectId, String solutionId, String revisionId,String authToken);
+
+	/**
+	 * Check the input model and version exists in CDS
+	 * @param modelId
+	 * 			the input model Id 
+	 * @param version
+	 * 			the input version
+	 * @return 
+	 * 			the revision Id if Model exists
+	 */
+	public String modelExists(String modelId, String version);
+
 	
 	
 	

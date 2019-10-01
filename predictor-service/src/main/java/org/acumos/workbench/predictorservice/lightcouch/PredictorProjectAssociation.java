@@ -254,17 +254,19 @@ public class PredictorProjectAssociation implements Serializable{
 		this.version = version;
 	}
 	/**
-	 * @return the predcitorId
+	 * @return the predictorId
 	 */
-	public String getPredcitorId() {
+	public String getPredictorId() {
 		return predictorId;
 	}
 	/**
-	 * @param predcitorId the predcitorId to set
+	 * @param predictorId the predictorId to set
 	 */
-	public void setPredcitorId(String predcitorId) {
-		this.predictorId = predcitorId;
+	public void setPredictorId(String predictorId) {
+		this.predictorId = predictorId;
 	}
+	
+	
 	
 	
 	

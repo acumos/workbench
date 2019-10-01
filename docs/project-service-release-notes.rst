@@ -19,18 +19,30 @@
 ===============================
 Project Service Release Notes
 ===============================
+
+
+Version 2.0.0, 2019-10-01
+---------------------------
+* ACUMOS-3454 : Update all MLWB MS to use Java 11
+* ACUMOS-3489 : Define New API in Project Service for Project Collaboration
+* ACUMOS-3488 : Modify Project Service API
+
+
 Version 1.0.3, 2019-09-25
 ---------------------------
 * ACUMOS-3450 : Update MLWB MS to point to CDS 3.0.0
+
 
 Version 1.0.2, 2019-09-09
 ---------------------------
 * Updated to refer workbench-common 1.0.4
 
+
 Version 1.0.1, 2019-05-30
 ---------------------------
 * ACUMOS-2850 : Move common code to workbench-common
 * Updated to refer workbench-common-1.0.3
+
 
 Version 1.0.0, 2019-04-27
 ---------------------------

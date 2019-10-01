@@ -27,6 +27,9 @@ public class PredictorServiceConstants {
 	public static final String PREDICTORID = "predictorId";
 	public static final String PROJECTID = "projectId";
 	public static final String ASSOCIATIONID = "ASSOCIATION_ID";
+	public static final String REVISIONID = "REVISION_ID";
+	public static final String MODELID = "modelId";
+	public static final String VERSION = "version";
 	
 	public static final String ASSOCIATIONEXISTSINCOUCHQUERY = "{\"selector\":{\"$and\":[{\"projectId\":{\"$eq\":\"%s\"}},{\"solutionId\":{\"$eq\":\"%s\"}},{\"revisionId\":{\"$eq\":\"%s\"}}]}}";
 
@@ -37,5 +40,10 @@ public class PredictorServiceConstants {
 	public static final String PREDICTOREXISTSINCOUCHQUERY = "{\"selector\":{\"$and\":[{\"predictorId\":{\"$eq\":\"%s\"}},{\"predictorDeploymentStatus\":{\"$eq\":\"%s\"}}]}}";
 	
 	public static final String MODELPROJECTASSOCIATIONEXISTSINCOUCHQUERY = "{\"selector\":{\"$and\":[{\"projectId\":{\"$eq\":\"%s\"}},{\"solutionId\":{\"$eq\":\"%s\"}},{\"revisionId\":{\"$eq\":\"%s\"}},{\"predictorDeploymentStatus\":{\"$eq\":\"%s\"}}]}}";
+	
+	public static final String GETDATASETPREDICTORQUERY ="{\"selector\":{\"$and\":[{\"userId\":{\"$eq\":\"%s\"}},{\"solutionId\":{\"$eq\":\"%s\"}},{\"revisionId\":{\"$eq\":\"%s\"}}]}}";
+	
+	
+	
 
 }

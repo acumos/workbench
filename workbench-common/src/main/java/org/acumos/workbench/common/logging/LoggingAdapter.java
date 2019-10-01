@@ -38,7 +38,7 @@ import org.slf4j.event.Level;
 public class LoggingAdapter {
 
 	/**
-	 * String constant for messages <tt>ENTERING</tt>, <tt>EXITING</tt>, etc.
+	 * String constant for messages "ENTERING", "EXITING", etc.
 	 */
 	private static final String EMPTY_MESSAGE = "";
 
@@ -71,7 +71,7 @@ public class LoggingAdapter {
 	}
 
 	/**
-	 * Report <tt>ENTERING</tt> marker.
+	 * Report "ENTERING" marker.
 	 *
 	 * @param request
 	 *            non-null incoming request (wrapper).
@@ -89,7 +89,7 @@ public class LoggingAdapter {
 	}
 
 	/**
-	 * Report <tt>ENTERING</tt> marker.
+	 * Report "ENTERING" marker.
 	 *
 	 * @param request
 	 *            non-null incoming request.
@@ -100,7 +100,7 @@ public class LoggingAdapter {
 	}
 
 	/**
-	 * Report <tt>ENTERING</tt> marker.
+	 * Report "ENTERING" marker.
 	 * 
 	 * @param request
 	 * 		non-null incoming request.
@@ -116,7 +116,7 @@ public class LoggingAdapter {
 	}
 
 	/**
-	 * Report <tt>EXITING</tt> marker.
+	 * Report "EXITING" marker.
 	 *
 	 * @return this.
 	 */
@@ -231,7 +231,7 @@ public class LoggingAdapter {
 	/**
 	 * Response is different in that response MDCs are normally only reported
 	 * once, for a single log message. (But there's no method for clearing them,
-	 * because this is only expected to be called during <tt>#exiting</tt>.)
+	 * because this is only expected to be called during "#exiting".)
 	 */
 	public static class ResponseDescriptor {
 
@@ -244,7 +244,7 @@ public class LoggingAdapter {
 		/** Response severity. */
 		protected Level mSeverity;
 
-		/** Response status, of {<tt>COMPLETED</tt>, <tt>ERROR</tt>}. */
+		/** Response status, of {"COMPLETED", "ERROR"}. */
 		protected LoggingConstants.ResponseStatus mStatus;
 
 		/**
@@ -318,7 +318,7 @@ public class LoggingAdapter {
 	 * Adapter for reading information from an incoming HTTP request.
 	 *
 	 * Incoming is generally easy, because in most cases you'll be able to get
-	 * your hands on the <tt>HttpServletRequest</tt>.
+	 * your hands on the "HttpServletRequest".
 	 *
 	 * Perhaps should be generalized to refer to constants instead of requiring
 	 * the implementation of specific methods.
@@ -381,7 +381,7 @@ public class LoggingAdapter {
 	 * request.
 	 *
 	 * Incoming is generally easy, because in most cases you'll be able to get
-	 * your hands on the <tt>HttpServletRequestAdapter</tt>.
+	 * your hands on the "HttpServletRequestAdapter".
 	 *
 	 * Perhaps should be generalized to refer to constants instead of requiring
 	 * the implementation of specific methods.

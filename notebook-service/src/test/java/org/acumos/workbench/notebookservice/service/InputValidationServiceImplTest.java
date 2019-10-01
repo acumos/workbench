@@ -39,11 +39,12 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
-public class InputValidationServiceImplTest extends NotebookCommons{
+//@RunWith(SpringRunner.class)
+public class InputValidationServiceImplTest { //extends NotebookCommons{
 	
 	private static final String authenticatedUserId = "123";
 
+	/*
 	@Rule
 	public MockitoRule mockitoRule = MockitoJUnit.rule();
 	
@@ -95,5 +96,5 @@ public class InputValidationServiceImplTest extends NotebookCommons{
 		
 	}
 	
-	
+	*/
 }

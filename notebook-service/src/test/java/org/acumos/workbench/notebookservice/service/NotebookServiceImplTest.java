@@ -65,10 +65,11 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 //@RunWith(SpringRunner.class)
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(NotebookServiceUtil.class)
-public class NotebookServiceImplTest extends NotebookCommons {
+public class NotebookServiceImplTest { // extends NotebookCommons {
 
 	private static final String authenticatedUserId = "19a554b1-4b00-4135-a122-2b6061480185";
 
+	/* 
 	@Rule
 	public MockitoRule mockitoRule = MockitoJUnit.rule();
 
@@ -355,5 +356,5 @@ public class NotebookServiceImplTest extends NotebookCommons {
 		return mlpProject;
 	}
 	
-	
+	*/
 }

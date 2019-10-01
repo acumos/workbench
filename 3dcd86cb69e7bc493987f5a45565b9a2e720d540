@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cdeb9ad3_42b6685e",
+        "filename": "docs/project-service-release-notes.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-10-01T16:52:22Z",
+      "side": 1,
+      "message": "Please include below tasks too : \nACUMOS-3489 : Define New API in Project Service for Project Collaboration \nACUMOS-3488 : Modify Project Service API : Get Project",
+      "revId": "3dcd86cb69e7bc493987f5a45565b9a2e720d540",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c8834672_c9075d62",
+        "filename": "docs/workbench-common-release-notes.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-10-01T16:52:22Z",
+      "side": 1,
+      "message": "Raman have also introduce some changes, those details are missing",
+      "revId": "3dcd86cb69e7bc493987f5a45565b9a2e720d540",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}

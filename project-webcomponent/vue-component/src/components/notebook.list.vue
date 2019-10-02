@@ -28,7 +28,6 @@
               <option value>Sort By</option>
               <option value="createdAt">Created</option>
               <option value="name">Name</option>
-              <option value="id" disabled>ID</option>
             </select>
             <input
               type="text"
@@ -73,7 +72,6 @@
                   <button
                     class="btn btn-xs btn-primary text-white mx-1"
                     @click="notebookLaunch(props.row)"
-                    :disabled="!loginAsOwner"
                   >
                     <FAIcon icon="external-link-alt" />
                   </button>

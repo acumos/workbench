@@ -12,7 +12,9 @@
               class="btn btn-secondary btn-sm mr-2"
               @click="associateModel()"
               :disabled="!loginAsOwner"
-            >Associate Models</button>
+            >
+              Associate Models
+            </button>
           </div>
         </div>
       </div>
@@ -20,10 +22,9 @@
         <div class="flex justify-end my-3">
           <div class="flex inline-flex items-center">
             <select class="form-select mr-2" v-model="sortBy">
-              <option>Sort By</option>
+              <option value>Sort By</option>
               <option value="createdAt">Created</option>
               <option value="name">Name</option>
-              <option value="id">ID</option>
             </select>
             <input
               type="text"
@@ -50,8 +51,15 @@
           :sort-options="sortOptions"
         >
           <template slot="table-row" slot-scope="props">
-            <div class="flex justify-center" v-if="props.column.field === 'publishStatus'">
-              <FAIcon class="text-gray-500" icon="cloud" v-if="props.row.publishStatus === 'false'"></FAIcon>
+            <div
+              class="flex justify-center"
+              v-if="props.column.field === 'publishStatus'"
+            >
+              <FAIcon
+                class="text-gray-500"
+                icon="cloud"
+                v-if="props.row.publishStatus === 'false'"
+              ></FAIcon>
               <FAIcon
                 class="text-green-700"
                 icon="cloud-upload-alt"
@@ -62,12 +70,24 @@
             <div
               class="flex justify-center"
               v-else-if="props.column.field === 'modelType'"
-            >{{ props.row.modelType === "None"? "Others": lookUpCategory(props.row.modelType)}}</div>
+            >
+              {{
+                props.row.modelType === "None"
+                  ? "Others"
+                  : lookUpCategory(props.row.modelType)
+              }}
+            </div>
 
             <div
               class="flex justify-center"
               v-else-if="props.column.field === 'modelCatalog'"
-            >{{ props.row.modelCatalog === "None"? "Private Catalog": props.row.modelCatalog}}</div>
+            >
+              {{
+                props.row.modelCatalog === "None"
+                  ? "Private Catalog"
+                  : props.row.modelCatalog
+              }}
+            </div>
 
             <div v-else-if="props.column.field === 'actions'">
               <div class="flex justify-center">
@@ -81,7 +101,9 @@
                 <button
                   class="btn btn-xs btn-secondary text-black mx-1"
                   @click="viewModel(props.row)"
-                  :disabled="!loginAsOwner && !(props.row.publishStatus === 'true') "
+                  :disabled="
+                    !loginAsOwner && !(props.row.publishStatus === 'true')
+                  "
                 >
                   <FAIcon icon="eye" />
                 </button>
@@ -94,21 +116,30 @@
                 </button>
               </div>
             </div>
-            <div v-else class="flex justify-center">{{ props.formattedRow[props.column.field] }}</div>
+            <div v-else class="flex justify-center">
+              {{ props.formattedRow[props.column.field] }}
+            </div>
           </template>
           <template slot="pagination-bottom" slot-scope="props">
-            <pagination-ui :total="props.total" :pageChanged="props.pageChanged" :itemsPerPage="5" />
+            <pagination-ui
+              :total="props.total"
+              :pageChanged="props.pageChanged"
+              :itemsPerPage="5"
+            />
           </template>
         </vue-good-table>
       </div>
     </collapsable-ui>
     <modal-ui
-      title="Associate Model"
+      :title="activeModel ? 'Edit Model Association' : 'Associate Model'"
       size="md"
       v-if="isAssociatingModel"
       @onDismiss="isAssociatingModel = false"
     >
-      <associate-model-form :initialModel="activeModel" @onSuccess="isAssociatingModel = false" />
+      <associate-model-form
+        :initialModel="activeModel"
+        @onSuccess="isAssociatingModel = false"
+      />
     </modal-ui>
   </div>
 </template>
@@ -216,11 +247,11 @@ export default {
     async deleteModelAssociation(model) {
       model = new Model(model);
       this.confirm({
-        title: "Delete "+model.name+" Association",
+        title: "Delete " + model.name + " Association",
         body: "Are you sure you want to delete " + model.name + " association?",
         options: {
-           okLabel: "Delete Model Association",
-           dismissLabel: "Cancel"
+          okLabel: "Delete Model Association",
+          dismissLabel: "Cancel"
         },
         onOk: async () => {
           const response = await this.deleteAssociation(model.$toJson());

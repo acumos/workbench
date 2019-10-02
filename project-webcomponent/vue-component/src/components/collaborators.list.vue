@@ -5,46 +5,60 @@
       class="relative p-2"
       innerClass="w-full"
     ></ToastUI>
-    <div class="flex flex-col w-full p-3">
+    <ValidationObserver ref="form" tag="div" class="flex flex-col w-full p-3">
       <h3 class="text-lg font-semibold my-2">Add Collaborator</h3>
-      <div class="flex items-center">
-        <v-select
-          class="flex-grow mr-2"
-          label="username"
-          placeholder="User Login Id"
-          :options="users"
-          @search="setUsers"
-          @input="selectUser"
+      <div class="flex items-start">
+        <ValidationProvider
+          class="w-1/2"
+          name="User Id"
+          rules="required"
+          v-slot="{ errors, classes }"
         >
-          <template slot="no-options">
-            type to search users..
-          </template>
-          <template slot="option" slot-scope="option">
-            <div class="d-center">
-              <img :src="option.picture" />
-              {{ option.username }}
-            </div>
-          </template>
-          <template slot="selected-option" slot-scope="option">
-            <div class="selected d-center">
-              <img :src="option.picture" />
-              {{ option.username }}
-            </div>
-          </template>
-        </v-select>
+          <v-select
+            class="flex-grow mr-2"
+            label="username"
+            placeholder="User Login Id"
+            :options="users"
+            v-model="newCollaborator"
+            :filterBy="filterBy"
+            :disabled="loadingUsers"
+          >
+            <template slot="spinner">
+              <div class="mx-2 text-xl" v-show="loadingUsers">
+                <FAIcon icon="spinner" pulse />
+              </div>
+            </template>
 
-        <select
-          class="flex-grow form-select"
-          v-model="newCollaborator.permission"
-        >
-          <option value="">Select a permission</option>
+            <template slot="no-options">
+              type to search users..
+            </template>
+            <template slot="option" slot-scope="option">
+              <div class="d-center">
+                <img :src="option.picture" />
+                {{ option.firstName }} {{ option.lastName }}
+              </div>
+            </template>
+            <template slot="selected-option" slot-scope="option">
+              <div class="selected d-center">
+                <img :src="option.picture" />
+                {{ option.firstName }} {{ option.lastName }}
+              </div>
+            </template>
+          </v-select>
+          <span class="text-sm text-red-700 flex items-center" v-if="errors[0]">
+            <FAIcon icon="exclamation-triangle" />
+            <span class="ml-1 my-1">{{ errors[0] }}</span>
+          </span>
+        </ValidationProvider>
+        <select class="w-1/2 form-select" v-model="newPermission">
+          <option value>Select a permission</option>
           <option value="READ">READ</option>
           <option value="WRITE" disabled>WRITE</option>
           <option value="ADMIN" disabled>ADMIN</option>
         </select>
         <button
           class="btn btn-primary btn-sm ml-2 my-1"
-          @click="addNewCollaborator(newCollaborator)"
+          @click="addNewCollaborator(newCollaborator, newPermission)"
         >
           <FAIcon icon="plus" />
         </button>
@@ -72,7 +86,7 @@
           </td>
         </tr>
       </table>
-    </div>
+    </ValidationObserver>
 
     <div
       class="flex justify-end py-3 px-2 bg-gray-100 border-gray-200 border-t"
@@ -89,23 +103,31 @@ import Collaborator from "../store/entities/collaborator.entity";
 import ToastUI from "../components/ui/Toast.ui";
 
 import { mapActions, mapState } from "vuex";
-import { differenceWith, filter } from "lodash-es";
+import { differenceWith, filter, sortBy } from "lodash-es";
 
 export default {
   components: { ToastUI },
   props: ["initialCollaborators"],
   data() {
     return {
-      newCollaborator: new Collaborator(),
+      newCollaborator: null,
+      newPermission: "READ",
       collaboratorList: this.initialCollaborators,
       users: [],
-      loading: false
+      loadingUsers: false,
+      filterString: "",
+      allUsers: []
     };
   },
 
   watch: {
     initialCollaborators: function() {
       this.collaboratorList = this.initialCollaborators;
+      this.users = differenceWith(
+        this.allUsers.data.data,
+        this.initialCollaborators,
+        (user, collaborator) => user.username === collaborator.name
+      );
     }
   },
 
@@ -116,6 +138,18 @@ export default {
     ...mapState("app", {
       userName: state => state.userName
     })
+  },
+  async created() {
+    this.loadingUsers = true;
+    this.allUsers = await this.getUsersList();
+    this.users = differenceWith(
+      this.allUsers.data.data,
+      this.initialCollaborators,
+      (user, collaborator) => user.username === collaborator.name
+    );
+    this.users = filter(this.users, user => user.username !== this.userName);
+    this.users = sortBy(this.users, ["firstName"]);
+    this.loadingUsers = false;
   },
   methods: {
     ...mapActions("project", [
@@ -129,32 +163,26 @@ export default {
       this.users = [];
     },
 
-    async setUsers(search, loading) {
-      loading(true);
-      if (this.users.length > 0) {
-        loading(false);
+    filterBy(option, label, search) {
+      return (
+        option.firstName.toLowerCase().indexOf(search) > -1 ||
+        option.lastName.toLowerCase().indexOf(search) > -1
+      );
+    },
+
+    async addNewCollaborator(newCollaborator, newPermission) {
+      const isValid = await this.$refs.form.validate();
+
+      if (!isValid) {
         return;
       }
-      let users = await this.getUsersList();
-      users = differenceWith(
-        users.data.data,
-        this.initialCollaborators,
-        (user, collaborator) => user.username === collaborator.name
-      );
-      loading(false);
-      this.users = filter(users, user => user.username !== this.userName);
-    },
+      const collaborator = new Collaborator();
 
-    selectUser(user) {
-      this.newCollaborator.id = user.userId;
-      this.newCollaborator.name = user.username;
-      this.newCollaborator.permission = "";
-    },
+      collaborator.id = newCollaborator.userId;
+      collaborator.name = newCollaborator.username;
+      collaborator.permission = newPermission;
 
-    async addNewCollaborator(newCollaborator) {
-      const response = await this.shareProjectToUsers(
-        newCollaborator.$toJson()
-      );
+      const response = await this.shareProjectToUsers(collaborator.$toJson());
       if (response.data.status === "Success") {
         await this.getDetails();
         this.showToastMessage({
@@ -162,7 +190,7 @@ export default {
           message: `${response.data.message}`,
           type: "success"
         });
-      } else{
+      } else {
         this.showToastMessage({
           id: "collaborator-list",
           message: `${response.data.message}`,
@@ -183,7 +211,7 @@ export default {
           message: `${response.data.message}`,
           type: "success"
         });
-      } else{
+      } else {
         this.showToastMessage({
           id: "collaborator-list",
           message: `${response.data.message}`,

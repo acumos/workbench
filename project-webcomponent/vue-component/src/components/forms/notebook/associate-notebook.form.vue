@@ -85,7 +85,7 @@
 </template>
 
 <script>
-import { isUndefined } from "lodash-es";
+import { isUndefined, sortBy } from "lodash-es";
 import ToastUI from "../../ui/Toast.ui";
 import Notebook from "../../../store/entities/notebook.entity";
 import { mapActions } from "vuex";
@@ -114,7 +114,7 @@ export default {
       return isUndefined(this.notebook);
     },
     filteredNotebooks() {
-      return this.notebooks;
+      return sortBy(this.notebooks, ["name"]);
     }
   },
   async created() {

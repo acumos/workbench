@@ -64,7 +64,7 @@
 </template>
 
 <script>
-import { isUndefined } from "lodash-es";
+import { isUndefined, sortBy } from "lodash-es";
 import ToastUI from "../../ui/Toast.ui";
 import Pipeline from "../../../store/entities/pipeline.entity";
 import { mapActions } from "vuex";
@@ -92,12 +92,11 @@ export default {
       return isUndefined(this.pipeline);
     },
     filteredPipelines() {
-      return this.pipelines;
+      return sortBy(this.pipelines, ["name"]);
     }
   },
   async created() {
     this.pipelines = await this.getAllPipelines();
-    //this.pipelines = this.pipelines.data.data.map(pipeline => Pipeline.$fromJson(pipeline));
   },
   methods: {
     ...mapActions("pipeline", ["getAllPipelines", "associatePipeline"]),

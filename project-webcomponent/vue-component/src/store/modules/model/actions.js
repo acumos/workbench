@@ -1,5 +1,5 @@
 import axios from "axios";
-import { map } from "lodash-es";
+import { map, isNull } from "lodash-es";
 import Model from "../../entities/model.entity";
 
 export default {
@@ -65,14 +65,21 @@ export default {
     );
   },
 
-  async getAllModels({ rootState }) {
-    return await axios.post(
+  async getAllModels({ rootState, state, commit }) {
+    if (!isNull(state.models)) {
+      return state.models;
+    }
+    const models = await axios.post(
       `${rootState.app.componentUrl}/api/models/getAllModels`,
       {
         userName: rootState.app.userName,
         url: rootState.app.msConfig.modelmSURL
       }
     );
+
+    commit("setModels", models);
+
+    return models;
   },
 
   async updateAssociation({ rootState }, model) {

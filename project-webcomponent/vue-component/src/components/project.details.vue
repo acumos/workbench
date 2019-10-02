@@ -1,9 +1,13 @@
 <template>
-  <div class="flex w-full" v-if="project">
-    <collapsable-ui title="Test Project" icon="project-diagram" :collapse-border="true">
+  <ValidationObserver ref="form" tag="div" class="flex w-full">
+    <collapsable-ui
+      :title="project.name"
+      icon="project-diagram"
+      :collapse-border="true"
+    >
       <div class="inline-flex" slot="left-actions">
         <button
-          class="btn btn-xs py-1 px-2 btn-primary"
+          class="btn btn-xs btn-primary w-8 h-8"
           v-if="!isEditing && !isArchived"
           @click="editProject()"
           :disabled="!loginAsOwner"
@@ -11,46 +15,74 @@
           <FAIcon icon="pencil-alt"></FAIcon>
         </button>
         <button
-          class="btn btn-xs btn-primary py-1 ml-2"
+          class="btn btn-xs btn-primary ml-2 w-8 h-8"
           v-if="!isEditing && !isArchived"
           @click="isManagingCollaborators = true"
           :disabled="!loginAsOwner"
         >
           <FAIcon icon="users"></FAIcon>
         </button>
+        <div class="flex ml-4" v-if="!isEditing && !isArchived">
+          <div class="flex">
+            <div
+              v-tooltip="{
+                content: item.name
+              }"
+              v-for="(item, index) in firstThreeCollaborators"
+              :key="index"
+              class="w-8 h-8 border rounded-full inline-flex items-center justify-around shadow-md bg-gray-100 text-gray-400 -ml-2"
+            >
+              <FAIcon icon="user"></FAIcon>
+            </div>
+          </div>
+          <template v-if="collaborators.length > 3">
+            <div class="inline-flex items-center text-gray-500 text-base ml-2">
+              <FAIcon icon="ellipsis-h" class="text-xs"></FAIcon>
+              <div class="mx-2 text-xs">
+                {{ collaborators.length - 3 }} more
+              </div>
+            </div>
+          </template>
+        </div>
         <div v-if="isEditing">
-          <button class="btn btn-xs py-1 px-2 btn-primary rounded-0" @click="save(updatedProject)">
+          <button
+            class="btn btn-xs py-1 px-2 btn-primary rounded-0"
+            @click="save(updatedProject)"
+          >
             <FAIcon icon="save"></FAIcon>
           </button>
-          <button class="ml-2 text-base" @click="revert(project)">Cancel</button>
+          <button class="ml-2 text-base" @click="revert(project)">
+            Cancel
+          </button>
         </div>
       </div>
-      <div slot="right-actions" class="flex mr-3">
-        <template v-if="collaborators.length > 3">
-          <div class="inline-flex items-center text-gray-500 text-base mr-2">
-            <div class="mx-2 text-xs">{{ collaborators.length - 3 }} more</div>
-            <FAIcon icon="ellipsis-h" class="text-xs"></FAIcon>
-          </div>
-        </template>
-        <div class="flex">
-          <div
-            v-tooltip="{
-              content: item.name
-            }"
-            v-for="(item, index) in firstThreeCollaborators"
-            :key="index"
-            class="w-8 h-8 border rounded-full inline-flex items-center justify-around shadow-md bg-gray-100 text-gray-400 -mr-2"
-          >
-            <FAIcon icon="user"></FAIcon>
-          </div>
-        </div>
-      </div>
+
       <table class="project-table">
         <tr>
-          <td>Project Name</td>
+          <td>
+            Project Name <span v-if="isEditing" class="text-red-500">*</span>
+          </td>
           <td v-if="!isEditing">{{ project.name }}</td>
           <td v-if="isEditing">
-            <input class="form-input w-2/6" type="text" v-model="updatedProject.name" />
+            <ValidationProvider
+              class="flex flex-col"
+              name="project name"
+              rules="required"
+              v-slot="{ errors, classes }"
+            >
+              <input
+                class="form-input w-2/6"
+                type="text"
+                v-model="updatedProject.name"
+              />
+              <span
+                class="text-sm text-red-700 flex items-center"
+                v-if="errors[0]"
+              >
+                <FAIcon icon="exclamation-triangle" />
+                <span class="ml-1 my-1">{{ errors[0] }}</span>
+              </span>
+            </ValidationProvider>
           </td>
         </tr>
         <tr>
@@ -58,19 +90,37 @@
           <td>{{ project.id }}</td>
         </tr>
         <tr>
-          <td>Project Version</td>
+          <td>
+            Project Version <span v-if="isEditing" class="text-red-500">*</span>
+          </td>
           <td v-if="!isEditing">{{ project.version }}</td>
           <td v-if="isEditing">
-            <input class="form-input w-2/6" type="text" v-model="updatedProject.version" />
+            <ValidationProvider
+              class="flex flex-col"
+              name="project version"
+              rules="required"
+              v-slot="{ errors, classes }"
+            >
+              <input
+                class="form-input w-2/6"
+                type="text"
+                v-model="updatedProject.version"
+              />
+              <span
+                class="text-sm text-red-700 flex items-center"
+                v-if="errors[0]"
+              >
+                <FAIcon icon="exclamation-triangle" />
+                <span class="ml-1 my-1">{{ errors[0] }}</span>
+              </span>
+            </ValidationProvider>
           </td>
         </tr>
         <tr>
           <td>Project Status</td>
           <td>
             <span class="font-semibold" :class="statusClass">
-              {{
-              project.status
-              }}
+              {{ project.status }}
             </span>
           </td>
         </tr>
@@ -79,10 +129,30 @@
           <td>{{ created }}</td>
         </tr>
         <tr>
-          <td>Project Description</td>
+          <td>
+            Project Description
+            <span v-if="isEditing" class="text-red-500">*</span>
+          </td>
           <td v-if="!isEditing">{{ project.description }}</td>
           <td v-if="isEditing">
-            <textarea class="form-textarea w-2/6" v-model="updatedProject.description"></textarea>
+            <ValidationProvider
+              class="flex flex-col"
+              name="project description"
+              rules="required"
+              v-slot="{ errors, classes }"
+            >
+              <textarea
+                class="form-textarea w-2/6"
+                v-model="updatedProject.description"
+              ></textarea>
+              <span
+                class="text-sm text-red-700 flex items-center"
+                v-if="errors[0]"
+              >
+                <FAIcon icon="exclamation-triangle" />
+                <span class="ml-1 my-1">{{ errors[0] }}</span>
+              </span>
+            </ValidationProvider>
           </td>
         </tr>
       </table>
@@ -98,12 +168,13 @@
         @onClose="isManagingCollaborators = false"
       />
     </modal-ui>
-  </div>
+  </ValidationObserver>
 </template>
 
 <script>
 import dayjs from "dayjs";
 import { mapActions, mapState } from "vuex";
+import { get } from "lodash-es";
 
 import Project from "../store/entities/project.entity.js";
 import CollapsableUi from "../components/ui/collapsable.ui";
@@ -118,25 +189,12 @@ export default {
     }
   },
   components: { CollapsableUi, ModalUi, CollaboratorsList },
-  watch: {
-    project(currentProject) {
-      this.updatedProject = new Project(currentProject);
-      if (
-        this.updatedProject.collaborators !== [] &&
-        this.updatedProject.collaborators !== null
-      )
-        this.collaborators = this.updatedProject.collaborators.users.map(user =>
-          Collaborator.$fromJson(user)
-        );
-    }
-  },
   data() {
     return {
       updatedProject: new Project(),
       isEditing: false,
       isManagingCollaborators: false,
-      isHoveringOverCollaborators: false,
-      collaborators: []
+      isHoveringOverCollaborators: false
     };
   },
   computed: {
@@ -164,27 +222,30 @@ export default {
     },
     created() {
       return dayjs(this.project.creationDate).format("YYYY-MM-DD");
+    },
+    collaborators() {
+      return get(this.project, "collaborators.users", []).map(user =>
+        Collaborator.$fromJson(user)
+      );
     }
   },
   created() {
     this.updatedProject = new Project(this.project);
-    if (
-      this.updatedProject.collaborators !== [] &&
-      this.updatedProject.collaborators !== null
-    )
-      this.collaborators = this.updatedProject.collaborators.users.map(user =>
-        Collaborator.$fromJson(user)
-      );
   },
   methods: {
     ...mapActions("project", ["updateProject", "getDetails"]),
     ...mapActions("app", ["showToastMessage"]),
     editProject() {
-      this.updatedProject = this.project;
       this.isEditing = true;
     },
 
     async save(updatedProject) {
+      const isValid = await this.$refs.form.validate();
+
+      if (!isValid) {
+        return;
+      }
+
       const response = await this.updateProject(updatedProject.$toJson());
       if (response.data.status === "Success") {
         await this.getDetails();

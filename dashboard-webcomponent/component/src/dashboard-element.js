@@ -30,6 +30,7 @@ export class DashboardLitElement extends LitElement {
       errorMessage: {type: String},
       userName : {type: String},
       projectCount: {type: Number},
+      sharedProjectCount: {type: Number},
       pipelineCount: {type: Number},
       notebookCount: {type: Number},
       modelCount: {type: Number},
@@ -61,6 +62,7 @@ export class DashboardLitElement extends LitElement {
 
     this.message = "Custom message placeholder";
     this.projectCount = 0;
+    this.sharedProjectCount = 0;
     this.pipelineCount = 0;
     this.notebookCount = 0;
     this.modelCount = 0;
@@ -154,6 +156,7 @@ export class DashboardLitElement extends LitElement {
           this.errorMessage = n.message;
         } else {
           this.projectCount = n.data;
+          this.getSharedProjectsCount();
         }
     }).catch((error) => {
       console.error('Request failed', error);
@@ -161,6 +164,32 @@ export class DashboardLitElement extends LitElement {
     });
   }
 
+  getSharedProjectsCount(){
+    const url = this.componenturl + '/api/project/sharedProjects';
+    fetch(url, {
+      method: 'POST',
+      mode: 'cors',
+      cache: 'default',
+      headers: {
+        "Content-Type": "application/json",
+        "auth": this.authToken,
+      },
+      body: JSON.stringify({
+        "url": this.msconfig.projectmSURL,
+        "userName": this.userName
+      })
+    }).then(res => res.json())
+      .then((n) => {
+        if(n.status === 'Error'){
+          this.errorMessage = n.message;
+        } else {
+          this.sharedProjectCount = n.data+this.projectCount;
+        }
+    }).catch((error) => {
+      console.error('Request failed', error);
+      this.errorMessage = 'Project count fetch request failed with error: '+ error;
+    });
+  }
   getNotebookCount(){
     const url = this.componenturl + '/api/notebook/count';
 	  fetch(url, {
@@ -362,7 +391,7 @@ export class DashboardLitElement extends LitElement {
                               </button>
                             `
                             : html`
-                              <h4 class="font-weight-normal">${this.projectCount}</h4>
+                              <h4 class="font-weight-normal">${this.sharedProjectCount}</h4>
                             `
                           }
                         </div>

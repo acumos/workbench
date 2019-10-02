@@ -52,6 +52,7 @@ export class BaseComponent implements OnDestroy {
 
   public loadComponent(componentName: string, componentFileName: string, breadCrumbs: any[]) {
     this.url = this.script.getConfig(componentName);
+    this.showSpinner = true;
     this.script.getUserSession().subscribe((res: any) => {
       if (res.userName !== '' && res.authToken !== '') {
         let portalFEURL: any;
@@ -67,6 +68,7 @@ export class BaseComponent implements OnDestroy {
         this.alertOpen = false;
         this.script.load(componentName, '/' + componentFileName + '.js');
         this.loadHtml = true;
+        this.showSpinner = false;
       } else {
         this.sessionError = 'Acumos session details are unavailable in browser cookies. Pls login to Acumos portal and come back here..';
         this.alertOpen = true;

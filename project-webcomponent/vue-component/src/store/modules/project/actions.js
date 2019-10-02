@@ -15,7 +15,12 @@ export default {
       }
     );
 
-    commit("setLoginAsOwner", rootState.app.userName === data.data.owner.authenticatedUserId ? true : false);
+    commit(
+      "setLoginAsOwner",
+      rootState.app.userName === data.data.owner.authenticatedUserId
+        ? true
+        : false
+    );
     Project.create({
       data: {
         id: get(data, "data.projectId.uuid"),
@@ -28,8 +33,6 @@ export default {
         owner: get(data, "data.owner.authenticatedUserId")
       }
     });
-
-
   },
   async getProjectNotebooks({ rootState }) {
     const { data } = await axios.post(
@@ -68,59 +71,79 @@ export default {
     });
   },
   async archive({ rootState }, projectId) {
-    return await axios.put(`${rootState.app.componentUrl}/api/project/archive`, {
-      userName: rootState.app.userName,
-      url: rootState.app.msConfig.projectmSURL,
-      projectId
-    });
+    return await axios.put(
+      `${rootState.app.componentUrl}/api/project/archive`,
+      {
+        userName: rootState.app.userName,
+        url: rootState.app.msConfig.projectmSURL,
+        projectId
+      }
+    );
   },
 
   async unarchive({ rootState }, projectId) {
-    return await axios.put(`${rootState.app.componentUrl}/api/project/restore`, {
-      userName: rootState.app.userName,
-      url: rootState.app.msConfig.projectmSURL,
-      projectId
-    });
-  },
-    
-  async deleteProject({ rootState }, projectId){
-    return await axios.post(`${rootState.app.componentUrl}/api/project/delete`, {
-      userName: rootState.app.userName,
-      url: rootState.app.msConfig.projectmSURL,
-      projectId
-    })
+    return await axios.put(
+      `${rootState.app.componentUrl}/api/project/restore`,
+      {
+        userName: rootState.app.userName,
+        url: rootState.app.msConfig.projectmSURL,
+        projectId
+      }
+    );
   },
 
-  async shareProjectToUsers({ rootState }, user){
-    return await axios.post(`${rootState.app.componentUrl}/api/project/addUser`, {
-      userName: rootState.app.userName,
-      url: rootState.app.msConfig.projectmSURL,
-      projectId: rootState.project.activeProject,
-      users: user
-    });
+  async deleteProject({ rootState }, projectId) {
+    return await axios.post(
+      `${rootState.app.componentUrl}/api/project/delete`,
+      {
+        userName: rootState.app.userName,
+        url: rootState.app.msConfig.projectmSURL,
+        projectId
+      }
+    );
   },
 
-  async deleteSharedUserFromProject({ rootState }, user){
-    return await axios.post(`${rootState.app.componentUrl}/api/project/removeUser`, {
-      userName: rootState.app.userName,
-      url: rootState.app.msConfig.projectmSURL,
-      projectId: rootState.project.activeProject,
-      user: user
-    });
+  async shareProjectToUsers({ rootState }, user) {
+    return await axios.post(
+      `${rootState.app.componentUrl}/api/project/addUser`,
+      {
+        userName: rootState.app.userName,
+        url: rootState.app.msConfig.projectmSURL,
+        projectId: rootState.project.activeProject,
+        users: user
+      }
+    );
   },
 
-  async sharedProjectsForUser({ rootState }){
-    await axios.post(`${rootState.app.componentUrl}/api/project/sharedProjects`, {
-      userName: rootState.app.userName,
-      url: rootState.app.msConfig.projectmSURL
-    });
+  async deleteSharedUserFromProject({ rootState }, user) {
+    return await axios.post(
+      `${rootState.app.componentUrl}/api/project/removeUser`,
+      {
+        userName: rootState.app.userName,
+        url: rootState.app.msConfig.projectmSURL,
+        projectId: rootState.project.activeProject,
+        user: user
+      }
+    );
   },
 
-  async getUsersList({ rootState }){
-    return await axios.post(`${rootState.app.componentUrl}/api/users/userList`, {
-      userName: rootState.app.userName,
-      url: rootState.app.portalFEUrl
-    });
-    
+  async sharedProjectsForUser({ rootState }) {
+    await axios.post(
+      `${rootState.app.componentUrl}/api/project/sharedProjects`,
+      {
+        userName: rootState.app.userName,
+        url: rootState.app.msConfig.projectmSURL
+      }
+    );
+  },
+
+  async getUsersList({ rootState }) {
+    return await axios.post(
+      `${rootState.app.componentUrl}/api/users/userList`,
+      {
+        userName: rootState.app.userName,
+        url: rootState.app.portalFEUrl
+      }
+    );
   }
 };

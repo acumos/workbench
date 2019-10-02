@@ -1,6 +1,10 @@
 <template>
   <ValidationObserver ref="form" tag="div" class="flex flex-col w-full">
-    <ToastUI id="pipeline-form" class="relative p-2" innerClass="w-full"></ToastUI>
+    <ToastUI
+      id="pipeline-form"
+      class="relative p-2"
+      innerClass="w-full"
+    ></ToastUI>
     <div class="p-3">
       <div class="flex mb-2">
         <div class="flex-1 flex flex-col mr-2">
@@ -20,7 +24,10 @@
               v-model="updatedPipeline.name"
               placeholder="Enter Data Pipeline Name"
             />
-            <span class="text-sm text-red-700 flex items-center" v-if="errors[0]">
+            <span
+              class="text-sm text-red-700 flex items-center"
+              v-if="errors[0]"
+            >
               <FAIcon icon="exclamation-triangle" />
               <span class="ml-1 my-1">{{ errors[0] }}</span>
             </span>
@@ -37,27 +44,44 @@
             v-model="updatedPipeline.description"
             placeholder="Enter Data Pipeline Description"
           ></textarea>
-          <span
-            class="leading-none text-right text-gray-600 mt-1"
-          >{{ 2000 - updatedPipeline.description.length }} Chars</span>
+          <span class="leading-none text-right text-gray-600 mt-1"
+            >{{ 2000 - updatedPipeline.description.length }} Chars</span
+          >
         </div>
         <div class="flex-1 flex flex-col">
-          <label class="mt-2">Data Pipeline URL</label>
-          <input
-            type="text"
-            class="form-input"
-            v-model="updatedPipeline.url"
-            placeholder="Enter Data Pipeline URL"
-          />
+          <label class="mt-2"
+            >Data Pipeline URL <span class="text-red-500">*</span></label
+          >
+          <ValidationProvider
+            class="flex flex-col"
+            name="Data Pipeline url"
+            rules="required"
+            v-slot="{ errors, classes }"
+          >
+            <input
+              type="text"
+              class="form-input"
+              v-model="updatedPipeline.url"
+              placeholder="Enter Data Pipeline URL"
+            />
+            <span
+              class="text-sm text-red-700 flex items-center"
+              v-if="errors[0]"
+            >
+              <FAIcon icon="exclamation-triangle" />
+              <span class="ml-1 my-1">{{ errors[0] }}</span>
+            </span>
+          </ValidationProvider>
         </div>
       </div>
     </div>
-    <div class="flex justify-between py-3 px-2 bg-gray-100 border-gray-200 border-t">
+    <div
+      class="flex justify-between py-3 px-2 bg-gray-100 border-gray-200 border-t"
+    >
       <button class="btn btn-sm btn-secondary" @click="reset()">Reset</button>
-      <button
-        class="btn btn-sm btn-primary"
-        @click="save(updatedPipeline)"
-      >{{ isNew ? "Create" : "Save" }} Data Pipeline</button>
+      <button class="btn btn-sm btn-primary" @click="save(updatedPipeline)">
+        {{ isNew ? "Create" : "Save" }} Data Pipeline
+      </button>
     </div>
   </ValidationObserver>
 </template>

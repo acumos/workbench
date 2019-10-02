@@ -28,7 +28,6 @@
               <option value>Sort By</option>
               <option value="createdAt">Created</option>
               <option value="name">Name</option>
-              <option value="id" disabled>ID</option>
             </select>
             <input
               type="text"

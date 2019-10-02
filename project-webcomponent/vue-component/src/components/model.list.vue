@@ -20,10 +20,9 @@
         <div class="flex justify-end my-3">
           <div class="flex inline-flex items-center">
             <select class="form-select mr-2" v-model="sortBy">
-              <option>Sort By</option>
+              <option value>Sort By</option>
               <option value="createdAt">Created</option>
               <option value="name">Name</option>
-              <option value="id">ID</option>
             </select>
             <input
               type="text"

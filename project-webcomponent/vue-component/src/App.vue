@@ -41,14 +41,14 @@
           </a>
         </div>
       </div>
-      <ProjectDetails :project="project" class="my-5" />
+      <ProjectDetails :project="project" v-if="project" class="my-5" />
       <template v-if="project.status !== 'ARCHIVED'">
         <NotebookList :notebooks="notebooks" class="my-5" />
         <template v-if="pipelineFlag === 'true'">
           <PipelineList :pipelines="pipelines" class="my-5" />
         </template>
         <ModelList :models="models" class="my-5" />
-        <PredictorList :predictors="predictors" class="my-5" />
+        <!-- <PredictorList :predictors="predictors" class="my-5" /> -->
       </template>
     </div>
   </div>
@@ -167,11 +167,11 @@ export default {
     ...mapActions("model", ["getModelCategories", "getModelDetailsForProject"]),
     async unarchiveProject(project) {
       this.confirm({
-        title: "Unarchive "+project.name,
+        title: "Unarchive " + project.name,
         body: "Are you sure you want to unarchive " + project.name + "?",
         options: {
-           okLabel: "Unarchive Project",
-           dismissLabel: "Cancel"
+          okLabel: "Unarchive Project",
+          dismissLabel: "Cancel"
         },
         onOk: async () => {
           const response = await this.unarchive(project.id);
@@ -195,11 +195,11 @@ export default {
 
     async archiveProject(project) {
       this.confirm({
-        title: "Archive "+project.name,
+        title: "Archive " + project.name,
         body: "Are you sure you want to archive " + project.name + "?",
         options: {
-           okLabel: "Archive Project",
-           dismissLabel: "Cancel"
+          okLabel: "Archive Project",
+          dismissLabel: "Cancel"
         },
         onOk: async () => {
           const response = await this.archive(project.id);
@@ -222,17 +222,17 @@ export default {
     },
     async projectDelete(project) {
       this.confirm({
-        title: "Delete "+project.name,
+        title: "Delete " + project.name,
         body: "Are you sure you want to delete " + project.name + "?",
         options: {
-           okLabel: "Delete Project",
-           dismissLabel: "Cancel"
+          okLabel: "Delete Project",
+          dismissLabel: "Cancel"
         },
         onOk: async () => {
           const response = await this.deleteProject(project.id);
           if (response.data.status === "Success") {
             this.$emit("project-event", {
-                data: "catalog-project"
+              data: "catalog-project"
             });
           } else {
             this.showToastMessage({

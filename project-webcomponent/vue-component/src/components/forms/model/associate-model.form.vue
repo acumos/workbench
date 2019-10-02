@@ -4,16 +4,37 @@
     <div class="p-3">
       <div class="flex mb-2 w-1/2">
         <div class="flex-1 flex flex-col">
-          <label class="mt-2">Model Category</label>
-          <select class="form-select" v-model="updatedModel.modelType" :disabled="!isNew">
-            <option value>Select Category</option>
-            <option
-              v-for="(category, index) in categories"
-              :key="index"
-              :value="category.code"
-            >{{category.name}}</option>
-            <option value="None">Others</option>
-          </select>
+          <label class="mt-2"
+            >Model Category <span class="text-red-500">*</span></label
+          >
+          <ValidationProvider
+            class="flex flex-col"
+            name="Model category"
+            rules="required"
+            v-slot="{ errors, classes }"
+          >
+            <select
+              class="form-select"
+              v-model="updatedModel.modelType"
+              :disabled="!isNew"
+            >
+              <option value>Select Category</option>
+              <option
+                v-for="(category, index) in categories"
+                :key="index"
+                :value="category.code"
+                >{{ category.name }}</option
+              >
+              <option value="None">Others</option>
+            </select>
+            <span
+              class="text-sm text-red-700 flex items-center"
+              v-if="errors[0]"
+            >
+              <FAIcon icon="exclamation-triangle" />
+              <span class="ml-1 my-1">{{ errors[0] }}</span>
+            </span>
+          </ValidationProvider>
         </div>
       </div>
       <div class="flex">
@@ -22,74 +43,105 @@
             Model Name
             <span class="text-red-500">*</span>
           </label>
-          <v-select
-            :options="filteredModels"
-            label="name"
-            placeholder="Enter Model Name"
-            v-model="updatedModel.name"
-            @input="setModelName"
-            :disabled="updatedModel.modelType === '' || !isNew"
-          ></v-select>
-
-          <!-- <span class="text-sm text-red-700 flex items-center" v-if="errors[0]">
+          <ValidationProvider
+            class="flex flex-col"
+            name="Model name"
+            rules="required"
+            v-slot="{ errors, classes }"
+          >
+            <v-select
+              :options="filteredModels"
+              label="name"
+              placeholder="Enter Model Name"
+              v-model="updatedModel.name"
+              @input="setModelName"
+              :disabled="updatedModel.modelType === '' || !isNew"
+            ></v-select>
+            <span
+              class="text-sm text-red-700 flex items-center"
+              v-if="errors[0]"
+            >
               <FAIcon icon="exclamation-triangle" />
               <span class="ml-1 my-1">{{ errors[0] }}</span>
             </span>
-          </ValidationProvider>-->
-          <!-- </template>
-          <template v-if="!isNew">
-            <input
-              type="text"
-              class="form-input"
-              v-model="updatedModel.name"
-              disabled
-              placeholder="Enter Model Name"
-            />
-          </template>-->
+          </ValidationProvider>
         </div>
         <div class="flex-1 flex flex-col">
           <label class="mt-2">
             Model Version
             <span class="text-red-500">*</span>
           </label>
-          <select
-            class="form-select"
-            v-model="updatedModel.version"
-            :disabled="updatedModel.name === ''"
+          <ValidationProvider
+            class="flex flex-col"
+            name="Model version"
+            rules="required"
+            v-slot="{ errors, classes }"
           >
-            <option value>Select Version</option>
-            <option
-              v-for="(model, index) in filteredVersions"
-              :key="index"
-              :value="model.version"
-            >{{model.version}}</option>
-          </select>
+            <select
+              class="form-select"
+              v-model="updatedModel.version"
+              :disabled="updatedModel.name === ''"
+            >
+              <option value>Select Version</option>
+              <option
+                v-for="(model, index) in filteredVersions"
+                :key="index"
+                :value="model.version"
+                >{{ model.version }}</option
+              >
+            </select>
+            <span
+              class="text-sm text-red-700 flex items-center"
+              v-if="errors[0]"
+            >
+              <FAIcon icon="exclamation-triangle" />
+              <span class="ml-1 my-1">{{ errors[0] }}</span>
+            </span>
+          </ValidationProvider>
         </div>
       </div>
       <div class="flex mb-2 w-1/2">
         <div class="flex-1 flex flex-col">
-          <label class="mt-2">Model Catalog</label>
-          <select
-            class="form-select"
-            v-model="updatedModel.modelCatalog"
-            :disabled="updatedModel.version === ''"
+          <label class="mt-2"
+            >Model Catalog <span class="text-red-500">*</span></label
           >
-            <option value>Select Catalog</option>
-            <option
-              v-for="(catalog, index) in filteredCatalogs"
-              :key="index"
-              :value="catalog"
-            >{{catalog}}</option>
-          </select>
+          <ValidationProvider
+            class="flex flex-col"
+            name="Model catalog"
+            rules="required"
+            v-slot="{ errors, classes }"
+          >
+            <select
+              class="form-select"
+              v-model="updatedModel.modelCatalog"
+              :disabled="updatedModel.version === ''"
+            >
+              <option value>Select Catalog</option>
+              <option
+                v-for="(catalog, index) in filteredCatalogs"
+                :key="index"
+                :value="catalog"
+                >{{ catalog }}</option
+              >
+            </select>
+            <span
+              class="text-sm text-red-700 flex items-center"
+              v-if="errors[0]"
+            >
+              <FAIcon icon="exclamation-triangle" />
+              <span class="ml-1 my-1">{{ errors[0] }}</span>
+            </span>
+          </ValidationProvider>
         </div>
       </div>
     </div>
-    <div class="flex justify-between py-3 px-2 bg-gray-100 border-gray-200 border-t">
+    <div
+      class="flex justify-between py-3 px-2 bg-gray-100 border-gray-200 border-t"
+    >
       <button class="btn btn-sm btn-secondary" @click="reset()">Reset</button>
-      <button
-        class="btn btn-sm btn-primary"
-        @click="save(updatedModel)"
-      >{{ isNew ? "Associate Model" : "Save Model Association" }}</button>
+      <button class="btn btn-sm btn-primary" @click="save(updatedModel)">
+        {{ isNew ? "Associate Model" : "Save Model Association" }}
+      </button>
     </div>
   </ValidationObserver>
 </template>

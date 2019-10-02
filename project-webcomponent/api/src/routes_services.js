@@ -184,9 +184,9 @@ module.exports = function(app) {
 	app.post('/api/project/deleteNotebook', function (req, res){
 		let serviceUrl = req.body.url + uripath;
 		let userName = req.body.userName;
-		let noteBookId = req.body.noteBookId;
+		let notebookId = req.body.notebookId;
 		let authToken = req.headers['auth'];
-		deleteNotebook(userName, serviceUrl, noteBookId, getLatestAuthToken(req, authToken)).then(function(result){
+		deleteNotebook(userName, serviceUrl, notebookId, getLatestAuthToken(req, authToken)).then(function(result){
 			res.send(result);
 		});
 	});
@@ -226,9 +226,9 @@ module.exports = function(app) {
 		let userName = req.body.userName;
     let serviceUrl = req.body.url + uripath;
 		let notebookPayload = req.body.notebookPayload;
-		let noteBookId = req.body.noteBookId;
+		let notebookId = req.body.notebookId;
 		let authToken = req.headers['auth'];
-		updateNotebookDetails(userName, serviceUrl, noteBookId, notebookPayload, getLatestAuthToken(req, authToken)).then(function(result){
+		updateNotebookDetails(userName, serviceUrl, notebookId, notebookPayload, getLatestAuthToken(req, authToken)).then(function(result){
 			res.send(result);
 		});
 	});

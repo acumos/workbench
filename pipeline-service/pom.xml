@@ -45,7 +45,9 @@
 		<!-- Not supplied to all jobs; e.g., Javadoc -->
 		<docker.pull.registry>nexus3.acumos.org:10001</docker.pull.registry>
 		<!-- Supplied by Jenkins -->
+		<docker.push.registry>${env.CONTAINER_PUSH_REGISTRY}</docker.push.registry>
 		<mockito.version>1.10.19</mockito.version>
+		
 	</properties>
 
 	<dependencies>

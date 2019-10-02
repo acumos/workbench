@@ -7,7 +7,7 @@ export default class Collaborator extends Model {
         return {
             id: this.attr(null),
             name: this.attr(""),
-            permission: this.attr("")
+            permission: this.attr("READ")
         };
     }
 

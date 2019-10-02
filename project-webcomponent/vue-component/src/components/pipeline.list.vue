@@ -25,10 +25,9 @@
         <div class="flex justify-end my-3" v-if="!isEmpty">
           <div class="flex inline-flex items-center">
             <select class="form-select mr-2 py-1" v-model="sortBy">
-              <option>Sort By</option>
+              <option value>Sort By</option>
               <option value="createdAt">Created</option>
               <option value="name">Name</option>
-              <option value="id">ID</option>
             </select>
             <input
               type="text"
@@ -259,11 +258,11 @@ export default {
     },
     async pipelineArchive(pipeline) {
       this.confirm({
-        title: "Archive "+pipeline.name,
+        title: "Archive " + pipeline.name,
         body: "Are you sure you want to archive " + pipeline.name + "?",
         options: {
-           okLabel: "Archive Pipeline",
-           dismissLabel: "Cancel"
+          okLabel: "Archive Pipeline",
+          dismissLabel: "Cancel"
         },
         onOk: async () => {
           const response = await this.archivePipeline(pipeline);
@@ -286,11 +285,11 @@ export default {
     },
     async pipelineUnarchive(pipeline) {
       this.confirm({
-        title: "Unarchive "+pipeline.name,
+        title: "Unarchive " + pipeline.name,
         body: "Are you sure you want to unarchive " + pipeline.name + "?",
         options: {
-           okLabel: "Unarchive Pipeline",
-           dismissLabel: "Cancel"
+          okLabel: "Unarchive Pipeline",
+          dismissLabel: "Cancel"
         },
         onOk: async () => {
           const response = await this.restorePipeline(pipeline);
@@ -313,11 +312,11 @@ export default {
     },
     async pipelineDelete(pipeline) {
       this.confirm({
-        title: "Delete "+pipeline.name,
+        title: "Delete " + pipeline.name,
         body: "Are you sure you want to delete " + pipeline.name + "?",
         options: {
-           okLabel: "Delete Pipeline",
-           dismissLabel: "Cancel"
+          okLabel: "Delete Pipeline",
+          dismissLabel: "Cancel"
         },
         onOk: async () => {
           const response = await this.deletePipeline(pipeline);

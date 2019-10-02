@@ -125,6 +125,15 @@ module.exports = function(app) {
 		});
 	});
 
+	app.post('/api/project/sharedProjects', function (req, res){
+		let serviceUrl = req.body.url+uripath;
+		let authToken = req.headers['auth'];
+		let userName = req.body.userName;
+		sharedProjectsCount(serviceUrl, userName, getLatestAuthToken(req, authToken)).then(function(result){
+			res.send(result);
+		});
+	});
+
 	var getProjectsCount = function(userName, url, authToken) {
 		return new Promise(function(resolve, reject) {
 			var options = {
@@ -142,6 +151,30 @@ module.exports = function(app) {
 					resolve(prepRespJsonAndLogit(response, projectCount, "Projects count retrieved successfully"));
 				} else if (!error) {
 					resolve(prepRespJsonAndLogit(response, response.body, "Unable to retrieve Projects"));
+				} else {
+					resolve(prepRespJsonAndLogit(null, null, null, error));
+				}
+			});
+		});
+	};
+
+	var sharedProjectsCount = function(srvcUrl, userName, authToken){
+		return new Promise(function(resolve, reject) {
+			var options = {
+				method : "GET",
+				url : srvcUrl + userName + "/projects/shared",
+				headers : {
+					'Content-Type' : 'application/json',
+					'Authorization' : authToken,
+				}
+			};
+			
+			request.get(options, function(error, response) {
+				if (!error && response.statusCode == 200 && response.body !== undefined) {
+					let projectCount = JSON.parse(response.body).length;
+					resolve(prepRespJsonAndLogit(response, projectCount, "Shared Projects count retrieved successfully"));
+				} else if (!error) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to retrieve shared projects for user"));
 				} else {
 					resolve(prepRespJsonAndLogit(null, null, null, error));
 				}
@@ -252,6 +285,7 @@ module.exports = function(app) {
 			});
 		});
 	};
+
 
 	/* Utility functions */
 	var prepRespJsonAndLogit = function(httpResponse, responseData, message, error) {

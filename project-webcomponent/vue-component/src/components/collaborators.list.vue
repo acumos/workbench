@@ -22,13 +22,13 @@
           <template slot="option" slot-scope="option">
             <div class="d-center">
               <img :src="option.picture" />
-              {{ option.username }}
+              {{ option.firstName }} {{ option.lastName}}
             </div>
           </template>
           <template slot="selected-option" slot-scope="option">
             <div class="selected d-center">
               <img :src="option.picture" />
-              {{ option.username }}
+              {{ option.firstName }} {{ option.lastName}}
             </div>
           </template>
         </v-select>
@@ -134,21 +134,22 @@ export default {
       if (this.users.length > 0) {
         loading(false);
         return;
-      }
-      let users = await this.getUsersList();
-      users = differenceWith(
-        users.data.data,
+      } else{
+        this.users = await this.getUsersList();
+      } 
+      this.users = differenceWith(
+        this.users.data.data,
         this.initialCollaborators,
         (user, collaborator) => user.username === collaborator.name
       );
       loading(false);
-      this.users = filter(users, user => user.username !== this.userName);
+      this.users = filter(this.users, user => user.username !== this.userName);
+      this.users = filter(this.users, user => (user.firstName.indexOf(search) > -1 || user.lastName.indexOf(search) > -1));
     },
 
     selectUser(user) {
       this.newCollaborator.id = user.userId;
       this.newCollaborator.name = user.username;
-      this.newCollaborator.permission = "";
     },
 
     async addNewCollaborator(newCollaborator) {
@@ -169,6 +170,7 @@ export default {
           type: "error"
         });
       }
+      this.users = [];
     },
 
     async deleteCollaborator(collaborator) {

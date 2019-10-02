@@ -11,13 +11,33 @@
           <FAIcon icon="pencil-alt"></FAIcon>
         </button>
         <button
-          class="btn btn-xs btn-primary py-1 ml-2"
+          class="btn btn-xs btn-primary py-1 px-2 ml-2"
           v-if="!isEditing && !isArchived"
           @click="isManagingCollaborators = true"
           :disabled="!loginAsOwner"
         >
           <FAIcon icon="users"></FAIcon>
         </button>
+        <div slot="right-actions" class="flex ml-3">
+          <div class="flex">
+            <div
+              v-tooltip="{
+                content: item.name
+              }"
+              v-for="(item, index) in firstThreeCollaborators"
+              :key="index"
+              class="w-8 h-8 border rounded-full inline-flex items-center justify-around shadow-md bg-gray-100 text-gray-400 -ml-2"
+            >
+              <FAIcon icon="user"></FAIcon>
+            </div>
+          </div>
+          <template v-if="collaborators.length > 3">
+            <div class="inline-flex items-center text-gray-500 text-base ml-2">
+              <FAIcon icon="ellipsis-h" class="text-xs"></FAIcon>
+              <div class="mx-2 text-xs">{{ collaborators.length - 3 }} more</div>
+            </div>
+          </template>
+        </div>
         <div v-if="isEditing">
           <button class="btn btn-xs py-1 px-2 btn-primary rounded-0" @click="save(updatedProject)">
             <FAIcon icon="save"></FAIcon>
@@ -25,26 +45,7 @@
           <button class="ml-2 text-base" @click="revert(project)">Cancel</button>
         </div>
       </div>
-      <div slot="right-actions" class="flex mr-3">
-        <template v-if="collaborators.length > 3">
-          <div class="inline-flex items-center text-gray-500 text-base mr-2">
-            <div class="mx-2 text-xs">{{ collaborators.length - 3 }} more</div>
-            <FAIcon icon="ellipsis-h" class="text-xs"></FAIcon>
-          </div>
-        </template>
-        <div class="flex">
-          <div
-            v-tooltip="{
-              content: item.name
-            }"
-            v-for="(item, index) in firstThreeCollaborators"
-            :key="index"
-            class="w-8 h-8 border rounded-full inline-flex items-center justify-around shadow-md bg-gray-100 text-gray-400 -mr-2"
-          >
-            <FAIcon icon="user"></FAIcon>
-          </div>
-        </div>
-      </div>
+      
       <table class="project-table">
         <tr>
           <td>Project Name</td>

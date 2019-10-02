@@ -48,7 +48,7 @@
           <PipelineList :pipelines="pipelines" class="my-5" />
         </template>
         <ModelList :models="models" class="my-5" />
-        <PredictorList :predictors="predictors" class="my-5" />
+        <!-- <PredictorList :predictors="predictors" class="my-5" /> -->
       </template>
     </div>
   </div>

@@ -23,9 +23,13 @@ package org.acumos.workbench.predictorservice.service;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 
+import org.acumos.cds.client.CommonDataServiceRestClientImpl;
+import org.acumos.cds.domain.MLPSolution;
+import org.acumos.cds.domain.MLPSolutionRevision;
 import org.acumos.workbench.common.exception.ArchivedException;
 import org.acumos.workbench.common.exception.NotProjectOwnerException;
 import org.acumos.workbench.common.exception.ProjectNotFoundException;
+import org.acumos.workbench.common.exception.TargetServiceInvocationException;
 import org.acumos.workbench.common.exception.ValueNotFoundException;
 import org.acumos.workbench.common.service.ModelServiceRestClientImpl;
 import org.acumos.workbench.common.service.ProjectServiceRestClientImpl;
@@ -36,7 +40,7 @@ import org.acumos.workbench.common.vo.Model;
 import org.acumos.workbench.common.vo.Project;
 import org.acumos.workbench.predictorservice.exception.AssociationException;
 import org.acumos.workbench.predictorservice.exception.PredictorException;
-import org.acumos.workbench.predictorservice.lightcouch.PredictorManager;
+import org.acumos.workbench.predictorservice.lightcouch.DataSetPredictor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +61,9 @@ public class PredictorValidationImpl implements PredictorValidation {
 	
 	@Autowired
 	private ModelServiceRestClientImpl msClient;
+	
+	@Autowired
+	private CommonDataServiceRestClientImpl cdsRestClientImpl;
 
 	@Override
 	public void validateProject(String authenticatedUserId, String projectId, String authToken) {
@@ -96,9 +103,9 @@ public class PredictorValidationImpl implements PredictorValidation {
 		logger.debug("predictorExists() Begin");
 		String userId = null;
 		boolean hasAccess = false;
-		List<PredictorManager> predictorList = couchDBService.getPredictorDetails(predictorId);
+		List<DataSetPredictor> predictorList = couchDBService.getPredictorDetails(predictorId);
 		// Check if Logged in User has the access to the input predictor
-		for(PredictorManager predictor : predictorList) {
+		for(DataSetPredictor predictor : predictorList) {
 			userId = predictor.getUserId();
 			if(authenticatedUserId.equals(userId)) {
 				hasAccess = true;
@@ -142,6 +149,28 @@ public class PredictorValidationImpl implements PredictorValidation {
 					"Cannot Associate Predictor, as corresponding model is not associated to a Project");
 		}
 		logger.debug("isModelAssociatedToProject() End");
+	}
+
+	@Override
+	public String modelExists(String modelId, String version) {
+		logger.debug("modelExists() Begin");
+		boolean modelExists = false;
+		String revisionId = null;
+		MLPSolution mlpSolution = cdsRestClientImpl.getSolution(modelId);
+		if(null != mlpSolution) {
+			List<MLPSolutionRevision> mlpSolutionRevisions = cdsRestClientImpl.getSolutionRevisions(mlpSolution.getSolutionId());
+			for(MLPSolutionRevision revision : mlpSolutionRevisions) {
+				if(revision.getVersion().equals(version)) {
+					revisionId = revision.getRevisionId();
+					modelExists = true;
+				}
+			}
+		}
+		if(!modelExists) {
+			throw new TargetServiceInvocationException("Solution is not avaiable");
+		}
+		logger.debug("modelExists() End");
+		return revisionId;
 	}
 
 

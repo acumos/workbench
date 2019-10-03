@@ -27,6 +27,7 @@ import org.acumos.workbench.common.exception.TargetServiceInvocationException;
 import org.acumos.workbench.common.exception.UserNotFoundException;
 import org.acumos.workbench.common.vo.Predictor;
 import org.acumos.workbench.common.vo.ServiceState;
+import org.acumos.workbench.predictorservice.lightcouch.DataSetPredictor;
 import org.acumos.workbench.predictorservice.lightcouch.PredictorProjectAssociation;
 
 public interface PredictorProjectAssociationService {
@@ -59,16 +60,12 @@ public interface PredictorProjectAssociationService {
 	 * Associate the Predictor to a Project
 	 * @param authenticatedUserId
 	 * 				The Acumos User Login Id
-	 * @param predictorId
-	 * 				The Predictor Id 
-	 * @param projectId
-	 * 				The Project Id
 	 * @param predProjAssociation
 	 * 				accepts PredictorProjectAssociation VO
 	 * @return
 	 * 				accepts Predictor Details
 	 */
-	public Predictor associatePredictorToProject(String authenticatedUserId, String predictorId, String projectId, PredictorProjectAssociation predProjAssociation);
+	public Predictor associatePredictorToProject(String authenticatedUserId, String predictorId, PredictorProjectAssociation predProjAssociation);
 	
 	/**
 	 * Modify the Predictor Project Association
@@ -91,6 +88,34 @@ public interface PredictorProjectAssociationService {
 	 * 			the ServiceState
 	 */
 	public ServiceState deleteAssociation(String authenticatedUserId, String associationId);
+
+	/**
+	 * Get the Predictor Details for input modelId and version from Coch DB
+	 * @param authenticatedUserId
+	 * 			The Acumos User Login Id
+	 * @param modelId
+	 * 			The input ModelId
+	 * @param version
+	 * 			The input Model Version
+	 * @param modelRevisionId 
+	 * @return 
+	 * 			The Predictor Details
+	 */
+	public Predictor getPredictor(String authenticatedUserId, String modelId, String version, String modelRevisionId);
+
+	/**
+	 * Create new DataSetPredictor in Couch DB using input data
+	 * @param authenticatedUserId
+	 * 			The Acumos User Login Id
+	 * @param projectId
+	 * 			The ProjectId
+	 * @param predictorProjAssociation
+	 * 			The PredictorProjectAssociation Details
+	 * @return 	
+	 * 			The DataSetPredictor Details
+	 */
+	public DataSetPredictor createDataSetPredictor(String authenticatedUserId, String projectId,
+			PredictorProjectAssociation predictorProjAssociation);
 	
 	
 }

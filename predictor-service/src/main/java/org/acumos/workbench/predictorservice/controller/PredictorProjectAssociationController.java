@@ -69,18 +69,17 @@ public class PredictorProjectAssociationController {
 	private PredictorProjectAssociationService predProjAssociationService;
 	
 	@ApiOperation(value = "Associate Predictor to a Project (Create Association)")
-	@RequestMapping(value = "/users/{authenticatedUserId}/predictors/{predictorId}/projects/{projectId}", method = RequestMethod.POST)
+	@RequestMapping(value = "/users/{authenticatedUserId}/projects/{projectId}/predictors", method = RequestMethod.POST)
 	public ResponseEntity<?> associatePredictorToProject(HttpServletRequest request,
 			@ApiParam(value = "Acumos User login Id", required = true) @PathVariable("authenticatedUserId") String authenticatedUserId,
-			@ApiParam(value = "Predictor Id", required = true) @PathVariable("predictorId") String predictorId,
 			@ApiParam(value = "Project Id", required = true) @PathVariable("projectId") String projectId,
 			@RequestBody(required = true) PredictorProjectAssociation predictorProjAssociation) {
 		
 		logger.debug("associatePredictorToProject() Begin");
 		
+		
 		// Check all the mandatory fields are present in the request i.e Acumos User login Id, Predictor Id, Project Id
 		inputValidationService.isValuePresent(PredictorServiceConstants.AUTHENTICATEDUSERID, authenticatedUserId);
-		inputValidationService.isValuePresent(PredictorServiceConstants.PREDICTORID, predictorId);
 		inputValidationService.isValuePresent(PredictorServiceConstants.PROJECTID, projectId);
 		
 		// Validate the Json Structure for the input data and check the missing fields
@@ -94,8 +93,9 @@ public class PredictorProjectAssociationController {
 		// Check if Predictor for input PredictorId exists (with status Active)
 		// Check if logged in user has access to the input Predictor
 		// Need to call Predictor Manager Service
-		predictorValidation.predictorExists(authenticatedUserId,predictorId);
-		
+		if(null != predictorProjAssociation.getPredictorId()) {
+			predictorValidation.predictorExists(authenticatedUserId,predictorProjAssociation.getPredictorId());
+		} 		
 		// Access Validation  : Check if logged in user has access to the input ProjectId
 		// Restriction : Check if model of the selected predictor is associated to a Project or not
 		// Before Associating the Project to Predictor need to check the input model is already associated to any project or not
@@ -103,10 +103,37 @@ public class PredictorProjectAssociationController {
 		
 		// Predictor deployment status should be Active.  
 		//User should not be allowed to associate Predictor to a Project if predictor deployment status is other than Active.
-		Predictor result = predProjAssociationService.associatePredictorToProject(authenticatedUserId,predictorId,projectId,predictorProjAssociation);
+		Predictor result = predProjAssociationService.associatePredictorToProject(authenticatedUserId,projectId,predictorProjAssociation);
 		logger.debug("associatePredictorToProject() Ends");
 		return new ResponseEntity<Predictor>(result, HttpStatus.OK);	
 	}
+	
+	
+	@ApiOperation(value = "Get Predictor Details for given input Model")
+	@RequestMapping(value = "/users/{authenticatedUserId}/models/{modelId}/version/{version}", method = RequestMethod.GET)
+	public ResponseEntity<?> getPredictorDetails(HttpServletRequest request,
+			@ApiParam(value = "Acumos Login ID", required = true) @PathVariable("authenticatedUserId") String authenticatedUserId,
+			@ApiParam(value = "Model Id", required = true) @PathVariable("modelId") String modelId,
+			@ApiParam(value = "Model Version", required = true) @PathVariable("version") String version) {
+		logger.debug("getPredictorDetails() Begin");
+		// Input field Validation
+		inputValidationService.isValuePresent(PredictorServiceConstants.AUTHENTICATEDUSERID, authenticatedUserId);
+		inputValidationService.isValuePresent(PredictorServiceConstants.MODELID, modelId);
+		inputValidationService.isValuePresent(PredictorServiceConstants.VERSION, version);
+		
+		//Existence Validations 1. Check if Authenticated User Id exists
+		predProjAssociationService.getUserDetails(authenticatedUserId);
+		// Check if the input model and version exists in CDS
+		String modelRevisionId = predictorValidation.modelExists(modelId,version);
+		
+		//Get the predictor Details in Couch DB, if not found anything return empty
+		Predictor result = predProjAssociationService.getPredictor(authenticatedUserId,modelId,version,modelRevisionId);
+		
+		logger.debug("getPredictorDetails() End");
+		return new ResponseEntity<Predictor>(result, HttpStatus.OK);	
+
+	}
+	
 	
 	@ApiOperation(value = "Get Predictors Associated to a Project")
 	@RequestMapping(value = "/users/{authenticatedUserId}/projects/{projectId}/predictors", method = RequestMethod.GET)

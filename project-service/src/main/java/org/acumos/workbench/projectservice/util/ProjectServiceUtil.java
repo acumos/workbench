@@ -84,10 +84,6 @@ public class ProjectServiceUtil {
 	 */
 	public static Project getProjectVO(MLPProject mlpProject, MLPUser mlpUser) {
 		logger.debug("getProjectVO() Begin");
-		//TODO : Include null checks
-		if (mlpUser.getUserId().equals(mlpProject.getUserId())) {
-			
-		}
 		Project result = new Project(); 
 		Identifier userIdentifier = new Identifier();
 		userIdentifier.setIdentifierType(IdentifierType.USER);

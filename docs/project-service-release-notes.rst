@@ -20,6 +20,9 @@
 Project Service Release Notes
 ===============================
 
+Version 2.0.1, 2019-10-09
+---------------------------
+* ACUMOS-3539 : Minor changes in the response of Project Service API : Get Project Details
 
 Version 2.0.0, 2019-10-01
 ---------------------------

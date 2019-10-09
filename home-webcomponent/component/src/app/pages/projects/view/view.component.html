@@ -23,5 +23,6 @@ limitations under the License.
     [attr.componenturl]="url"
     [attr.username]="userName"
     [attr.authtoken]="authToken"
+    (on-load-event)="this.stopSpinner()"
   >
   </project-webcomponent-element>

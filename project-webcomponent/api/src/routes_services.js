@@ -39,7 +39,8 @@ module.exports = function(app) {
 		projectmSURL : properties.projectmSURL,
 		notebookmSURL : properties.notebookmSURL,
 		pipelinemSURL : properties.pipelinemSURL,
-		modelmSURL : properties.modelmSURL
+		modelmSURL : properties.modelmSURL,
+		predictormSURL : properties.predictormSURL
 	};
 	const pipelineFlag = properties.pipelineFlag;
 	const portalBEUrl = properties.portalBEURL;
@@ -447,6 +448,60 @@ module.exports = function(app) {
 		let serviceUrl = req.body.url;
 		let authToken = req.headers['auth'];
 		getUsersList(serviceUrl, getLatestAuthToken(req, authToken)).then(function(result){
+			res.send(result);
+		});
+	});
+
+	app.post('/api/project/getProjectPredictors', function (req, res){
+		let userName = req.body.userName;
+		let serviceUrl = req.body.url + uripath;
+		let projectId = req.body.projectId;
+		let authToken = req.headers['auth'];
+		getSelectedProjectPredictors(userName, serviceUrl, projectId, getLatestAuthToken(req, authToken)).then(function(result){
+			res.send(result);
+		});
+	 });
+
+	 app.post('/api/project/associatePredictor', function (req, res){
+		let userName = req.body.userName;
+		let serviceUrl = req.body.url + uripath;
+		let projectId = req.body.projectId;
+		let authToken = req.headers['auth'];
+		let predictorPayload = req.body.predictorPayload;
+		associatePredictorProject(userName, serviceUrl, projectId, predictorPayload, getLatestAuthToken(req, authToken)).then(function(result){
+			res.send(result);
+		});
+	});
+
+	app.put('/api/project/updateAssociatePredictor', function (req, res){
+		let userName = req.body.userName;
+		let serviceUrl = req.body.url + uripath;
+		let associationId = req.body.associationId;
+		let predictorId = req.body.predictorId;
+		let authToken = req.headers['auth'];
+		let predictorPayload = req.body.predictorPayload;
+		updatePredictorAssociation(userName, serviceUrl, predictorId, associationId, predictorPayload, getLatestAuthToken(req, authToken)).then(function(result){
+			res.send(result);
+		});
+	});
+
+	app.post('/api/project/deleteAssociatePredictor', function (req, res){
+		let userName = req.body.userName;
+		let serviceUrl = req.body.url + uripath;
+		let associationId = req.body.associationId;
+		let authToken = req.headers['auth'];
+		deletePredictorAssociation(userName, serviceUrl, associationId, getLatestAuthToken(req, authToken)).then(function(result){
+			res.send(result);
+		});
+	});
+
+	app.post('/api/predictor/modelSelected', function (req, res){
+		let userName = req.body.userName;
+		let serviceUrl = req.body.url + uripath;
+		let authToken = req.headers['auth'];
+		let modelId = req.body.modelId;
+		let modelVersion = req.body.modelVersion;
+		getPredictorForModel(userName, serviceUrl, modelId, modelVersion, getLatestAuthToken(req, authToken)).then(function(result){
 			res.send(result);
 		});
 	});
@@ -1278,6 +1333,126 @@ module.exports = function(app) {
 					resolve(prepRespJsonAndLogit(response, userDetails, "Users list fetched successfully"));
 				} else if (!error) {
 					resolve(prepRespJsonAndLogit(response, response.body, "Unable to fetch users list"));
+				} else {
+					resolve(prepRespJsonAndLogit(null, null, null, error));
+				}
+			});
+		});
+	};
+
+	var getSelectedProjectPredictors = function(userName, srvcUrl, projectId, authToken){
+		return new Promise(function(resolve, reject){
+			var options = {
+				method : "GET",
+				url : srvcUrl + userName + "/projects/" + projectId + "/predictors",
+				headers : {
+					'Content-Type' : 'application/json',
+					'Authorization' : authToken,
+				}
+			};
+			
+			request.get(options, function(error, response) {
+				if (!error && response.statusCode == 200) {						
+					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Predictors for the project retrieved successfully"));
+				} else if (!error) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to retrieve Predictors"));
+				} else {
+					resolve(prepRespJsonAndLogit(null, null, null, error));
+				}
+			});
+
+		});
+	};
+
+	var associatePredictorProject = function(userName, srvcUrl, projectId, predictorPayload, authToken){
+		return new Promise(function(resolve, reject) {
+			var options = {
+				method : "POST",
+				url : srvcUrl + userName + "/projects/" + projectId + "/predictors" ,
+				headers : {
+					'Content-Type' : 'application/json',
+					'Authorization' : authToken,
+				},
+				body: predictorPayload,
+				json: true
+			};
+
+			request.post(options, function(error, response) {
+				if (!error && response.statusCode == 200) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Predictor associated successfully"));
+				} else if (!error) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to associate Predictor"));
+				} else {
+					resolve(prepRespJsonAndLogit(null, null, null, error));
+				}
+			});
+		});
+	};
+
+	var updatePredictorAssociation = function(userName, srvcUrl, predictorId, associationId, predictorPayload, authToken){
+		return new Promise(function(resolve, reject) {
+			var options = {
+				method : "PUT",
+				url : srvcUrl + userName + "/predictors/" + predictorId + "/associations/" + associationId,
+				headers : {
+					'Content-Type' : 'application/json',
+					'Authorization' : authToken,
+				},
+				body: predictorPayload,
+				json: true
+			};
+
+			request.put(options, function(error, response) {
+				if (!error && response.statusCode == 200) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Predictor association updated successfully"));
+				} else if (!error) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to update Predictor association"));
+				} else {
+					resolve(prepRespJsonAndLogit(null, null, null, error));
+				}
+			});
+		});
+	};
+
+	var deletePredictorAssociation = function(userName, srvcUrl, associationId, authToken){
+		return new Promise(function(resolve, reject) {
+			var options = {
+				method : "DELETE",
+				url : srvcUrl + userName + "/predictors/associations/" + associationId,
+				headers : {
+					'Content-Type' : 'application/json',
+					'Authorization' : authToken,
+				}
+			};
+
+			request.delete(options, function(error, response) {
+				if (!error && response.statusCode == 200) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Predictor association deleted successfully"));
+				} else if (!error) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to delete Predicto association"));
+				} else {
+					resolve(prepRespJsonAndLogit(null, null, null, error));
+				}
+			});
+		});
+	};
+
+	var getPredictorForModel = function(userName, srvcUrl, modelId, version, authToken){
+		return new Promise(function(resolve, reject) {
+			var options = {
+				method : "GET",
+				url : srvcUrl + userName + "/models/" + modelId + "/version/" + version,
+				headers : {
+					'Content-Type' : 'application/json',
+					'Authorization' : authToken,
+				}
+			};
+
+			request.get(options, function(error, response) {
+				if (!error && response.statusCode == 200) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Predictor for model fetched successfully"));
+				} else if (!error) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to fetch predictor for model"));
 				} else {
 					resolve(prepRespJsonAndLogit(null, null, null, error));
 				}

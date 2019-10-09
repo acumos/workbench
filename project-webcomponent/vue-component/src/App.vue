@@ -48,7 +48,7 @@
           <PipelineList :pipelines="pipelines" class="my-5" />
         </template>
         <ModelList :models="models" class="my-5" />
-        <!-- <PredictorList :predictors="predictors" class="my-5" /> -->
+        <PredictorList :predictors="predictors" class="my-5" />
       </template>
     </div>
   </div>
@@ -57,13 +57,14 @@
 <script>
 import { dom } from "@fortawesome/fontawesome-svg-core";
 import { mapState, mapActions, mapMutations } from "vuex";
-import { isUndefined, isNull } from "lodash-es";
+import { isUndefined } from "lodash-es";
 import Vue2Filters from "vue2-filters";
 
 import Project from "./store/entities/project.entity";
 import Notebook from "./store/entities/notebook.entity";
 import Pipeline from "./store/entities/pipeline.entity";
 import Model from "./store/entities/model.entity";
+import Predictor from "./store/entities/predictor.entity";
 
 // UI Elements
 import ToastUI from "./components/ui/Toast.ui";
@@ -72,7 +73,7 @@ import ProjectDetails from "./components/project.details";
 import NotebookList from "./components/notebook.list";
 import PipelineList from "./components/pipeline.list";
 import ModelList from "./components/model.list";
-import PredictorList from "./components/predictor.list.vue";
+import PredictorList from "./components/predictor.list";
 
 export default {
   name: "app",
@@ -109,7 +110,7 @@ export default {
       return Model.all();
     },
     predictors() {
-      return [];
+      return Predictor.all();
     }
   },
   watch: {
@@ -145,6 +146,7 @@ export default {
 
       await this.getModelCategories();
       await this.getModelDetailsForProject();
+      await this.getProjectPredictors();
     },
     ...mapMutations("app", [
       "setComponentUrl",
@@ -163,6 +165,8 @@ export default {
       "getProjectPipelines"
     ]),
     ...mapActions("model", ["getModelCategories", "getModelDetailsForProject"]),
+    ...mapActions("predictor", ["getProjectPredictors"]),
+
     async unarchiveProject(project) {
       this.confirm({
         title: "Unarchive " + project.name,

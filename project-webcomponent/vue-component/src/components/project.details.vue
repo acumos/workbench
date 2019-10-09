@@ -26,7 +26,7 @@
           <div class="flex">
             <div
               v-tooltip="{
-                content: item.name
+                content: item.firstName+' '+item.lastName
               }"
               v-for="(item, index) in firstThreeCollaborators"
               :key="index"

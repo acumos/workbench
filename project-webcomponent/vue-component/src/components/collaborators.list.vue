@@ -72,7 +72,7 @@
           <th class="w-1"></th>
         </tr>
         <tr v-for="(collaborator, index) in collaboratorList" :key="index">
-          <td class="text-left text-sm pr-2">{{ collaborator.name }}</td>
+          <td class="text-left text-sm pr-2">{{ collaborator.firstName }} {{ collaborator.lastName }}</td>
           <td class="text-left text-sm pr-2">
             {{ collaborator.permission }}
           </td>

@@ -26,6 +26,9 @@ import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
+import org.acumos.workbench.common.util.ArtifactStatus;
+import org.acumos.workbench.common.util.ServiceStatus;
+import org.acumos.workbench.common.vo.Predictor;
 import org.acumos.workbench.predictorservice.exception.AssociationException;
 import org.acumos.workbench.predictorservice.exception.CouchDBException;
 import org.acumos.workbench.predictorservice.exception.PredictorException;
@@ -68,7 +71,7 @@ public class CouchDBService {
 			association.setAssociationID(UUID.randomUUID().toString());
 			association.setCreatedTimestamp(Instant.now().toString());
 			association.setUpdateTimestamp(Instant.now().toString());
-			association.setAssociationStatus("ACTIVE");
+			association.setAssociationStatus(ArtifactStatus.ACTIVE.toString());
 			response = dbClient.save(association);
 			association.set_rev(response.getRev());
 			logger.debug("Response Object from Couch DB  : " + response);
@@ -95,11 +98,11 @@ public class CouchDBService {
 	 * @return
 	 * 			returns list of PredictorProjectAssociation's, If no predictors are associated then returns empty object([])
 	 */
-	public List<PredictorProjectAssociation> getPredictors(String projectId) {
+	public List<PredictorProjectAssociation> getPredictorsForProject(String projectId) {
 		logger.debug("getPredictors() Begin");
 		CouchDbClient dbClient = null;
 		List<PredictorProjectAssociation> predictorProjAssociation = null;
-		String jsonQuery = String.format(PredictorServiceConstants.GETPREDICTORSQUERY,projectId,"ACTIVE");
+		String jsonQuery = String.format(PredictorServiceConstants.GETPREDICTORSQUERY,projectId,ArtifactStatus.ACTIVE.toString());
 		
 		try {
 			dbClient = getLightCouchdbClient();
@@ -214,7 +217,7 @@ public class CouchDBService {
 		logger.debug("predictorExists() Begin");
 		CouchDbClient dbClient = getLightCouchdbClient();
 		List<DataSetPredictor> predictorList = null;
-		String jsonQuery = String.format(PredictorServiceConstants.PREDICTOREXISTSINCOUCHQUERY, predictorId,"ACTIVE");
+		String jsonQuery = String.format(PredictorServiceConstants.PREDICTOREXISTSINCOUCHQUERY, predictorId,ArtifactStatus.ACTIVE.toString());
 		try {
 			predictorList = dbClient.findDocs(jsonQuery, DataSetPredictor.class);
 			// similar predictor already exists and is ACTIVE
@@ -302,6 +305,8 @@ public class CouchDBService {
 			predictor.setRevisionId(predictorProjAssociation.getRevisionId());
 			predictor.setSolutionId(predictorProjAssociation.getSolutionId());
 			predictor.setUserId(predictorProjAssociation.getUserId());
+			predictor.setPredictorDeploymentStatus(ArtifactStatus.ACTIVE.toString());
+			predictor.setPredictorkey(predictorProjAssociation.getPredictorkey());
 			response = dbClient.save(predictor);
 			logger.debug("Response Object from Couch DB  : " + response);
 		} catch (CouchDBException e) {
@@ -320,6 +325,79 @@ public class CouchDBService {
 		return predictor;
 	}
 	
+	/**
+	 * Get Predictor details for input id
+	 * 
+	 * @param predictorId 
+	 * 			the predictor id
+	 * @return 
+	 * 			returns the DataSetPredictor details else null
+	 */
+	
+	/**
+	 * Get Predictor details for input id
+	 * 
+	 * @param predictorId
+	 * 		Predictor Id 
+	 * @return DataSetPredictor
+	 * 		Returns DataSetPredictor if found else throws CouchDBException
+	 * @throws CouchDBException
+	 * 		throws CouchDBException
+	 */
+	public DataSetPredictor getPredictor(String predictorId) throws CouchDBException {
+		logger.debug("getPredictor() Begin");
+		CouchDbClient dbClient = getLightCouchdbClient();
+		Response response = new Response();
+		DataSetPredictor predictor = null;
+		try {
+			predictor = dbClient.find(DataSetPredictor.class, predictorId);
+		} catch (NoDocumentException e) {
+			logger.error("Exception : Predictor not found in Couch DB");
+			throw new CouchDBException("Predictor not found");
+		} finally {
+			try {
+				// closing the resources
+				dbClient.close();
+			} catch (IOException e) {
+				logger.error("IOException occured while closing the lightcouch client",e);
+			}
+		}
+				
+		logger.debug("getPredictor() End");
+		return predictor;
+	}
+	
+	/**
+	 * Update the Predictor in CouchDB 
+	 * 
+	 * @param predictor
+	 * 		Predictor details to be update 
+	 * 
+	 * @throws CouchDBException
+	 * 		In case of any error throws CouchDBException
+	 * 
+	 */
+	public void updatePredictor(DataSetPredictor predictor) throws CouchDBException {
+		logger.debug("updatePredictor() Begin");
+		CouchDbClient dbClient = getLightCouchdbClient();
+		try {
+			dbClient.update(predictor);
+		} catch (Exception e) {
+			logger.error("Exception occured while updating Predictor document in Couch DB");
+			throw new CouchDBException("Exception occured while updating Predictor");
+		} finally {
+			try {
+				// closing the resources
+				dbClient.close();
+			} catch (IOException e) {
+				logger.error("IOException occured while closing the lightcouch client", e);
+			}
+		}
+		logger.debug("updatePredictor() End");
+		
+	}
+	
+	
 	private void associationExistsInCouch(String predcitorID, String projectId, String revisionId, String solutionId) {
 		logger.debug("associationExistsInCouch() Begin");
 		CouchDbClient dbClient = getLightCouchdbClient();
@@ -330,8 +408,8 @@ public class CouchDBService {
 			association = dbClient.findDocs(jsonQuery, PredictorProjectAssociation.class);
 			// similar association already exists and is ACTIVE
 			if (null != association && association.size() > 0) {
-				logger.error("Association already exists in Couch DB");
-				throw new AssociationException("Association already exists in Couch DB");
+				logger.error("Predictor already associated");
+				throw new AssociationException("Predictor already associated");
 			}
 		} catch (CouchDBException e) {
 			logger.error("Exception occured while finding the documents in couchDB");
@@ -354,6 +432,9 @@ public class CouchDBService {
 				configurationProperties.getCouchdbHost(), configurationProperties.getCouchdbPort(),
 				configurationProperties.getCouchdbUser(), configurationProperties.getCouchdbPwd());
 	}
+
+	
+
 
 	
 

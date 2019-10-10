@@ -44,6 +44,7 @@ public class PredictorProjectAssociation implements Serializable{
 	private String environmentPath;				//http://FQDN:port/<operation name>
 	private String metadata1;					//Additional data as needed
 	private String metadata2;					//Additional data as needed
+	private String predictorkey;				//Predictor Key given by UI
 	
 	
 	/**
@@ -216,6 +217,18 @@ public class PredictorProjectAssociation implements Serializable{
 	 */
 	public void setEnvironmentPath(String environmentPath) {
 		this.environmentPath = environmentPath;
+	}
+	/**
+	 * @return the predictorkey
+	 */
+	public String getPredictorkey() {
+		return predictorkey;
+	}
+	/**
+	 * @param predictorkey the predictorkey to set
+	 */
+	public void setPredictorkey(String predictorkey) {
+		this.predictorkey = predictorkey;
 	}
 	/**
 	 * @return the metadata1

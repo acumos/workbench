@@ -108,7 +108,7 @@ public class PredictorProjectAssociationServiceImpl implements PredictorProjectA
 		List<Predictor> predList = new ArrayList<Predictor>();
 		try {
 			MLPUser mlpUser = getUserDetails(authenticatedUserId);
-			List<PredictorProjectAssociation> predictorProjAssociationList = couchDbService.getPredictors(projectId);
+			List<PredictorProjectAssociation> predictorProjAssociationList = couchDbService.getPredictorsForProject(projectId);
 			
 			if (null != predictorProjAssociationList && !predictorProjAssociationList.isEmpty()) {
 				for (PredictorProjectAssociation association : predictorProjAssociationList) {
@@ -142,8 +142,8 @@ public class PredictorProjectAssociationServiceImpl implements PredictorProjectA
 			result = couchDbService.savePredictorProjectAssociation(predProjAssociation);
 			predictor = getPredictorVO(authenticatedUserId,mlpUser,result);
 		} catch (Exception e) {
-			logger.error("Association already exists in Couch DB");
-			throw new PredictorException("Association already exists in Couch DB");
+			logger.error("Predictor already associated");
+			throw new PredictorException("Predictor already associated");
 		}
 		logger.debug("associatePredictorToProject() End");
 		return predictor;
@@ -155,20 +155,57 @@ public class PredictorProjectAssociationServiceImpl implements PredictorProjectA
 		logger.debug("editPredictorAssociationToProject() Begin");
 		Predictor predictor = null;
 		String newVersion = predictorProjAssociation.getPredictorVersion();
+		String newPredictorKey = predictorProjAssociation.getPredictorkey();
+		String newEnvironmentPath = predictorProjAssociation.getEnvironmentPath();
+		boolean changeFound = false;
+		
 		MLPUser mlpUser = getUserDetails(authenticatedUserId);
 		try {
 			PredictorProjectAssociation oldAssociation = couchDbService.getPredictorProjectAssocaition(associationId);
 			if (null != oldAssociation) {
+				
+				
+				//1. Get predictor from couch DB 
+				DataSetPredictor oldPredictor = couchDbService.getPredictor(oldAssociation.getPredictorId());
+				
 				String oldVersion = oldAssociation.getPredictorVersion();
+				String oldPredictorKey = oldAssociation.getPredictorkey();
+				String oldEnvironmentPath = oldAssociation.getEnvironmentPath();
+
 				if (null != newVersion && !newVersion.equals(oldVersion)) {
-					oldAssociation.setAssociationID(associationId);
+					oldAssociation.setPredictorVersion(newVersion);
+					oldPredictor.setPredictorVersion(newVersion);
+					changeFound = true;
+				}
+
+				if (null != newPredictorKey && !newPredictorKey.equals(oldPredictorKey)) {
+					oldAssociation.setPredictorkey(newPredictorKey);
+					oldPredictor.setPredictorkey(newPredictorKey);
+					changeFound = true;
+				}
+
+				if (null != newEnvironmentPath && !newEnvironmentPath.equals(oldEnvironmentPath)) {
+					oldAssociation.setEnvironmentPath(newEnvironmentPath);
+					oldPredictor.setEnvironmentPath(newEnvironmentPath);
+					changeFound = true;
+				}
+
+				if (changeFound) {
+					
+					
+					//Update Predictor details 
+					oldPredictor.setPredictorId(predictorProjAssociation.getPredictorId());
+					oldPredictor.setUpdateTimestamp(Instant.now().toString());
+					couchDbService.updatePredictor(oldPredictor);
+					
+					//Updte Predictor Association Details 
 					oldAssociation.setPredictorId(predictorProjAssociation.getPredictorId());
-					//oldAssociation.setVersion(newVersion); //predictor version needs to be updated
-					oldAssociation.setPredictorVersion(newVersion); // predictor version update
+					oldAssociation.setAssociationID(associationId);
 					oldAssociation.setUpdateTimestamp(Instant.now().toString());
 					couchDbService.updatePredictorProjectAssociation(oldAssociation);
-					predictor = getPredictorVO(authenticatedUserId, mlpUser, oldAssociation);
 				}
+
+				predictor = getPredictorVO(authenticatedUserId, mlpUser, oldAssociation);
 			}
 
 		} catch (Exception e) {
@@ -242,6 +279,18 @@ public class PredictorProjectAssociationServiceImpl implements PredictorProjectA
 		predictorVersion.setModifiedTimeStamp(pred.getUpdateTimestamp());
 		predIdentifier.setVersionId(predictorVersion);
 		predictor.setPredictorId(predIdentifier);
+		predIdentifier.setServiceUrl(pred.getEnvironmentPath());
+
+		// Predictor Metrics
+		List<KVPair> kvPairList = new ArrayList<KVPair>();
+		KVPairs metrics = new KVPairs();
+		KVPair kvPair = new KVPair();
+		kvPair.setKey(PredictorServiceConstants.PREDICTORKEY);
+		kvPair.setValue(pred.getPredictorkey());
+		kvPairList.add(kvPair);
+		metrics.setKv(kvPairList);
+		predIdentifier.setMetrics(metrics);
+
 		ArtifactState artifactState = new ArtifactState();
 		artifactState.setStatus(ArtifactStatus.ACTIVE);
 		// Predictor Artifact Status
@@ -290,11 +339,15 @@ public class PredictorProjectAssociationServiceImpl implements PredictorProjectA
 		predIdentifier.setServiceUrl(association.getEnvironmentPath());
 		
 		// Predictor Metrics
+		List<KVPair> kvPairList = new ArrayList<KVPair>();
 		KVPairs metrics = new KVPairs();
 		KVPair kvPair = new KVPair();
 		kvPair.setKey(PredictorServiceConstants.ASSOCIATIONID);
 		kvPair.setValue(association.getAssociationID());
-		List<KVPair> kvPairList = new ArrayList<KVPair>();
+		kvPairList.add(kvPair);
+		kvPair = new KVPair();
+		kvPair.setKey(PredictorServiceConstants.PREDICTORKEY);
+		kvPair.setValue(association.getPredictorkey());
 		kvPairList.add(kvPair);
 		metrics.setKv(kvPairList);
 		predIdentifier.setMetrics(metrics);

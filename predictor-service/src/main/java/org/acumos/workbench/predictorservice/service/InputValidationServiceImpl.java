@@ -64,17 +64,17 @@ public class InputValidationServiceImpl implements InputValidationService {
 		if (null != predictorProjAssociation) {
 			if (null != predictorProjAssociation.getPredictorName() 
 					|| null != predictorProjAssociation.getEnvironmentPath()
-					|| null != predictorProjAssociation.getPredictorVersion()
 					|| null != predictorProjAssociation.getPredictorDeploymentStatus()
 					|| null != predictorProjAssociation.getSolutionId()
+					|| null != predictorProjAssociation.getProjectId()
 					|| null != predictorProjAssociation.getRevisionId()) {
 				result = true;
 			} 
 			if (!predictorProjAssociation.getPredictorName().equals("")
 					|| !predictorProjAssociation.getEnvironmentPath().equals("")
-					|| !predictorProjAssociation.getPredictorVersion().equals("")
 					|| !predictorProjAssociation.getPredictorDeploymentStatus().equals("")
 					|| !predictorProjAssociation.getSolutionId().equals("")
+					|| !predictorProjAssociation.getProjectId().equals("")
 					|| !predictorProjAssociation.getRevisionId().equals("")) {
 				result = true;
 			}

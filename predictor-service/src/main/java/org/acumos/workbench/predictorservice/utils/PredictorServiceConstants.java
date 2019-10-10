@@ -30,12 +30,14 @@ public class PredictorServiceConstants {
 	public static final String REVISIONID = "REVISION_ID";
 	public static final String MODELID = "modelId";
 	public static final String VERSION = "version";
+	public static final String PREDICTORKEY = "predictorkey";
 	
 	public static final String ASSOCIATIONEXISTSINCOUCHQUERY = "{\"selector\":{\"$and\":[{\"projectId\":{\"$eq\":\"%s\"}},{\"solutionId\":{\"$eq\":\"%s\"}},{\"revisionId\":{\"$eq\":\"%s\"}}]}}";
 
 	public static final String GETPREDICTORSQUERY = "{\"selector\":{\"$and\":[{\"projectId\":{\"$eq\":\"%s\"}},{\"associationStatus\":{\"$eq\":\"%s\"}}]}}";
-
-	public static final String EDITPREDICTORASSOCIATIONTOPROJECTQUERY = "{\"selector\":{\"$and\":[{\"predictorName\":{\"$eq\":\"%s\"}},{\"predcitorId\":{\"$eq\":\"%s\"}},{\"environmentPath\":{\"$eq\":\"%s\"}},{\"predictorVersion\":{\"$eq\":\"%s\"}}]}}";
+	
+	//TODO: To be removed once confirmed
+	//public static final String EDITPREDICTORASSOCIATIONTOPROJECTQUERY = "{\"selector\":{\"$and\":[{\"predictorName\":{\"$eq\":\"%s\"}},{\"predcitorId\":{\"$eq\":\"%s\"}},{\"environmentPath\":{\"$eq\":\"%s\"}},{\"predictorVersion\":{\"$eq\":\"%s\"}}]}}";
 	
 	public static final String PREDICTOREXISTSINCOUCHQUERY = "{\"selector\":{\"$and\":[{\"predictorId\":{\"$eq\":\"%s\"}},{\"predictorDeploymentStatus\":{\"$eq\":\"%s\"}}]}}";
 	

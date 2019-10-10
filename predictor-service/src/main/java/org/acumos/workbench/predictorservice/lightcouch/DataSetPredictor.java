@@ -10,6 +10,8 @@ public class DataSetPredictor implements Serializable{
 	
 	private static final long serialVersionUID = -3151260834226542723L;
 	
+	private String _id;	
+	private String _rev;	
 	private String userId;
 	private String solutionId; 
 	private String revisionId; 	
@@ -17,13 +19,14 @@ public class DataSetPredictor implements Serializable{
 	private String updateTimestamp; 			
 	private String modelStatus;
 	private String predictorDeploymentStatus; 
-	private String predictorId;	
 	private String predictorName; 	
 	private String predictorDescription;		
 	private String predictorVersion;			
 	private String environmentPath;				//http://FQDN:port/<operation name>
 	private String metadata1;					
 	private String metadata2;
+	private String predictorkey;				//Predictor Key given by UI
+	
 	
 	
 	/**
@@ -114,13 +117,13 @@ public class DataSetPredictor implements Serializable{
 	 * @return the predcitorId
 	 */
 	public String getPredcitorId() {
-		return predictorId;
+		return _id;
 	}
 	/**
 	 * @param predcitorId the predcitorId to set
 	 */
 	public void setPredcitorId(String predcitorId) {
-		this.predictorId = predcitorId;
+		this._id = predcitorId;
 	}
 	/**
 	 * @return the predictorName
@@ -194,7 +197,45 @@ public class DataSetPredictor implements Serializable{
 	public void setMetadata2(String metadata2) {
 		this.metadata2 = metadata2;
 	}					
+
+	/**
+	 * @return the predictorId
+	 */
+	public String getPredictorId() {
+		return _id;
+	}
+
+	/**
+	 * @param predictorId the predictorId to set
+	 */
+	public void setPredictorId(String predictorId) {
+		this._id = predictorId;
+	}
+	/**
+	 * @return the predictorkey
+	 */
+	public String getPredictorkey() {
+		return predictorkey;
+	}
+	/**
+	 * @param predictorkey the predictorkey to set
+	 */
+	public void setPredictorkey(String predictorkey) {
+		this.predictorkey = predictorkey;
+	}
 	
-	
+	/**
+	 * @return the _rev
+	 */
+	public String get_rev() {
+		return _rev;
+	}
+	/**
+	 * @param _rev the _rev to set
+	 */
+	public void set_rev(String _rev) {
+		this._rev = _rev;
+	}
+
 
 }

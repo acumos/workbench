@@ -163,7 +163,8 @@ public class PredictorProjectAssociationServiceImpl implements PredictorProjectA
 				if (null != newVersion && !newVersion.equals(oldVersion)) {
 					oldAssociation.setAssociationID(associationId);
 					oldAssociation.setPredictorId(predictorProjAssociation.getPredictorId());
-					oldAssociation.setVersion(newVersion);
+					//oldAssociation.setVersion(newVersion); //predictor version needs to be updated
+					oldAssociation.setPredictorVersion(newVersion); // predictor version update
 					oldAssociation.setUpdateTimestamp(Instant.now().toString());
 					couchDbService.updatePredictorProjectAssociation(oldAssociation);
 					predictor = getPredictorVO(authenticatedUserId, mlpUser, oldAssociation);

@@ -39,7 +39,7 @@ public class PredictorServiceConstants {
 	//TODO: To be removed once confirmed
 	//public static final String EDITPREDICTORASSOCIATIONTOPROJECTQUERY = "{\"selector\":{\"$and\":[{\"predictorName\":{\"$eq\":\"%s\"}},{\"predcitorId\":{\"$eq\":\"%s\"}},{\"environmentPath\":{\"$eq\":\"%s\"}},{\"predictorVersion\":{\"$eq\":\"%s\"}}]}}";
 	
-	public static final String PREDICTOREXISTSINCOUCHQUERY = "{\"selector\":{\"$and\":[{\"predictorId\":{\"$eq\":\"%s\"}},{\"predictorDeploymentStatus\":{\"$eq\":\"%s\"}}]}}";
+	public static final String PREDICTOREXISTSINCOUCHQUERY = "{\"selector\":{\"$and\":[{\"_id\":{\"$eq\":\"%s\"}},{\"predictorDeploymentStatus\":{\"$eq\":\"%s\"}}]}}";
 	
 	public static final String MODELPROJECTASSOCIATIONEXISTSINCOUCHQUERY = "{\"selector\":{\"$and\":[{\"projectId\":{\"$eq\":\"%s\"}},{\"solutionId\":{\"$eq\":\"%s\"}},{\"revisionId\":{\"$eq\":\"%s\"}},{\"predictorDeploymentStatus\":{\"$eq\":\"%s\"}}]}}";
 	

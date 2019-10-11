@@ -1,0 +1,37 @@
+table.vgt-table {
+    .line-numbers {
+        @apply w-5 text-center;
+    }
+
+    @apply w-full;
+    
+    th {
+        @apply bg-gray-300;
+        @apply border border-gray-400;
+        @apply text-gray-800 font-medium text-center;
+        @apply py-2;
+
+        &:first-child {
+            @apply border-l-0;
+        }
+        &:last-child {
+            @apply border-r-0;
+        }
+    }
+    tr {
+        @apply text-black;
+
+        td { 
+            @apply border border-gray-400;
+            @apply py-0;
+            
+            &:first-child {
+                @apply border-l-0;
+            }
+
+            &:last-child {
+                @apply border-r-0;
+            }
+        }
+    }
+}

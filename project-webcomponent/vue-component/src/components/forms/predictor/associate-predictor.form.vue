@@ -18,7 +18,7 @@
               rules="required"
               v-slot="{ errors, classes }"
             >
-              <select class="form-select" v-model="modelName">
+              <select class="form-select" v-model="modelName" @change="resetForm">
                 <option value>Select Model Name</option>
                 <option
                   v-for="(model, index) in projectModels"
@@ -72,7 +72,7 @@
             <ValidationProvider
               class="flex flex-col"
               name="Predictor Name"
-              rules="required"
+              rules="required|startAlpha"
               v-slot="{ errors, classes }"
             >
               <input
@@ -80,6 +80,7 @@
                 class="form-input"
                 v-model="updatedPredictor.name"
                 placeholder="Enter Predictor Name"
+                :disabled="!isNew"
               />
               <span class="text-sm text-red-700 flex items-center" v-if="errors[0]">
                 <FAIcon icon="exclamation-triangle" />
@@ -120,7 +121,7 @@
             <ValidationProvider
               class="flex flex-col"
               name="Predictor Engine Base URL"
-              rules="required"
+              rules="required|url"
               v-slot="{ errors, classes }"
             >
               <input
@@ -135,7 +136,7 @@
               </span>
             </ValidationProvider>
           </div>
-          <div class="flex-1 flex flex-col">
+          <!-- <div class="flex-1 flex flex-col">
             <label class="mt-2">
               Predictor Engine Version
               <span class="text-red-500">*</span>
@@ -157,7 +158,7 @@
                 <span class="ml-1 my-1">{{ errors[0] }}</span>
               </span>
             </ValidationProvider>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="flex justify-between py-3 px-2 bg-gray-100 border-gray-200 border-t">
@@ -232,10 +233,15 @@ export default {
       this.loadingPredictors = false;
       if (predictor.data.data !== "") {
         predictor = JSON.parse(predictor.data.data);
-        this.updatedPredictor = Predictor.$fromJson(predictor);
+        this.updatedPredictor = Predictor.$predictorfromJson(predictor);
       }
     },
 
+    resetForm(){
+      this.updatedPredictor = new Predictor();
+      this.modelVersion = "";
+    },
+    
     async save(predictor) {
       const isValid = await this.$refs.form.validate();
       predictor = new Predictor(predictor);

@@ -17,7 +17,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ===============LICENSE_END=========================================================
 -->
+<ngx-base-component
+  [alertOpen]="alertOpen"
+  [showSpinner]="showSpinner"
+  [sessionError]="sessionError"
+></ngx-base-component>
+
   <project-webcomponent-element #webComponent
+    [class.hidden]="showSpinner"
     (project-event)="this.OnViewProjectEvent($event)"
     [attr.projectid]="id"
     [attr.componenturl]="url"

@@ -17,7 +17,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ===============LICENSE_END=========================================================
 -->
-<ngx-base-component [alertOpen]="alertOpen" [showSpinner]="showSpinner" [sessionError]="sessionError"></ngx-base-component>
+<ngx-base-component
+  [alertOpen]="alertOpen"
+  [showSpinner]="showSpinner"
+  [sessionError]="sessionError"
+></ngx-base-component>
 
-<pipeline-element *ngIf="loadHtml" attr.pipelineId="{{ id }}" [attr.componenturl]="url" (on-load-event)="this.stopSpinner()" 
-     (pipeline-event)="this.OnViewPipelineEvent($event)" [attr.userName]="userName" [attr.authToken]="authToken"> </pipeline-element>
+<pipeline-webcomponent-element #webComponent
+[class.hidden]="showSpinner"
+  [attr.pipelineId]="id"
+  [attr.componenturl]="url"
+  (on-load-event)="this.stopSpinner()"
+  (pipeline-event)="this.OnViewPipelineEvent($event)"
+  [attr.userName]="userName"
+  [attr.authToken]="authToken"
+>
+</pipeline-webcomponent-element>

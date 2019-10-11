@@ -30,7 +30,7 @@ var port = process.env.PORT || 9091;
 
 app.use(cors());
 
-app.use(express.static("../component/build/default"));
+app.use(express.static("../vue-component/dist"));
 app.use(cookieParser());
 app.use(methodOverride());
 

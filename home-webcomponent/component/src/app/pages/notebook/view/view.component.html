@@ -17,9 +17,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ===============LICENSE_END=========================================================
 -->
-<ngx-base-component [alertOpen]="alertOpen" [showSpinner]="showSpinner" [sessionError]="sessionError"></ngx-base-component>
+<ngx-base-component
+  [alertOpen]="alertOpen"
+  [showSpinner]="showSpinner"
+  [sessionError]="sessionError"
+></ngx-base-component>
 
-<notebook-element *ngIf="loadHtml" attr.noteBookId="{{ id }}" [attr.componenturl]="url" (notebook-event)="this.OnViewNotebookEvent($event)"
-[attr.userName]="userName" [attr.authToken]="authToken" (on-load-event)="this.stopSpinner()">
-</notebook-element>
- 
+<notebook-webcomponent-element #webComponent
+  [class.hidden]="showSpinner"
+  [attr.noteBookId]="id"
+  [attr.componenturl]="url"
+  (notebook-event)="this.OnViewNotebookEvent($event)"
+  [attr.userName]="userName"
+  [attr.authToken]="authToken"
+  (on-load-event)="this.stopSpinner()"
+>
+</notebook-webcomponent-element>

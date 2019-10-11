@@ -3,19 +3,17 @@
   "version": "1.0.5",
   "license": "Apache",
   "scripts": {
-    "install:app": "cd component && npm install --prod",
+    "install:app": "cd vue-component && npm install",
     "install:api": "cd api && npm install --prod",
     "run:api": "cd api && npm run start",
     "run:component": "cd component && npm run start:dev",
-    "build:component": "cd component && npm run build",
+    "build:component": "cd vue-component && npm run build:webcomponent",
     "postinstall": "run-s install:*",
     "start:dev": "run-p run:*",
     "polymer-build": "run-p build:*"
   },
-  "devDependencies": {
-    "polymer-cli": "^1.9.6"
-  },
   "dependencies": {
+    "axios": "^0.19.0",
     "npm-run-all": "^4.1.5"
   }
 }

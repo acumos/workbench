@@ -66,12 +66,12 @@
           <td v-if="isEditing">
             <ValidationProvider
               class="flex flex-col"
-              name="project name"
-              rules="required"
+              name="Project Name"
+              rules="required|startAlpha"
               v-slot="{ errors, classes }"
             >
               <input
-                class="form-input w-2/6"
+                class="form-input w-2/6 my-2"
                 type="text"
                 v-model="updatedProject.name"
               />
@@ -97,12 +97,12 @@
           <td v-if="isEditing">
             <ValidationProvider
               class="flex flex-col"
-              name="project version"
-              rules="required"
+              name="Project Version"
+              rules="required|versionValidation"
               v-slot="{ errors, classes }"
             >
               <input
-                class="form-input w-2/6"
+                class="form-input w-2/6 my-2"
                 type="text"
                 v-model="updatedProject.version"
               />
@@ -135,24 +135,15 @@
           </td>
           <td v-if="!isEditing">{{ project.description }}</td>
           <td v-if="isEditing">
-            <ValidationProvider
-              class="flex flex-col"
-              name="project description"
-              rules="required"
-              v-slot="{ errors, classes }"
-            >
               <textarea
-                class="form-textarea w-2/6"
+                class="form-textarea w-1/2 h-24 my-2"
                 v-model="updatedProject.description"
+                maxlength="2000"
+                placeholder="Enter Project Description"
               ></textarea>
-              <span
-                class="text-sm text-red-700 flex items-center"
-                v-if="errors[0]"
-              >
-                <FAIcon icon="exclamation-triangle" />
-                <span class="ml-1 my-1">{{ errors[0] }}</span>
-              </span>
-            </ValidationProvider>
+              <span class="leading-none text-right text-gray-600 mt-1"
+                >{{ 2000 - updatedProject.description.length }} Chars</span
+              >          
           </td>
         </tr>
       </table>

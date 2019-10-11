@@ -44,9 +44,9 @@
           </label>
           <ValidationProvider
             class="flex flex-col"
-            name="Notebook type"
-            rules="required"
-            v-slot="{ errors, classes }"
+            name="Notebook Name"
+            rules="required|startAlpha"
+            v-slot="{ errors, classes, failedRules }"
           >
             <input
               type="text"
@@ -71,8 +71,8 @@
           </label>
           <ValidationProvider
             class="flex flex-col"
-            name="notebook version"
-            rules="required"
+            name="Notebook Version"
+            rules="required|versionValidation"
             v-slot="{ errors, classes }"
           >
             <input
@@ -98,8 +98,8 @@
           </label>
           <ValidationProvider
             class="flex flex-col"
-            name="notebook url"
-            rules="required"
+            name="Notebook Url"
+            rules="required|url"
             v-slot="{ errors, classes }"
           >
             <input

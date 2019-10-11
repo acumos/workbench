@@ -22,16 +22,16 @@ export default class Model extends _Model {
 
   static $fromJson(json) {
     return {
-      modelId : get(json, "modelId.uuid"),
-      name : get(json, "modelId.name"),
-      version : get(json, "modelId.versionId.label"),
-      createdTimestamp : get(json, "modelId.versionId.creationTimeStamp"),
-      createdBy : get(json, "owner.authenticatedUserId"),
-			status : get(json, "artifactStatus.status"),
-			modelType : get(json, "modelId.metrics.kv[0].value"), 
-			modelCatalog : get(json, "modelId.metrics.kv[2].value"),
-			publishStatus : get(json, "modelId.metrics.kv[1].value"),
-      associationId : get(json, "modelId.metrics.kv[3].value"),
+      modelId: get(json, "modelId.uuid"),
+      name: get(json, "modelId.name"),
+      version: get(json, "modelId.versionId.label"),
+      createdTimestamp: get(json, "modelId.versionId.creationTimeStamp"),
+      createdBy: get(json, "owner.authenticatedUserId"),
+      status: get(json, "artifactStatus.status"),
+      modelType: get(json, "modelId.metrics.kv[0].value"),
+      modelCatalog: get(json, "modelId.metrics.kv[2].value"),
+      publishStatus: get(json, "modelId.metrics.kv[1].value"),
+      associationId: get(json, "modelId.metrics.kv[3].value"),
       revisionId: get(json, "modelId.metrics.kv[4].value")
     };
   }
@@ -39,11 +39,11 @@ export default class Model extends _Model {
   $toJson() {
     return {
       modelId: {
-        name : this.name,
-        uuid : this.modelId,
-        versionId : {
-          comment : "",
-          label : this.version
+        name: this.name,
+        uuid: this.modelId,
+        versionId: {
+          comment: "",
+          label: this.version
         },
         metrics: {
           kv: [
@@ -66,6 +66,6 @@ export default class Model extends _Model {
           ]
         }
       }
-    }
+    };
   }
 }

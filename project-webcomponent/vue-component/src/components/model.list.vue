@@ -2,7 +2,7 @@
   <div class="flex w-full">
     <collapsable-ui title="Models" icon="cube" :collapseBorder="!isEmpty">
       <div slot="right-actions" class="inline-flex">
-        <a href="#" class="text-sm text-gray-500 underline">Learn More</a>
+        <a :href="wikiConfig.modelWikiURL" target="_blank" class="text-sm text-gray-500 underline">Learn More</a>
       </div>
       <div v-if="isEmpty">
         <div class="flex flex-col p-2">
@@ -23,13 +23,13 @@
           <div class="flex inline-flex items-center">
             <select class="form-select mr-2" v-model="sortBy">
               <option value>Sort By</option>
-              <option value="createdAt">Created</option>
+              <option value="createdTimestamp">Created</option>
               <option value="name">Name</option>
             </select>
             <input
               type="text"
               class="form-input mr-2"
-              placeholder="Search Models"
+              placeholder="Search Models by Name"
               v-model="searchTerm"
             />
             <button
@@ -145,6 +145,7 @@
 </template>
 
 <script>
+import dayjs from "dayjs";
 import Model from "../store/entities/model.entity";
 import CollapsableUi from "../components/ui/collapsable.ui";
 import ModalUi from "../components/ui/modal.ui";
@@ -163,6 +164,8 @@ export default {
   },
 
   computed: {
+    ...mapState("app", [
+      "wikiConfig"]),
     ...mapState("model", {
       modelCategories: state => state.categories
     }),
@@ -219,6 +222,16 @@ export default {
           label: "Model Publish Status",
           field: "publishStatus",
           width: "175px"
+        },
+        {
+          label: "Created At",
+          field: "createdTimestamp",
+          sortFn(dateA, dateB) {
+            return dayjs(dateA).isBefore(dayjs(dateB)) ? 1 : -1;
+          },
+          formatFn(value) {
+            return dayjs(value).format("YYYY-MM-DD");
+          }
         },
         {
           label: "Actions",

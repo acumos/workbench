@@ -2,7 +2,7 @@
   <div class="flex w-full">
     <collapsable-ui title="Predictors" icon="cubes" :collapseBorder="!isEmpty">
       <div slot="right-actions" class="inline-flex">
-        <a href="#" class="text-sm text-gray-500 underline">Learn More</a>
+        <a :href="wikiConfig.predictorWikiURL" target="_blank" class="text-sm text-gray-500 underline">Learn More</a>
       </div>
       <div v-if="isEmpty">
         <div class="flex flex-col p-2">
@@ -21,13 +21,13 @@
           <div class="flex inline-flex items-center">
             <select class="form-select mr-2" v-model="sortBy">
               <option value>Sort By</option>
-              <option value="createdAt">Created</option>
+              <option value="createdTimestamp">Created</option>
               <option value="name">Name</option>
             </select>
             <input
               type="text"
               class="form-input mr-2"
-              placeholder="Search Predictors"
+              placeholder="Search Predictors by Name"
               v-model="searchTerm"
             />
             <button
@@ -105,6 +105,7 @@
 </template>
 
 <script>
+import dayjs from "dayjs";
 import CollapsableUi from "../components/ui/collapsable.ui";
 import ModalUi from "../components/ui/modal.ui";
 import PaginationUi from "../components/ui/pagination.ui";
@@ -121,6 +122,8 @@ export default {
     AssociatePredictorForm
   },
   computed: {
+    ...mapState("app", [
+      "wikiConfig"]),
     ...mapState("project", {
       loginAsOwner: state => state.loginAsOwner
     }),
@@ -154,10 +157,6 @@ export default {
           field: "key"
         },
         {
-          label: "Predictor Version",
-          field: "version"
-        },
-        {
           label: "Base URL",
           field: "url"
         },
@@ -166,6 +165,16 @@ export default {
           field: "deployStatus",
           width: "175px"
         },
+        // {
+        //   label: "Created At",
+        //   field: "createdTimestamp",
+        //   sortFn(dateA, dateB) {
+        //     return dayjs(dateA).isBefore(dayjs(dateB)) ? 1 : -1;
+        //   },
+        //   formatFn(value) {
+        //     return dayjs(value).format("YYYY-MM-DD");
+        //   }
+        // },
         {
           label: "Actions",
           field: "actions",

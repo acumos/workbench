@@ -2,7 +2,7 @@
   <div class="w-full">
     <collapsable-ui title="Notebooks" icon="book-open" :collapse-border="!isEmpty">
       <div slot="right-actions" class="inline-flex">
-        <a href="#" class="text-sm text-gray-500 underline">Learn More</a>
+        <a :href="wikiConfig.notebookWikiURL" target="_blank" class="text-sm text-gray-500 underline">Learn More</a>
       </div>
       <div>
         <div class="flex flex-col" v-if="isEmpty">
@@ -32,7 +32,7 @@
             <input
               type="text"
               class="form-input mr-2 py-1"
-              placeholder="Search Notebooks"
+              placeholder="Search Notebooks by Name"
               v-model="searchTerm"
             />
             <button
@@ -111,7 +111,7 @@
                 </template>
               </div>
             </div>
-            <div v-else class="flex justify-left px-1">{{ props.formattedRow[props.column.field] }}</div>
+            <div v-else class="flex justify-center px-1">{{ props.formattedRow[props.column.field] }}</div>
           </template>
           <template slot="pagination-bottom" slot-scope="props">
             <pagination-ui :total="props.total" :pageChanged="props.pageChanged" :itemsPerPage="5" />
@@ -157,6 +157,8 @@ export default {
     AssociateNotebookForm
   },
   computed: {
+    ...mapState("app", [
+      "wikiConfig"]),
     ...mapState("project", {
       loginAsOwner: state => state.loginAsOwner
     }),
@@ -170,7 +172,7 @@ export default {
 
       return {
         enabled: true,
-        initialSortBy: { field: this.sortBy, type: "desc" }
+        initialSortBy: { field: this.sortBy, type: "asc" }
       };
     }
   },

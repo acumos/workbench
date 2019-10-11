@@ -119,7 +119,7 @@ module.exports = function(app) {
 		});
 	});
 	
-	app.delete('/api/notebook/delete', function (req, res){
+	app.post('/api/notebook/delete', function (req, res){
 		let serviceUrl = req.body.url + uripath;
 		let userName = req.body.userName;
 		let noteBookId = req.body.noteBookId;

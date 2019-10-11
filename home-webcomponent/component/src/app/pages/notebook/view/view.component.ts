@@ -52,6 +52,6 @@ export class NotebookViewComponent extends BaseComponent implements OnInit {
     this.id = this.route.snapshot.paramMap.get('id');
     this.name = this.route.snapshot.paramMap.get('name');
     this.breadCrumbs.push({ name: this.name });
-    this.loadComponent('notebookComponent', 'src/notebook-element', this.breadCrumbs);
+    this.loadComponent('notebookComponent', 'notebook-webcomponent-element', this.breadCrumbs);
   }
 }

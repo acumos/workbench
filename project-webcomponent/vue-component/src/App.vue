@@ -147,6 +147,7 @@ export default {
       await this.getModelCategories();
       await this.getModelDetailsForProject();
       await this.getProjectPredictors();
+      this.$emit("on-load-event");
     },
     ...mapMutations("app", [
       "setComponentUrl",

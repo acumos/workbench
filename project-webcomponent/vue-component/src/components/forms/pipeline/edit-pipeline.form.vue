@@ -15,7 +15,7 @@
           <ValidationProvider
             class="flex flex-col"
             name="Data Pipeline Name"
-            rules="required"
+            rules="required|startAlpha"
             v-slot="{ errors, classes }"
           >
             <input
@@ -55,7 +55,7 @@
           <ValidationProvider
             class="flex flex-col"
             name="Data Pipeline url"
-            rules="required"
+            rules="required|url"
             v-slot="{ errors, classes }"
           >
             <input

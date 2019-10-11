@@ -33,7 +33,8 @@ module.exports = function(app) {
 		projectWikiURL: properties.projectWikiURL,
 		notebookWikiURL: properties.notebookWikiURL,
 		pipelineWikiURL: properties.pipelineWikiURL,
-		modelWikiURL: properties.modelWikiURL
+		modelWikiURL: properties.modelWikiURL,
+		predictorWikiURL: properties.predictorWikiURL
 	};
 	const ms_urls = {
 		projectmSURL : properties.projectmSURL,

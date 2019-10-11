@@ -26,7 +26,7 @@ export default class Predictor extends Model {
     return {
       id: get(json, "predictorId.uuid"),
       name: get(json, "predictorId.name"),
-      key: get(json, "predictorId.key"),
+      key: get(json, "predictorId.metrics.kv[1].value"),
       version: get(json, "predictorId.versionId.label"),
       url: get(json, "predictorId.serviceUrl"),
       deployStatus: get(json, "artifactStatus.status"),
@@ -35,6 +35,23 @@ export default class Predictor extends Model {
       modelId: get(json, "model.modelId.uuid"),
       modelVersion: get(json, "model.modelId.versionId.label"),
       associationId: get(json, "predictorId.metrics.kv[0].value"),
+      owner: get(json, "user.authenticatedUserId"),
+      revisionId: get(json, "model.modelId.metrics.kv[0].value")
+    };
+  }
+
+  static $predictorfromJson(json) {
+    return {
+      id: get(json, "predictorId.uuid"),
+      name: get(json, "predictorId.name"),
+      key: get(json, "predictorId.metrics.kv[0].value"),
+      version: get(json, "predictorId.versionId.label"),
+      url: get(json, "predictorId.serviceUrl"),
+      deployStatus: get(json, "artifactStatus.status"),
+      createdTimestamp: get(json, "predictorId.versionId.creationTimeStamp"),
+      status: get(json, "artifactStatus.status"),
+      modelId: get(json, "model.modelId.uuid"),
+      modelVersion: get(json, "model.modelId.versionId.label"),
       owner: get(json, "user.authenticatedUserId"),
       revisionId: get(json, "model.modelId.metrics.kv[0].value")
     };
@@ -79,7 +96,8 @@ export default class Predictor extends Model {
       predictorName: this.name,
       predictorDescription: this.description,
       predictorVersion: this.version,
-      environmentPath: this.url
+      environmentPath: this.url,
+      predictorkey: this.key
     };
   }
 }

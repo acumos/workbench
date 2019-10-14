@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.acumos.cds.client.CommonDataServiceRestClientImpl;
+import org.acumos.cds.domain.MLPSolutionRevision;
 import org.acumos.cds.domain.MLPUser;
 import org.acumos.cds.transport.RestPageRequest;
 import org.acumos.cds.transport.RestPageResponse;
@@ -63,7 +64,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientResponseException;
 
 @Service("PredictorProjectAssociationServiceImpl")
-public class PredictorProjectAssociationServiceImpl implements PredictorProjectAssociationService{
+public class PredictorProjectAssociationServiceImpl implements PredictorProjectAssociationService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
@@ -158,56 +159,43 @@ public class PredictorProjectAssociationServiceImpl implements PredictorProjectA
 		String newPredictorKey = predictorProjAssociation.getPredictorkey();
 		String newEnvironmentPath = predictorProjAssociation.getEnvironmentPath();
 		boolean changeFound = false;
-		
 		MLPUser mlpUser = getUserDetails(authenticatedUserId);
 		try {
 			PredictorProjectAssociation oldAssociation = couchDbService.getPredictorProjectAssocaition(associationId);
 			if (null != oldAssociation) {
-				
-				
 				//1. Get predictor from couch DB 
 				DataSetPredictor oldPredictor = couchDbService.getPredictor(oldAssociation.getPredictorId());
-				
 				String oldVersion = oldAssociation.getPredictorVersion();
 				String oldPredictorKey = oldAssociation.getPredictorkey();
 				String oldEnvironmentPath = oldAssociation.getEnvironmentPath();
-
 				if (null != newVersion && !newVersion.equals(oldVersion)) {
 					oldAssociation.setPredictorVersion(newVersion);
 					oldPredictor.setPredictorVersion(newVersion);
 					changeFound = true;
 				}
-
 				if (null != newPredictorKey && !newPredictorKey.equals(oldPredictorKey)) {
 					oldAssociation.setPredictorkey(newPredictorKey);
 					oldPredictor.setPredictorkey(newPredictorKey);
 					changeFound = true;
 				}
-
 				if (null != newEnvironmentPath && !newEnvironmentPath.equals(oldEnvironmentPath)) {
 					oldAssociation.setEnvironmentPath(newEnvironmentPath);
 					oldPredictor.setEnvironmentPath(newEnvironmentPath);
 					changeFound = true;
 				}
-
 				if (changeFound) {
-					
-					
 					//Update Predictor details 
 					oldPredictor.setPredictorId(predictorProjAssociation.getPredictorId());
 					oldPredictor.setUpdateTimestamp(Instant.now().toString());
 					couchDbService.updatePredictor(oldPredictor);
-					
-					//Updte Predictor Association Details 
+					//Update Predictor Association Details 
 					oldAssociation.setPredictorId(predictorProjAssociation.getPredictorId());
 					oldAssociation.setAssociationID(associationId);
 					oldAssociation.setUpdateTimestamp(Instant.now().toString());
 					couchDbService.updatePredictorProjectAssociation(oldAssociation);
 				}
-
 				predictor = getPredictorVO(authenticatedUserId, mlpUser, oldAssociation);
 			}
-
 		} catch (Exception e) {
 			logger.error("Error occured in editPredictorAssociationToProject() " + e);
 			throw new AssociationException(e.getMessage());
@@ -234,7 +222,6 @@ public class PredictorProjectAssociationServiceImpl implements PredictorProjectA
 		logger.debug("deleteAssociation() Begin");
 		return result;
 	}
-	
 	
 	@Override
 	public Predictor getPredictor(String authenticatedUserId, String modelId,String modelVersion, String revisionId) {
@@ -263,9 +250,7 @@ public class PredictorProjectAssociationServiceImpl implements PredictorProjectA
 		DataSetPredictor result = couchDbService.saveDataSetPredictor(authenticatedUserId,projectId,predictorProjAssociation);
 		logger.debug("createDataSetPredictor() Begin");
 		return result;
-		
 	}
-
 
 	private Predictor convertPredictorVO(String authenticatedUserId,String modelVersion, MLPUser mlpUser, DataSetPredictor pred) {
 		Predictor predictor = new Predictor();
@@ -274,7 +259,7 @@ public class PredictorProjectAssociationServiceImpl implements PredictorProjectA
 		predIdentifier.setName(pred.getPredictorName());
 		predIdentifier.setUuid(pred.getPredcitorId());
 		Version predictorVersion = new Version();
-		predictorVersion.setLabel(pred.getPredictorVersion());
+//		predictorVersion.setLabel(pred.getPredictorVersion());
 		predictorVersion.setCreationTimeStamp(pred.getCreatedTimestamp());
 		predictorVersion.setModifiedTimeStamp(pred.getUpdateTimestamp());
 		predIdentifier.setVersionId(predictorVersion);
@@ -303,7 +288,9 @@ public class PredictorProjectAssociationServiceImpl implements PredictorProjectA
 		modelIdentifier.setIdentifierType(IdentifierType.MODEL);
 		modelIdentifier.setUuid(pred.getSolutionId());
 		Version version = new Version();
-		version.setLabel(modelVersion);
+		MLPSolutionRevision mlpSolutionRevision=cdsClient.getSolutionRevision(pred.getSolutionId(), pred.getRevisionId());
+		String modelVersionLabel =mlpSolutionRevision.getVersion();
+		version.setLabel(modelVersionLabel);
 		modelIdentifier.setVersionId(version);
 		model.setModelId(modelIdentifier);
 		// Predictor associated model details
@@ -334,7 +321,9 @@ public class PredictorProjectAssociationServiceImpl implements PredictorProjectA
 		predIdentifier.setName(association.getPredictorName());
 		predIdentifier.setUuid(association.getPredictorId());
 		Version version = new Version();
-		version.setLabel(association.getPredictorVersion());
+//		version.setLabel(association.getPredictorVersion());
+		version.setCreationTimeStamp(association.getCreatedTimestamp());
+		version.setModifiedTimeStamp(association.getUpdateTimestamp());
 		predIdentifier.setVersionId(version);
 		predIdentifier.setServiceUrl(association.getEnvironmentPath());
 		
@@ -365,8 +354,12 @@ public class PredictorProjectAssociationServiceImpl implements PredictorProjectA
 		modelIdentifier.setIdentifierType(IdentifierType.MODEL);
 		modelIdentifier.setUuid(association.getSolutionId());
 		Version modelVersion = new Version();
-		modelVersion.setLabel(association.getVersion());
+		MLPSolutionRevision mlpSolutionRevision=cdsClient.getSolutionRevision(association.getSolutionId(), association.getRevisionId());
+		String modelVersionLabel =mlpSolutionRevision.getVersion();
+		modelVersion.setLabel(modelVersionLabel);
 		modelIdentifier.setVersionId(modelVersion);
+		
+		
 		
 		KVPairs modelMetrics = new KVPairs();
 		KVPair modelKVPair = new KVPair();
@@ -403,8 +396,4 @@ public class PredictorProjectAssociationServiceImpl implements PredictorProjectA
 		predictor.setUser(predictorUser);
 		return predictor;
 	}
-
-	
-	
-
 }

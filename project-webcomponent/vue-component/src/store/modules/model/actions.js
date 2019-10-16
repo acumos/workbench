@@ -1,6 +1,7 @@
 import axios from "axios";
 import { map, isNull } from "lodash-es";
 import Model from "../../entities/model.entity";
+import Predictor from "../../entities/predictor.entity";
 
 export default {
   async getModelCatalogs({ rootState }) {
@@ -37,6 +38,19 @@ export default {
     Model.create({
       data: models
     });
+  },
+
+  async getPredictorDetailsForProject({ rootState }) {
+    const { data } = await axios.post(
+      `${rootState.app.componentUrl}/api/project/getProjectPredictors`,
+      {
+        userName: rootState.app.userName,
+        url: rootState.app.msConfig.predictormSURL,
+        projectId: rootState.project.activeProject
+      }
+    );
+
+    return map(data.data, predictor => Predictor.$fromJson(predictor));
   },
 
   async associateModel({ rootState }, model) {

@@ -1,0 +1,73 @@
+.btn {
+    @apply px-3 py-2;
+    @apply cursor-pointer;
+    @apply rounded;
+
+    .badge {
+        @apply bg-white text-black p-1 rounded text-xs ml-2;
+    }
+
+    &:focus {
+        @apply outline-none;
+    }
+
+    &:disabled, &:disabled:hover {
+        @apply bg-gray-200 border border-gray-300 text-gray-400;
+        @apply cursor-default;
+        
+    }
+}
+.btn-sm {
+    @apply .btn;
+    @apply px-2 py-1;
+}
+.btn-xs {
+    @apply .btn;
+    @apply px-1 py-0;
+    @apply text-sm;
+}
+.btn-group {
+    @apply p-0 m-2 !important;
+
+    .btn:nth-child(n) {
+        @apply border rounded-none border-r-0;
+
+        &:disabled {
+            @apply cursor-default;
+            @apply border-gray-400;
+            @apply text-gray-400;
+            @apply bg-gray-100;
+        }
+    }
+    
+    .btn:first-child {
+        @apply rounded-l;
+    }
+
+    .btn:last-child {
+        @apply border-r rounded-r;
+    }
+}
+
+.btn-primary {
+    @apply bg-purple-500 text-white;
+
+    &:hover:not(:disabled) {
+        @apply bg-purple-600;
+    }
+}
+
+.btn-secondary {
+    @apply bg-white text-black;
+    @apply border border-gray-400;
+
+    &:hover {
+        @apply bg-gray-100;
+    }
+}
+
+.btn-link {
+    @apply pb-0 px-0 mx-2;
+    @apply text-purple-500;
+    @apply border-b border-purple-500 rounded-none border-dashed;
+}

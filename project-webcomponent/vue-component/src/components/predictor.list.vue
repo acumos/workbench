@@ -106,9 +106,9 @@
 
 <script>
 import dayjs from "dayjs";
-import CollapsableUi from "../components/ui/collapsable.ui";
-import ModalUi from "../components/ui/modal.ui";
-import PaginationUi from "../components/ui/pagination.ui";
+import CollapsableUi from "../vue-common/components/ui/collapsable.ui";
+import ModalUi from "../vue-common/components/ui/modal.ui";
+import PaginationUi from "../vue-common/components/ui/pagination.ui";
 import AssociatePredictorForm from "../components/forms/predictor/associate-predictor.form";
 import Predictor from "../store/entities/predictor.entity";
 import { mapActions, mapState, mapMutations } from "vuex";

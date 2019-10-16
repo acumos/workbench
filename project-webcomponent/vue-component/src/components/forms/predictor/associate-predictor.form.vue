@@ -174,7 +174,7 @@
 
 <script>
 import { isUndefined, filter } from "lodash-es";
-import ToastUI from "../../ui/Toast.ui";
+import ToastUI from "../../../vue-common/components/ui/Toast.ui";
 import Predictor from "../../../store/entities/predictor.entity";
 import { mapState, mapActions } from "vuex";
 

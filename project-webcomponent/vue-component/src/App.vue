@@ -67,8 +67,8 @@ import Model from "./store/entities/model.entity";
 import Predictor from "./store/entities/predictor.entity";
 
 // UI Elements
-import ToastUI from "./components/ui/Toast.ui";
-import ConfirmUI from "./components/ui/Confirm.ui";
+import ToastUI from "./vue-common/components/ui/Toast.ui";
+import ConfirmUI from "./vue-common/components/ui/Confirm.ui";
 import ProjectDetails from "./components/project.details";
 import NotebookList from "./components/notebook.list";
 import PipelineList from "./components/pipeline.list";

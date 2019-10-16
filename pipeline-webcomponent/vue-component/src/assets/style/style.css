@@ -5,8 +5,6 @@
 @import "./components/buttons.css";
 
 /* Vendor overwrides */
-@import "./vendors/very-good-table.css";
 @import './vendors/v-tooltip.css';
-@import './vendors/vue-select.css';
 
 @tailwind utilities;

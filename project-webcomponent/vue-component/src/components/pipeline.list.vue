@@ -148,11 +148,11 @@
 
 <script>
 import dayjs from "dayjs";
-import CollapsableUi from "../components/ui/collapsable.ui";
-import ModalUi from "../components/ui/modal.ui";
+import CollapsableUi from "../vue-common/components/ui/collapsable.ui";
+import ModalUi from "../vue-common/components/ui/modal.ui";
 import EditPipelineForm from "./forms/pipeline/edit-pipeline.form";
 import AssociatePipelineForm from "./forms/pipeline/associate-pipeline.form";
-import PaginationUi from "../components/ui/pagination.ui";
+import PaginationUi from "../vue-common/components/ui/pagination.ui";
 
 import { mapActions, mapState, mapMutations } from "vuex";
 export default {

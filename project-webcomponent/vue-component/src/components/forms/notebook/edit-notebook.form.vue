@@ -145,7 +145,7 @@
 
 <script>
 import { isUndefined } from "lodash-es";
-import ToastUI from "../../ui/Toast.ui";
+import ToastUI from "../../../vue-common/components/ui/Toast.ui";
 import Notebook from "../../../store/entities/notebook.entity";
 import { mapActions, mapState } from "vuex";
 

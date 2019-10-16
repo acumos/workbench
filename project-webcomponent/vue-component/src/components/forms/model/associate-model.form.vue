@@ -160,7 +160,7 @@
 
 <script>
 import { isUndefined, uniqBy, filter, differenceWith, sortBy } from "lodash-es";
-import ToastUI from "../../ui/Toast.ui";
+import ToastUI from "../../../vue-common/components/ui/Toast.ui";
 import Model from "../../../store/entities/model.entity";
 import { mapState, mapActions } from "vuex";
 

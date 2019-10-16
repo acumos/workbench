@@ -29,7 +29,6 @@ var app = express();
 var port = process.env.PORT || 9091;
 
 app.use(cors());
-
 app.use(express.static("../vue-component/dist"));
 app.use(cookieParser());
 app.use(methodOverride());
@@ -44,9 +43,7 @@ app.use(bodyParser.urlencoded({
 
 app.use(bodyParser.text());
 
-
 require('./routes_services.js')(app);
-
 
 var server = app.listen(port, function() {
 	console.info('running on ...'+ port);

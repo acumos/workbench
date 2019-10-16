@@ -25,9 +25,7 @@
         <div class="flex ml-4" v-if="!isEditing && !isArchived">
           <div class="flex">
             <div
-              v-tooltip="{
-                content: item.firstName+' '+item.lastName
-              }"
+              v-tooltip="item.firstName+' '+item.lastName"
               v-for="(item, index) in firstThreeCollaborators"
               :key="index"
               class="w-8 h-8 border rounded-full inline-flex items-center justify-around shadow-md bg-gray-100 text-gray-400 -ml-2"
@@ -168,8 +166,8 @@ import { mapActions, mapState } from "vuex";
 import { get } from "lodash-es";
 
 import Project from "../store/entities/project.entity.js";
-import CollapsableUi from "../components/ui/collapsable.ui";
-import ModalUi from "./ui/modal.ui";
+import CollapsableUi from "../vue-common/components/ui/collapsable.ui";
+import ModalUi from "../vue-common/components/ui/modal.ui";
 import CollaboratorsList from "./collaborators.list";
 import Collaborator from "../store/entities/collaborator.entity.js";
 
@@ -220,9 +218,16 @@ export default {
       );
     }
   },
+  watch:{
+    project() {
+      this.updatedProject = new Project(this.project);
+    }
+   },
+
   created() {
     this.updatedProject = new Project(this.project);
   },
+  
   methods: {
     ...mapActions("project", ["updateProject", "getDetails"]),
     ...mapActions("app", ["showToastMessage"]),

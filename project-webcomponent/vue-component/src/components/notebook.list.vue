@@ -140,9 +140,9 @@
 
 <script>
 import dayjs from "dayjs";
-import CollapsableUi from "../components/ui/collapsable.ui";
-import PaginationUi from "../components/ui/pagination.ui";
-import ModalUi from "./ui/modal.ui";
+import CollapsableUi from "../vue-common/components/ui/collapsable.ui";
+import PaginationUi from "../vue-common/components/ui/pagination.ui";
+import ModalUi from "../vue-common/components/ui/modal.ui";
 import EditNotebookForm from "./forms/notebook/edit-notebook.form";
 import AssociateNotebookForm from "./forms/notebook/associate-notebook.form";
 

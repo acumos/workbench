@@ -39,11 +39,11 @@ export class DashboardComponent extends BaseComponent implements OnInit {
   }
 
   OnDashboardEvent(e) {
-    if (e.detail.data === 'notebook') {
+    if (e.detail[0].action === 'notebook') {
       this.router.navigateByUrl('/pages/notebook/catalog');
-    } else if (e.detail.data === 'project') {
+    } else if (e.detail[0].action === 'project') {
       this.router.navigateByUrl('/pages/projects/catalog');
-    } else if (e.detail.data === 'pipeline') {
+    } else if (e.detail[0].action === 'pipeline') {
       this.router.navigateByUrl('/pages/pipeline/catalog');
     }
   }
@@ -59,7 +59,7 @@ export class DashboardComponent extends BaseComponent implements OnInit {
   getGlobalMsg() {
     if (this.retry === 5 || this.globals.parentMsg !== undefined) {
       this.parentMsg = this.globals.parentMsg;
-      this.loadComponent('dashboardComponent', 'src/dashboard-element', this.breadCrumbs);
+      this.loadComponent('dashboardComponent', 'dashboard-webcomponent', this.breadCrumbs);
       return;
     }
     setTimeout( () => {

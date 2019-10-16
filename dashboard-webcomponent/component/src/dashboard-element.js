@@ -109,6 +109,7 @@ export class DashboardLitElement extends LitElement {
           this.getPipelineCount();
           this.getNotebookCount();
           this.getPRModelCount();
+          this.getModelCount();
         } else if(username && username !== '' && token && token !== '' && id && id !== '') {
           this.view = 'view';
           this.authToken = token;
@@ -118,6 +119,7 @@ export class DashboardLitElement extends LitElement {
           this.getPipelineCount();
           this.getNotebookCount();
           this.getPRModelCount();
+          this.getModelCount();
         } else {
           this.errorMessage = 'Acumos session details are unavailable in browser cookies. Pls login to Acumos portal and come back here..';
           this.alertOpen = true;
@@ -272,12 +274,12 @@ export class DashboardLitElement extends LitElement {
       }),
     }).then(res => res.json())
       .then((n) => {
-        if(n.status === 'Error'){
-          this.errorMessage = n.message;
-          this.modelCount = this.prModelCount;
-        } else {
-          this.modelCount = n.data + this.prModelCount;
-        }
+        // if(n.status === 'Error'){
+        //   this.errorMessage = n.message;
+        //   this.modelCount = this.prModelCount;
+        // } else {
+          this.modelCount = n.data;
+        //}
     }).catch((error) => {
       console.error('Request failed', error);
       this.errorMessage = 'Model count fetch request failed with error: '+ error;
@@ -312,13 +314,13 @@ export class DashboardLitElement extends LitElement {
       }),
     }).then(res => res.json())
       .then((n) => {
-        if(n.status === 'Error'){
-          this.errorMessage = n.message;
-          this.prModelCount = 0;
-        } else {
+        // if(n.status === 'Error'){
+        //   this.errorMessage = n.message;
+        //   this.prModelCount = 0;
+        // } else {
           this.prModelCount = n.data;
-        }
-        this.getModelCount();
+        //}
+        
     }).catch((error) => {
       console.error('Request failed', error);
       this.errorMessage = 'Model count fetch request failed with error: '+ error;
@@ -340,6 +342,15 @@ export class DashboardLitElement extends LitElement {
 	    window.top.postMessage('navigateToMyModel', '*');
     } else{
       this.myModelsUrl = this.portalFEUrl + '/#/manageModule';
+      window.open(this.myModelsUrl, '_blank');
+    }
+  }
+
+  navigateToMarketplace(){
+    if(this.parentMsg === "iframeMsg"){
+	    window.top.postMessage('navigateToMarketplace', '*');
+    } else{
+      this.myModelsUrl = this.portalFEUrl + '/#/marketPlace';
       window.open(this.myModelsUrl, '_blank');
     }
   }
@@ -375,7 +386,7 @@ export class DashboardLitElement extends LitElement {
               <div class="col-lg-12">
                 <div class="row">
                   <div class="col-md-3">
-                    <div class="card-shadow card card-link mb-3 mb-5 bg-white">
+                    <div class="card-shadow card card-link mb-3 mb-5 bg-white h-75">
                       <a href="javascript:void" @click=${e => this.userAction("project")}>
                         <div class="card-body text-center">
                           <div class="div-color mb-4">
@@ -399,7 +410,7 @@ export class DashboardLitElement extends LitElement {
                     </div>
                   </div>
                   <div class="col-md-3">
-                    <div class="card-shadow card card-link mb-3 mb-5 bg-white">
+                    <div class="card-shadow card card-link mb-3 mb-5 bg-white h-75">
                       <a href="javascript:void" @click=${e => this.userAction("notebook")}>
                         <div class="card-body text-center">
                           <div class="div-color mb-4">
@@ -425,7 +436,7 @@ export class DashboardLitElement extends LitElement {
                   ${this.pipelineFlag === "true"
                     ?html`
                     <div class="col-md-3">
-                      <div class="card-shadow card card-link mb-3 mb-5 bg-white">
+                      <div class="card-shadow card card-link mb-3 mb-5 bg-white h-75">
                         <a href="javascript:void" @click=${e => this.userAction("pipeline")}>
                           <div class="card-body text-center">
                             <div class="div-color mb-4">
@@ -452,16 +463,25 @@ export class DashboardLitElement extends LitElement {
                     :``
                   }
                   <div class="col-md-3">
-                    <div class="card-shadow card card-link mb-3 mb-5 bg-white">
-                      <a href="javascript:void" @click=${e => this.navigateToMyModel()}>
+                    <div class="card-shadow card card-link mb-3 mb-5 bg-white h-75">
+                      <a>
                         <div class="card-body text-center">
                           <div class="div-color mb-4">
                             <button class="btnIcon btn-primary">
                               <img src="${this.componenturl}/src/my_model_icon.png" alt="My Models">
                             </button>
-                            <h2 class="font-weight-normal mt-2">My Models</h2>
                           </div>
-                          <h4 class="font-weight-normal">${this.modelCount}</h4>
+                            <button class="btn btn-primary card-button btn-md btn-block" style="width:50%" @click=${e => this.navigateToMyModel()}>
+                            My Models&nbsp;&nbsp;
+                            <span class="badge badge-light">
+                              ${this.prModelCount}</span>
+                            </button>
+                            <button class="btn btn-primary card-button btn-md btn-block" style="width:50%" @click=${e => this.navigateToMarketplace()}>
+                            Marketplace&nbsp;&nbsp;
+                            <span class="badge badge-light">
+                              ${this.modelCount}</span>
+                            </button>
+                            
                         </div>
                       </a>
                     </div>

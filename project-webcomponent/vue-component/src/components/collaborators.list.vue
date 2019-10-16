@@ -100,7 +100,7 @@
 
 <script>
 import Collaborator from "../store/entities/collaborator.entity";
-import ToastUI from "../components/ui/Toast.ui";
+import ToastUI from "../vue-common/components/ui/Toast.ui";
 
 import { mapActions, mapState } from "vuex";
 import { differenceWith, filter, sortBy } from "lodash-es";

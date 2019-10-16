@@ -153,7 +153,7 @@ import dayjs from "dayjs";
 import { mapActions } from "vuex";
 
 import Notebook from "../store/entities/notebook.entity.js";
-import CollapsableUi from "../components/ui/collapsable.ui";
+import CollapsableUi from "../vue-common/components/ui/collapsable.ui";
 
 export default {
   props: {
@@ -189,6 +189,13 @@ export default {
       return dayjs(this.notebook.creationDate).format("YYYY-MM-DD");
     }
   },
+
+  watch:{
+    notebook() {
+      this.updatedNotebook = new Notebook(this.notebook);
+    }
+   },
+
   created() {
     this.updatedNotebook = new Notebook(this.notebook);
   },

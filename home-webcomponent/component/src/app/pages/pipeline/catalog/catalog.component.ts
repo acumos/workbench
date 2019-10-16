@@ -37,8 +37,8 @@ export class PipelineCatalogComponent extends BaseComponent implements OnInit {
   }
 
   OnCatalogPipelineEvent(e) {
-    if (e.detail.data.action === 'view-pipeline') {
-      this.router.navigateByUrl('/pages/pipeline/view/' + e.detail.data.pipelineId + '/' + e.detail.data.pipelineName);
+    if (e.detail[0].action === 'view-pipeline') {
+      this.router.navigateByUrl('/pages/pipeline/view/' + e.detail[0].pipelineId + '/' + e.detail[0].pipelineName);
     }
   }
 
@@ -46,6 +46,6 @@ export class PipelineCatalogComponent extends BaseComponent implements OnInit {
     this.loadHtml = false;
     this.showSpinner = true;
     this.alertOpen = false;
-    this.loadComponent('pipelineCatalogComponent', 'src/pipeline-catalog-element', this.breadCrumbs);
+    this.loadComponent('pipelineCatalogComponent', 'pipeline-catalog-webcomponent', this.breadCrumbs);
   }
 }

@@ -2,7 +2,11 @@
   <div class="flex w-full">
     <collapsable-ui title="Models" icon="cube" :collapseBorder="!isEmpty">
       <div slot="right-actions" class="inline-flex">
-        <a :href="wikiConfig.modelWikiURL" target="_blank" class="text-sm text-gray-500 underline">Learn More</a>
+        <a
+          :href="wikiConfig.modelWikiURL"
+          target="_blank"
+          class="text-sm text-gray-500 underline"
+        >Learn More</a>
       </div>
       <div v-if="isEmpty">
         <div class="flex flex-col p-2">
@@ -12,9 +16,7 @@
               class="btn btn-secondary btn-sm mr-2"
               @click="associateModel()"
               :disabled="!loginAsOwner"
-            >
-              Associate Models
-            </button>
+            >Associate Models</button>
           </div>
         </div>
       </div>
@@ -51,15 +53,8 @@
           :sort-options="sortOptions"
         >
           <template slot="table-row" slot-scope="props">
-            <div
-              class="flex justify-center"
-              v-if="props.column.field === 'publishStatus'"
-            >
-              <FAIcon
-                class="text-gray-500"
-                icon="cloud"
-                v-if="props.row.publishStatus === 'false'"
-              ></FAIcon>
+            <div class="flex justify-center" v-if="props.column.field === 'publishStatus'">
+              <FAIcon class="text-gray-500" icon="cloud" v-if="props.row.publishStatus === 'false'"></FAIcon>
               <FAIcon
                 class="text-green-700"
                 icon="cloud-upload-alt"
@@ -67,25 +62,19 @@
               ></FAIcon>
             </div>
 
-            <div
-              class="flex justify-center"
-              v-else-if="props.column.field === 'modelType'"
-            >
+            <div class="flex justify-center" v-else-if="props.column.field === 'modelType'">
               {{
-                props.row.modelType === "None"
-                  ? "Others"
-                  : lookUpCategory(props.row.modelType)
+              props.row.modelType === "None"
+              ? "Others"
+              : lookUpCategory(props.row.modelType)
               }}
             </div>
 
-            <div
-              class="flex justify-center"
-              v-else-if="props.column.field === 'modelCatalog'"
-            >
+            <div class="flex justify-center" v-else-if="props.column.field === 'modelCatalog'">
               {{
-                props.row.modelCatalog === "None"
-                  ? "Private Catalog"
-                  : props.row.modelCatalog
+              props.row.modelCatalog === "None"
+              ? "Private Catalog"
+              : props.row.modelCatalog
               }}
             </div>
 
@@ -116,16 +105,10 @@
                 </button>
               </div>
             </div>
-            <div v-else class="flex justify-center">
-              {{ props.formattedRow[props.column.field] }}
-            </div>
+            <div v-else class="flex justify-center">{{ props.formattedRow[props.column.field] }}</div>
           </template>
           <template slot="pagination-bottom" slot-scope="props">
-            <pagination-ui
-              :total="props.total"
-              :pageChanged="props.pageChanged"
-              :itemsPerPage="5"
-            />
+            <pagination-ui :total="props.total" :pageChanged="props.pageChanged" :itemsPerPage="5" />
           </template>
         </vue-good-table>
       </div>
@@ -136,10 +119,7 @@
       v-if="isAssociatingModel"
       @onDismiss="isAssociatingModel = false"
     >
-      <associate-model-form
-        :initialModel="activeModel"
-        @onSuccess="isAssociatingModel = false"
-      />
+      <associate-model-form :initialModel="activeModel" @onSuccess="isAssociatingModel = false" />
     </modal-ui>
   </div>
 </template>
@@ -152,7 +132,7 @@ import ModalUi from "../components/ui/modal.ui";
 import PaginationUi from "../components/ui/pagination.ui";
 import AssociateModelForm from "../components/forms/model/associate-model.form";
 import { mapActions, mapState, mapMutations } from "vuex";
-import { find } from "lodash-es";
+import { find, filter } from "lodash-es";
 
 export default {
   props: ["models"],
@@ -164,8 +144,7 @@ export default {
   },
 
   computed: {
-    ...mapState("app", [
-      "wikiConfig"]),
+    ...mapState("app", ["wikiConfig"]),
     ...mapState("model", {
       modelCategories: state => state.categories
     }),
@@ -245,8 +224,13 @@ export default {
 
   methods: {
     ...mapMutations("app", ["confirm"]),
-    ...mapActions("model", ["deleteAssociation", "getModelDetailsForProject"]),
+    ...mapActions("model", [
+      "deleteAssociation",
+      "getModelDetailsForProject",
+      "getPredictorDetailsForProject"
+    ]),
     ...mapActions("app", ["showToastMessage"]),
+    ...mapActions("predictor", ["deletePredictorAssociation", "getProjectPredictors"]),
     associateModel() {
       this.activeModel = undefined;
       this.isAssociatingModel = true;
@@ -259,31 +243,84 @@ export default {
 
     async deleteModelAssociation(model) {
       model = new Model(model);
-      this.confirm({
+      let predictors = await this.getPredictorDetailsForProject();
+      let predictorAssociated = [];
+      if(predictors.length > 0){
+        predictorAssociated = filter(
+          predictors,
+          predictor =>
+            predictor.modelId === model.modelId &&
+            predictor.modelVersion === model.version
+        );
+      }
+
+      if (predictorAssociated.length > 0) {
+        this.confirm({
         title: "Delete " + model.name + " Association",
-        body: "Are you sure you want to delete " + model.name + " association?",
+        body:
+          "Removing the Model association will also remove Predictor association.",
         options: {
-          okLabel: "Delete Model Association",
+          okLabel: "Confirm",
           dismissLabel: "Cancel"
         },
         onOk: async () => {
-          const response = await this.deleteAssociation(model.$toJson());
-          if (response.data.status === "Success") {
-            await this.getModelDetailsForProject();
-            this.showToastMessage({
-              id: "global",
-              message: `${response.data.message}`,
-              type: "success"
-            });
-          } else {
-            this.showToastMessage({
-              id: "global",
-              message: `${response.data.message}`,
-              type: "error"
-            });
+            const response = await this.deletePredictorAssociation(
+              predictorAssociated[0]
+            );
+            if (response.data.status === "Success") {
+              await this.getProjectPredictors();
+              const response1 = await this.deleteAssociation(model.$toJson());
+              if (response1.data.status === "Success") {
+                await this.getModelDetailsForProject();
+                this.showToastMessage({
+                  id: "global",
+                  message: `${response1.data.message}`,
+                  type: "success"
+                });
+              } else {
+                this.showToastMessage({
+                  id: "global",
+                  message: `${response1.data.message}`,
+                  type: "error"
+                });
+              }
+            } else {
+              this.showToastMessage({
+                id: "global",
+                message: `${response.data.message}`,
+                type: "error"
+              });
+            }
           }
-        }
-      });
+        });
+      } else{
+        this.confirm({
+          title: "Delete " + model.name + " Association",
+          body:
+            "Are you sure you want to delete " + model.name + " association?",
+          options: {
+            okLabel: "Delete Model Association",
+            dismissLabel: "Cancel"
+          },
+          onOk: async () => {
+            const response = await this.deleteAssociation(model.$toJson());
+            if (response.data.status === "Success") {
+              await this.getModelDetailsForProject();
+              this.showToastMessage({
+                id: "global",
+                message: `${response.data.message}`,
+                type: "success"
+              });
+            } else {
+              this.showToastMessage({
+                id: "global",
+                message: `${response.data.message}`,
+                type: "error"
+              });
+            }
+          }
+        });
+      }
     },
 
     viewModel(model) {

@@ -220,9 +220,12 @@ export default {
       );
     }
   },
-  created() {
-    this.updatedProject = new Project(this.project);
-  },
+  watch:{
+    project() {
+      this.updatedProject = new Project(this.project);
+    }
+   },
+
   methods: {
     ...mapActions("project", ["updateProject", "getDetails"]),
     ...mapActions("app", ["showToastMessage"]),

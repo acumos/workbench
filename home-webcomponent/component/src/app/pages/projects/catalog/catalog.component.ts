@@ -37,8 +37,8 @@ export class CatalogComponent extends BaseComponent implements OnInit {
   }
 
   OnCatalogProjectEvent(e) {
-    if (e.detail.data.action === 'view-project') {
-      this.router.navigateByUrl('/pages/projects/view/' + e.detail.data.projectId + '/' + e.detail.data.projectName);
+    if (e.detail[0].action === 'view-project') {
+      this.router.navigateByUrl('/pages/projects/view/' + e.detail[0].projectId + '/' + e.detail[0].projectName);
     }
   }
 
@@ -46,6 +46,6 @@ export class CatalogComponent extends BaseComponent implements OnInit {
     this.loadHtml = false;
     this.showSpinner = true;
     this.alertOpen = false;
-    this.loadComponent('projectCatalogComponent', 'src/project-catalog-element', this.breadCrumbs);
+    this.loadComponent('projectCatalogComponent', 'project-catalog-webcomponent', this.breadCrumbs);
   }
 }

@@ -18,7 +18,7 @@ import PipelineModule from "./modules/pipeline";
 import ModelModule from "./modules/model";
 import PredictorModule from "./modules/predictor";
 
-const database = new VuexORM.Database();
+const database = new VuexORM.Database({});
 
 database.register(Model);
 database.register(Notebook);

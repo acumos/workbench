@@ -486,3 +486,219 @@ a. JSON formatted project object as the body of the response
 
 b.Http response code 200.
 
+6. Share Project with User:
+--------------------
+**Operation Name**
+
+ shareProject
+
+**Trigger**
+
+This API is called when the user request the to share his owned project to another user in ML Workbench workspace UI.
+
+ **Request**
+
+  {
+     Users:collaborators (list of Users with user.userId.uuid and Role)
+  }
+ **Response**
+
+  {
+     Project:project (with list of collaborators)
+  }
+
+**Behavior**
+
+1. The Project Service must check if the request JSON structure is valid, otherwise it should return
+
+  a. serviceStatus.status.SERVICE_STATUS=ERROR
+  b. serviceStatus.statusMessage= “Incorrectly formatted input – Invalid JSON”
+  c. Send the response to client with Http response code – 4xx NOT_FOUND
+
+2. The Project Service must retrieve the authenticatedUserId from the context of the REST call (the REST Header contains the authenticatedUserId) and make sure it is populated otherwise it must return
+
+  a. serviceStatus.status.SERVICE_STATUS =ERROR
+  b. serviceStatus.statusMessage = “Acumos User Id missing”.
+  c. Send the response to client with Http response code – 4xx NOT_FOUND
+
+3. The Project Service must check that projectId.uuid is populated in the request otherwise it must return:
+
+  a. serviceStatus.status.SERVICE_STATUS =ERROR
+  b. serviceStatus.statusMessage = “Project Id missing”.
+  c. Send response to client with Http response code – 4xx NOT_FOUND
+
+4. Check if the user is exists in CDS : Project service must call the CDS and check whether user is present in cds otherwise it must return:
+
+  a. serviceStatus.status.SERVICE_STATUS =ERROR
+  b. serviceStatus.statusMessage = "Exception occured: User does not Exists "
+  c. Send response to client with Http response code – 4xx NOT_FOUND
+
+5. Check if the user is owner of the project: Project service must call CDS and check whether user is the owner of the project otherwise it should return :
+
+  a. serviceStatus.status.SERVICE_STATUS =ERROR
+  b. serviceStatus.statusMessage = "Permission denied"
+  c. Send response to client with Http response code – 4xx NOT_FOUND
+
+6. Check if user is ACTIVE or not : Project service must call CDS and check whether the user is active otherwise it should return :
+
+  a. serviceStatus.status.SERVICE_STATUS =ERROR
+  b. serviceStatus.statusMessage = "User is not ACTIVE"
+  c. Send response to client with Http response code – 4xx NOT_FOUND
+
+7 . Check if Role is given by the user in input : Project service must check if the given input have roles to the user otherwise it should return :
+
+  a. serviceStatus.status.SERVICE_STATUS =ERROR
+  b. serviceStatus.statusMessage = "Roles not defined"
+  c. Send response to client with Http response code – 4xx NOT_FOUND
+
+8. Check if the related project is exists : Project service must call CDS and check if the given project with projectId  is exists in otherwise it should return:
+
+  a. serviceStatus.status.SERVICE_STATUS =ERROR
+  b. serviceStatus.statusMessage = "Project Specified Not found"
+  c. Send response to client with Http response code – 4xx NOT_FOUND
+
+9. Check if the collaborators is already exists : Project service must call couch db and check if collaborators already exists otherwise it should return :
+
+  a. serviceStatus.status.SERVICE_STATUS =ERROR
+  b. serviceStatus.statusMessage = "Collaborator already Exists"
+  c. Send response to client with Http response code – 4xx NOT_FOUND
+
+10. Share project with collaborator : Project service must access couch db and create a document in it with required details and must return the Project object with the user and role respectively otherwise it should return 
+
+  a. serviceStatus.status.SERVICE_STATUS =ERROR
+  b. serviceStatus.statusMessage = "Exception occured while saving in DB"
+  c. Send response to client with Http response code – 4xx NOT_FOUND
+
+
+7. Remove user from the Collaborator List:
+----------------------------------------
+**Operation Name**
+
+removeCollaborator
+
+**Trigger**
+
+This API is called when the user request to remove the user from the collaborators from his owned project in ML Workbench workspace UI.
+
+**Request**
+
+  {
+     Users:collaborators (list of Users with user.userId.uuid)
+  }
+
+**Response**
+
+  {
+     Project:project ( with list of updated collaborators after removal)
+  }
+**Behavior**
+
+1.The Project Service must check if the request JSON structure is valid, otherwise it should return
+
+  a. serviceStatus.status.SERVICE_STATUS=ERROR
+  b. serviceStatus.statusMessage= “Incorrectly formatted input – Invalid JSON”
+  c. Send the response to client with Http response code – 4xx NOT_FOUND
+
+2.The Project Service must retrieve the authenticatedUserId from the context of the REST call (the REST Header contains the authenticatedUserId) and make sure it is populated otherwise it must return
+
+  a. serviceStatus.status.SERVICE_STATUS =ERROR
+  b. serviceStatus.statusMessage = “Acumos User Id missing”.
+  c. Send the response to client with Http response code – 4xx NOT_FOUND
+
+3.The Project Service must check that projectId.uuid is populated in the request otherwise it must return:
+
+  a. serviceStatus.status.SERVICE_STATUS =ERROR
+  b. serviceStatus.statusMessage = “Project Id missing”.
+  c. Send response to client with Http response code – 4xx NOT_FOUND
+
+4. Check if the user is exists in CDS : Project service must call the CDS and check whether user is present in cds otherwise it must return:
+
+  a. serviceStatus.status.SERVICE_STATUS =ERROR
+  b. serviceStatus.statusMessage = "Exception occured: User does not Exists "
+  c. Send response to client with Http response code – 4xx NOT_FOUND
+
+5. Check if the user is owner of the project: Project service must call CDS and check whether user is the owner of the project otherwise it should return :
+
+  a. serviceStatus.status.SERVICE_STATUS =ERROR
+  b. serviceStatus.statusMessage = "Permission denied"
+  c. Send response to client with Http response code – 4xx NOT_FOUND
+
+6. Check if user is ACTIVE or not : Project service must call CDS and check whether the user is active otherwise it should return :
+
+  a. serviceStatus.status.SERVICE_STATUS =ERROR
+  b. serviceStatus.statusMessage = "User is not ACTIVE"
+  c. Send response to client with Http response code – 4xx NOT_FOUND
+
+7 . check if Role is given by the user in input : Project service must check if the given input have roles to the user otherwise it should return :
+
+  a. serviceStatus.status.SERVICE_STATUS =ERROR
+  b. serviceStatus.statusMessage = "Roles not defined"
+  c. Send response to client with Http response code – 4xx NOT_FOUND
+
+8. check if the related project is exists : Project service must call CDS and check if the given project with projectId  is exists in otherwise it should return:
+
+  a. serviceStatus.status.SERVICE_STATUS =ERROR
+  b. serviceStatus.statusMessage = "Project Specified Not found"
+  c. Send response to client with Http response code – 4xx NOT_FOUND
+
+9. check if the user is exists as a collaborator : Project service must check in couch db if the user exists as a collaborator otherwise it should return :
+
+  a. serviceStatus.status.SERVICE_STATUS =ERROR
+  b. serviceStatus.statusMessage = "User is not a collaborator"
+  c. Send response to client with Http response code – 4xx NOT_FOUND
+
+10 . Remove user from collaborators list: Project service must call access couch db and get the related document details and remove the user from the collaborators list from couch db. After this successful execution, it must return 
+Project object with updates collaborators with roles respectively otherwise it should return:
+
+  a. serviceStatus.status.SERVICE_STATUS =ERROR
+  b. serviceStatus.statusMessage = "Exception occured while finding the documents in couchDB"
+  c. Send response to client with Http response code – 4xx NOT_FOUND
+
+8. Get the list of shared Project for the logged in User:
+---------------------------------------------------------
+**Operation Name**
+getSharedProjects
+
+**Trigger**
+
+This API is called when the user request to the projects which are shared with it in ML Workbench workspace UI.
+
+**Request**
+
+authenticatedUserId
+
+**Response**
+
+  {
+     Project:project (with collaborators)
+  }
+**Behavior**
+1.The Project Service must check if the request JSON structure is valid, otherwise it should return
+
+  a. serviceStatus.status.SERVICE_STATUS=ERROR
+  b. serviceStatus.statusMessage= “Incorrectly formatted input – Invalid JSON”
+  c. Send the response to client with Http response code – 4xx NOT_FOUND
+
+2.The Project Service must retrieve the authenticatedUserId from the context of the REST call (the REST Header contains the authenticatedUserId) and make sure it is populated otherwise it must return :
+
+  a. serviceStatus.status.SERVICE_STATUS =ERROR
+  b. serviceStatus.statusMessage = “Acumos User Id missing”.
+  c. Send the response to client with Http response code – 4xx NOT_FOUND
+
+3.The Project Service must check that projectId.uuid is populated in the request otherwise it must return:
+
+  a. serviceStatus.status.SERVICE_STATUS =ERROR
+  b. serviceStatus.statusMessage = “Project Id missing”.
+  c. Send response to client with Http response code – 4xx NOT_FOUND
+
+4. Check if the user is exists in CDS : Project service must call the CDS and check whether user is present in cds otherwise it must return:
+
+  a. serviceStatus.status.SERVICE_STATUS =ERROR
+  b. serviceStatus.statusMessage = "Exception occured: User does not Exists "
+  c. Send response to client with Http response code – 4xx NOT_FOUND
+
+5. Get shareProjects for the logged in user: Project service must access couch db and get the list of projects that is been shared with this logged in user and returns the list of project object with the collaborators otherwise it should return : 
+
+  a. serviceStatus.status.SERVICE_STATUS =ERROR
+  b. serviceStatus.statusMessage = "Exception occured while finding the documents in couchDB "
+  c. Send response to client with Http response code – 4xx NOT_FOUND

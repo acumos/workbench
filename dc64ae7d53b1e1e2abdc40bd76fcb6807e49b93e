@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "816a81b8_460f6be7",
+        "filename": "docs/project-service-api-doc.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-10-17T13:54:43Z",
+      "side": 1,
+      "message": "Not aligned properly as per the other points.",
+      "revId": "dc64ae7d53b1e1e2abdc40bd76fcb6807e49b93e",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f4f0f3c5_cebc25bc",
+        "filename": "docs/project-service-api-doc.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-10-17T13:54:43Z",
+      "side": 1,
+      "message": "Not aligned properly as per the other points.\n\nAlso please check for alignment of other points in Behavior",
+      "revId": "dc64ae7d53b1e1e2abdc40bd76fcb6807e49b93e",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}

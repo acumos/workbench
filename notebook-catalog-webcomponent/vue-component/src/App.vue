@@ -50,7 +50,7 @@ export default {
     onOpenNotebook(notebook) {
       this.$emit("catalog-notebook-event", {
         action: "view-notebook",
-        notebookId: notebook.id,
+        noteBookId: notebook.id,
         notebookName: notebook.name
       });
     },

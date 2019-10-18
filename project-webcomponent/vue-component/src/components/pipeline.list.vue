@@ -25,20 +25,21 @@
         <div class="flex justify-end my-3" v-if="!isEmpty">
           <div class="flex inline-flex items-center">
             <select class="form-select mr-2 py-1" v-model="sortBy">
-              <option value>Sort By</option>
-              <option value="createdAt">Created</option>
+              <option value="" disabled selected>Sort By</option>
+              <option value="createdAt">Created Date</option>
               <option value="name">Name</option>
             </select>
             <input
               type="text"
               class="form-input mr-2 py-1"
-              placeholder="Search Pipelines by Name"
+              placeholder="Search Pipelines"
               v-model="searchTerm"
             />
             <button
               class="btn btn-sm btn-primary text-white mr-2"
               @click="editPipeline()"
               :disabled="!loginAsOwner"
+              v-tooltip="'Create Pipeline'"
             >
               <FAIcon icon="plus-square" />
             </button>
@@ -46,6 +47,7 @@
               class="btn btn-sm btn-secondary text-black mr-2"
               @click="associatePipeline()"
               :disabled="!loginAsOwner"
+              v-tooltip="'Associate Pipeline'"
             >
               <FAIcon icon="link" />
             </button>
@@ -70,6 +72,7 @@
                   <button
                     class="btn btn-xs btn-primary text-white mx-1"
                     @click="pipelineLaunch(props.row)"
+                    v-tooltip="'Launch Pipeline'"
                   >
                     <FAIcon icon="external-link-alt" />
                   </button>
@@ -77,12 +80,13 @@
                     class="btn btn-xs btn-secondary text-black mx-1"
                     @click="editPipeline(props.row)"
                     :disabled="!loginAsOwner"
+                    v-tooltip="'Edit Pipeline'"
                   >
                     <FAIcon icon="pencil-alt" />
                   </button>
                   <button
                     class="btn btn-xs btn-secondary text-black mx-1"
-                    v-tooltip="'Archive'"
+                    v-tooltip="'Archive Pipeline'"
                     @click="pipelineArchive(props.row)"
                     :disabled="!loginAsOwner"
                   >
@@ -92,7 +96,7 @@
                 <template v-else-if="props.row.status === 'ARCHIVED'">
                   <button
                     class="btn btn-xs btn-secondary text-black mx-1"
-                    v-tooltip="'Unarchive'"
+                    v-tooltip="'Unarchive Pipeline'"
                     @click="pipelineUnarchive(props.row)"
                     :disabled="!loginAsOwner"
                   >
@@ -100,7 +104,7 @@
                   </button>
                   <button
                     class="btn btn-xs btn-secondary text-black mx-1"
-                    v-tooltip="'Delete'"
+                    v-tooltip="'Delete Pipeline'"
                     @click="pipelineDelete(props.row)"
                     :disabled="!loginAsOwner"
                   >
@@ -111,7 +115,7 @@
                 <template v-else-if="props.row.status === 'FAILED'">
                   <button
                     class="btn btn-xs btn-secondary text-black mx-1"
-                    v-tooltip="'Delete'"
+                    v-tooltip="'Delete Pipeline'"
                     @click="pipelineDelete(props.row)"
                   >
                     <FAIcon icon="trash-alt" />

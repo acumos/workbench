@@ -25,20 +25,21 @@
         <div class="flex justify-end my-3" v-if="!isEmpty">
           <div class="flex inline-flex items-center">
             <select class="form-select mr-2 py-1" v-model="sortBy">
-              <option value>Sort By</option>
+              <option value="" disabled selected>Sort By</option>
               <option value="createdAt">Created</option>
               <option value="name">Name</option>
             </select>
             <input
               type="text"
               class="form-input mr-2 py-1"
-              placeholder="Search Notebooks by Name"
+              placeholder="Search Notebooks"
               v-model="searchTerm"
             />
             <button
               class="btn btn-sm btn-primary text-white mr-2"
               @click="editNotebook()"
               :disabled="!loginAsOwner"
+              v-tooltip="'Create Notebook'"
             >
               <FAIcon icon="plus-square" />
             </button>
@@ -46,6 +47,7 @@
               class="btn btn-sm btn-secondary text-black mr-2"
               @click="associateNotebook()"
               :disabled="!loginAsOwner"
+              v-tooltip="'Associate Notebook'"
             >
               <FAIcon icon="link" />
             </button>
@@ -72,6 +74,7 @@
                   <button
                     class="btn btn-xs btn-primary text-white mx-1"
                     @click="notebookLaunch(props.row)"
+                    v-tooltip="'Launch Notebook'"
                   >
                     <FAIcon icon="external-link-alt" />
                   </button>
@@ -79,12 +82,13 @@
                     class="btn btn-xs btn-secondary text-black mx-1"
                     @click="editNotebook(props.row)"
                     :disabled="!loginAsOwner"
+                    v-tooltip="'Edit Notebook'"
                   >
                     <FAIcon icon="pencil-alt" />
                   </button>
                   <button
                     class="btn btn-xs btn-secondary text-black mx-1"
-                    v-tooltip="'Archive'"
+                    v-tooltip="'Archive Notebook'"
                     @click="notebookArchive(props.row)"
                     :disabled="!loginAsOwner"
                   >
@@ -94,7 +98,7 @@
                 <template v-else-if="props.row.status === 'ARCHIVED'">
                   <button
                     class="btn btn-xs btn-secondary text-black mx-1"
-                    v-tooltip="'Unarchive'"
+                    v-tooltip="'Unarchive Notebook'"
                     @click="notebookUnarchive(props.row)"
                     :disabled="!loginAsOwner"
                   >
@@ -102,7 +106,7 @@
                   </button>
                   <button
                     class="btn btn-xs btn-secondary text-black mx-1"
-                    v-tooltip="'Delete'"
+                    v-tooltip="'Delete Notebook'"
                     @click="notebookDelete(props.row)"
                     :disabled="!loginAsOwner"
                   >

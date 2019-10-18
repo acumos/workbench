@@ -10,6 +10,7 @@
           class="btn btn-xs btn-primary w-8 h-8"
           v-if="!isEditing && !isArchived"
           @click="editNotebook()"
+          v-tooltip="'Edit Notebook'"
         >
           <FAIcon icon="pencil-alt"></FAIcon>
         </button>
@@ -18,6 +19,7 @@
           <button
             class="btn btn-xs py-1 px-2 btn-primary rounded-0"
             @click="save(updatedNotebook)"
+            v-tooltip="'Save Notebook'"
           >
             <FAIcon icon="save"></FAIcon>
           </button>
@@ -97,6 +99,10 @@
         <tr>
           <td>Notebook Creation Date</td>
           <td>{{ created }}</td>
+        </tr>
+        <tr>
+          <td>Notebook Modified Date</td>
+          <td>{{ modified }}</td>
         </tr>
         <tr>
           <td>
@@ -187,6 +193,9 @@ export default {
     },
     created() {
       return dayjs(this.notebook.creationDate).format("YYYY-MM-DD");
+    },
+    modified() {
+      return dayjs(this.notebook.modifiedDate).format("YYYY-MM-DD");
     }
   },
 

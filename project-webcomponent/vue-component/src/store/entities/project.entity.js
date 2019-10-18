@@ -11,6 +11,7 @@ export default class Project extends Model {
       version: this.attr(""),
       status: this.attr(""),
       creationDate: this.attr(""),
+      modifiedDate: this.attr(""),
       description: this.attr(""),
       collaborators: this.attr(null),
       owner: this.attr("")
@@ -24,6 +25,7 @@ export default class Project extends Model {
     set(json, "projectId.name", this.name);
     set(json, "description", this.description);
     set(json, "projectId.versionId.creationTimeStamp", this.creationDate);
+    set(json, "projectId.versionId.modifiedTimeStamp", this.modifiedDate);
     set(json, "projectId.versionId.label", this.version);
     set(json, "artifactStatus.status", this.status);
     set(json, "collaborators", this.collaborators);

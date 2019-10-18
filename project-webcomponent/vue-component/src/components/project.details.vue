@@ -11,6 +11,7 @@
           v-if="!isEditing && !isArchived"
           @click="editProject()"
           :disabled="!loginAsOwner"
+          v-tooltip="'edit'"
         >
           <FAIcon icon="pencil-alt"></FAIcon>
         </button>
@@ -19,6 +20,7 @@
           v-if="!isEditing && !isArchived"
           @click="isManagingCollaborators = true"
           :disabled="!loginAsOwner"
+          v-tooltip="'Manage Collaborators'"
         >
           <FAIcon icon="users"></FAIcon>
         </button>
@@ -46,6 +48,7 @@
           <button
             class="btn btn-xs py-1 px-2 btn-primary rounded-0"
             @click="save(updatedProject)"
+            v-tooltip="'Save Project'"
           >
             <FAIcon icon="save"></FAIcon>
           </button>
@@ -125,6 +128,10 @@
         <tr>
           <td>Project Creation Date</td>
           <td>{{ created }}</td>
+        </tr>
+        <tr>
+          <td>Project Modified Date</td>
+          <td>{{ modified }}</td>
         </tr>
         <tr>
           <td>
@@ -211,6 +218,9 @@ export default {
     },
     created() {
       return dayjs(this.project.creationDate).format("YYYY-MM-DD");
+    },
+    modified() {
+      return dayjs(this.project.modifiedDate).format("YYYY-MM-DD");
     },
     collaborators() {
       return get(this.project, "collaborators.users", []).map(user =>

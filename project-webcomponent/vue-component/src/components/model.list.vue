@@ -24,7 +24,7 @@
         <div class="flex justify-end my-3">
           <div class="flex inline-flex items-center">
             <select class="form-select mr-2" v-model="sortBy">
-              <option value>Sort By</option>
+              <option value="" disabled selected>Sort By</option>
               <option value="createdTimestamp">Created</option>
               <option value="name">Name</option>
             </select>
@@ -38,6 +38,7 @@
               class="btn btn-secondary text-black mr-2"
               @click="associateModel()"
               :disabled="!loginAsOwner"
+              v-tooltip="'Associate Model'"
             >
               <FAIcon icon="link" />
             </button>
@@ -84,6 +85,7 @@
                   class="btn btn-xs btn-primary mx-1"
                   @click="editModelAssociation(props.row)"
                   :disabled="!loginAsOwner"
+                  v-tooltip="'Edit Model Association'"
                 >
                   <FAIcon icon="pencil-alt" />
                 </button>
@@ -93,6 +95,7 @@
                   :disabled="
                     !loginAsOwner && !(props.row.publishStatus === 'true')
                   "
+                  v-tooltip="'View Model'"
                 >
                   <FAIcon icon="eye" />
                 </button>
@@ -100,6 +103,7 @@
                   class="btn btn-xs btn-secondary text-black mx-1"
                   @click="deleteModelAssociation(props.row)"
                   :disabled="!loginAsOwner"
+                  v-tooltip="'Delete Model Association'"
                 >
                   <FAIcon icon="unlink" />
                 </button>

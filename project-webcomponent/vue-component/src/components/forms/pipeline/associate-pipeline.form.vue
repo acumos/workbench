@@ -128,6 +128,7 @@ export default {
     },
     reset() {
       this.updatedPipeline = new Pipeline();
+      this.selectedPipeline = "";
       this.$refs.form.reset();
     }
   }

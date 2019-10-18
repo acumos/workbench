@@ -9,7 +9,7 @@
             class="btn btn-primary ml-2"
             @click="pipelineLaunch(pipeline)"
             v-if="pipeline.status === 'ACTIVE'"
-            v-tooltip="'Launch'"
+            v-tooltip="'Launch Pipeline'"
           >
             <FAIcon icon="external-link-alt"></FAIcon>
           </button>
@@ -17,14 +17,14 @@
             class="btn btn-secondary ml-2"
             @click="pipelineArchive(pipeline)"
             v-if="pipeline.status === 'ACTIVE'"
-            v-tooltip="'Archive'"
+            v-tooltip="'Archive Pipeline'"
           >
             <FAIcon icon="box"></FAIcon>
           </button>
           <template v-if="pipeline.status === 'ARCHIVED'">
             <button
               class="btn btn-secondary ml-2"
-              v-tooltip="'Unarchive'"
+              v-tooltip="'Unarchive Pipeline'"
               @click="unarchivePipeline(pipeline)"
             >
               <FAIcon icon="box-open"></FAIcon>
@@ -46,12 +46,13 @@
               <FAIcon icon="trash-alt"></FAIcon>
             </button>
           </template>
-          <template v-if="pipeline.status === 'IN PROGRESS'">
+          <template v-if="pipeline.status === 'INPROGRESS'">
           </template>
           <a
             :href="pipelineWikiURL"
             target="_blank"
             class="btn btn-secondary text-black ml-2"
+            v-tooltip="'Learn More'"
           >
             <FAIcon icon="question-circle"></FAIcon>
           </a>

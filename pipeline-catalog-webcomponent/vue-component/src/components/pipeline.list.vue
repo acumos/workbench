@@ -2,7 +2,7 @@
   <div class="flex flex-col m-3">
     <div class="flex w-full justify-end">
       <button class="btn btn-primary" @click="editPipeline()" v-if="hasPipelines">Create Pipeline</button>
-      <a :href="pipelineWikiURL" target="_blank" class="btn btn-secondary ml-2">
+      <a :href="pipelineWikiURL" target="_blank" class="btn btn-secondary ml-2" v-tooltip="'Learn More'">
         <FAIcon icon="question-circle"></FAIcon>
       </a>
     </div>

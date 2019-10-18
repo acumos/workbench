@@ -28,6 +28,7 @@ export default {
         version: get(data, "data.projectId.versionId.label"),
         status: get(data, "data.artifactStatus.status"),
         creationDate: get(data, "data.projectId.versionId.creationTimeStamp"),
+        modifiedDate: get(data, "data.projectId.versionId.modifiedTimeStamp"),
         description: get(data, "data.description"),
         collaborators: get(data, "data.collaborators"),
         owner: get(data, "data.owner.authenticatedUserId")

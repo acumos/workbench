@@ -19,7 +19,7 @@
     </div>
     <div class="flex py-1">
       <span class="font-bold mx-1">Status:</span>
-      <span :class="statusClass">{{ pipeline.status | capitalize }}</span>
+      <span :class="statusClass">{{ pipeline.status }}</span>
     </div>
     <div class="flex py-1">
       <span class="font-bold mx-1">Creation Date:</span>
@@ -38,7 +38,7 @@
       <div class="flex" v-if="!inProgress">
         <button
           class="mx-2"
-          v-tooltip="'Unarchive'"
+          v-tooltip="'Unarchive Pipeline'"
           v-if="isArchived"
           @click="unarchivePipeline(pipeline)"
         >
@@ -48,14 +48,14 @@
           :href="pipeline.url"
           target="_blank"
           class="mx-2"
-          v-tooltip="'Launch'"
+          v-tooltip="'Launch Pipeline'"
           v-if="!isArchived && pipeline.url"
         >
           <FAIcon class="text-2xl text-gray-600" icon="external-link-alt"></FAIcon>
         </a>
         <button
           class="mx-2"
-          v-tooltip="'Archive'"
+          v-tooltip="'Archive Pipeline'"
           v-if="!isArchived"
           @click="archivepipeline(pipeline)"
         >
@@ -63,7 +63,7 @@
         </button>
         <button
           class="mx-2"
-          v-tooltip="'Delete'"
+          v-tooltip="'Delete Pipeline'"
           v-if="isArchived || isFailed"
           @click="pipelineDelete(pipeline)"
         >
@@ -85,7 +85,7 @@ export default {
       currentUser: state => state.userName
     }),
     inProgress() {
-      return this.pipeline.status === "IN PROGRESS";
+      return this.pipeline.status === "INPROGRESS";
     },
     isFailed() {
       return this.pipeline.status === "FAILED";
@@ -102,7 +102,7 @@ export default {
         case "ARCHIVED":
           _class += "text-red-500";
           break;
-        case "IN PROGRESS":
+        case "INPROGRESS":
           _class += "text-blue-500";
           break;
         case "FAILED":

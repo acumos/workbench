@@ -10,6 +10,7 @@
           class="btn btn-xs btn-primary w-8 h-8"
           v-if="!isEditing && !isArchived"
           @click="editPipeline()"
+          v-tooltip="'Edit Pipeline'"
         >
           <FAIcon icon="pencil-alt"></FAIcon>
         </button>
@@ -18,6 +19,7 @@
           <button
             class="btn btn-xs py-1 px-2 btn-primary rounded-0"
             @click="save(updatedPipeline)"
+            v-tooltip="'Save Pipeline'"
           >
             <FAIcon icon="save"></FAIcon>
           </button>
@@ -97,6 +99,10 @@
         <tr>
           <td>Pipeline Creation Date</td>
           <td>{{ created }}</td>
+        </tr>
+        <tr>
+          <td>Pipeline Modified Date</td>
+          <td>{{ modified }}</td>
         </tr>
         <tr>
           <td>
@@ -188,6 +194,9 @@ export default {
     },
     created() {
       return dayjs(this.pipeline.creationDate).format("YYYY-MM-DD");
+    },
+    modified() {
+      return dayjs(this.pipeline.modifiedDate).format("YYYY-MM-DD");
     }
   },
   watch:{

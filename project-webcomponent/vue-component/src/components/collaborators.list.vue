@@ -17,7 +17,7 @@
           <v-select
             class="flex-grow mr-2"
             label="username"
-            placeholder="User Login Id"
+            placeholder="User Full Name"
             :options="users"
             v-model="newCollaborator"
             :filterBy="filterBy"
@@ -34,13 +34,11 @@
             </template>
             <template slot="option" slot-scope="option">
               <div class="d-center">
-                <img :src="option.picture" />
                 {{ option.firstName }} {{ option.lastName }}
               </div>
             </template>
             <template slot="selected-option" slot-scope="option">
               <div class="selected d-center">
-                <img :src="option.picture" />
                 {{ option.firstName }} {{ option.lastName }}
               </div>
             </template>
@@ -59,6 +57,7 @@
         <button
           class="btn btn-primary btn-sm ml-2 my-1"
           @click="addNewCollaborator(newCollaborator, newPermission)"
+          v-tooltip="'Add Collaborator'"
         >
           <FAIcon icon="plus" />
         </button>
@@ -80,6 +79,7 @@
             <button
               class="btn btn-primary btn-xs bg-red-600"
               @click="deleteCollaborator(collaborator)"
+              v-tooltip="'Delete Collaborator'"
             >
               <FAIcon icon="minus" />
             </button>
@@ -165,8 +165,8 @@ export default {
 
     filterBy(option, label, search) {
       return (
-        option.firstName.toLowerCase().indexOf(search) > -1 ||
-        option.lastName.toLowerCase().indexOf(search) > -1
+        option.firstName.toLowerCase().indexOf(search.toLowerCase()) > -1 ||
+        option.lastName.toLowerCase().indexOf(search.toLowerCase()) > -1
       );
     },
 

@@ -2,7 +2,7 @@
   <div class="flex flex-col m-3">
     <div class="flex w-full justify-end">
       <button class="btn btn-primary" @click="editProject()" v-if="hasProjects">Create Project</button>
-      <a :href="projectWikiURL" target="_blank" class="btn btn-secondary ml-2">
+      <a :href="projectWikiURL" target="_blank" class="btn btn-secondary ml-2" v-tooltip="'Learn More'">
         <FAIcon icon="question-circle"></FAIcon>
       </a>
     </div>
@@ -102,21 +102,28 @@ export default {
     ProjectCard
   },
   computed: {
-    hasProjects(){
+    hasProjects() {
       return this.projects.length > 0;
     },
     filteredAndOrdered() {
-      const filtered = this.filterBy(this.projects, this.searchTerm, "name");
-      let filteredByExtraFilter = this.filterBy(
-        filtered,
-        this.currentFilter.toUpperCase(),
-        "status"
+      let filtered = this.filterBy(this.projects, this.searchTerm, "name");
+      let sharedProjectsFiltered = this.filterBy(
+        this.sharedProjects,
+        this.searchTerm,
+        "name"
       );
 
+      let filteredByExtraFilter = [];
       if (this.currentFilter === "all") {
-        filteredByExtraFilter = [...filtered, ...this.sharedProjects];
+        filteredByExtraFilter = [...filtered, ...sharedProjectsFiltered];
       } else if (this.currentFilter === "shared") {
-        filteredByExtraFilter = this.sharedProjects;
+        filteredByExtraFilter = sharedProjectsFiltered;
+      } else {
+        filteredByExtraFilter = this.filterBy(
+          filtered,
+          this.currentFilter.toUpperCase(),
+          "status"
+        );
       }
 
       return this.orderBy(filteredByExtraFilter, this.sortBy, -1);

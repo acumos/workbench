@@ -19,7 +19,7 @@
     </div>
     <div class="flex py-1">
       <span class="font-bold mx-1">Status:</span>
-      <span :class="statusClass">{{ project.status | capitalize }}</span>
+      <span :class="statusClass">{{ project.status }}</span>
     </div>
     <div class="flex py-1">
       <span class="font-bold mx-1">Creation Date:</span>
@@ -46,7 +46,7 @@
       <div>
         <button
           class="mx-2"
-          v-tooltip="'Unarchive'"
+          v-tooltip="'Unarchive Project'"
           v-if="isArchived"
           @click="unarchiveProject(project)"
         >
@@ -54,13 +54,13 @@
         </button>
         <button
           class="mx-2"
-          v-tooltip="'Archive'"
+          v-tooltip="'Archive Project'"
           v-if="!isArchived"
           @click="archiveProject(project)"
         >
           <FAIcon class="text-2xl text-gray-600" icon="box"></FAIcon>
         </button>
-        <button class="mx-2" v-tooltip="'Delete'" v-if="isArchived" @click="projectDelete(project)">
+        <button class="mx-2" v-tooltip="'Delete Project'" v-if="isArchived" @click="projectDelete(project)">
           <FAIcon class="text-2xl text-gray-600" icon="trash-alt"></FAIcon>
         </button>
       </div>

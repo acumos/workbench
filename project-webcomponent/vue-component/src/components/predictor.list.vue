@@ -20,7 +20,7 @@
         <div class="flex justify-end my-3">
           <div class="flex inline-flex items-center">
             <select class="form-select mr-2" v-model="sortBy">
-              <option value>Sort By</option>
+              <option value="" disabled selected>Sort By</option>
               <option value="createdTimestamp">Created</option>
               <option value="name">Name</option>
             </select>
@@ -34,6 +34,7 @@
               class="btn btn-secondary text-black mr-2"
               @click="associatePredictor()"
               :disabled="!loginAsOwner"
+              v-tooltip="'Associate Predictor'"
             >
               <FAIcon icon="link" />
             </button>
@@ -67,6 +68,7 @@
                   class="btn btn-xs btn-primary mx-1"
                   @click="editPredictorAssociation(props.row)"
                   :disabled="!loginAsOwner"
+                  v-tooltip="'Edit Predictor Association'"
                 >
                   <FAIcon icon="pencil-alt" />
                 </button>
@@ -77,6 +79,7 @@
                   class="btn btn-xs btn-secondary text-black mx-1"
                   @click="deleteAssociationPredictor(props.row)"
                   :disabled="!loginAsOwner"
+                  v-tooltip="'Delete Predictor Association'"
                 >
                   <FAIcon icon="unlink" />
                 </button>
@@ -105,7 +108,7 @@
 </template>
 
 <script>
-import dayjs from "dayjs";
+
 import CollapsableUi from "../vue-common/components/ui/collapsable.ui";
 import ModalUi from "../vue-common/components/ui/modal.ui";
 import PaginationUi from "../vue-common/components/ui/pagination.ui";

@@ -100,6 +100,7 @@ export default {
   data() {
     return {
       notebookType: "",
+      updatedNotebook: new Notebook(),
       selectedNotebook: "",
       notebooks: []
     };
@@ -150,6 +151,7 @@ export default {
     },
     reset() {
       this.updatedNotebook = new Notebook();
+      this.selectedNotebook = "";
       this.$refs.form.reset();
     }
   }

@@ -9,7 +9,7 @@
             class="btn btn-secondary ml-2"
             @click="archiveProject(project)"
             v-if="project.status === 'ACTIVE'"
-            v-tooltip="'Archive'"
+            v-tooltip="'Archive Project'"
             :disabled="!loginAsOwner"
           >
             <FAIcon icon="box"></FAIcon>
@@ -17,7 +17,7 @@
           <template v-if="project.status === 'ARCHIVED'">
             <button
               class="btn btn-secondary ml-2"
-              v-tooltip="'Unarchive'"
+              v-tooltip="'Unarchive Project'"
               @click="unarchiveProject(project)"
               :disabled="!loginAsOwner"
             >
@@ -36,6 +36,7 @@
             :href="wikiConfig.projectWikiURL"
             target="_blank"
             class="btn btn-secondary text-black ml-2"
+            v-tooltip="'Learn More'"
           >
             <FAIcon icon="question-circle"></FAIcon>
           </a>

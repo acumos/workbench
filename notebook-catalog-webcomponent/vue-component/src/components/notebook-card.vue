@@ -23,7 +23,7 @@
     </div>
     <div class="flex py-1">
       <span class="font-bold mx-1">Status:</span>
-      <span :class="statusClass">{{ notebook.status | capitalize }}</span>
+      <span :class="statusClass">{{ notebook.status }}</span>
     </div>
     <div class="flex py-1">
       <span class="font-bold mx-1">Creation Date:</span>
@@ -42,7 +42,7 @@
       <div class="flex">
         <button
           class="mx-2"
-          v-tooltip="'Unarchive'"
+          v-tooltip="'Unarchive Notebook'"
           v-if="isArchived"
           @click="unarchiveNotebook(notebook)"
         >
@@ -52,7 +52,7 @@
           :href="notebook.url"
           target="_blank"
           class="mx-2"
-          v-tooltip="'Launch'"
+          v-tooltip="'Launch Notebook'"
           v-if="!isArchived && notebook.url"
         >
           <FAIcon
@@ -62,7 +62,7 @@
         </a>
         <button
           class="mx-2"
-          v-tooltip="'Archive'"
+          v-tooltip="'Archive Notebook'"
           v-if="!isArchived"
           @click="archivenotebook(notebook)"
         >
@@ -70,7 +70,7 @@
         </button>
         <button
           class="mx-2"
-          v-tooltip="'Delete'"
+          v-tooltip="'Delete Notebook'"
           v-if="isArchived"
           @click="notebookDelete(notebook)"
         >

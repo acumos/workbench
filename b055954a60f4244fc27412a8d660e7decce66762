@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8b46cbe4_3f0fc81c",
+        "filename": "docs/predictor-service-api-doc.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-10-18T12:26:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "211b48d6_b61d2452",
+      "revId": "b055954a60f4244fc27412a8d660e7decce66762",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80ee13bd_764ec582",
         "filename": "docs/predictor-service-api-doc.rst",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2019-10-18T08:30:08Z",
       "side": 1,
       "message": "Please change to Predictor instead of Predict",
+      "range": {
+        "startLine": 208,
+        "startChar": 54,
+        "endLine": 208,
+        "endChar": 61
+      },
+      "revId": "b055954a60f4244fc27412a8d660e7decce66762",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "177a9731_42a997b5",
+        "filename": "docs/predictor-service-api-doc.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-10-18T12:26:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80ee13bd_764ec582",
       "range": {
         "startLine": 208,
         "startChar": 54,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "e3581eee_bd478e77",
+        "filename": "docs/predictor-service-api-doc.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-10-18T12:26:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fdcaf27f_45b84772",
+      "range": {
+        "startLine": 217,
+        "startChar": 4,
+        "endLine": 217,
+        "endChar": 33
+      },
+      "revId": "b055954a60f4244fc27412a8d660e7decce66762",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac2e0121_1395cbcd",
         "filename": "docs/predictor-service-api-doc.rst",
         "patchSetId": 1
@@ -76,6 +142,30 @@
       "writtenOn": "2019-10-18T08:30:08Z",
       "side": 1,
       "message": "Please check the spelling its predictorProjectAssociationId",
+      "range": {
+        "startLine": 327,
+        "startChar": 4,
+        "endLine": 327,
+        "endChar": 33
+      },
+      "revId": "b055954a60f4244fc27412a8d660e7decce66762",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "64101467_6122503e",
+        "filename": "docs/predictor-service-api-doc.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-10-18T12:26:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac2e0121_1395cbcd",
       "range": {
         "startLine": 327,
         "startChar": 4,

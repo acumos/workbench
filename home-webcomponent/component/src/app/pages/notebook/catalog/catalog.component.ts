@@ -37,8 +37,8 @@ export class NotebookCatalogComponent extends BaseComponent implements OnInit {
   }
 
   OnCatalogNotebookEvent(e) {
-    if (e.detail.data.action === 'view-notebook') {
-      this.router.navigateByUrl('/pages/notebook/view/' + e.detail.data.noteBookId + '/' + e.detail.data.notebookName);
+    if (e.detail[0].action === 'view-notebook') {
+      this.router.navigateByUrl('/pages/notebook/view/' + e.detail[0].noteBookId + '/' + e.detail[0].notebookName);
     }
   }
 
@@ -46,6 +46,6 @@ export class NotebookCatalogComponent extends BaseComponent implements OnInit {
     this.loadHtml = false;
     this.showSpinner = true;
     this.alertOpen = false;
-    this.loadComponent('notebookCatalogComponent', 'src/notebook-catalog-element', this.breadCrumbs);
+    this.loadComponent('notebookCatalogComponent', 'notebook-catalog-webcomponent', this.breadCrumbs);
   }
 }

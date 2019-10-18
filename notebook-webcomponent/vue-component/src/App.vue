@@ -60,8 +60,8 @@ import Vue2Filters from "vue2-filters";
 import Notebook from "./store/entities/notebook.entity";
 
 // UI Elements
-import ToastUI from "./components/ui/Toast.ui";
-import ConfirmUI from "./components/ui/Confirm.ui";
+import ToastUI from "./vue-common/components/ui/Toast.ui";
+import ConfirmUI from "./vue-common/components/ui/Confirm.ui";
 import NotebookDetails from "./components/notebook.details";
 
 export default {
@@ -244,6 +244,5 @@ export default {
 </script>
 
 <style>
-@import "~vue-select/dist/vue-select.css";
 @import "./assets/style/style.css";
 </style>

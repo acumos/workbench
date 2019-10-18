@@ -23,12 +23,12 @@ limitations under the License.
   [sessionError]="sessionError"
 ></ngx-base-component>
 
-<notebook-catalog-element
-  *ngIf="loadHtml"
+<notebook-catalog-webcomponent #webComponent
+  [class.hidden]="showSpinner"
   (catalog-notebook-event)="this.OnCatalogNotebookEvent($event)"
   [attr.componenturl]="url"
   [attr.userName]="userName"
   [attr.authToken]="authToken"
   (on-load-event)="this.stopSpinner()"
 >
-</notebook-catalog-element>
+</notebook-catalog-webcomponent>

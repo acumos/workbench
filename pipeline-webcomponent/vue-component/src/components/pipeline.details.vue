@@ -154,7 +154,7 @@ import dayjs from "dayjs";
 import { mapActions } from "vuex";
 
 import Pipeline from "../store/entities/pipeline.entity.js";
-import CollapsableUi from "../components/ui/collapsable.ui";
+import CollapsableUi from "../vue-common/components/ui/collapsable.ui";
 
 export default {
   props: {
@@ -190,6 +190,12 @@ export default {
       return dayjs(this.pipeline.creationDate).format("YYYY-MM-DD");
     }
   },
+  watch:{
+    pipeline() {
+      this.updatedPipeline = new Pipeline(this.pipeline);
+    }
+   },
+
   created() {
     this.updatedPipeline = new Pipeline(this.pipeline);
   },

@@ -19,6 +19,7 @@ limitations under the License.
 */
 
 var express = require("express");
+var https = require("https");
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var methodOverride = require('method-override');
@@ -28,7 +29,6 @@ var app = express();
 var port = process.env.PORT || 9086;
 
 app.use(cors());
-
 app.use(express.static("../vue-component/dist"));
 app.use(cookieParser());
 app.use(methodOverride());
@@ -43,9 +43,7 @@ app.use(bodyParser.urlencoded({
 
 app.use(bodyParser.text());
 
-
 require('./routes_services.js')(app);
-
 
 var server = app.listen(port, function() {
 	console.info('running on ...'+ port);

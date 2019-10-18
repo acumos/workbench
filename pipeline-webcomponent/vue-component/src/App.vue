@@ -71,8 +71,8 @@ import Vue2Filters from "vue2-filters";
 import Pipeline from "./store/entities/pipeline.entity";
 
 // UI Elements
-import ToastUI from "./components/ui/Toast.ui";
-import ConfirmUI from "./components/ui/Confirm.ui";
+import ToastUI from "./vue-common/components/ui/Toast.ui";
+import ConfirmUI from "./vue-common/components/ui/Confirm.ui";
 import PipelineDetails from "./components/pipeline.details";
 
 export default {
@@ -256,6 +256,5 @@ export default {
 </script>
 
 <style>
-@import "~vue-select/dist/vue-select.css";
 @import "./assets/style/style.css";
 </style>

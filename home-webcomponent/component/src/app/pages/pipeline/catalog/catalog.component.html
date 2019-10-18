@@ -17,11 +17,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ===============LICENSE_END=========================================================
 -->
-<ngx-base-component [alertOpen]="alertOpen" [showSpinner]="showSpinner" [sessionError]="sessionError"></ngx-base-component>
+<ngx-base-component
+  [alertOpen]="alertOpen"
+  [showSpinner]="showSpinner"
+  [sessionError]="sessionError"
+></ngx-base-component>
 
-<pipeline-catalog-element *ngIf="loadHtml" (on-load-event)="this.stopSpinner()" (catalog-pipeline-event)="this.OnCatalogPipelineEvent($event)" [attr.componenturl]="url"
-[attr.userName]="userName" [attr.authToken]="authToken">
-</pipeline-catalog-element>
-
-
-
+<pipeline-catalog-webcomponent #webComponent
+  [class.hidden]="showSpinner"
+  (on-load-event)="this.stopSpinner()"
+  (catalog-pipeline-event)="this.OnCatalogPipelineEvent($event)"
+  [attr.componenturl]="url"
+  [attr.userName]="userName"
+  [attr.authToken]="authToken"
+>
+</pipeline-catalog-webcomponent>

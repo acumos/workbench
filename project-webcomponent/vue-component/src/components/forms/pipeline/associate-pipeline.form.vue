@@ -65,7 +65,7 @@
 
 <script>
 import { isUndefined, sortBy } from "lodash-es";
-import ToastUI from "../../ui/Toast.ui";
+import ToastUI from "../../../vue-common/components/ui/Toast.ui";
 import Pipeline from "../../../store/entities/pipeline.entity";
 import { mapActions } from "vuex";
 

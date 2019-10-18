@@ -5,18 +5,19 @@ import { config } from "@fortawesome/fontawesome-svg-core";
 import VueGoodTablePlugin from "vue-good-table";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import wrap from "@vue/web-component-wrapper";
-import VTooltip from 'v-tooltip';
-import vSelect from 'vue-select'
+import vSelect from "vue-select";
 import store from "./store";
 import App from "./App.vue";
 import "./icons";
-import "./validators";
+import "./vue-common/validators";
+import TooltipDirective from "./vue-common/directives/tooltip.directive";
+
+Vue.directive(TooltipDirective.name, TooltipDirective.directive);
 
 Vue.use(Vue2Filters);
 Vue.use(VueGoodTablePlugin);
-Vue.use(VTooltip);
 
-Vue.component('v-select', vSelect);
+Vue.component("v-select", vSelect);
 Vue.component("FAIcon", FontAwesomeIcon);
 Vue.component("ValidationProvider", ValidationProvider);
 Vue.component("ValidationObserver", ValidationObserver);

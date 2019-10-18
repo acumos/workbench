@@ -18,11 +18,20 @@ limitations under the License.
 ===============LICENSE_END=========================================================
 -->
 
-<ngx-base-component [alertOpen]="alertOpen" [showSpinner]="showSpinner" [sessionError]="sessionError"></ngx-base-component>
+<ngx-base-component
+  [alertOpen]="alertOpen"
+  [showSpinner]="showSpinner"
+  [sessionError]="sessionError"
+></ngx-base-component>
 
-<dashboard-element *ngIf="loadHtml" (dashboard-event)="this.OnDashboardEvent($event)" [attr.componenturl]="url" 
-[attr.userName]="userName" [attr.authToken]="authToken" [attr.userId]="userId" [attr.parentMsg]="parentMsg" (on-load-event)="this.stopSpinner()">
-</dashboard-element>
-
-
- 
+<dashboard-webcomponent #webComponent
+  [class.hidden]="showSpinner"
+  (dashboard-event)="this.OnDashboardEvent($event)"
+  [attr.componenturl]="url"
+  [attr.userName]="userName"
+  [attr.authToken]="authToken"
+  [attr.userId]="userId"
+  [attr.parentMsg]="parentMsg"
+  (on-load-event)="this.stopSpinner()"
+>
+</dashboard-webcomponent>

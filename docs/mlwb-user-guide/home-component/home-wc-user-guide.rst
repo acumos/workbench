@@ -34,7 +34,7 @@ After clicking on launch button of ML workbench, Users are welcomed to ML Workbe
 # of Projects, Notebooks, Pipelines and Models associated to the logged in user. Left part of the ML Workbench screen shows the 
 sidebar to help in navigation from one to another screens. 
 
-    .. image:: images/home-land.png
+    .. image:: images/Home-Landing.png
 
 .. note::
     Users need to have valid Acumos session present in browser to navigate to the ML Workbench platform.

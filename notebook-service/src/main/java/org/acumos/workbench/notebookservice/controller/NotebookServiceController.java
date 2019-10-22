@@ -46,6 +46,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -338,7 +339,7 @@ public class NotebookServiceController {
 	 * @return ResponseEntity<ServiceState> 
 	 * 		returns ServiceStat indicating Notebook is deleted successfully. 
 	 */
-	@ApiOperation(value = "Delete Notebook", response = Notebook.class)
+	@ApiOperation(value = "Delete Notebook", response = ServiceState.class)
 	@RequestMapping(value = "/users/{authenticatedUserId}/notebooks/{notebookId}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteNotebook(
     		HttpServletRequest request,
@@ -419,6 +420,46 @@ public class NotebookServiceController {
         return new ResponseEntity<Notebook>(result, HttpStatus.OK);
         
     }
+	
+	/**
+	 * Delete the Project Notebook Association
+	 * @param request
+	 * 			The HttpsServletRequest
+	 * @param authenticatedUserId
+	 * 			The Acumos User Login Id
+	 * @param projectId
+	 * 			The Project Id
+	 * @param notebookId
+	 * 			The Notebook Id
+	 * @return
+	 * 			returns the ServiceState object
+	 */
+	
+	@ApiOperation(value = "Delete Project Notebook Association", response = ServiceState.class)
+	@RequestMapping(value = "/users/{authenticatedUserId}/projects/{projectId}/notebooks/{notebookId}", method = RequestMethod.DELETE)
+	@ResponseBody
+	public ResponseEntity<?> deleteProjectNotebookAssociation(HttpServletRequest request,
+			@ApiParam(value="Acumos User login Id ")@PathVariable("authenticatedUserId") String authenticatedUserId,
+			@ApiParam(value="Project Id ")@PathVariable("projectId") String projectId,
+			@ApiParam(value="Notebook Id ")@PathVariable("notebookId") String notebookId){
+		logger.debug("deleteProjectNotebookAssociation() Begin");
+		ServiceState result = null;
+		
+		//Check authenticatedUserId should be present
+		inputValidationService.isValuePresent(FIELD_AUTHENTICATED_USER_ID, authenticatedUserId);
+		
+		// Notebook Exists 
+		notebookService.notebookExists(notebookId);
+		
+		//Check if the user is the owner of the Notebook or has the permission to archive the Notebook.(call to CDS).  
+		notebookService.isOwnerOfNotebook(authenticatedUserId, notebookId);
+		
+		//Delete Project Notebook Association in CDS 
+		result = notebookService.deleteProjectNotebookAssociation(authenticatedUserId,projectId, notebookId);
+		logger.debug("deleteProjectNotebookAssociation() End");
+        return new ResponseEntity<ServiceState>(result, HttpStatus.OK);
+		
+	}
 	
 	private Notebook createNotebook(String authenticatedUserId, String projectId, Notebook notebook, String authToken) {
 		logger.debug("createNotebook() Begin");

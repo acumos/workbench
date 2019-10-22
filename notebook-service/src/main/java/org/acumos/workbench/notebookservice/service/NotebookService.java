@@ -214,5 +214,19 @@ public interface NotebookService {
 	 * 		Throws AssociationNotFoundException if Notebook is not associated to specified Project.
 	 */
 	void isNotebookProjectAssociated(String projectId, String notebookId) throws AssociationNotFoundException;
+
+
+	/**
+	 * Delete the Project Notebook Association in CDS
+	 * @param authenticatedUserId
+	 * 			The Acumos User Login Id
+	 * @param projectId
+	 * 			The Project Id
+	 * @param notebookId
+	 * 			The Notebook Id
+	 * @return
+	 * 			The ServieState object
+	 */
+	ServiceState deleteProjectNotebookAssociation(String authenticatedUserId, String projectId, String notebookId);
 	
 }

@@ -49,24 +49,19 @@ public interface PipeLineService {
 	public Pipeline createPipeLine(String authenticatedUserId, String projectId, Pipeline pipeLine) throws TargetServiceInvocationException;
 
 	/**
-	 * 
-	 * @param authenticatedUserId
-	 * 				the authenticated user Id
-	 * @param pipeLine
-	 * 				the pipeLine object
-	 * @throws DuplicatePipeLineException 
-	 */
-	/**
 	 * This method is to check if the pipeline already exists or not in DB using CDS client
 	 * @param authenticatedUserId
 	 * 		the authenticated user Id
 	 * @param projectId
+	 * 		the projectId
 	 * @param pipeLine
+	 * 		returns PipeLine object with additional details
 	 */
 	public void pipeLineExists(String authenticatedUserId, String projectId, Pipeline pipeLine);
 
 
 	/**
+	 * To get the list of pipelines for the specific projectId 
 	 * @param authenticatedUserId
 	 * 		the authenticated user Id
 	 * @param projectId
@@ -77,6 +72,7 @@ public interface PipeLineService {
 	public List<Pipeline> getPipelines(String authenticatedUserId, String projectId);
 
 	/**
+	 * To check the user is owner of the pipeline for specified pipelineId
 	 * @param authenticatedUserId
 	 * 		the authenticated user Id
 	 * @param pipelineId
@@ -87,6 +83,7 @@ public interface PipeLineService {
 	public boolean isOwnerOfPipeline(String authenticatedUserId, String pipelineId) throws NotOwnerException;
 
 	/**
+	 * To update the Pipeline Details
 	 * @param authenticatedUserId
 	 * 		the authenticated user Id
 	 * @param projectId
@@ -101,6 +98,7 @@ public interface PipeLineService {
 	public Pipeline updatePipeline(String authenticatedUserId, String projectId, String pipelineId, Pipeline pipeLine)throws DuplicatePipeLineException;
 
 	/**
+	 * Get the Pipeline Details for the specific pipelineId
 	 * @param authenticatedUserId
 	 * 		the authenticated user Id
 	 * @param pipelineId
@@ -111,6 +109,7 @@ public interface PipeLineService {
 	public Pipeline getPipeline(String authenticatedUserId, String pipelineId) throws PipelineNotFoundException;
 
 	/**
+	 * Delete the Pipeline for the specific pipelineId
 	 * @param pipelineId
 	 * 		the pipelineId
 	 * @return
@@ -119,6 +118,7 @@ public interface PipeLineService {
 	public ServiceState deletePipeline(String authenticatedUserId, String pipelineId);
 
 	/**
+	 * To Archive the Pipeline
 	 * @param authenticatedUserId
 	 * 		the authenticated user Id
 	 * @param projectId
@@ -133,12 +133,14 @@ public interface PipeLineService {
 	public Pipeline archivePipeline(String authenticatedUserId, String projectId, String pipelineId, String actionType);
 	
 	/**
+	 * TO verify the Pipeline is Archived
 	 * @param pipelineId
 	 * 		the pipelineId
 	 */
 	public void isPipelineArchived(String pipelineId);
 
 	/**
+	 * To Check the Pipeline is Associated under the Project
 	 * @param projectId
 	 * 		the projectId
 	 * @param pipelineId
@@ -147,16 +149,28 @@ public interface PipeLineService {
 	public void isPipelineAssociatedUnderProject(String projectId, String pipelineId);
 
 	/**
+	 * To Launch the Pipeline
 	 * @param authenticatedUserId
 	 * 			the authenticated user Id
 	 * @param projectId
 	 * 			the projectId
 	 * @param pipelineId
-	 * 			the projectId
+	 * 			the PipelineId
 	 * @return
 	 * 			Pipeline object
 	 */
 	public Pipeline launchPipeline(String authenticatedUserId, String projectId, String pipelineId);
+
+	/**
+	 * Delete the Project Pipeline Association
+	 * @param projectId
+	 * 		the projectId
+	 * @param pipelineId
+	 * 		the PipelineId
+	 * @return
+	 * 		ServiceState object
+	 */
+	public ServiceState deleteProjectPipelineAssociation(String projectId, String pipelineId);
 
 
 	

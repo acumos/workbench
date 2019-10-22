@@ -520,3 +520,65 @@ API
             a.    Pipeline object as the body of the response
 
             b.    Http response code 200.
+			
+6.    Delete Project Pipeline Association
+------------------------------------------
+    **Operation Name**
+        deleteProjectPipelineAssociation
+    **Trigger**
+        This API is called when the user delete the associated pipeline of a project in the project catalog in ML Workbench.
+
+    **Request**
+        {
+           authenticatedUserId:Acumos User Login Id;//mandatory
+
+	   projectId:ProjectId //mandatory
+
+	   pipelineId:PipelineId //mandatory
+
+        }
+    **Response**
+        {
+         servicestate:ServiceState;
+
+        }
+
+    **Behavior**
+
+        1.    The Pipeline Service must retrieve the authenticatedUserId from the context of the REST call (the REST Header contains the authenticatedUserId) and make sure it is populated otherwise it must return
+
+            a.     serviceStatus.SERVICE_STATUS =ERROR
+
+            b.    serviceStatus.statusMessage = “Acumos User Id missing”.
+
+            c.    Send response to client with Http response code – 4xx (404)
+
+        2.    Check if the requester is the owner of the pipeline : The Pipeline Service must call CDS to check if the requester (i.e., authenticatedUserId) is the owner of the project (in later releases must check the Permissions table if the requester is allowed to perform this action). If not it just return:
+
+            a.    serviceStatus.SERVICE_STATUS =ERROR
+
+            b.    serviceStatus.statusMessage = “Permission denied”.
+
+            c.    Send response to client with Http response code – 4xx.
+
+        3.    Check if the Pipeline is exists in CDS or not, If not then it must return:
+
+            a.    serviceStatus.SERVICE_STATUS =ERROR
+
+            b.    serviceStatus.statusMessage = “Requested Pipeline Not found”.
+
+            c.    Send response to client with Http response code – 4xx
+
+        5.    Delete the Project Pipeline Association : The Pipeline Service must call the CDS to drop the Association between the Project and Pipeline.
+
+            **CDS Dependency:**
+
+            a.    CDS must implement a REST API to drop the association between Project and Pipeline.
+
+        6.    Construct a JSON formatted ServiceState object with serviceStatus.status=COMPLETED and the corresponding message as serviceStatus.statusMessage=Project Pipeline Association Deleted successfully.
+
+        7.    The Pipeline Service must return:
+
+            a.    ServiceState object as the body of the response
+
+            b.    Http response code 200.

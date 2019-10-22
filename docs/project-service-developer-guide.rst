@@ -31,22 +31,7 @@ ML(Machine Learning) Workbench Project Service Developer Guide
 ML Workbench Project Service expose API to allow to perform CRUD operation on Project in ML Workbench.
 
 
-2.Architecture and Design
-=================================
-
-2.1. High-Level Flow
-----------------------
-Coming soon
-
-2.2. Class Diagrams
-----------------------
-Coming soon
-
-2.3. Sequence Diagrams
---------------------------
-Coming soon
-
-3. Technology and Frameworks
+2. Technology and Frameworks
 =============================
   **List of the development languages, frameworks, etc.**
 
@@ -56,7 +41,7 @@ Coming soon
   #. Jackson 2.7.5
   #. JUnit 4.12
 
-4.Project Resources
+3.Project Resources
 ==========================
 
 - Gerrit repo: `workbench/project-service <https://gerrit.acumos.org/r/#/admin/projects/workbench>`_
@@ -66,7 +51,7 @@ Coming soon
 - `Jira <https://jira.acumos.org/browse/ACUMOS-2483>`_  View Project
 - `Jira <https://jira.acumos.org/browse/ACUMOS-2484>`_  Delete Project
 
-5. Development Setup
+4. Development Setup
 =====================
 
 1. Clone or download code from "**Gerrit repo**" mentioned above.

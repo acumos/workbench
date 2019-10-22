@@ -24,7 +24,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.acumos.workbench</groupId>
 	<artifactId>pipeline-service</artifactId>
-	<version>2.0.0-SNAPSHOT</version>
+	<version>2.0.1-SNAPSHOT</version>
 	<name>pipeline-service</name>
 	<packaging>jar</packaging>
 	<parent>
@@ -140,7 +140,7 @@
 			<artifactId>velocity</artifactId>
 			<version>1.7</version>
 		</dependency>
-
+		
 	</dependencies>
 	<build>
 		<resources>
@@ -219,22 +219,17 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-                        	<version>2.22.0</version>
-				<configuration>
-					<argLine> --illegal-access=permit
-                                        </argLine>
-				</configuration>
+                                <version>2.22.0</version>
 			</plugin>
 			
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-failsafe-plugin</artifactId>
-                        	<version>2.22.0</version>
-				<configuration>
-					<argLine> --illegal-access=permit
-					</argLine>
-				</configuration>
-			</plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-failsafe-plugin</artifactId>
+                            <version>2.22.0</version>
+                            <configuration>
+                                <argLine> --illegal-access=permit</argLine>
+                            </configuration>
+		        </plugin>
 			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -285,7 +280,7 @@
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.8.1</version>
+				<version>0.8.4</version>
 				<executions>
 					<execution>
 						<id>default-prepare-agent</id>

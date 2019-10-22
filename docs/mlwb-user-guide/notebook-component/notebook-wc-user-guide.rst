@@ -1,7 +1,7 @@
 .. ===============LICENSE_START=======================================================
 .. Acumos CC-BY-4.0
 .. ===================================================================================
-.. Copyright (C) 2017-2018 AT&T Intellectual Property & Tech Mahindra. All rights reserved.
+.. Copyright (C) 2019 AT&T Intellectual Property & Tech Mahindra. All rights reserved.
 .. ===================================================================================
 .. This Acumos documentation file is distributed by AT&T and Tech Mahindra
 .. under the Creative Commons Attribution 4.0 International License (the "License");
@@ -98,6 +98,8 @@ displayed.
 	.. image:: images/notebook-details.png
 
 In the Notebook details screen, user can perform following Notebook relevant actions. 
+
+While creating, editing the notebook, user can give the external notebook url as well, to save his own jupyter or zappelin notebook details.
 
 1. **Edit Notebook**
 

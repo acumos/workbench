@@ -25,7 +25,8 @@ ML Workbench
    :caption: Contents:
    
    dashboard-component/index
-   home-webcomponent/index
+   home-component/index
    notebook-component/index
-   project-compoenent/index
+   pipeline-component/index
+   project-component/index
    

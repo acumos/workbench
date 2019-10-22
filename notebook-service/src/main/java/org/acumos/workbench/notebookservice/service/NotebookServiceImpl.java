@@ -476,7 +476,6 @@ public class NotebookServiceImpl implements NotebookService {
 		}
 		//TODO : Once JupyterHub is integrated with Git, stop the launched notebook server after deleting notebook in it. notebookRestClient.stopNotebookServer(authenticatedUserId)
 		
-		
 		//Delete any association with Project
 		try {
 			cdsClient.setRequestId(MDC.get(LoggingConstants.MDCs.REQUEST_ID));
@@ -542,13 +541,6 @@ public class NotebookServiceImpl implements NotebookService {
 		return mlpUser;
 	}
 
-	private void saveNotification(String authenticatedUserId, String statusCode, String taskName,
-			String resultMsg) {
-
-		MLPNotification mlpNotification = new MLPNotification();
-
-		//TODO : Set Notification
-	}
 
 	@Override
 	public Notebook archiveNotebook(String authenticatedUserId, String projectId,
@@ -621,6 +613,25 @@ public class NotebookServiceImpl implements NotebookService {
 		logger.debug("isNotebookProjectAssociated() End");
 	}
 
+	@Override
+	public ServiceState deleteProjectNotebookAssociation(String authenticatedUserId, String projectId,
+			String notebookId) {
+		logger.debug("deleteProjectNotebookAssociation() Begin");
+		ServiceState result = null;
+		try {
+			logger.debug("dropProjectNotebook() Begin");
+			cdsClient.dropProjectNotebook(projectId, notebookId);
+			logger.debug("dropProjectNotebook() End");
+		} catch (Exception e) {
+			logger.error("CDS - Project Notebook Association Exception occured");
+			throw new TargetServiceInvocationException(props.getCdsDropProjectNotebookExcp());
+		}
+		result = new ServiceState();
+		result.setStatus(ServiceStatus.COMPLETED);
+		result.setStatusMessage("Project Notebook Association Deleted successfully.");
+		logger.debug("deleteProjectNotebookAssociation() End");
+		return result;
+	}
 	
 	private NotebookRestClient getNotebookRestClient(String notebookType) {
 		logger.debug("getNotebookRestClient() Begin");
@@ -642,6 +653,15 @@ public class NotebookServiceImpl implements NotebookService {
 		logger.debug("getNotebookRestClient() End");
 		return result;
 	}
+
+	private void saveNotification(String authenticatedUserId, String statusCode, String taskName,
+			String resultMsg) {
+
+		MLPNotification mlpNotification = new MLPNotification();
+
+		//TODO : Set Notification
+	}
+	
 
 	
 }

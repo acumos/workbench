@@ -1,7 +1,7 @@
 .. ===============LICENSE_START=======================================================
 .. Acumos CC-BY-4.0
 .. ===================================================================================
-.. Copyright (C) 2017-2018 AT&T Intellectual Property & Tech Mahindra. All rights reserved.
+.. Copyright (C) 2019 AT&T Intellectual Property & Tech Mahindra. All rights reserved.
 .. ===================================================================================
 .. This Acumos documentation file is distributed by AT&T and Tech Mahindra
 .. under the Creative Commons Attribution 4.0 International License (the "License");
@@ -31,6 +31,7 @@ Notebook Catalog screen displays list of notebooks which are created by user. Th
 2. Or click on the 'Notebooks' link from sidebar navigation 
 
 	.. image:: images/notebook-catalog.png
+	   :alt: notebook-catalog image.
 
 
 
@@ -42,6 +43,7 @@ Notebook Catalog screen displays list of notebooks which are created by user. Th
   click on the 'Create Notebook' button. After successful notebook creation, User will be able to see that created Notebook.   
 
 	.. image:: images/create-notebook-catalog.png
+	   :alt: create-notebook-catalog image.
 
 2. **Archive Notebook**
 
@@ -49,6 +51,7 @@ Notebook Catalog screen displays list of notebooks which are created by user. Th
   A confirmation dialog box will appear on click of Archive button. After confirmation, notebook will be archived.  
 
 	.. image:: images/archive-notebook-dialog.png
+	   :alt: archive-notebook-dialog image.
 
 3. **Unarchive Notebook**
 
@@ -56,6 +59,7 @@ Notebook Catalog screen displays list of notebooks which are created by user. Th
   A confirmation dialog box will appear on click of Unarchive button. After confirmation, notebook will be unarchived.  
 
 	.. image:: images/unarchive-notebook-dialog.png
+	   :alt: unarchive-notebook-dialog image.
 
 
 4. **Delete Notebook** 
@@ -64,6 +68,7 @@ Notebook Catalog screen displays list of notebooks which are created by user. Th
   A confirmation dialog box will appear on click of Delete button. After confirmation, notebook will be deleted physically from database and can not be restored.  
 
 	.. image:: images/delete-notebook-dialog.png
+	   :alt: delete-notebook-dialog image.
 
 5. **Launch Notebook** 
 
@@ -71,6 +76,7 @@ Notebook Catalog screen displays list of notebooks which are created by user. Th
   On click of launch button, notebook will be opened in the user specific Jupyter Instance in a new browser tab.
 
 	.. image:: images/notebook-launch.png
+	   :alt: notebook-launch image.
 
 **Notebook Catalog screen includes following features/capabilities.**
 
@@ -96,8 +102,11 @@ On click on specific Notebook card in the Notebook catalog screen, user will be 
 displayed.
  
 	.. image:: images/notebook-details.png
+	   :alt: notebook-details image.
 
 In the Notebook details screen, user can perform following Notebook relevant actions. 
+
+While creating, editing the notebook, user can give the external notebook url as well, to save his own jupyter or zappelin notebook details.
 
 1. **Edit Notebook**
 
@@ -105,18 +114,21 @@ In the Notebook details screen, user can perform following Notebook relevant act
   User can provide new information and save it.
 
 	.. image:: images/edit-notebook.png
+	   :alt: edit-notebook image.
 	
 2. **Archive Notebook**
 
   To Archive Notebook, click on the Archive button. After user confirmation, notebook will get archived and status will be reflected in notebook details.
 
     .. image:: images/archive-notebook-detail-dialog.png
+	   :alt: archive-notebook-detail-dialog image.
     
 3. **Unarchive Notebook**
 
   To Unarchive Notebook, click on the Unarchive button. After user confirmation, notebook will get unarchived and status will be reflected in notebook details.
 
 	.. image:: images/unarchive-notebook-detail-dialog.png
+	   :alt: unarchive-notebook-detail-dialog image.
 
 4. **Delete Notebook**
 
@@ -124,12 +136,14 @@ In the Notebook details screen, user can perform following Notebook relevant act
   user will be redirected to the Notebook Catalog Screen.
 
 	.. image:: images/delete-notebook-detail-dialog.png
+	   :alt: delete-notebook-detail-dialog image.
 	
 5. **Launch Notebook**
   
  If Notebook is active, then launch button will be enabled for the user. On click of launch button, notebook will be opened in the user specific Jupyter Instance in a new browser tab.
 
     .. image:: images/notebook-launch.png
+	   :alt: notebook-launch image.
 	
   	
   	

@@ -31,22 +31,7 @@ ML Workbench Notebook Service Developer Guide
 
     ML Workbench Notebook Service expose API to allow to perform CRUD operation on Notebook in ML Workbench.
 
-2.    Architecture and Design
-=================================
-
-2.1. High-Level Flow
-----------------------
-    Coming soon
-
-2.2. Class Diagrams
-----------------------
-    Coming soon
-
-2.3. Sequence Diagrams
---------------------------
-    Coming soon
-
-3. Technology and Frameworks
+2. Technology and Frameworks
 =============================
   **List of the development languages, frameworks, etc.**
 
@@ -56,7 +41,7 @@ ML Workbench Notebook Service Developer Guide
   #. Jackson 2.7.5
   #. JUnit 4.12
 
-4.    Project Resources
+3.    Project Resources
 ==========================
 
 - Gerrit repo: `workbench/notebook-service <https://gerrit.acumos.org/r/#/admin/projects/workbench>`_
@@ -66,7 +51,7 @@ ML Workbench Notebook Service Developer Guide
 - `Jira <https://jira.acumos.org/browse/ACUMOS-2503>`_  Delete Notebook
 - `Jira <https://jira.acumos.org/browse/ACUMOS-2495>`_  Launch Notebook
 
-5. Development Setup
+4. Development Setup
 =====================
 
     1. Clone or download code from "**Gerrit repo**" mentioned above.

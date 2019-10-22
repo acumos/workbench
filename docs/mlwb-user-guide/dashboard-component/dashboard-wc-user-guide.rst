@@ -21,6 +21,13 @@ Dashboard Component Overview
 ============================
 
 Once user launches ML Workbench from Acumos Design-Studio then user will be landing on the dashboard screen. 
-Dashboard screen provides summary information about user's artifacts like # of projects, notebooks and pipelines.
+Dashboard screen provides summary information about user's artifacts like # of projects, notebooks, Data pipelines and My Models.
 
-.. image:: images/home-land.png
+When user clicks on the Projects tile then it will display the number of projects which are accessible for the logged in user.
+When user clicks on the Notebooks tile then it will display the number of notebooks which are accessible for the logged in user.
+When user clicks on the Data Pipelines tile then it will display the number of pipelines which are accessible for the logged in user.
+When user clicks on the My Models tile then it will redirect to the My Models Tab of Acumos.
+
+
+		.. image:: images/Home-landing.png
+		   :alt: Home-landing image.

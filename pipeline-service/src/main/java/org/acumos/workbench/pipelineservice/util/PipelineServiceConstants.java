@@ -33,7 +33,7 @@ public class PipelineServiceConstants {
 	public static final String CDS_GET_PROJECT_PIPELINES = "CDS - Get Project Pipelines";
 	public static final String CDS_GET_PIPELINE_PROJECTS = "CDS - Get Pipeline Projects";
 	public static final String CDS_GET_USER_DETAILS = "CDS - Get User Details";
-	public static final String CDS_DROP_PROJECT_PIPELINE = "CDS - Drop Project Pipeline";
+	public static final String CDS_DROP_PROJECT_PIPELINE = "CDS - Project Pipeline Association Does Not Exists";
 	public static final String CDS_DELETE_PIPELINE = "CDS - Delete Pipeline";
 	public static final String PROJECT_SERVICE_GET_PROJECT = "Project Service - Get Project";
 	public static final String FIELD_PIPELINE_ID = "Pipeline Id";

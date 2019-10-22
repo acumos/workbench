@@ -232,6 +232,17 @@ public class PipeLineServiceController {
 
 	}
 	
+	/**
+	 * Gets list of Pipelines associated to a project
+	 * @param request
+	 * 		The HttpServletRequest
+	 * @param authenticatedUserId
+	 * 		The Acumos User Login Id
+	 * @param projectId
+	 * 		The Project Id 
+	 * @return
+	 * 		Returns Pipeline details
+	 */
 	@ApiOperation(value = "Gets list of Pipelines associated to a project")
 	@RequestMapping(value = "users/{authenticatedUserId}/projects/{projectId}/pipelines/", method = RequestMethod.GET)
 	@ResponseBody
@@ -554,6 +565,47 @@ public class PipeLineServiceController {
 		return new ResponseEntity<Pipeline>(result,
 				getServiceStatus(result.getServiceStatus().getStatus().getServiceStatusCode()));
 	}
+	
+	/**
+	 * Delete the Project Pipeline Association
+	 * @param request
+	 * 			The HttpsServletRequest
+	 * @param authenticatedUserId
+	 * 			The Acumos User Login ID
+	 * @param projectId
+	 * 			The Project Id
+	 * @param pipelineId
+	 * 			The Pipeline Id
+	 * @return
+	 * 			returns Service State object
+	 */
+	
+	@ApiOperation(value = "Delete the Project Pipeline Association")
+	@RequestMapping(value = "users/{authenticatedUserId}/projects/{projectId}/pipelines/{pipelineId}", method = RequestMethod.DELETE)
+	@ResponseBody
+	public ResponseEntity<?> deleteProjectPipelineAssociation(HttpServletRequest request,
+			@ApiParam(value = "The Acumos Login Id", required = true) @PathVariable("authenticatedUserId") String authenticatedUserId,
+			@ApiParam(value = "The Project Id", required = true) @PathVariable("projectId") String projectId,
+			@ApiParam(value = "The Pipeline Id", required = true) @PathVariable("pipelineId") String pipelineId){
+		
+		logger.debug("deleteProjectPipelineAssociation() Begin");
+		String requestId = defaultToUUID(request.getHeader(LoggingConstants.Headers.REQUEST_ID));
+		pipelineCacheService.putDeleteRequest(requestId, pipelineId);
+		ServiceState result = null;
+		// 1. Validate the input
+		// 2. Check authenticatedUserId should be present
+		inputValidationService.isValueExists(FIELD_AUTHENTICATED_USER_ID, authenticatedUserId);
+		
+		// 3. Check if the user is the owner of the Pipeline or has the permission to archive the Pipeline.(call to CDS).
+		pipeLineService.isOwnerOfPipeline(authenticatedUserId, pipelineId);
+		// 4. Delete Project Pipeline Association
+		result = pipeLineService.deleteProjectPipelineAssociation(projectId,pipelineId);
+		pipelineCacheService.removeDeleteRequest(requestId, pipelineId);
+		logger.debug("deletePipeLine() End");
+		return new ResponseEntity<ServiceState>(result, HttpStatus.OK);
+	}
+	
+	
 	
 	private Pipeline checkPipelineCreationStatus(String authenticatedUserId, String projectId, String authToken,
 			String pipelineId) {

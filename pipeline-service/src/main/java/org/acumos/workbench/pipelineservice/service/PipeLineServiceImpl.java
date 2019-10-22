@@ -539,6 +539,27 @@ public class PipeLineServiceImpl implements PipeLineService{
 		logger.debug(" LaunchPipeline() End " );
 		return result;
 	}
+	
+	@Override
+	public ServiceState deleteProjectPipelineAssociation(String projectId, String pipelineId) {
+		logger.debug("deleteProjectPipelineAssociation() Begin");
+		ServiceState result = null;
+		try {
+			logger.debug("CDS dropProjectPipeline() method Begin");
+			// Drop the association between the pipeline and the project
+			cdsClient.dropProjectPipeline(projectId, pipelineId);
+			logger.debug("CDS dropProjectPipeline() method End");
+		} catch (Exception e) {
+			logger.error("CDS - Drop Project Pipeline Association", e);
+			throw new TargetServiceInvocationException(PipelineServiceConstants.CDS_DROP_PROJECT_PIPELINE);
+		}
+		result = new ServiceState();
+		result.setStatus(ServiceStatus.COMPLETED);
+		result.setStatusMessage("Project Pipeline Association Deleted successfully.");
+		logger.debug("deletePipeline() End");
+		return result;
+	}
+
 
 	
 
@@ -617,6 +638,8 @@ public class PipeLineServiceImpl implements PipeLineService{
 		return mlpUser;
 	}
 
+
+	
 
 }
 

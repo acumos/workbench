@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3efa2b02_8dd34915",
+        "filename": "docs/model-service-developer-guide.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-10-23T16:11:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "603de210_69065bad",
+      "revId": "d6c368c6526af9738abd24b60d746e558797eb30",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "abb7e759_08185b82",
         "filename": "docs/model-service-developer-guide.rst",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2019-10-23T12:54:46Z",
       "side": 1,
       "message": "Not aligned properly",
+      "revId": "d6c368c6526af9738abd24b60d746e558797eb30",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e1eb824f_576a0299",
+        "filename": "docs/model-service-developer-guide.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-10-23T16:11:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abb7e759_08185b82",
       "revId": "d6c368c6526af9738abd24b60d746e558797eb30",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0f4c14f9_43f3a2b4",
+        "filename": "docs/model-service-developer-guide.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-10-23T16:11:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3eafe2b6_79c79035",
+      "revId": "d6c368c6526af9738abd24b60d746e558797eb30",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9757a98_58780267",
         "filename": "docs/notebook-service-api-doc.rst",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2019-10-23T12:54:46Z",
       "side": 1,
       "message": "Context path and HTTP Method details is missing.  Please refer Predictor Service API Definition",
+      "revId": "d6c368c6526af9738abd24b60d746e558797eb30",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "43c8f76d_00408839",
+        "filename": "docs/notebook-service-api-doc.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-10-23T16:11:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9757a98_58780267",
       "revId": "d6c368c6526af9738abd24b60d746e558797eb30",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "c0722710_7454f1a1",
+        "filename": "docs/pipeline-service-api-doc.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-10-23T16:11:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5111cf4d_dcbd637e",
+      "revId": "d6c368c6526af9738abd24b60d746e558797eb30",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f09be093_d966543d",
         "filename": "notebook-service/pom.xml",
         "patchSetId": 4
@@ -98,6 +188,24 @@
       "writtenOn": "2019-10-23T12:54:46Z",
       "side": 1,
       "message": "Please check alignment",
+      "revId": "d6c368c6526af9738abd24b60d746e558797eb30",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c207e58e_e9d12ad0",
+        "filename": "notebook-service/pom.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-10-23T16:11:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f09be093_d966543d",
       "revId": "d6c368c6526af9738abd24b60d746e558797eb30",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "5102817e_b71a9ba6",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/controller/NotebookServiceController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-10-23T16:11:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38130526_321c1363",
+      "revId": "d6c368c6526af9738abd24b60d746e558797eb30",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc291f70_24202f5b",
         "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookService.java",
         "patchSetId": 4
@@ -132,6 +258,24 @@
       "writtenOn": "2019-10-23T12:54:46Z",
       "side": 1,
       "message": "\"in CDS\" is not required.",
+      "revId": "d6c368c6526af9738abd24b60d746e558797eb30",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b98ff294_f6c0773e",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-10-23T16:11:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc291f70_24202f5b",
       "revId": "d6c368c6526af9738abd24b60d746e558797eb30",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "09b00279_445edd8f",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookServiceImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-10-23T16:11:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db0e5b24_779dc41e",
+      "revId": "d6c368c6526af9738abd24b60d746e558797eb30",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05276723_b41adc95",
         "filename": "pipeline-service/pom.xml",
         "patchSetId": 4
@@ -166,6 +328,24 @@
       "writtenOn": "2019-10-23T12:54:46Z",
       "side": 1,
       "message": "Please check alignment",
+      "revId": "d6c368c6526af9738abd24b60d746e558797eb30",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7e5ff9f_ce51b748",
+        "filename": "pipeline-service/pom.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2019-10-23T16:11:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05276723_b41adc95",
       "revId": "d6c368c6526af9738abd24b60d746e558797eb30",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": false

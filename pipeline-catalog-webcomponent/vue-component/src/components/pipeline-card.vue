@@ -1,34 +1,35 @@
 <template>
   <div
-    @click="$emit('on-open-pipeline', pipeline)"
     class="flex flex-col p-4 border border-2 m-3 cursor-pointer hover:shadow-2xl hover:rounded-lg"
     style="width: 21rem;"
   >
-    <span class="text-purple-500 font-semibold text-xl py-2">
-      {{ pipeline.name | truncate(22) }}
-      <FAIcon class="mx-2 text-gray-800" icon="users" v-if="pipeline.collaborators" />
-    </span>
+    <a @click="$emit('on-open-pipeline', pipeline)">
+      <span class="text-purple-500 font-semibold text-xl py-2">
+        {{ pipeline.name | truncate(22) }}
+        <FAIcon class="mx-2 text-gray-800" icon="users" v-if="pipeline.collaborators" />
+      </span>
 
-    <div class="flex py-1">
-      <span class="font-bold mx-1">ID:</span>
-      <span>{{ pipeline.id }}</span>
-    </div>
-    <div class="flex py-1">
-      <span class="font-bold mx-1">Version:</span>
-      <span>{{ pipeline.version }}</span>
-    </div>
-    <div class="flex py-1">
-      <span class="font-bold mx-1">Status:</span>
-      <span :class="statusClass">{{ pipeline.status }}</span>
-    </div>
-    <div class="flex py-1">
-      <span class="font-bold mx-1">Creation Date:</span>
-      <span>{{ createdAt }}</span>
-    </div>
-    <div class="flex py-1">
-      <span class="font-bold mx-1">Modified Date:</span>
-      <span>{{ modifiedAt }}</span>
-    </div>
+      <div class="flex py-1">
+        <span class="font-bold mx-1">ID:</span>
+        <span>{{ pipeline.id }}</span>
+      </div>
+      <div class="flex py-1">
+        <span class="font-bold mx-1">Version:</span>
+        <span>{{ pipeline.version }}</span>
+      </div>
+      <div class="flex py-1">
+        <span class="font-bold mx-1">Status:</span>
+        <span :class="statusClass">{{ pipeline.status }}</span>
+      </div>
+      <div class="flex py-1">
+        <span class="font-bold mx-1">Creation Date:</span>
+        <span>{{ createdAt }}</span>
+      </div>
+      <div class="flex py-1">
+        <span class="font-bold mx-1">Modified Date:</span>
+        <span>{{ modifiedAt }}</span>
+      </div>
+    </a>
     <div class="flex bg-gray-200 py-3 mt-2 px-2 justify-between">
       <div>
         <button class="mx-1" :title="pipeline.owner" v-tooltip="pipeline.owner">

@@ -103,7 +103,7 @@ export default {
   },
   computed: {
     hasProjects() {
-      return this.projects.length > 0;
+      return (this.projects.length > 0 || this.sharedProjects.length > 0);
     },
     filteredAndOrdered() {
       let filtered = this.filterBy(this.projects, this.searchTerm, "name");

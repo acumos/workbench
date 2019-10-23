@@ -2,7 +2,11 @@
   <div class="w-full">
     <collapsable-ui title="Data Pipelines" icon="code-branch">
       <div slot="right-actions" class="inline-flex">
-        <a :href="wikiConfig.pipelineWikiURL" target="_blank" class="text-sm text-gray-500 underline">Learn More</a>
+        <a
+          :href="wikiConfig.pipelineWikiURL"
+          target="_blank"
+          class="text-sm text-gray-500 underline"
+        >Learn More</a>
       </div>
       <div>
         <div class="flex flex-col" v-if="isEmpty">
@@ -63,8 +67,10 @@
           :sort-options="sortOptions"
         >
           <template slot="table-row" slot-scope="props">
-            <div class="flex justify-center" v-if="props.column.field === 'pushStatus'">
-              <!-- need to change -->
+            <div class="flex justify-center" v-if="props.column.field === 'status'">
+              <div
+                :class="{'text-green-500': props.row.status === 'ACTIVE', 'text-red-500': props.row.status === 'ARCHIVED', 'text-blue-500': props.row.status === 'INPROGRESS', 'text-red-700': props.row.status === 'FAILED'}"
+              >{{props.row.status}}</div>
             </div>
             <div v-else-if="props.column.field === 'actions'">
               <div class="flex justify-center">
@@ -123,7 +129,10 @@
                 </template>
               </div>
             </div>
-            <div v-else class="flex justify-center px-1">{{ props.formattedRow[props.column.field] }}</div>
+            <div
+              v-else
+              class="flex justify-center px-1"
+            >{{ props.formattedRow[props.column.field] }}</div>
           </template>
           <template slot="pagination-bottom" slot-scope="props">
             <pagination-ui :total="props.total" :pageChanged="props.pageChanged" :itemsPerPage="5" />
@@ -212,8 +221,7 @@ export default {
     };
   },
   computed: {
-    ...mapState("app", [
-      "wikiConfig"]),
+    ...mapState("app", ["wikiConfig"]),
     ...mapState("project", {
       loginAsOwner: state => state.loginAsOwner
     }),

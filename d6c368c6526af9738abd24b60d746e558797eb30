@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "603de210_69065bad",
+        "filename": "docs/model-service-developer-guide.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-10-23T12:54:46Z",
+      "side": 1,
+      "message": "Not aligned properly",
+      "revId": "d6c368c6526af9738abd24b60d746e558797eb30",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "abb7e759_08185b82",
+        "filename": "docs/model-service-developer-guide.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-10-23T12:54:46Z",
+      "side": 1,
+      "message": "Not aligned properly",
+      "revId": "d6c368c6526af9738abd24b60d746e558797eb30",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3eafe2b6_79c79035",
+        "filename": "docs/model-service-developer-guide.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-10-23T12:54:46Z",
+      "side": 1,
+      "message": "Not aligned in properly",
+      "revId": "d6c368c6526af9738abd24b60d746e558797eb30",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e9757a98_58780267",
+        "filename": "docs/notebook-service-api-doc.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-10-23T12:54:46Z",
+      "side": 1,
+      "message": "Context path and HTTP Method details is missing.  Please refer Predictor Service API Definition",
+      "revId": "d6c368c6526af9738abd24b60d746e558797eb30",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5111cf4d_dcbd637e",
+        "filename": "docs/pipeline-service-api-doc.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-10-23T12:54:46Z",
+      "side": 1,
+      "message": "Context Path and HTTP Method is missing.  Please refer the Predictor Service API definition",
+      "revId": "d6c368c6526af9738abd24b60d746e558797eb30",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f09be093_d966543d",
+        "filename": "notebook-service/pom.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-10-23T12:54:46Z",
+      "side": 1,
+      "message": "Please check alignment",
+      "revId": "d6c368c6526af9738abd24b60d746e558797eb30",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "38130526_321c1363",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/controller/NotebookServiceController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-10-23T12:54:46Z",
+      "side": 1,
+      "message": "Please check the alignment.",
+      "revId": "d6c368c6526af9738abd24b60d746e558797eb30",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dc291f70_24202f5b",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-10-23T12:54:46Z",
+      "side": 1,
+      "message": "\"in CDS\" is not required.",
+      "revId": "d6c368c6526af9738abd24b60d746e558797eb30",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "db0e5b24_779dc41e",
+        "filename": "notebook-service/src/main/java/org/acumos/workbench/notebookservice/service/NotebookServiceImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-10-23T12:54:46Z",
+      "side": 1,
+      "message": "Pleas make sure you send User friendly message to UI and the technical details.",
+      "revId": "d6c368c6526af9738abd24b60d746e558797eb30",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "05276723_b41adc95",
+        "filename": "pipeline-service/pom.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-10-23T12:54:46Z",
+      "side": 1,
+      "message": "Please check alignment",
+      "revId": "d6c368c6526af9738abd24b60d746e558797eb30",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}

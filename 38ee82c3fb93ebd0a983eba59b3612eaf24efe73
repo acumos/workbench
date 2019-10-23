@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d4871d3_68d7d6a1",
+        "filename": "docs/mlwb-user-guide/home-component/home-wc-user-guide.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-10-23T12:54:46Z",
+      "side": 0,
+      "message": ":alt: tag is missing",
+      "revId": "38ee82c3fb93ebd0a983eba59b3612eaf24efe73",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}

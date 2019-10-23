@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "376fa59d_cbbf5d58",
+        "filename": "docs/mlwb-user-guide/home-component/home-wc-user-guide.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-10-23T12:54:46Z",
+      "side": 1,
+      "message": ":alt: tag is missing",
+      "range": {
+        "startLine": 37,
+        "startChar": 4,
+        "endLine": 37,
+        "endChar": 38
+      },
+      "revId": "2db91c9d82d87055e309d950aabf4909570a5d35",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "58222538_4a000f26",
+        "filename": "docs/mlwb-user-guide/notebook-component/notebook-wc-user-guide.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-10-23T12:54:46Z",
+      "side": 1,
+      "message": ":alt: tag is missing",
+      "range": {
+        "startLine": 98,
+        "startChar": 4,
+        "endLine": 98,
+        "endChar": 9
+      },
+      "revId": "2db91c9d82d87055e309d950aabf4909570a5d35",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "731305d6_f5c21f33",
+        "filename": "docs/mlwb-user-guide/notebook-component/notebook-wc-user-guide.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2019-10-23T12:54:46Z",
+      "side": 1,
+      "message": ":alt: tag is missing",
+      "range": {
+        "startLine": 109,
+        "startChar": 4,
+        "endLine": 109,
+        "endChar": 9
+      },
+      "revId": "2db91c9d82d87055e309d950aabf4909570a5d35",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    }
+  ]
+}

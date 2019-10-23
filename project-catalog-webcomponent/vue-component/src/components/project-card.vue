@@ -1,43 +1,43 @@
 <template>
   <div
-    @click="$emit('on-open-project', project)"
     class="flex flex-col p-4 border border-2 m-3 cursor-pointer hover:shadow-2xl hover:rounded-lg"
     style="width: 21rem;"
   >
-    <span class="text-purple-500 font-semibold text-xl py-2">
-      {{ project.name | truncate(22) }}
-      <FAIcon class="mx-2 text-gray-800" icon="users" v-if="project.collaborators" />
-    </span>
+    <a @click="$emit('on-open-project', project)">
+      <span class="text-purple-500 font-semibold text-xl py-2">
+        {{ project.name | truncate(22) }}
+        <FAIcon class="mx-2 text-gray-800" icon="users" v-if="project.collaborators" />
+      </span>
 
-    <div class="flex py-1">
-      <span class="font-bold mx-1">ID:</span>
-      <span>{{ project.id }}</span>
-    </div>
-    <div class="flex py-1">
-      <span class="font-bold mx-1">Version:</span>
-      <span>{{ project.version }}</span>
-    </div>
-    <div class="flex py-1">
-      <span class="font-bold mx-1">Status:</span>
-      <span :class="statusClass">{{ project.status }}</span>
-    </div>
-    <div class="flex py-1">
-      <span class="font-bold mx-1">Creation Date:</span>
-      <span>{{ createdAt }}</span>
-    </div>
-    <div class="flex py-1">
-      <span class="font-bold mx-1">Modified Date:</span>
-      <span>{{ modifiedAt }}</span>
-    </div>
+      <div class="flex py-1">
+        <span class="font-bold mx-1">ID:</span>
+        <span>{{ project.id }}</span>
+      </div>
+      <div class="flex py-1">
+        <span class="font-bold mx-1">Version:</span>
+        <span>{{ project.version }}</span>
+      </div>
+      <div class="flex py-1">
+        <span class="font-bold mx-1">Status:</span>
+        <span :class="statusClass">{{ project.status }}</span>
+      </div>
+      <div class="flex py-1">
+        <span class="font-bold mx-1">Creation Date:</span>
+        <span>{{ createdAt }}</span>
+      </div>
+      <div class="flex py-1">
+        <span class="font-bold mx-1">Modified Date:</span>
+        <span>{{ modifiedAt }}</span>
+      </div>
+    </a>
     <div class="flex bg-gray-200 py-3 mt-2 px-2 justify-between">
       <div>
-        <button class="mx-1" :title="project.owner" v-tooltip="project.owner">
+        <button class="mx-1" :title="project.owner">
           <FAIcon class="text-2xl text-gray-600" icon="user-circle"></FAIcon>
         </button>
         <button
           class="mx-1"
           v-if="currentUser !== project.owner"
-          v-tooltip="currentUser"
           :title="currentUser"
         >
           <FAIcon class="text-2xl text-gray-600" icon="user-circle"></FAIcon>
@@ -46,7 +46,7 @@
       <div>
         <button
           class="mx-2"
-          v-tooltip="'Unarchive Project'"
+          title="Unarchive Project"
           v-if="isArchived"
           @click="unarchiveProject(project)"
         >
@@ -54,13 +54,18 @@
         </button>
         <button
           class="mx-2"
-          v-tooltip="'Archive Project'"
+          title="Archive Project"
           v-if="!isArchived"
           @click="archiveProject(project)"
         >
           <FAIcon class="text-2xl text-gray-600" icon="box"></FAIcon>
         </button>
-        <button class="mx-2" v-tooltip="'Delete Project'" v-if="isArchived" @click="projectDelete(project)">
+        <button
+          class="mx-2"
+          title="Delete Project"
+          v-if="isArchived"
+          @click="projectDelete(project)"
+        >
           <FAIcon class="text-2xl text-gray-600" icon="trash-alt"></FAIcon>
         </button>
       </div>

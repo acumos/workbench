@@ -1,48 +1,45 @@
 <template>
   <div
-    @click="$emit('on-open-notebook', notebook)"
     class="flex flex-col p-4 border border-2 m-3 cursor-pointer hover:shadow-2xl hover:rounded-lg"
     style="width: 21rem;"
   >
-    <span class="text-purple-500 font-semibold text-xl py-2">
-      {{ notebook.name | truncate(22) }}
-      <FAIcon
-        class="mx-2 text-gray-800"
-        icon="users"
-        v-if="notebook.collaborators"
-      />
-    </span>
+    <a @click="$emit('on-open-notebook', notebook)">
+      <span class="text-purple-500 font-semibold text-xl py-2">
+        {{ notebook.name | truncate(22) }}
+        <FAIcon class="mx-2 text-gray-800" icon="users" v-if="notebook.collaborators" />
+      </span>
 
-    <div class="flex py-1">
-      <span class="font-bold mx-1">Type</span>
-      <span>{{ notebook.type }}</span>
-    </div>
-    <div class="flex py-1">
-      <span class="font-bold mx-1">Version:</span>
-      <span>{{ notebook.version }}</span>
-    </div>
-    <div class="flex py-1">
-      <span class="font-bold mx-1">Status:</span>
-      <span :class="statusClass">{{ notebook.status }}</span>
-    </div>
-    <div class="flex py-1">
-      <span class="font-bold mx-1">Creation Date:</span>
-      <span>{{ createdAt }}</span>
-    </div>
-    <div class="flex py-1">
-      <span class="font-bold mx-1">Modified Date:</span>
-      <span>{{ modifiedAt }}</span>
-    </div>
+      <div class="flex py-1">
+        <span class="font-bold mx-1">Type</span>
+        <span>{{ notebook.type }}</span>
+      </div>
+      <div class="flex py-1">
+        <span class="font-bold mx-1">Version:</span>
+        <span>{{ notebook.version }}</span>
+      </div>
+      <div class="flex py-1">
+        <span class="font-bold mx-1">Status:</span>
+        <span :class="statusClass">{{ notebook.status }}</span>
+      </div>
+      <div class="flex py-1">
+        <span class="font-bold mx-1">Creation Date:</span>
+        <span>{{ createdAt }}</span>
+      </div>
+      <div class="flex py-1">
+        <span class="font-bold mx-1">Modified Date:</span>
+        <span>{{ modifiedAt }}</span>
+      </div>
+    </a>
     <div class="flex bg-gray-200 py-3 mt-2 px-2 justify-between">
       <div>
-        <button class="mx-1" :title="notebook.owner" v-tooltip="notebook.owner">
+        <button class="mx-1" :title="notebook.owner">
           <FAIcon class="text-2xl text-gray-600" icon="user-circle"></FAIcon>
         </button>
       </div>
       <div class="flex">
         <button
           class="mx-2"
-          v-tooltip="'Unarchive Notebook'"
+          title="Unarchive Notebook"
           v-if="isArchived"
           @click="unarchiveNotebook(notebook)"
         >
@@ -52,17 +49,14 @@
           :href="notebook.url"
           target="_blank"
           class="mx-2"
-          v-tooltip="'Launch Notebook'"
+          title="Launch Notebook"
           v-if="!isArchived && notebook.url"
         >
-          <FAIcon
-            class="text-2xl text-gray-600"
-            icon="external-link-alt"
-          ></FAIcon>
+          <FAIcon class="text-2xl text-gray-600" icon="external-link-alt"></FAIcon>
         </a>
         <button
           class="mx-2"
-          v-tooltip="'Archive Notebook'"
+          title="Archive Notebook"
           v-if="!isArchived"
           @click="archivenotebook(notebook)"
         >
@@ -70,7 +64,7 @@
         </button>
         <button
           class="mx-2"
-          v-tooltip="'Delete Notebook'"
+          title="Delete Notebook"
           v-if="isArchived"
           @click="notebookDelete(notebook)"
         >

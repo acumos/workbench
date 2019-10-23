@@ -2,7 +2,11 @@
   <div class="w-full">
     <collapsable-ui title="Data Pipelines" icon="code-branch">
       <div slot="right-actions" class="inline-flex">
-        <a :href="wikiConfig.pipelineWikiURL" target="_blank" class="text-sm text-gray-500 underline">Learn More</a>
+        <a
+          :href="wikiConfig.pipelineWikiURL"
+          target="_blank"
+          class="text-sm text-gray-500 underline"
+        >Learn More</a>
       </div>
       <div>
         <div class="flex flex-col" v-if="isEmpty">
@@ -25,7 +29,7 @@
         <div class="flex justify-end my-3" v-if="!isEmpty">
           <div class="flex inline-flex items-center">
             <select class="form-select mr-2 py-1" v-model="sortBy">
-              <option value="" disabled selected>Sort By</option>
+              <option value disabled selected>Sort By</option>
               <option value="createdAt">Created Date</option>
               <option value="name">Name</option>
             </select>
@@ -39,7 +43,7 @@
               class="btn btn-sm btn-primary text-white mr-2"
               @click="editPipeline()"
               :disabled="!loginAsOwner"
-              v-tooltip="'Create Pipeline'"
+              title="Create Pipeline"
             >
               <FAIcon icon="plus-square" />
             </button>
@@ -47,7 +51,7 @@
               class="btn btn-sm btn-secondary text-black mr-2"
               @click="associatePipeline()"
               :disabled="!loginAsOwner"
-              v-tooltip="'Associate Pipeline'"
+              title="Associate Pipeline"
             >
               <FAIcon icon="link" />
             </button>
@@ -63,8 +67,10 @@
           :sort-options="sortOptions"
         >
           <template slot="table-row" slot-scope="props">
-            <div class="flex justify-center" v-if="props.column.field === 'pushStatus'">
-              <!-- need to change -->
+            <div class="flex justify-center" v-if="props.column.field === 'status'">
+              <div
+                :class="{'text-green-500': props.row.status === 'ACTIVE', 'text-red-500': props.row.status === 'ARCHIVED', 'text-blue-500': props.row.status === 'INPROGRESS', 'text-red-700': props.row.status === 'FAILED'}"
+              >{{props.row.status}}</div>
             </div>
             <div v-else-if="props.column.field === 'actions'">
               <div class="flex justify-center">
@@ -72,7 +78,7 @@
                   <button
                     class="btn btn-xs btn-primary text-white mx-1"
                     @click="pipelineLaunch(props.row)"
-                    v-tooltip="'Launch Pipeline'"
+                    title="Launch Pipeline"
                   >
                     <FAIcon icon="external-link-alt" />
                   </button>
@@ -80,13 +86,13 @@
                     class="btn btn-xs btn-secondary text-black mx-1"
                     @click="editPipeline(props.row)"
                     :disabled="!loginAsOwner"
-                    v-tooltip="'Edit Pipeline'"
+                    title="Edit Pipeline"
                   >
                     <FAIcon icon="pencil-alt" />
                   </button>
                   <button
                     class="btn btn-xs btn-secondary text-black mx-1"
-                    v-tooltip="'Archive Pipeline'"
+                    title="Archive Pipeline"
                     @click="pipelineArchive(props.row)"
                     :disabled="!loginAsOwner"
                   >
@@ -96,34 +102,28 @@
                 <template v-else-if="props.row.status === 'ARCHIVED'">
                   <button
                     class="btn btn-xs btn-secondary text-black mx-1"
-                    v-tooltip="'Unarchive Pipeline'"
+                    title="Unarchive Pipeline"
                     @click="pipelineUnarchive(props.row)"
                     :disabled="!loginAsOwner"
                   >
                     <FAIcon icon="box-open" />
                   </button>
-                  <button
-                    class="btn btn-xs btn-secondary text-black mx-1"
-                    v-tooltip="'Delete Pipeline'"
-                    @click="pipelineDelete(props.row)"
-                    :disabled="!loginAsOwner"
-                  >
-                    <FAIcon icon="trash-alt" />
-                  </button>
                 </template>
-                <template v-else-if="props.row.status === 'IN PROGRESS'"></template>
-                <template v-else-if="props.row.status === 'FAILED'">
-                  <button
-                    class="btn btn-xs btn-secondary text-black mx-1"
-                    v-tooltip="'Delete Pipeline'"
-                    @click="pipelineDelete(props.row)"
-                  >
-                    <FAIcon icon="trash-alt" />
-                  </button>
-                </template>
+
+                <button
+                  class="btn btn-xs btn-secondary text-black mx-1"
+                  title="Delete Pipeline Association"
+                  @click="pipelineDeleteAssociation(props.row)"
+                  :disabled="!loginAsOwner"
+                >
+                  <FAIcon icon="unlink" />
+                </button>
               </div>
             </div>
-            <div v-else class="flex justify-center px-1">{{ props.formattedRow[props.column.field] }}</div>
+            <div
+              v-else
+              class="flex justify-center px-1"
+            >{{ props.formattedRow[props.column.field] }}</div>
           </template>
           <template slot="pagination-bottom" slot-scope="props">
             <pagination-ui :total="props.total" :pageChanged="props.pageChanged" :itemsPerPage="5" />
@@ -212,8 +212,7 @@ export default {
     };
   },
   computed: {
-    ...mapState("app", [
-      "wikiConfig"]),
+    ...mapState("app", ["wikiConfig"]),
     ...mapState("project", {
       loginAsOwner: state => state.loginAsOwner
     }),
@@ -237,7 +236,7 @@ export default {
       "launchPipeline",
       "archivePipeline",
       "restorePipeline",
-      "deletePipeline"
+      "deletePipelineAssociation"
     ]),
     ...mapActions("project", ["getProjectPipelines"]),
     ...mapActions("app", ["showToastMessage"]),
@@ -315,16 +314,17 @@ export default {
         }
       });
     },
-    async pipelineDelete(pipeline) {
+    async pipelineDeleteAssociation(pipeline) {
       this.confirm({
-        title: "Delete " + pipeline.name,
-        body: "Are you sure you want to delete " + pipeline.name + "?",
+        title: "Delete " + pipeline.name + " Association",
+        body:
+          "Are you sure you want to delete " + pipeline.name + "association?",
         options: {
-          okLabel: "Delete Pipeline",
+          okLabel: "Delete Pipeline Association",
           dismissLabel: "Cancel"
         },
         onOk: async () => {
-          const response = await this.deletePipeline(pipeline);
+          const response = await this.deletePipelineAssociation(pipeline);
           if (response.data.status === "Success") {
             await this.getProjectPipelines();
             this.showToastMessage({

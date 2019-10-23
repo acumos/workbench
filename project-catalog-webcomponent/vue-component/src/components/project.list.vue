@@ -2,7 +2,7 @@
   <div class="flex flex-col m-3">
     <div class="flex w-full justify-end">
       <button class="btn btn-primary" @click="editProject()" v-if="hasProjects">Create Project</button>
-      <a :href="projectWikiURL" target="_blank" class="btn btn-secondary ml-2" v-tooltip="'Learn More'">
+      <a :href="projectWikiURL" target="_blank" class="btn btn-secondary ml-2" title="Learn More">
         <FAIcon icon="question-circle"></FAIcon>
       </a>
     </div>
@@ -103,7 +103,7 @@ export default {
   },
   computed: {
     hasProjects() {
-      return this.projects.length > 0;
+      return (this.projects.length > 0 || this.sharedProjects.length > 0);
     },
     filteredAndOrdered() {
       let filtered = this.filterBy(this.projects, this.searchTerm, "name");

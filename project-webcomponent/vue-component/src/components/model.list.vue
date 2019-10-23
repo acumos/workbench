@@ -38,7 +38,7 @@
               class="btn btn-secondary text-black mr-2"
               @click="associateModel()"
               :disabled="!loginAsOwner"
-              v-tooltip="'Associate Model'"
+              title="Associate Model"
             >
               <FAIcon icon="link" />
             </button>
@@ -85,7 +85,7 @@
                   class="btn btn-xs btn-primary mx-1"
                   @click="editModelAssociation(props.row)"
                   :disabled="!loginAsOwner"
-                  v-tooltip="'Edit Model Association'"
+                  title="Edit Model Association"
                 >
                   <FAIcon icon="pencil-alt" />
                 </button>
@@ -95,7 +95,7 @@
                   :disabled="
                     !loginAsOwner && !(props.row.publishStatus === 'true')
                   "
-                  v-tooltip="'View Model'"
+                  title="View Model"
                 >
                   <FAIcon icon="eye" />
                 </button>
@@ -103,7 +103,7 @@
                   class="btn btn-xs btn-secondary text-black mx-1"
                   @click="deleteModelAssociation(props.row)"
                   :disabled="!loginAsOwner"
-                  v-tooltip="'Delete Model Association'"
+                  title="Delete Model Association"
                 >
                   <FAIcon icon="unlink" />
                 </button>

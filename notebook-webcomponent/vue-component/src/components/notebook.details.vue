@@ -10,7 +10,7 @@
           class="btn btn-xs btn-primary w-8 h-8"
           v-if="!isEditing && !isArchived"
           @click="editNotebook()"
-          v-tooltip="'Edit Notebook'"
+          title="Edit Notebook"
         >
           <FAIcon icon="pencil-alt"></FAIcon>
         </button>
@@ -19,7 +19,7 @@
           <button
             class="btn btn-xs py-1 px-2 btn-primary rounded-0"
             @click="save(updatedNotebook)"
-            v-tooltip="'Save Notebook'"
+            title="Save Notebook"
           >
             <FAIcon icon="save"></FAIcon>
           </button>

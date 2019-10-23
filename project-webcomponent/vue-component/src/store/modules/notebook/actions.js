@@ -89,12 +89,13 @@ export default {
     );
   },
 
-  async deleteNotebook({ rootState }, notebook) {
+  async deleteNotebookAssociation({ rootState }, notebook) {
     return await axios.post(
-      `${rootState.app.componentUrl}/api/project/deleteNotebook`,
+      `${rootState.app.componentUrl}/api/project/deleteNotebookAssociation`,
       {
         userName: rootState.app.userName,
         url: rootState.app.msConfig.notebookmSURL,
+        projectId: rootState.project.activeProject,
         notebookId: notebook.id
       }
     );

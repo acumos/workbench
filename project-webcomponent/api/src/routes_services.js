@@ -183,12 +183,13 @@ module.exports = function(app) {
 		});
 	});
 
-	app.post('/api/project/deleteNotebook', function (req, res){
+	app.post('/api/project/deleteNotebookAssociation', function (req, res){
 		let serviceUrl = req.body.url + uripath;
 		let userName = req.body.userName;
+		let projectId = req.body.projectId;
 		let notebookId = req.body.notebookId;
 		let authToken = req.headers['auth'];
-		deleteNotebook(userName, serviceUrl, notebookId, getLatestAuthToken(req, authToken)).then(function(result){
+		deleteNotebookAssociation(userName, serviceUrl, projectId, notebookId, getLatestAuthToken(req, authToken)).then(function(result){
 			res.send(result);
 		});
 	});
@@ -279,12 +280,13 @@ module.exports = function(app) {
 		});
 	});
 	
-	app.post('/api/pipeline/delete', function (req, res){
+	app.post('/api/pipeline/deleteAssociation', function (req, res){
 		let serviceUrl = req.body.url + uripath;
 		let userName = req.body.userName;
+		let projectId = req.body.projectId;
 		let pipelineId = req.body.pipelineId;
 		let authToken = req.headers['auth'];
-		deletePipeline(userName, serviceUrl, pipelineId, getLatestAuthToken(req, authToken)).then(function(result){
+		deletePipelineAssociation(userName, serviceUrl, projectId, pipelineId, getLatestAuthToken(req, authToken)).then(function(result){
 			res.send(result);
 		});
 	});
@@ -739,11 +741,11 @@ module.exports = function(app) {
 		});
 	};
 
-	var deleteNotebook = function(userName, srvcUrl, noteBookId, authToken){
+	var deleteNotebookAssociation = function(userName, srvcUrl, projectId, noteBookId, authToken){
 		return new Promise(function(resolve, reject) {
 			var options = {
 				method : "DELETE",
-				url : srvcUrl + userName + "/notebooks/" + noteBookId,
+				url : srvcUrl + userName + "/projects/" + projectId + "/notebooks/" + noteBookId,
 				headers : {
 					'Content-Type' : 'application/json',
 					'Authorization' : authToken,
@@ -751,9 +753,9 @@ module.exports = function(app) {
 			};
 			request.delete(options, function(error, response, body) {
 				if (!error && response.statusCode == 200) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Notebook Deleted successfully"));
+					resolve(prepRespJsonAndLogit(response, response.body, "Notebook Association Deleted successfully"));
 				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to delete Notebook"));
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to delete Notebook Association"));
 				} else {
 					resolve(prepRespJsonAndLogit(null, null, null, error));
 				}
@@ -971,11 +973,11 @@ module.exports = function(app) {
 		});
 	};
 	
-	var deletePipeline = function(userName, srvcUrl, pipelineId, authToken){
+	var deletePipelineAssociation = function(userName, srvcUrl, projectId, pipelineId, authToken){
 		return new Promise(function(resolve, reject) {
 			var options = {
 				method : "DELETE",
-				url : srvcUrl + userName + "/pipelines/" + pipelineId,
+				url : srvcUrl + userName + "/projects/" + projectId + "/pipelines/" + pipelineId,
 				headers : {
 					'Content-Type' : 'application/json',
 					'Authorization' : authToken,
@@ -983,9 +985,9 @@ module.exports = function(app) {
 			};
 			request.delete(options, function(error, response, body) {
 				if (!error && response.statusCode == 200) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Data Pipeline Deleted successfully"));
+					resolve(prepRespJsonAndLogit(response, response.body, "Data Pipeline Association Deleted successfully"));
 				} else if (!error) {
-					resolve(prepRespJsonAndLogit(response, response.body, "Unable to delete Data Pipeline"));
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to delete Data Pipeline association"));
 				} else {
 					resolve(prepRespJsonAndLogit(null, null, null, error));
 				}

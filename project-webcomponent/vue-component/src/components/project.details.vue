@@ -11,7 +11,7 @@
           v-if="!isEditing && !isArchived"
           @click="editProject()"
           :disabled="!loginAsOwner"
-          v-tooltip="'edit'"
+          title="edit"
         >
           <FAIcon icon="pencil-alt"></FAIcon>
         </button>
@@ -20,14 +20,14 @@
           v-if="!isEditing && !isArchived"
           @click="isManagingCollaborators = true"
           :disabled="!loginAsOwner"
-          v-tooltip="'Manage Collaborators'"
+          title="Manage Collaborators"
         >
           <FAIcon icon="users"></FAIcon>
         </button>
         <div class="flex ml-4" v-if="!isEditing && !isArchived">
           <div class="flex">
             <div
-              v-tooltip="item.firstName+' '+item.lastName"
+              :title="item.firstName+' '+item.lastName"
               v-for="(item, index) in firstThreeCollaborators"
               :key="index"
               class="w-8 h-8 border rounded-full inline-flex items-center justify-around shadow-md bg-gray-100 text-gray-400 -ml-2"
@@ -48,7 +48,7 @@
           <button
             class="btn btn-xs py-1 px-2 btn-primary rounded-0"
             @click="save(updatedProject)"
-            v-tooltip="'Save Project'"
+            title="Save Project"
           >
             <FAIcon icon="save"></FAIcon>
           </button>

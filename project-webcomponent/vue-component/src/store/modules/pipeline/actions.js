@@ -87,12 +87,13 @@ export default {
     );
   },
 
-  async deletePipeline({ rootState }, pipeline) {
+  async deletePipelineAssociation({ rootState }, pipeline) {
     return await axios.post(
-      `${rootState.app.componentUrl}/api/pipeline/delete`,
+      `${rootState.app.componentUrl}/api/pipeline/deleteAssociation`,
       {
         userName: rootState.app.userName,
         url: rootState.app.msConfig.pipelinemSURL,
+        projectId: rootState.project.activeProject,
         pipelineId: pipeline.id
       }
     );

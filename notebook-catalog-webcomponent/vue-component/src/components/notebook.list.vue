@@ -2,7 +2,7 @@
   <div class="flex flex-col m-3">
     <div class="flex w-full justify-end">
       <button class="btn btn-primary" @click="editNotebook()" v-if="hasNotebooks">Create Notebook</button>
-      <a :href="notebookWikiURL" target="_blank" class="btn btn-secondary ml-2" v-tooltip="'Learn More'">
+      <a :href="notebookWikiURL" target="_blank" class="btn btn-secondary ml-2" title="Learn More">
         <FAIcon icon="question-circle"></FAIcon>
       </a>
     </div>

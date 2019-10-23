@@ -39,7 +39,7 @@
               class="btn btn-sm btn-primary text-white mr-2"
               @click="editNotebook()"
               :disabled="!loginAsOwner"
-              v-tooltip="'Create Notebook'"
+              title="Create Notebook"
             >
               <FAIcon icon="plus-square" />
             </button>
@@ -47,7 +47,7 @@
               class="btn btn-sm btn-secondary text-black mr-2"
               @click="associateNotebook()"
               :disabled="!loginAsOwner"
-              v-tooltip="'Associate Notebook'"
+              title="Associate Notebook"
             >
               <FAIcon icon="link" />
             </button>
@@ -74,7 +74,7 @@
                   <button
                     class="btn btn-xs btn-primary text-white mx-1"
                     @click="notebookLaunch(props.row)"
-                    v-tooltip="'Launch Notebook'"
+                    title="Launch Notebook"
                   >
                     <FAIcon icon="external-link-alt" />
                   </button>
@@ -82,13 +82,13 @@
                     class="btn btn-xs btn-secondary text-black mx-1"
                     @click="editNotebook(props.row)"
                     :disabled="!loginAsOwner"
-                    v-tooltip="'Edit Notebook'"
+                    title="Edit Notebook"
                   >
                     <FAIcon icon="pencil-alt" />
                   </button>
                   <button
                     class="btn btn-xs btn-secondary text-black mx-1"
-                    v-tooltip="'Archive Notebook'"
+                    title="Archive Notebook"
                     @click="notebookArchive(props.row)"
                     :disabled="!loginAsOwner"
                   >
@@ -98,21 +98,21 @@
                 <template v-else-if="props.row.status === 'ARCHIVED'">
                   <button
                     class="btn btn-xs btn-secondary text-black mx-1"
-                    v-tooltip="'Unarchive Notebook'"
+                    title="Unarchive Notebook"
                     @click="notebookUnarchive(props.row)"
                     :disabled="!loginAsOwner"
                   >
                     <FAIcon icon="box-open" />
                   </button>
-                  <button
+                </template>
+                 <button
                     class="btn btn-xs btn-secondary text-black mx-1"
-                    v-tooltip="'Delete Notebook'"
-                    @click="notebookDelete(props.row)"
+                    title="Delete Notebook Association"
+                    @click="notebookDeleteAssociation(props.row)"
                     :disabled="!loginAsOwner"
                   >
-                    <FAIcon icon="trash-alt" />
+                    <FAIcon icon="unlink" />
                   </button>
-                </template>
               </div>
             </div>
             <div v-else class="flex justify-center px-1">{{ props.formattedRow[props.column.field] }}</div>
@@ -234,7 +234,7 @@ export default {
       "launchNotebook",
       "archiveNotebook",
       "restoreNotebook",
-      "deleteNotebook"
+      "deleteNotebookAssociation"
     ]),
     ...mapActions("project", ["getProjectNotebooks"]),
     ...mapActions("app", ["showToastMessage"]),
@@ -312,16 +312,16 @@ export default {
         }
       });
     },
-    async notebookDelete(notebook) {
+    async notebookDeleteAssociation(notebook) {
       this.confirm({
-        title: "Delete "+notebook.name,
-        body: "Are you sure you want to delete " + notebook.name + "?",
+        title: "Delete "+notebook.name + " Association",
+        body: "Are you sure you want to delete " + notebook.name + "association?",
         options: {
-           okLabel: "Delete Notebook",
+           okLabel: "Delete Notebook Association",
            dismissLabel: "Cancel"
         },
         onOk: async () => {
-          const response = await this.deleteNotebook(notebook);
+          const response = await this.deleteNotebookAssociation(notebook);
           if (response.data.status === "Success") {
             await this.getProjectNotebooks();
             this.showToastMessage({

@@ -34,7 +34,7 @@
               class="btn btn-secondary text-black mr-2"
               @click="associatePredictor()"
               :disabled="!loginAsOwner"
-              v-tooltip="'Associate Predictor'"
+              title="Associate Predictor"
             >
               <FAIcon icon="link" />
             </button>
@@ -68,7 +68,7 @@
                   class="btn btn-xs btn-primary mx-1"
                   @click="editPredictorAssociation(props.row)"
                   :disabled="!loginAsOwner"
-                  v-tooltip="'Edit Predictor Association'"
+                  title="Edit Predictor Association"
                 >
                   <FAIcon icon="pencil-alt" />
                 </button>
@@ -79,7 +79,7 @@
                   class="btn btn-xs btn-secondary text-black mx-1"
                   @click="deleteAssociationPredictor(props.row)"
                   :disabled="!loginAsOwner"
-                  v-tooltip="'Delete Predictor Association'"
+                  title="Delete Predictor Association"
                 >
                   <FAIcon icon="unlink" />
                 </button>

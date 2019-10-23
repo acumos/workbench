@@ -9,7 +9,7 @@
             class="btn btn-secondary ml-2"
             @click="archiveProject(project)"
             v-if="project.status === 'ACTIVE'"
-            v-tooltip="'Archive Project'"
+            title="Archive Project"
             :disabled="!loginAsOwner"
           >
             <FAIcon icon="box"></FAIcon>
@@ -17,7 +17,7 @@
           <template v-if="project.status === 'ARCHIVED'">
             <button
               class="btn btn-secondary ml-2"
-              v-tooltip="'Unarchive Project'"
+              title="Unarchive Project"
               @click="unarchiveProject(project)"
               :disabled="!loginAsOwner"
             >
@@ -25,7 +25,7 @@
             </button>
             <button
               class="btn btn-secondary ml-2 text-red-600"
-              v-tooltip="'Delete Project'"
+              title="Delete Project"
               @click="projectDelete(project)"
               :disabled="!loginAsOwner"
             >
@@ -36,7 +36,7 @@
             :href="wikiConfig.projectWikiURL"
             target="_blank"
             class="btn btn-secondary text-black ml-2"
-            v-tooltip="'Learn More'"
+            title="Learn More"
           >
             <FAIcon icon="question-circle"></FAIcon>
           </a>
@@ -180,7 +180,7 @@ export default {
         onOk: async () => {
           const response = await this.unarchive(project.id);
           if (response.data.status === "Success") {
-            await this.getDetails();
+            this.init();
             this.showToastMessage({
               id: "global",
               message: `${response.data.message}`,

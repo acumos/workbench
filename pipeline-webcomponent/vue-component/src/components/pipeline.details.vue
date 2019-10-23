@@ -10,7 +10,7 @@
           class="btn btn-xs btn-primary w-8 h-8"
           v-if="!isEditing && !isArchived"
           @click="editPipeline()"
-          v-tooltip="'Edit Pipeline'"
+          title="Edit Pipeline"
         >
           <FAIcon icon="pencil-alt"></FAIcon>
         </button>
@@ -19,7 +19,7 @@
           <button
             class="btn btn-xs py-1 px-2 btn-primary rounded-0"
             @click="save(updatedPipeline)"
-            v-tooltip="'Save Pipeline'"
+            title="Save Pipeline"
           >
             <FAIcon icon="save"></FAIcon>
           </button>

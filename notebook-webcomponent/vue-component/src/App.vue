@@ -9,7 +9,7 @@
             class="btn btn-primary ml-2"
             @click="notebookLaunch(notebook)"
             v-if="notebook.status === 'ACTIVE'"
-            v-tooltip="'Launch Notebook'"
+            title="Launch Notebook"
           >
             <FAIcon icon="external-link-alt"></FAIcon>
           </button>
@@ -17,21 +17,21 @@
             class="btn btn-secondary ml-2"
             @click="notebookArchive(notebook)"
             v-if="notebook.status === 'ACTIVE'"
-            v-tooltip="'Archive Notebook'"
+            title="Archive Notebook"
           >
             <FAIcon icon="box"></FAIcon>
           </button>
           <template v-if="notebook.status === 'ARCHIVED'">
             <button
               class="btn btn-secondary ml-2"
-              v-tooltip="'Unarchive Notebook'"
+              title="Unarchive Notebook"
               @click="unarchiveNotebook(notebook)"
             >
               <FAIcon icon="box-open"></FAIcon>
             </button>
             <button
               class="btn btn-secondary ml-2 text-red-600"
-              v-tooltip="'Delete Notebook'"
+              title="Delete Notebook"
               @click="notebookDelete(notebook)"
             >
               <FAIcon icon="trash-alt"></FAIcon>
@@ -41,7 +41,7 @@
             :href="notebookWikiURL"
             target="_blank"
             class="btn btn-secondary text-black ml-2"
-            v-tooltip="'Learn More'"
+            title="Learn More"
           >
             <FAIcon icon="question-circle"></FAIcon>
           </a>

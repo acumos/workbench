@@ -57,7 +57,7 @@
         <button
           class="btn btn-primary btn-sm ml-2 my-1"
           @click="addNewCollaborator(newCollaborator, newPermission)"
-          v-tooltip="'Add Collaborator'"
+          title="Add Collaborator"
         >
           <FAIcon icon="plus" />
         </button>
@@ -79,7 +79,7 @@
             <button
               class="btn btn-primary btn-xs bg-red-600"
               @click="deleteCollaborator(collaborator)"
-              v-tooltip="'Delete Collaborator'"
+              title="Delete Collaborator"
             >
               <FAIcon icon="minus" />
             </button>

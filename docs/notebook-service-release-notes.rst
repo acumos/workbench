@@ -20,7 +20,7 @@
 Notebook Service Release Notes
 ===============================
 
-Version 2.0.1, 2019-10-23
+Version 2.0.1, 2019-10-25
 ---------------------------
 * ACUMOS-3620 : Define new API to delete Project-Pipeline and Project-Notebook Association
 * ACUMOS-3480 : User Guide | Design Studio | Acu-Compose | MLWB : Few section need to update

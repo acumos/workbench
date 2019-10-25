@@ -1,4 +1,11 @@
 export default {
   categories: [],
-  models: null
+  models: null,
+  modelToast: {
+    id: "",
+    enabled: false,
+    type: "",
+    message: ""
+  },
+  modelError: false
 };

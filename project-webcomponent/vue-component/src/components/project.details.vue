@@ -143,11 +143,11 @@
               <textarea
                 class="form-textarea w-1/2 h-24 my-2"
                 v-model="updatedProject.description"
-                maxlength="2000"
+                maxlength="1000"
                 placeholder="Enter Project Description"
               ></textarea>
               <span class="leading-none text-right text-gray-600 mt-1"
-                >{{ 2000 - updatedProject.description.length }} Chars</span
+                >{{ 1000 - updatedProject.description.length }} Chars</span
               >          
           </td>
         </tr>

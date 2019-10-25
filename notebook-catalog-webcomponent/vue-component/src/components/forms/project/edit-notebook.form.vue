@@ -102,12 +102,12 @@
             <textarea
               class="form-textarea"
               rows="4"
-              maxlength="2000"
+              maxlength="1000"
               v-model="updatedNotebook.description"
               placeholder="Enter Notebook Description"
             ></textarea>
             <span class="leading-none text-right text-gray-600 mt-1"
-              >{{ 2000 - updatedNotebook.description.length }} Chars</span
+              >{{ 1000 - updatedNotebook.description.length }} Chars</span
             >
             <span
               class="text-sm text-red-700 flex items-center"

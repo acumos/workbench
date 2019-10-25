@@ -1,114 +1,137 @@
 <template>
-  <div class="flex w-full">
-    <collapsable-ui title="Predictors" icon="cubes" :collapseBorder="!isEmpty">
-      <div slot="right-actions" class="inline-flex">
-        <a :href="wikiConfig.predictorWikiURL" target="_blank" class="text-sm text-gray-500 underline">Learn More</a>
-      </div>
-      <div v-if="isEmpty">
-        <div class="flex flex-col p-2">
-          <span class="my-5">No Predictors.</span>
-          <div class="flex">
-            <button
-              class="btn btn-secondary btn-sm mr-2"
-              @click="associatePredictor()"
-              :disabled="!loginAsOwner"
-            >Associate Predictors</button>
-          </div>
+  <div class="w-full">
+    <div class="flex w-full">
+      <collapsable-ui title="Predictors" icon="cubes" :collapseBorder="!isEmpty">
+        <div slot="right-actions" class="inline-flex">
+          <a
+            :href="wikiConfig.predictorWikiURL"
+            target="_blank"
+            class="text-sm text-gray-500 underline"
+          >Learn More</a>
         </div>
-      </div>
-      <div v-if="!isEmpty">
-        <div class="flex justify-end my-3">
-          <div class="flex inline-flex items-center">
-            <select class="form-select mr-2" v-model="sortBy">
-              <option value="" disabled selected>Sort By</option>
-              <option value="createdTimestamp">Created</option>
-              <option value="name">Name</option>
-            </select>
-            <input
-              type="text"
-              class="form-input mr-2"
-              placeholder="Search Predictors by Name"
-              v-model="searchTerm"
-            />
-            <button
-              class="btn btn-secondary text-black mr-2"
-              @click="associatePredictor()"
-              :disabled="!loginAsOwner"
-              title="Associate Predictor"
+        <div v-if="predictorError">
+          <div class="mt-2" v-if="predictorToast.enabled && predictorToast.id === 'predictor'">
+            <div
+              class="w-1/2 p-2 rounded-lg shadow-lg border bg-red-300 text-red-800 border-red-400"
             >
-              <FAIcon icon="link" />
-            </button>
+              <div class="flex itemx-center">
+                <FAIcon cl icon="exclamation-triangle" class="mr-1 text-2xl"></FAIcon>
+                {{ predictorToast.message }}
+              </div>
+            </div>
           </div>
         </div>
-        <vue-good-table
-          v-if="!isEmpty"
-          :columns="columns"
-          :rows="predictors"
-          :line-numbers="true"
-          :pagination-options="{ enabled: true, perPage: 5 }"
-          :search-options="{ enabled: true, externalQuery: searchTerm }"
-          :sort-options="sortOptions"
-        >
-          <template slot="table-row" slot-scope="props">
-            <div class="flex justify-center" v-if="props.column.field === 'deployStatus'">
-              <FAIcon
-                class="text-gray-500"
-                icon="cloud"
-                v-if="props.row.deployStatus === 'ARCHIVED'"
-              ></FAIcon>
-              <FAIcon
-                class="text-green-700"
-                icon="cloud-upload-alt"
-                v-if="props.row.deployStatus === 'ACTIVE'"
-              ></FAIcon>
+        <div v-if="!predictorError">
+          <div v-if="isEmpty">
+            <div class="flex flex-col p-2">
+              <span class="my-5">No Predictors.</span>
+              <div class="flex">
+                <button
+                  class="btn btn-secondary btn-sm mr-2"
+                  @click="associatePredictor()"
+                  :disabled="!loginAsOwner"
+                >Associate Predictors</button>
+              </div>
             </div>
-            <div v-else-if="props.column.field === 'actions'">
-              <div class="flex justify-center">
+          </div>
+          <div v-if="!isEmpty">
+            <div class="flex justify-end my-3">
+              <div class="flex inline-flex items-center">
+                <select class="form-select mr-2" v-model="sortBy">
+                  <option value disabled selected>Sort By</option>
+                  <option value="createdTimestamp">Created</option>
+                  <option value="name">Name</option>
+                </select>
+                <input
+                  type="text"
+                  class="form-input mr-2"
+                  placeholder="Search Predictors by Name"
+                  v-model="searchTerm"
+                />
                 <button
-                  class="btn btn-xs btn-primary mx-1"
-                  @click="editPredictorAssociation(props.row)"
+                  class="btn btn-secondary text-black mr-2"
+                  @click="associatePredictor()"
                   :disabled="!loginAsOwner"
-                  title="Edit Predictor Association"
+                  title="Associate Predictor"
                 >
-                  <FAIcon icon="pencil-alt" />
-                </button>
-                <button class="btn btn-xs btn-secondary text-black mx-1" disabled>
-                  <FAIcon icon="eye" />
-                </button>
-                <button
-                  class="btn btn-xs btn-secondary text-black mx-1"
-                  @click="deleteAssociationPredictor(props.row)"
-                  :disabled="!loginAsOwner"
-                  title="Delete Predictor Association"
-                >
-                  <FAIcon icon="unlink" />
+                  <FAIcon icon="link" />
                 </button>
               </div>
             </div>
-            <div v-else class="flex justify-center">{{ props.formattedRow[props.column.field] }}</div>
-          </template>
-          <template slot="pagination-bottom" slot-scope="props">
-            <pagination-ui :total="props.total" :pageChanged="props.pageChanged" :itemsPerPage="5" />
-          </template>
-        </vue-good-table>
-      </div>
-    </collapsable-ui>
-    <modal-ui
-      title="Associate Predictor"
-      size="md"
-      v-if="isAssociatingPredictor"
-      @onDismiss="isAssociatingPredictor = false"
-    >
-      <AssociatePredictorForm
-        :initialPredictor="activePredictor"
-        @onSuccess="isAssociatingPredictor = false"
-      />
-    </modal-ui>
+            <vue-good-table
+              v-if="!isEmpty"
+              :columns="columns"
+              :rows="predictors"
+              :line-numbers="true"
+              :pagination-options="{ enabled: true, perPage: 5 }"
+              :search-options="{ enabled: true, externalQuery: searchTerm }"
+              :sort-options="sortOptions"
+            >
+              <template slot="table-row" slot-scope="props">
+                <div class="flex justify-center" v-if="props.column.field === 'deployStatus'">
+                  <FAIcon
+                    class="text-gray-500"
+                    icon="cloud"
+                    v-if="props.row.deployStatus === 'ARCHIVED'"
+                  ></FAIcon>
+                  <FAIcon
+                    class="text-green-700"
+                    icon="cloud-upload-alt"
+                    v-if="props.row.deployStatus === 'ACTIVE'"
+                  ></FAIcon>
+                </div>
+                <div v-else-if="props.column.field === 'actions'">
+                  <div class="flex justify-center">
+                    <button
+                      class="btn btn-xs btn-primary mx-1"
+                      @click="editPredictorAssociation(props.row)"
+                      :disabled="!loginAsOwner"
+                      title="Edit Predictor Association"
+                    >
+                      <FAIcon icon="pencil-alt" />
+                    </button>
+                    <button class="btn btn-xs btn-secondary text-black mx-1" disabled>
+                      <FAIcon icon="eye" />
+                    </button>
+                    <button
+                      class="btn btn-xs btn-secondary text-black mx-1"
+                      @click="deleteAssociationPredictor(props.row)"
+                      :disabled="!loginAsOwner"
+                      title="Delete Predictor Association"
+                    >
+                      <FAIcon icon="unlink" />
+                    </button>
+                  </div>
+                </div>
+                <div v-else class="flex justify-center">{{ props.formattedRow[props.column.field] }}</div>
+              </template>
+              <template slot="pagination-bottom" slot-scope="props">
+                <pagination-ui
+                  :total="props.total"
+                  :pageChanged="props.pageChanged"
+                  :itemsPerPage="5"
+                />
+              </template>
+            </vue-good-table>
+          </div>
+        </div>
+      </collapsable-ui>
+      <modal-ui
+        title="Associate Predictor"
+        size="md"
+        v-if="isAssociatingPredictor"
+        @onDismiss="isAssociatingPredictor = false"
+      >
+        <AssociatePredictorForm
+          :initialPredictor="activePredictor"
+          @onSuccess="isAssociatingPredictor = false"
+        />
+      </modal-ui>
+    </div>
   </div>
 </template>
 
 <script>
-
 import CollapsableUi from "../vue-common/components/ui/collapsable.ui";
 import ModalUi from "../vue-common/components/ui/modal.ui";
 import PaginationUi from "../vue-common/components/ui/pagination.ui";
@@ -125,11 +148,11 @@ export default {
     AssociatePredictorForm
   },
   computed: {
-    ...mapState("app", [
-      "wikiConfig"]),
+    ...mapState("app", ["wikiConfig"]),
     ...mapState("project", {
       loginAsOwner: state => state.loginAsOwner
     }),
+    ...mapState("predictor", ["predictorError", "predictorToast"]),
     isEmpty() {
       return this.predictors.length === 0;
     },

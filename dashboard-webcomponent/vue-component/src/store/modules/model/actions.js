@@ -21,6 +21,9 @@ export default {
       }
     );
 
+    if (data.status === "Error") {
+      return data;
+    }
     return get(data, "data");
   },
   async privateModelCount({ rootState }) {
@@ -43,6 +46,9 @@ export default {
       }
     );
 
+    if (data.status === "Error") {
+      return data;
+    }
     return get(data, "data");
   }
 };

@@ -4,7 +4,7 @@ import Model from "../../entities/model.entity";
 import Predictor from "../../entities/predictor.entity";
 
 export default {
-  async getProjectModels({ rootState }) {
+  async getProjectModels({ rootState, commit }) {
     const { data } = await axios.post(
       `${rootState.app.componentUrl}/api/models/getProjectModels`,
       {
@@ -14,10 +14,20 @@ export default {
       }
     );
 
+    if (data.status === "Error") {
+      commit("setPredictorToast", {
+        id: "predictor",
+        type: "error",
+        message: data.message
+      });
+
+      commit("setPredictorError", true);
+      return [];
+    }
     return map(data.data, model => Model.$fromJson(model));
   },
 
-  async getProjectPredictors({ rootState }) {
+  async getProjectPredictors({ rootState, commit }) {
     const { data } = await axios.post(
       `${rootState.app.componentUrl}/api/project/getProjectPredictors`,
       {
@@ -27,6 +37,16 @@ export default {
       }
     );
 
+    if (data.status === "Error") {
+      commit("setPredictorToast", {
+        id: "predictor",
+        type: "error",
+        message: data.message
+      });
+
+      commit("setPredictorError", true);
+      return [];
+    }
     const predictors = map(data.data, predictor =>
       Predictor.$fromJson(predictor)
     );

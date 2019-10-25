@@ -1,10 +1,6 @@
 <template>
   <div class="w-full">
-    <ToastUI
-      id="collaborator-list"
-      class="relative p-2"
-      innerClass="w-full"
-    ></ToastUI>
+    <ToastUI id="collaborator-list" class="relative p-2" innerClass="w-full"></ToastUI>
     <ValidationObserver ref="form" tag="div" class="flex flex-col w-full p-3">
       <h3 class="text-lg font-semibold my-2">Add Collaborator</h3>
       <div class="flex items-start">
@@ -29,18 +25,12 @@
               </div>
             </template>
 
-            <template slot="no-options">
-              type to search users..
-            </template>
+            <template slot="no-options">type to search users..</template>
             <template slot="option" slot-scope="option">
-              <div class="d-center">
-                {{ option.firstName }} {{ option.lastName }}
-              </div>
+              <div class="d-center">{{ option.firstName }} {{ option.lastName }}</div>
             </template>
             <template slot="selected-option" slot-scope="option">
-              <div class="selected d-center">
-                {{ option.firstName }} {{ option.lastName }}
-              </div>
+              <div class="selected d-center">{{ option.firstName }} {{ option.lastName }}</div>
             </template>
           </v-select>
           <span class="text-sm text-red-700 flex items-center" v-if="errors[0]">
@@ -48,12 +38,23 @@
             <span class="ml-1 my-1">{{ errors[0] }}</span>
           </span>
         </ValidationProvider>
-        <select class="w-1/2 form-select" v-model="newPermission">
-          <option value>Select a permission</option>
-          <option value="READ">READ</option>
-          <option value="WRITE" disabled>WRITE</option>
-          <option value="ADMIN" disabled>ADMIN</option>
-        </select>
+        <ValidationProvider
+          class="w-1/2"
+          name="User Permission"
+          rules="required"
+          v-slot="{ errors, classes }"
+        >
+          <select class="w-full form-select" v-model="newPermission">
+            <option value disabled>Select a permission</option>
+            <option value="READ">READ</option>
+            <option value="WRITE" disabled>WRITE</option>
+            <option value="ADMIN" disabled>ADMIN</option>
+          </select>
+          <span class="text-sm text-red-700 flex items-center" v-if="errors[0]">
+            <FAIcon icon="exclamation-triangle" />
+            <span class="ml-1 my-1">{{ errors[0] }}</span>
+          </span>
+        </ValidationProvider>
         <button
           class="btn btn-primary btn-sm ml-2 my-1"
           @click="addNewCollaborator(newCollaborator, newPermission)"
@@ -71,10 +72,10 @@
           <th class="w-1"></th>
         </tr>
         <tr v-for="(collaborator, index) in collaboratorList" :key="index">
-          <td class="text-left text-sm pr-2">{{ collaborator.firstName }} {{ collaborator.lastName }}</td>
-          <td class="text-left text-sm pr-2">
-            {{ collaborator.permission }}
-          </td>
+          <td
+            class="text-left text-sm pr-2"
+          >{{ collaborator.firstName }} {{ collaborator.lastName }}</td>
+          <td class="text-left text-sm pr-2">{{ collaborator.permission }}</td>
           <td class="text-center">
             <button
               class="btn btn-primary btn-xs bg-red-600"
@@ -88,12 +89,8 @@
       </table>
     </ValidationObserver>
 
-    <div
-      class="flex justify-end py-3 px-2 bg-gray-100 border-gray-200 border-t"
-    >
-      <button class="btn btn-sm btn-secondary" @click="closeCollaborator()">
-        Close
-      </button>
+    <div class="flex justify-end py-3 px-2 bg-gray-100 border-gray-200 border-t">
+      <button class="btn btn-sm btn-secondary" @click="closeCollaborator()">Close</button>
     </div>
   </div>
 </template>

@@ -72,12 +72,12 @@
           <textarea
             class="form-textarea"
             rows="4"
-            maxlength="2000"
+            maxlength="1000"
             v-model="updatedPipeline.description"
             placeholder="Enter Pipeline Description"
           ></textarea>
           <span class="leading-none text-right text-gray-600 mt-1"
-            >{{ 2000 - updatedPipeline.description.length }} Chars</span
+            >{{ 1000 - updatedPipeline.description.length }} Chars</span
           >
           <span class="text-sm text-red-700 flex items-center" v-if="errors[0]">
             <FAIcon icon="exclamation-triangle" />

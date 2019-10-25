@@ -1,14 +1,20 @@
 <template>
-  <div class="flex flex-col font-sans" id="project-catalog-webcomponent">
-    <ToastUI id="global"></ToastUI>
-    <ConfirmUI></ConfirmUI>
-    <ProjectList
-      :projects="projects"
-      :sharedProjects="projectsShared"
-      @on-open-project="onOpenProject"
-    />
+  <div>
+    <ToastUI v-if="globalError" id="global" />
+    <div v-if="!globalError">
+      <div class="flex flex-col font-sans" id="project-catalog-webcomponent">
+        <ToastUI id="global"></ToastUI>
+        <ConfirmUI></ConfirmUI>
+        <ProjectList
+          :projects="projects"
+          :sharedProjects="projectsShared"
+          @on-open-project="onOpenProject"
+        />
+      </div>
+    </div>
   </div>
 </template>
+
 
 <script>
 import { dom } from "@fortawesome/fontawesome-svg-core";
@@ -34,7 +40,13 @@ export default {
   mixins: [Vue2Filters.mixin],
   props: ["projectid", "componenturl", "authtoken", "username", "parentMsg"],
   computed: {
-    ...mapState("app", ["wikiConfig", "componentUrl", "authToken", "userName"]),
+    ...mapState("app", [
+      "wikiConfig",
+      "componentUrl",
+      "authToken",
+      "userName",
+      "globalError"
+    ]),
     ...mapState("project", ["loginAsOwner"]),
     projects() {
       return Project.all();
@@ -77,15 +89,27 @@ export default {
       }
 
       await this.getConfig();
-      await this.allProjects();
-      this.projectsShared = await this.sharedProjects();
+      if (this.userName !== "" && this.authToken !== "") {
+        await this.allProjects();
+        this.projectsShared = await this.sharedProjects();
+      } else {
+        this.setToastMessage({
+          id: "global",
+          type: "error",
+          message:
+            "Acumos session details are unavailable in browser cookies. Pls login to Acumos portal and come back here.."
+        });
+        this.setGlobalError(true);
+      }
       this.$emit("on-load-event");
     },
     ...mapMutations("app", [
       "setComponentUrl",
       "setAuthToken",
       "setUserName",
-      "confirm"
+      "confirm",
+      "setToastMessage",
+      "setGlobalError"
     ]),
     ...mapActions("app", ["getConfig", "showToastMessage"]),
     ...mapActions("project", ["allProjects", "sharedProjects"])

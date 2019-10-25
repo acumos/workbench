@@ -4,7 +4,7 @@ import { get } from "lodash-es";
 import Notebook from "../../entities/notebook.entity";
 
 export default {
-  async getNotebookDetails({ rootState }) {
+  async getNotebookDetails({ rootState, commit }) {
     const { data } = await axios.post(
       `${rootState.app.componentUrl}/api/notebook/details`,
       {
@@ -13,6 +13,21 @@ export default {
         noteBookId: rootState.notebook.activeNotebook
       }
     );
+
+    if (data.status === "Error") {
+      commit(
+        "app/setToastMessage",
+        {
+          id: "global",
+          type: "error",
+          message: data.message
+        },
+        { root: true }
+      );
+
+      commit("app/setGlobalError", true, { root: true });
+      return [];
+    }
 
     Notebook.create({
       data: {

@@ -1,12 +1,12 @@
 <template>
-  <div class="w-screen h-screen flex fixed" v-if="confirm.enabled">
+  <div class="w-2/3 h-screen flex fixed" v-if="confirm.enabled">
     <div class="bg-black w-screen h-screen fixed opacity-25 z-10"></div>
     <div class="w-1/2 m-auto rounded-lg shadow-lg border bg-white z-20">
       <div class="flex flex-col rounded">
-        <div class="bg-purple-500 p-2 text-white rounded-t-lg">
+        <div class="bg-purple-500 p-2 text-white rounded-t-lg text-lg">
           {{ confirm.title }}
         </div>
-        <div class="text-xl p-2" v-if="confirm.body">
+        <div class="text-lg p-2" v-if="confirm.body">
           {{ confirm.body }}
         </div>
         <div class="flex justify-between p-2">

@@ -3,7 +3,7 @@ import { map } from "lodash-es";
 import Notebook from "../../entities/notebook.entity";
 
 export default {
-  async allNotebooks({ rootState }) {
+  async allNotebooks({ rootState, commit }) {
     const { data } = await axios.post(
       `${rootState.app.componentUrl}/api/notebooks`,
       {
@@ -11,6 +11,21 @@ export default {
         userName: rootState.app.userName
       }
     );
+
+    if (data.status === "Error") {
+      commit(
+        "app/setToastMessage",
+        {
+          id: "global",
+          type: "error",
+          message: data.message
+        },
+        { root: true }
+      );
+
+      commit("app/setGlobalError", true, { root: true });
+      return [];
+    }
 
     Notebook.create({
       data: map(data.data, notebook => Notebook.$fromJson(notebook))

@@ -1,130 +1,154 @@
 <template>
-  <div class="flex w-full">
-    <collapsable-ui title="Models" icon="cube" :collapseBorder="!isEmpty">
-      <div slot="right-actions" class="inline-flex">
-        <a
-          :href="wikiConfig.modelWikiURL"
-          target="_blank"
-          class="text-sm text-gray-500 underline"
-        >Learn More</a>
-      </div>
-      <div v-if="isEmpty">
-        <div class="flex flex-col p-2">
-          <span class="my-5">No Models.</span>
-          <div class="flex">
-            <button
-              class="btn btn-secondary btn-sm mr-2"
-              @click="associateModel()"
-              :disabled="!loginAsOwner"
-            >Associate Models</button>
-          </div>
+  <div class="w-full">
+    <div class="flex w-full">
+      <collapsable-ui title="Models" icon="cube" :collapseBorder="!isEmpty">
+        <div slot="right-actions" class="inline-flex">
+          <a
+            :href="wikiConfig.modelWikiURL"
+            target="_blank"
+            class="text-sm text-gray-500 underline"
+          >Learn More</a>
         </div>
-      </div>
-      <div v-if="!isEmpty">
-        <div class="flex justify-end my-3">
-          <div class="flex inline-flex items-center">
-            <select class="form-select mr-2" v-model="sortBy">
-              <option value="" disabled selected>Sort By</option>
-              <option value="createdTimestamp">Created</option>
-              <option value="name">Name</option>
-            </select>
-            <input
-              type="text"
-              class="form-input mr-2"
-              placeholder="Search Models by Name"
-              v-model="searchTerm"
-            />
-            <button
-              class="btn btn-secondary text-black mr-2"
-              @click="associateModel()"
-              :disabled="!loginAsOwner"
-              title="Associate Model"
+        <div v-if="modelError">
+          <div class="mt-2" v-if="modelToast.enabled && modelToast.id === 'model'">
+            <div
+              class="w-1/2 p-2 rounded-lg shadow-lg border bg-red-300 text-red-800 border-red-400"
             >
-              <FAIcon icon="link" />
-            </button>
+              <div class="flex itemx-center">
+                <FAIcon cl icon="exclamation-triangle" class="mr-1 text-2xl"></FAIcon>
+                {{ modelToast.message }}
+              </div>
+            </div>
           </div>
         </div>
-        <vue-good-table
-          v-if="!isEmpty"
-          :columns="columns"
-          :rows="models"
-          :line-numbers="true"
-          :pagination-options="{ enabled: true, perPage: 5 }"
-          :search-options="{ enabled: true, externalQuery: searchTerm }"
-          :sort-options="sortOptions"
-        >
-          <template slot="table-row" slot-scope="props">
-            <div class="flex justify-center" v-if="props.column.field === 'publishStatus'">
-              <FAIcon class="text-gray-500" icon="cloud" v-if="props.row.publishStatus === 'false'"></FAIcon>
-              <FAIcon
-                class="text-green-700"
-                icon="cloud-upload-alt"
-                v-if="props.row.publishStatus === 'true'"
-              ></FAIcon>
-            </div>
-
-            <div class="flex justify-center" v-else-if="props.column.field === 'modelType'">
-              {{
-              props.row.modelType === "None"
-              ? "Others"
-              : lookUpCategory(props.row.modelType)
-              }}
-            </div>
-
-            <div class="flex justify-center" v-else-if="props.column.field === 'modelCatalog'">
-              {{
-              props.row.modelCatalog === "None"
-              ? "Private Catalog"
-              : props.row.modelCatalog
-              }}
-            </div>
-
-            <div v-else-if="props.column.field === 'actions'">
-              <div class="flex justify-center">
+        <div v-if="!modelError">
+          <div v-if="isEmpty">
+            <div class="flex flex-col p-2">
+              <span class="my-5">No Models.</span>
+              <div class="flex">
                 <button
-                  class="btn btn-xs btn-primary mx-1"
-                  @click="editModelAssociation(props.row)"
+                  class="btn btn-secondary btn-sm mr-2"
+                  @click="associateModel()"
                   :disabled="!loginAsOwner"
-                  title="Edit Model Association"
-                >
-                  <FAIcon icon="pencil-alt" />
-                </button>
+                >Associate Models</button>
+              </div>
+            </div>
+          </div>
+          <div v-if="!isEmpty">
+            <div class="flex justify-end my-3">
+              <div class="flex inline-flex items-center">
+                <select class="form-select mr-2" v-model="sortBy">
+                  <option value disabled selected>Sort By</option>
+                  <option value="createdTimestamp">Created</option>
+                  <option value="name">Name</option>
+                </select>
+                <input
+                  type="text"
+                  class="form-input mr-2"
+                  placeholder="Search Models by Name"
+                  v-model="searchTerm"
+                />
                 <button
-                  class="btn btn-xs btn-secondary text-black mx-1"
-                  @click="viewModel(props.row)"
-                  :disabled="
-                    !loginAsOwner && !(props.row.publishStatus === 'true')
-                  "
-                  title="View Model"
-                >
-                  <FAIcon icon="eye" />
-                </button>
-                <button
-                  class="btn btn-xs btn-secondary text-black mx-1"
-                  @click="deleteModelAssociation(props.row)"
+                  class="btn btn-secondary text-black mr-2"
+                  @click="associateModel()"
                   :disabled="!loginAsOwner"
-                  title="Delete Model Association"
+                  title="Associate Model"
                 >
-                  <FAIcon icon="unlink" />
+                  <FAIcon icon="link" />
                 </button>
               </div>
             </div>
-            <div v-else class="flex justify-center">{{ props.formattedRow[props.column.field] }}</div>
-          </template>
-          <template slot="pagination-bottom" slot-scope="props">
-            <pagination-ui :total="props.total" :pageChanged="props.pageChanged" :itemsPerPage="5" />
-          </template>
-        </vue-good-table>
-      </div>
-    </collapsable-ui>
-    <modal-ui
-      :title="activeModel ? 'Edit Model Association' : 'Associate Model'"
-      size="md"
-      v-if="isAssociatingModel"
-      @onDismiss="isAssociatingModel = false"
-    >
-      <associate-model-form :initialModel="activeModel" @onSuccess="isAssociatingModel = false" />
-    </modal-ui>
+            <vue-good-table
+              v-if="!isEmpty"
+              :columns="columns"
+              :rows="models"
+              :line-numbers="true"
+              :pagination-options="{ enabled: true, perPage: 5 }"
+              :search-options="{ enabled: true, externalQuery: searchTerm }"
+              :sort-options="sortOptions"
+            >
+              <template slot="table-row" slot-scope="props">
+                <div class="flex justify-center" v-if="props.column.field === 'publishStatus'">
+                  <FAIcon
+                    class="text-gray-500"
+                    icon="cloud"
+                    v-if="props.row.publishStatus === 'false'"
+                  ></FAIcon>
+                  <FAIcon
+                    class="text-green-700"
+                    icon="cloud-upload-alt"
+                    v-if="props.row.publishStatus === 'true'"
+                  ></FAIcon>
+                </div>
+
+                <div class="flex justify-center" v-else-if="props.column.field === 'modelType'">
+                  {{
+                  props.row.modelType === "None"
+                  ? "Others"
+                  : lookUpCategory(props.row.modelType)
+                  }}
+                </div>
+
+                <div class="flex justify-center" v-else-if="props.column.field === 'modelCatalog'">
+                  {{
+                  props.row.modelCatalog === "None"
+                  ? "Private Catalog"
+                  : props.row.modelCatalog
+                  }}
+                </div>
+
+                <div v-else-if="props.column.field === 'actions'">
+                  <div class="flex justify-center">
+                    <button
+                      class="btn btn-xs btn-primary mx-1"
+                      @click="editModelAssociation(props.row)"
+                      :disabled="!loginAsOwner"
+                      title="Edit Model Association"
+                    >
+                      <FAIcon icon="pencil-alt" />
+                    </button>
+                    <button
+                      class="btn btn-xs btn-secondary text-black mx-1"
+                      @click="viewModel(props.row)"
+                      :disabled="
+                    !loginAsOwner && !(props.row.publishStatus === 'true')
+                  "
+                      title="View Model"
+                    >
+                      <FAIcon icon="eye" />
+                    </button>
+                    <button
+                      class="btn btn-xs btn-secondary text-black mx-1"
+                      @click="deleteModelAssociation(props.row)"
+                      :disabled="!loginAsOwner"
+                      title="Delete Model Association"
+                    >
+                      <FAIcon icon="unlink" />
+                    </button>
+                  </div>
+                </div>
+                <div v-else class="flex justify-center">{{ props.formattedRow[props.column.field] }}</div>
+              </template>
+              <template slot="pagination-bottom" slot-scope="props">
+                <pagination-ui
+                  :total="props.total"
+                  :pageChanged="props.pageChanged"
+                  :itemsPerPage="5"
+                />
+              </template>
+            </vue-good-table>
+          </div>
+        </div>
+      </collapsable-ui>
+      <modal-ui
+        :title="activeModel ? 'Edit Model Association' : 'Associate Model'"
+        size="md"
+        v-if="isAssociatingModel"
+        @onDismiss="isAssociatingModel = false"
+      >
+        <associate-model-form :initialModel="activeModel" @onSuccess="isAssociatingModel = false" />
+      </modal-ui>
+    </div>
   </div>
 </template>
 
@@ -152,6 +176,7 @@ export default {
     ...mapState("model", {
       modelCategories: state => state.categories
     }),
+    ...mapState("model", ["modelToast", "modelError"]),
     ...mapState("app", {
       portalFEUrl: state => state.portalFEUrl
     }),
@@ -234,7 +259,10 @@ export default {
       "getPredictorDetailsForProject"
     ]),
     ...mapActions("app", ["showToastMessage"]),
-    ...mapActions("predictor", ["deletePredictorAssociation", "getProjectPredictors"]),
+    ...mapActions("predictor", [
+      "deletePredictorAssociation",
+      "getProjectPredictors"
+    ]),
     associateModel() {
       this.activeModel = undefined;
       this.isAssociatingModel = true;
@@ -249,7 +277,7 @@ export default {
       model = new Model(model);
       let predictors = await this.getPredictorDetailsForProject();
       let predictorAssociated = [];
-      if(predictors.length > 0){
+      if (predictors.length > 0) {
         predictorAssociated = filter(
           predictors,
           predictor =>
@@ -260,14 +288,14 @@ export default {
 
       if (predictorAssociated.length > 0) {
         this.confirm({
-        title: "Delete " + model.name + " Association",
-        body:
-          "Removing the Model association will also remove Predictor association.",
-        options: {
-          okLabel: "Confirm",
-          dismissLabel: "Cancel"
-        },
-        onOk: async () => {
+          title: "Delete " + model.name + " Association",
+          body:
+            "Removing the Model association will also remove Predictor association.",
+          options: {
+            okLabel: "Confirm",
+            dismissLabel: "Cancel"
+          },
+          onOk: async () => {
             const response = await this.deletePredictorAssociation(
               predictorAssociated[0]
             );
@@ -297,7 +325,7 @@ export default {
             }
           }
         });
-      } else{
+      } else {
         this.confirm({
           title: "Delete " + model.name + " Association",
           body:

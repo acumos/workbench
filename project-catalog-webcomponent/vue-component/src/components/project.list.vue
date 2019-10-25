@@ -6,7 +6,7 @@
         <FAIcon icon="question-circle"></FAIcon>
       </a>
     </div>
-    <div class="flex w-full my-2" v-if="!hasProjects">
+    <div class="flex w-full my-2" v-if="!hasProjects && globalError">
       <CollapsableUi title="Projects" icon="project-diagram" :collapse-border="true">
         <div class="p-5">
           <p class="py-4">No Projects, get started with ML Workbench by creating your first project.</p>
@@ -142,7 +142,7 @@ export default {
     ...mapState("project", {
       loginAsOwner: state => state.loginAsOwner
     }),
-    ...mapState("app", ["projectWikiURL"]),
+    ...mapState("app", ["projectWikiURL", "globalError"]),
     filters() {
       return {
         active: filter(this.projects, { status: "ACTIVE" }).length,

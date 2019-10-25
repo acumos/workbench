@@ -11,6 +11,24 @@ export default {
       }
     );
 
+    if (data.status === "Error") {
+      return data;
+    }
+    return get(data, "data");
+  },
+
+  async sharedProjectsCount({ rootState }) {
+    const { data } = await axios.post(
+      `${rootState.app.componentUrl}/api/project/sharedProjects`,
+      {
+        url: rootState.app.msConfig.projectmSURL,
+        userName: rootState.app.userName
+      }
+    );
+
+    if (data.status === "Error") {
+      return data;
+    }
     return get(data, "data");
   }
 };

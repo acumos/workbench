@@ -3,7 +3,7 @@ import { map } from "lodash-es";
 import Project from "../../entities/project.entity";
 
 export default {
-  async allProjects({ rootState }) {
+  async allProjects({ rootState, commit }) {
     const { data } = await axios.post(
       `${rootState.app.componentUrl}/api/projects`,
       {
@@ -13,11 +13,25 @@ export default {
       }
     );
 
+    if (data.status === "Error") {
+      commit(
+        "app/setToastMessage",
+        {
+          id: "global",
+          type: "error",
+          message: data.message
+        },
+        { root: true }
+      );
+
+      commit("app/setGlobalError", true, { root: true });
+      return [];
+    }
     Project.create({
       data: map(data.data, project => Project.$fromJson(project))
     });
   },
-  async sharedProjects({ rootState }) {
+  async sharedProjects({ rootState, commit }) {
     const { data } = await axios.post(
       `${rootState.app.componentUrl}/api/project/sharedProjects`,
       {
@@ -27,10 +41,21 @@ export default {
       }
     );
 
-    return await map(
-      data.data,
-      project => new Project(Project.$fromJson(project))
-    );
+    if (data.status === "Error") {
+      commit(
+        "app/setToastMessage",
+        {
+          id: "global",
+          type: "error",
+          message: data.message
+        },
+        { root: true }
+      );
+
+      commit("app/setGlobalError", true, { root: true });
+      return [];
+    }
+    return map(data.data, project => new Project(Project.$fromJson(project)));
   },
 
   async createProject({ rootState }, project) {

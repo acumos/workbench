@@ -115,11 +115,11 @@
               <textarea
                 class="form-textarea w-1/2 h-24 my-2"
                 v-model="updatedPipeline.description"
-                maxlength="2000"
+                maxlength="1000"
                 placeholder="Enter Data Pipeline Description"
               ></textarea>
               <span class="leading-none text-right text-gray-600 mt-1"
-                >{{ 2000 - updatedPipeline.description.length }} Chars</span
+                >{{ 1000 - updatedPipeline.description.length }} Chars</span
               >
           </td>
         </tr>

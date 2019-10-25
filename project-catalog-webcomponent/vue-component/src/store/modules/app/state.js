@@ -17,5 +17,6 @@ export default {
     onOk: null,
     okDismiss: null,
     options: {}
-  }
+  },
+  globalError: false
 };

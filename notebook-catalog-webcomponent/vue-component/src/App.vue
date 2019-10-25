@@ -1,8 +1,13 @@
 <template>
-  <div class="flex flex-col font-sans" id="notebook-catalog-webcomponent">
-    <ToastUI id="global"></ToastUI>
-    <ConfirmUI></ConfirmUI>
-    <NotebookList :notebooks="notebooks" @on-open-notebook="onOpenNotebook" />
+  <div>
+    <ToastUI v-if="globalError" id="global" />
+    <div v-if="!globalError">
+      <div class="flex flex-col font-sans" id="notebook-catalog-webcomponent">
+        <ToastUI id="global"></ToastUI>
+        <ConfirmUI></ConfirmUI>
+        <NotebookList :notebooks="notebooks" @on-open-notebook="onOpenNotebook" />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -30,7 +35,13 @@ export default {
   mixins: [Vue2Filters.mixin],
   props: ["componenturl", "authtoken", "username"],
   computed: {
-    ...mapState("app", ["wikiConfig", "componentUrl", "authToken", "userName"]),
+    ...mapState("app", [
+      "wikiConfig",
+      "componentUrl",
+      "authToken",
+      "userName",
+      "globalError"
+    ]),
     notebooks() {
       return Notebook.all();
     }
@@ -67,11 +78,27 @@ export default {
       }
 
       await this.getConfig();
-      await this.allNotebooks();
+      if (this.userName !== "" && this.authToken !== "") {
+        await this.allNotebooks();
+      } else {
+        this.setToastMessage({
+          id: "global",
+          type: "error",
+          message:
+            "Acumos session details are unavailable in browser cookies. Pls login to Acumos portal and come back here.."
+        });
+        this.setGlobalError(true);
+      }
 
       this.$emit("on-load-event");
     },
-    ...mapMutations("app", ["setComponentUrl", "setAuthToken", "setUserName"]),
+    ...mapMutations("app", [
+      "setComponentUrl",
+      "setAuthToken",
+      "setUserName",
+      "setToastMessage",
+      "setGlobalError"
+    ]),
     ...mapActions("app", ["getConfig", "showToastMessage"]),
     ...mapActions("notebook", ["allNotebooks"])
   },

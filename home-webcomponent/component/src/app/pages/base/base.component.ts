@@ -44,9 +44,8 @@ export class BaseComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-    if (!isUndefined(this.webComponent)) {
+    if (!isUndefined(this.webComponent.nativeElement.vueComponent)) {
       this.webComponent.nativeElement.vueComponent.$destroy();
-
     }
   }
 

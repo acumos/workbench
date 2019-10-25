@@ -21,5 +21,6 @@ export default {
   },
   pipelineFlag: null,
   portalFEUrl: null,
-  portalBEUrl: null
+  portalBEUrl: null,
+  globalError: false
 };

@@ -21,10 +21,20 @@ export default {
       }
     );
 
+    if (data.status === "Error") {
+      commit("setModelToast", {
+        id: "model",
+        type: "error",
+        message: data.message
+      });
+
+      commit("setModelError", true);
+      return [];
+    }
     commit("setCategories", data.data);
   },
 
-  async getModelDetailsForProject({ rootState }) {
+  async getModelDetailsForProject({ rootState, commit }) {
     const { data } = await axios.post(
       `${rootState.app.componentUrl}/api/models/getProjectModels`,
       {
@@ -34,13 +44,23 @@ export default {
       }
     );
 
+    if (data.status === "Error") {
+      commit("setModelToast", {
+        id: "model",
+        type: "error",
+        message: data.message
+      });
+
+      commit("setModelError", true);
+      return [];
+    }
     const models = map(data.data, model => Model.$fromJson(model));
     Model.create({
       data: models
     });
   },
 
-  async getPredictorDetailsForProject({ rootState }) {
+  async getPredictorDetailsForProject({ rootState, commit }) {
     const { data } = await axios.post(
       `${rootState.app.componentUrl}/api/project/getProjectPredictors`,
       {
@@ -50,6 +70,19 @@ export default {
       }
     );
 
+    if (data.status === "Error") {
+      commit(
+        "app/setToastMessage",
+        {
+          id: "model",
+          type: "error",
+          message: data.message
+        },
+        { root: true }
+      );
+
+      return [];
+    }
     return map(data.data, predictor => Predictor.$fromJson(predictor));
   },
 

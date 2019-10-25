@@ -4,5 +4,16 @@ export default {
   },
   setModels(state, models) {
     state.models = models;
+  },
+  setModelToast(state, { message, type, id }) {
+    state.modelToast = {
+      id,
+      enabled: true,
+      message,
+      type
+    };
+  },
+  setModelError(state, modelError){
+    state.modelError = modelError;
   }
 };

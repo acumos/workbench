@@ -1,3 +1,10 @@
 export default {
-  activeProject: null
+  activeProject: null,
+  notebookToast: {
+    id: "",
+    enabled: false,
+    type: "",
+    message: ""
+  },
+  notebookError: false
 };

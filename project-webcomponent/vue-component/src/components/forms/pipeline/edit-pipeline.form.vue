@@ -40,12 +40,12 @@
           <textarea
             class="form-textarea"
             rows="4"
-            maxlength="2000"
+            maxlength="1000"
             v-model="updatedPipeline.description"
             placeholder="Enter Data Pipeline Description"
           ></textarea>
           <span class="leading-none text-right text-gray-600 mt-1"
-            >{{ 2000 - updatedPipeline.description.length }} Chars</span
+            >{{ 1000 - updatedPipeline.description.length }} Chars</span
           >
         </div>
         <div class="flex-1 flex flex-col">

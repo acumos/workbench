@@ -1,53 +1,58 @@
 <template>
-  <div class="flex flex-col font-sans">
-    <ToastUI id="global"></ToastUI>
-    <ConfirmUI></ConfirmUI>
-    <div class="flex flex-wrap m-2">
-      <div class="flex w-full justify-end">
-        <div v-if="notebook">
-           <button
-            class="btn btn-primary ml-2"
-            @click="notebookLaunch(notebook)"
-            v-if="notebook.status === 'ACTIVE'"
-            title="Launch Notebook"
-          >
-            <FAIcon icon="external-link-alt"></FAIcon>
-          </button>
-          <button
-            class="btn btn-secondary ml-2"
-            @click="notebookArchive(notebook)"
-            v-if="notebook.status === 'ACTIVE'"
-            title="Archive Notebook"
-          >
-            <FAIcon icon="box"></FAIcon>
-          </button>
-          <template v-if="notebook.status === 'ARCHIVED'">
-            <button
-              class="btn btn-secondary ml-2"
-              title="Unarchive Notebook"
-              @click="unarchiveNotebook(notebook)"
-            >
-              <FAIcon icon="box-open"></FAIcon>
-            </button>
-            <button
-              class="btn btn-secondary ml-2 text-red-600"
-              title="Delete Notebook"
-              @click="notebookDelete(notebook)"
-            >
-              <FAIcon icon="trash-alt"></FAIcon>
-            </button>
-          </template>
-          <a
-            :href="notebookWikiURL"
-            target="_blank"
-            class="btn btn-secondary text-black ml-2"
-            title="Learn More"
-          >
-            <FAIcon icon="question-circle"></FAIcon>
-          </a>
+  <div>
+    <ToastUI v-if="globalError" id="global" />
+    <div v-if="!globalError">
+      <div class="flex flex-col font-sans">
+        <ToastUI id="global"></ToastUI>
+        <ConfirmUI></ConfirmUI>
+        <div class="flex flex-wrap m-2">
+          <div class="flex w-full justify-end">
+            <div v-if="notebook">
+              <button
+                class="btn btn-primary ml-2"
+                @click="notebookLaunch(notebook)"
+                v-if="notebook.status === 'ACTIVE'"
+                title="Launch Notebook"
+              >
+                <FAIcon icon="external-link-alt"></FAIcon>
+              </button>
+              <button
+                class="btn btn-secondary ml-2"
+                @click="notebookArchive(notebook)"
+                v-if="notebook.status === 'ACTIVE'"
+                title="Archive Notebook"
+              >
+                <FAIcon icon="box"></FAIcon>
+              </button>
+              <template v-if="notebook.status === 'ARCHIVED'">
+                <button
+                  class="btn btn-secondary ml-2"
+                  title="Unarchive Notebook"
+                  @click="unarchiveNotebook(notebook)"
+                >
+                  <FAIcon icon="box-open"></FAIcon>
+                </button>
+                <button
+                  class="btn btn-secondary ml-2 text-red-600"
+                  title="Delete Notebook"
+                  @click="notebookDelete(notebook)"
+                >
+                  <FAIcon icon="trash-alt"></FAIcon>
+                </button>
+              </template>
+              <a
+                :href="notebookWikiURL"
+                target="_blank"
+                class="btn btn-secondary text-black ml-2"
+                title="Learn More"
+              >
+                <FAIcon icon="question-circle"></FAIcon>
+              </a>
+            </div>
+          </div>
+          <NotebookDetails :notebook="notebook" v-if="notebook" class="my-5" />
         </div>
       </div>
-      <NotebookDetails :notebook="notebook" v-if="notebook" class="my-5" />
     </div>
   </div>
 </template>
@@ -79,7 +84,8 @@ export default {
       "notebookWikiURL",
       "componentUrl",
       "authToken",
-      "userName"
+      "userName",
+      "globalError"
     ]),
 
     notebook() {
@@ -113,14 +119,27 @@ export default {
       }
 
       await this.getConfig();
-      await this.getNotebookDetails();
+      if (this.userName !== "" && this.authToken !== "") {
+        await this.getNotebookDetails();
+      } else {
+        this.setToastMessage({
+          id: "global",
+          type: "error",
+          message:
+            "Acumos session details are unavailable in browser cookies. Pls login to Acumos portal and come back here.."
+        });
+        this.setGlobalError(true);
+      }
+
       this.$emit("on-load-event");
     },
     ...mapMutations("app", [
       "setComponentUrl",
       "setAuthToken",
       "setUserName",
-      "confirm"
+      "confirm",
+      "setToastMessage",
+      "setGlobalError"
     ]),
     ...mapMutations("notebook", ["setActiveNotebook"]),
     ...mapActions("app", ["getConfig", "showToastMessage"]),

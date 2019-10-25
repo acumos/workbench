@@ -1,144 +1,169 @@
 <template>
   <div class="w-full">
-    <collapsable-ui title="Notebooks" icon="book-open" :collapse-border="!isEmpty">
-      <div slot="right-actions" class="inline-flex">
-        <a :href="wikiConfig.notebookWikiURL" target="_blank" class="text-sm text-gray-500 underline">Learn More</a>
-      </div>
-      <div>
-        <div class="flex flex-col" v-if="isEmpty">
-          <span class="my-5">No Notebooks.</span>
-          <div class="flex">
-            <button
-              class="btn btn-secondary btn-sm mr-2"
-              @click="associateNotebook()"
-              :disabled="!loginAsOwner"
-            >Associate Notebook</button>
-            <button
-              class="btn btn-primary btn-sm"
-              @click="editNotebook()"
-              :disabled="!loginAsOwner"
-            >Create Notebook</button>
-          </div>
+    <div class="flex w-full">
+      <collapsable-ui title="Notebooks" icon="book-open" :collapse-border="!isEmpty">
+        <div slot="right-actions" class="inline-flex">
+          <a
+            :href="wikiConfig.notebookWikiURL"
+            target="_blank"
+            class="text-sm text-gray-500 underline"
+          >Learn More</a>
         </div>
-      </div>
-      <div class="flex flex-col">
-        <div class="flex justify-end my-3" v-if="!isEmpty">
-          <div class="flex inline-flex items-center">
-            <select class="form-select mr-2 py-1" v-model="sortBy">
-              <option value="" disabled selected>Sort By</option>
-              <option value="createdAt">Created</option>
-              <option value="name">Name</option>
-            </select>
-            <input
-              type="text"
-              class="form-input mr-2 py-1"
-              placeholder="Search Notebooks"
-              v-model="searchTerm"
-            />
-            <button
-              class="btn btn-sm btn-primary text-white mr-2"
-              @click="editNotebook()"
-              :disabled="!loginAsOwner"
-              title="Create Notebook"
+        <div v-if="notebookError">
+          <div class="mt-2" v-if="notebookToast.enabled && notebookToast.id === 'notebook'">
+            <div
+              class="w-1/2 p-2 rounded-lg shadow-lg border bg-red-300 text-red-800 border-red-400"
             >
-              <FAIcon icon="plus-square" />
-            </button>
-            <button
-              class="btn btn-sm btn-secondary text-black mr-2"
-              @click="associateNotebook()"
-              :disabled="!loginAsOwner"
-              title="Associate Notebook"
-            >
-              <FAIcon icon="link" />
-            </button>
-          </div>
-        </div>
-        <vue-good-table
-          v-if="!isEmpty"
-          :columns="columns"
-          :rows="notebooks"
-          :line-numbers="true"
-          :pagination-options="{ enabled: true, perPage: 5 }"
-          :search-options="{ enabled: true, externalQuery: searchTerm }"
-          :sort-options="sortOptions"
-        >
-          <template slot="table-row" slot-scope="props">
-            <div class="flex justify-center" v-if="props.column.field === 'status'">
-              <div
-                :class="{'text-green-500': props.row.status === 'ACTIVE', 'text-red-500': props.row.status === 'ARCHIVED'}"
-              >{{props.row.status}}</div>
-            </div>
-            <div v-else-if="props.column.field === 'actions'">
-              <div class="flex justify-center">
-                <template v-if="props.row.status === 'ACTIVE'">
-                  <button
-                    class="btn btn-xs btn-primary text-white mx-1"
-                    @click="notebookLaunch(props.row)"
-                    title="Launch Notebook"
-                  >
-                    <FAIcon icon="external-link-alt" />
-                  </button>
-                  <button
-                    class="btn btn-xs btn-secondary text-black mx-1"
-                    @click="editNotebook(props.row)"
-                    :disabled="!loginAsOwner"
-                    title="Edit Notebook"
-                  >
-                    <FAIcon icon="pencil-alt" />
-                  </button>
-                  <button
-                    class="btn btn-xs btn-secondary text-black mx-1"
-                    title="Archive Notebook"
-                    @click="notebookArchive(props.row)"
-                    :disabled="!loginAsOwner"
-                  >
-                    <FAIcon icon="box" />
-                  </button>
-                </template>
-                <template v-else-if="props.row.status === 'ARCHIVED'">
-                  <button
-                    class="btn btn-xs btn-secondary text-black mx-1"
-                    title="Unarchive Notebook"
-                    @click="notebookUnarchive(props.row)"
-                    :disabled="!loginAsOwner"
-                  >
-                    <FAIcon icon="box-open" />
-                  </button>
-                </template>
-                 <button
-                    class="btn btn-xs btn-secondary text-black mx-1"
-                    title="Delete Notebook Association"
-                    @click="notebookDeleteAssociation(props.row)"
-                    :disabled="!loginAsOwner"
-                  >
-                    <FAIcon icon="unlink" />
-                  </button>
+              <div class="flex itemx-center">
+                <FAIcon cl icon="exclamation-triangle" class="mr-1 text-2xl"></FAIcon>
+                {{ notebookToast.message }}
               </div>
             </div>
-            <div v-else class="flex justify-center px-1">{{ props.formattedRow[props.column.field] }}</div>
-          </template>
-          <template slot="pagination-bottom" slot-scope="props">
-            <pagination-ui :total="props.total" :pageChanged="props.pageChanged" :itemsPerPage="5" />
-          </template>
-        </vue-good-table>
-      </div>
-    </collapsable-ui>
-    <modal-ui
-      :title="(activeNotebook ? 'Edit' : 'Create') + ' Notebook'"
-      size="md"
-      v-if="isEdittingNotebook"
-      @onDismiss="isEdittingNotebook = false"
-    >
-      <edit-notebook-form :data="activeNotebook" @onSuccess="isEdittingNotebook = false" />
-    </modal-ui>
-    <modal-ui
-      title="Associate Notebook"
-      size="md"
-      v-if="isAssociatingNotebook"
-      @onDismiss="isAssociatingNotebook = false"
-    >
-      <associate-notebook-form :data="activeNotebook" @onSuccess="isAssociatingNotebook = false" />
-    </modal-ui>
+          </div>
+        </div>
+        <div v-if="!notebookError">
+          <div class="flex flex-col" v-if="isEmpty">
+            <span class="my-5">No Notebooks.</span>
+            <div class="flex">
+              <button
+                class="btn btn-secondary btn-sm mr-2"
+                @click="associateNotebook()"
+                :disabled="!loginAsOwner"
+              >Associate Notebook</button>
+              <button
+                class="btn btn-primary btn-sm"
+                @click="editNotebook()"
+                :disabled="!loginAsOwner"
+              >Create Notebook</button>
+            </div>
+          </div>
+          <div class="flex flex-col">
+            <div class="flex justify-end my-3" v-if="!isEmpty">
+              <div class="flex inline-flex items-center">
+                <select class="form-select mr-2 py-1" v-model="sortBy">
+                  <option value disabled selected>Sort By</option>
+                  <option value="createdAt">Created</option>
+                  <option value="name">Name</option>
+                </select>
+                <input
+                  type="text"
+                  class="form-input mr-2 py-1"
+                  placeholder="Search Notebooks"
+                  v-model="searchTerm"
+                />
+                <button
+                  class="btn btn-sm btn-primary text-white mr-2"
+                  @click="editNotebook()"
+                  :disabled="!loginAsOwner"
+                  title="Create Notebook"
+                >
+                  <FAIcon icon="plus-square" />
+                </button>
+                <button
+                  class="btn btn-sm btn-secondary text-black mr-2"
+                  @click="associateNotebook()"
+                  :disabled="!loginAsOwner"
+                  title="Associate Notebook"
+                >
+                  <FAIcon icon="link" />
+                </button>
+              </div>
+            </div>
+            <vue-good-table
+              v-if="!isEmpty"
+              :columns="columns"
+              :rows="notebooks"
+              :line-numbers="true"
+              :pagination-options="{ enabled: true, perPage: 5 }"
+              :search-options="{ enabled: true, externalQuery: searchTerm }"
+              :sort-options="sortOptions"
+            >
+              <template slot="table-row" slot-scope="props">
+                <div class="flex justify-center" v-if="props.column.field === 'status'">
+                  <div
+                    :class="{'text-green-500': props.row.status === 'ACTIVE', 'text-red-500': props.row.status === 'ARCHIVED'}"
+                  >{{props.row.status}}</div>
+                </div>
+                <div v-else-if="props.column.field === 'actions'">
+                  <div class="flex justify-center">
+                    <template v-if="props.row.status === 'ACTIVE'">
+                      <button
+                        class="btn btn-xs btn-primary text-white mx-1"
+                        @click="notebookLaunch(props.row)"
+                        title="Launch Notebook"
+                      >
+                        <FAIcon icon="external-link-alt" />
+                      </button>
+                      <button
+                        class="btn btn-xs btn-secondary text-black mx-1"
+                        @click="editNotebook(props.row)"
+                        :disabled="!loginAsOwner"
+                        title="Edit Notebook"
+                      >
+                        <FAIcon icon="pencil-alt" />
+                      </button>
+                      <button
+                        class="btn btn-xs btn-secondary text-black mx-1"
+                        title="Archive Notebook"
+                        @click="notebookArchive(props.row)"
+                        :disabled="!loginAsOwner"
+                      >
+                        <FAIcon icon="box" />
+                      </button>
+                    </template>
+                    <template v-else-if="props.row.status === 'ARCHIVED'">
+                      <button
+                        class="btn btn-xs btn-secondary text-black mx-1"
+                        title="Unarchive Notebook"
+                        @click="notebookUnarchive(props.row)"
+                        :disabled="!loginAsOwner"
+                      >
+                        <FAIcon icon="box-open" />
+                      </button>
+                    </template>
+                    <button
+                      class="btn btn-xs btn-secondary text-black mx-1"
+                      title="Delete Notebook Association"
+                      @click="notebookDeleteAssociation(props.row)"
+                      :disabled="!loginAsOwner"
+                    >
+                      <FAIcon icon="unlink" />
+                    </button>
+                  </div>
+                </div>
+                <div
+                  v-else
+                  class="flex justify-center px-1"
+                >{{ props.formattedRow[props.column.field] }}</div>
+              </template>
+              <template slot="pagination-bottom" slot-scope="props">
+                <pagination-ui
+                  :total="props.total"
+                  :pageChanged="props.pageChanged"
+                  :itemsPerPage="5"
+                />
+              </template>
+            </vue-good-table>
+          </div>
+        </div>
+      </collapsable-ui>
+      <modal-ui
+        :title="(activeNotebook ? 'Edit' : 'Create') + ' Notebook'"
+        size="md"
+        v-if="isEdittingNotebook"
+        @onDismiss="isEdittingNotebook = false"
+      >
+        <edit-notebook-form :data="activeNotebook" @onSuccess="isEdittingNotebook = false" />
+      </modal-ui>
+      <modal-ui
+        title="Associate Notebook"
+        size="md"
+        v-if="isAssociatingNotebook"
+        @onDismiss="isAssociatingNotebook = false"
+      >
+        <associate-notebook-form :data="activeNotebook" @onSuccess="isAssociatingNotebook = false" />
+      </modal-ui>
+    </div>
   </div>
 </template>
 
@@ -161,11 +186,11 @@ export default {
     AssociateNotebookForm
   },
   computed: {
-    ...mapState("app", [
-      "wikiConfig"]),
+    ...mapState("app", ["wikiConfig"]),
     ...mapState("project", {
       loginAsOwner: state => state.loginAsOwner
     }),
+    ...mapState("notebook", ["notebookError", "notebookToast"]),
     isEmpty() {
       return this.notebooks.length === 0;
     },
@@ -260,11 +285,11 @@ export default {
     },
     async notebookArchive(notebook) {
       this.confirm({
-        title: "Archive "+notebook.name,
+        title: "Archive " + notebook.name,
         body: "Are you sure you want to archive " + notebook.name + "?",
         options: {
-           okLabel: "Archive Notebook",
-           dismissLabel: "Cancel"
+          okLabel: "Archive Notebook",
+          dismissLabel: "Cancel"
         },
         onOk: async () => {
           const response = await this.archiveNotebook(notebook);
@@ -287,11 +312,11 @@ export default {
     },
     async notebookUnarchive(notebook) {
       this.confirm({
-        title: "Unarchive "+notebook.name,
+        title: "Unarchive " + notebook.name,
         body: "Are you sure you want to unarchive " + notebook.name + "?",
         options: {
-           okLabel: "Unarchive Notebook",
-           dismissLabel: "Cancel"
+          okLabel: "Unarchive Notebook",
+          dismissLabel: "Cancel"
         },
         onOk: async () => {
           const response = await this.restoreNotebook(notebook);
@@ -314,11 +339,12 @@ export default {
     },
     async notebookDeleteAssociation(notebook) {
       this.confirm({
-        title: "Delete "+notebook.name + " Association",
-        body: "Are you sure you want to delete " + notebook.name + "association?",
+        title: "Delete " + notebook.name + " Association",
+        body:
+          "Are you sure you want to delete " + notebook.name + "association?",
         options: {
-           okLabel: "Delete Notebook Association",
-           dismissLabel: "Cancel"
+          okLabel: "Delete Notebook Association",
+          dismissLabel: "Cancel"
         },
         onOk: async () => {
           const response = await this.deleteNotebookAssociation(notebook);

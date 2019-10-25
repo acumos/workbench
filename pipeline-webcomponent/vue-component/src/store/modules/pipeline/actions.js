@@ -4,7 +4,7 @@ import { get } from "lodash-es";
 import Pipeline from "../../entities/pipeline.entity";
 
 export default {
-  async getPipelineDetails({ rootState }) {
+  async getPipelineDetails({ rootState, commit }) {
     const { data } = await axios.post(
       `${rootState.app.componentUrl}/api/pipeline/details`,
       {
@@ -14,6 +14,20 @@ export default {
       }
     );
 
+    if (data.status === "Error") {
+      commit(
+        "app/setToastMessage",
+        {
+          id: "global",
+          type: "error",
+          message: data.message
+        },
+        { root: true }
+      );
+
+      commit("app/setGlobalError", true, { root: true });
+      return [];
+    }
     Pipeline.create({
       data: {
         id: get(data, "data.pipelineId.uuid"),

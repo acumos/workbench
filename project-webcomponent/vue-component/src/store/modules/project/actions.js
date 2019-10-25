@@ -15,6 +15,21 @@ export default {
       }
     );
 
+    if (data.status === "Error") {
+      commit(
+        "app/setToastMessage",
+        {
+          id: "global",
+          type: "error",
+          message: data.message
+        },
+        { root: true }
+      );
+
+      commit("app/setGlobalError", true, { root: true });
+      return [];
+    }
+
     commit(
       "setLoginAsOwner",
       rootState.app.userName === data.data.owner.authenticatedUserId
@@ -35,7 +50,7 @@ export default {
       }
     });
   },
-  async getProjectNotebooks({ rootState }) {
+  async getProjectNotebooks({ rootState, commit }) {
     const { data } = await axios.post(
       `${rootState.app.componentUrl}/api/project/notebooksList`,
       {
@@ -45,11 +60,25 @@ export default {
       }
     );
 
+    if (data.status === "Error") {
+      commit(
+        "notebook/setNotebookToast",
+        {
+          id: "notebook",
+          type: "error",
+          message: data.message
+        },
+        { root: true }
+      );
+
+      commit("notebook/setNotebookError", true, { root: true });
+      return [];
+    }
     Notebook.create({
       data: map(data.data, notebook => Notebook.$fromJson(notebook))
     });
   },
-  async getProjectPipelines({ rootState }) {
+  async getProjectPipelines({ rootState, commit }) {
     const { data } = await axios.post(
       `${rootState.app.componentUrl}/api/project/pipelinesList`,
       {
@@ -59,6 +88,20 @@ export default {
       }
     );
 
+    if (data.status === "Error") {
+      commit(
+        "pipeline/setPipelineToast",
+        {
+          id: "pipeline",
+          type: "error",
+          message: data.message
+        },
+        { root: true }
+      );
+
+      commit("pipeline/setPipelineError", true, { root: true });
+      return [];
+    }
     Pipeline.create({
       data: map(data.data, pipeline => Pipeline.$fromJson(pipeline))
     });

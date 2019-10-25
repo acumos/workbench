@@ -15,10 +15,12 @@ export default {
   useExternalNotebook: null,
   useExternalPipeline: null,
   toast: {
-    id: "",
-    enabled: false,
-    type: "",
-    message: ""
+    global: {
+      id: "global",
+      enabled: false,
+      type: "",
+      message: ""
+    }
   },
   confirm: {
     enabled: false,
@@ -27,5 +29,6 @@ export default {
     onOk: null,
     okDismiss: null,
     options: {}
-  }
+  },
+  globalError: false
 };

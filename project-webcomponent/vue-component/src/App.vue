@@ -1,56 +1,61 @@
 <template>
-  <div class="flex flex-col font-sans">
-    <ToastUI id="global"></ToastUI>
-    <ConfirmUI></ConfirmUI>
-    <div class="flex flex-wrap m-2">
-      <div class="flex w-full justify-end">
-        <div v-if="project">
-          <button
-            class="btn btn-secondary ml-2"
-            @click="archiveProject(project)"
-            v-if="project.status === 'ACTIVE'"
-            title="Archive Project"
-            :disabled="!loginAsOwner"
-          >
-            <FAIcon icon="box"></FAIcon>
-          </button>
-          <template v-if="project.status === 'ARCHIVED'">
-            <button
-              class="btn btn-secondary ml-2"
-              title="Unarchive Project"
-              @click="unarchiveProject(project)"
-              :disabled="!loginAsOwner"
-            >
-              <FAIcon icon="box-open"></FAIcon>
-            </button>
-            <button
-              class="btn btn-secondary ml-2 text-red-600"
-              title="Delete Project"
-              @click="projectDelete(project)"
-              :disabled="!loginAsOwner"
-            >
-              <FAIcon icon="trash-alt"></FAIcon>
-            </button>
+  <div>
+    <ToastUI v-if="globalError" id="global" />
+    <div v-if="!globalError">
+      <div class="flex flex-col font-sans">
+        <ToastUI id="global"></ToastUI>
+        <ConfirmUI></ConfirmUI>
+        <div class="flex flex-wrap m-2">
+          <div class="flex w-full justify-end">
+            <div v-if="project">
+              <button
+                class="btn btn-secondary ml-2"
+                @click="archiveProject(project)"
+                v-if="project.status === 'ACTIVE'"
+                title="Archive Project"
+                :disabled="!loginAsOwner"
+              >
+                <FAIcon icon="box"></FAIcon>
+              </button>
+              <template v-if="project.status === 'ARCHIVED'">
+                <button
+                  class="btn btn-secondary ml-2"
+                  title="Unarchive Project"
+                  @click="unarchiveProject(project)"
+                  :disabled="!loginAsOwner"
+                >
+                  <FAIcon icon="box-open"></FAIcon>
+                </button>
+                <button
+                  class="btn btn-secondary ml-2 text-red-600"
+                  title="Delete Project"
+                  @click="projectDelete(project)"
+                  :disabled="!loginAsOwner"
+                >
+                  <FAIcon icon="trash-alt"></FAIcon>
+                </button>
+              </template>
+              <a
+                :href="wikiConfig.projectWikiURL"
+                target="_blank"
+                class="btn btn-secondary text-black ml-2"
+                title="Learn More"
+              >
+                <FAIcon icon="question-circle"></FAIcon>
+              </a>
+            </div>
+          </div>
+          <ProjectDetails :project="project" v-if="project" class="my-5" />
+          <template v-if="project && project.status !== 'ARCHIVED'">
+            <NotebookList :notebooks="notebooks" class="my-5" />
+            <template v-if="pipelineFlag === 'true'">
+              <PipelineList :pipelines="pipelines" class="my-5" />
+            </template>
+            <ModelList :models="models" class="my-5" />
+            <PredictorList :predictors="predictors" class="my-5" />
           </template>
-          <a
-            :href="wikiConfig.projectWikiURL"
-            target="_blank"
-            class="btn btn-secondary text-black ml-2"
-            title="Learn More"
-          >
-            <FAIcon icon="question-circle"></FAIcon>
-          </a>
         </div>
       </div>
-      <ProjectDetails :project="project" v-if="project" class="my-5" />
-      <template v-if="project && project.status !== 'ARCHIVED'">
-        <NotebookList :notebooks="notebooks" class="my-5" />
-        <template v-if="pipelineFlag === 'true'">
-          <PipelineList :pipelines="pipelines" class="my-5" />
-        </template>
-        <ModelList :models="models" class="my-5" />
-        <PredictorList :predictors="predictors" class="my-5" />
-      </template>
     </div>
   </div>
 </template>
@@ -95,7 +100,8 @@ export default {
       "componentUrl",
       "authToken",
       "userName",
-      "pipelineFlag"
+      "pipelineFlag",
+      "globalError"
     ]),
     ...mapState("project", ["activeProject", "loginAsOwner"]),
     project() {
@@ -141,13 +147,27 @@ export default {
       }
 
       await this.getConfig();
-      await this.getDetails();
-      await this.getProjectNotebooks();
-      await this.getProjectPipelines();
+      if (this.userName !== "" && this.authToken !== "") {
+        await this.getDetails();
+        if (!this.globalError) {
+          await this.getProjectNotebooks();
+          if (this.pipelineFlag) {
+            await this.getProjectPipelines();
+          }
+          await this.getModelCategories();
+          await this.getModelDetailsForProject();
+          await this.getProjectPredictors();
+        }
+      } else {
+        this.setToastMessage({
+          id: "global",
+          type: "error",
+          message:
+            "Acumos session details are unavailable in browser cookies. Pls login to Acumos portal and come back here.."
+        });
+        this.setGlobalError(true);
+      }
 
-      await this.getModelCategories();
-      await this.getModelDetailsForProject();
-      await this.getProjectPredictors();
       this.$emit("on-load-event");
     },
     ...mapMutations("app", [

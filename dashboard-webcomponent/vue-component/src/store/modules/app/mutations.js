@@ -58,5 +58,9 @@ export default {
     newConfirm.enabled = !state.confirm.enabled;
 
     state.confirm = newConfirm;
+  },
+
+  setGlobalError(state, globalError){
+    state.globalError = globalError;
   }
 };

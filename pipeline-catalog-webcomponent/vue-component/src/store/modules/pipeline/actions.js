@@ -3,7 +3,7 @@ import { map } from "lodash-es";
 import Pipeline from "../../entities/pipeline.entity";
 
 export default {
-  async allPipelines({ rootState }) {
+  async allPipelines({ rootState, commit }) {
     const { data } = await axios.post(
       `${rootState.app.componentUrl}/api/pipelines`,
       {
@@ -11,6 +11,21 @@ export default {
         userName: rootState.app.userName
       }
     );
+
+    if (data.status === "Error") {
+      commit(
+        "app/setToastMessage",
+        {
+          id: "global",
+          type: "error",
+          message: data.message
+        },
+        { root: true }
+      );
+
+      commit("app/setGlobalError", true, { root: true });
+      return [];
+    }
 
     Pipeline.create({
       data: map(data.data, pipeline => Pipeline.$fromJson(pipeline))

@@ -45,6 +45,11 @@ Notebook Catalog screen displays list of notebooks which are created by user. Th
 	.. image:: images/create-notebook-catalog.png
 	   :alt: create-notebook-catalog image.
 
+  if external notebook flag is set to true, user will be able to create a external notebook in acumos by providing its url in the create notebook form.
+
+	.. image:: images/notebook-create-url.png
+	   :alt: create-notebook-create-url image.
+
 2. **Archive Notebook**
 
   If user wish to **Archive** any **Active** Notebook then he can click on the Archive button present at the bottom right corner of that specific Notebook card.
@@ -82,7 +87,7 @@ Notebook Catalog screen displays list of notebooks which are created by user. Th
 
 1. **Notebook Sorting**
 
-  User can sort the notebook list by choosing either one of following options - By Notebook Created Date, By Notebook Name, By Notebook ID. 
+  User can sort the notebook list by choosing either one of following options - By Notebook Created Date, By Notebook Name. 
 
 2. **Search with Notebook metadata** 
 
@@ -115,6 +120,11 @@ While creating, editing the notebook, user can give the external notebook url as
 
 	.. image:: images/edit-notebook.png
 	   :alt: edit-notebook image.
+
+  If external Notebook flag is set to true, user will be able to edit name, version, description and url as well.
+
+  .. image:: images/notebook-edit-url.png
+	   :alt: notebook-edit-url image.
 	
 2. **Archive Notebook**
 

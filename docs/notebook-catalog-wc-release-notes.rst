@@ -20,6 +20,20 @@
 ML Workbench NoteBook-Catalog Web Component
 ===============================================
 
+Version 2.0.5  25th October 2019 
+=================================
+* IST | MLWB | Project, Notebook , Data Pipeline | Creation of Project, Notebook and Data pipeline giving error if the description fields filled with all the capacity (ACUMOS-3617)
+* IST | Pipeline and Notebook | Font size for for the pop is not proper (ACUMOS-3616)
+* IST | Alignment of archive pop is not proper (ACUMOS-3615)
+* IST | MLWB | Notebook | Archival of notebook navigating user to edit screen. (ACUMOS-3619)
+* IST | MLWB | After archival of Data pipeline and notebook tooltip's in action item showing incorrect information about the icons (ACUMOS-3621)
+
+Version 2.0.3  18th October 2019 
+=================================
+* MLW - update Notebook details from polymer to Vue components (ACUMOS-3544)
+* IST | MLWB | Creation and Modified date is not showing for notebook while editing the notebook (ACUMOS-3456)
+* IST2 | MLWB | Max count for description filed is missing for Creation of project and notebook (ACUMOS-2981)
+
 Version 1.0.6  9th September 2019
 ==================================
 * Notebook UI Web Component to defile property at application level configuration to allow user to enter URL (ACUMOS-3412)

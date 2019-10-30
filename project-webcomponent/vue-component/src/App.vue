@@ -129,6 +129,7 @@ export default {
     }
   },
   created() {
+    this.reset();
     this.init();
   },
   methods: {
@@ -170,13 +171,25 @@ export default {
 
       this.$emit("on-load-event");
     },
+    reset(){
+      this.setGlobalError(false);
+      this.setNotebookError(false);
+      this.setPipelineError(false);
+      this.setModelError(false);
+      this.setPredictorError(false);
+    },
     ...mapMutations("app", [
       "setComponentUrl",
       "setAuthToken",
       "setUserName",
-      "confirm"
+      "confirm",
+      "setGlobalError"
     ]),
     ...mapMutations("project", ["setActiveProject"]),
+    ...mapMutations("model", ["setModelError"]),
+    ...mapMutations("notebook", ["setNotebookError"]),
+    ...mapMutations("pipeline", ["setPipelineError"]),
+    ...mapMutations("predictor", ["setPredictorError"]),
     ...mapActions("app", ["getConfig", "showToastMessage"]),
     ...mapActions("project", [
       "getDetails",
@@ -200,6 +213,7 @@ export default {
         onOk: async () => {
           const response = await this.unarchive(project.id);
           if (response.data.status === "Success") {
+            this.reset();
             this.init();
             this.showToastMessage({
               id: "global",

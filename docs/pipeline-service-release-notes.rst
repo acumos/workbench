@@ -20,6 +20,10 @@
 Pipeline Service Release Notes
 ===============================
 
+Version 2.0.2, 2019-10-31
+---------------------------
+* ACUMOS-3624 : IST | MLWB | Deletion of Data pipeline giving error
+
 Version 2.0.1, 2019-10-25
 ---------------------------
 * ACUMOS-3624 : IST | MLWB | Deletion of Data pipeline giving error

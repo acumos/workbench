@@ -407,7 +407,10 @@ public class PipeLineServiceImpl implements PipeLineService{
 		Pipeline pipeline = getPipeline(authenticatedUserId, pipelineId);
 		String pipelineName = pipeline.getPipelineId().getName();
 		// Call NiFi Service to delete the Pipeline Details inside NiFi Server
-		nifiService.deletePipeline(authenticatedUserId, pipelineName);
+		if(!configProps.isUseexternalpipeline()) {
+			nifiService.deletePipeline(authenticatedUserId, pipelineName);
+		}
+		
 		try {
 			//1.Delete the Pipeline
 			cdsClient.setRequestId(MDC.get(LoggingConstants.MDCs.REQUEST_ID));

@@ -97,9 +97,11 @@ public class ProjectSharingServiceImpl implements ProjectSharingService{
 			for (String collaborator : collaboratorList) {
 				if (collaborator.equals(loginUser.getUserId())) {
 					mlpProject = cdsClient.getProject(datasetCollaborator.getProjectId());
-					mlpUser = cdsClient.getUser(mlpProject.getUserId());
-					result = ProjectServiceUtil.getProjectVO(mlpProject, mlpUser);
-					projectVOList.add(result);
+					if(null != mlpProject) {
+						mlpUser = cdsClient.getUser(mlpProject.getUserId());
+						result = ProjectServiceUtil.getProjectVO(mlpProject, mlpUser);
+						projectVOList.add(result);
+					}
 				}
 			}
 		}

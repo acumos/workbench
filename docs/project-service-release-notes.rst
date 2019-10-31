@@ -20,6 +20,10 @@
 Project Service Release Notes
 ===============================
 
+Version 2.0.2, 2019-10-31
+---------------------------
+* ACUMOS-3650 : IST: ML Workbench: Getting error while clicking on the ML Workbench and Project menu
+
 Version 2.0.1, 2019-10-09
 ---------------------------
 * ACUMOS-3539 : Minor changes in the response of Project Service API : Get Project Details

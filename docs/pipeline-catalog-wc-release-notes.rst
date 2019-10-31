@@ -20,6 +20,18 @@
 ML Workbench Pipeline Catalog Web Component
 ===============================================
 
+Version 2.0.5  25th October 2019 
+=================================
+* IST | MLWB | Project, Notebook , Data Pipeline | Creation of Project, Notebook and Data pipeline giving error if the description fields filled with all the capacity (ACUMOS-3617)
+* IST | Pipeline and Notebook | Font size for for the pop is not proper (ACUMOS-3616)
+* IST | Alignment of archive pop is not proper (ACUMOS-3615)
+* IST | MLWB | Data pipeline archival navigating user to pipeline edit screen (ACUMOS-3614)
+* IST | MLWB | After archival of Data pipeline and notebook tooltip's in action item showing incorrect information about the icons (ACUMOS-3621)
+
+Version 2.0.3  18th October 2019 
+=================================
+* MLW - update Pipeline details from polymer to Vue components (ACUMOS-3542)
+
 Version 1.0.6  9th September 2019
 ==================================
 * Service URL is not being picked up right (ACUMOS-3235)

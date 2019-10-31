@@ -159,17 +159,143 @@ In the Project details screen, user can perform following Project relevant actio
 
 	.. image:: images/associate-notebook-project.png
 
-  * **Archive/Unarchive/Delete Notebook**: 
+  * **Archive/Unarchive Notebook**: 
   
-  	User may choose an option of Archiving, Unarchiving or Deleting a notebook by clicking on appropriate button. On confirmation, notebook will get archived/unarchived/deleted based on user action 
+  	User may choose an option of Archiving, Unarchiving a notebook by clicking on appropriate button. On confirmation, notebook will get archived/unarchived based on user action 
   	and status will get reflect into the Notebook list. 
   	
 	.. image:: images/archive-notebook-project-dialog.png
 	.. image:: images/unarchive-notebook-project-dialog.png
-	.. image:: images/delete-notebook-project-dialog.png
 	
+  * **Delete Notebook Association**:
+
+    User may choose an option to delete notebook association. On confirmation, notebook association with project will get deleted and notebook will not be seen under notebook list.
+
+    .. image:: images/delete-notebook-project-dialog.png
+
   * **Launch Notebook** 
 
     If user wish to **Launch** any **Active** Notebook, then user can click on the Launch button. On click of launch button, notebook will be opened in the user specific Jupyter Instance in a new browser tab.
   	
   .. image:: images/notebook-launch.png
+
+6. **Pipeline Section**
+  
+  Pipeline section will display all pipelines which are associate with the project. Pipeline lists will get displayed in tabular format showing Pipeline name, 
+  version, type, status, created date etc. 
+
+	.. image:: images/project-artifacts.png
+
+  If there is no pipeline associated to that project then two options 'Create Pipeline' and 'Associate Pipeline' will be displayed to the user in this section.
+ 
+	.. image:: images/project-empty.png
+
+  **Following are the user actions available in the Pipeline section:**
+	
+  * **Create Pipeline**: 
+  
+  	If there is no pipeline associated already for a project then user can create a pipeline by clicking on the 'Create Pipeline' button. Or else, user has to click on the '+' sign
+  	displayed on the right top corner of the Pipeline section for same. On click event, a dialog box will appeared where user has to fill out all required information and submit.
+  	On successful Pipeline creation, pipeline will get displayed in the tablular list.
+  	 
+  	 	.. image:: images/Create-pipeline-project.png
+  	  
+  * **Associate Pipeline**: 
+  
+  	If there is no pipeline associated already for a project then user can associate an existing pipeline by clicking on the 'Associate Pipeline' button. Or else, user has to click on the link button
+  	displayed on the right top corner of the Pipeline section for same. On click event, a dialog box will appeared where user has to select the desired pipeline from drop down and submit.
+  	On successful Pipeline association, pipeline will get displayed in the tablular list.
+
+	.. image:: images/associate-pipeline.png
+
+  * **Archive/Unarchive Pipeline**: 
+  
+  	User may choose an option of Archiving, Unarchiving a pipeline by clicking on appropriate button. On confirmation, pipeline will get archived/unarchived based on user action 
+  	and status will get reflect into the Pipeline list. 
+  	
+	.. image:: images/archive-pipeline-project-dialog.png
+	.. image:: images/unarchive-pipeline-project-dialog.png
+  	
+  * **Delete Pipeline Association**:
+
+    User may choose an option to delete pipeline association. On confirmation, pipeline association with project will get deleted and pipeline will not be seen under pipeline list.
+
+    .. image:: images/delete-pipeline-project-dialog.png
+
+  * **Launch Pipeline** 
+
+    If user wish to **Launch** any **Active** Pipeline, then user can click on the Launch button. On click of launch button, pipeline will be opened in the user specific Nifi Instance in a new browser tab.
+  	
+  .. image:: images/pipeline-launch.png
+
+7. **Model Section**
+  
+  Model section will display all modelss which are associated with the project. Model lists will get displayed in tabular format showing model name, 
+  version, model type, status, created date etc. 
+
+	.. image:: images/project-artifacts.png
+
+  If there is no model associated to that project then one option 'Associate Model' will be displayed to the user in this section.
+ 
+	.. image:: images/project-empty.png
+
+  **Following are the user actions available in the Model section:**
+  	  
+  * **Associate Model**: 
+  
+  	If there is no model associated already for a project then user can associate an existing model by clicking on the 'Associate model' button. Or else, user has to click on the link button
+  	displayed on the right top corner of the model section for same. On click event, a dialog box will be appeared where user has to select the desired model from drop down and submit.
+  	On successful MODEL association, model will get displayed in the tablular list.
+
+	.. image:: images/associate-model.png
+
+  * **Delete Model Association**: 
+  
+  	 User may choose an option to delete model association. On confirmation, model association with project will get deleted and model will not be seen under model list.
+
+	.. image:: images/delete-model-project-dialog.png
+	
+  * **edit Model Association** 
+
+     User may choose to edit model association. On click of the appropriate button, a dialog box will be appeared where user can select other version of the model to update model association.
+    
+     .. image:: images/edit-model-project.png
+
+  * **View Model**
+
+    User can view additional details about the associated model by clicking on view model button. When clicked, user will be redirected to model details page of the marketplace.
+    
+    .. image:: images/view-model-project.png
+    
+8. **Predictor Section**
+  
+  Predictor section will display all predictorss which are associated with the project. Predictor lists will get displayed in tabular format showing predictor name, 
+  version, predictor type, status, created date etc. 
+
+	.. image:: images/project-artifacts.png
+
+  If there is no predictor associated to that project then one option 'Associate Predictor' will be displayed to the user in this section.
+ 
+	.. image:: images/project-empty.png
+
+  **Following are the user actions available in the Predictor section:**
+  	  
+  * **Associate Predictor**: 
+  
+  	If there is no predictor associated already for a project then user can associate an existing predictor by clicking on the 'Associate predictor' button. Or else, user has to click on the link button
+  	displayed on the right top corner of the predictor section for same. On click event, a dialog box will be appeared where user has to select the desired predictor from drop down and submit.
+  	On successful MODEL association, predictor will get displayed in the tablular list.
+
+	.. image:: images/associate-predictor.png
+
+  * **Delete Predictor Association**: 
+  
+  	 User may choose an option to delete predictor association. On confirmation, predictor association with project will get deleted and predictor will not be seen under predictor list.
+
+	.. image:: images/delete-predictor-project-dialog.png
+	
+  * **edit Predictor Association** 
+
+     User may choose to edit predictor association. On click of the appropriate button, a dialog box will be appeared where user can select other version of the predictor to update predictor association.
+    
+     .. image:: images/edit-predictor-project.png

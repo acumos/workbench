@@ -20,6 +20,37 @@
 ML Workbench Project Web Component
 ===============================================
 
+Version 2.0.5  25th October 2019 
+=================================
+* IST | MLWB | Manage Collaborator | Without selection of permission project can be shared to other users (ACUMOS-3641)
+* IST | MLWB | Project, Notebook , Data Pipeline | Creation of Project, Notebook and Data pipeline giving error if the description fields filled with all the capacity (ACUMOS-3617)
+* IST | MLWB | Model Collaborator | Collaborator profile showing invalid data in shared project tab once project deleted (ACUMOS-3634)
+* IST | Pipeline and Notebook | Font size for for the pop is not proper (ACUMOS-3616)
+* IST | Alignment of archive pop is not proper (ACUMOS-3615)
+* Allow user to disassociate the Pipeline and Notebook from Project (ACUMOS-3622)
+* IST | MLWB | Data Pipeline | Color of Active and Archive in status column not proper (ACUMOS-3623)
+* IST | MLWB | Un-archival of project in edit screen gives garbage values on screen (ACUMOS-3627)
+* IST | MLWB | After archival of Data pipeline and notebook tooltip's in action item showing incorrect information about the icons (ACUMOS-3621)
+
+Version 2.0.3  18th October 2019 
+=================================
+* IST | MLWB | Creation and Modified date is not showing for projects (ACUMOS-3455)
+* IST2 | MLWB | Max count for description filed is missing for Creation of project and notebook (ACUMOS-2981)
+
+Version 2.0.2  14th October 2019 
+=================================
+* Project-predictor mapping UI (ACUMOS-3474)
+* Predictor Project Association UI and API Integration (ACUMOS-3490)
+* integrate with predictor service (ACUMOS-3475)
+* MLWB - Model/Project mapping UI known issues (ACUMOS-3424)
+
+Version 2.0.0  3rd October 2019 
+=================================
+* integrate project collaboration UI with project service (ACUMOS-3473)
+* project collaboration UI (ACUMOS-3472)
+* Change project-webcomponent polymer component to vue (ACUMOS-3476)
+* Project collaboration <initial launch> (ACUMOS-3465)
+
 Version 1.0.6  9th September 2019
 ==================================
 * Service URL is not being picked up right (ACUMOS-3235)

@@ -20,6 +20,22 @@
 ML Workbench Home Web Component
 ===============================================
 
+Version 2.0.5  25th October 2019 
+=================================
+* IST | Alignment of archive pop is not proper (ACUMOS-3615)
+* IST | MLWB | Archival of the project navigating user to edit screen (ACUMOS-3618)
+
+Version 2.0.3  18th October 2019 
+=================================
+* MLW - update Dashboard Page from polymer to Vue components (ACUMOS-3541)
+* MLW - update Notebook details from polymer to Vue components (ACUMOS-3544)
+* MLW - update Pipeline details from polymer to Vue components (ACUMOS-3542)
+* MLW - update Project catalog from ploymer to Vue components (ACUMOS-3540)
+
+Version 2.0.1  14th October 2019 
+=================================
+* MLWB - Model/Project mapping UI known issues (ACUMOS-3424)
+
 Version 1.0.6  9th September 2019
 ==================================
 * Develop and integrate Project Service UI to allow user to facilitate User to get Models associated to a Project (ACUMOS-3217)

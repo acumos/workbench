@@ -20,6 +20,18 @@
 ML Workbench Dashboard Web Component
 ===============================================
 
+Version 2.0.5  25th October 2019 
+=================================
+* MLW Dashboard UI update (ACUMOS-3604)
+
+Version 2.0.3  18th October 2019 
+=================================
+* MLW - update Dashboard Page from polymer to Vue components (ACUMOS-3541)
+
+Version 2.0.0  3rd October 2019 
+=================================
+* integrate project collaboration UI with project service (ACUMOS-3473)
+
 Version 1.0.5  31st May 2019 
 =================================
 * ML Workbench facing compatibility issues with Mozilla Firefox (ACUMOS-2866)

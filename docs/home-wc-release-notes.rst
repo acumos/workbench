@@ -20,6 +20,10 @@
 ML Workbench Home Web Component
 ===============================================
 
+Version 2.0.6  1st November 2019 
+=================================
+* ML Workbench: Create Pipeline button is not clickable due to anchor message (ACUMOS-3654)
+
 Version 2.0.5  25th October 2019 
 =================================
 * IST | Alignment of archive pop is not proper (ACUMOS-3615)

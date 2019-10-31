@@ -20,6 +20,10 @@
 ML Workbench Project Web Component
 ===============================================
 
+Version 2.0.6  1st November 2019 
+=================================
+* ML Workbench: Create Pipeline button is not clickable due to anchor message (ACUMOS-3654)
+
 Version 2.0.5  25th October 2019 
 =================================
 * IST | MLWB | Project, Notebook , Data Pipeline | Creation of Project, Notebook and Data pipeline giving error if the description fields filled with all the capacity (ACUMOS-3617)

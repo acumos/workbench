@@ -20,6 +20,11 @@
 ML Workbench Project Web Component
 ===============================================
 
+Version 2.0.6  1st November 2019 
+=================================
+* ML Workbench: Create Pipeline button is not clickable due to anchor message (ACUMOS-3654)
+* IST | MLWB | Un-archival of project in edit screen gives garbage values on screen (ACUMOS-3655)
+
 Version 2.0.5  25th October 2019 
 =================================
 * IST | MLWB | Manage Collaborator | Without selection of permission project can be shared to other users (ACUMOS-3641)

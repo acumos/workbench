@@ -1,6 +1,6 @@
 <template>
-  <div class="w-full fixed mt-2" v-if="toast.enabled && toast.id === id">
-    <div class="w-1/2 m-auto p-2 rounded-lg shadow-lg border" :class="type">
+  <div class="w-1/2 fixed mt-2" v-if="toast.enabled && toast.id === id">
+    <div class="m-auto p-2 rounded-lg shadow-lg border" :class="type">
       <div class="flex itemx-center">
         <FAIcon cl :icon="icon" class="mr-1 text-2xl"></FAIcon>
         {{ toast.message }}

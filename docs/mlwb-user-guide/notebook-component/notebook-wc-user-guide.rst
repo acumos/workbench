@@ -145,7 +145,7 @@ While creating, editing the notebook, user can give the external notebook url as
   If Notebook is archived then Delete button will be enabled for a user to delete the notebook. On click of Delete Button, Notebook will get deleted and 
   user will be redirected to the Notebook Catalog Screen.
 
-	.. image:: images/delete-notebook-detail-dialog.png
+	.. image:: images/delete-notebook-detail-dialog.PNG
 	   :alt: delete-notebook-detail-dialog image.
 	
 5. **Launch Notebook**

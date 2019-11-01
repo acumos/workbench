@@ -24,6 +24,14 @@ ML Workbench
    :maxdepth: 2
    :caption: Contents:
    
+   dashboard-wc-release-notes.rst
+   home-wc-release-notes.rst
+   notebook-catalog-wc-release-notes.rst
+   notebook-wc-release-notes.rst
+   pipeline-catalog-wc-release-notes.rst
+   pipeline-wc-release-notes.rst
+   project-catalog-wc-release-notes.rst
+   project-wc-release-notes.rst
    notebook-service-release-notes.rst
    notebook-service-api-doc.rst
    notebook-service-developer-guide.rst

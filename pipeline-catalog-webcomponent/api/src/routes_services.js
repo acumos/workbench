@@ -132,7 +132,7 @@ module.exports = function(app) {
 		});
 	});
 	
-	app.delete('/api/pipeline/delete', function (req, res){
+	app.post('/api/pipeline/delete', function (req, res){
 		let serviceUrl = req.body.url + uripath;
 		let userName = req.body.userName;
 		let pipelineId = req.body.pipelineId;

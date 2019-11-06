@@ -130,7 +130,6 @@ export default {
     ...mapActions("app", ["showToastMessage"]),
     async save(pipeline) {
       const isValid = await this.$refs.form.validate();
-      debugger;
       let response = null;
       if (isValid) {
         if (this.isNew) {

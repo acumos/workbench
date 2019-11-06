@@ -6,7 +6,7 @@
         <FAIcon icon="question-circle"></FAIcon>
       </a>
     </div>
-    <div class="flex w-full my-2" v-if="!hasProjects && globalError">
+    <div class="flex w-full my-2" v-if="!hasProjects">
       <CollapsableUi title="Projects" icon="project-diagram" :collapse-border="true">
         <div class="p-5">
           <p class="py-4">No Projects, get started with ML Workbench by creating your first project.</p>

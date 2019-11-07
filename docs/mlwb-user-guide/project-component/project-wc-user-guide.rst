@@ -30,7 +30,7 @@ Project Catalog screen displays list of projects which are created by user. Ther
 
 2. Or click on the 'Project' link from sidebar navigation 
 
-	.. image:: images/project-catalog.png
+	.. image:: images/project-catalog.PNG
 
 
 
@@ -41,21 +41,21 @@ Project Catalog screen displays list of projects which are created by user. Ther
   By clicking on 'Create Project' button present at top right corner, a dialog box will get open. Fill out all required information and 
   click on the 'Create Project' button. After successful project creation, User will be able to see that created Project inside 'Active Project' tab.   
 
-	.. image:: images/Create-project-Dialog.png
+	.. image:: images/Create-project-Dialog.PNG
 
 2. **Archive Project**
 
   If user wish to **Archive** any **Active** Project then he can click on the Archive button present at the bottom right corner of that specific project card.
   A confirmation dialog box will appear on click of Archive button. After confirmation, project will be archived and user can see that project inside 'Archive Project' tab.  
 
-	.. image:: images/archive-project-catalog-dialog.png
+	.. image:: images/archive-project-catalog-dialog.PNG
 
 3. **Unarchive Project**
 
   If user wish to **Unarchive** any **Archived** Project then he can click on the Unarchive button present at the bottom right corner of that specific project card.
   A confirmation dialog box will appear on click of Unarchive button. After confirmation, project will be unarchived and user can see that project inside 'Active Project' tab.  
 
-	.. image:: images/unarchive-project-catalog-dialog.png
+	.. image:: images/unarchive-project-catalog-dialog.PNG
 
 
 4. **Delete Project** 
@@ -63,7 +63,7 @@ Project Catalog screen displays list of projects which are created by user. Ther
   If user wish to **Delete** any **Archived** Project then he can click on the Delete button present at the bottom right corner of that specific project card.
   A confirmation dialog box will appear on click of Delete button. After confirmation, project will be deleted physically from database and can not be restored.  
 
-	.. image:: images/delete-project-catalog-dialog.png
+	.. image:: images/delete-project-catalog-dialog.PNG
 
 
 **Project Catalog screen includes following features/capabilities.**
@@ -95,7 +95,7 @@ Project Details
 On click on specific Project card in the Project catalog screen, user will be redirected to the Project details screen. In this screen, Project basic details will get
 displayed along with associated notebook details.
  
-	.. image:: images/project-details.png
+	.. image:: images/project-details.PNG
 
 In the Project details screen, user can perform following Project relevant actions. 
 
@@ -104,42 +104,42 @@ In the Project details screen, user can perform following Project relevant actio
   To Edit the Project, click on the 'Edit' icon present on the card-header of the Project. On edit, project name, version and description field will become editable. 
   User can provide new information and save it.
 
-	.. image:: images/edit-project-detail-new.png
+	.. image:: images/edit-project-detail-new.PNG
 	
 2. **Archive Project**
 
   To Archive Project, click on the Archive button. After user confirmation, project will get archived and status will be reflected in project details
 
-  .. image:: images/archive-project-detail-dialog.png
+  .. image:: images/archive-project-detail-dialog.PNG
 
 .. note::
   If project is archived then Notebook and Pipeline section will not be displayed for that project in the Project Details screen. 
   
-  .. image:: images/project-archive-new.png
+  .. image:: images/project-archive-new.PNG
     
 3. **Unarchive Project**
 
   To Unarchive Project, click on the Unarchive button. After user confirmation, project will get unarchived and status will be reflected in project details
 
-	.. image:: images/unarchive-project-dialog.png
+	.. image:: images/unarchive-project-dialog.PNG
 
 4. **Delete Project**
 
   If project is archived then Delete button will be enabled for a user to delete the project. On click of Delete Button, Project will get deleted and 
   user will be redirected to the Project Catalog Screen
 
-	.. image:: images/delete-project-dialog.png
+	.. image:: images/delete-project-dialog.PNG
 	
 5. **Notebook Section**
   
   Notebook section will display all notebooks which are associate with the project. Notebook lists will get displayed in tabular format showing Notebook name, 
   version, type, status, created date etc. 
 
-	.. image:: images/project-notebook.png
+	.. image:: images/project-notebook.PNG
 
   If there is no notebook associated to that project then two options 'Create Notebook' and 'Associate Notebook' will be displayed to the user in this section.
  
-	.. image:: images/project-details.png
+	.. image:: images/project-details.PNG
 
   **Following are the user actions available in the Notebook section:**
 	
@@ -149,7 +149,7 @@ In the Project details screen, user can perform following Project relevant actio
   	displayed on the right top corner of the Notebook section for same. On click event, a dialog box will appeared where user has to fill out all required information and submit.
   	On successful Notebook creation, notebook will get displayed in the tablular list.
   	 
-  	 	.. image:: images/Create-notebook-project.png
+  	 	.. image:: images/Create-notebook-project.PNG
   	  
   * **Associate  Notebook**: 
   
@@ -157,38 +157,38 @@ In the Project details screen, user can perform following Project relevant actio
   	displayed on the right top corner of the Notebook section for same. On click event, a dialog box will appeared where user has to select the desired notebook from drop down and submit.
   	On successful Notebook association, notebook will get displayed in the tablular list.
 
-	.. image:: images/associate-notebook-project.png
+	.. image:: images/associate-notebook-project.PNG
 
   * **Archive/Unarchive Notebook**: 
   
   	User may choose an option of Archiving, Unarchiving a notebook by clicking on appropriate button. On confirmation, notebook will get archived/unarchived based on user action 
   	and status will get reflect into the Notebook list. 
   	
-	.. image:: images/archive-notebook-project-dialog.png
-	.. image:: images/unarchive-notebook-project-dialog.png
+	.. image:: images/archive-notebook-project-dialog.PNG
+	.. image:: images/unarchive-notebook-project-dialog.PNG
 	
   * **Delete Notebook Association**:
 
     User may choose an option to delete notebook association. On confirmation, notebook association with project will get deleted and notebook will not be seen under notebook list.
 
-    .. image:: images/delete-notebook-project-dialog.png
+    .. image:: images/delete-notebook-project-dialog.PNG
 
   * **Launch Notebook** 
 
     If user wish to **Launch** any **Active** Notebook, then user can click on the Launch button. On click of launch button, notebook will be opened in the user specific Jupyter Instance in a new browser tab.
   	
-  .. image:: images/notebook-launch.png
+  .. image:: images/notebook-launch.PNG
 
 6. **Pipeline Section**
   
   Pipeline section will display all pipelines which are associate with the project. Pipeline lists will get displayed in tabular format showing Pipeline name, 
   version, type, status, created date etc. 
 
-	.. image:: images/project-artifacts.png
+	.. image:: images/project-artifacts.PNG
 
   If there is no pipeline associated to that project then two options 'Create Pipeline' and 'Associate Pipeline' will be displayed to the user in this section.
  
-	.. image:: images/project-empty.png
+	.. image:: images/project-empty.PNG
 
   **Following are the user actions available in the Pipeline section:**
 	
@@ -198,7 +198,7 @@ In the Project details screen, user can perform following Project relevant actio
   	displayed on the right top corner of the Pipeline section for same. On click event, a dialog box will appeared where user has to fill out all required information and submit.
   	On successful Pipeline creation, pipeline will get displayed in the tablular list.
   	 
-  	 	.. image:: images/Create-pipeline-project.png
+  	 	.. image:: images/Create-pipeline-project.PNG
   	  
   * **Associate Pipeline**: 
   
@@ -206,38 +206,38 @@ In the Project details screen, user can perform following Project relevant actio
   	displayed on the right top corner of the Pipeline section for same. On click event, a dialog box will appeared where user has to select the desired pipeline from drop down and submit.
   	On successful Pipeline association, pipeline will get displayed in the tablular list.
 
-	.. image:: images/associate-pipeline.png
+	.. image:: images/associate-pipeline.PNG
 
   * **Archive/Unarchive Pipeline**: 
   
   	User may choose an option of Archiving, Unarchiving a pipeline by clicking on appropriate button. On confirmation, pipeline will get archived/unarchived based on user action 
   	and status will get reflect into the Pipeline list. 
   	
-	.. image:: images/archive-pipeline-project-dialog.png
-	.. image:: images/unarchive-pipeline-project-dialog.png
+	.. image:: images/archive-pipeline-project-dialog.PNG
+	.. image:: images/unarchive-pipeline-project-dialog.PNG
   	
   * **Delete Pipeline Association**:
 
     User may choose an option to delete pipeline association. On confirmation, pipeline association with project will get deleted and pipeline will not be seen under pipeline list.
 
-    .. image:: images/delete-pipeline-project-dialog.png
+    .. image:: images/delete-pipeline-project-dialog.PNG
 
   * **Launch Pipeline** 
 
     If user wish to **Launch** any **Active** Pipeline, then user can click on the Launch button. On click of launch button, pipeline will be opened in the user specific Nifi Instance in a new browser tab.
   	
-  .. image:: images/pipeline-launch.png
+  .. image:: images/pipeline-launch.PNG
 
 7. **Model Section**
   
   Model section will display all modelss which are associated with the project. Model lists will get displayed in tabular format showing model name, 
   version, model type, status, created date etc. 
 
-	.. image:: images/project-artifacts.png
+	.. image:: images/project-artifacts.PNG
 
   If there is no model associated to that project then one option 'Associate Model' will be displayed to the user in this section.
  
-	.. image:: images/project-empty.png
+	.. image:: images/project-empty.PNG
 
   **Following are the user actions available in the Model section:**
   	  
@@ -247,36 +247,36 @@ In the Project details screen, user can perform following Project relevant actio
   	displayed on the right top corner of the model section for same. On click event, a dialog box will be appeared where user has to select the desired model from drop down and submit.
   	On successful MODEL association, model will get displayed in the tablular list.
 
-	.. image:: images/associate-model.png
+	.. image:: images/associate-model.PNG
 
   * **Delete Model Association**: 
   
   	 User may choose an option to delete model association. On confirmation, model association with project will get deleted and model will not be seen under model list.
 
-	.. image:: images/delete-model-project-dialog.png
+	.. image:: images/delete-model-project-dialog.PNG
 	
   * **edit Model Association** 
 
      User may choose to edit model association. On click of the appropriate button, a dialog box will be appeared where user can select other version of the model to update model association.
     
-     .. image:: images/edit-model-project.png
+     .. image:: images/edit-model-project.PNG
 
   * **View Model**
 
     User can view additional details about the associated model by clicking on view model button. When clicked, user will be redirected to model details page of the marketplace.
     
-    .. image:: images/view-model-project.png
+    .. image:: images/view-model-project.PNG
     
 8. **Predictor Section**
   
   Predictor section will display all predictorss which are associated with the project. Predictor lists will get displayed in tabular format showing predictor name, 
   version, predictor type, status, created date etc. 
 
-	.. image:: images/project-artifacts.png
+	.. image:: images/project-artifacts.PNG
 
   If there is no predictor associated to that project then one option 'Associate Predictor' will be displayed to the user in this section.
  
-	.. image:: images/project-empty.png
+	.. image:: images/project-empty.PNG
 
   **Following are the user actions available in the Predictor section:**
   	  
@@ -286,16 +286,16 @@ In the Project details screen, user can perform following Project relevant actio
   	displayed on the right top corner of the predictor section for same. On click event, a dialog box will be appeared where user has to select the desired predictor from drop down and submit.
   	On successful MODEL association, predictor will get displayed in the tablular list.
 
-	.. image:: images/associate-predictor.png
+	.. image:: images/associate-predictor.PNG
 
   * **Delete Predictor Association**: 
   
   	 User may choose an option to delete predictor association. On confirmation, predictor association with project will get deleted and predictor will not be seen under predictor list.
 
-	.. image:: images/delete-predictor-project-dialog.png
+	.. image:: images/delete-predictor-project-dialog.PNG
 	
   * **edit Predictor Association** 
 
      User may choose to edit predictor association. On click of the appropriate button, a dialog box will be appeared where user can select other version of the predictor to update predictor association.
     
-     .. image:: images/edit-predictor-project.png
+     .. image:: images/edit-predictor-project.PNG

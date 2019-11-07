@@ -30,7 +30,7 @@ Notebook Catalog screen displays list of notebooks which are created by user. Th
 
 2. Or click on the 'Notebooks' link from sidebar navigation 
 
-	.. image:: images/notebook-catalog.png
+	.. image:: images/notebook-catalog.PNG
 	   :alt: notebook-catalog image.
 
 
@@ -42,12 +42,12 @@ Notebook Catalog screen displays list of notebooks which are created by user. Th
   By clicking on 'Create Notebook' button present at top right corner, a dialog box will get open. Fill out all required information and 
   click on the 'Create Notebook' button. After successful notebook creation, User will be able to see that created Notebook.   
 
-	.. image:: images/create-notebook-catalog.png
+	.. image:: images/create-notebook-catalog.PNG
 	   :alt: create-notebook-catalog image.
 
   if external notebook flag is set to true, user will be able to create a external notebook in acumos by providing its url in the create notebook form.
 
-	.. image:: images/notebook-create-url.png
+	.. image:: images/notebook-create-url.PNG
 	   :alt: create-notebook-create-url image.
 
 2. **Archive Notebook**
@@ -55,7 +55,7 @@ Notebook Catalog screen displays list of notebooks which are created by user. Th
   If user wish to **Archive** any **Active** Notebook then he can click on the Archive button present at the bottom right corner of that specific Notebook card.
   A confirmation dialog box will appear on click of Archive button. After confirmation, notebook will be archived.  
 
-	.. image:: images/archive-notebook-dialog.png
+	.. image:: images/archive-notebook-dialog.PNG
 	   :alt: archive-notebook-dialog image.
 
 3. **Unarchive Notebook**
@@ -63,7 +63,7 @@ Notebook Catalog screen displays list of notebooks which are created by user. Th
   If user wish to **Unarchive** any **Archived** Notebook then he can click on the Unarchive button present at the bottom right corner of that specific notebook card.
   A confirmation dialog box will appear on click of Unarchive button. After confirmation, notebook will be unarchived.  
 
-	.. image:: images/unarchive-notebook-dialog.png
+	.. image:: images/unarchive-notebook-dialog.PNG
 	   :alt: unarchive-notebook-dialog image.
 
 
@@ -72,7 +72,7 @@ Notebook Catalog screen displays list of notebooks which are created by user. Th
   If user wish to **Delete** any **Archived** Notebook then he can click on the Delete button present at the bottom right corner of that specific notebook card.
   A confirmation dialog box will appear on click of Delete button. After confirmation, notebook will be deleted physically from database and can not be restored.  
 
-	.. image:: images/delete-notebook-dialog.png
+	.. image:: images/delete-notebook-dialog.PNG
 	   :alt: delete-notebook-dialog image.
 
 5. **Launch Notebook** 
@@ -80,7 +80,7 @@ Notebook Catalog screen displays list of notebooks which are created by user. Th
   If user wish to **Launch** any **Active** Notebook, then he can click on the Launch button present at the bottom right corner of that specific notebook card.
   On click of launch button, notebook will be opened in the user specific Jupyter Instance in a new browser tab.
 
-	.. image:: images/notebook-launch.png
+	.. image:: images/notebook-launch.PNG
 	   :alt: notebook-launch image.
 
 **Notebook Catalog screen includes following features/capabilities.**
@@ -106,7 +106,7 @@ Notebook Details
 On click on specific Notebook card in the Notebook catalog screen, user will be redirected to the Notebook details screen. In this screen, Notebook basic details will get
 displayed.
  
-	.. image:: images/notebook-details.png
+	.. image:: images/notebook-details.PNG
 	   :alt: notebook-details image.
 
 In the Notebook details screen, user can perform following Notebook relevant actions. 
@@ -118,26 +118,26 @@ While creating, editing the notebook, user can give the external notebook url as
   To Edit the Notebook, click on the 'Edit' icon present on the card-header of the Notebook. On edit, notebook name, version and description field will become editable. 
   User can provide new information and save it.
 
-	.. image:: images/edit-notebook.png
+	.. image:: images/edit-notebook.PNG
 	   :alt: edit-notebook image.
 
   If external Notebook flag is set to true, user will be able to edit name, version, description and url as well.
 
-  .. image:: images/notebook-edit-url.png
+  .. image:: images/notebook-edit-url.PNG
 	   :alt: notebook-edit-url image.
 	
 2. **Archive Notebook**
 
   To Archive Notebook, click on the Archive button. After user confirmation, notebook will get archived and status will be reflected in notebook details.
 
-    .. image:: images/archive-notebook-detail-dialog.png
+    .. image:: images/archive-notebook-detail-dialog.PNG
 	   :alt: archive-notebook-detail-dialog image.
     
 3. **Unarchive Notebook**
 
   To Unarchive Notebook, click on the Unarchive button. After user confirmation, notebook will get unarchived and status will be reflected in notebook details.
 
-	.. image:: images/unarchive-notebook-detail-dialog.png
+	.. image:: images/unarchive-notebook-detail-dialog.PNG
 	   :alt: unarchive-notebook-detail-dialog image.
 
 4. **Delete Notebook**
@@ -152,7 +152,7 @@ While creating, editing the notebook, user can give the external notebook url as
   
  If Notebook is active, then launch button will be enabled for the user. On click of launch button, notebook will be opened in the user specific Jupyter Instance in a new browser tab.
 
-    .. image:: images/notebook-launch.png
+    .. image:: images/notebook-launch.PNG
 	   :alt: notebook-launch image.
 	
   	

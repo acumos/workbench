@@ -40,7 +40,7 @@ export class PipelineViewComponent extends BaseComponent implements OnInit {
   }
 
   OnViewPipelineEvent(e) {
-    if (e.detail.data === 'catalog-pipeline') {
+    if (e.detail[0].data === 'catalog-pipeline') {
       this.router.navigateByUrl('/pages/pipeline/catalog');
     }
   }

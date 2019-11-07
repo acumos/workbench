@@ -20,6 +20,10 @@
 ML Workbench Project Web Component
 ===============================================
 
+Version 2.0.8  7th November 2019 
+=================================
+* IST | MLWB | unable to delete Project  (ACUMOS-3691)
+
 Version 2.0.6  1st November 2019 
 =================================
 * ML Workbench: Create Pipeline button is not clickable due to anchor message (ACUMOS-3654)

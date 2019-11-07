@@ -20,6 +20,14 @@
 ML Workbench Dashboard Web Component
 ===============================================
 
+Version 2.0.8  7th November 2019 
+=================================
+* IST | MLWB | Deletion of Data pipeline giving error (ACUMOS-3624)
+
+Version 2.0.6  1st November 2019 
+=================================
+* ML Workbench: Create Pipeline button is not clickable due to anchor message (ACUMOS-3654)
+
 Version 2.0.5  25th October 2019 
 =================================
 * MLW Dashboard UI update (ACUMOS-3604)

@@ -20,6 +20,14 @@
 ML Workbench Project-Catalog Web Component
 ===============================================
 
+Version 2.0.8  7th November 2019 
+=================================
+* IST | MLWB | unable to delete Project  (ACUMOS-3691)
+
+Version 2.0.7  6th November 2019 
+=================================
+* IST | MLWB  | Project screen is not loading so unable to test any of project related functionality (ACUMOS-3687)
+
 Version 2.0.6  1st November 2019 
 =================================
 * ML Workbench: Create Pipeline button is not clickable due to anchor message (ACUMOS-3654)

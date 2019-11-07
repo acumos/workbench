@@ -40,7 +40,7 @@ export class NotebookViewComponent extends BaseComponent implements OnInit {
   }
 
   OnViewNotebookEvent(e) {
-    if (e.detail.data === 'catalog-notebook') {
+    if (e.detail[0].data === 'catalog-notebook') {
       this.router.navigateByUrl('/pages/notebook/catalog');
     }
   }

@@ -109,7 +109,7 @@ module.exports = function(app) {
 		});
 	});
 	
-	app.delete('/api/project/delete', function (req, res){
+	app.post('/api/project/delete', function (req, res){
 		let serviceUrl = req.body.url + uripath;
 		let userName = req.body.userName;
 		let projectId = req.body.projectId;

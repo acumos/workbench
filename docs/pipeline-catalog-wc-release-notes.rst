@@ -20,6 +20,14 @@
 ML Workbench Pipeline Catalog Web Component
 ===============================================
 
+Version 2.0.8  7th November 2019 
+=================================
+* IST | MLWB | Deletion of Data pipeline giving error (ACUMOS-3624)
+
+Version 2.0.7  6th November 2019 
+=================================
+* IST | MLWB | Deletion of Data pipeline giving error (ACUMOS-3624)
+
 Version 2.0.6  1st November 2019 
 =================================
 * ML Workbench: Create Pipeline button is not clickable due to anchor message (ACUMOS-3654)

@@ -179,7 +179,14 @@ export default {
         },
         onOk: async () => {
           const response = await this.deleteProject(project.id);
-          if (response.data.status !== "Success") {
+          if (response.data.status === "Success") {
+            await this.allProjects();
+            this.showToastMessage({
+              id: "global",
+              message: `${response.data.message}`,
+              type: "success"
+            });
+          } else {
             this.showToastMessage({
               id: "global",
               message: `${response.data.message}`,

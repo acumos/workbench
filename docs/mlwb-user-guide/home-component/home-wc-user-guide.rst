@@ -27,14 +27,14 @@ User will be able to launch Jupyter/Zeppelin Notebook, Nifi pipeline, Acucompose
 ML Workbench is an integral part of Acumos Portal which can be launched from 'Design Studio' of Acumos Portal as shown in below screenshot.
 
 
-    .. image:: images/Acumos-desgin-studio.png
+    .. image:: images/Acumos-desgin-studio.PNG
 
 
 After clicking on launch button of ML workbench, Users are welcomed to ML Workbench home page with displaying 
 # of Projects, Notebooks, Pipelines and Models associated to the logged in user. Left part of the ML Workbench screen shows the 
 sidebar to help in navigation from one to another screens. 
 
-    .. image:: images/Home-Landing.png
+    .. image:: images/Home-Landing.PNG
 
 .. note::
     Users need to have valid Acumos session present in browser to navigate to the ML Workbench platform.

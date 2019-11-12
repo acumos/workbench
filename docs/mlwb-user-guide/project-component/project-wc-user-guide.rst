@@ -30,7 +30,7 @@ Project Catalog screen displays list of projects which are created by user. Ther
 
 2. Or click on the 'Project' link from sidebar navigation 
 
-	.. image:: images/project-catalog.PNG
+	.. image:: images/Project-catalog.PNG
 
 
 
@@ -41,7 +41,7 @@ Project Catalog screen displays list of projects which are created by user. Ther
   By clicking on 'Create Project' button present at top right corner, a dialog box will get open. Fill out all required information and 
   click on the 'Create Project' button. After successful project creation, User will be able to see that created Project inside 'Active Project' tab.   
 
-	.. image:: images/Create-project-Dialog.PNG
+	.. image:: images/Create-Project-Dialog.PNG
 
 2. **Archive Project**
 
@@ -95,7 +95,7 @@ Project Details
 On click on specific Project card in the Project catalog screen, user will be redirected to the Project details screen. In this screen, Project basic details will get
 displayed along with associated notebook details.
  
-	.. image:: images/project-details.PNG
+	.. image:: images/Project-details.PNG
 
 In the Project details screen, user can perform following Project relevant actions. 
 
@@ -139,7 +139,7 @@ In the Project details screen, user can perform following Project relevant actio
 
   If there is no notebook associated to that project then two options 'Create Notebook' and 'Associate Notebook' will be displayed to the user in this section.
  
-	.. image:: images/project-details.PNG
+	.. image:: images/Project-details.PNG
 
   **Following are the user actions available in the Notebook section:**
 	
@@ -198,7 +198,7 @@ In the Project details screen, user can perform following Project relevant actio
   	displayed on the right top corner of the Pipeline section for same. On click event, a dialog box will appeared where user has to fill out all required information and submit.
   	On successful Pipeline creation, pipeline will get displayed in the tablular list.
   	 
-  	 	.. image:: images/Create-pipeline-project.PNG
+  	 	.. image:: images/create-pipeline-project.PNG
   	  
   * **Associate Pipeline**: 
   

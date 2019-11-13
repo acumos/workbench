@@ -19,6 +19,11 @@
 ===============================
 Model Service Release Notes
 ===============================
+
+Version 2.0.1, 2019-11-13
+---------------------------
+* ACUMOS-3713 : IST | MLWB | Model Association | Edit association allowing same version for association
+
 Version 2.0.0, 2019-10-01
 ---------------------------
 * ACUMOS-3454 : Update all MLWB MS to use Java 11

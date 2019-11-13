@@ -235,6 +235,7 @@ public class CouchDBService {
 	public void updateAssocaitedModel(DataSetModel dataSetModel) {
 		logger.debug("updateAssocaitedModel() Begin");
 		CouchDbClient dbClient = getLightCouchdbClient();
+		associationExistsInCouch(dataSetModel.getProjectId(),dataSetModel.getSolutionId(), dataSetModel.getRevisionId());
 		try {
 			dbClient.update(dataSetModel);
 		} catch (Exception e) {
@@ -244,6 +245,28 @@ public class CouchDBService {
 			closeLightCouchdbClient(dbClient);
 		}
 		logger.debug("updateAssocaitedModel() End");
+	}
+	
+	private void associationExistsInCouch(String projectId, String solutionId, String revisionId)
+			throws AssociationException {
+		logger.debug("associationExistsInCouch() Begin");
+		CouchDbClient dbClient = getLightCouchdbClient();
+		List<DataSetModel> dataSetModels = null;
+		String jsonQuery = String.format(ModelServiceConstants.ASSOCIATIONEXISTSINCOUCHQUERY, projectId, solutionId,revisionId,AssociationStatus.ACTIVE.getAssociationStatusCode());
+		try {
+			dataSetModels = dbClient.findDocs(jsonQuery, DataSetModel.class);
+			// similar association already exists and is ACTIVE
+			if (null != dataSetModels && dataSetModels.size() > 0) { 
+				logger.error("Association already exists in Couch DB");
+				throw new AssociationException("Association already exists in Couch DB");
+			}
+		} catch (Exception e) {
+			logger.error("Exception occured while finding the documents in couchDB");
+			throw new CouchDBException("Exception occured while finding the documents in couchDB");
+		} finally {
+			closeLightCouchdbClient(dbClient);
+		}
+		logger.debug("associationExistsInCouch() End");
 	}
 
 	private Model getDocuments(String id, String rev, String authenticatedUserId, String projectId, String modelName,
@@ -314,28 +337,6 @@ public class CouchDBService {
 		return model;
 	}
 
-
-	private void associationExistsInCouch(String projectId, String solutionId, String revisionId)
-			throws AssociationException {
-		logger.debug("associationExistsInCouch() Begin");
-		CouchDbClient dbClient = getLightCouchdbClient();
-		List<DataSetModel> dataSetModels = null;
-		String jsonQuery = String.format(ModelServiceConstants.ASSOCIATIONEXISTSINCOUCHQUERY, projectId, solutionId,revisionId,AssociationStatus.ACTIVE.getAssociationStatusCode());
-		try {
-			dataSetModels = dbClient.findDocs(jsonQuery, DataSetModel.class);
-			// similar association already exists and is ACTIVE
-			if (null != dataSetModels && dataSetModels.size() > 0) { 
-				logger.error("Association already exists in Couch DB");
-				throw new AssociationException("Association already exists in Couch DB");
-			}
-		} catch (Exception e) {
-			logger.error("Exception occured while finding the documents in couchDB");
-			throw new CouchDBException("Exception occured while finding the documents in couchDB");
-		} finally {
-			closeLightCouchdbClient(dbClient);
-		}
-		logger.debug("associationExistsInCouch() End");
-	}
 
 	private void closeLightCouchdbClient(CouchDbClient dbClient) {
 		if (null != dbClient) {

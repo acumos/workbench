@@ -493,7 +493,8 @@ public class ModelServiceImpl implements ModelService {
 				couchService.updateAssocaitedModel(newAssociationModel);
 			}
 		} catch (Exception e) {
-			logger.error("Error occured in updateProjectModelAssociation() " + e);
+			logger.error("AssociationException occured in updateProjectModelAssociation() " + e);
+			throw new AssociationException("Association already exists in Couch DB");
 		}
 		ServiceState serviceState = new ServiceState();
 		serviceState.setStatus(ServiceStatus.COMPLETED);

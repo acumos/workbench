@@ -68,6 +68,11 @@
               :sort-options="sortOptions"
             >
               <template slot="table-row" slot-scope="props">
+                <div class="flex justify-center" v-if="props.column.field === 'status'">
+                  <div
+                    :class="{'text-green-500': props.row.status === 'ACTIVE', 'text-red-500': props.row.status === 'ARCHIVED'}"
+                  >{{props.row.status}}</div>
+                </div>
                 <div class="flex justify-center" v-if="props.column.field === 'publishStatus'">
                   <FAIcon
                     class="text-gray-500"

@@ -45,7 +45,7 @@
                 <input
                   type="text"
                   class="form-input mr-2"
-                  placeholder="Search Predictors by Name"
+                  placeholder="Search Predictors"
                   v-model="searchTerm"
                 />
                 <button

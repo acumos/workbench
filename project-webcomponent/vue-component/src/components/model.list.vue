@@ -45,7 +45,7 @@
                 <input
                   type="text"
                   class="form-input mr-2"
-                  placeholder="Search Models by Name"
+                  placeholder="Search Models"
                   v-model="searchTerm"
                 />
                 <button
@@ -73,7 +73,7 @@
                     :class="{'text-green-500': props.row.status === 'ACTIVE', 'text-red-500': props.row.status === 'ARCHIVED'}"
                   >{{props.row.status}}</div>
                 </div>
-                <div class="flex justify-center" v-if="props.column.field === 'publishStatus'">
+                <div class="flex justify-center" v-else-if="props.column.field === 'publishStatus'">
                   <FAIcon
                     class="text-gray-500"
                     icon="cloud"

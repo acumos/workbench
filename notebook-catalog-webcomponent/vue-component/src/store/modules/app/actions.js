@@ -7,6 +7,7 @@ export default {
       .then(({ data }) => {
         commit("setNotebookWikiURL", data.notebookWikiURL);
         commit("setMsConfig", data.msconfig);
+        commit("setUseExternalNotebook", data.useExternalNotebook);
         // Set auth token
         axios.defaults.headers.common["auth"] = rootState.app.authToken;
       });

@@ -123,7 +123,7 @@
               >
           </td>
         </tr>
-        <tr>
+        <tr v-if="useExternalPipeline === 'true'">
           <td>
             Pipeline URL
             <span v-if="isEditing" class="text-red-500">*</span>
@@ -157,7 +157,7 @@
 
 <script>
 import dayjs from "dayjs";
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 import Pipeline from "../store/entities/pipeline.entity.js";
 import CollapsableUi from "../vue-common/components/ui/collapsable.ui";
@@ -176,6 +176,9 @@ export default {
     };
   },
   computed: {
+    ...mapState("app", {
+      useExternalPipeline: state => state.useExternalPipeline
+    }),
     statusClass() {
       let _class = "";
       switch (this.pipeline.status) {

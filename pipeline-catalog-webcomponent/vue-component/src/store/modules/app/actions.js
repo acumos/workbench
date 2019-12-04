@@ -7,6 +7,7 @@ export default {
       .then(({ data }) => {
         commit("setPipelineWikiURL", data.pipelineWikiURL);
         commit("setMsConfig", data.msconfig);
+        commit("setUseExternalPipeline", data.useExternalPipeline);
         // Set auth token
         axios.defaults.headers.common["auth"] = rootState.app.authToken;
       });

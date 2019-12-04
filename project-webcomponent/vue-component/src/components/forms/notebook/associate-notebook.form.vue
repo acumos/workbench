@@ -52,7 +52,7 @@
         </div>
       </div>
       <div class="flex mb-2">
-        <div class="flex-1 flex flex-col mr-2">
+        <div class="flex-1 flex flex-col mr-2" v-if="useExternalNotebook === 'true'">
           <label class="mt-2">Notebook URL</label>
           <input
             type="text"
@@ -69,7 +69,7 @@
             class="form-input"
             v-model="selectedNotebook.version"
             disabled
-            placeholder="Enter Notebook URL"
+            placeholder="Notebook Version"
           />
         </div>
       </div>
@@ -88,7 +88,7 @@
 import { isUndefined, sortBy } from "lodash-es";
 import ToastUI from "../../../vue-common/components/ui/Toast.ui";
 import Notebook from "../../../store/entities/notebook.entity";
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 export default {
   components: { ToastUI },
@@ -111,6 +111,9 @@ export default {
     }
   },
   computed: {
+    ...mapState("app", {
+      useExternalNotebook: state => state.useExternalNotebook
+    }),
     isNew() {
       return isUndefined(this.notebook);
     },

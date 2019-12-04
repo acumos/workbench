@@ -122,7 +122,7 @@
               > 
           </td>
         </tr>
-        <tr>
+        <tr v-if="useExternalNotebook === 'true'">
           <td>
             Notebook URL
             <span v-if="isEditing" class="text-red-500">*</span>
@@ -156,7 +156,7 @@
 
 <script>
 import dayjs from "dayjs";
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 import Notebook from "../store/entities/notebook.entity.js";
 import CollapsableUi from "../vue-common/components/ui/collapsable.ui";
@@ -175,6 +175,9 @@ export default {
     };
   },
   computed: {
+    ...mapState("app", {
+      useExternalNotebook: state => state.useExternalNotebook
+    }),
     statusClass() {
       let _class = "";
       switch (this.notebook.status) {

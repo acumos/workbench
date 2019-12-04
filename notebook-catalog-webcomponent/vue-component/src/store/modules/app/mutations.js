@@ -14,6 +14,9 @@ export default {
   setAuthToken(state, authToken) {
     state.authToken = authToken;
   },
+  setUseExternalNotebook(state, useExternalNotebook) {
+    state.useExternalNotebook = useExternalNotebook;
+  },
   setToastMessage(state, { message, type, id }) {
     state.toast = {
       id,

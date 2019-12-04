@@ -1320,7 +1320,7 @@ module.exports = function(app) {
 		return new Promise(function(resolve, reject) {
 			var options = {
 				method : "GET",
-				url : srvcUrl + "/api/users/userDetails",
+				url : srvcUrl + "/users/userDetails",
 				headers : {
 					'Content-Type' : 'application/json',
 					'Authorization' : authToken,

@@ -39,7 +39,7 @@
           />
         </div>
       </div>
-      <div class="flex mb-2">
+      <div class="flex mb-2" v-if="useExternalPipeline === 'true'">
         <div class="flex-1 flex flex-col mr-2">
           <label class="mt-2">Data Pipeline URL</label>
           <input
@@ -67,7 +67,7 @@
 import { isUndefined, sortBy } from "lodash-es";
 import ToastUI from "../../../vue-common/components/ui/Toast.ui";
 import Pipeline from "../../../store/entities/pipeline.entity";
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 export default {
   components: { ToastUI },
@@ -88,6 +88,9 @@ export default {
     }
   },
   computed: {
+    ...mapState("app", {
+      useExternalPipeline: state => state.useExternalPipeline
+    }),
     isNew() {
       return isUndefined(this.pipeline);
     },

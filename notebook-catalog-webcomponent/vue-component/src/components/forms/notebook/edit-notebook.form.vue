@@ -119,7 +119,7 @@
           </ValidationProvider>
         </div>
       </div>
-      <div class="flex flex-col">
+      <div class="flex flex-col" v-if="useExternalNotebook === 'true'">
         <label class="mt-2"
           >Notebook URL <span class="text-red-500">*</span></label
         >
@@ -158,7 +158,7 @@
 import { isUndefined } from "lodash-es";
 import ToastUI from "../../../vue-common/components/ui/Toast.ui";
 import Notebook from "../../../store/entities/notebook.entity";
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 export default {
   components: { ToastUI },
@@ -178,6 +178,9 @@ export default {
       : new Notebook(this.data);
   },
   computed: {
+    ...mapState("app", {
+      useExternalNotebook: state => state.useExternalNotebook
+    }),
     isNew() {
       return isUndefined(this.data);
     }

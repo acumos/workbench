@@ -4,6 +4,7 @@ export default {
   msConfig: null,
   userName: null,
   authToken: null,
+  useExternalPipeline: null,
   toast: {
     id: "",
     enabled: false,

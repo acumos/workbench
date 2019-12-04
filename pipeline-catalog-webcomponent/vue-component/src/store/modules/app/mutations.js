@@ -14,6 +14,9 @@ export default {
   setAuthToken(state, authToken) {
     state.authToken = authToken;
   },
+  setUseExternalPipeline(state, useExternalPipeline) {
+    state.useExternalPipeline = useExternalPipeline;
+  },
   setToastMessage(state, { message, type, id }) {
     state.toast = {
       id,
@@ -48,7 +51,7 @@ export default {
     state.confirm = newConfirm;
   },
 
-  setGlobalError(state, globalError){
+  setGlobalError(state, globalError) {
     state.globalError = globalError;
   }
 };

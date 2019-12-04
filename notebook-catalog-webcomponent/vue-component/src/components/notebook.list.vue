@@ -84,7 +84,7 @@
 import PaginationUi from "../vue-common/components/ui/pagination.ui";
 import CollapsableUi from "../vue-common/components/ui/collapsable.ui";
 import ModalUi from "../vue-common/components/ui/modal.ui";
-import EditNotebookForm from "./forms/project/edit-notebook.form";
+import EditNotebookForm from "./forms/notebook/edit-notebook.form";
 import NotebookCard from "./notebook-card";
 
 import { mapState } from "vuex";

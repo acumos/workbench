@@ -186,7 +186,7 @@ export default {
       `${rootState.app.componentUrl}/api/users/userList`,
       {
         userName: rootState.app.userName,
-        url: rootState.app.portalFEUrl
+        url: rootState.app.portalBEUrl
       }
     );
   }

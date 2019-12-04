@@ -84,7 +84,7 @@
 import PaginationUi from "../vue-common/components/ui/pagination.ui";
 import CollapsableUi from "../vue-common/components/ui/collapsable.ui";
 import ModalUi from "../vue-common/components/ui/modal.ui";
-import EditPipelineForm from "./forms/project/edit-pipeline.form";
+import EditPipelineForm from "./forms/pipeline/edit-pipeline.form";
 import PipelineCard from "./pipeline-card";
 
 import { mapState } from "vuex";

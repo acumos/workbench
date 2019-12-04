@@ -4,6 +4,7 @@ export default {
   msConfig: null,
   userName: null,
   authToken: null,
+  useExternalNotebook: null,
   toast: {
     id: "",
     enabled: false,

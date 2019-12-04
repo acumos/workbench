@@ -36,7 +36,7 @@
           </ValidationProvider>
         </div>
       </div>
-      <div class="flex flex-col">
+      <div class="flex flex-col" v-if="useExternalPipeline === 'true'">
         <label class="mt-2"
           >Pipeline URL <span class="text-red-500">*</span></label
         >
@@ -101,7 +101,7 @@
 import { isUndefined } from "lodash-es";
 import ToastUI from "../../../vue-common/components/ui/Toast.ui";
 import Pipeline from "../../../store/entities/pipeline.entity";
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 export default {
   components: { ToastUI },
@@ -121,6 +121,9 @@ export default {
       : new Pipeline(this.data);
   },
   computed: {
+    ...mapState("app", {
+      useExternalPipeline: state => state.useExternalPipeline
+    }),
     isNew() {
       return isUndefined(this.data);
     }

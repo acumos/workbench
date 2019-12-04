@@ -48,7 +48,7 @@
             >{{ 1000 - updatedPipeline.description.length }} Chars</span
           >
         </div>
-        <div class="flex-1 flex flex-col">
+        <div class="flex-1 flex flex-col" v-if="useExternalPipeline === 'true'">
           <label class="mt-2"
             >Data Pipeline URL <span class="text-red-500">*</span></label
           >

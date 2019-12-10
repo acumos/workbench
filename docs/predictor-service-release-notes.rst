@@ -20,6 +20,10 @@
 Predictor Service Release Notes
 ===============================
 
+Version 1.0.1, 2019-12-10
+---------------------------
+* Updated Predictor Service CDS version to 3.1.0
+
 Version 1.0.0, 2019-10-01
 ---------------------------
 * ACUMOS-3491 : Create New Project in workbench Repository named : predictor-service

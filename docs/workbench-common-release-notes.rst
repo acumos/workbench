@@ -24,6 +24,7 @@ Version 2.0.0, 2019-10-01
 * ACUMOS-3454 : Update all MLWB MS to use Java 11
 * ModelServiceRestClientImpl RestTemplete code added for Predictor Project Association
 * PredictorProjectAssociation pojo has been added
+* Updated Workbench commons CDS version to 3.1.0
 
 Version 1.0.5, 2019-09-25
 ---------------------------

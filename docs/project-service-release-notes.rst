@@ -20,6 +20,10 @@
 Project Service Release Notes
 ===============================
 
+Version 2.0.3, 2019-12-10
+---------------------------
+* Updated Project Service CDS version to 3.1.0
+
 Version 2.0.2, 2019-10-31
 ---------------------------
 * ACUMOS-3650 : IST: ML Workbench: Getting error while clicking on the ML Workbench and Project menu

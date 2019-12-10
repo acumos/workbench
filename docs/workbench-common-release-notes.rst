@@ -19,6 +19,11 @@
 ================================
 Workbench Common Release Notes
 ================================
+
+Version 2.0.1, 2019-12-10
+---------------------------
+* Updated Workbench commons CDS version to 3.1.0
+
 Version 2.0.0, 2019-10-01
 ---------------------------
 * ACUMOS-3454 : Update all MLWB MS to use Java 11

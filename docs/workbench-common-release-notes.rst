@@ -19,11 +19,17 @@
 ================================
 Workbench Common Release Notes
 ================================
+
+Version 2.0.1, 2019-12-10
+---------------------------
+* Updated Workbench commons CDS version to 3.1.0
+
 Version 2.0.0, 2019-10-01
 ---------------------------
 * ACUMOS-3454 : Update all MLWB MS to use Java 11
 * ModelServiceRestClientImpl RestTemplete code added for Predictor Project Association
 * PredictorProjectAssociation pojo has been added
+* Updated Workbench commons CDS version to 3.1.0
 
 Version 1.0.5, 2019-09-25
 ---------------------------

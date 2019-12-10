@@ -20,6 +20,10 @@
 Model Service Release Notes
 ===============================
 
+Version 2.0.2, 2019-12-10
+---------------------------
+* Updated Model Service CDS version to 3.1.0
+
 Version 2.0.1, 2019-11-13
 ---------------------------
 * ACUMOS-3713 : IST | MLWB | Model Association | Edit association allowing same version for association

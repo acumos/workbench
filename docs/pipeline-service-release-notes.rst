@@ -20,6 +20,10 @@
 Pipeline Service Release Notes
 ===============================
 
+Version 2.0.3, 2019-12-10
+---------------------------
+* Updated Pipeline Service CDS version to 3.1.0
+
 Version 2.0.2, 2019-10-31
 ---------------------------
 * ACUMOS-3624 : IST | MLWB | Deletion of Data pipeline giving error

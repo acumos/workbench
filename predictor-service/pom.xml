@@ -23,7 +23,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>arg.acumos.workbench</groupId>
 	<artifactId>predictor-service</artifactId>
-	<version>1.0.2-SNAPSHOT</version>
+	<version>1.0.3-SNAPSHOT</version>
 	<name>predecitorservice</name>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -81,6 +81,13 @@
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>2.9.2</version>
+		</dependency>
+		
+			<!-- Logger dependencies -->
+		<dependency>
+			<groupId>org.acumos.platform-oam</groupId>
+			<artifactId>logging-demo</artifactId>
+			<version>3.0.5-SNAPSHOT</version>
 		</dependency>
 		
 		<!-- Test dependencies -->

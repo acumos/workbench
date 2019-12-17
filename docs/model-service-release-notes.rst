@@ -20,6 +20,10 @@
 Model Service Release Notes
 ===============================
 
+Version 2.0.3, 2019-12-16
+---------------------------
+* Added Logger dependencies
+
 Version 2.0.2, 2019-12-10
 ---------------------------
 * Updated Model Service CDS version to 3.1.0

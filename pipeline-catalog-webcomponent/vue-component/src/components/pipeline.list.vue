@@ -1,45 +1,62 @@
 <template>
   <div class="flex flex-col m-3">
     <div class="flex w-full justify-end">
-      <button class="btn btn-primary" @click="editPipeline()" v-if="hasPipelines">Create Pipeline</button>
-      <a :href="pipelineWikiURL" target="_blank" class="btn btn-secondary ml-2" title="Learn More">
+      <button
+        class="btn btn-primary"
+        @click="editPipeline()"
+        v-if="hasPipelines"
+      >
+        Create Pipeline
+      </button>
+      <a
+        :href="pipelineWikiURL"
+        target="_blank"
+        class="btn btn-secondary ml-2"
+        title="Learn More"
+      >
         <FAIcon icon="question-circle"></FAIcon>
       </a>
     </div>
     <div class="flex w-full my-2" v-if="!hasPipelines">
-      <CollapsableUi title="Pipelines" icon="code-branch" :collapse-border="true">
+      <CollapsableUi
+        title="Pipelines"
+        icon="code-branch"
+        :collapse-border="true"
+      >
         <div class="p-5">
-          <p class="py-4">No Pipelines, get started with ML Workbench by creating your first pipeline.</p>
-          <button class="btn btn-primary" @click="editPipeline()">Create Pipeline</button>
+          <p class="py-4">
+            No Pipelines, get started with ML Workbench by creating your first
+            pipeline.
+          </p>
+          <button class="btn btn-primary" @click="editPipeline()">
+            Create Pipeline
+          </button>
         </div>
       </CollapsableUi>
     </div>
-    <div class="flex justify-between my-2" v-if="hasPipelines">
+    <div class="flex my-2 w-full justify-end" v-if="hasPipelines">
       <div class="flex">
-        <div
-          @click="setFilter(filter)"
-          v-for="(count, filter) in filters"
-          :key="filter"
-          class="cursor-pointer border-2 border-gray-400 w-56 px-2 py-2 rounded ml-2"
-          :class="{
-            'bg-purple-500 text-white': filter === currentFilter,
-            'bg-white text-black': filter !== currentFilter
-          }"
-        >
-          {{ filter | capitalize }} Data Pipelines
-          <span
-            class="text-sm px-1 rounded"
-            :class="{
-              'bg-white text-black': filter === currentFilter,
-              'bg-gray-600 text-white': filter !== currentFilter
-            }"
-          >{{ count }}</span>
+        <div class="flex inline-flex items-center">
+          <select
+            class="form-select mr-2 py-1"
+            v-model="currentFilter"
+            @change="setFilter()"
+          >
+            <option value disabled>Filter By</option>
+            <option
+              v-for="(count, filter) in filters"
+              :key="filter"
+              :value="filter"
+            >
+              {{ filter | capitalize }} Data Pipelines ({{ count }})
+            </option>
+          </select>
         </div>
       </div>
       <div class="flex">
         <div class="flex inline-flex items-center">
           <select class="form-select mr-2 py-1" v-model="sortBy">
-            <option value>Sort By</option>
+            <option value disabled>Sort By</option>
             <option value="createdAt">Created</option>
             <option value="name">Name</option>
           </select>
@@ -75,7 +92,10 @@
       v-if="isEdittingPipeline"
       @onDismiss="isEdittingPipeline = false"
     >
-      <EditPipelineForm :data="activePipeline" @onSuccess="isEdittingPipeline = false" />
+      <EditPipelineForm
+        :data="activePipeline"
+        @onSuccess="isEdittingPipeline = false"
+      />
     </ModalUi>
   </div>
 </template>
@@ -168,8 +188,7 @@ export default {
     pageChanged(page) {
       this.offset = this.itemsPerPage * page.currentPage;
     },
-    setFilter(filter) {
-      this.currentFilter = filter;
+    setFilter() {
       this.offset = 0;
       this.$refs.pagination.goToPage(1);
     }

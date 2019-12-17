@@ -1,45 +1,58 @@
 <template>
   <div class="flex flex-col m-3">
     <div class="flex w-full justify-end">
-      <button class="btn btn-primary" @click="editProject()" v-if="hasProjects">Create Project</button>
-      <a :href="projectWikiURL" target="_blank" class="btn btn-secondary ml-2" title="Learn More">
+      <button class="btn btn-primary" @click="editProject()" v-if="hasProjects">
+        Create Project
+      </button>
+      <a
+        :href="projectWikiURL"
+        target="_blank"
+        class="btn btn-secondary ml-2"
+        title="Learn More"
+      >
         <FAIcon icon="question-circle"></FAIcon>
       </a>
     </div>
     <div class="flex w-full my-2" v-if="!hasProjects">
-      <CollapsableUi title="Projects" icon="project-diagram" :collapse-border="true">
+      <CollapsableUi
+        title="Projects"
+        icon="project-diagram"
+        :collapse-border="true"
+      >
         <div class="p-5">
-          <p class="py-4">No Projects, get started with ML Workbench by creating your first project.</p>
-          <button class="btn btn-primary" @click="editProject()">Create Project</button>
+          <p class="py-4">
+            No Projects, get started with ML Workbench by creating your first
+            project.
+          </p>
+          <button class="btn btn-primary" @click="editProject()">
+            Create Project
+          </button>
         </div>
       </CollapsableUi>
     </div>
-    <div class="flex justify-between my-2" v-if="hasProjects">
+    <div class="flex my-2 w-full justify-end" v-if="hasProjects">
       <div class="flex">
-        <div
-          @click="setFilter(filter)"
-          v-for="(count, filter) in filters"
-          :key="filter"
-          class="cursor-pointer border-2 border-gray-400 w-48 px-2 py-2 rounded ml-2"
-          :class="{
-            'bg-purple-500 text-white': filter === currentFilter,
-            'bg-white text-black': filter !== currentFilter
-          }"
-        >
-          {{ filter | capitalize }} Projects
-          <span
-            class="text-sm px-1 rounded"
-            :class="{
-              'bg-white text-black': filter === currentFilter,
-              'bg-gray-600 text-white': filter !== currentFilter
-            }"
-          >{{ count }}</span>
+        <div class="flex inline-flex items-center">
+          <select
+            class="form-select mr-2 py-1"
+            v-model="currentFilter"
+            @change="setFilter()"
+          >
+            <option value disabled>Filter By</option>
+            <option
+              v-for="(count, filter) in filters"
+              :key="filter"
+              :value="filter"
+            >
+              {{ filter | capitalize }} Projects ({{ count }})
+            </option>
+          </select>
         </div>
       </div>
       <div class="flex">
         <div class="flex inline-flex items-center">
           <select class="form-select mr-2 py-1" v-model="sortBy">
-            <option value>Sort By</option>
+            <option value disabled>Sort By</option>
             <option value="createdAt">Created</option>
             <option value="name">Name</option>
           </select>
@@ -75,7 +88,10 @@
       v-if="isEdittingProject"
       @onDismiss="isEdittingProject = false"
     >
-      <EditProjectForm :data="activeProject" @onSuccess="isEdittingProject = false" />
+      <EditProjectForm
+        :data="activeProject"
+        @onSuccess="isEdittingProject = false"
+      />
     </ModalUi>
   </div>
 </template>
@@ -145,9 +161,9 @@ export default {
     ...mapState("app", ["projectWikiURL", "globalError"]),
     filters() {
       return {
+        all: this.projects.length + this.sharedProjects.length,
         active: filter(this.projects, { status: "ACTIVE" }).length,
         archived: filter(this.projects, { status: "ARCHIVED" }).length,
-        all: this.projects.length + this.sharedProjects.length,
         shared: this.sharedProjects.length
       };
     },
@@ -181,8 +197,7 @@ export default {
     pageChanged(page) {
       this.offset = this.itemsPerPage * page.currentPage;
     },
-    setFilter(filter) {
-      this.currentFilter = filter;
+    setFilter() {
       this.offset = 0;
       this.$refs.pagination.goToPage(1);
     }

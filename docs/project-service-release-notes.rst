@@ -20,6 +20,10 @@
 Project Service Release Notes
 ===============================
 
+Version 2.0.4, 2019-12-23
+---------------------------
+* Added Platform-oam dependency
+
 Version 2.0.3, 2019-12-10
 ---------------------------
 * Updated Project Service CDS version to 3.1.0

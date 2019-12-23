@@ -23,7 +23,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>arg.acumos.workbench</groupId>
 	<artifactId>predictor-service</artifactId>
-	<version>1.0.2-SNAPSHOT</version>
+	<version>1.0.3-SNAPSHOT</version>
 	<name>predecitorservice</name>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -124,6 +124,12 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-couchbase</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.acumos.platform-oam</groupId>
+			<artifactId>logging-demo</artifactId>
+			<version>3.0.5</version>
 		</dependency>
 		
 	</dependencies>

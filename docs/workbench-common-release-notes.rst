@@ -20,6 +20,10 @@
 Workbench Common Release Notes
 ================================
 
+Version 2.0.2, 2019-12-23
+---------------------------
+* Added Platform-oam dependency
+
 Version 2.0.1, 2019-12-10
 ---------------------------
 * Updated Workbench commons CDS version to 3.1.0

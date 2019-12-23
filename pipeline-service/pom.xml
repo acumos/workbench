@@ -24,7 +24,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.acumos.workbench</groupId>
 	<artifactId>pipeline-service</artifactId>
-	<version>2.0.3-SNAPSHOT</version>
+	<version>2.0.4-SNAPSHOT</version>
 	<name>pipeline-service</name>
 	<packaging>jar</packaging>
 	<parent>
@@ -139,6 +139,12 @@
 			<groupId>org.apache.velocity</groupId>
 			<artifactId>velocity</artifactId>
 			<version>1.7</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.acumos.platform-oam</groupId>
+			<artifactId>logging-demo</artifactId>
+			<version>3.0.5</version>
 		</dependency>
 		
 	</dependencies>

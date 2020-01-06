@@ -200,7 +200,8 @@ export default {
         },
         {
           label: "Pipeline URL",
-          field: "url"
+          field: "url",
+          width: "200px"
         },
         {
           label: "Status",

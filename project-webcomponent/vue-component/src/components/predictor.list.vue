@@ -184,7 +184,8 @@ export default {
         },
         {
           label: "Base URL",
-          field: "url"
+          field: "url",
+          width: "200px"
         },
         {
           label: "Deploy Status",

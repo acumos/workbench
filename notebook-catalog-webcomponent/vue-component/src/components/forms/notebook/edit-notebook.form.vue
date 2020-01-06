@@ -126,7 +126,7 @@
         <ValidationProvider
           class="flex flex-col"
           name="Notebook URL"
-          rules="required"
+          rules="required|url"
           v-slot="{ errors, classes }"
         >
           <input

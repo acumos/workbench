@@ -224,7 +224,8 @@ export default {
         },
         {
           label: "Notebook URL",
-          field: "url"
+          field: "url",
+          width: "200px"
         },
         {
           label: "Status",

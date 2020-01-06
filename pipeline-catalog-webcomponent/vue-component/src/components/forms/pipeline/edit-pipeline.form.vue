@@ -43,7 +43,7 @@
         <ValidationProvider
           class="flex flex-col"
           name="Pipeline URL"
-          rules="required"
+          rules="required|url"
           v-slot="{ errors, classes }"
         >
           <input

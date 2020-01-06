@@ -132,6 +132,11 @@
                   </div>
                 </div>
                 <div
+                v-else-if="props.column.field === 'url'"
+                  class="break-all justify-center px-1"
+                >{{ props.formattedRow[props.column.field] }}
+                </div>
+                <div
                   v-else
                   class="flex justify-center px-1"
                 >{{ props.formattedRow[props.column.field] }}</div>
@@ -214,13 +219,11 @@ export default {
         },
         {
           label: "Version",
-          field: "version",
-          width: "90px"
+          field: "version"
         },
         {
           label: "Notebook Type",
-          field: "type",
-          width: "175px"
+          field: "type"
         },
         {
           label: "Notebook URL",
@@ -242,8 +245,7 @@ export default {
         },
         {
           label: "Actions",
-          field: "actions",
-          width: "100px"
+          field: "actions"
         }
       ],
       activeNotebook: null,

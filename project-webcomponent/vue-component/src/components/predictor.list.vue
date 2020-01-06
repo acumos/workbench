@@ -103,6 +103,11 @@
                     </button>
                   </div>
                 </div>
+                 <div
+                v-else-if="props.column.field === 'url'"
+                  class="break-all justify-center px-1"
+                >{{ props.formattedRow[props.column.field] }}
+                </div>
                 <div v-else class="flex justify-center">{{ props.formattedRow[props.column.field] }}</div>
               </template>
               <template slot="pagination-bottom" slot-scope="props">
@@ -188,8 +193,7 @@ export default {
         },
         {
           label: "Deploy Status",
-          field: "deployStatus",
-          width: "175px"
+          field: "deployStatus"
         },
         // {
         //   label: "Created At",
@@ -203,8 +207,7 @@ export default {
         // },
         {
           label: "Actions",
-          field: "actions",
-          width: "100px"
+          field: "actions"
         }
       ],
       rows: []

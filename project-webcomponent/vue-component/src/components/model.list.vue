@@ -7,15 +7,23 @@
             :href="wikiConfig.modelWikiURL"
             target="_blank"
             class="text-sm text-gray-500 underline"
-          >Learn More</a>
+            >Learn More</a
+          >
         </div>
         <div v-if="modelError">
-          <div class="mt-2" v-if="modelToast.enabled && modelToast.id === 'model'">
+          <div
+            class="mt-2"
+            v-if="modelToast.enabled && modelToast.id === 'model'"
+          >
             <div
               class="w-1/2 p-2 rounded-lg shadow-lg border bg-red-300 text-red-800 border-red-400"
             >
               <div class="flex itemx-center">
-                <FAIcon cl icon="exclamation-triangle" class="mr-1 text-2xl"></FAIcon>
+                <FAIcon
+                  cl
+                  icon="exclamation-triangle"
+                  class="mr-1 text-2xl"
+                ></FAIcon>
                 {{ modelToast.message }}
               </div>
             </div>
@@ -30,7 +38,9 @@
                   class="btn btn-secondary btn-sm mr-2"
                   @click="associateModel()"
                   :disabled="!loginAsOwner"
-                >Associate Models</button>
+                >
+                  Associate Models
+                </button>
               </div>
             </div>
           </div>
@@ -68,12 +78,23 @@
               :sort-options="sortOptions"
             >
               <template slot="table-row" slot-scope="props">
-                <div class="flex justify-center" v-if="props.column.field === 'status'">
+                <div
+                  class="flex justify-center"
+                  v-if="props.column.field === 'status'"
+                >
                   <div
-                    :class="{'text-green-500': props.row.status === 'ACTIVE', 'text-red-500': props.row.status === 'ARCHIVED'}"
-                  >{{props.row.status}}</div>
+                    :class="{
+                      'text-green-500': props.row.status === 'ACTIVE',
+                      'text-red-500': props.row.status === 'ARCHIVED'
+                    }"
+                  >
+                    {{ props.row.status }}
+                  </div>
                 </div>
-                <div class="flex justify-center" v-else-if="props.column.field === 'publishStatus'">
+                <div
+                  class="flex justify-center"
+                  v-else-if="props.column.field === 'publishStatus'"
+                >
                   <FAIcon
                     class="text-gray-500"
                     icon="cloud"
@@ -86,19 +107,25 @@
                   ></FAIcon>
                 </div>
 
-                <div class="flex justify-center" v-else-if="props.column.field === 'modelType'">
+                <div
+                  class="flex justify-center"
+                  v-else-if="props.column.field === 'modelType'"
+                >
                   {{
-                  props.row.modelType === "None"
-                  ? "Others"
-                  : lookUpCategory(props.row.modelType)
+                    props.row.modelType === "None"
+                      ? "Others"
+                      : lookUpCategory(props.row.modelType)
                   }}
                 </div>
 
-                <div class="flex justify-center" v-else-if="props.column.field === 'modelCatalog'">
+                <div
+                  class="flex justify-center"
+                  v-else-if="props.column.field === 'modelCatalog'"
+                >
                   {{
-                  props.row.modelCatalog === "None"
-                  ? "Private Catalog"
-                  : props.row.modelCatalog
+                    props.row.modelCatalog === "None"
+                      ? "Private Catalog"
+                      : props.row.modelCatalog
                   }}
                 </div>
 
@@ -116,8 +143,8 @@
                       class="btn btn-xs btn-secondary text-black mx-1"
                       @click="viewModel(props.row)"
                       :disabled="
-                    !loginAsOwner && !(props.row.publishStatus === 'true')
-                  "
+                        !loginAsOwner && !(props.row.publishStatus === 'true')
+                      "
                       title="View Model"
                     >
                       <FAIcon icon="eye" />
@@ -130,9 +157,19 @@
                     >
                       <FAIcon icon="unlink" />
                     </button>
+                    <button
+                      class="btn btn-xs btn-secondary text-black mx-1"
+                      @click="deployModelToK8s(props.row)"
+                      :disabled="!loginAsOwner"
+                      title="Deploy Model"
+                    >
+                      <FAIcon icon="cloud-upload-alt" />
+                    </button>
                   </div>
                 </div>
-                <div v-else class="flex justify-center">{{ props.formattedRow[props.column.field] }}</div>
+                <div v-else class="flex justify-center">
+                  {{ props.formattedRow[props.column.field] }}
+                </div>
               </template>
               <template slot="pagination-bottom" slot-scope="props">
                 <pagination-ui
@@ -151,7 +188,21 @@
         v-if="isAssociatingModel"
         @onDismiss="isAssociatingModel = false"
       >
-        <associate-model-form :initialModel="activeModel" @onSuccess="isAssociatingModel = false" />
+        <associate-model-form
+          :initialModel="activeModel"
+          @onSuccess="isAssociatingModel = false"
+        />
+      </modal-ui>
+      <modal-ui
+        title="Deploy Model To Kubernetes"
+        size="md"
+        v-if="isDeployingModel"
+        @onDismiss="isDeployingModel = false"
+      >
+        <deploy-model-form
+          :initialModel="activeModel"
+          @onSuccess="isDeployingModel = false"
+        />
       </modal-ui>
     </div>
   </div>
@@ -164,6 +215,7 @@ import CollapsableUi from "../vue-common/components/ui/collapsable.ui";
 import ModalUi from "../vue-common/components/ui/modal.ui";
 import PaginationUi from "../vue-common/components/ui/pagination.ui";
 import AssociateModelForm from "../components/forms/model/associate-model.form";
+import DeployModelForm from "../components/forms/model/deploy-model.form";
 import { mapActions, mapState, mapMutations } from "vuex";
 import { find, filter } from "lodash-es";
 
@@ -173,7 +225,8 @@ export default {
     CollapsableUi,
     ModalUi,
     PaginationUi,
-    AssociateModelForm
+    AssociateModelForm,
+    DeployModelForm
   },
 
   computed: {
@@ -205,6 +258,7 @@ export default {
   data() {
     return {
       isAssociatingModel: false,
+      isDeployingModel: false,
       activeModel: undefined,
       sortBy: "",
       searchTerm: "",
@@ -223,18 +277,15 @@ export default {
         },
         {
           label: "Status",
-          field: "status",
-          width: "80px"
+          field: "status"
         },
         {
           label: "Version",
-          field: "version",
-          width: "80px"
+          field: "version"
         },
         {
           label: "Model Publish Status",
-          field: "publishStatus",
-          width: "175px"
+          field: "publishStatus"
         },
         {
           label: "Created At",
@@ -248,8 +299,7 @@ export default {
         },
         {
           label: "Actions",
-          field: "actions",
-          width: "100px"
+          field: "actions"
         }
       ],
       rows: []
@@ -276,6 +326,22 @@ export default {
     editModelAssociation(model) {
       this.activeModel = model;
       this.isAssociatingModel = true;
+    },
+
+    deployModelToK8s(model) {
+      this.confirm({
+        title: "Deploy " + model.name + " To Kubernetes",
+        body:
+          "Deploying this model outside the Acumos system may expose its information to third parties. Please click OK to confirm this deployment is being done in compliance with all local policies.",
+        options: {
+          okLabel: "OK",
+          dismissLabel: "Cancel"
+        },
+        onOk: () => {
+          this.activeModel = model;
+          this.isDeployingModel = true;
+        }
+      });
     },
 
     async deleteModelAssociation(model) {

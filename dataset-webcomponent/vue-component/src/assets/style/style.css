@@ -1,0 +1,10 @@
+@tailwind base;
+
+@tailwind components;
+
+@import "./components/buttons.css";
+
+/* Vendor overwrides */
+@import './vendors/v-tooltip.css';
+
+@tailwind utilities;

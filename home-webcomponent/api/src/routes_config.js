@@ -34,6 +34,8 @@ module.exports = function(app) {
 		notebookComponent: properties.notebookComponent,
 		pipelineCatalogComponent : properties.pipelineCatalogComponent,
 		pipelineComponent: properties.pipelineComponent,
+		datasetCatalogComponent: properties.datasetCatalogComponent,
+		datasetComponent: properties.datasetComponent,
 		portalFEURL: properties.portalFEURL,
 		menuItems : properties.menuItems
 	};

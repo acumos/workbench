@@ -1,7 +1,7 @@
 {
   "name": "home-webcomponent",
   "version": "1.0.0",
-  "license": "Apache",
+  "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "git+https://gerrit.acumos.org/workbench.git"

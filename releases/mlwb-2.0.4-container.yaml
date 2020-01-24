@@ -1,0 +1,18 @@
+---
+distribution_type: container
+container_release_tag: 2.0.4
+container_pull_registry: nexus3.acumos.org:10004
+container_push_registry: nexus3.acumos.org:10002
+project: workbench
+ref: 5c18d55184e4fcd66fb57a54cf3ac6b4e82e1ebf
+containers:
+        - name: project-service
+          version: 2.0.4
+		- name: model-service
+          version: 2.0.3
+		- name: notebook-service
+          version: 2.0.3
+		- name: pipeline-service
+          version: 2.0.4
+		- name: predictor-service
+          version: 1.0.3

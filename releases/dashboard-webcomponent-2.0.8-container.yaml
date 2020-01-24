@@ -1,0 +1,10 @@
+---
+distribution_type: container
+container_release_tag: dashboard-webcomponent-2.0.8
+container_pull_registry: nexus3.acumos.org:10004
+container_push_registry: nexus3.acumos.org:10002
+project: workbench
+ref: 5fcd99776b9c0a70fbe2c4adc0958cbe99b5ca6c
+containers:
+        - name: dashboard-webcomponent
+          version: 2.0.8 

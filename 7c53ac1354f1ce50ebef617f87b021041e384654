@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd5b2eea_c948224c",
+        "filename": "releases/dashboard-webcomponent-2.0.8-container.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-01-24T16:16:36Z",
+      "side": 1,
+      "message": "This must be 2.0.8, not the name of the docker container :)",
+      "range": {
+        "startLine": 3,
+        "startChar": 23,
+        "endLine": 3,
+        "endChar": 45
+      },
+      "revId": "7c53ac1354f1ce50ebef617f87b021041e384654",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    }
+  ]
+}

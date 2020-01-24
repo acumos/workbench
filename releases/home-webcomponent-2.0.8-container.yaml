@@ -1,0 +1,10 @@
+---
+distribution_type: container
+container_release_tag: home-webcomponent-2.0.8
+container_pull_registry: nexus3.acumos.org:10004
+container_push_registry: nexus3.acumos.org:10002
+project: workbench
+ref: 14de1cd4fc9a9aab91c4952c6c602e742ee572c1
+containers:
+        - name: home-webcomponent
+          version: 2.0.8 

@@ -10,6 +10,6 @@
   },
   "scripts": {
     "start:dev": "polymer serve --port=9084",
-    "build": "polymer build"
+    "build": "polymer  build"
   }
 }

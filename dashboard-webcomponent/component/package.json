@@ -8,7 +8,7 @@
     "lit-element": "^2.0.1"
   },
   "scripts": {
-    "start:dev": "polymer serve  --port=9083",
+    "start:dev": "polymer serve --port=9083",
     "build": "polymer build"
   }
 }

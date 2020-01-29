@@ -20,6 +20,10 @@
 Workbench Common Release Notes
 ================================
 
+Version 2.0.3, 2020-01-29
+---------------------------
+* Updated Workbench commons CDS version to 3.1.1
+
 Version 2.0.2, 2019-12-16
 ---------------------------
 * Added Logger dependencies

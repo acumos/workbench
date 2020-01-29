@@ -20,6 +20,10 @@
 Model Service Release Notes
 ===============================
 
+Version 2.0.4, 2020-01-29
+---------------------------
+* Updated Model Service CDS version to 3.1.1
+
 Version 2.0.3, 2019-12-16
 ---------------------------
 * Added Logger dependencies
@@ -51,6 +55,7 @@ Version 1.0.0, 2019-09-09
 * ACUMOS-3292 Model Service MS should expose API to update the Project Model association
 * ACUMOS-3293 Model Service MS should expose API to delete the Project Model association
 * ACUMOS-3290 Model Service MS should expose API to create Project Model association
+
 
 
 

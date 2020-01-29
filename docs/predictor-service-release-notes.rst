@@ -20,6 +20,10 @@
 Predictor Service Release Notes
 ===============================
 
+Version 1.0.4, 2020-01-29
+---------------------------
+* Updated Predictor Service CDS version to 3.1.1
+
 Version 1.0.3, 2019-12-16
 ---------------------------
 * Added Logger dependencies

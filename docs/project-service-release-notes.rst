@@ -20,6 +20,10 @@
 Project Service Release Notes
 ===============================
 
+Version 2.0.5, 2020-01-29
+---------------------------
+* Updated Project Service CDS version to 3.1.1
+
 Version 2.0.4, 2019-12-16
 ---------------------------
 * Added Logger dependencies

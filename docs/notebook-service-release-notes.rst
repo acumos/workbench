@@ -20,6 +20,10 @@
 Notebook Service Release Notes
 ===============================
 
+Version 2.0.4, 2020-01-29
+---------------------------
+* Updated Notebook Service CDS version to 3.1.1
+
 Version 2.0.3, 2019-12-16
 ---------------------------
 * Added Logger dependencies

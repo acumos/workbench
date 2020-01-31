@@ -20,6 +20,10 @@
 ML Workbench Project Web Component
 ===============================================
 
+Version 2.0.9  31st January 2020 
+=================================
+* Combine multiple options as dropdown (ACUMOS-3788)
+
 Version 2.0.8  7th November 2019 
 =================================
 * IST | MLWB | unable to delete Project  (ACUMOS-3691)

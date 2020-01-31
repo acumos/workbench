@@ -20,6 +20,10 @@
 ML Workbench Home Web Component
 ===============================================
 
+Version 2.0.9  31st January 2020 
+=================================
+* Updated the Minor version for build release
+
 Version 2.0.8  7th November 2019 
 =================================
 * IST | MLWB | Deletion of Data pipeline giving error (ACUMOS-3624)

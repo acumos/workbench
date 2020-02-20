@@ -433,10 +433,9 @@ public class NotebookServiceImpl implements NotebookService {
 				queryParameters.put("userId", userId);
 				RestPageRequest pageRequest = new RestPageRequest(0, confprops.getResultsetSize());
 				cdsClient.setRequestId(MDC.get(LoggingConstants.MDCs.REQUEST_ID));
-				RestPageResponse<MLPNotebook> response = cdsClient.searchNotebooks(queryParameters,
-						false, pageRequest);
+				RestPageResponse<MLPNotebook> response = cdsClient.searchNotebooks(queryParameters, false, pageRequest);
 				mlpNotebooks = response.getContent();
-			} catch (Exception e) { 
+			} catch (Exception e) {
 				logger.error(props.getCdsSearchNotebooksExcp());
 				throw new TargetServiceInvocationException(props.getCdsSearchNotebooksExcp());
 			}
@@ -444,7 +443,7 @@ public class NotebookServiceImpl implements NotebookService {
 		} else {
 			try {
 				mlpNotebooks = cdsClient.getProjectNotebooks(projectId);
-			} catch (Exception e) { 
+			} catch (Exception e) {
 				logger.error(props.getCdsGetProjectNotebooksExcp());
 				throw new TargetServiceInvocationException(props.getCdsGetProjectNotebooksExcp());
 			}
@@ -462,29 +461,33 @@ public class NotebookServiceImpl implements NotebookService {
 		logger.debug("deleteNotebook() Begin");
 		ServiceState result = null;
 		List<MLPProject> mlpProjects = null;
-		
-		//Delete Notebook from Notebook server 
+
+		// Delete Notebook from Notebook server
 		Notebook notebook = getNotebook(authenticatedUserId, notebookId);
-		//First Launch the notebook
-		String notebookName = notebook.getNoteBookId().getName()+"_"+ notebook.getNoteBookId().getVersionId().getLabel();
-		NotebookRestClient notebookRestClient = getNotebookRestClient(notebook.getNotebookType());
-		String url =  notebookRestClient.launchNotebookServer(authenticatedUserId);
-		String serviceURL = null;
-		if(null != url) { 
-			//delete notebook 
-			notebookRestClient.deleteNotebookFromNotebookServer(authenticatedUserId, notebookName);
+		if (!confprops.isUseExternalNotebook()) {
+			// First Launch the notebook
+			String notebookName = notebook.getNoteBookId().getName() + "_"
+					+ notebook.getNoteBookId().getVersionId().getLabel();
+			NotebookRestClient notebookRestClient = getNotebookRestClient(notebook.getNotebookType());
+			String url = notebookRestClient.launchNotebookServer(authenticatedUserId);
+			String serviceURL = null;
+			if (null != url) {
+				// delete notebook
+				notebookRestClient.deleteNotebookFromNotebookServer(authenticatedUserId, notebookName);
+			}
+
+			// TODO : Once JupyterHub is integrated with Git, stop the launched notebook server after deleting notebook in it.
+			// notebookRestClient.stopNotebookServer(authenticatedUserId)
 		}
-		//TODO : Once JupyterHub is integrated with Git, stop the launched notebook server after deleting notebook in it. notebookRestClient.stopNotebookServer(authenticatedUserId)
-		
-		//Delete any association with Project
+		// Delete any association with Project
 		try {
 			cdsClient.setRequestId(MDC.get(LoggingConstants.MDCs.REQUEST_ID));
 			mlpProjects = cdsClient.getNotebookProjects(notebookId);
-		} catch (Exception e) { 
+		} catch (Exception e) {
 			logger.error("CDS - Get Notebook Projects");
-			throw new TargetServiceInvocationException(props.getCdsGetNotebookProjectsExcp()); 
+			throw new TargetServiceInvocationException(props.getCdsGetNotebookProjectsExcp());
 		}
-		
+
 		try {
 			if (null != mlpProjects && mlpProjects.size() > 0) {
 				for (MLPProject mlpProject : mlpProjects) {
@@ -495,16 +498,16 @@ public class NotebookServiceImpl implements NotebookService {
 			}
 		} catch (Exception e) {
 			logger.error("CDS - Drop Project Notebook");
-			throw new TargetServiceInvocationException(props.getCdsDropProjectNotebookExcp()); 
+			throw new TargetServiceInvocationException(props.getCdsDropProjectNotebookExcp());
 		}
-		
+
 		try {
 			logger.debug("deleteNotebook() Begin");
 			cdsClient.deleteNotebook(notebookId);
 			logger.debug("deleteNotebook() End");
-		} catch (Exception e) { 
+		} catch (Exception e) {
 			logger.error("CDS - Delete Notebook");
-			throw new TargetServiceInvocationException(props.getCdsDeleteNotebookExcp()); 
+			throw new TargetServiceInvocationException(props.getCdsDeleteNotebookExcp());
 		}
 		result = new ServiceState();
 		result.setStatus(ServiceStatus.COMPLETED);

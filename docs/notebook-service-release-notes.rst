@@ -20,6 +20,10 @@
 Notebook Service Release Notes
 ===============================
 
+Version 2.0.5, 2020-02-17
+---------------------------
+* ACUMOS-3688 : IST | MLWB | Unable to delete the external notebook.
+
 Version 2.0.4, 2020-01-29
 ---------------------------
 * Updated Notebook Service CDS version to 3.1.1

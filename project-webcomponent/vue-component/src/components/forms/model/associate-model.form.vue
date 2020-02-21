@@ -270,7 +270,7 @@ export default {
       if (isValid) {
         if (this.isNew) {
           const modelAssociation = model.$toJson();
-          modelAssociation.modelId.metrics.kv.splice(-1, 1);
+          modelAssociation.modelId.metrics.kv.splice(-2, 2);
           response = await this.associateModel(modelAssociation);
         } else {
           response = await this.updateAssociation(model.$toJson());

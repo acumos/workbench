@@ -68,6 +68,13 @@
               :sort-options="sortOptions"
             >
               <template slot="table-row" slot-scope="props">
+			    <div class="flex justify-center" v-if="props.column.field === 'cluster'">
+                    <FAIcon
+                    class="text-gray-500"
+                     icon="minus"
+                    v-if="props.row.cluster === ''"
+                  ></FAIcon>
+                </div>
                 <div class="flex justify-center" v-if="props.column.field === 'deployStatus'">
                   <FAIcon
                     class="text-gray-500"
@@ -79,6 +86,15 @@
                     icon="cloud-upload-alt"
                     v-if="props.row.deployStatus === 'ACTIVE'"
                   ></FAIcon>
+				   <button
+                      class="btn btn-xs text-red-700 mx-1"
+                      @click="errorMessage()"
+                      :disabled="!loginAsOwner"
+                      title="View Error"
+					  v-if="props.row.deployStatus === 'ERROR'"
+                    >
+                      <FAIcon icon="exclamation-triangle" />
+                    </button>
                 </div>
                 <div v-else-if="props.column.field === 'actions'">
                   <div class="flex justify-center">
@@ -187,6 +203,11 @@ export default {
           label: "Key",
           field: "key"
         },
+		  {
+          label: "Cluster",
+          field: "cluster",
+          width: "175px"
+        },
         {
           label: "Base URL",
           field: "url"
@@ -230,6 +251,14 @@ export default {
     editPredictorAssociation(predictor) {
       this.activePredictor = predictor;
       this.isAssociatingPredictor = true;
+    },
+	
+	errorMessage() {
+      this.confirm({
+         title: "Error Details" ,
+        body:
+          "Deploying this model outside the Acumos system may expose its information to third parties. Please click OK to confirm this deployment is being done in compliance with all local policies.",
+      });
     },
 
     async deleteAssociationPredictor(predictor) {

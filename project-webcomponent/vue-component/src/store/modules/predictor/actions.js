@@ -27,6 +27,27 @@ export default {
     return map(data.data, model => Model.$fromJson(model));
   },
 
+  async getClusters({ rootState, commit }) {
+    const { data } = await axios.post(
+      `${rootState.app.componentUrl}/api/users`,
+      {
+        userName: rootState.app.userName,
+      }
+    );
+
+    if (data.status === "Error") {
+      commit("setPredictorToast", {
+        id: "predictor",
+        type: "error",
+        message: data.message
+      });
+
+      commit("setPredictorError", true);
+      return [];
+    }
+    return map(data.data, model => Model.$fromJson(model));
+  },
+
   async getProjectPredictors({ rootState, commit }) {
     const { data } = await axios.post(
       `${rootState.app.componentUrl}/api/project/getProjectPredictors`,
@@ -53,6 +74,44 @@ export default {
     Predictor.create({
       data: predictors
     });
+  },
+
+  async getPredictorDeploymentStatus({ rootState, commit }) {
+    const { data } = await axios.post(
+      `${rootState.app.componentUrl}/api/perdictor/getPredictorDeploymentStatus`,
+      {
+        userName: rootState.app.userName,
+        url: rootState.app.msConfig.predictormSURL,
+        predictorId: predictor.predictorId,
+      }
+    );
+
+    if (data.status === "Error") {
+      commit("setPredictorToast", {
+        id: "predictor",
+        type: "error",
+        message: data.message
+      });
+
+      commit("setPredictorError", true);
+      return [];
+    }
+    const predictors = map(data.data, predictor =>
+      Predictor.$fromJson(predictor)
+    );
+    Predictor.create({
+      data: predictors
+    });
+  },
+  
+  async deployModelKub({ rootState }, deployModel) {
+    return await axios.post(
+      `${rootState.app.componentUrl}/api/predictor/predictors`,
+      {
+        userName: rootState.app.userName,
+        deployPayload: deployModel
+      }
+    );
   },
 
   async associatePredictor({ rootState }, predictor) {

@@ -465,6 +465,17 @@ module.exports = function(app) {
 		});
 	 });
 
+	 app.post('/api/predictor/predictors', function (req, res){
+		let userName = req.body.userName;
+		let serviceUrl = req.body.url + uripath;
+		
+		let authToken = req.headers['auth'];
+		let deployPayload = req.body.deployPayload;
+		deployModelKub(userName, serviceUrl,deployPayload, getLatestAuthToken(req, authToken)).then(function(result){
+			res.send(result);
+		});
+	});
+
 	 app.post('/api/project/associatePredictor', function (req, res){
 		let userName = req.body.userName;
 		let serviceUrl = req.body.url + uripath;
@@ -508,6 +519,24 @@ module.exports = function(app) {
 			res.send(result);
 		});
 	});
+
+	app.get('api/users', function (req, res){
+		let userName = req.body.userName;
+		let authToken = req.headers['auth'];
+		getSelectedClusters(userName,  getLatestAuthToken(req, authToken)).then(function(result){
+			res.send(result);
+		});
+	});
+
+	app.get('api/perdictor/getPredictorDeploymentStatus', function (req, res){
+		let userName = req.body.userName;
+		let predictorId = req.body.predictorId;
+		let authToken = req.headers['auth'];
+		getDeploymentStatus(userName, predictorId, getLatestAuthToken(req, authToken)).then(function(result){
+			res.send(result);
+		});
+	});
+
 
 	var getSelectedProjectDetails = function(userName, srvcUrl, projectId, authToken){
     	return new Promise(function(resolve, reject) {
@@ -1089,6 +1118,30 @@ module.exports = function(app) {
 		});
 	};
 
+	var getSelectedClusters = function(userName,  authToken){
+		return new Promise(function(resolve, reject){
+			var options = {
+				method : "GET",
+				url : srvcUrl + userName,
+				headers : {
+					'Content-Type' : 'application/json',
+					'Authorization' : authToken,
+				}
+			};
+			
+			request.get(options, function(error, response) {
+				if (!error && response.statusCode == 200) {						
+					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Model deployed on cluster successfully"));
+				} else if (!error) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to deploy model"));
+				} else {
+					resolve(prepRespJsonAndLogit(null, null, null, error));
+				}
+			});
+
+		});
+	};
+
 	var associateModelProject = function(userName, srvcUrl, projectId, modelId, modelPayload, authToken){
 		return new Promise(function(resolve, reject) {
 			var options = {
@@ -1364,6 +1417,55 @@ module.exports = function(app) {
 				}
 			});
 
+		});
+	};
+
+	var getDeploymentStatus = function(userName, srvcUrl, predictorId , authToken){
+		return new Promise(function(resolve, reject){
+			var options = {
+				method : "GET",
+				url : srvcUrl + userName + "/projects/" + predictorId + "/predictors",
+				headers : {
+					'Content-Type' : 'application/json',
+					'Authorization' : authToken,
+				}
+			};
+			
+			request.get(options, function(error, response) {
+				if (!error && response.statusCode == 200) {						
+					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Deployment status retrieved successfully"));
+				} else if (!error) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to retrieve Deployment status"));
+				} else {
+					resolve(prepRespJsonAndLogit(null, null, null, error));
+				}
+			});
+
+		});
+	};
+
+	var deployModelKub = function(userName, srvcUrl, deployPayload, authToken){
+		return new Promise(function(resolve, reject) {
+			var options = {
+				method : "POST",
+				url : srvcUrl + "/predictor/" +  userName + "/predictors" ,
+				headers : {
+					'Content-Type' : 'application/json',
+					'Authorization' : authToken,
+				},
+				body: deployPayload,
+				json: true
+			};
+
+			request.post(options, function(error, response) {
+				if (!error && response.statusCode == 200) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Deployment is in progress, the predictor section will be update in a few minutes."));
+				} else if (!error) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to deploy model"));
+				} else {
+					resolve(prepRespJsonAndLogit(null, null, null, error));
+				}
+			});
 		});
 	};
 

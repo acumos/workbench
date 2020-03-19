@@ -1,7 +1,7 @@
 <template>
   <div class="w-full">
     <div class="flex w-full">
-      <collapsable-ui title="Predictors" icon="cubes" :collapseBorder="!isEmpty">
+      <collapsable-ui title="Predictor" icon="cubes" :collapseBorder="!isEmpty">
         <div slot="right-actions" class="inline-flex">
           <a
             :href="wikiConfig.predictorWikiURL"
@@ -31,6 +31,12 @@
                   @click="associatePredictor()"
                   :disabled="!loginAsOwner"
                 >Associate Predictors</button>
+
+                 <!-- <button
+                  class="btn btn-primary btn-sm"
+                  @click="deployLocal()"
+                  :disabled="!loginAsOwner"
+                >Deploy to Local</button> -->
               </div>
             </div>
           </div>
@@ -68,6 +74,13 @@
               :sort-options="sortOptions"
             >
               <template slot="table-row" slot-scope="props">
+                <div class="flex justify-center" v-if="props.column.field === 'k8s_id'">
+                    <FAIcon
+                    class="text-gray-500"
+                     icon="minus"
+                    v-if="props.row.k8s_id=== ''"
+                  ></FAIcon>
+                </div>
                 <div class="flex justify-center" v-if="props.column.field === 'deployStatus'">
                   <FAIcon
                     class="text-gray-500"
@@ -78,6 +91,20 @@
                     class="text-green-700"
                     icon="cloud-upload-alt"
                     v-if="props.row.deployStatus === 'ACTIVE'"
+                  ></FAIcon>
+                   <button
+                      class="btn btn-xs text-red-700 mx-1"
+                      @click="errorMessage()"
+                      :disabled="!loginAsOwner"
+                      title="View Error"
+                      v-if="props.row.deployStatus === 'FAILED'"
+                    >
+                      <FAIcon icon="exclamation-triangle" />
+                    </button>
+                     <FAIcon
+                    class="text-gray-500"
+                    icon="minus"
+                    v-if="props.row.deployStatus === ''"
                   ></FAIcon>
                 </div>
                 <div v-else-if="props.column.field === 'actions'">
@@ -103,11 +130,6 @@
                     </button>
                   </div>
                 </div>
-                 <div
-                v-else-if="props.column.field === 'url'"
-                  class="break-all justify-center px-1"
-                >{{ props.formattedRow[props.column.field] }}
-                </div>
                 <div v-else class="flex justify-center">{{ props.formattedRow[props.column.field] }}</div>
               </template>
               <template slot="pagination-bottom" slot-scope="props">
@@ -132,6 +154,17 @@
           @onSuccess="isAssociatingPredictor = false"
         />
       </modal-ui>
+      <!-- <modal-ui
+        title="Deploy to Local"
+        size="md"
+        v-if="isDeployLocal"
+        @onDismiss="isDeployLocal = false"
+      >
+        <DeployToLocalForm
+          :initialPredictor="activePredictor"
+          @onSuccess="isDeployLocal = false"
+        />
+      </modal-ui> -->
     </div>
   </div>
 </template>
@@ -141,6 +174,7 @@ import CollapsableUi from "../vue-common/components/ui/collapsable.ui";
 import ModalUi from "../vue-common/components/ui/modal.ui";
 import PaginationUi from "../vue-common/components/ui/pagination.ui";
 import AssociatePredictorForm from "../components/forms/predictor/associate-predictor.form";
+import DeployToLocalForm from "../components/forms/predictor/deploy-form"
 import Predictor from "../store/entities/predictor.entity";
 import { mapActions, mapState, mapMutations } from "vuex";
 
@@ -150,7 +184,8 @@ export default {
     CollapsableUi,
     ModalUi,
     PaginationUi,
-    AssociatePredictorForm
+    AssociatePredictorForm,
+    DeployToLocalForm
   },
   computed: {
     ...mapState("app", ["wikiConfig"]),
@@ -175,6 +210,7 @@ export default {
   data() {
     return {
       isAssociatingPredictor: false,
+     // isDeployLocal:false,
       activePredictor: undefined,
       sortBy: "",
       searchTerm: "",
@@ -185,7 +221,12 @@ export default {
         },
         {
           label: "Key",
-          field: "key"
+          field: "predictorkey"
+        },
+        {
+          label: "Cluster",
+          field: "k8s_id",
+          width: "175px"
         },
         {
           label: "Base URL",
@@ -193,21 +234,14 @@ export default {
         },
         {
           label: "Deploy Status",
-          field: "deployStatus"
+          field: "deployStatus",
+          width: "175px"
         },
-        // {
-        //   label: "Created At",
-        //   field: "createdTimestamp",
-        //   sortFn(dateA, dateB) {
-        //     return dayjs(dateA).isBefore(dayjs(dateB)) ? 1 : -1;
-        //   },
-        //   formatFn(value) {
-        //     return dayjs(value).format("YYYY-MM-DD");
-        //   }
-        // },
+       
         {
           label: "Actions",
-          field: "actions"
+          field: "actions",
+          width: "100px"
         }
       ],
       rows: []
@@ -226,13 +260,24 @@ export default {
       this.activePredictor = undefined;
       this.isAssociatingPredictor = true;
     },
-
+  //  deployLocal() {
+  //    this.activePredictor = null;
+  //   this.isDeployLocal = true;
+  //   },
     editPredictorAssociation(predictor) {
       this.activePredictor = predictor;
       this.isAssociatingPredictor = true;
     },
-
+  errorMessage() {
+      this.confirm({
+         title: "Error Details" ,
+        body:
+          "Deployment of this model is failed. Check Jenikins URL for more details...",
+      });
+    },
     async deleteAssociationPredictor(predictor) {
+      debugger;
+      // modelAssociation.modelId.metrics.kv.splice(-2, 2);
       predictor = new Predictor(predictor);
       this.confirm({
         title: "Delete " + predictor.name + " Association",

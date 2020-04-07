@@ -8,7 +8,7 @@ export default class Predictor extends Model {
     return {
       id: this.attr(null),
       name: this.attr(""),
-      key: this.attr(""),
+      predictorkey: this.attr(""),
       version: this.attr(""),
       url: this.attr(""),
       deployStatus: this.attr(""),
@@ -18,7 +18,9 @@ export default class Predictor extends Model {
       modelVersion: this.attr(""),
       associationId: this.attr(""),
       owner: this.attr(""),
-      revisionId: this.attr("")
+      revisionId: this.attr(""),
+      cluster: this.attr(""),
+      k8s_id: this.attr("")
     };
   }
 
@@ -26,7 +28,7 @@ export default class Predictor extends Model {
     return {
       id: get(json, "predictorId.uuid"),
       name: get(json, "predictorId.name"),
-      key: get(json, "predictorId.metrics.kv[1].value"),
+      key: get(json, "predictorId.metrics.kv[3].key"),
       version: get(json, "predictorId.versionId.label"),
       url: get(json, "predictorId.serviceUrl"),
       deployStatus: get(json, "artifactStatus.status"),
@@ -36,7 +38,9 @@ export default class Predictor extends Model {
       modelVersion: get(json, "model.modelId.versionId.label"),
       associationId: get(json, "predictorId.metrics.kv[0].value"),
       owner: get(json, "user.authenticatedUserId"),
-      revisionId: get(json, "model.modelId.metrics.kv[0].value")
+      revisionId: get(json, "model.modelId.metrics.kv[0].value"),
+      cluster: get(json, "model.modelId.metrics.kv[1].value"),
+      k8s_id: get(json, "model.modelId.metrics.kv[2].value")
     };
   }
 
@@ -47,6 +51,7 @@ export default class Predictor extends Model {
       key: get(json, "predictorId.metrics.kv[0].value"),
       version: get(json, "predictorId.versionId.label"),
       url: get(json, "predictorId.serviceUrl"),
+      associationId: get(json, "predictorId.metrics.kv[0].value"),
       deployStatus: get(json, "artifactStatus.status"),
       createdTimestamp: get(json, "predictorId.versionId.creationTimeStamp"),
       status: get(json, "artifactStatus.status"),
@@ -98,6 +103,55 @@ export default class Predictor extends Model {
       predictorVersion: this.version,
       environmentPath: this.url,
       predictorkey: this.key
+      
+    };
+  }
+
+ static $deployfromJson(json) {
+    return {
+      id: get(json, "predictorId.uuid"),
+      name: get(json, "predictorId.name"),
+      predictorkey: get(json, "predictorId.metrics.kv[3].value"),
+      version: get(json, "predictorId.versionId.label"),
+      modelId: get(json, "model.modelId.uuid"), 
+      revisionId: get(json, "predictorId.metrics.kv[0].value"),
+      k8s_id: get(json, "predictorId.metrics.kv[2].value"),
+      deployStatus: get(json,  "predictorId.metrics.kv[1].value")
+    };
+  }
+  $toDeployJson(){
+    return{
+      model: {
+      modelId: {
+        metrics: {
+          kv: [
+            {
+              key: "REVISION_ID",
+              value: this.revisionId
+            },
+            {
+              key: "K8S_ID",
+              value: this.cluster
+            },
+            {
+              key: "PREDICTOR_KEY",
+              value: this.key
+            },
+          ]
+        },
+        "uuid": this.modelId,
+      }
+    },
+      predictorId:{
+        name: this.name, 
+        versionId: {
+            comment : "",
+            label: this.version
+          },
+     },
     };
   }
 }
+
+
+

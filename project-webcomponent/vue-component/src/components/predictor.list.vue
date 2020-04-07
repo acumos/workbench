@@ -1,7 +1,7 @@
 <template>
   <div class="w-full">
     <div class="flex w-full">
-      <collapsable-ui title="Predictors" icon="cubes" :collapseBorder="!isEmpty">
+      <collapsable-ui title="Predictor" icon="cubes" :collapseBorder="!isEmpty">
         <div slot="right-actions" class="inline-flex">
           <a
             :href="wikiConfig.predictorWikiURL"
@@ -68,6 +68,13 @@
               :sort-options="sortOptions"
             >
               <template slot="table-row" slot-scope="props">
+                <div class="flex justify-center" v-if="props.column.field === 'k8s_id'">
+                    <FAIcon
+                    class="text-gray-500"
+                     icon="minus"
+                    v-if="props.row.k8s_id=== ''"
+                  ></FAIcon>
+                </div>
                 <div class="flex justify-center" v-if="props.column.field === 'deployStatus'">
                   <FAIcon
                     class="text-gray-500"
@@ -78,6 +85,20 @@
                     class="text-green-700"
                     icon="cloud-upload-alt"
                     v-if="props.row.deployStatus === 'ACTIVE'"
+                  ></FAIcon>
+                   <button
+                      class="btn btn-xs text-red-700 mx-1"
+                      @click="errorMessage()"
+                      :disabled="!loginAsOwner"
+                      title="View Error"
+                      v-if="props.row.deployStatus === 'FAILED'"
+                    >
+                      <FAIcon icon="exclamation-triangle" />
+                    </button>
+                     <FAIcon
+                    class="text-gray-500"
+                    icon="minus"
+                    v-if="props.row.deployStatus === ''"
                   ></FAIcon>
                 </div>
                 <div v-else-if="props.column.field === 'actions'">
@@ -102,11 +123,6 @@
                       <FAIcon icon="unlink" />
                     </button>
                   </div>
-                </div>
-                 <div
-                v-else-if="props.column.field === 'url'"
-                  class="break-all justify-center px-1"
-                >{{ props.formattedRow[props.column.field] }}
                 </div>
                 <div v-else class="flex justify-center">{{ props.formattedRow[props.column.field] }}</div>
               </template>
@@ -185,7 +201,12 @@ export default {
         },
         {
           label: "Key",
-          field: "key"
+          field: "predictorkey"
+        },
+        {
+          label: "Cluster",
+          field: "k8s_id",
+          width: "175px"
         },
         {
           label: "Base URL",
@@ -193,21 +214,14 @@ export default {
         },
         {
           label: "Deploy Status",
-          field: "deployStatus"
+          field: "deployStatus",
+          width: "175px"
         },
-        // {
-        //   label: "Created At",
-        //   field: "createdTimestamp",
-        //   sortFn(dateA, dateB) {
-        //     return dayjs(dateA).isBefore(dayjs(dateB)) ? 1 : -1;
-        //   },
-        //   formatFn(value) {
-        //     return dayjs(value).format("YYYY-MM-DD");
-        //   }
-        // },
+       
         {
           label: "Actions",
-          field: "actions"
+          field: "actions",
+          width: "100px"
         }
       ],
       rows: []
@@ -226,12 +240,18 @@ export default {
       this.activePredictor = undefined;
       this.isAssociatingPredictor = true;
     },
-
+ 
     editPredictorAssociation(predictor) {
       this.activePredictor = predictor;
       this.isAssociatingPredictor = true;
     },
-
+  errorMessage() {
+      this.confirm({
+         title: "Error Details" ,
+        body:
+          "Deployment of this model is failed. Check Jenikins URL for more details...",
+      });
+    },
     async deleteAssociationPredictor(predictor) {
       predictor = new Predictor(predictor);
       this.confirm({

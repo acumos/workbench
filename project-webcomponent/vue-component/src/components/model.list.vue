@@ -161,7 +161,7 @@
                       class="btn btn-xs btn-secondary text-black mx-1"
                       @click="deployModelToK8s(props.row)"
                       :disabled="!loginAsOwner"
-                      title="Deploy Model"
+                      title="Deploy to K8"
                     >
                       <FAIcon icon="cloud-upload-alt" />
                     </button>
@@ -328,23 +328,14 @@ export default {
       this.isAssociatingModel = true;
     },
 
-    deployModelToK8s(model) {
-      this.confirm({
-        title: "Deploy " + model.name + " To Kubernetes",
-        body:
-          "Deploying this model outside the Acumos system may expose its information to third parties. Please click OK to confirm this deployment is being done in compliance with all local policies.",
-        options: {
-          okLabel: "OK",
-          dismissLabel: "Cancel"
-        },
-        onOk: () => {
-          this.activeModel = model;
-          this.isDeployingModel = true;
-        }
-      });
-    },
+      deployModelToK8s(model){
+        this.activeModel = model;
+        this.isDeployingModel = true;
+      },
 
     async deleteModelAssociation(model) {
+      debugger
+      delete(model["cluster"]);
       model = new Model(model);
       let predictors = await this.getPredictorDetailsForProject();
       let predictorAssociated = [];
@@ -406,7 +397,9 @@ export default {
             dismissLabel: "Cancel"
           },
           onOk: async () => {
-            const response = await this.deleteAssociation(model.$toJson());
+            model = model.$toJson();
+              model.modelId.metrics.kv.splice(-1, 1);
+            const response = await this.deleteAssociation(model);
             if (response.data.status === "Success") {
               await this.getModelDetailsForProject();
               this.showToastMessage({

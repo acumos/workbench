@@ -455,7 +455,7 @@ module.exports = function(app) {
 		});
 	});
 
-	app.post('/api/project/getProjectPredictors', function (req, res){
+	 app.post('/api/project/getProjectPredictors', function (req, res){
 		let userName = req.body.userName;
 		let serviceUrl = req.body.url + uripath;
 		let projectId = req.body.projectId;
@@ -464,6 +464,17 @@ module.exports = function(app) {
 			res.send(result);
 		});
 	 });
+
+	 app.post('/api/project/users/predictors', function (req, res){
+		let userName = req.body.userName;
+		let serviceUrl = req.body.url;
+		let authToken = req.headers['auth'];
+		let deployPayload = req.body.deployPayload;
+		let projectId = req.body.projectId;
+		deployModelKub(userName, serviceUrl,deployPayload,projectId, getLatestAuthToken(req, authToken)).then(function(result){
+			res.send(result);
+		});
+	});
 
 	 app.post('/api/project/associatePredictor', function (req, res){
 		let userName = req.body.userName;
@@ -508,6 +519,26 @@ module.exports = function(app) {
 			res.send(result);
 		});
 	});
+
+	app.post('/api/project/users', function (req, res){
+		let userName = req.body.userName;
+		let serviceUrl = req.body.url;
+		let authToken = req.headers['auth'];
+		getSelectedClusters(userName, serviceUrl, getLatestAuthToken(req, authToken)).then(function(result){
+			res.send(result);
+		});
+	});
+
+	app.post('/api/project/users/predictorsId', function (req, res){
+		let userName = req.body.userName;
+		let serviceUrl = req.body.url;
+		let authToken = req.headers['auth'];
+		let predictorId = req.body.predictorId;
+		getDeploymentStatus(userName, serviceUrl,  predictorId, getLatestAuthToken(req, authToken)).then(function(result){
+			res.send(result);
+		});
+	});
+
 
 	var getSelectedProjectDetails = function(userName, srvcUrl, projectId, authToken){
     	return new Promise(function(resolve, reject) {
@@ -1089,6 +1120,31 @@ module.exports = function(app) {
 		});
 	};
 
+	var getSelectedClusters = function(userName, srvcUrl, authToken){
+		return new Promise(function(resolve, reject){
+			var options = {
+				method : "GET",
+				url : srvcUrl + '/users/' + userName,
+				headers : {
+					'Content-Type' : 'application/json',
+					'Authorization' : authToken,
+				}
+			};
+			
+			request.get(options, function(error, response) {
+				if (!error && response.statusCode == 200) {						
+					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Model deployed on cluster successfully"));
+				} else if (!error) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to deploy model"));
+				} else {
+					resolve(prepRespJsonAndLogit(null, null, null, error));
+				
+				}
+			});
+
+		});
+	};
+
 	var associateModelProject = function(userName, srvcUrl, projectId, modelId, modelPayload, authToken){
 		return new Promise(function(resolve, reject) {
 			var options = {
@@ -1343,11 +1399,12 @@ module.exports = function(app) {
 		});
 	};
 
-	var getSelectedProjectPredictors = function(userName, srvcUrl, projectId, authToken){
+
+	 var getSelectedProjectPredictors = function(userName, srvcUrl, projectId, authToken){
 		return new Promise(function(resolve, reject){
 			var options = {
 				method : "GET",
-				url : srvcUrl + userName + "/projects/" + projectId + "/predictors",
+				url : srvcUrl  + userName + '/'+ projectId + "/predictorList",
 				headers : {
 					'Content-Type' : 'application/json',
 					'Authorization' : authToken,
@@ -1364,6 +1421,56 @@ module.exports = function(app) {
 				}
 			});
 
+		});
+	};
+
+
+	var getDeploymentStatus = function(userName, srvcUrl, predictorId , authToken){
+		return new Promise(function(resolve, reject){
+			var options = {
+				method : "GET",
+				url : srvcUrl + '/users/' + userName + '/predictors/' + predictorId,
+				headers : {
+					'Content-Type' : 'application/json',
+					'Authorization' : authToken,
+				}
+			};
+			
+			request.get(options, function(error, response) {
+				if (!error && response.statusCode == 200) {						
+					resolve(prepRespJsonAndLogit(response, JSON.parse(response.body), "Deployment status retrieved successfully"));
+				} else if (!error) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to retrieve Deployment status"));
+				} else {
+					resolve("error");
+				}
+			});
+
+		});
+	};
+
+	var deployModelKub = function(userName, srvcUrl, deployPayload, projectId, authToken){
+		return new Promise(function(resolve, reject) {
+			var options = {
+				method : "POST",
+				url : srvcUrl + '/users/' +  userName + "/" + projectId + '/predictors' ,
+				headers : {
+					'Content-Type' : 'application/json',
+					'Authorization' : authToken,
+				},
+				body: deployPayload,
+				json: true
+			};
+
+			request.post(options, function(error, response) {
+				if (!error && response.statusCode == 200) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Deployment is in progress, the predictor section will be update in a few minutes."));
+				} else if (!error) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to deploy model"));
+				} else {
+					resolve(prepRespJsonAndLogit(null, null, null, error));
+				}
+			});
 		});
 	};
 

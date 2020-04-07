@@ -268,12 +268,14 @@ export default {
       const isValid = await this.$refs.form.validate();
       let response = null;
       if (isValid) {
-        if (this.isNew) {
           const modelAssociation = model.$toJson();
-          modelAssociation.modelId.metrics.kv.splice(-1, 1);
+         
+        if (this.isNew) {
+          modelAssociation.modelId.metrics.kv.splice(-2, 2);
           response = await this.associateModel(modelAssociation);
         } else {
-          response = await this.updateAssociation(model.$toJson());
+          modelAssociation.modelId.metrics.kv.splice(-1, 1);
+          response = await this.updateAssociation(modelAssociation);
         }
 
         if (response.data.status === "Success") {

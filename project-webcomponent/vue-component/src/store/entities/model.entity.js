@@ -16,7 +16,8 @@ export default class Model extends _Model {
       modelCatalog: this.attr(""),
       publishStatus: this.attr(""),
       associationId: this.attr(""),
-      revisionId: this.attr("")
+      revisionId: this.attr(""),
+      k8s_id: this.attr("")
     };
   }
 
@@ -32,7 +33,8 @@ export default class Model extends _Model {
       modelCatalog: get(json, "modelId.metrics.kv[2].value"),
       publishStatus: get(json, "modelId.metrics.kv[1].value"),
       associationId: get(json, "modelId.metrics.kv[3].value"),
-      revisionId: get(json, "modelId.metrics.kv[4].value")
+      revisionId: get(json, "modelId.metrics.kv[4].value"),
+      k8s_id: get(json, "modelId.metrics.kv[5].value")
     };
   }
 
@@ -62,7 +64,11 @@ export default class Model extends _Model {
             {
               key: "ASSOCIATION_ID",
               value: this.associationId
-            }
+            },
+            {
+              key: "K8S_ID",
+              value: this.k8s_id
+            },
           ]
         }
       }

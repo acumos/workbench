@@ -24,12 +24,16 @@ import java.lang.invoke.MethodHandles;
 import java.util.List;
 
 import org.acumos.cds.client.CommonDataServiceRestClientImpl;
+import org.acumos.cds.domain.MLPProject;
 import org.acumos.cds.domain.MLPSolution;
 import org.acumos.cds.domain.MLPSolutionRevision;
+import org.acumos.cds.domain.MLPUser;
 import org.acumos.workbench.common.exception.ArchivedException;
+import org.acumos.workbench.common.exception.EntityNotFoundException;
 import org.acumos.workbench.common.exception.NotProjectOwnerException;
 import org.acumos.workbench.common.exception.ProjectNotFoundException;
 import org.acumos.workbench.common.exception.TargetServiceInvocationException;
+import org.acumos.workbench.common.exception.UserNotFoundException;
 import org.acumos.workbench.common.exception.ValueNotFoundException;
 import org.acumos.workbench.common.service.ModelServiceRestClientImpl;
 import org.acumos.workbench.common.service.ProjectServiceRestClientImpl;
@@ -64,6 +68,12 @@ public class PredictorValidationImpl implements PredictorValidation {
 	
 	@Autowired
 	private CommonDataServiceRestClientImpl cdsRestClientImpl;
+	
+	@Autowired
+	private PredictorServiceImpl predictorServiceImpl;
+	
+
+	private MLPSolutionRevision mlpSolutionRevision;
 
 	@Override
 	public void validateProject(String authenticatedUserId, String projectId, String authToken) {
@@ -95,15 +105,15 @@ public class PredictorValidationImpl implements PredictorValidation {
 			throw new ProjectNotFoundException();
 		}
 		logger.debug("validateProject() End");
-		
 	}
 
 	@Override
 	public void predictorExists(String authenticatedUserId,String predictorId) {
 		logger.debug("predictorExists() Begin");
 		String userId = null;
+		
 		boolean hasAccess = false;
-		List<DataSetPredictor> predictorList = couchDBService.getPredictorDetails(predictorId);
+		List<DataSetPredictor> predictorList = couchDBService.getPredictorById(authenticatedUserId, predictorId);
 		// Check if Logged in User has the access to the input predictor
 		for(DataSetPredictor predictor : predictorList) {
 			userId = predictor.getUserId();
@@ -113,10 +123,9 @@ public class PredictorValidationImpl implements PredictorValidation {
 			}
 		}
 		if(!hasAccess) {
-			logger.error("Predicotr is Not Accessible to logged in User");
-			throw new PredictorException("Predicotr is Not Accessible to logged in User");
+			logger.error("Predictor is Not Accessible to logged in User");
+			throw new PredictorException("Predictor is Not Accessible to logged in User");
 		}
-		
 		logger.debug("predictorExists() End");
 	}
 
@@ -142,7 +151,6 @@ public class PredictorValidationImpl implements PredictorValidation {
 				}
 			}
 		}
-
 		if (!isAssociated) {
 			logger.error("Cannot Associate Predictor, as corresponding model is not associated to a Project");
 			throw new AssociationException(
@@ -173,5 +181,96 @@ public class PredictorValidationImpl implements PredictorValidation {
 		return revisionId;
 	}
 
+	@Override
+	public void isUserExists(String authenticatedUserId) {
+		logger.debug("isUserExists() Begin");
+		MLPUser mlpUser = null;
+		mlpUser = predictorServiceImpl.getUserDetails(authenticatedUserId);
+		if (mlpUser == null || mlpUser.getUserId().isEmpty()) {
+			logger.error("User does not exists");
+			throw new UserNotFoundException("Exception occured: User does not Exists ");
+		}
+		if (!mlpUser.isActive()) {
+			logger.error("User Exists but not Active");
+			throw new UserNotFoundException("User Exists but not Active");
+		}
+		logger.debug("isUserExists() End");
+	}
+
+	@Override
+	public void isSolutionRevisionExists(String solutionId,String revisionId) {
+		//check if SolutionRevisionExists is exists
+		mlpSolutionRevision = cdsRestClientImpl.getSolutionRevision(solutionId, revisionId);
+		if ((null == mlpSolutionRevision )) {
+			logger.error("Solution RevisionId does not exists");
+			throw new EntityNotFoundException("Solution RevisionId does not exists");
+		}
+	}
+
+	@Override
+	public void isPredictorExists(String authenticatedUserId, String predictorName) {
+		// check if predictor is exists in couch db 
+		List<DataSetPredictor> dataSetPredictorList = couchDBService.getPreditor(authenticatedUserId, predictorName);
+		if (!dataSetPredictorList.isEmpty() ) {
+			logger.error("Predictor name already Exists");
+			throw new PredictorException("Predictor name already Exists");
+		}
+	}
+	
+	@Override
+	public void isSolutionAccessible(String authenticatedUserId, String solutionId) {
+		// check if solutionId is accessible to user
+		List<MLPUser> mlpUserList;
+		mlpUserList=cdsRestClientImpl.getSolutionAccessUsers(solutionId);
+		// Need to check how to find if the Model is published or not.
+		for (MLPUser mlpUser : mlpUserList) {
+			if (!mlpUser.getLoginName().equals(authenticatedUserId)) {
+				logger.error("Model is not accessible to the user");
+				throw new EntityNotFoundException("Model is not accessible to the user");
+			}
+		}
+	}
+	
+	@Override
+	public void isPredictorAccessibleToUser(String authenticatedUserId, String predictorId) {
+		//check if the user can access the predictor	
+		List<DataSetPredictor> dataSetPredictorList = couchDBService.getPredictorById(authenticatedUserId, predictorId);
+		for (DataSetPredictor dataSetPredictor : dataSetPredictorList) {
+			if (!dataSetPredictor.getUserId().equals(authenticatedUserId)) {
+				logger.error("User is not authorized to access the predictor");
+				throw new UserNotFoundException("User is not authorized to access the predictor");
+			}
+		}
+	}
+	@Override
+	public void isProjectExists(String authenticatedUserId, String projectId) {
+		// check if project is exist in predictor
+		MLPProject mlpProject=cdsRestClientImpl.getProject(projectId);
+		if (null==mlpProject) {
+			logger.error("Project does not Exists");
+			throw new EntityNotFoundException("Project does not Exists");
+		}
+		else if (!mlpProject.isActive()) {
+			logger.error("Project is not Active");
+			throw new EntityNotFoundException("Project is not Active");
+		}
+
+	}
+
+	@Override
+	public void isValueExists(String fieldName, String value) {
+		// check if value exists
+		logger.debug("isValueExists() Begin");
+		boolean result = false;
+		String msg = "Mandatory field: " + fieldName + " is missing";
+		if (null != value && !value.trim().equals("")) {
+			result = true;
+		}
+		if (!result) {
+			logger.error("Mandatory field : " + fieldName + " is missing");
+			throw new ValueNotFoundException(msg);
+		}
+		logger.debug("isValueExists() End");
+	}
 
 }

@@ -18,29 +18,24 @@
  * ===============LICENSE_END=========================================================
  */
 
-package org.acumos.workbench.predictorservice.service;
+package org.acumos.workbench.predictorservice.deployClient;
 
-import org.acumos.workbench.common.exception.ValueNotFoundException;
-import org.acumos.workbench.predictorservice.lightcouch.DataSetPredictor;
+import org.springframework.http.ResponseEntity;
 
-public interface InputValidationService {
-	
+public interface DeploymentService {
 	/**
-	 * Check the input value present or not
-	 * @param fieldName
-	 * 		The name of the filed to be shown in the error message. 
-	 * @param value
-	 * 		The value to be validated
-	 * @throws ValueNotFoundException
-	 * 		throws ValueNotFoundException in case value is null or empty.
+	 * This method will deploy a model to kubernetes Environment 
+	 * @param userId
+	 * 			the userId
+	 * @param solutionId
+	 * 			the solutionId
+	 * @param revisionId
+	 * 			the revisionId
+	 * @param envId
+	 * 			the envId
+	 * @return
+	 * 		   response String
 	 */
-	public void isValuePresent(String fieldName, String value) throws ValueNotFoundException;
-
-	/**
-	 * Validate the input data
-	 * @param predictorProjAssociation
-	 * 			The PredictorProjectAssociation details
-	 */
-	public void validateInputData(DataSetPredictor predictorProjAssociation);
+	public ResponseEntity<String> deployModelToK8s(String userId,String solutionId,String revisionId,String envId);
 
 }

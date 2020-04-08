@@ -68,6 +68,12 @@ public class ConfigurationProperties {
 	@Value("${couchdb.port}")
 	private int couchdbPort;
 	
+	@Value("${k8deploy.url}")
+	private String k8deployURL;
+	
+	@Value("${dssvc.url}")
+	private String DSURL;
+
 	
 	/**
 	 * @return the modelServiceURL
@@ -182,4 +188,19 @@ public class ConfigurationProperties {
 		return couchdbPort;
 	}
 
+	/**
+	 * 
+	 * @return the k8deployURL
+	 */
+	public String getK8deployURL() {
+		return k8deployURL;
+	}
+
+	/**
+	 * 
+	 * @return the design studio service URL
+	 */
+	public String getDSURL() {
+		return DSURL;
+	}
 }

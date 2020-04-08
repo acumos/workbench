@@ -28,7 +28,6 @@ import org.acumos.workbench.common.exception.UserNotFoundException;
 import org.acumos.workbench.common.vo.Predictor;
 import org.acumos.workbench.common.vo.ServiceState;
 import org.acumos.workbench.predictorservice.lightcouch.DataSetPredictor;
-import org.acumos.workbench.predictorservice.lightcouch.PredictorProjectAssociation;
 
 public interface PredictorProjectAssociationService {
 	
@@ -65,7 +64,7 @@ public interface PredictorProjectAssociationService {
 	 * @return
 	 * 				accepts Predictor Details
 	 */
-	public Predictor associatePredictorToProject(String authenticatedUserId, String predictorId, PredictorProjectAssociation predProjAssociation);
+	public Predictor associatePredictorToProject(String authenticatedUserId, String predictorId, DataSetPredictor predProjAssociation);
 	
 	/**
 	 * Modify the Predictor Project Association
@@ -76,7 +75,7 @@ public interface PredictorProjectAssociationService {
 	 * @return
 	 * 			returns Predictor
 	 */
-	public Predictor editPredictorProjectAssociation(String authenticatedUserId,String associationId,PredictorProjectAssociation predictorProjAssociation);
+	public Predictor editPredictorProjectAssociation(String authenticatedUserId,String associationId,DataSetPredictor predictorProjAssociation);
 
 	/**
 	 * Delete the Predictor Association
@@ -115,7 +114,7 @@ public interface PredictorProjectAssociationService {
 	 * 			The DataSetPredictor Details
 	 */
 	public DataSetPredictor createDataSetPredictor(String authenticatedUserId, String projectId,
-			PredictorProjectAssociation predictorProjAssociation);
+			DataSetPredictor predictorProjAssociation);
 	
 	
 }

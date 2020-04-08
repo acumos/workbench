@@ -23,6 +23,7 @@ package org.acumos.workbench.predictorservice.exception;
 import java.lang.invoke.MethodHandles;
 
 import org.acumos.workbench.common.exception.EntityNotFoundException;
+import org.acumos.workbench.common.exception.ValueNotFoundException;
 import org.acumos.workbench.common.util.ServiceStatus;
 import org.acumos.workbench.common.vo.Predictor;
 import org.acumos.workbench.common.vo.ServiceState;
@@ -115,7 +116,23 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 		Predictor predictor = getModelWithErrorStatus(ex);
 		return new ResponseEntity<Predictor>(predictor, HttpStatus.NOT_FOUND);
 	}
-	
+
+	/**
+	 * To handle ValueNotFoundException and returns appropriate response to UI
+	 * 
+	 * @param ex
+	 * 		the exception thrown by the service method
+	 * @param request
+	 * 		the WebRequest
+	 * @return
+	 * 		returns Predictor with ServiceStatus indicating error
+	 */
+	@ExceptionHandler(ValueNotFoundException.class)
+	public final ResponseEntity<?> handleValueNotFoundException(CouchDBException ex, WebRequest request) {
+		Predictor predictor = getModelWithErrorStatus(ex);
+		return new ResponseEntity<Predictor>(predictor, HttpStatus.NOT_FOUND);
+	}
+
 	private Predictor getModelWithErrorStatus(RuntimeException ex) {
 		logger.debug("getModelWithErrorStatus() Begin");
 		Predictor predictor = new Predictor();

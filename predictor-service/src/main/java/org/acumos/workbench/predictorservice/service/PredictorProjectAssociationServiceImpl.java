@@ -60,6 +60,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientResponseException;
 
@@ -73,6 +74,10 @@ public class PredictorProjectAssociationServiceImpl implements PredictorProjectA
 	
 	@Autowired
 	private CouchDBService couchDbService;
+	
+	@Autowired
+	@Qualifier("PredictorServiceImpl")
+	private PredictorServiceImpl predictorServiceImpl;
 	
 	@Override
 	public MLPUser getUserDetails(String authenticatedUserId)
@@ -109,10 +114,10 @@ public class PredictorProjectAssociationServiceImpl implements PredictorProjectA
 		List<Predictor> predList = new ArrayList<Predictor>();
 		try {
 			MLPUser mlpUser = getUserDetails(authenticatedUserId);
-			List<PredictorProjectAssociation> predictorProjAssociationList = couchDbService.getPredictorsForProject(projectId);
+			List<DataSetPredictor> predictorProjAssociationList = couchDbService.getPredictorsForProject(projectId);
 			
 			if (null != predictorProjAssociationList && !predictorProjAssociationList.isEmpty()) {
-				for (PredictorProjectAssociation association : predictorProjAssociationList) {
+				for (DataSetPredictor association : predictorProjAssociationList) {
 					predictor = getPredictorVO(authenticatedUserId, mlpUser, association);
 					predList.add(predictor);
 				}
@@ -126,9 +131,9 @@ public class PredictorProjectAssociationServiceImpl implements PredictorProjectA
 	}
 	
 	@Override
-	public Predictor associatePredictorToProject(String authenticatedUserId, String projectId, PredictorProjectAssociation predProjAssociation) {
+	public Predictor associatePredictorToProject(String authenticatedUserId, String projectId, DataSetPredictor predProjAssociation) {
 		logger.debug("associatePredictorToProject() Begin");
-		PredictorProjectAssociation result = null;
+		DataSetPredictor result = null;
 		MLPUser mlpUser = getUserDetails(authenticatedUserId);
 		Predictor predictor = null;
 		try {
@@ -152,7 +157,7 @@ public class PredictorProjectAssociationServiceImpl implements PredictorProjectA
 
 	@Override
 	public Predictor editPredictorProjectAssociation(String authenticatedUserId,
-			String associationId, PredictorProjectAssociation predictorProjAssociation) {
+			String associationId, DataSetPredictor predictorProjAssociation) {
 		logger.debug("editPredictorAssociationToProject() Begin");
 		Predictor predictor = null;
 		String newVersion = predictorProjAssociation.getPredictorVersion();
@@ -161,7 +166,7 @@ public class PredictorProjectAssociationServiceImpl implements PredictorProjectA
 		boolean changeFound = false;
 		MLPUser mlpUser = getUserDetails(authenticatedUserId);
 		try {
-			PredictorProjectAssociation oldAssociation = couchDbService.getPredictorProjectAssocaition(associationId);
+			DataSetPredictor oldAssociation = couchDbService.getPredictorProjectAssocaition(associationId);
 			if (null != oldAssociation) {
 				//1. Get predictor from couch DB 
 				DataSetPredictor oldPredictor = couchDbService.getPredictor(oldAssociation.getPredictorId());
@@ -190,8 +195,8 @@ public class PredictorProjectAssociationServiceImpl implements PredictorProjectA
 					couchDbService.updatePredictor(oldPredictor);
 					//Update Predictor Association Details 
 					oldAssociation.setPredictorId(predictorProjAssociation.getPredictorId());
-					oldAssociation.setAssociationID(associationId);
-					oldAssociation.setUpdateTimestamp(Instant.now().toString());
+					oldAssociation.setAssociationId(associationId);
+					oldAssociation.setAssociationUpdateTimestamp(Instant.now().toString());
 					couchDbService.updatePredictorProjectAssociation(oldAssociation);
 				}
 				predictor = getPredictorVO(authenticatedUserId, mlpUser, oldAssociation);
@@ -209,10 +214,10 @@ public class PredictorProjectAssociationServiceImpl implements PredictorProjectA
 		logger.debug("deleteAssociation() Begin");
 		ServiceState result = new ServiceState();
 		// Existence Validation : Check if PredictorProjectAssociation for input AsscoaitionId exists
-		PredictorProjectAssociation association= couchDbService.getPredictorProjectAssocaition(associationId);
+		DataSetPredictor association= couchDbService.getPredictorProjectAssocaition(associationId);
 		// Access Validation : Check if logged in user has access to the input AssociationId.  For now check if user is owner of the Association
 		if(association.getUserId().equals(authenticatedUserId)){
-			couchDbService.deleteAssociation(association.getAssociationID(), association.get_rev());
+			couchDbService.deleteAssociation(association.get_id(), association.get_rev());
 			result.setStatus(ServiceStatus.COMPLETED);
 			result.setStatusMessage("Predictor Project Asssociation Deleted Successfully");
 		}else {
@@ -244,8 +249,7 @@ public class PredictorProjectAssociationServiceImpl implements PredictorProjectA
 	}
 	
 	@Override
-	public DataSetPredictor createDataSetPredictor(String authenticatedUserId, String projectId,
-			PredictorProjectAssociation predictorProjAssociation) {
+	public DataSetPredictor createDataSetPredictor(String authenticatedUserId, String projectId, DataSetPredictor predictorProjAssociation) {
 		logger.debug("createDataSetPredictor() Begin");
 		DataSetPredictor result = couchDbService.saveDataSetPredictor(authenticatedUserId,projectId,predictorProjAssociation);
 		logger.debug("createDataSetPredictor() Begin");
@@ -313,8 +317,7 @@ public class PredictorProjectAssociationServiceImpl implements PredictorProjectA
 		return predictor;
 	}
 
-	private Predictor getPredictorVO(String authenticatedUserId, MLPUser mlpUser,
-			PredictorProjectAssociation association) {
+	private Predictor getPredictorVO(String authenticatedUserId, MLPUser mlpUser, DataSetPredictor association) {
 		Predictor predictor = new Predictor();
 		Identifier predIdentifier = new Identifier();
 		predIdentifier.setIdentifierType(IdentifierType.PREDICTOR);
@@ -326,13 +329,12 @@ public class PredictorProjectAssociationServiceImpl implements PredictorProjectA
 		version.setModifiedTimeStamp(association.getUpdateTimestamp());
 		predIdentifier.setVersionId(version);
 		predIdentifier.setServiceUrl(association.getEnvironmentPath());
-		
 		// Predictor Metrics
 		List<KVPair> kvPairList = new ArrayList<KVPair>();
 		KVPairs metrics = new KVPairs();
 		KVPair kvPair = new KVPair();
 		kvPair.setKey(PredictorServiceConstants.ASSOCIATIONID);
-		kvPair.setValue(association.getAssociationID());
+		kvPair.setValue(association.getAssociationId());
 		kvPairList.add(kvPair);
 		kvPair = new KVPair();
 		kvPair.setKey(PredictorServiceConstants.PREDICTORKEY);
@@ -348,7 +350,6 @@ public class PredictorProjectAssociationServiceImpl implements PredictorProjectA
 		predictor.setArtifactStatus(artifactState);
 		// Predictor Environment Details
 		predictor.setEnvironment(Environment.DEVELOPMENT);
-		
 		Model model = new Model();
 		Identifier modelIdentifier = new Identifier();
 		modelIdentifier.setIdentifierType(IdentifierType.MODEL);
@@ -358,9 +359,6 @@ public class PredictorProjectAssociationServiceImpl implements PredictorProjectA
 		String modelVersionLabel =mlpSolutionRevision.getVersion();
 		modelVersion.setLabel(modelVersionLabel);
 		modelIdentifier.setVersionId(modelVersion);
-		
-		
-		
 		KVPairs modelMetrics = new KVPairs();
 		KVPair modelKVPair = new KVPair();
 		modelKVPair.setKey(PredictorServiceConstants.REVISIONID);

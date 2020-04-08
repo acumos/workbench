@@ -2,7 +2,7 @@
  * ===============LICENSE_START=======================================================
  * Acumos
  * ===================================================================================
- * Copyright (C) 2019 AT&T Intellectual Property & Tech Mahindra. All rights reserved.
+ * Copyright (C) 2020 AT&T Intellectual Property & Tech Mahindra. All rights reserved.
  * ===================================================================================
  * This Acumos software file is distributed by AT&T and Tech Mahindra
  * under the Apache License, Version 2.0 (the "License");
@@ -18,29 +18,55 @@
  * ===============LICENSE_END=========================================================
  */
 
-package org.acumos.workbench.predictorservice.service;
+package org.acumos.workbench.predictorservice.deployClient;
 
-import org.acumos.workbench.common.exception.ValueNotFoundException;
-import org.acumos.workbench.predictorservice.lightcouch.DataSetPredictor;
+public class DeploymentResponse {
 
-public interface InputValidationService {
+	private String taskId;
+	private String status;
+	private String trackingId;
+	private String jenkinUrl;
+	private String deploymentUrl;
 	
-	/**
-	 * Check the input value present or not
-	 * @param fieldName
-	 * 		The name of the filed to be shown in the error message. 
-	 * @param value
-	 * 		The value to be validated
-	 * @throws ValueNotFoundException
-	 * 		throws ValueNotFoundException in case value is null or empty.
-	 */
-	public void isValuePresent(String fieldName, String value) throws ValueNotFoundException;
 
 	/**
-	 * Validate the input data
-	 * @param predictorProjAssociation
-	 * 			The PredictorProjectAssociation details
+	 * 
+	 * @return the taskId
 	 */
-	public void validateInputData(DataSetPredictor predictorProjAssociation);
+	public String getTaskId() {
+		return taskId;
+	}
+
+	/**
+	 * 
+	 * @return the status
+	 */
+	public String getStatus() {
+		return status;
+	}
+
+	/**
+	 * 
+	 * @return the trackingId
+	 */
+	public String getTrackingId() {
+		return trackingId;
+	}
+
+	/**
+	 * 
+	 * @return the jenkinUrl
+	 */
+	public String getJenkinUrl() {
+		return jenkinUrl;
+	}
+
+	/**
+	 * 
+	 * @return the deploymentUrl
+	 */
+	public String getDeploymentUrl() {
+		return deploymentUrl;
+	}
 
 }

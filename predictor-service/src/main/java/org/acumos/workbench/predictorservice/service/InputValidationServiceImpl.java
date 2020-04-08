@@ -25,7 +25,7 @@ import java.text.MessageFormat;
 
 import org.acumos.workbench.common.exception.InvalidInputJSONException;
 import org.acumos.workbench.common.exception.ValueNotFoundException;
-import org.acumos.workbench.predictorservice.lightcouch.PredictorProjectAssociation;
+import org.acumos.workbench.predictorservice.lightcouch.DataSetPredictor;
 import org.acumos.workbench.predictorservice.utils.PredictorServiceProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,7 +58,7 @@ public class InputValidationServiceImpl implements InputValidationService {
 	}
 
 	@Override
-	public void validateInputData(PredictorProjectAssociation predictorProjAssociation) {
+	public void validateInputData(DataSetPredictor predictorProjAssociation) {
 		logger.debug("validateInputData() Begin");
 		boolean result = false;
 		if (null != predictorProjAssociation) {

@@ -1,0 +1,611 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ee22818_912b930a",
+        "filename": "predictor-service/application.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2020-04-08T11:13:08Z",
+      "side": 1,
+      "message": "What for this field is required.  Please elaborate",
+      "range": {
+        "startLine": 43,
+        "startChar": 6,
+        "endLine": 43,
+        "endChar": 9
+      },
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f47510c6_affbcb13",
+        "filename": "predictor-service/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2020-04-08T11:13:08Z",
+      "side": 1,
+      "message": "Please elaborate what for we need this",
+      "range": {
+        "startLine": 58,
+        "startChar": 2,
+        "endLine": 58,
+        "endChar": 12
+      },
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c3558bc_494bac75",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/controller/PredictorManagerController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2020-04-08T11:13:08Z",
+      "side": 1,
+      "message": "Change year to 2020",
+      "range": {
+        "startLine": 5,
+        "startChar": 17,
+        "endLine": 5,
+        "endChar": 22
+      },
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f5fcffb_9fa11ab2",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/controller/PredictorManagerController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2020-04-08T11:13:08Z",
+      "side": 1,
+      "message": "url should be : /users/{authenticatedUserId}/projects/{projectId}/predictors",
+      "range": {
+        "startLine": 71,
+        "startChar": 2,
+        "endLine": 71,
+        "endChar": 16
+      },
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aec77042_64b80653",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/controller/PredictorManagerController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2020-04-08T11:13:08Z",
+      "side": 1,
+      "message": "What if kvPairList is empty.  Is it mandatory if not then what values need to set in required fields.",
+      "range": {
+        "startLine": 83,
+        "startChar": 15,
+        "endLine": 83,
+        "endChar": 26
+      },
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8c5068c_328de488",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/controller/PredictorManagerController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2020-04-08T11:13:08Z",
+      "side": 1,
+      "message": "URL should be /users/{authenticatedUserId}/sitecofnig",
+      "range": {
+        "startLine": 148,
+        "startChar": 2,
+        "endLine": 148,
+        "endChar": 16
+      },
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9228dee_5c7bbca7",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/controller/PredictorManagerController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2020-04-08T11:13:08Z",
+      "side": 1,
+      "message": "URL should be : /users/{authenticatedUserId}/projects/{projectId}/predictorList\nI would suggest that projectId may be optional and so should not be path variable, but instead should be request param.\nCheck same for other occurrences.",
+      "range": {
+        "startLine": 168,
+        "startChar": 2,
+        "endLine": 168,
+        "endChar": 16
+      },
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41f64a66_c490b3a6",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/controller/PredictorManagerController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2020-04-08T11:13:08Z",
+      "side": 1,
+      "message": "Remove Commented Code",
+      "range": {
+        "startLine": 185,
+        "startChar": 4,
+        "endLine": 185,
+        "endChar": 16
+      },
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a3f116a_c3715b7e",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/deployClient/DeployRequest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2020-04-08T11:13:08Z",
+      "side": 1,
+      "message": "year : 2020",
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba3b04f6_d96deb9e",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/deployClient/DeployRequest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2020-04-08T11:13:08Z",
+      "side": 1,
+      "message": "include : implements Serializable",
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e23f08b6_bea31f6d",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/deployClient/DeploymentResponse.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2020-04-08T11:13:08Z",
+      "side": 1,
+      "message": "include : implements Serializable",
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "354c5232_45384896",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/deployClient/DeploymentResponse.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2020-04-08T11:13:08Z",
+      "side": 1,
+      "message": "No setter, how values get set in the fields?",
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0737338c_b0d5c487",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/deployClient/DeploymentService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2020-04-08T11:13:08Z",
+      "side": 1,
+      "message": "year : 2020\nCheck other occurrence if any.",
+      "range": {
+        "startLine": 5,
+        "startChar": 17,
+        "endLine": 5,
+        "endChar": 22
+      },
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be9f4173_50cfba77",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/deployClient/DeploymentService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2020-04-08T11:13:08Z",
+      "side": 1,
+      "message": "remove public access modifier.  By default all the declaration in interface are public.",
+      "range": {
+        "startLine": 39,
+        "startChar": 1,
+        "endLine": 39,
+        "endChar": 8
+      },
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0149794_79a916dc",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/deployClient/DeploymentServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2020-04-08T11:13:08Z",
+      "side": 1,
+      "message": "year : 2020",
+      "range": {
+        "startLine": 5,
+        "startChar": 17,
+        "endLine": 5,
+        "endChar": 22
+      },
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08b357c9_89dc05fd",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/deployClient/DeploymentServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2020-04-08T11:13:08Z",
+      "side": 1,
+      "message": "Add throws clause, if method throw any exception.",
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16bda285_5ba3d5e7",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/deployClient/K8sConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2020-04-08T11:13:08Z",
+      "side": 1,
+      "message": "year : 2020",
+      "range": {
+        "startLine": 5,
+        "startChar": 17,
+        "endLine": 5,
+        "endChar": 22
+      },
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08e17f19_8f116895",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/deployClient/K8sConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2020-04-08T11:13:08Z",
+      "side": 1,
+      "message": "include : implements Serializable",
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15b8b14f_8cc2444a",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/exception/CustomizedResponseEntityExceptionHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2020-04-08T11:13:08Z",
+      "side": 1,
+      "message": "Method Description is missing from javadoc.",
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2442795_d3d3e070",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/PredictorService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2020-04-08T11:13:08Z",
+      "side": 1,
+      "message": "year : 2020",
+      "range": {
+        "startLine": 5,
+        "startChar": 17,
+        "endLine": 5,
+        "endChar": 22
+      },
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53e7af4d_338d83f2",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/PredictorService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2020-04-08T11:13:08Z",
+      "side": 1,
+      "message": "Method description missing from java doc",
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80c1df21_ed92835b",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/PredictorService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2020-04-08T11:13:08Z",
+      "side": 1,
+      "message": "Method description missing from java doc",
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5913e15_eb6e75c0",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/PredictorServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2020-04-08T11:13:08Z",
+      "side": 1,
+      "message": "year : 2020",
+      "range": {
+        "startLine": 5,
+        "startChar": 17,
+        "endLine": 5,
+        "endChar": 22
+      },
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2ca1de9_bb862ddb",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/PredictorServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2020-04-08T11:13:08Z",
+      "side": 1,
+      "message": "Missing exception handling",
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e82f433c_edfe16f3",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/PredictorServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2020-04-08T11:13:08Z",
+      "side": 1,
+      "message": "Missing exception handling",
+      "range": {
+        "startLine": 138,
+        "startChar": 18,
+        "endLine": 138,
+        "endChar": 30
+      },
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a04934a_8238752a",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/PredictorServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2020-04-08T11:13:08Z",
+      "side": 1,
+      "message": "No exception handling is done.",
+      "range": {
+        "startLine": 153,
+        "startChar": 18,
+        "endLine": 153,
+        "endChar": 37
+      },
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb9c9694_b3b539d9",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/PredictorServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2020-04-08T11:13:08Z",
+      "side": 1,
+      "message": "No exception handling is done.",
+      "range": {
+        "startLine": 170,
+        "startChar": 24,
+        "endLine": 170,
+        "endChar": 42
+      },
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b6cbeaf_151c2718",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/PredictorServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2020-04-08T11:13:08Z",
+      "side": 1,
+      "message": "No exception handling is done.",
+      "range": {
+        "startLine": 232,
+        "startChar": 21,
+        "endLine": 232,
+        "endChar": 36
+      },
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c660f5d_907d07dc",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/PredictorServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2020-04-08T11:13:08Z",
+      "side": 1,
+      "message": "Include TODO for incomplete methods.",
+      "range": {
+        "startLine": 251,
+        "startChar": 21,
+        "endLine": 251,
+        "endChar": 47
+      },
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    }
+  ]
+}

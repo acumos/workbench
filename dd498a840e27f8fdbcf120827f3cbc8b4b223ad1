@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "d41ac0e5_1dcb412c",
+        "filename": "predictor-service/application.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 356
+      },
+      "writtenOn": "2020-04-10T13:58:25Z",
+      "side": 1,
+      "message": "We are calling DS api to get protobufSignature",
+      "parentUuid": "87eae2ce_4ce36a7c",
+      "range": {
+        "startLine": 43,
+        "startChar": 6,
+        "endLine": 43,
+        "endChar": 9
+      },
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f47510c6_affbcb13",
         "filename": "predictor-service/pom.xml",
         "patchSetId": 2
@@ -225,6 +249,30 @@
       "side": 1,
       "message": "If kvPairlist is mandatory, then please move isValuePresent before using kvPairlist.",
       "parentUuid": "f1c13c81_9cd38cba",
+      "range": {
+        "startLine": 83,
+        "startChar": 15,
+        "endLine": 83,
+        "endChar": 26
+      },
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e524b13d_58a16d6a",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/controller/PredictorManagerController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 356
+      },
+      "writtenOn": "2020-04-10T13:58:25Z",
+      "side": 1,
+      "message": "I have made changes:\nNull check for kvpairlist,If its null i am throwing Exception.\nwhile getting values from KVpairList checking values with inputValidation method.\n\nPlease check",
+      "parentUuid": "38467800_8fe40ad1",
       "range": {
         "startLine": 83,
         "startChar": 15,
@@ -823,6 +871,24 @@
       "side": 1,
       "message": "Not required for private method, but for public method its mandatory.  viz. handleValueNotFoundException",
       "parentUuid": "f51d26e3_8f3f6686",
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b36d775a_97126e56",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/exception/CustomizedResponseEntityExceptionHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 356
+      },
+      "writtenOn": "2020-04-10T13:58:25Z",
+      "side": 1,
+      "message": "Yes got it vaibhav. Done",
+      "parentUuid": "9b65d52c_9cfaca70",
       "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": true

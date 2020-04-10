@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fc03d6cb_6f8d7403",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/CouchDBService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 356
+      },
+      "writtenOn": "2020-04-10T07:43:11Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "946bf4f4_c88ec48c",
+      "revId": "ea49c80949bbe06533c018479eec61717b11f407",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b55392c0_8fcaaf3c",
         "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/InputValidationService.java",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d8a4b0cf_fdd3dd0f",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/InputValidationService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 356
+      },
+      "writtenOn": "2020-04-10T07:43:11Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "b55392c0_8fcaaf3c",
+      "revId": "ea49c80949bbe06533c018479eec61717b11f407",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "308fa3e5_425b1051",
         "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/PredictorProjectAssociationService.java",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "ea49c80949bbe06533c018479eec61717b11f407",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97e7ca72_9bec8fbc",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/PredictorProjectAssociationService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 356
+      },
+      "writtenOn": "2020-04-10T07:43:11Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "308fa3e5_425b1051",
+      "revId": "ea49c80949bbe06533c018479eec61717b11f407",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
     }
   ]
 }

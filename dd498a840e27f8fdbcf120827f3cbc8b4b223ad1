@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ea6441ea_7eac5f75",
+        "filename": "predictor-service/application.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 356
+      },
+      "writtenOn": "2020-04-10T07:43:11Z",
+      "side": 1,
+      "message": "This is design studio service URL",
+      "parentUuid": "5ee22818_912b930a",
+      "range": {
+        "startLine": 43,
+        "startChar": 6,
+        "endLine": 43,
+        "endChar": 9
+      },
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f47510c6_affbcb13",
         "filename": "predictor-service/pom.xml",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa9f9fdb_36bd6160",
+        "filename": "predictor-service/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 356
+      },
+      "writtenOn": "2020-04-10T07:43:11Z",
+      "side": 1,
+      "message": "This is to use StringEscapeUtils.escapeJava for extracting values from Deployment API",
+      "parentUuid": "f47510c6_affbcb13",
+      "range": {
+        "startLine": 58,
+        "startChar": 2,
+        "endLine": 58,
+        "endChar": 12
+      },
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "f1c13c81_9cd38cba",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/controller/PredictorManagerController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 356
+      },
+      "writtenOn": "2020-04-10T07:43:11Z",
+      "side": 1,
+      "message": "I am using  isValuePresent method to check kvPairlist below.I am using KVpair for these values because we have implemented the same before.",
+      "parentUuid": "aec77042_64b80653",
+      "range": {
+        "startLine": 83,
+        "startChar": 15,
+        "endLine": 83,
+        "endChar": 26
+      },
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8c5068c_328de488",
         "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/controller/PredictorManagerController.java",
         "patchSetId": 2
@@ -137,6 +209,30 @@
       "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f3f0ecb_26ea74a6",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/controller/PredictorManagerController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 356
+      },
+      "writtenOn": "2020-04-10T07:43:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8c5068c_328de488",
+      "range": {
+        "startLine": 148,
+        "startChar": 2,
+        "endLine": 148,
+        "endChar": 16
+      },
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "138a7c95_f68e7c5c",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/controller/PredictorManagerController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 356
+      },
+      "writtenOn": "2020-04-10T07:43:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9228dee_5c7bbca7",
+      "range": {
+        "startLine": 168,
+        "startChar": 2,
+        "endLine": 168,
+        "endChar": 16
+      },
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41f64a66_c490b3a6",
         "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/controller/PredictorManagerController.java",
         "patchSetId": 2
@@ -186,6 +306,30 @@
     },
     {
       "key": {
+        "uuid": "14552fd8_64f73ef5",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/controller/PredictorManagerController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 356
+      },
+      "writtenOn": "2020-04-10T07:43:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41f64a66_c490b3a6",
+      "range": {
+        "startLine": 185,
+        "startChar": 4,
+        "endLine": 185,
+        "endChar": 16
+      },
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a3f116a_c3715b7e",
         "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/deployClient/DeployRequest.java",
         "patchSetId": 2
@@ -200,6 +344,24 @@
       "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59377ee8_9abe05b7",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/deployClient/DeployRequest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 356
+      },
+      "writtenOn": "2020-04-10T07:43:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a3f116a_c3715b7e",
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
     },
     {
       "key": {
@@ -220,6 +382,24 @@
     },
     {
       "key": {
+        "uuid": "aa61dd9a_8cf4c4c8",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/deployClient/DeployRequest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 356
+      },
+      "writtenOn": "2020-04-10T07:43:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba3b04f6_d96deb9e",
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e23f08b6_bea31f6d",
         "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/deployClient/DeploymentResponse.java",
         "patchSetId": 2
@@ -237,6 +417,24 @@
     },
     {
       "key": {
+        "uuid": "c1117f61_8e7d6f2f",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/deployClient/DeploymentResponse.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 356
+      },
+      "writtenOn": "2020-04-10T07:43:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e23f08b6_bea31f6d",
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "354c5232_45384896",
         "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/deployClient/DeploymentResponse.java",
         "patchSetId": 2
@@ -251,6 +449,24 @@
       "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b1b01b8_a0dad033",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/deployClient/DeploymentResponse.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 356
+      },
+      "writtenOn": "2020-04-10T07:43:11Z",
+      "side": 1,
+      "message": "Values setting in these fields through parsing Json values to Object",
+      "parentUuid": "354c5232_45384896",
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
     },
     {
       "key": {
@@ -277,6 +493,30 @@
     },
     {
       "key": {
+        "uuid": "f0e5d645_927cef50",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/deployClient/DeploymentService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 356
+      },
+      "writtenOn": "2020-04-10T07:43:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0737338c_b0d5c487",
+      "range": {
+        "startLine": 5,
+        "startChar": 17,
+        "endLine": 5,
+        "endChar": 22
+      },
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be9f4173_50cfba77",
         "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/deployClient/DeploymentService.java",
         "patchSetId": 2
@@ -297,6 +537,30 @@
       "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edb06346_a921b320",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/deployClient/DeploymentService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 356
+      },
+      "writtenOn": "2020-04-10T07:43:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be9f4173_50cfba77",
+      "range": {
+        "startLine": 39,
+        "startChar": 1,
+        "endLine": 39,
+        "endChar": 8
+      },
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
     },
     {
       "key": {
@@ -323,6 +587,30 @@
     },
     {
       "key": {
+        "uuid": "8db9905b_77c6b905",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/deployClient/DeploymentServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 356
+      },
+      "writtenOn": "2020-04-10T07:43:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0149794_79a916dc",
+      "range": {
+        "startLine": 5,
+        "startChar": 17,
+        "endLine": 5,
+        "endChar": 22
+      },
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08b357c9_89dc05fd",
         "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/deployClient/DeploymentServiceImpl.java",
         "patchSetId": 2
@@ -337,6 +625,24 @@
       "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee010a8d_b46fa994",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/deployClient/DeploymentServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 356
+      },
+      "writtenOn": "2020-04-10T07:43:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08b357c9_89dc05fd",
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
     },
     {
       "key": {
@@ -363,6 +669,30 @@
     },
     {
       "key": {
+        "uuid": "e89fa9aa_f90fa7d4",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/deployClient/K8sConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 356
+      },
+      "writtenOn": "2020-04-10T07:43:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16bda285_5ba3d5e7",
+      "range": {
+        "startLine": 5,
+        "startChar": 17,
+        "endLine": 5,
+        "endChar": 22
+      },
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08e17f19_8f116895",
         "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/deployClient/K8sConfig.java",
         "patchSetId": 2
@@ -380,6 +710,24 @@
     },
     {
       "key": {
+        "uuid": "6f23d00c_3091284b",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/deployClient/K8sConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 356
+      },
+      "writtenOn": "2020-04-10T07:43:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08e17f19_8f116895",
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15b8b14f_8cc2444a",
         "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/exception/CustomizedResponseEntityExceptionHandler.java",
         "patchSetId": 2
@@ -391,6 +739,24 @@
       "writtenOn": "2020-04-08T11:13:08Z",
       "side": 1,
       "message": "Method Description is missing from javadoc.",
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f51d26e3_8f3f6686",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/exception/CustomizedResponseEntityExceptionHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 356
+      },
+      "writtenOn": "2020-04-10T07:43:11Z",
+      "side": 1,
+      "message": "Do we need to provide Javadoc for Private methods also?",
+      "parentUuid": "15b8b14f_8cc2444a",
       "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": true
@@ -420,6 +786,30 @@
     },
     {
       "key": {
+        "uuid": "25dd54a6_7e747cbc",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/PredictorService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 356
+      },
+      "writtenOn": "2020-04-10T07:43:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2442795_d3d3e070",
+      "range": {
+        "startLine": 5,
+        "startChar": 17,
+        "endLine": 5,
+        "endChar": 22
+      },
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53e7af4d_338d83f2",
         "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/PredictorService.java",
         "patchSetId": 2
@@ -437,6 +827,24 @@
     },
     {
       "key": {
+        "uuid": "a2a87db7_dd298d30",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/PredictorService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 356
+      },
+      "writtenOn": "2020-04-10T07:43:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53e7af4d_338d83f2",
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80c1df21_ed92835b",
         "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/PredictorService.java",
         "patchSetId": 2
@@ -451,6 +859,24 @@
       "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "391d546d_baddac72",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/PredictorService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 356
+      },
+      "writtenOn": "2020-04-10T07:43:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80c1df21_ed92835b",
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
     },
     {
       "key": {
@@ -477,6 +903,30 @@
     },
     {
       "key": {
+        "uuid": "ae4f14f4_d052b04f",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/PredictorServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 356
+      },
+      "writtenOn": "2020-04-10T07:43:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5913e15_eb6e75c0",
+      "range": {
+        "startLine": 5,
+        "startChar": 17,
+        "endLine": 5,
+        "endChar": 22
+      },
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2ca1de9_bb862ddb",
         "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/PredictorServiceImpl.java",
         "patchSetId": 2
@@ -491,6 +941,24 @@
       "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9962b0d_dd3fd33b",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/PredictorServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 356
+      },
+      "writtenOn": "2020-04-10T07:43:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2ca1de9_bb862ddb",
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
     },
     {
       "key": {
@@ -540,6 +1008,30 @@
     },
     {
       "key": {
+        "uuid": "6f298223_8b7e5a8c",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/PredictorServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 356
+      },
+      "writtenOn": "2020-04-10T07:43:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a04934a_8238752a",
+      "range": {
+        "startLine": 153,
+        "startChar": 18,
+        "endLine": 153,
+        "endChar": 37
+      },
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb9c9694_b3b539d9",
         "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/PredictorServiceImpl.java",
         "patchSetId": 2
@@ -560,6 +1052,30 @@
       "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "684e3b6c_625f1857",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/PredictorServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 356
+      },
+      "writtenOn": "2020-04-10T07:43:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb9c9694_b3b539d9",
+      "range": {
+        "startLine": 170,
+        "startChar": 24,
+        "endLine": 170,
+        "endChar": 42
+      },
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
     },
     {
       "key": {
@@ -586,6 +1102,30 @@
     },
     {
       "key": {
+        "uuid": "fc8798fa_10a78b01",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/PredictorServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 356
+      },
+      "writtenOn": "2020-04-10T07:43:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b6cbeaf_151c2718",
+      "range": {
+        "startLine": 232,
+        "startChar": 21,
+        "endLine": 232,
+        "endChar": 36
+      },
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c660f5d_907d07dc",
         "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/PredictorServiceImpl.java",
         "patchSetId": 2
@@ -606,6 +1146,30 @@
       "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05f4dc53_a4680c67",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/PredictorServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 356
+      },
+      "writtenOn": "2020-04-10T07:43:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c660f5d_907d07dc",
+      "range": {
+        "startLine": 251,
+        "startChar": 21,
+        "endLine": 251,
+        "endChar": 47
+      },
+      "revId": "dd498a840e27f8fdbcf120827f3cbc8b4b223ad1",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
     }
   ]
 }

@@ -20,8 +20,9 @@
 
 package org.acumos.workbench.predictorservice.service;
 
+import org.acumos.workbench.common.exception.InvalidInputJSONException;
 import org.acumos.workbench.common.exception.ValueNotFoundException;
-import org.acumos.workbench.predictorservice.lightcouch.PredictorProjectAssociation;
+import org.acumos.workbench.predictorservice.lightcouch.DataSetPredictor;
 
 public interface InputValidationService {
 	
@@ -38,9 +39,12 @@ public interface InputValidationService {
 
 	/**
 	 * Validate the input data
-	 * @param predictorProjAssociation
-	 * 			The PredictorProjectAssociation details
+	 * 
+	 * @param predictorProjAssociation 
+	 * 		The PredictorProjectAssociation details
+	 * @throws InvalidInputJSONException
+	 * 		throws InvalidInputJSONException in case value is null or empty.
 	 */
-	public void validateInputData(PredictorProjectAssociation predictorProjAssociation);
+	public void validateInputData(DataSetPredictor predictorProjAssociation) throws InvalidInputJSONException;
 
 }

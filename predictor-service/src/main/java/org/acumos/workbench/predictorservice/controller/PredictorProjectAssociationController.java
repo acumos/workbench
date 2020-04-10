@@ -30,6 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.acumos.workbench.common.vo.Predictor;
 import org.acumos.workbench.common.vo.ServiceState;
+import org.acumos.workbench.predictorservice.lightcouch.DataSetPredictor;
 import org.acumos.workbench.predictorservice.lightcouch.PredictorProjectAssociation;
 import org.acumos.workbench.predictorservice.service.InputValidationService;
 import org.acumos.workbench.predictorservice.service.PredictorProjectAssociationService;
@@ -73,7 +74,7 @@ public class PredictorProjectAssociationController {
 	public ResponseEntity<?> associatePredictorToProject(HttpServletRequest request,
 			@ApiParam(value = "Acumos User login Id", required = true) @PathVariable("authenticatedUserId") String authenticatedUserId,
 			@ApiParam(value = "Project Id", required = true) @PathVariable("projectId") String projectId,
-			@RequestBody(required = true) PredictorProjectAssociation predictorProjAssociation) {
+			@RequestBody(required = true) DataSetPredictor predictorProjAssociation) {
 		
 		logger.debug("associatePredictorToProject() Begin");
 		
@@ -111,7 +112,7 @@ public class PredictorProjectAssociationController {
 	
 	@ApiOperation(value = "Get Predictor Details for given input Model")
 	@RequestMapping(value = "/users/{authenticatedUserId}/models/{modelId}/version/{version}", method = RequestMethod.GET)
-	public ResponseEntity<?> getPredictorDetails(HttpServletRequest request,
+	public ResponseEntity<?> n(HttpServletRequest request,
 			@ApiParam(value = "Acumos Login ID", required = true) @PathVariable("authenticatedUserId") String authenticatedUserId,
 			@ApiParam(value = "Model Id", required = true) @PathVariable("modelId") String modelId,
 			@ApiParam(value = "Model Version", required = true) @PathVariable("version") String version) {
@@ -167,7 +168,7 @@ public class PredictorProjectAssociationController {
 			@ApiParam(value = "Acumos Login ID", required = true) @PathVariable("authenticatedUserId") String authenticatedUserId,
 			@ApiParam(value = "Predictor ID", required = true) @PathVariable("predictorId") String predictorId,
 			@ApiParam(value = "Predictor Project Association Id", required = true) @PathVariable("associationId") String associationId,
-			@RequestBody(required = true) PredictorProjectAssociation associationData) {
+			@RequestBody(required = true) DataSetPredictor associationData) {
 		logger.debug("editPredictorAssociationToProject() Begin");
 		
 		// Check all the mandatory fields are present in the request i.e Acumos User login Id, Predictor Id, Project Id

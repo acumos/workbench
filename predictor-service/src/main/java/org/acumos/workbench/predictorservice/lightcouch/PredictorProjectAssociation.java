@@ -41,7 +41,7 @@ public class PredictorProjectAssociation implements Serializable{
 	private String predictorName; 				//(Key)Modelname_<service name >_<env (dev/prod)> [recommended naming format]
 	private String predictorDescription;		//Give some desc on what this predictor does
 	private String predictorVersion;			//Auto Generated (1,2,3…)
-	private String environmentPath;				//http://FQDN:port/<operation name>
+	private String environmentPath;				//http://FQDN:porDataSetPredictort/<operation name>
 	private String metadata1;					//Additional data as needed
 	private String metadata2;					//Additional data as needed
 	private String predictorkey;				//Predictor Key given by UI

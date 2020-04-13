@@ -45,14 +45,14 @@ Project Catalog screen displays list of projects which are created by user. Ther
 
 2. **Archive Project**
 
-  If user wish to **Archive** any **Active** Project then he can click on the Archive button present at the bottom right corner of that specific project card.
+  If user wish to **Archive** any **Active** Project then user can click on the Archive button present at the bottom right corner of that specific project card.
   A confirmation dialog box will appear on click of Archive button. After confirmation, project will be archived and user can see that project inside 'Archive Project' tab.  
 
 	.. image:: images/archive-project-catalog-dialog.PNG
 
 3. **Unarchive Project**
 
-  If user wish to **Unarchive** any **Archived** Project then he can click on the Unarchive button present at the bottom right corner of that specific project card.
+  If user wish to **Unarchive** any **Archived** Project then user can click on the Unarchive button present at the bottom right corner of that specific project card.
   A confirmation dialog box will appear on click of Unarchive button. After confirmation, project will be unarchived and user can see that project inside 'Active Project' tab.  
 
 	.. image:: images/unarchive-project-catalog-dialog.PNG
@@ -60,7 +60,7 @@ Project Catalog screen displays list of projects which are created by user. Ther
 
 4. **Delete Project** 
 
-  If user wish to **Delete** any **Archived** Project then he can click on the Delete button present at the bottom right corner of that specific project card.
+  If user wish to **Delete** any **Archived** Project then user can click on the Delete button present at the bottom right corner of that specific project card.
   A confirmation dialog box will appear on click of Delete button. After confirmation, project will be deleted physically from database and can not be restored.  
 
 	.. image:: images/delete-project-catalog-dialog.PNG
@@ -70,22 +70,40 @@ Project Catalog screen displays list of projects which are created by user. Ther
 
 1. **Project Filter**  
 
-  Project Catalog screen has three different tabs named as 'Acitve Project', 'Archive Project' and 'All Project' which basically 
-  provides filter capability based on 'Project Status'. If user wish to see only 'Active' project then he can choose 'Active Project' tab. 
-  Similarly if user wish to see all projects then he can choose 'All Projects' tab. 
+  Project Catalog screen has three different tabs named as 'Acitve Projects', 'Archive Projects', 'All Projects' and 'Shared Projects' which basically 
+  provides filter capability based on 'Project Status'. If user wish to see only 'Active' project then user can choose 'Active Projects' tab. 
+  Similarly if user wish to see all projects then user can choose 'All Projects' tab and if the user wants to see all the shared projects then user can choose 'Shared Projects'. 
+  
+	.. image:: images/projects-filter.PNG
+	   :alt: projects-filter image.
 
 2. **Project Sorting**
 
-  User can sort the project list by choosing either one of following options - By Project Created Date, By Project Name, By Project ID. 
+  User can sort the project list by choosing either one of following options - By Project Created Date, By Project Name.
+  
+  For Project Created Date
+  
+	.. image:: images/project-created date.PNG
+	   :alt: project-created date image.
+	   
+	
+  For Project Name
+	
+	.. image:: images/project-created name.PNG
+	   :alt: project-created name image.
 
 3. **Search with Project metadata** 
 
   Project Catalog screen provides textual search capability as well where if user wish to search for specific text present in Project metadata 
-  then he can enter into the search box (present at the right top corner) and projects matching with the entered search criteria will get displayed. 
+  then user can enter into the search box (present at the right top corner) and projects matching with the entered search criteria will get displayed. 
+
+	.. image:: images/project-search.PNG
+	   :alt: project-search image.
+  
 
 4. **Pagination**
  
-  In Project catalog screen, at a time only 8 projects will be displayed. User can use Pagination feature to navigate to another page if he wish to see other project lists. 
+  In Project catalog screen, at a time only 8 projects will be displayed. User can use Pagination feature to navigate to another page if user wishes to see other project lists. 
 
 
 
@@ -147,7 +165,7 @@ In the Project details screen, user can perform following Project relevant actio
   
   	If there is no notebook associated already for a project then user can create a notebook by clicking on the 'Create Notebook' button. Or else, user has to click on the '+' sign
   	displayed on the right top corner of the Notebook section for same. On click event, a dialog box will appeared where user has to fill out all required information and submit.
-  	On successful Notebook creation, notebook will get displayed in the tablular list.
+  	On successful Notebook creation, notebook will get displayed in the tabular list.
   	 
   	 	.. image:: images/Create-notebook-project.PNG
   	  
@@ -155,7 +173,7 @@ In the Project details screen, user can perform following Project relevant actio
   
   	If there is no notebook associated already for a project then user can associate an existing notebook by clicking on the 'Associate Notebook' button. Or else, user has to click on the link button
   	displayed on the right top corner of the Notebook section for same. On click event, a dialog box will appeared where user has to select the desired notebook from drop down and submit.
-  	On successful Notebook association, notebook will get displayed in the tablular list.
+  	On successful Notebook association, notebook will get displayed in the tabular list.
 
 	.. image:: images/associate-notebook-project.PNG
 
@@ -204,7 +222,7 @@ In the Project details screen, user can perform following Project relevant actio
   
   	If there is no pipeline associated already for a project then user can associate an existing pipeline by clicking on the 'Associate Pipeline' button. Or else, user has to click on the link button
   	displayed on the right top corner of the Pipeline section for same. On click event, a dialog box will appeared where user has to select the desired pipeline from drop down and submit.
-  	On successful Pipeline association, pipeline will get displayed in the tablular list.
+  	On successful Pipeline association, pipeline will get displayed in the tabular list.
 
 	.. image:: images/associate-pipeline.PNG
 
@@ -230,7 +248,7 @@ In the Project details screen, user can perform following Project relevant actio
 
 7. **Model Section**
   
-  Model section will display all modelss which are associated with the project. Model lists will get displayed in tabular format showing model name, 
+  Model section will display all models which are associated with the project. Model lists will get displayed in tabular format showing model name, 
   version, model type, status, created date etc. 
 
 	.. image:: images/project-artifacts.PNG

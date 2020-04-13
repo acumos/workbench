@@ -52,7 +52,7 @@ Notebook Catalog screen displays list of notebooks which are created by user. Th
 
 2. **Archive Notebook**
 
-  If user wish to **Archive** any **Active** Notebook then he can click on the Archive button present at the bottom right corner of that specific Notebook card.
+  If user wish to **Archive** any **Active** Notebook then user can click on the Archive button present at the bottom right corner of that specific Notebook card.
   A confirmation dialog box will appear on click of Archive button. After confirmation, notebook will be archived.  
 
 	.. image:: images/archive-notebook-dialog.PNG
@@ -60,7 +60,7 @@ Notebook Catalog screen displays list of notebooks which are created by user. Th
 
 3. **Unarchive Notebook**
 
-  If user wish to **Unarchive** any **Archived** Notebook then he can click on the Unarchive button present at the bottom right corner of that specific notebook card.
+  If user wish to **Unarchive** any **Archived** Notebook then user can click on the Unarchive button present at the bottom right corner of that specific notebook card.
   A confirmation dialog box will appear on click of Unarchive button. After confirmation, notebook will be unarchived.  
 
 	.. image:: images/unarchive-notebook-dialog.PNG
@@ -69,7 +69,7 @@ Notebook Catalog screen displays list of notebooks which are created by user. Th
 
 4. **Delete Notebook** 
 
-  If user wish to **Delete** any **Archived** Notebook then he can click on the Delete button present at the bottom right corner of that specific notebook card.
+  If user wish to **Delete** any **Archived** Notebook then user can click on the Delete button present at the bottom right corner of that specific notebook card.
   A confirmation dialog box will appear on click of Delete button. After confirmation, notebook will be deleted physically from database and can not be restored.  
 
 	.. image:: images/delete-notebook-dialog.PNG
@@ -77,7 +77,7 @@ Notebook Catalog screen displays list of notebooks which are created by user. Th
 
 5. **Launch Notebook** 
 
-  If user wish to **Launch** any **Active** Notebook, then he can click on the Launch button present at the bottom right corner of that specific notebook card.
+  If user wish to **Launch** any **Active** Notebook, then user can click on the Launch button present at the bottom right corner of that specific notebook card.
   On click of launch button, notebook will be opened in the user specific Jupyter Instance in a new browser tab.
 
 	.. image:: images/notebook-launch.PNG
@@ -88,15 +88,28 @@ Notebook Catalog screen displays list of notebooks which are created by user. Th
 1. **Notebook Sorting**
 
   User can sort the notebook list by choosing either one of following options - By Notebook Created Date, By Notebook Name. 
+  
+  For Notebook Created Date
+
+	.. image:: images/notebook-sorting by created date.PNG
+	   :alt: notebook-sorting by created date image.
+	   
+  For Notebook Name 
+	   
+	.. image:: images/notebook-sorting by name.PNG
+	   :alt: notebook-sorting by name image.
 
 2. **Search with Notebook metadata** 
 
   Notebook Catalog screen provides textual search capability as well where if user wish to search for specific text present in Notebook metadata 
-  then he can enter into the search box (present at the right top corner) and notebooks matching with the entered search criteria will get displayed. 
+  then user can enter into the search box (present at the right top corner) and notebooks matching with the entered search criteria will get displayed.
+  
+	.. image:: images/notebook-search.PNG
+	   :alt: notebook-search image.
 
 3. **Pagination**
  
-  In Notebook catalog screen, at a time only 8 notebooks will be displayed. User can use Pagination feature to navigate to another page if he wish to see other notebooks lists. 
+  In Notebook catalog screen, at a time only 8 notebooks will be displayed. User can use Pagination feature to navigate to another page if the user wishes to see other notebooks lists. 
 
 
 
@@ -111,7 +124,7 @@ displayed.
 
 In the Notebook details screen, user can perform following Notebook relevant actions. 
 
-While creating, editing the notebook, user can give the external notebook url as well, to save his own jupyter or zappelin notebook details.
+While creating, editing the notebook, user can give the external notebook url as well, to save user's own jupyter or zappelin notebook details.
 
 1. **Edit Notebook**
 

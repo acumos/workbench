@@ -70,18 +70,36 @@ Project Catalog screen displays list of projects which are created by user. Ther
 
 1. **Project Filter**  
 
-  Project Catalog screen has three different tabs named as 'Acitve Project', 'Archive Project' and 'All Project' which basically 
-  provides filter capability based on 'Project Status'. If user wish to see only 'Active' project then he can choose 'Active Project' tab. 
-  Similarly if user wish to see all projects then he can choose 'All Projects' tab. 
+  Project Catalog screen has three different tabs named as 'Acitve Projects', 'Archive Projects', 'All Projects' and 'Shared Projects' which basically 
+  provides filter capability based on 'Project Status'. If user wish to see only 'Active' project then he can choose 'Active Projects' tab. 
+  Similarly if user wish to see all projects then he can choose 'All Projects' tab and if the user wants to see all the shared projects thenhe can choose 'Shared Projects'. 
+  
+	.. image:: images/projects-filter.PNG
+	   :alt: projects-filter image.
 
 2. **Project Sorting**
 
-  User can sort the project list by choosing either one of following options - By Project Created Date, By Project Name, By Project ID. 
+  User can sort the project list by choosing either one of following options - By Project Created Date, By Project Name.
+  
+  For Project Created Date
+  
+	.. image:: images/project-created date.PNG
+	   :alt: project-created date image.
+	   
+	
+  For Project Name
+	
+	.. image:: images/project-created name.PNG
+	   :alt: project-created name image.
 
 3. **Search with Project metadata** 
 
   Project Catalog screen provides textual search capability as well where if user wish to search for specific text present in Project metadata 
   then he can enter into the search box (present at the right top corner) and projects matching with the entered search criteria will get displayed. 
+
+	.. image:: images/project-search.PNG
+	   :alt: project-search image.
+  
 
 4. **Pagination**
  

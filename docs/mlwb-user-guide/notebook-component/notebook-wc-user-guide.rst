@@ -88,11 +88,24 @@ Notebook Catalog screen displays list of notebooks which are created by user. Th
 1. **Notebook Sorting**
 
   User can sort the notebook list by choosing either one of following options - By Notebook Created Date, By Notebook Name. 
+  
+  For Notebook Created Date
+
+	.. image:: images/notebook-sorting by created date.PNG
+	   :alt: notebook-sorting by created date image.
+	   
+  For Notebook Name 
+	   
+	.. image:: images/notebook-sorting by name.PNG
+	   :alt: notebook-sorting by name image.
 
 2. **Search with Notebook metadata** 
 
   Notebook Catalog screen provides textual search capability as well where if user wish to search for specific text present in Notebook metadata 
-  then he can enter into the search box (present at the right top corner) and notebooks matching with the entered search criteria will get displayed. 
+  then he can enter into the search box (present at the right top corner) and notebooks matching with the entered search criteria will get displayed.
+  
+	.. image:: images/notebook-search.PNG
+	   :alt: notebook-search image.
 
 3. **Pagination**
  

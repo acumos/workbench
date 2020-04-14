@@ -383,7 +383,25 @@ public class CouchDBService {
 		}
 		logger.debug("updatePredictor() End");
 	}
-	
+	/**
+	 * To Create the Predictor
+	 * @param authenticatedUserId
+	 * 		the authenticatedUserId
+	 * @param predictor
+	 * 		the predictor object
+	 * @param revisionId
+	 * 		the revisionId
+	 * @param authToken
+	 * 		the authToken
+	 * @param K8S_ID
+	 * 		the K8S_ID
+	 * @param predictorKey
+	 * 		the predictorKey
+	 * @param projectId
+	 * 		the projectId
+	 * @return
+	 * 		DataSetPredictor object
+	 */
 	public DataSetPredictor createPredictor(String authenticatedUserId,Predictor predictor,String revisionId, String authToken,String K8S_ID,String predictorKey,String projectId) {
 		logger.debug("createPredictor() Begin");
 		CouchDbClient dbClient = getLightCouchdbClient();
@@ -427,7 +445,15 @@ public class CouchDBService {
 		logger.debug("createPredictor() End");
 		return dataSetPredictor;
 	}
-	
+	/**
+	 * To get the predictor for PredictorName
+	 * @param authenticatedUserId
+	 * 		the authenticatedUserId
+	 * @param predictorName
+	 * 		the predictorName
+	 * @return
+	 * 		the List of Datasetpredictor
+	 */
 	public List<DataSetPredictor> getPreditor(String authenticatedUserId, String predictorName) {
 		logger.debug("getPreditor() Begin");
 		CouchDbClient dbClient = null;
@@ -453,6 +479,16 @@ public class CouchDBService {
 		return dataSetPredictorList;
 	}
 
+	/**
+	 * To get the Predictor by predictor Id
+	 * 
+	 * @param authenticatedUserId
+	 *    the authenticatedUserId
+	 * @param predictorId
+	 * 		the predictorId
+	 * @return
+	 * the List of Datsetpredictors
+	 */
 	public List<DataSetPredictor> getPredictorById(String authenticatedUserId, String predictorId) {
 		logger.debug("getPredictorById() Begin");
 		CouchDbClient dbClient = null;
@@ -477,15 +513,23 @@ public class CouchDBService {
 		logger.debug("getPredictorById() End");
 		return dataSetPredictorList;
 	}
-	
+	/**
+	 * To get the Predictor for User or User/Project
+	 * @param authenticatedUserId
+	 * 		the authenticatedUserId
+	 * @param projectId
+	 * 		the projectId
+	 * @return
+	 * 		the list of DatasetPredictor
+	 */
 	public List<DataSetPredictor> getPredictorforUser(String authenticatedUserId,String projectId) {
 		logger.debug("getPredictorforUser() Begin");
 		CouchDbClient dbClient = null;
 		String jsonQuery=null;
 		List<DataSetPredictor> dataSetPredictorList = new ArrayList<DataSetPredictor>();
 		jsonQuery = String.format(PredictorServiceConstants.GETPREDICTOR_FOR_USER, authenticatedUserId);
-		if (null != projectId && "" != projectId.trim()) {
-			jsonQuery = String.format(PredictorServiceConstants.GETPREDICTOR_FOR_USER, authenticatedUserId, projectId);
+		if (null != projectId && ! projectId.equals(" ")) {
+			jsonQuery = String.format(PredictorServiceConstants.GETPREDICTOR_FOR_USER_PROJECT, authenticatedUserId, projectId);
 		}
 		try {
 			dbClient = getLightCouchdbClient();
@@ -505,7 +549,17 @@ public class CouchDBService {
 		logger.debug("getPredictorforUser() End");
 		return dataSetPredictorList;
 	}
-	
+	/**
+	 * To get Predictor for user by predictorId and ProjectId
+	 * @param authenticatedUserId
+	 * 		the authenticatedUserId
+	 * @param predictorId
+	 * 		the predictorId
+	 * @param projectId
+	 * 		the projectId
+	 * @return
+	 * 		the list of PredictorProjectAssociation
+	 */
 	public List<PredictorProjectAssociation> getPredictorProject(String authenticatedUserId, String predictorId,String projectId) {
 		logger.debug("getPredictorProject() Begin");
 		CouchDbClient dbClient = null;
@@ -530,7 +584,32 @@ public class CouchDBService {
 		logger.debug("getPredictorProject() End");
 		return dataSetPredictorList;
 	}
-	
+
+	/**
+	 * To Delete the Predictor
+	 * 
+	 * @param dataSetPredictor the dataSetPredictor
+	 */
+	public void deletePredictor(DataSetPredictor dataSetPredictor) {
+		logger.debug("deletePredictor() Begin");
+		CouchDbClient dbClient = getLightCouchdbClient();
+		try {
+			dbClient.remove(dataSetPredictor);
+		} catch (Exception e) {
+			logger.error("Exception occured while removiing document from CouchDB", e);
+			throw new CouchDBException("Exception occured while removiing document from CouchDB", e);
+		} finally {
+			try {
+				// closing the resources
+				dbClient.close();
+			} catch (IOException e) {
+				logger.error("IOException occured while closing the lightcouch client");
+				throw new CouchDBException("IOException occured while closing the lightcouch client");
+			}
+			logger.debug("deletePredictor() End");
+		}
+
+	}
 	private void associationExistsInCouch(String predcitorID, String projectId, String revisionId, String solutionId) {
 		logger.debug("associationExistsInCouch() Begin");
 		CouchDbClient dbClient = getLightCouchdbClient();
@@ -558,7 +637,6 @@ public class CouchDBService {
 		}
 		logger.debug("associationExistsInCouch() End");
 	}
-	
 	private CouchDbClient getLightCouchdbClient() {
 		CouchDbClient couchDbClient = null;
 		try {
@@ -573,24 +651,4 @@ public class CouchDBService {
 		}
 		return couchDbClient;
 	}
-
-	public void deletePredictor(DataSetPredictor dataSetPredictor) {
-		logger.debug("deletePredictor() Begin");
-		CouchDbClient dbClient = getLightCouchdbClient();
-		try {
-			dbClient.remove(dataSetPredictor);
-		} catch (Exception e) {
-			logger.error("Exception occured while removiing document from CouchDB", e);
-			throw new CouchDBException("Exception occured while removiing document from CouchDB", e);
-		} finally {
-			try {
-				// closing the resources
-				dbClient.close();
-			} catch (IOException e) {
-				logger.error("IOException occured while closing the lightcouch client");
-				throw new CouchDBException("IOException occured while closing the lightcouch client");
-			}
-			logger.debug("deletePredictor() End");
-		}
-
-	}}
+}

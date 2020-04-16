@@ -175,15 +175,15 @@ public class PredictorManagerController {
 	
 	
 	@ApiOperation(value = "Get the list of Predictor for a User")
-	@RequestMapping(value = "/users/{authenticatedUserId}/projects{projectId}/predictorList", method = RequestMethod.GET)
+	@RequestMapping(value = "/users/{authenticatedUserId}/projects/predictorList", method = RequestMethod.GET)
 	public ResponseEntity<?> getPredictor(HttpServletRequest request,
 			@ApiParam(value = "Acumos User login Id", required = true) @PathVariable("authenticatedUserId") String authenticatedUserId,
-			@ApiParam(value = "Project Id", required = false) @RequestParam("projectId") String projectId) {
+			@ApiParam(value = "Project Id", required = false,defaultValue = " ") @RequestParam("projectId") String projectId) {
 		logger.debug("getPredictor() Begin"); // check if user exists
 		
 		predictorValidationImpl.isUserExists(authenticatedUserId);
 		
-		if (null != projectId && !"".equals(projectId)) {
+		if (null != projectId && !projectId.equals(" ")) {
 			predictorValidationImpl.isProjectExists(authenticatedUserId, projectId);
 		}
 

@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc65dfe7_602582d2",
+        "filename": "datasource-service-ms/pom.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2020-04-16T08:12:49Z",
+      "side": 1,
+      "message": "Incorrect Service name.  Please follow the trend. Rename it to : datasource-service",
+      "range": {
+        "startLine": 25,
+        "startChar": 32,
+        "endLine": 25,
+        "endChar": 34
+      },
+      "revId": "cfd70a2c21e331384fa50f4ac196afdd42d8c41f",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "199fcab5_4b971b38",
+        "filename": "datasource-service-ms/src/main/java/org/acumos/workbench/datasource/exception/AssociationException.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2020-04-16T08:12:49Z",
+      "side": 1,
+      "message": "Remove empty comment",
+      "range": {
+        "startLine": 25,
+        "startChar": 1,
+        "endLine": 27,
+        "endChar": 4
+      },
+      "revId": "cfd70a2c21e331384fa50f4ac196afdd42d8c41f",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03ce424f_292930b2",
+        "filename": "datasource-service-ms/src/main/java/org/acumos/workbench/datasource/exception/CollaboratorExistsException.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2020-04-16T08:12:49Z",
+      "side": 1,
+      "message": "Remove empty comment. Please check other occurrences",
+      "range": {
+        "startLine": 26,
+        "startChar": 1,
+        "endLine": 28,
+        "endChar": 4
+      },
+      "revId": "cfd70a2c21e331384fa50f4ac196afdd42d8c41f",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0731bca8_8990a1eb",
+        "filename": "datasource-service-ms/src/main/java/org/acumos/workbench/datasource/service/CouchDBService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2020-04-16T08:12:49Z",
+      "side": 1,
+      "message": "If in method you throw any exception then please include throws clause in method signature. Please check other occurrences.",
+      "revId": "cfd70a2c21e331384fa50f4ac196afdd42d8c41f",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    }
+  ]
+}

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "280d07bb_41fb0c07",
+        "filename": "datasource-service-ms/pom.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2020-04-17T11:08:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc65dfe7_602582d2",
+      "range": {
+        "startLine": 25,
+        "startChar": 32,
+        "endLine": 25,
+        "endChar": 34
+      },
+      "revId": "cfd70a2c21e331384fa50f4ac196afdd42d8c41f",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "199fcab5_4b971b38",
         "filename": "datasource-service-ms/src/main/java/org/acumos/workbench/datasource/exception/AssociationException.java",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "cfd70a2c21e331384fa50f4ac196afdd42d8c41f",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1639b31e_58ec37c4",
+        "filename": "datasource-service-ms/src/main/java/org/acumos/workbench/datasource/exception/AssociationException.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2020-04-17T11:08:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "199fcab5_4b971b38",
+      "range": {
+        "startLine": 25,
+        "startChar": 1,
+        "endLine": 27,
+        "endChar": 4
+      },
+      "revId": "cfd70a2c21e331384fa50f4ac196afdd42d8c41f",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "96e8d6a3_03550134",
+        "filename": "datasource-service-ms/src/main/java/org/acumos/workbench/datasource/exception/CollaboratorExistsException.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2020-04-17T11:08:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03ce424f_292930b2",
+      "range": {
+        "startLine": 26,
+        "startChar": 1,
+        "endLine": 28,
+        "endChar": 4
+      },
+      "revId": "cfd70a2c21e331384fa50f4ac196afdd42d8c41f",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0731bca8_8990a1eb",
         "filename": "datasource-service-ms/src/main/java/org/acumos/workbench/datasource/service/CouchDBService.java",
         "patchSetId": 4
@@ -85,6 +157,24 @@
       "revId": "cfd70a2c21e331384fa50f4ac196afdd42d8c41f",
       "serverId": "655300a2-7a56-4504-9153-881edd907bea",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa417355_1de16474",
+        "filename": "datasource-service-ms/src/main/java/org/acumos/workbench/datasource/service/CouchDBService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 38
+      },
+      "writtenOn": "2020-04-17T11:08:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0731bca8_8990a1eb",
+      "revId": "cfd70a2c21e331384fa50f4ac196afdd42d8c41f",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": false
     }
   ]
 }

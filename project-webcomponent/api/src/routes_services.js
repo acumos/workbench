@@ -1124,7 +1124,7 @@ module.exports = function(app) {
 		return new Promise(function(resolve, reject){
 			var options = {
 				method : "GET",
-				url : srvcUrl + '/users/' + userName,
+				url : srvcUrl + '/users/' + userName + '/siteConfig',
 				headers : {
 					'Content-Type' : 'application/json',
 					'Authorization' : authToken,
@@ -1404,7 +1404,7 @@ module.exports = function(app) {
 		return new Promise(function(resolve, reject){
 			var options = {
 				method : "GET",
-				url : srvcUrl  + userName + '/'+ projectId + "/predictorList",
+				url : srvcUrl  + userName + '/projects/predictorList?projectId=' + projectId,
 				headers : {
 					'Content-Type' : 'application/json',
 					'Authorization' : authToken,

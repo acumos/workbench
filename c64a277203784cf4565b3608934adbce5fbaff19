@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab8d9657_4ecae485",
+        "filename": "docs/project-wc-release-notes.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2020-04-21T10:23:37Z",
+      "side": 1,
+      "message": "update version to : 3.0.0",
+      "range": {
+        "startLine": 23,
+        "startChar": 8,
+        "endLine": 23,
+        "endChar": 14
+      },
+      "revId": "c64a277203784cf4565b3608934adbce5fbaff19",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    }
+  ]
+}

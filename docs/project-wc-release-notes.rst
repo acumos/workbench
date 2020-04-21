@@ -20,6 +20,10 @@
 ML Workbench Project Web Component
 ===============================================
 
+Version 2.1.0 21st April 2020 
+=================================
+* Predictor Manager UI Changes (ACUMOS-3786)
+
 Version 2.0.9  31st January 2020 
 =================================
 * Combine multiple options as dropdown (ACUMOS-3788)

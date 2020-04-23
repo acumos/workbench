@@ -24,6 +24,9 @@ export default {
       commit("setPredictorError", true);
       return [];
     }
+	else{
+      return map(data.data, model => Model.$fromJson(model));
+    }
   },
 
   async getClusters({ rootState, commit }) {

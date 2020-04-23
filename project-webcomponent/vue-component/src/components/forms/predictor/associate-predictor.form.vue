@@ -129,6 +129,7 @@
                 class="form-input"
                 v-model="updatedPredictor.url"
                 placeholder="Enter Predictor Engine Base URL"
+				disabled
               />
               <span class="text-sm text-red-700 flex items-center" v-if="errors[0]">
                 <FAIcon icon="exclamation-triangle" />

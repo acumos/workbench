@@ -129,7 +129,7 @@
                 class="form-input"
                 v-model="updatedPredictor.url"
                 placeholder="Enter Predictor Engine Base URL"
-				disabled
+				:disabled="!isNew"
               />
               <span class="text-sm text-red-700 flex items-center" v-if="errors[0]">
                 <FAIcon icon="exclamation-triangle" />
@@ -229,13 +229,6 @@ export default {
         model =>
           model.name === this.modelName && model.version === this.modelVersion
       );
-      this.loadingPredictors = true;
-      let predictor = await this.getPredictorsForModel(this.model[0]);
-      this.loadingPredictors = false;
-      if (predictor.data.data !== "") {
-        predictor = JSON.parse(predictor.data.data);
-        this.updatedPredictor = Predictor.$predictorfromJson(predictor);
-      }
     },
 
     resetForm(){

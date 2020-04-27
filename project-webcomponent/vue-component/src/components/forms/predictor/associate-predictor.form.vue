@@ -11,7 +11,9 @@
       <div class="p-3">
         <div class="flex mb-2" v-if="isNew">
           <div class="flex-1 flex flex-col mr-2">
-            <label class="mt-2">Model Name</label>
+            <label class="mt-2">Model Name
+				<span class="text-red-500">*</span>
+			</label>
             <ValidationProvider
               class="flex flex-col"
               name="Model Name"
@@ -99,7 +101,7 @@
               rules="required"
               v-slot="{ errors, classes }"
             >
-              <input
+              <input 
                 type="text"
                 class="form-input"
                 v-model="updatedPredictor.key"
@@ -116,9 +118,9 @@
           <div class="flex-1 flex flex-col mr-2">
             <label class="mt-2">
               Predictor Engine Base URL
-              <span class="text-red-500">*</span>
-            </label>
-            <ValidationProvider
+              <span class="text-red-500" v-if="isNew">*</span>
+          </label>
+             <ValidationProvider v-if="isNew"
               class="flex flex-col"
               name="Predictor Engine Base URL"
               rules="required|url"
@@ -128,8 +130,27 @@
                 type="text"
                 class="form-input"
                 v-model="updatedPredictor.url"
+                id="url"
                 placeholder="Enter Predictor Engine Base URL"
-				:disabled="!isNew"
+                :disabled="!isNew" 
+              />
+              <span class="text-sm text-red-700 flex items-center" v-if="errors[0]">
+                <FAIcon icon="exclamation-triangle" />
+                <span class="ml-1 my-1">{{ errors[0] }}</span>
+              </span>
+            </ValidationProvider> 
+            <ValidationProvider  v-if="!isNew"
+              class="flex flex-col"
+              name="Predictor Engine Base URL"
+              rules="url"
+              v-slot="{ errors, classes }"
+            >
+              <input
+                type="text"
+                class="form-input"
+                v-model="updatedPredictor.url"
+                placeholder="Enter Predictor Engine Base URL"
+                :disabled="!isNew" 
               />
               <span class="text-sm text-red-700 flex items-center" v-if="errors[0]">
                 <FAIcon icon="exclamation-triangle" />
@@ -213,6 +234,7 @@ export default {
       ? new Predictor()
       : new Predictor(this.initialPredictor);
     this.projectModels = await this.getProjectModels();
+
   },
   methods: {
     ...mapActions("predictor", [
@@ -229,6 +251,14 @@ export default {
         model =>
           model.name === this.modelName && model.version === this.modelVersion
       );
+      //  this.updatedPredictor = Predictor.$predictorfromJson(predictor);   
+      // this.loadingPredictors = true;
+      // let predictor = await this.getPredictorsForModel(this.model[0]);
+      // this.loadingPredictors = false;
+      // if (predictor.data.data !== "") {
+      //   predictor = JSON.parse(predictor.data.data);
+      //   this.updatedPredictor = Predictor.$predictorfromJson(predictor);
+      // }
     },
 
     resetForm(){
@@ -238,7 +268,7 @@ export default {
     
     async save(predictor) {
       const isValid = await this.$refs.form.validate();
-      predictor = new Predictor(predictor);
+      this.predictor = new Predictor(predictor);
       let response = null;
       if (isValid) {
         if (this.isNew) {
@@ -248,7 +278,7 @@ export default {
           predictorAssociation.revisionId = this.model[0].revisionId;
           response = await this.associatePredictor(predictorAssociation);
         } else {
-          response = await this.updateAssociation(predictor.$toJson());
+            response = await this.updateAssociation(predictor.$toJson());     
         }
 
         if (response.data.status === "Success") {

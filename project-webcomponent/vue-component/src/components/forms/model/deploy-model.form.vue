@@ -112,10 +112,12 @@
           <div class="flex-1 flex flex-col mr-2">
             <label class="mt-2">
               Predictor Engine Key
+			  <span class="text-red-500">*</span>
             </label>
             <ValidationProvider
               class="flex flex-col"
               name="Predictor Engine Key"
+			  rules="required|startAlpha"
               v-slot="{ errors, classes }"
             >
               <input
@@ -212,21 +214,21 @@ export default {
   async created() {
     this.updatedPredictor = new Model(this.initialModel);
    
-    let model = {
-      'modelId' : this.updatedPredictor.modelId,
-      'version' : this.updatedPredictor.version
-    }
+    //let model = {
+    //  'modelId' : this.updatedPredictor.modelId,
+    //  'version' : this.updatedPredictor.version
+   // }
     
-  this.loadingPredictors = true;
+ // this.loadingPredictors = true;
   
-    let pre = await this.getPredictorsForModel(model);
-	if(pre.data.data !== ""){
-		this.predictorModel = JSON.parse(pre.data.data);
-		this.predictorName = this.predictorModel.predictorId.name;
-		this.predictorkey = this.predictorModel.predictorId.metrics.kv[0].value;
-		this.predictorUrl = this.predictorModel.predictorId.serviceUrl;
-  } 
-  this.loadingPredictors = false;
+  //  let pre = await this.getPredictorsForModel(model);
+	//if(pre.data.data !== ""){
+	//	this.predictorModel = JSON.parse(pre.data.data);
+	//	this.predictorName = this.predictorModel.predictorId.name;
+	//	this.predictorkey = this.predictorModel.predictorId.metrics.kv[0].value;
+	//	this.predictorUrl = this.predictorModel.predictorId.serviceUrl;
+ // } 
+ // this.loadingPredictors = false;
   this.clusters = await this.getClusters();
   },
   methods: {

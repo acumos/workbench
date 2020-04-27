@@ -129,19 +129,29 @@ export default {
     );
   },
 
-  async updateAssociation({ rootState }, predictor) {
+ async updateAssociation({ rootState }, predictor) {
     predictor.projectId = rootState.project.activeProject;
+    predictor.userId = rootState.app.userName;
+    let associationId = predictor.associationId;
+    let  preId = predictor.predictorId;
+    delete predictor.associationId;
+    delete predictor.predictorId;
+    delete predictor.url;
     return await axios.put(
       `${rootState.app.componentUrl}/api/project/updateAssociatePredictor`,
       {
         userName: rootState.app.userName,
         url: rootState.app.msConfig.predictormSURL,
-        predictorId: predictor.predictorId,
-        associationId: predictor.associationId,
-        predictorPayload: predictor
+        predictorId: preId,
+        associationId: associationId,
+        predictorPayload: predictor,
+       
       }
+      
     );
+    
   },
+
 
   async getPredictorsForModel({ rootState }, model) {
     return await axios.post(

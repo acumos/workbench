@@ -99,10 +99,11 @@ export default class Predictor extends Model {
       modelStatus: "ACTIVE",
       predictorDeploymentStatus: "ACTIVE",
       predictorName: this.name,
-      predictorDescription: this.description,
+      predictorDescription: this.name,
       predictorVersion: this.version,
       environmentPath: this.url,
-      predictorkey: this.key
+      predictorkey: this.key,
+	  url: this.url
       
     };
   }
@@ -116,7 +117,8 @@ export default class Predictor extends Model {
       modelId: get(json, "model.modelId.uuid"), 
       revisionId: get(json, "predictorId.metrics.kv[0].value"),
       k8s_id: get(json, "predictorId.metrics.kv[2].value"),
-      deployStatus: get(json,  "predictorId.metrics.kv[1].value")
+      deployStatus: get(json,  "predictorId.metrics.kv[1].value"),
+	  url: get(json, "predictorId.serviceUrl"),
     };
   }
   $toDeployJson(){

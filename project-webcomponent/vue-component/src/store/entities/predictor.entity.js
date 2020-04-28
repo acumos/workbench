@@ -1,3 +1,4 @@
+
 import { Model } from "@vuex-orm/core";
 import { get } from "lodash-es";
 
@@ -103,22 +104,23 @@ export default class Predictor extends Model {
       predictorVersion: this.version,
       environmentPath: this.url,
       predictorkey: this.key,
-	  url: this.url
+      url: this.url
       
     };
   }
 
- static $deployfromJson(json) {
+  static $deployfromJson(json) {
     return {
       id: get(json, "predictorId.uuid"),
       name: get(json, "predictorId.name"),
       predictorkey: get(json, "predictorId.metrics.kv[3].value"),
+      associationId : get(json, "predictorId.metrics.kv[4].value"), 
       version: get(json, "predictorId.versionId.label"),
       modelId: get(json, "model.modelId.uuid"), 
       revisionId: get(json, "predictorId.metrics.kv[0].value"),
       k8s_id: get(json, "predictorId.metrics.kv[2].value"),
       deployStatus: get(json,  "predictorId.metrics.kv[1].value"),
-	  url: get(json, "predictorId.serviceUrl"),
+      url: get(json, "predictorId.serviceUrl"),
     };
   }
   $toDeployJson(){
@@ -144,7 +146,7 @@ export default class Predictor extends Model {
         "uuid": this.modelId,
       }
     },
-      predictorId:{
+    predictorId:{
         name: this.name, 
         versionId: {
             comment : "",
@@ -154,6 +156,3 @@ export default class Predictor extends Model {
     };
   }
 }
-
-
-

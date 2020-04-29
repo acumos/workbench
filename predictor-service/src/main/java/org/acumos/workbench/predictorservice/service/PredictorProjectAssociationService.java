@@ -72,10 +72,12 @@ public interface PredictorProjectAssociationService {
 	 * 			the acumos user login id.
 	 * @param predictorProjAssociation
 	 * 			the PredictorProjectAssociation
+	 * @param predictorId
+	 * 			the predictorId
 	 * @return
 	 * 			returns Predictor
 	 */
-	public Predictor editPredictorProjectAssociation(String authenticatedUserId,String associationId,DataSetPredictor predictorProjAssociation);
+	public Predictor editPredictorProjectAssociation(String authenticatedUserId,String associationId,DataSetPredictor predictorProjAssociation,String predictorId);
 
 	/**
 	 * Delete the Predictor Association

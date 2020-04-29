@@ -274,6 +274,22 @@ public class PredictorServiceImpl implements PredictorService {
 		return null;
 	}
 	
+	@Override
+	public Predictor updatePredictor(String authenticatedUserId, String predictorId,String predictorKey) {
+		logger.debug("updatePredictor() Begin");
+		Predictor result=null;
+		List<DataSetPredictor> dataSetPredictorList = couchDBService.getPredictorById(authenticatedUserId, predictorId);
+		if (null != dataSetPredictorList && !dataSetPredictorList.isEmpty() && !(dataSetPredictorList.size() > 1)) {
+			for (DataSetPredictor dataSetPredictor : dataSetPredictorList) {
+				dataSetPredictor.setPredictorkey(predictorKey);
+				couchDBService.updatePredictor(dataSetPredictor);
+				result = getPredictorVO(dataSetPredictor);
+			}
+		}
+		logger.debug("updatePredictor() End");
+		return result;
+	}
+	
 	private Predictor getPredictorVO(DataSetPredictor dataSetPredictor) {
 		logger.debug("getPredictorVO() Begin");
 		Predictor predictor = new Predictor();
@@ -292,6 +308,11 @@ public class PredictorServiceImpl implements PredictorService {
 			KVPair kvPairDeploymentStatus = new KVPair(PredictorServiceConstants.DEPLOYMENTSTATUS,dataSetPredictor.getPredictorDeploymentStatus());
 			KVPair kvPairK8S_ID= new KVPair(PredictorServiceConstants.K8S_ID,dataSetPredictor.getK8sId());
 			KVPair kvPairPREDICTORKEY= new KVPair(PredictorServiceConstants.PREDICTORKEY,dataSetPredictor.getPredictorkey());
+			KVPair kvPairAssociationId=null;
+			if (null !=dataSetPredictor.getAssociationId()) {
+				 kvPairAssociationId= new KVPair(PredictorServiceConstants.ASSOCIATIONID,dataSetPredictor.getAssociationId());
+				
+			}
 			DeploymentResponse deploymentResponse = null;
 			KVPair kvPairJenkinsURL=null;
 			KVPair kvPairDeploymentURL=null;
@@ -316,6 +337,7 @@ public class PredictorServiceImpl implements PredictorService {
 			kv.add(kvPairDeploymentStatus);
 			kv.add(kvPairK8S_ID);
 			kv.add(kvPairPREDICTORKEY);
+			kv.add(kvPairAssociationId);
 			metrics.setKv(kv);
 			predictorIdentifier.setMetrics(metrics);
 			predictor.setPredictorId(predictorIdentifier);
@@ -443,5 +465,7 @@ public class PredictorServiceImpl implements PredictorService {
 			return false;
 		}
 	}
+
+	 
 	
 }

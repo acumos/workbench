@@ -51,8 +51,9 @@ public class PredictorServiceConstants {
 	
 	public static final String GETPREDICTORPROJECT = "{\"selector\":{\"$and\":[{\"userId\":{\"$eq\":\"%s\"}},{\"projectId\":{\"$eq\":\"%s\"}}]}}"; // NEED TO CHECK
 	
-	public static final String ASSOCIATIONEXISTSINCOUCHQUERY = "{\"selector\":{\"$and\":[{\"projectId\":{\"$eq\":\"%s\"}},{\"solutionId\":{\"$eq\":\"%s\"}},{\"revisionId\":{\"$eq\":\"%s\"}}\",{\"associationStatus\":{\"$gte\": null}}]}}";
-
+	//public static final String ASSOCIATIONEXISTSINCOUCHQUERY = "{\"selector\":{\"$and\":[{\"projectId\":{\"$eq\":\"%s\"}},{\"solutionId\":{\"$eq\":\"%s\"}},{\"revisionId\":{\"$eq\":\"%s\"}}\",{\"associationStatus\":{\"$gte\": null}}]}}";
+	public static final String ASSOCIATIONEXISTSINCOUCHQUERY = "{\"selector\":{\"$and\":[{\"predictorId\":{\"$eq\":\"%s\"}},{\"projectId\":{\"$eq\":\"%s\"}},{\"solutionId\":{\"$eq\":\"%s\"}},{\"revisionId\":{\"$eq\":\"%s\"}}]}}";
+	
 	public static final String GETPREDICTORSQUERY = "{\"selector\":{\"$and\":[{\"projectId\":{\"$eq\":\"%s\"}},{\"associationStatus\":{\"$eq\":\"%s\"}}]}}";
 	
 	//TODO: To be removed once confirmed

@@ -157,22 +157,55 @@ public class PredictorProjectAssociationServiceImpl implements PredictorProjectA
 
 	@Override
 	public Predictor editPredictorProjectAssociation(String authenticatedUserId,
-			String associationId, DataSetPredictor predictorProjAssociation) {
+			String associationId, DataSetPredictor predictorProjAssociation, String predictorId) {
 		logger.debug("editPredictorAssociationToProject() Begin");
 		Predictor predictor = null;
-		String newVersion = predictorProjAssociation.getPredictorVersion();
-		String newPredictorKey = predictorProjAssociation.getPredictorkey();
-		String newEnvironmentPath = predictorProjAssociation.getEnvironmentPath();
+		String newVersion = null;
+		String newPredictorKey = null;
+		String newEnvironmentPath = null;
+		if (null != predictorProjAssociation.getPredictorVersion()
+				&& !predictorProjAssociation.getPredictorVersion().equals("")) {
+			newVersion = predictorProjAssociation.getPredictorVersion();
+		}
+		if (null != predictorProjAssociation.getPredictorkey()
+				&& !predictorProjAssociation.getPredictorkey().equals("")) {
+			newPredictorKey = predictorProjAssociation.getPredictorkey();
+		}
+		if (null != predictorProjAssociation.getEnvironmentPath()
+				&& !predictorProjAssociation.getEnvironmentPath().equals("")) {
+			newEnvironmentPath = predictorProjAssociation.getEnvironmentPath();
+		}
+
 		boolean changeFound = false;
 		MLPUser mlpUser = getUserDetails(authenticatedUserId);
 		try {
 			DataSetPredictor oldAssociation = couchDbService.getPredictorProjectAssocaition(associationId);
 			if (null != oldAssociation) {
-				//1. Get predictor from couch DB 
-				DataSetPredictor oldPredictor = couchDbService.getPredictor(oldAssociation.getPredictorId());
-				String oldVersion = oldAssociation.getPredictorVersion();
-				String oldPredictorKey = oldAssociation.getPredictorkey();
-				String oldEnvironmentPath = oldAssociation.getEnvironmentPath();
+				// 1. Get predictor from couch DB
+				DataSetPredictor oldPredictor = null;
+				List<DataSetPredictor> oldPredictorList = couchDbService.getPredictorById(authenticatedUserId,
+						predictorId);
+				if (null != oldPredictorList && !oldPredictorList.isEmpty()) {
+					for (DataSetPredictor dataSetPredictor : oldPredictorList) {
+						if(oldAssociation.getAssociationId().equals(dataSetPredictor.getAssociationId())){
+							oldPredictor = dataSetPredictor;
+							break;
+						}
+					}
+				}
+				String oldVersion = null;
+				if (null != oldAssociation.getPredictorVersion() && !oldAssociation.getPredictorVersion().equals("")) {
+					oldVersion = oldAssociation.getPredictorVersion();
+				}
+				String oldPredictorKey = null;
+				if (null != oldAssociation.getPredictorkey() && !oldAssociation.getPredictorkey().equals("")) {
+					oldPredictorKey = oldAssociation.getPredictorkey();
+				}
+				String oldEnvironmentPath = null;
+				if (null != oldAssociation.getEnvironmentPath() && !oldAssociation.getEnvironmentPath().equals("")) {
+					oldEnvironmentPath = oldAssociation.getEnvironmentPath();
+				}
+
 				if (null != newVersion && !newVersion.equals(oldVersion)) {
 					oldAssociation.setPredictorVersion(newVersion);
 					oldPredictor.setPredictorVersion(newVersion);
@@ -189,13 +222,10 @@ public class PredictorProjectAssociationServiceImpl implements PredictorProjectA
 					changeFound = true;
 				}
 				if (changeFound) {
-					//Update Predictor details 
-					oldPredictor.setPredictorId(predictorProjAssociation.getPredictorId());
+					// Update Predictor details
+					oldPredictor.setPredictorId(predictorId);
 					oldPredictor.setUpdateTimestamp(Instant.now().toString());
-					couchDbService.updatePredictor(oldPredictor);
-					//Update Predictor Association Details 
-					oldAssociation.setPredictorId(predictorProjAssociation.getPredictorId());
-					oldAssociation.setAssociationId(associationId);
+					// Update Predictor Association Details
 					oldAssociation.setAssociationUpdateTimestamp(Instant.now().toString());
 					couchDbService.updatePredictorProjectAssociation(oldAssociation);
 				}
@@ -327,8 +357,14 @@ public class PredictorProjectAssociationServiceImpl implements PredictorProjectA
 //		version.setLabel(association.getPredictorVersion());
 		version.setCreationTimeStamp(association.getCreatedTimestamp());
 		version.setModifiedTimeStamp(association.getUpdateTimestamp());
+		if(null != association.getPredictorVersion() && !association.getPredictorVersion().equals("")) {
+			version.setLabel(association.getPredictorVersion());
+		}
 		predIdentifier.setVersionId(version);
-		predIdentifier.setServiceUrl(association.getEnvironmentPath());
+		if(null != association.getEnvironmentPath() && !association.getEnvironmentPath().equals("")) {
+			predIdentifier.setServiceUrl(association.getEnvironmentPath());	
+		}
+		
 		// Predictor Metrics
 		List<KVPair> kvPairList = new ArrayList<KVPair>();
 		KVPairs metrics = new KVPairs();
@@ -338,7 +374,9 @@ public class PredictorProjectAssociationServiceImpl implements PredictorProjectA
 		kvPairList.add(kvPair);
 		kvPair = new KVPair();
 		kvPair.setKey(PredictorServiceConstants.PREDICTORKEY);
-		kvPair.setValue(association.getPredictorkey());
+		if(null != association.getPredictorkey() && !association.getPredictorkey().equals("")) {
+			kvPair.setValue(association.getPredictorkey());
+		}
 		kvPairList.add(kvPair);
 		metrics.setKv(kvPairList);
 		predIdentifier.setMetrics(metrics);

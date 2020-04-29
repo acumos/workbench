@@ -149,4 +149,13 @@ public interface PredictorService {
 	 * 		the K8S cluster List
 	 */
 	public List<K8sConfig> getK8sSiteConfig();
+
+	/**
+	 * To update existing predictor in couchdb
+	 * @param authenticatedUserId authenticatedUserId
+	 * @param predictorId         predictorId
+	 * @param predictorKey         predictorKey
+	 * @return
+	 */
+	Predictor updatePredictor(String authenticatedUserId, String predictorId,String predictorKey);
 }

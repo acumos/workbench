@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a97cee0e_cbaa1baa",
+        "filename": "predictor-service/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2020-04-29T14:34:36Z",
+      "side": 1,
+      "message": "What for empty tag ?",
+      "range": {
+        "startLine": 32,
+        "startChar": 3,
+        "endLine": 32,
+        "endChar": 15
+      },
+      "revId": "a33639fbb119fe1c6dc60c36168925e9c5d80d76",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a68f7e7_975779b6",
+        "filename": "predictor-service/src/main/java/org/acumos/workbench/predictorservice/service/PredictorServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 11
+      },
+      "writtenOn": "2020-04-29T14:34:36Z",
+      "side": 1,
+      "message": "try/catch block missing",
+      "range": {
+        "startLine": 278,
+        "startChar": 18,
+        "endLine": 278,
+        "endChar": 33
+      },
+      "revId": "a33639fbb119fe1c6dc60c36168925e9c5d80d76",
+      "serverId": "655300a2-7a56-4504-9153-881edd907bea",
+      "unresolved": true
+    }
+  ]
+}

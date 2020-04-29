@@ -90,6 +90,8 @@ public class PredictorProjectAssociationController {
 		String authToken = getAuthJWTToken(request);
 		// Check if Project for input ProjectId exists (i.e., status Active)
 		predictorValidation.validateProject(authenticatedUserId, projectId, authToken);
+		// Check if predictor is already exists with same name.
+		predictorValidation.isPredictorExists(authenticatedUserId, predictorProjAssociation.getPredictorName());
 		
 		// Check if Predictor for input PredictorId exists (with status Active)
 		// Check if logged in user has access to the input Predictor
@@ -112,7 +114,7 @@ public class PredictorProjectAssociationController {
 	
 	@ApiOperation(value = "Get Predictor Details for given input Model")
 	@RequestMapping(value = "/users/{authenticatedUserId}/models/{modelId}/version/{version}", method = RequestMethod.GET)
-	public ResponseEntity<?> n(HttpServletRequest request,
+	public ResponseEntity<?> getPredictorDetails (HttpServletRequest request,
 			@ApiParam(value = "Acumos Login ID", required = true) @PathVariable("authenticatedUserId") String authenticatedUserId,
 			@ApiParam(value = "Model Id", required = true) @PathVariable("modelId") String modelId,
 			@ApiParam(value = "Model Version", required = true) @PathVariable("version") String version) {
@@ -196,7 +198,7 @@ public class PredictorProjectAssociationController {
 		// Restriction : Check if model of the selected predictor is associate to a Project
 		predictorValidation.isModelAssociatedToProject(authenticatedUserId,associationData.getProjectId(),associationData.getSolutionId(),associationData.getRevisionId(),authToken);
 		
-		Predictor result = predProjAssociationService.editPredictorProjectAssociation(authenticatedUserId,associationId, associationData);
+		Predictor result = predProjAssociationService.editPredictorProjectAssociation(authenticatedUserId,associationId, associationData,predictorId);
 
 		logger.debug("editPredictorAssociationToProject() End");
 		return new ResponseEntity<Predictor>(result, HttpStatus.OK);

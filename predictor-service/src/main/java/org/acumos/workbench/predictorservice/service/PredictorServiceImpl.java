@@ -158,39 +158,37 @@ public class PredictorServiceImpl implements PredictorService {
 		logger.debug("getDeploymentStatus() Begin");
 		Predictor result = null;
 		try {
-		List<DataSetPredictor> dataSetPredictorList = null;
-		dataSetPredictorList = couchDBService.getPredictorById(authenticatedUserId, predictorId);
-		if (null != dataSetPredictorList && !dataSetPredictorList.isEmpty() && !(dataSetPredictorList.size() > 1)) {
-			for (DataSetPredictor dataSetPredictor : dataSetPredictorList) {
-				dataSetPredictor = getEnvironmentPath(dataSetPredictor);
-				dataSetPredictor.setUpdateTimestamp(Instant.now().toString());
-				couchDBService.updatePredictor(dataSetPredictor);
-				result = getPredictorVO(dataSetPredictor);
+			List<DataSetPredictor> dataSetPredictorList = null;
+			dataSetPredictorList = couchDBService.getPredictorById(authenticatedUserId, predictorId);
+			if (null != dataSetPredictorList && !dataSetPredictorList.isEmpty() && !(dataSetPredictorList.size() > 1)) {
+				for (DataSetPredictor dataSetPredictor : dataSetPredictorList) {
+					dataSetPredictor = getEnvironmentPath(dataSetPredictor);
+					dataSetPredictor.setUpdateTimestamp(Instant.now().toString());
+					couchDBService.updatePredictor(dataSetPredictor);
+					result = getPredictorVO(dataSetPredictor);
+				}
 			}
-		}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			logger.debug("getDeploymentStatus() End");
-			throw new PredictorException("Exception ocuured while getting deployment status",e);
+			throw new PredictorException("Exception ocuured while getting deployment status", e);
 		}
 		return result;
 	}
 	@Override
-	public List<Predictor> getPredictorByUser(String authenticatedUserId,String projectId) {
+	public List<Predictor> getPredictorByUser(String authenticatedUserId, String projectId) {
 		logger.debug("getPredictorByUserProject() Begin");
 		Predictor predictor = null;
 		List<DataSetPredictor> dataSetPredictorList = null;
 		List<Predictor> result = new ArrayList<Predictor>();
 		try {
-		dataSetPredictorList = couchDBService.getPredictorforUser(authenticatedUserId,projectId);
-		if (null != dataSetPredictorList && !dataSetPredictorList.isEmpty()) {
-			for (DataSetPredictor dataSetPredictor : dataSetPredictorList) {
-				predictor = getPredictorVO(dataSetPredictor);
-				result.add(predictor);
+			dataSetPredictorList = couchDBService.getPredictorforUser(authenticatedUserId, projectId);
+			if (null != dataSetPredictorList && !dataSetPredictorList.isEmpty()) {
+				for (DataSetPredictor dataSetPredictor : dataSetPredictorList) {
+					predictor = getPredictorVO(dataSetPredictor);
+					result.add(predictor);
+				}
 			}
-		}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			logger.debug("getPredictorByUserProject() End");
 			throw new PredictorException("Exception occured while getting predictors list fro User/Project", e);
 		}
@@ -260,7 +258,7 @@ public class PredictorServiceImpl implements PredictorService {
 		result.setStatus(ServiceStatus.COMPLETED);
 		}
 		catch (Exception e) {
-			logger.debug("deletePredictor() End");
+			logger.error("Exception occured while deleting the predictor ");
 			throw new PredictorException("Exception occurred while deleting predictor from couch db", e);
 		}
 		return result;
@@ -272,6 +270,27 @@ public class PredictorServiceImpl implements PredictorService {
 		// TODO: Blocked due to Jenkins Jobs issue,Once this issue is resolved,need to complete the same.
 		logger.debug("checkDeploymentStatusonK8S() End");
 		return null;
+	}
+	
+	@Override
+	public Predictor updatePredictor(String authenticatedUserId, String predictorId,String predictorKey) throws PredictorException {
+		logger.debug("updatePredictor() Begin");
+		Predictor result=null;
+		try {
+			List<DataSetPredictor> dataSetPredictorList = couchDBService.getPredictorById(authenticatedUserId, predictorId);
+			if (null != dataSetPredictorList && !dataSetPredictorList.isEmpty() && !(dataSetPredictorList.size() > 1)) {
+				for (DataSetPredictor dataSetPredictor : dataSetPredictorList) {
+					dataSetPredictor.setPredictorkey(predictorKey);
+					couchDBService.updatePredictor(dataSetPredictor);
+					result = getPredictorVO(dataSetPredictor);
+				}
+			}
+		} catch (Exception e) {
+			logger.error("Exception occured while updating the predictor ");
+			throw new PredictorException("Exception occurred while updating the predictor from couch db", e);
+		}
+		logger.debug("updatePredictor() End");
+		return result;
 	}
 	
 	private Predictor getPredictorVO(DataSetPredictor dataSetPredictor) {
@@ -292,6 +311,11 @@ public class PredictorServiceImpl implements PredictorService {
 			KVPair kvPairDeploymentStatus = new KVPair(PredictorServiceConstants.DEPLOYMENTSTATUS,dataSetPredictor.getPredictorDeploymentStatus());
 			KVPair kvPairK8S_ID= new KVPair(PredictorServiceConstants.K8S_ID,dataSetPredictor.getK8sId());
 			KVPair kvPairPREDICTORKEY= new KVPair(PredictorServiceConstants.PREDICTORKEY,dataSetPredictor.getPredictorkey());
+			KVPair kvPairAssociationId=null;
+			if (null !=dataSetPredictor.getAssociationId()) {
+				 kvPairAssociationId= new KVPair(PredictorServiceConstants.ASSOCIATIONID,dataSetPredictor.getAssociationId());
+				
+			}
 			DeploymentResponse deploymentResponse = null;
 			KVPair kvPairJenkinsURL=null;
 			KVPair kvPairDeploymentURL=null;
@@ -316,6 +340,7 @@ public class PredictorServiceImpl implements PredictorService {
 			kv.add(kvPairDeploymentStatus);
 			kv.add(kvPairK8S_ID);
 			kv.add(kvPairPREDICTORKEY);
+			kv.add(kvPairAssociationId);
 			metrics.setKv(kv);
 			predictorIdentifier.setMetrics(metrics);
 			predictor.setPredictorId(predictorIdentifier);
@@ -443,5 +468,7 @@ public class PredictorServiceImpl implements PredictorService {
 			return false;
 		}
 	}
+
+	 
 	
 }

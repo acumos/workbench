@@ -28,6 +28,7 @@ import org.acumos.workbench.common.exception.UserNotFoundException;
 import org.acumos.workbench.common.vo.Predictor;
 import org.acumos.workbench.common.vo.ServiceState;
 import org.acumos.workbench.predictorservice.deployClient.K8sConfig;
+import org.acumos.workbench.predictorservice.exception.PredictorException;
 
 public interface PredictorService {
 	
@@ -149,4 +150,13 @@ public interface PredictorService {
 	 * 		the K8S cluster List
 	 */
 	public List<K8sConfig> getK8sSiteConfig();
+
+	/**
+	 * To update existing predictor in couchdb
+	 * @param authenticatedUserId authenticatedUserId
+	 * @param predictorId         predictorId
+	 * @param predictorKey         predictorKey
+	 * @return
+	 */
+	Predictor updatePredictor(String authenticatedUserId, String predictorId,String predictorKey) throws PredictorException;
 }

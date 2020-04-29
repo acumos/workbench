@@ -195,6 +195,29 @@ public class PredictorManagerController {
 
 	}
 	 
+	@ApiOperation(value = "Update Predictor")
+	@RequestMapping(value = "/users/{authenticatedUserId}/{predictorId}/predictor/{predictorKey}", method = RequestMethod.PUT)
+	public ResponseEntity<?> updatePredictor(HttpServletRequest request,
+			@ApiParam(value = "Acumos User login Id", required = true) @PathVariable("authenticatedUserId") String authenticatedUserId,
+			@ApiParam(value = "Predictor Id", required = true) @RequestParam("predictorId") String predictorId,
+			@ApiParam(value = "Predictor Key", required = true) @RequestParam("predictorKey") String predictorKey) {
+		logger.debug("updatePredictor() Begin"); // check if user exists
+		
+		inputValidationServiceImpl.isValuePresent(PredictorServiceConstants.AUTHENTICATEDUSERID, authenticatedUserId);
+		inputValidationServiceImpl.isValuePresent(PredictorServiceConstants.PREDICTORID, predictorId);
+		inputValidationServiceImpl.isValuePresent(PredictorServiceConstants.PREDICTORKEY, predictorKey);
+		
+		predictorValidationImpl.isUserExists(authenticatedUserId);
+		
+		predictorValidationImpl.isPredictorAccessibleToUser(authenticatedUserId, predictorId);
+		
+		Predictor result = predictorServiceImpl.updatePredictor(authenticatedUserId, predictorId,predictorKey);
+
+		logger.debug("updatePredictor() Ends");
+
+		return new ResponseEntity<Predictor>(result, HttpStatus.OK);
+
+	}
 
 	@ApiOperation(value = "Delete Predictor")
 	@RequestMapping(value = "/users/{authenticatedUserId}/predictors/{predictorId}/project/{projectId}", method = RequestMethod.DELETE)

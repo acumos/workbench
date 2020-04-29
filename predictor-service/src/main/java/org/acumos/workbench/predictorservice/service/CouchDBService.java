@@ -170,7 +170,7 @@ public class CouchDBService {
 		try {
 		String jsonQuery = String.format(PredictorServiceConstants.GETPREDICTORPROJECTASSOCIATION,associationId);
 		association = dbClient.findDocs(jsonQuery, DataSetPredictor.class);
-		if ((association.size()>1 && null ==association.get(0))) {
+			if ((association.isEmpty())) {
 			throw new AssociationException("Association not found in Couch DB");
 		}
 		} catch (NoDocumentException e) {
@@ -425,6 +425,10 @@ public class CouchDBService {
 			dataSetPredictor.setUpdateTimestamp(Instant.now().toString());
 			dataSetPredictor.setPredictorkey(predictorKey);
 			dataSetPredictor.setProjectId(projectId);
+			dataSetPredictor.setAssociationId(UUID.randomUUID().toString());
+			dataSetPredictor.setAssociationCreatedTimestamp(Instant.now().toString());
+			dataSetPredictor.setAssociationStatus("ACTIVE");
+			dataSetPredictor.setAssociationUpdateTimestamp(Instant.now().toString());
 			
 			// Save the metaData in Couch DB
 			response = dbClient.save(dataSetPredictor);
@@ -610,11 +614,11 @@ public class CouchDBService {
 		}
 
 	}
-	private void associationExistsInCouch(String predcitorID, String projectId, String revisionId, String solutionId) {
+	private void associationExistsInCouch(String predcitorId, String projectId, String revisionId, String solutionId) {
 		logger.debug("associationExistsInCouch() Begin");
 		CouchDbClient dbClient = getLightCouchdbClient();
 		List<PredictorProjectAssociation> association = null;
-		String jsonQuery = String.format(PredictorServiceConstants.ASSOCIATIONEXISTSINCOUCHQUERY, projectId, solutionId,
+		String jsonQuery = String.format(PredictorServiceConstants.ASSOCIATIONEXISTSINCOUCHQUERY,predcitorId, projectId, solutionId,
 				revisionId);
 		try {
 			association = dbClient.findDocs(jsonQuery, PredictorProjectAssociation.class);

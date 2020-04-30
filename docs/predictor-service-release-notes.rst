@@ -19,6 +19,9 @@
 ===============================
 Predictor Service Release Notes
 ===============================
+Version 1.0.5, 2020-04-29
+---------------------------
+* ACUMOS-3888 : Predictor-Manager known issues fixes.
 
 Version 1.0.4, 2020-01-29
 ---------------------------

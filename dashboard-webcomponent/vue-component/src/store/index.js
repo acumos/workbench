@@ -7,6 +7,7 @@ import PipelineModule from "./modules/pipeline";
 import ModelModule from "./modules/model";
 import NotebookModule from "./modules/notebook";
 import ProjectModule from "./modules/project";
+import DatasourceModule from "./modules/datasource";
 
 Vue.use(Vuex);
 
@@ -16,6 +17,7 @@ export default new Vuex.Store({
     pipeline: PipelineModule,
     project: ProjectModule,
     notebook: NotebookModule,
+    datasource: DatasourceModule,
     model: ModelModule
   }
 });

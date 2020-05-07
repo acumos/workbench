@@ -33,7 +33,8 @@ module.exports = function(app) {
 	const ms_urls = {
 		projectmSURL : properties.projectmSURL,
 		pipelinemSURL : properties.pipelinemSURL,
-		notebookmSURL : properties.notebookmSURL
+		notebookmSURL : properties.notebookmSURL,
+		datasourcemSURL : properties.datasourcemSURL
 	};
 	
 	const pipelineFlag = properties.pipelineFlag;
@@ -101,6 +102,18 @@ module.exports = function(app) {
 		let userName = req.body.userName;
 		let authToken = req.headers['auth'];
 		getNotebookCount(userName, serviceUrl, getLatestAuthToken(req, authToken)).then(function(result) {
+			res.send(result);
+		});
+	});
+
+	app.post('/api/datasource/count', function(req, res) {
+		let serviceUrl = req.body.url + uripath;
+		let userName = req.body.userName;
+		let authToken = req.headers['auth'];
+		let category = req.body.category;
+		let namespace = req.body.namespace;
+		let textSearch = req.body.textSearch;
+		getDatasourceCount(userName, category, namespace, textSearch, serviceUrl, getLatestAuthToken(req, authToken)).then(function(result) {
 			res.send(result);
 		});
 	});
@@ -199,6 +212,30 @@ module.exports = function(app) {
 					resolve(prepRespJsonAndLogit(response, notebookCount, "Notebook count retrieved successfully"));
 				} else if (!error) {
 					resolve(prepRespJsonAndLogit(response, response.body, "Unable to retrieve Notebook count"));
+				} else {
+					resolve(prepRespJsonAndLogit(null, null, null, error));
+				}
+			});
+		});
+	};
+
+	var getDatasourceCount = function(userName, category, namespace, textSearch, url, authToken) {
+		return new Promise(function(resolve, reject) {
+			var options = {
+				method : "GET",
+				url : url  + userName + "?" + "category="+ category + "&namespace="+ namespace + "&textSearch=" + textSearch,
+				headers : {
+					'Content-Type' : 'application/json',
+					'Authorization' : authToken,
+				},
+			};
+
+			request.get(options, function(error, response) {
+				if (!error && response.statusCode == 200 && response.body !== undefined) {
+					let datasourceCount = JSON.parse(response.body).length;
+					resolve(prepRespJsonAndLogit(response, datasourceCount, "Datasource count retrieved successfully"));
+				} else if (!error) {
+					resolve(prepRespJsonAndLogit(response, response.body, "Unable to retrieve Datasource count"));
 				} else {
 					resolve(prepRespJsonAndLogit(null, null, null, error));
 				}

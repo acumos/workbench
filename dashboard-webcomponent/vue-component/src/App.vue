@@ -57,6 +57,25 @@
           <span class="text-2xl text-center" v-if="pipeline_count">{{ pipeline_count }}</span>
           <button class="btn btn-primary" v-if="!pipeline_count">Create Pipeline</button>
         </div>
+
+         <div
+          @click="openSection('datasource')"
+          class="flex flex-col border p-4 m-4 shadow-xl justify-center w-1/4 justify-between cursor-pointer"
+        >
+          <div class="flex flex-col">
+            <div class="flex justify-center">
+              <div
+                class="bg-purple-500 text-white w-10 h-10 inline-flex items-center justify-center rounded-full"
+              >
+                <FAIcon icon="database" class="text-xl" />
+              </div>
+            </div>
+            <span class="text-center text-3xl my-2 text-purple-500">Datasources</span>
+          </div>
+          <span class="text-2xl text-center" v-if="datasource_count">{{ datasource_count }}</span>
+          <button class="btn btn-primary" v-if="!datasource_count">Create Datasource</button>
+        </div>
+
         <div class="flex flex-col border p-4 m-4 shadow-xl justify-center w-1/4 justify-between">
           <div class="flex flex-col">
             <div class="flex justify-center">
@@ -123,11 +142,13 @@ export default {
       shared_project_count: 0,
       notebook_count: 0,
       pipeline_count: 0,
+      datasource_count: 0,
       private_model_count: 0,
       public_model_count: 0,
       all_project_count: 0,
       all_notebook_count: 0,
       all_pipeline_count: 0,
+       all_datasource_count: 0,
       all_private_model_count: 0,
       all_public_model_count: 0
     };
@@ -194,6 +215,7 @@ export default {
         this.shared_project_count = await this.sharedProjectsCount();
         this.notebook_count = await this.notebookCount();
         this.pipeline_count = await this.pipelineCount();
+        this.datasource_count = await this.datasourceCount();
         this.private_model_count = await this.privateModelCount();
         this.public_model_count = await this.modelCount();
         this.$emit("on-load-event");
@@ -229,6 +251,16 @@ export default {
         } else {
           this.all_notebook_count = this.notebook_count;
         }
+
+          if (this.datasource_count.status !== undefined) {
+          this.showToastMessage({
+            id: "global",
+            message: `${this.datasource_count.message}`,
+            type: "error"
+          });
+        } else {
+          this.all_datasource_count = this.datasource_count;
+        } 
 
         if (this.pipeline_count.status !== undefined) {
           this.showToastMessage({
@@ -282,6 +314,7 @@ export default {
     ...mapActions("project", ["projectCount", "sharedProjectsCount"]),
     ...mapActions("pipeline", ["pipelineCount"]),
     ...mapActions("notebook", ["notebookCount"]),
+     ...mapActions("datasource", ["datasourceCount"]),
     ...mapActions("model", ["modelCount", "privateModelCount"])
   },
 

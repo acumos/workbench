@@ -1,0 +1,18 @@
+{
+  "name": "DatasourceCatalogWebComponent",
+  "version": "1.0.5",
+  "license": "Apache",
+  "scripts": {
+    "install:app": "cd vue-component && npm install",
+    "install:api": "cd api && npm install --prod",
+    "run:api": "cd api && npm run start",
+    "run:component": "cd vue-component && npm run serve",
+    "build:component": "cd vue-component && npm run build:webcomponent",
+    "postinstall": "run-s install:*",
+    "start:dev": "run-p run:*"
+  },
+  "devDependencies": {},
+  "dependencies": {
+    "npm-run-all": "^4.1.5"
+  }
+}

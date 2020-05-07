@@ -24,6 +24,7 @@ var config = {
 		projectmSURL : "http://localhost:9088/mlWorkbench/v1/project",
 		notebookmSURL : "http://localhost:9089/mlWorkbench/v1/notebook",
 		pipelinemSURL : "http://localhost:9090/mlWorkbench/v1/pipeline",
+		datasourcemSURL : "http://localhost:9097/mlWorkbench/v1/datasource",
 		portalFEURL : "http://localhost:8085",
 		portalBEURL : "http://localhost:8083",
 		pipelineFlag : "false"
@@ -33,6 +34,7 @@ var config = {
 		projectmSURL : process.env.projectmSURL,
 		notebookmSURL : process.env.notebookmSURL,
 		pipelinemSURL : process.env.pipelinemSURL,
+		datasourcemSURL : process.env.datasourcemSURL,
 		portalFEURL : process.env.portalFEURL,
 		portalBEURL : process.env.portalBEURL,
 		pipelineFlag : process.env.pipelineFlag

@@ -125,6 +125,7 @@ public class DataSourceServiceImpl implements IDataSourceService{
 		version.setModifiedTimeStamp(Instant.now().toString());
 		version.setLabel(dataSource.getDatasourceId().getVersionId().getLabel());
 		id.setVersionId(version);
+		id.setName(dataSource.getDatasourceId().getName());
 		dataSource.setDatasourceId(id);
 		dataSource.setActive(true);
 		// check null values in the parameters that are required for connection
@@ -158,9 +159,19 @@ public class DataSourceServiceImpl implements IDataSourceService{
 			logger.debug("checkDataSourcesDetails, connection test for mysql datasource will be initiated");
 			MySQLConnectorModel sqlConnectorModel = new MySQLConnectorModel();
 			sqlConnectorModel.setHostname(datasource.getCommonDetails().getServerName());
-			sqlConnectorModel.setPassword(datasource.getDbDetails().getDbServerPassword());
+			if (isCreate) {
+				sqlConnectorModel.setUserName(datasource.getDbDetails().getDbServerUsername());
+				sqlConnectorModel.setPassword(datasource.getDbDetails().getDbServerPassword());
+			} else if (isUpdate) {
+				Map<String, String> encryptionMap = decryptCreds(datasource);
+				if (null != encryptionMap) {
+					datasource.getDbDetails().setDbServerUsername(encryptionMap.get("DbServerUsername"));
+					datasource.getDbDetails().setDbServerPassword(encryptionMap.get("DbServerPassword"));
+				}
+				sqlConnectorModel.setUserName(datasource.getDbDetails().getDbServerUsername());
+				sqlConnectorModel.setPassword(datasource.getDbDetails().getDbServerPassword());
+			}
 			sqlConnectorModel.setPort(String.valueOf(datasource.getCommonDetails().getPortNumber()));
-			sqlConnectorModel.setUserName(datasource.getDbDetails().getDbServerUsername());
 			sqlConnectorModel.setDbName(datasource.getDbDetails().getDatabaseName());
 			sqlConnectorModel.getMetaData();
 			// Get the Connection Status (success/failed) by connecting to MySQL Service
@@ -170,10 +181,12 @@ public class DataSourceServiceImpl implements IDataSourceService{
 			} catch (Exception e) {
 				logger.error(
 						"checkDataSourcesDetails, Exception occurred while checking connection : " + e.getMessage());
-				throw new ServiceConnectivityException("Check DataSources Details, Exception occurred while checking connection",e);
+				throw new ServiceConnectivityException(
+						"Check DataSources Details, Exception occurred while checking connection", e);
 			}
 
-			// If the connection status is success then update the dataSource db details and metadata
+			// If the connection status is success then update the dataSource db details and
+			// metadata
 			if (connectionStatus.equals("success") && (isCreate || isUpdate)) {
 				Map<String, String> encryptionMap = encryptCreds(datasource);
 				if (null != encryptionMap) {
@@ -193,10 +206,19 @@ public class DataSourceServiceImpl implements IDataSourceService{
 
 			if (datasource.getDbDetails().getDbServerPassword() != null
 					&& datasource.getDbDetails().getDbServerUsername() != null) {
-				mongoConnectionModel.setPassword(datasource.getDbDetails().getDbServerPassword());
-				mongoConnectionModel.setUsername(datasource.getDbDetails().getDbServerUsername());
+				if (isCreate) {
+					mongoConnectionModel.setUsername(datasource.getDbDetails().getDbServerUsername());
+					mongoConnectionModel.setPassword(datasource.getDbDetails().getDbServerPassword());
+				} else if (isUpdate) {
+					Map<String, String> encryptionMap = decryptCreds(datasource);
+					if (null != encryptionMap) {
+						datasource.getDbDetails().setDbServerUsername(encryptionMap.get("DbServerUsername"));
+						datasource.getDbDetails().setDbServerPassword(encryptionMap.get("DbServerPassword"));
+					}
+					mongoConnectionModel.setUsername(datasource.getDbDetails().getDbServerUsername());
+					mongoConnectionModel.setPassword(datasource.getDbDetails().getDbServerPassword());
+				}
 			}
-
 			try {
 				connectionStatus = mongoSvc.getMongoConnectionStatus(mongoConnectionModel,
 						datasource.getDbDetails().getDbQuery());
@@ -228,10 +250,19 @@ public class DataSourceServiceImpl implements IDataSourceService{
 			
 			if (datasource.getDbDetails().getDbServerPassword() != null
 					&& datasource.getDbDetails().getDbServerUsername() != null) {
-				couchConnectionModel.setUsername(datasource.getDbDetails().getDbServerUsername());
-				couchConnectionModel.setPassword(datasource.getDbDetails().getDbServerPassword());
+				if (isCreate) {
+					couchConnectionModel.setUsername(datasource.getDbDetails().getDbServerUsername());
+					couchConnectionModel.setPassword(datasource.getDbDetails().getDbServerPassword());
+				} else if (isUpdate) {
+					Map<String, String> encryptionMap = decryptCreds(datasource);
+					if (null != encryptionMap) {
+						datasource.getDbDetails().setDbServerUsername(encryptionMap.get("DbServerUsername"));
+						datasource.getDbDetails().setDbServerPassword(encryptionMap.get("DbServerPassword"));
+					}
+					couchConnectionModel.setUsername(datasource.getDbDetails().getDbServerUsername());
+					couchConnectionModel.setPassword(datasource.getDbDetails().getDbServerPassword());
+				}
 			}
-
 			try {
 				connectionStatus = couchSvc.getCouchConnectionStatus(couchConnectionModel, datasource.getDbDetails().getDbQuery());
 			} catch (Exception e) {
@@ -314,6 +345,7 @@ public class DataSourceServiceImpl implements IDataSourceService{
 		dataSourceModel.getDatasourceId().getVersionId().setModifiedTimeStamp(Instant.now().toString());
 		dataSourceModel.getDatasourceId().setName(dataSource.getDatasourceId().getName());
 		dataSourceModel.setCategory(dataSource.getCategory());
+		dataSourceModel.setDatasourceDescription(dataSource.getDatasourceDescription());
 		dataSourceModel.setOwner(owner);
 		
 		String connectionStatus = checkDataSourceConnectionStatus(authenticatedUserId,dataSource, dataSourceKey, "update");
@@ -545,6 +577,30 @@ public class DataSourceServiceImpl implements IDataSourceService{
 		}
 		logger.debug("encryptCreds() End");
 		return encryptionMap;
+	}
+	
+	private Map<String, String> decryptCreds(DataSource datasource) {
+		logger.debug("decryptCreds() Begin");
+		Map<String, String> writeValues = new HashMap<>();
+		writeValues.put("DbServerUsername", datasource.getDbDetails().getDbServerUsername());
+		writeValues.put("DbServerPassword", datasource.getDbDetails().getDbServerPassword());
+		// Convert the DB Server User Name and DB Server User Password into encrypted
+		// format
+		Map<String, String> decryptionMap = new HashMap<String, String>();
+
+		if (writeValues == null || writeValues.isEmpty()) {
+			return null;
+		} else {
+			String value = null;
+			MLWBCipherSuite cipherSuite = new MLWBCipherSuite(datasource.getDatasourceId().getUuid());
+			for (String key : writeValues.keySet()) {
+				value = writeValues.get(key);
+				value = cipherSuite.decrypt(value);
+				decryptionMap.put(key, value);
+			}
+		}
+		logger.debug("decryptCreds() End");
+		return decryptionMap;
 	}
 
 	private void validateDataSource(String authenticatedUserId, String dataSourceKey) throws IOException {

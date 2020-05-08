@@ -33,6 +33,7 @@ export class DashboardLitElement extends LitElement {
       sharedProjectCount: {type: Number},
       pipelineCount: {type: Number},
       notebookCount: {type: Number},
+      datasourceCount: {type: Number},
       modelCount: {type: Number},
       prModelCount: {type: Number},
       portalFEUrl: {type: String},
@@ -65,6 +66,7 @@ export class DashboardLitElement extends LitElement {
     this.sharedProjectCount = 0;
     this.pipelineCount = 0;
     this.notebookCount = 0;
+    this.datasourceCount = 0;
     this.modelCount = 0;
     this.prModelCount = 0;
     this.view = '';
@@ -108,6 +110,7 @@ export class DashboardLitElement extends LitElement {
           this.getProjectsCount();
           this.getPipelineCount();
           this.getNotebookCount();
+          this.datasourceCount();
           this.getPRModelCount();
           this.getModelCount();
         } else if(username && username !== '' && token && token !== '' && id && id !== '') {
@@ -118,6 +121,7 @@ export class DashboardLitElement extends LitElement {
           this.getProjectsCount();
           this.getPipelineCount();
           this.getNotebookCount();
+          this.datasourceCount();
           this.getPRModelCount();
           this.getModelCount();
         } else {
@@ -218,6 +222,34 @@ export class DashboardLitElement extends LitElement {
       this.errorMessage = 'Notebook count fetch request failed with error: '+ error;
     });
   }
+
+  getdatasourceCount(){
+    const url = this.componenturl + '/api/datasource/count';
+	  fetch(url, {
+		  method: 'POST',
+      mode: 'cors',
+      cache: 'default',
+      headers: {
+        "Content-Type": "application/json",
+        "auth": this.authToken,
+      },
+      body: JSON.stringify({
+        "url": this.msconfig.datasourcemSURL,
+        "userName": this.userName
+      })
+    }).then(res => res.json())
+      .then((n) => {
+        if(n.status === 'Error'){
+          this.errorMessage = n.message;
+        } else {
+          this.datasourceCount = n.data;
+        }
+    }).catch((error) => {
+      console.error('Request failed', error);
+      this.errorMessage = 'Datasource count fetch request failed with error: '+ error;
+    });
+  }
+
 
   getPipelineCount(){
     const url = this.componenturl + '/api/pipeline/count';
@@ -433,6 +465,32 @@ export class DashboardLitElement extends LitElement {
                       </a>
                     </div>
                   </div>
+
+                  <div class="col-md-3">
+                    <div class="card-shadow card card-link mb-3 mb-5 bg-white h-75">
+                      <a href="javascript:void" @click=${e => this.userAction("dataset")}>
+                        <div class="card-body text-center">
+                          <div class="div-color mb-4">
+                            <button class="btnIcon btn-primary">
+                              <mwc-icon class="mwc-icon">import_contacts</mwc-icon>
+                            </button>
+                            <h2 class="font-weight-normal mt-2">Datasources</h2>
+                          </div>
+                          ${this.datasourceCount === 0
+                            ? html`
+                              <button class="btn btn-primary card-button btn-md">
+                                Create Notebook
+                              </button>
+                            `
+                            : html`
+                              <h4 class="font-weight-normal">${this.datasourceCount}</h4>
+                            `
+                          }
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+
                   ${this.pipelineFlag === "true"
                     ?html`
                     <div class="col-md-3">

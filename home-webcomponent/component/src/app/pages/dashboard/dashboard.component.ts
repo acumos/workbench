@@ -45,6 +45,8 @@ export class DashboardComponent extends BaseComponent implements OnInit {
       this.router.navigateByUrl('/pages/projects/catalog');
     } else if (e.detail[0].action === 'pipeline') {
       this.router.navigateByUrl('/pages/pipeline/catalog');
+    } else if (e.detail[0].action === 'datasource') {
+      this.router.navigateByUrl('/pages/datasource/catalog');
     }
   }
 

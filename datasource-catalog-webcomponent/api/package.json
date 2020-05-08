@@ -1,0 +1,19 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "main": "server.js",
+  "license": "Apache",
+  "scripts": {
+    "start": "node src/server.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "cookie-parser": "^1.4.3",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "https": "^1.0.0",
+    "method-override": "~2.1.2",
+    "request": "^2.75.0",
+    "request-cookies": "^1.1.0"
+  }
+}

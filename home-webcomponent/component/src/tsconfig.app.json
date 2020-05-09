@@ -11,16 +11,16 @@
       "@nebular/*": [
         "../node_modules/@nebular/*"
       ]
-    }
+    },
+	  "skipLibCheck" : true,
   },
   "exclude": [
     "test.ts",
     "**/*.spec.ts",
-    "../node_modules/@nebular/**/*.spec.ts"
+    "node_modules"
   ],
   "include": [
     "../src/*.ts",
-    "../src/**/*.ts",
-    "../node_modules/@nebular/**/*.ts"
+    "../src/**/*.ts"
   ]
 }

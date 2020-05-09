@@ -28,6 +28,8 @@ import { NotebookViewComponent } from './notebook/view/view.component';
 import { PipelineCatalogComponent } from './pipeline/catalog/catalog.component';
 import { PipelineViewComponent } from './pipeline/view/view.component';
 import { AcuComposeComponent } from './acuCompose/acuCompose.component';
+import { DatasetCatalogComponent } from './dataset/catalog/catalog.component';
+import { DatasetViewComponent } from './dataset/view/view.component';
 
 const routes: Routes = [
   {
@@ -61,6 +63,14 @@ const routes: Routes = [
       {
         path: 'pipeline/view/:id/:name',
         component: PipelineViewComponent,
+      },
+      {
+        path: 'dataset/catalog',
+        component: DatasetCatalogComponent,
+      },
+      {
+        path: 'dataset/view/:id/:name',
+        component: DatasetViewComponent,
       },
       {
         path: 'acuCompose',

@@ -37,6 +37,7 @@ export class CatalogComponent extends BaseComponent implements OnInit {
   }
 
   OnCatalogProjectEvent(e) {
+    debugger;
     if (e.detail[0].action === 'view-project') {
       this.router.navigateByUrl('/pages/projects/view/' + e.detail[0].projectId + '/' + e.detail[0].projectName);
     }

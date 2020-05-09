@@ -27,8 +27,10 @@ var config = {
 		notebookCatalogComponent: "http://localhost:9087",
 		pipelineComponent: "http://localhost:9091",
 		pipelineCatalogComponent: "http://localhost:9092",
+		datasourceCatalogComponent: "http://localhost:9093",
+		datasourceComponent: "http://localhost:9094",
 		portalFEURL: "http://localhost:8085",
-		menuItems: '[{"title": "Dashboard", "icon": "fa fa-tachometer-alt", "link": "/pages/dashboard", "home": true}, {"title": "Projects", "icon": "fa fa-project-diagram", "link": "/pages/projects/catalog"}, {"title": "Notebooks", "icon": "fas fa-book-open", "link": "/pages/notebook/catalog"}, {"title": "Data Pipelines", "icon": "fa fa-code-branch", "link": "/pages/pipeline/catalog"}, {"title": "AcuCompose", "icon": "fas fa-crop-alt", "link": "/pages/acuCompose"}]'
+		menuItems: '[{"title": "Dashboard", "icon": "fa fa-tachometer-alt", "link": "/pages/dashboard", "home": true}, {"title": "Projects", "icon": "fa fa-project-diagram", "link": "/pages/projects/catalog"}, {"title": "Notebooks", "icon": "fas fa-book-open", "link": "/pages/notebook/catalog"}, {"title": "Data Pipelines", "icon": "fa fa-code-branch", "link": "/pages/pipeline/catalog"}, {"title": "Datasource", "icon": "fa fa-database", "link": "/pages/datasource/catalog"}]'
 	},
 	deploy : {
 		dashboardComponent : process.env.dashboardComponent,
@@ -38,6 +40,8 @@ var config = {
 		notebookCatalogComponent: process.env.notebookCatalogComponent,
 		pipelineComponent : process.env.pipelineComponent,
 		pipelineCatalogComponent: process.env.pipelineCatalogComponent,
+		datasourceCatalogComponent: process.env.datasourceCatalogComponent,
+		datasourceComponent: process.env.datasourceComponent,
 		portalFEURL: process.env.portalFEURL,
 		menuItems: process.env.menuItems
 	}

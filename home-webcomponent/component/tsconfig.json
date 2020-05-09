@@ -7,6 +7,7 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+     "skipLibCheck" : true, 
     "target": "es5",
     "typeRoots": [
       "node_modules/@types"
@@ -17,6 +18,9 @@
     ],
     "plugins": [
       { "name": "tslint-language-service"}
-    ]
+    ],
+ "exclude": [
+    "node_modules"
+  ]
   }
 }

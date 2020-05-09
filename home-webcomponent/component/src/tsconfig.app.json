@@ -11,7 +11,8 @@
       "@nebular/*": [
         "../node_modules/@nebular/*"
       ]
-    }
+    },
+	  "skipLibCheck" : true,
   },
   "exclude": [
     "test.ts",

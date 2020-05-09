@@ -25,13 +25,13 @@ import { BaseComponent } from '../../base/base.component';
 @Component({
   templateUrl: './view.component.html',
 })
-export class ViewComponent extends BaseComponent implements OnInit {
+export class DatasourceViewComponent extends BaseComponent implements OnInit {
 
   public id: string;
   public name: string;
   public router: Router;
   script: ScriptService;
-  public projectComponentURL: string;
+  public datasourceComponentURL: string;
   public userName: any;
   public authToken: any;
   public sessionError: any;
@@ -40,26 +40,25 @@ export class ViewComponent extends BaseComponent implements OnInit {
     { name: 'Home', href: '' },
     { name: 'Design Studio', href: '' },
     { name: 'ML Workbench', sref: '/pages/dashboard' },
-    { name: 'Projects', sref: '/pages/projects/catalog' }];
+    { name: 'Datasource', sref: '/pages/datasource/catalog' }];
 
   constructor(private route: ActivatedRoute, router: Router, script: ScriptService, breadcrumbsService: BreadcrumbsService) {
     super(router, script, breadcrumbsService);
   }
 
-  OnViewProjectEvent(e) {
-    if (e.detail[0].data === 'catalog-project') {
-      this.router.navigateByUrl('/pages/projects/catalog');
+  OnViewDatasourceEvent(e) {
+    if (e.detail[0].data === 'catalog-datasource') {
+      this.router.navigateByUrl('/pages/datasource/catalog');
     }
   }
 
   ngOnInit() {
-    debugger;
     this.loadHtml = false;
     this.showSpinner = true;
     this.alertOpen = false;
     this.id = this.route.snapshot.paramMap.get('id');
     this.name = this.route.snapshot.paramMap.get('name');
     this.breadCrumbs.push({ name: this.name });
-    this.loadComponent('projectComponent', 'project-webcomponent-element', this.breadCrumbs);
+    this.loadComponent('datasourceComponent', 'datasource-webcomponent-element', this.breadCrumbs);
   }
 }

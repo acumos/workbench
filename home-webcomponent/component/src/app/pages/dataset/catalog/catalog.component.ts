@@ -17,49 +17,36 @@ limitations under the License.
 */
 
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ScriptService } from '../../../@core/utils/script.service';
 import { BreadcrumbsService } from '../../../@core/utils/breadcrumbs.service';
 import { BaseComponent } from '../../base/base.component';
 
 @Component({
-  templateUrl: './view.component.html',
+  templateUrl: './catalog.component.html',
 })
-export class ViewComponent extends BaseComponent implements OnInit {
-
-  public id: string;
-  public name: string;
-  public router: Router;
-  script: ScriptService;
-  public projectComponentURL: string;
-  public userName: any;
-  public authToken: any;
-  public sessionError: any;
-  public alertOpen: any;
+export class DatasetCatalogComponent extends BaseComponent implements OnInit {
   public breadCrumbs: any[] = [
     { name: 'Home', href: '' },
     { name: 'Design Studio', href: '' },
     { name: 'ML Workbench', sref: '/pages/dashboard' },
-    { name: 'Projects', sref: '/pages/projects/catalog' }];
+    { name: 'Dataset' }];
 
-  constructor(private route: ActivatedRoute, router: Router, script: ScriptService, breadcrumbsService: BreadcrumbsService) {
+  constructor(router: Router, script: ScriptService, breadcrumbsService: BreadcrumbsService) {
     super(router, script, breadcrumbsService);
   }
 
-  OnViewProjectEvent(e) {
-    if (e.detail[0].data === 'catalog-project') {
-      this.router.navigateByUrl('/pages/projects/catalog');
+  OnCatalogDatasetEvent(e) {
+    debugger;
+    if (e.detail[0].action === 'view-dataset') {
+      this.router.navigateByUrl('/pages/dataset/view/' + e.detail[0].datasourceId + '/' + e.detail[0].datasetName);
     }
   }
 
   ngOnInit() {
-    debugger;
     this.loadHtml = false;
     this.showSpinner = true;
     this.alertOpen = false;
-    this.id = this.route.snapshot.paramMap.get('id');
-    this.name = this.route.snapshot.paramMap.get('name');
-    this.breadCrumbs.push({ name: this.name });
-    this.loadComponent('projectComponent', 'project-webcomponent-element', this.breadCrumbs);
+    this.loadComponent('datasetCatalogComponent', 'dataset-catalog-webcomponent', this.breadCrumbs);
   }
 }

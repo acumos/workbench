@@ -23,6 +23,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { ProjectsModule } from './projects/projects.module';
 import { NotebookModule } from './notebook/notebook.module';
 import { PipelineModule } from './pipeline/pipeline.module';
+import { DatasetModule } from './dataset/dataset.module';
 import { AcuComposeModule } from './acuCompose/acuCompose.module';
 import { BaseModule } from './base/base.module';
 
@@ -40,6 +41,7 @@ const PAGES_COMPONENTS = [PagesComponent];
     ProjectsModule,
     NotebookModule,
     PipelineModule,
+    DatasetModule,
     MiscellaneousModule,
     AcuComposeModule,
     BaseModule,

@@ -31,8 +31,6 @@ import { AppConfigService } from './app-config.service';
 import {Globals} from './globals'
 import '@material/mwc-icon';
 
-declare module 'lit-html/lib/parts.d' { type bigint = number; }
-
 const configInitializer = (appConfig: AppConfigService) => {
   return () => {
     return appConfig.loadAppConfig();

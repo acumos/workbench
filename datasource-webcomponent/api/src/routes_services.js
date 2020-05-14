@@ -262,6 +262,7 @@ module.exports = function(app) {
 				}
 			});
 		});
+	};
 	
 	var prepRespJsonAndLogit = function(httpResponse, responseData, message, error) {
 		let r = {};

@@ -26,7 +26,7 @@ var methodOverride = require('method-override');
 var cors = require('cors')
 
 var app = express();
-var port = process.env.PORT || 9093;
+var port = process.env.PORT || 9095;
 
 app.use(cors());
 app.use(express.static("../vue-component/dist"));

@@ -30,5 +30,5 @@ RUN npm run build:component
 
 RUN chmod 777 -R /opt/app/
 
-EXPOSE 9086
+EXPOSE 9099
 CMD npm run run:api

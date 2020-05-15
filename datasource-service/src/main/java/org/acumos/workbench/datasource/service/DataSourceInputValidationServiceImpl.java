@@ -72,7 +72,7 @@ public class DataSourceInputValidationServiceImpl implements IDataSourceInputVal
 			}
 
 			if (dataSource.getDatasourceId().getName() == null) {
-				missedParameters.add("datasetName");
+				missedParameters.add("datasourceName");
 			}
 
 			if (dataSource.getReadWriteDescriptor() == null) {
@@ -160,7 +160,7 @@ public class DataSourceInputValidationServiceImpl implements IDataSourceInputVal
 				}
 
 				throw new DataSourceException(
-						"Datasource Model has missing mandatory information. Please send all the required information.",
+						"Datasource has missing mandatory information. Please send all the required information.",
 						Status.BAD_REQUEST.getStatusCode());
 			}
 
@@ -197,7 +197,39 @@ public class DataSourceInputValidationServiceImpl implements IDataSourceInputVal
 				for (int i = 0; i < missedParameters.size(); i++) {
 					variables[i] = missedParameters.get(i);
 				}
-				throw new DataSourceException("Datasource Model has missing mandatory information. Please send all the required information.", Status.BAD_REQUEST.getStatusCode());
+				throw new DataSourceException("Datasource has missing mandatory information. Please send all the required information.", Status.BAD_REQUEST.getStatusCode());
+			}
+		} else if (dataSource.getCategory().equals("couch")) {
+			if (dataSource.getCommonDetails() == null || dataSource.getDbDetails() == null
+					|| dataSource.getCommonDetails().getServerName() == null
+					|| dataSource.getCommonDetails().getPortNumber() == 0
+					|| dataSource.getDbDetails().getDatabaseName() == null) {
+				ArrayList<String> missedParameters = new ArrayList<String>();
+				if (dataSource.getCommonDetails() == null)
+					missedParameters.add("commonDetails");
+				else if (dataSource.getDbDetails() == null)
+					missedParameters.add("dbDetails");
+				else {
+					if (dataSource.getDbDetails().getDbServerUsername() == null)
+						missedParameters.add("dbServerUsername");
+					if (dataSource.getDbDetails().getDbServerPassword() == null)
+						missedParameters.add("dbServerPassword");
+					if (dataSource.getDbDetails().getDatabaseName() == null)
+						missedParameters.add("databaseName");
+					if (dataSource.getDbDetails().getDbQuery() == null)
+						missedParameters.add("dbQuery");
+					if (dataSource.getCommonDetails().getServerName() == null)
+						missedParameters.add("serverName");
+					if (dataSource.getCommonDetails().getPortNumber() == 0)
+						missedParameters.add("portNumber");
+				}
+
+				String[] variables = new String[missedParameters.size()];
+
+				for (int i = 0; i < missedParameters.size(); i++) {
+					variables[i] = missedParameters.get(i);
+				}
+				throw new DataSourceException("Datasource has missing mandatory information. Please send all the required information.", Status.BAD_REQUEST.getStatusCode());
 			}
 		}
 	}

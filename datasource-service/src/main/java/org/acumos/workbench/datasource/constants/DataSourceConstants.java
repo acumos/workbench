@@ -27,7 +27,7 @@ public class DataSourceConstants {
 	public static final String ASSOCIATION_EXISTS_IN_COUCH_QUERY ="{\"selector\":{\"$and\":[{\"authenticatedUserId\":{\"$eq\":\"%s\"}},{\"projectId\":{\"$eq\":\"%s\"}},{\"dataSourceKey\":{\"$eq\":\"%s\"}},{\"dataSourceVersion\":{\"$eq\":\"%s\"}},{\"associationStatus\":{\"$eq\":\"%s\"}}]}}";
 	public static final String PROJECT_EXISTS_IN_ASSOCIATION_QUERY = "{\"selector\":{\"$and\":[{\"authenticatedUserId\":{\"$eq\":\"%s\"}},{\"projectId\":{\"$eq\":\"%s\"}}]}}";
 	public static final String DATA_SOURCE_COLLABORATION = "{\"selector\":{\"$and\":[{\"dataSourceKey\":{\"$eq\":\"%s\"}},{\"dataSourceCollaborator\":{\"$gte\":null}}]}}";
-	public static final String GET_ALL_SHARED_PROJECTS = "{\"selector\":{\"dataSourceCollaborator\":{\"$gt\":null}},\"fields\":[\"dataSourceCollaborator\",\"dataSourceKey\"]}";
+	public static final String GET_ALL_SHARED_DATASOURCES = "{\"selector\":{\"dataSourceCollaborator\":{\"$gt\":null}},\"fields\":[\"dataSourceCollaborator\",\"dataSourceKey\"]}";
 	public static final String DATA_SOURCE_ASSOCIATION_DETAILS = "{\"selector\":{\"$and\":[{\"authenticatedUserId\":{\"$eq\":\"%s\"}},{\"dataSourceKey\":{\"$eq\":\"%s\"}},{\"dataSourceVersion\":{\"$eq\":\"%s\"}}]}}";
 	
 }

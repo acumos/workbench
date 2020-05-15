@@ -424,7 +424,6 @@ public class DataSourceServiceImpl implements IDataSourceService{
 		RestPageRequest pageRequest = new RestPageRequest(0, 1);
 		cdsClient.setRequestId(MDC.get(LoggingConstants.MDCs.REQUEST_ID));
 		RestPageResponse<MLPUser> response = cdsClient.searchUsers(queryParameters, false, pageRequest);
-		
 		List<MLPUser> mlpUsers = response.getContent();
 		MLPUser mlpUser = null;
 		
@@ -475,16 +474,18 @@ public class DataSourceServiceImpl implements IDataSourceService{
 	public DataSourceAssociationModel linkDataSourcetoProject(String authenticatedUserId, String projectId, String datasourceKey,
 			DataSource dataSource) throws IOException {
 		logger.debug("linkDataSourcetoProject() Begin");
-		// Validate the Associating DataSet has the exists in DB or not 
+		// Validate the Associating DataSource has the existence in DB or not 
 		validateDataSource(authenticatedUserId, datasourceKey);
 		List<DataSource> dataSourceModels = couchService.getDataSourceForKey(datasourceKey);
 		if (null != dataSourceModels && !dataSourceModels.isEmpty()) {
 			for (DataSource dsModel : dataSourceModels) {
 				if(dataSource.getDatasourceId().getVersionId().getLabel().equals(dsModel.getDatasourceId().getVersionId().getLabel())) {
-					dsModel.getDatasourceId().setName(dataSource.getDatasourceId().getName());
-					dsModel.setCategory(dataSource.getCategory());
-					dsModel.getDatasourceId().getVersionId().setLabel(dataSource.getDatasourceId().getVersionId().getLabel());
-					dsModel.setActive(dataSource.isActive());
+					if(null != dataSource.getDatasourceId().getName() && null != dataSource.getCategory() && null != dataSource.getDatasourceId().getVersionId().getLabel()) {
+						dsModel.getDatasourceId().setName(dataSource.getDatasourceId().getName());
+						dsModel.setCategory(dataSource.getCategory());
+						dsModel.getDatasourceId().getVersionId().setLabel(dataSource.getDatasourceId().getVersionId().getLabel());
+						dsModel.setActive(dataSource.isActive());
+					}
 					dsModel.getDatasourceId().setUuid(datasourceKey);
 					dataSource = dsModel;
 					break;

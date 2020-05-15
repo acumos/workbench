@@ -663,7 +663,7 @@ public class CouchDBService {
 		CouchDbClient dbClient = null;
 		List<DataSourceCollaboratorModel> dataSourceCollaboratorList=null;
 		try {
-			String jsonQuery = DataSourceConstants.GET_ALL_SHARED_PROJECTS;
+			String jsonQuery = DataSourceConstants.GET_ALL_SHARED_DATASOURCES;
 			dbClient = getLightCouchdbClient();
 			dataSourceCollaboratorList = dbClient.findDocs(jsonQuery, DataSourceCollaboratorModel.class);
 		} catch (Exception e) {

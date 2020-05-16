@@ -20,6 +20,10 @@
 DataSource Service Release Notes
 =================================
 
+Version 1.0.0, 2020-04-13
+---------------------------
+* Added prefix to docker name : acumos/
+
 Version 0.0.1, 2020-04-13
 ---------------------------
 * ACUMOS-3887 : API definition for datasource

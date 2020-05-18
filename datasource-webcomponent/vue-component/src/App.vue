@@ -8,31 +8,31 @@
         <div class="flex flex-wrap m-2">
           <div class="flex w-full justify-end">
             <div v-if="dataset">
-              <button
+              <!-- <button
                 class="btn btn-primary ml-2"
                 @click="datasetLaunch(dataset)"
                  title="Launch Datasource"
                  disabled
               >
                 <FAIcon icon="external-link-alt"></FAIcon>
-              </button>
-              <button
+              </button> -->
+              <!-- <button
                 class="btn btn-secondary ml-2"
                 @click="datasetArchive(dataset)"
                 title="Archive Datasource"
                 disabled
               >
                 <FAIcon icon="box"></FAIcon>
-              </button>
+              </button> -->
               <template>
-                <button
+                <!-- <button
                   class="btn btn-secondary ml-2"
                   title="Unarchive Datasource"
                   @click="unarchiveDataset(dataset)"
                   disabled
                 >
                   <FAIcon icon="box-open"></FAIcon>
-                </button>
+                </button> -->
                 <button
                   class="btn btn-secondary ml-2 text-red-600"
                   title="Delete Datasource"
@@ -155,61 +155,61 @@ export default {
       "launchDataset"
     ]),
 
-    async unarchiveDataset(dataset) {
-      this.confirm({
-        title: "Unarchive " + dataset.name,
-        body: "Are you sure you want to unarchive " + dataset.name + "?",
-        options: {
-          okLabel: "Unarchive Dataset",
-          dismissLabel: "Cancel"
-        },
-        onOk: async () => {
-          const response = await this.restoreDataset();
-          if (response.data.status === "Success") {
-            await this.getDatasetDetails();
-            this.showToastMessage({
-              id: "global",
-              message: `${response.data.message}`,
-              type: "success"
-            });
-          } else {
-            this.showToastMessage({
-              id: "global",
-              message: `${response.data.message}`,
-              type: "error"
-            });
-          }
-        }
-      });
-    },
+    // async unarchiveDataset(dataset) {
+    //   this.confirm({
+    //     title: "Unarchive " + dataset.name,
+    //     body: "Are you sure you want to unarchive " + dataset.name + "?",
+    //     options: {
+    //       okLabel: "Unarchive Dataset",
+    //       dismissLabel: "Cancel"
+    //     },
+    //     onOk: async () => {
+    //       const response = await this.restoreDataset();
+    //       if (response.data.status === "Success") {
+    //         await this.getDatasetDetails();
+    //         this.showToastMessage({
+    //           id: "global",
+    //           message: `${response.data.message}`,
+    //           type: "success"
+    //         });
+    //       } else {
+    //         this.showToastMessage({
+    //           id: "global",
+    //           message: `${response.data.message}`,
+    //           type: "error"
+    //         });
+    //       }
+    //     }
+    //   });
+    // },
 
-    async datasetArchive(dataset) {
-      this.confirm({
-        title: "Archive " + dataset.name,
-        body: "Are you sure you want to archive " + dataset.name + "?",
-        options: {
-          okLabel: "Archive Dataset",
-          dismissLabel: "Cancel"
-        },
-        onOk: async () => {
-          const response = await this.archiveDataset();
-          if (response.data.status === "Success") {
-            await this.getDatasetDetails();
-            this.showToastMessage({
-              id: "global",
-              message: `${response.data.message}`,
-              type: "success"
-            });
-          } else {
-            this.showToastMessage({
-              id: "global",
-              message: `${response.data.message}`,
-              type: "error"
-            });
-          }
-        }
-      });
-    },
+    // async datasetArchive(dataset) {
+    //   this.confirm({
+    //     title: "Archive " + dataset.name,
+    //     body: "Are you sure you want to archive " + dataset.name + "?",
+    //     options: {
+    //       okLabel: "Archive Dataset",
+    //       dismissLabel: "Cancel"
+    //     },
+    //     onOk: async () => {
+    //       const response = await this.archiveDataset();
+    //       if (response.data.status === "Success") {
+    //         await this.getDatasetDetails();
+    //         this.showToastMessage({
+    //           id: "global",
+    //           message: `${response.data.message}`,
+    //           type: "success"
+    //         });
+    //       } else {
+    //         this.showToastMessage({
+    //           id: "global",
+    //           message: `${response.data.message}`,
+    //           type: "error"
+    //         });
+    //       }
+    //     }
+    //   });
+    // },
     async datasetDelete(dataset) {
       this.confirm({
         title: "Delete " + dataset.name,
@@ -234,19 +234,19 @@ export default {
         }
       });
     },
-    async datasetLaunch(dataset) {
-      let response = await this.launchDataset();
-      if (response.data.status === "Success") {
-        let launchURL = response.data.data.dataset.jdbcURL;
-        window.open(launchURL, "_blank");
-      } else {
-        this.showToastMessage({
-          id: "global",
-          message: `${response.data.message}`,
-          type: "error"
-        });
-      }
-    }
+    // async datasetLaunch(dataset) {
+    //   let response = await this.launchDataset();
+    //   if (response.data.status === "Success") {
+    //     let launchURL = response.data.data.dataset.jdbcURL;
+    //     window.open(launchURL, "_blank");
+    //   } else {
+    //     this.showToastMessage({
+    //       id: "global",
+    //       message: `${response.data.message}`,
+    //       type: "error"
+    //     });
+    //   }
+    // }
   },
 
   mounted() {

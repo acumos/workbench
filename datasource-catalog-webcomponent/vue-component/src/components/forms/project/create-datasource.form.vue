@@ -77,7 +77,7 @@
             >
               <select class="form-select" v-model="category">
                 <option value>Select</option>
-                <option value="mongo">Mongo</option>
+                <option value="mongo" disabled>Mongo</option>
                 <option value="mysql">MySQL</option>
                 <option value="couch">Couch</option>
               </select>
@@ -97,7 +97,8 @@
               v-slot="{ errors, classes }"
             >
               <select class="form-select" v-model="readWriteDescriptor">
-                <option value="read,write">All</option>
+                <option value>Select</option>
+                <option value="all" disabled>All</option>
                 <option value="read">Read Only</option>
                 <option value="write">Write Only</option>
               </select>
@@ -255,7 +256,6 @@
           
            <div class="flex-1 flex flex-col mr-2">
             <label class="mt-2">Datasource Type
-			<span class="text-red-500">*</span></label>
             <ValidationProvider
               class="flex flex-col"
               name="Datasource Type"
@@ -263,7 +263,7 @@
               v-slot="{ errors, classes }"
             >
               <select class="form-select" v-model="datasetType">
-                <option value>Select Datasource Type</option>
+                <option value>Select</option>
               </select>
               <span class="text-sm text-red-700 flex items-center" v-if="errors[0]">
                 <FAIcon icon="exclamation-triangle" />
@@ -274,7 +274,7 @@
 		         <div class="flex-1 flex flex-col mr-2">
             <label class="mt-2">Task Type</label>
               <select class="form-select" v-model="taskType">
-                <option value>Select Task Type</option>
+                <option value>Select</option>
               </select>
           </div> 
         </div> 
@@ -283,19 +283,19 @@
           <div class="flex-1 flex flex-col mr-2">
             <label class="mt-2">Attribute Type</label>
               <select class="form-select" v-model="attributeType">
-                <option value>Select Attribute Type</option>
+                <option value>Select</option>
               </select>
           </div> 
            <div class="flex-1 flex flex-col mr-2">
             <label class="mt-2">Geo-Statistical Type</label>
               <select class="form-select" v-model="geoType">
-                <option value>Select Geo-Statistical Type</option>
+                <option value>Select</option>
               </select>
           </div> 
 		         <div class="flex-1 flex flex-col mr-2">
             <label class="mt-2">Format Type</label>
               <select class="form-select" v-model="formatType">
-                <option value>Select Format Type</option>
+                <option value>Select</option>
               </select>
           </div> 
         </div> 
@@ -394,12 +394,13 @@ export default {
       category: "",
       readWriteDescriptor: "",
       datasetType: "",
-      taskType: ""
+      taskType: "",
+      attributeType: "",
+      geoType: "",
+      formatType: "",
     };
   },
   created() {
-
-   // this.updatedDataset = this.isNew ? new Dataset() : new Dataset(this.data);
    this.updatedDataset =  new Dataset(this.updatedDataset) ;
   },
   computed: {
@@ -408,7 +409,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions("project", ["createDataset", "allDatasets"]),
+    ...mapActions("datasource", ["createDataset", "allDatasets"]),
     ...mapActions("app", ["showToastMessage"]),
     async save(dataset) {
       const isValid = await this.$refs.form.validate();
@@ -446,6 +447,9 @@ export default {
     },
     reset() {
       this.updatedDataset = new Dataset();
+      this.category= "";
+      this.jdbcURL = "";
+      this.readWriteDescriptor="";
       this.$refs.form.reset();
     }
   }

@@ -34,8 +34,7 @@
            <td>
             Datasource 
           </td>
-          <td>
-          
+          <td>    
           </td>
         </tr>
         <tr>
@@ -64,8 +63,7 @@
               </span>
             </ValidationProvider>
           </td>
-        </tr>
-        
+        </tr>   
        <tr>
           <td>
             Data Connector <span v-if="isEditing" class="text-red-500">*</span>
@@ -79,9 +77,8 @@
               v-slot="{ errors, classes }"
             >
               <select  class="form-input w-2/6"  v-model="updatedDataset.category">
-             
-               <option value="jdbc">JDBC</option>
-                <option value="mongo">Mongo</option>
+                <option value="mongo" disabled>Mongo</option>
+                <option value="jdbc">MySQL</option>
                 <option value="couch">Couch</option>
               </select>
               <span
@@ -107,7 +104,7 @@
               v-slot="{ errors, classes }"
             >
               <select  class="form-input w-2/6" v-model="updatedDataset.readWriteDescriptor">
-                <option value="read,write">All</option>
+                <option value="all" disabled>All</option>
                 <option value="read">Read Only</option>
                 <option value="write">Write Only</option>
               </select>
@@ -149,7 +146,6 @@
             </ValidationProvider>
           </td>
         </tr>
-
         <tr>
           <td>
             Database Server Password <span v-if="isEditing" class="text-red-500">*</span>
@@ -177,7 +173,6 @@
             </ValidationProvider>
           </td>
         </tr>
-
         <tr>
           <td>
             Database Name <span v-if="isEditing" class="text-red-500">*</span>
@@ -205,7 +200,6 @@
             </ValidationProvider>
           </td>
         </tr>
-
         <tr>
           <td>
             JDBC URL <span v-if="isEditing" class="text-red-500">*</span>
@@ -233,7 +227,6 @@
             </ValidationProvider>
           </td>
         </tr>
-
         <tr>
           <td>
             Database Query <span v-if="isEditing" class="text-red-500">*</span>
@@ -261,26 +254,26 @@
             </ValidationProvider>
           </td>
         </tr>
-                 <tr>
-          <td>Dataset MetaData</td>
+       <tr>
+          <td>Datasource MetaData</td>
            <td></td>
         </tr>
          <tr>
           <td>
-            Area <span v-if="isEditing" class="text-red-500">*</span>
+            Area <span v-if="isEditing" ></span>
           </td>
           <td v-if="!isEditing">{{ dataset.area }}</td>
           <td v-if="isEditing">
             <ValidationProvider
               class="flex flex-col"
-              name="Arear"
-              rules="required"
+              name="Area"  
               v-slot="{ errors, classes }"
             >
               <input
                 class="form-input w-2/6"
                 type="text"
                 v-model="updatedDataset.area"
+                disabled
               />
               <span
                 class="text-sm text-red-700 flex items-center"
@@ -292,23 +285,22 @@
             </ValidationProvider>
           </td>
         </tr>
-
       <tr>
           <td>
-            Dataset Type <span v-if="isEditing" class="text-red-500">*</span>
+            Datasource Type <span v-if="isEditing" ></span>
           </td>
           <td v-if="!isEditing">{{ dataset.dtype }}</td>
           <td v-if="isEditing">
             <ValidationProvider
               class="flex flex-col"
-              name="Dataset Type"
-              rules="required"
+              name="Datasource Type"
               v-slot="{ errors, classes }"
             >
               <input
                 class="form-input w-2/6"
                 type="text"
                 v-model="updatedDataset.dtype"
+                disabled
               />
               <span
                 class="text-sm text-red-700 flex items-center"
@@ -320,23 +312,22 @@
             </ValidationProvider>
           </td>
         </tr>
-
         <tr>
           <td>
-            Task Type <span v-if="isEditing" class="text-red-500">*</span>
+            Task Type <span v-if="isEditing" ></span>
           </td>
           <td v-if="!isEditing">{{ dataset.ttype }}</td>
           <td v-if="isEditing">
             <ValidationProvider
               class="flex flex-col"
               name="Task Type"
-              rules="required"
               v-slot="{ errors, classes }"
             >
               <input
                 class="form-input w-2/6"
                 type="text"
                 v-model="updatedDataset.ttype"
+                disabled
               />
               <span
                 class="text-sm text-red-700 flex items-center"
@@ -348,23 +339,22 @@
             </ValidationProvider>
           </td>
         </tr>
-
           <tr>
           <td>
-           Attribute Type <span v-if="isEditing" class="text-red-500">*</span>
+           Attribute Type <span v-if="isEditing" ></span>
           </td>
           <td v-if="!isEditing">{{ dataset.attributetype }}</td>
           <td v-if="isEditing">
             <ValidationProvider
               class="flex flex-col"
               name="Attribute Type"
-              rules="required"
               v-slot="{ errors, classes }"
             >
               <input
                 class="form-input w-2/6"
                 type="text"
                 v-model="updatedDataset.attributetype"
+                disabled
               />
               <span
                 class="text-sm text-red-700 flex items-center"
@@ -376,24 +366,22 @@
             </ValidationProvider>
           </td>
         </tr>
-
-
           <tr>
           <td>
-            Geo-Statistical Type <span v-if="isEditing" class="text-red-500">*</span>
+            Geo-Statistical Type <span v-if="isEditing" ></span>
           </td>
           <td v-if="!isEditing">{{ dataset.gstype }}</td>
           <td v-if="isEditing">
             <ValidationProvider
               class="flex flex-col"
               name="Geo-Statistical Type"
-              rules="required"
               v-slot="{ errors, classes }"
             >
               <input
                 class="form-input w-2/6"
                 type="text"
                 v-model="updatedDataset.gstype"
+                disabled
               />
               <span
                 class="text-sm text-red-700 flex items-center"
@@ -405,23 +393,22 @@
             </ValidationProvider>
           </td>
         </tr>
-
           <tr>
           <td>
-            Format Type <span v-if="isEditing" class="text-red-500">*</span>
+            Format Type <span v-if="isEditing" ></span>
           </td>
           <td v-if="!isEditing">{{ dataset.ftype }}</td>
           <td v-if="isEditing">
             <ValidationProvider
               class="flex flex-col"
               name="Format Typer"
-              rules="required"
               v-slot="{ errors, classes }"
             >
               <input
                 class="form-input w-2/6"
                 type="text"
                 v-model="updatedDataset.ftype"
+                disabled
               />
               <span
                 class="text-sm text-red-700 flex items-center"
@@ -439,9 +426,8 @@
 </template>
 
 <script>
-import dayjs from "dayjs";
-import { mapActions, mapState } from "vuex";
 
+import { mapActions, mapState } from "vuex";
 import Dataset from "../store/entities/datasource.entity.js";
 import CollapsableUi from "../vue-common/components/ui/collapsable.ui";
 
@@ -460,11 +446,7 @@ export default {
   },
   computed: {
     ...mapState("app", {
-     // useExternalNotebook: state => state.useExternalNotebook
     }),
-    isArchived() {
-      //return this.notebook.status === "ARCHIVED";
-    },
   },
 
   watch:{
@@ -485,11 +467,9 @@ export default {
 
     async save(updatedDataset) {
       const isValid = await this.$refs.form.validate();
-
       if (!isValid) {
         return;
       }
-
       const response = await this.updateDataset(updatedDataset.$toJson());
       if (response.data.status === "Success") {
         await this.getDatasetDetails();

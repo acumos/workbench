@@ -20,6 +20,11 @@
 ML Workbench Dashboard Web Component
 ===============================================
 
+Version 3.0.0 8th May 2020 
+=================================
+* ML Workbench UI - Datasource integration with Dashboard Webcomponent (ACUMOS-4076)
+
+
 Version 2.0.9  31st January 2020 
 =================================
 * Updated the Minor version for build release

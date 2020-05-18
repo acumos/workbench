@@ -25,6 +25,8 @@ ML Workbench
    :caption: Contents:
    
    dashboard-wc-release-notes.rst
+   datasource-catalog-wc-release-notes.rst
+   datasource-wc-release-notes.rst
    home-wc-release-notes.rst
    notebook-catalog-wc-release-notes.rst
    notebook-wc-release-notes.rst

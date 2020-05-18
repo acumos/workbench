@@ -33,7 +33,7 @@
           <FAIcon class="text-2xl text-gray-600" icon="user-circle"></FAIcon>
         </button>  -->
       </div>
-      <div>
+      <!-- <div>
         <button
           class="mx-2"
           title="Unarchive Datasource"
@@ -66,7 +66,7 @@
         >
           <FAIcon class="text-2xl text-gray-600" icon="trash-alt"></FAIcon>
         </button>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

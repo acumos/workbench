@@ -16,18 +16,11 @@
 .. limitations under the License.
 .. ===============LICENSE_END=========================================================
 
-=============
-ML Workbench
-=============
+===============================================
+ML Workbench Datasource Web Component
+===============================================
 
-.. toctree::
-   :maxdepth: 1
-   :caption: Contents:
-   
-   dashboard-component/index
-   datasource-component/index
-   home-component/index
-   notebook-component/index
-   pipeline-component/index
-   project-component/index
-   
+Version 3.0.0  8th May 2020 
+=================================
+
+* ML Workbench UI - Datasource Component with integration with Datasource service (ACUMOS-4076)

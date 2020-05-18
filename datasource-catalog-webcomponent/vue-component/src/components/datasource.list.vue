@@ -2,7 +2,7 @@
   <div class="flex flex-col m-3">
      <div class="flex w-full justify-end">
       <button class="btn btn-primary" @click="editDataset()" v-if="hasDatasets">
-        Create Dataset
+        Create Datasource
       </button>
       <a
         :href="datasetWikiURL"
@@ -24,7 +24,7 @@
            No Datasets, get started with ML Workbench by onboarding your first dataset.
           </p>
           <button class="btn btn-primary" @click="editDataset()">
-            Create Dataset
+            Create Datasource
           </button>
         </div>
       </CollapsableUi>
@@ -43,7 +43,7 @@
               :key="filter"
               :value="filter"
             >
-              {{ filter | capitalize }} Onboarded Datasets ({{ count }})
+              {{ filter | capitalize }} Onboarded Datasources ({{ count }})
             </option>
           </select>
         </div>
@@ -58,7 +58,7 @@
           <input
             type="text"
             class="form-input py-1"
-            placeholder="Search Datasets"
+            placeholder="Search Datasources"
             v-model="searchTerm"
           />
         </div>
@@ -82,7 +82,7 @@
       />
     </div>
     <ModalUi
-      :title="(activeDataset ? 'Edit' : 'Create') + ' Dataset'"
+      :title="(activeDataset ? 'Edit' : 'Create') + ' Datasource'"
       size="md"
       v-if="isEdittingDataset"
       @onDismiss="isEdittingDataset = false"
@@ -122,22 +122,6 @@ export default {
      },
     filteredAndOrdered() {
       let filtered = this.filterBy(this.datasets, this.searchTerm, "name");
-
-
-      // let filteredByExtraFilter = [];
-      //  if (this.currentFilter === "all") {
-      //   filteredByExtraFilter = [...filtered, ...sharedProjectsFiltered];
-      // } 
-     /* else if (this.currentFilter === "shared") {
-        filteredByExtraFilter = sharedProjectsFiltered;
-      } else { */
-        // filteredByExtraFilter = this.filterBy(
-        //   filtered,
-        //   this.currentFilter.toUpperCase(),
-        //   "status"
-        // );
-      //}
-
       return this.orderBy(filtered, this.sortBy, -1);
     },
     filteredOrderedAndSorted() {

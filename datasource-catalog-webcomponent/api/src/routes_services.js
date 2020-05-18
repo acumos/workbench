@@ -171,7 +171,7 @@ module.exports = function(app) {
 			};
 				
 			request.post(options, function(error, response, body) {
-				if (!error && response.statusCode == 201) {
+				if (!error && response.statusCode == 200) {
 					resolve(prepRespJsonAndLogit(response, response.body, "Datasource created successfully"));
 				} else if (!error) {
 					resolve(prepRespJsonAndLogit(response, response.body, "Unable to create Datasource"));

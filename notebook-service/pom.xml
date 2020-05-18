@@ -26,7 +26,7 @@
   <!-- FixMe Values are for template -->
   <groupId>org.acumos.workbench</groupId>
   <artifactId>notebook-service</artifactId>
-  <version>2.0.5-SNAPSHOT</version>
+  <version>2.0.5</version>
   <name>NotebookService</name>
   
   <parent>

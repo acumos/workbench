@@ -16,18 +16,13 @@
 .. limitations under the License.
 .. ===============LICENSE_END=========================================================
 
-=============
-ML Workbench
-=============
+======================
+DataSource User Guide
+======================
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
    :caption: Contents:
    
-   dashboard-component/index
-   home-component/index
-   notebook-component/index
-   pipeline-component/index
-   project-component/index
-   datasource-component/index
+   datasource-wc-user-guide
    

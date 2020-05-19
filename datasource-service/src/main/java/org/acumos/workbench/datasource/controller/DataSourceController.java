@@ -89,7 +89,7 @@ public class DataSourceController {
 			@ApiParam(value = "Data Source key", required = true) @PathVariable("datasourceKey") String dataSourceKey,
 			@RequestBody(required = true) DataSource dataSource) throws IOException, DataSourceNotFoundException, ClassNotFoundException, SQLException {
 		
-		logger.debug("updateDataSourceDetail() Begin");
+		logger.debug("Controller : updateDataSourceDetail() Begin");
 		
 		// 1. Check all the mandatory input request params are there or not
 		// 2. Check input request body is having proper json structure or not i.e json structure validation(schema)
@@ -98,7 +98,7 @@ public class DataSourceController {
 		// 4. Check the login user exists in acumos, or not by calling cds service
 		dataSourceService.getUserDetails(authenticatedUserId);
 		DataSource result = dataSourceService.updateDataSourceDetails(authenticatedUserId,dataSourceKey,dataSource);	
-		logger.debug("updateDataSourceDetail() End");
+		logger.debug("Controller : updateDataSourceDetail() End");
 		return new ResponseEntity<DataSource>(result, HttpStatus.OK);
 
 	}

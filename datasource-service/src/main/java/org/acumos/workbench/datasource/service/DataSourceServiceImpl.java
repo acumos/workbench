@@ -179,8 +179,7 @@ public class DataSourceServiceImpl implements IDataSourceService{
 				connectionStatus = mySQLSvc.getConnectionStatus(sqlConnectorModel,
 						datasource.getDbDetails().getDbQuery());
 			} catch (Exception e) {
-				logger.error(
-						"checkDataSourcesDetails, Exception occurred while checking connection : " + e.getMessage());
+				logger.error("checkDataSourcesDetails, Exception occurred while checking connection : " + e.getMessage());
 				throw new ServiceConnectivityException(
 						"Check DataSources Details, Exception occurred while checking connection", e);
 			}

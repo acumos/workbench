@@ -48,7 +48,7 @@ API
 			
 		**Response**
 			{
-			 dataSourceModelList: List of DataSourceModel
+			 List<DataSource>: List of DataSource
 			}
 
 		**Behavior**
@@ -79,7 +79,7 @@ API
 
 			7)  While fetching the DataSources details if any database exception occurs then throw the DataSourceException with appropriate error description and error code as 4xx as per the existing implementation.
 
-			8) The Json formatted List<DataSourceModel> objects should get in the body of the response with HTTP Status code 200 OK.
+			8) The Json formatted List<DataSource> objects should get in the body of the response with HTTP Status code 200 OK.
 			
 			
 2.Get DataSource
@@ -103,7 +103,7 @@ API
 			
 		**Response**
 			{
-			 dataSourceModel: DataSourceModel
+			 DataSource: DataSource
 			}
 
 			HTTPStatus : 201
@@ -132,7 +132,7 @@ API
 
 			5)  While fetching the DataSources details if any database exception occurs then throw the DataSourceException with appropriate error description and error code as 4xx as per the existing implementation.
 
-			6) The Json formatted DataSourceModel object should get in the body of the response with HTTP Status code 200 OK.
+			6) The Json formatted DataSource object should get in the body of the response with HTTP Status code 200 OK.
 			
 3. Create New DataSource
 ---------------------------
@@ -150,13 +150,13 @@ API
 			{
 				authenticatedUserId : User login Id,
 				
-				DataSource : DataSource Model object,
+				DataSource : DataSource object,
 			
 			}
 			
 		**Response**
 			{
-			 DataSource: DataSource Model object
+			 DataSource: DataSource object
 			}
 
 			HTTPStatus : 201

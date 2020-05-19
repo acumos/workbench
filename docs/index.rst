@@ -49,7 +49,9 @@ ML Workbench
    predictor-service-release-notes.rst
    predictor-service-api-doc.rst
    predictor-service-developer-guide.rst
+   datasource-service-release-notes.rst
    datasource-service-api-doc.rst
+   datasource-service-developer-guide.rst
    workbench-common-release-notes.rst
    workbench-common-doc.rst
    workbench-common-developer-guide.rst

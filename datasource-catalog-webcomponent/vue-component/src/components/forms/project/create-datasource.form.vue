@@ -251,6 +251,7 @@
                 class="form-input"
                 v-model="area"
                 placeholder="Enter Area"
+				disabled
               />
           </div>
           

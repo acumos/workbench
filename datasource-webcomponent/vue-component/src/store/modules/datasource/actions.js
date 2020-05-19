@@ -60,7 +60,7 @@ export default {
         userName: rootState.app.userName,
         url: rootState.app.datasourcemSURL,
         datasetPayload: dataset,
-        datasourceKey: rootState.notebook.activeDataset,
+        datasourceKey: rootState.datasource.activeDataset,
       }
     );
   },

@@ -20,6 +20,10 @@
 Workbench Common Release Notes
 ================================
 
+version 2.0.4, 2020-05-26
+---------------------------
+* Added DataSource Model Classes
+
 Version 2.0.3, 2020-01-29
 ---------------------------
 * Updated Workbench commons CDS version to 3.1.1

@@ -17,12 +17,12 @@
 .. ===============LICENSE_END=========================================================
 
 
-===========================
+==============================
 Datasource Component Overview
-===========================
+==============================
 
 Datasource Catalog
-================
+===================
 
 Datasource Catalog screen displays list of datasources which are created by user. There are following ways to navigate to the Datasource Catalog screen.
 
@@ -32,6 +32,9 @@ Datasource Catalog screen displays list of datasources which are created by user
 
 	.. image:: images/datasource-catalog.PNG
 	   :alt: datasource-catalog image.
+	   
+	.. image:: images/datasource-catalog1.PNG
+	   :alt: datasource-catalog1 image.
 
 
 
@@ -63,7 +66,7 @@ Datasource Catalog screen displays list of datasources which are created by user
 
 
 datasource Details
-================
+====================
 
 On click on specific datasource card in the datasource catalog screen, user will be redirected to the datasource details screen. In this screen, datasource basic details will get displayed.
  

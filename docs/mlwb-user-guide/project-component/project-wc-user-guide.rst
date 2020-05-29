@@ -76,6 +76,9 @@ Project Catalog screen displays list of projects which are created by user. Ther
   
 	.. image:: images/projects-filter.PNG
 	   :alt: projects-filter image.
+	   
+	.. image:: images/project-filter.PNG
+	   :alt: project-filter image.
 
 2. **Project Sorting**
 
@@ -85,6 +88,9 @@ Project Catalog screen displays list of projects which are created by user. Ther
   
 	.. image:: images/project-created date.PNG
 	   :alt: project-created date image.
+	   
+	.. image:: images/project-sorting1.PNG
+	   :alt: project-sorting1 image.
 	   
 	
   For Project Name
@@ -266,6 +272,16 @@ In the Project details screen, user can perform following Project relevant actio
   	On successful MODEL association, model will get displayed in the tablular list.
 
 	.. image:: images/associate-model.PNG
+	
+  * **Deploy to K8
+  
+	After model association with project, user can deploy that model to k8s, the predictor will be created with user provided values and it will be displayed under the predictor section.
+	
+	.. image:: images/deploy2-k8s.PNG
+	
+	.. image:: images/deploy2-k8s1.PNG
+	
+	.. image:: images/deploy2-k8spredictorcreation.PNG
 
   * **Delete Model Association**: 
   

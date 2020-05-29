@@ -20,8 +20,8 @@
 ML Workbench Platform Overview
 ==============================
 
-The ML Workbench is a web-based platoform designed for users who wish to create, track, manage and organize ML Models, Notebooks, ML Data Pipelines. 
-ML Workbench is the user's personal space where user can create any projects, notebooks or data pipelines and share among other platform users. 
+The ML Workbench is a web-based platoform designed for users who wish to create, track, manage and organize ML Models, Notebooks, ML Data Pipelines, DataSources. 
+ML Workbench is the user's personal space where user can create any projects, notebooks or data pipelines, datasources and share among other platform users. 
 User will be able to launch Jupyter/Zeppelin Notebook, Nifi pipeline, Acucompose and CMLP Studio from ML workbench.
 
 ML Workbench is an integral part of Acumos Portal which can be launched from 'Design Studio' of Acumos Portal as shown in below screenshot.
@@ -31,10 +31,13 @@ ML Workbench is an integral part of Acumos Portal which can be launched from 'De
 
 
 After clicking on launch button of ML workbench, Users are welcomed to ML Workbench home page with displaying 
-# of Projects, Notebooks, Pipelines and Models associated to the logged in user. Left part of the ML Workbench screen shows the 
+# of Projects, Notebooks, Pipelines, DataSources and Models associated to the logged in user. Left part of the ML Workbench screen shows the 
 sidebar to help in navigation from one to another screens. 
 
     .. image:: images/Home-Landing.PNG
+	
+	.. image:: images/home-land1.PNG
+	
 
 .. note::
     Users need to have valid Acumos session present in browser to navigate to the ML Workbench platform.

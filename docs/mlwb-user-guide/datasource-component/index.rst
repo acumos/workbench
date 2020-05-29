@@ -16,9 +16,9 @@
 .. limitations under the License.
 .. ===============LICENSE_END=========================================================
 
-=============
-Notebook User Guide
-=============
+=======================
+DataSource User Guide
+=======================
 
 .. toctree::
    :maxdepth: 2

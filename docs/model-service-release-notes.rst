@@ -20,9 +20,10 @@
 Model Service Release Notes
 ===============================
 
-Version 2.0.4, 2020-01-29
+Version 2.0.4, 2020-05-29
 ---------------------------
 * Updated Model Service CDS version to 3.1.1
+* Updated the workbench-common depndency to 2.0.4
 
 Version 2.0.3, 2019-12-16
 ---------------------------

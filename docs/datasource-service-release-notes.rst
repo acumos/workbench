@@ -20,9 +20,10 @@
 DataSource Service Release Notes
 =================================
 
-Version 1.0.0, 2020-04-13
+Version 1.0.0, 2020-05-29
 ---------------------------
 * Added prefix to docker name : acumos/
+* Updated the workbench-common depndency to 2.0.4
 
 Version 0.0.1, 2020-04-13
 ---------------------------

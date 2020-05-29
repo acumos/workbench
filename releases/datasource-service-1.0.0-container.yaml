@@ -1,0 +1,10 @@
+---
+distribution_type: container
+container_release_tag: 1.0.0
+container_pull_registry: nexus3.acumos.org:10004
+container_push_registry: nexus3.acumos.org:10002
+project: workbench
+ref: c02a044c4206ef12e090be0cc735330ca7c657b1
+containers:
+        - name: datasource-service
+          version: 1.0.0

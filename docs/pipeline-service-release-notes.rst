@@ -20,9 +20,10 @@
 Pipeline Service Release Notes
 ===============================
 
-Version 2.0.5, 2020-01-29
+Version 2.0.5, 2020-05-29
 ---------------------------
 * Updated Pipeline Service CDS version to 3.1.1
+* Updated the workbench-common depndency to 2.0.4
 
 Version 2.0.4, 2019-12-16
 ---------------------------

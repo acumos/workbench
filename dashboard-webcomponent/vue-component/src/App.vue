@@ -22,6 +22,7 @@
           <span class="text-2xl text-center" v-if="all_project_count">{{ all_project_count }}</span>
           <button v-if="!all_project_count" class="btn btn-primary">Create Project</button>
         </div>
+		
         <div
           @click="openSection('notebook')"
           class="flex flex-col border p-4 m-4 shadow-xl justify-center w-1/4 justify-between cursor-pointer"

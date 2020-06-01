@@ -45,6 +45,7 @@
               </a>
             </div>
           </div>
+		  
           <ProjectDetails :project="project" v-if="project" class="my-5" />
           <template v-if="project && project.status !== 'ARCHIVED'">
             <NotebookList :notebooks="notebooks" class="my-5" />

@@ -1,0 +1,18 @@
+---
+distribution_type: container
+container_release_tag: 3.0.0
+container_pull_registry: nexus3.acumos.org:10004
+container_push_registry: nexus3.acumos.org:10002
+project: workbench
+ref: 2eb7e460c72c74ab6265495bb915e7d165aee4f4
+containers:
+        - name: dashboard-webcomponent
+          version: 3.0.0
+        - name: home-webcomponent
+          version: 3.0.0
+        - name: project-webcomponent
+          version: 3.0.0
+        - name: datasource-webcomponent
+          version: 3.0.0
+        - name: datasource-catalog-webcomponent
+          version: 3.0.0

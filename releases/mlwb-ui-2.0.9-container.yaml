@@ -1,0 +1,18 @@
+---
+distribution_type: container
+container_release_tag: 2.0.9
+container_pull_registry: nexus3.acumos.org:10004
+container_push_registry: nexus3.acumos.org:10002
+project: workbench
+ref: fe8f5f84fb7d07d31520cb2c482b9a075350da9a
+containers:
+        - name: notebook-catalog-webcomponent
+          version: 2.0.9
+        - name: notebook-webcomponent
+          version: 2.0.9
+        - name: project-catalog-webcomponent
+          version: 2.0.9
+        - name: pipeline-catalog-webcomponent
+          version: 2.0.9
+        - name: pipeline-webcomponent
+          version: 2.0.9

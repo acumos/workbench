@@ -57,6 +57,7 @@
   </div>
 </template>
 
+
 <script>
 import { dom } from "@fortawesome/fontawesome-svg-core";
 import { mapState, mapActions, mapMutations } from "vuex";

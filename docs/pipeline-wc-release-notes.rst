@@ -17,7 +17,7 @@
 .. ===============LICENSE_END=========================================================
 
 ===============================================
-ML Workbench Project Web Component
+ML Workbench Pipeline Web Component
 ===============================================
 
 Version 2.0.9  31st January 2020 

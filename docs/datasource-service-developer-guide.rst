@@ -67,7 +67,7 @@ ML(Machine Learning) Workbench DataSource Service Developer Guide
 
     7. After successfully setting Authorize value, API are available to access.  Following are the sample inputs :
 
-        1.Get DataSource List
+	1.Get DataSource List
 
             {
 				authenticatedUserId : User login Id,
@@ -77,10 +77,9 @@ ML(Machine Learning) Workbench DataSource Service Developer Guide
 				namespace : datasource namespace,
 				
 				textSearch : textSearch
-	    }
+	    } 
 			
-
-		2.Get DataSource
+	2.Get DataSource
 
             {
 				authenticatedUserId : User login Id,
@@ -88,7 +87,7 @@ ML(Machine Learning) Workbench DataSource Service Developer Guide
 				dataSourceKey : DataSource Key
 	    }
 			
-		3.Create New DataSource
+	3.Create New DataSource
 
             {
 				authenticatedUserId : User login Id,
@@ -96,7 +95,7 @@ ML(Machine Learning) Workbench DataSource Service Developer Guide
 				DataSource : DataSource Object
 	    }
 			
-		4.Update DataSource Details
+	4.Update DataSource Details
 
             {
 				authenticatedUserId : User login Id,
@@ -106,7 +105,7 @@ ML(Machine Learning) Workbench DataSource Service Developer Guide
 				DataSource : DataSource Object
 	    }
 			
-		5.Delete DataSource Details
+	5.Delete DataSource Details
 
             {
 				authenticatedUserId : User login Id,
@@ -114,7 +113,7 @@ ML(Machine Learning) Workbench DataSource Service Developer Guide
 				dataSourceKey : DataSource Key (DataSource Id)
 	    }
 			
-		6.Associate the DataSource to the project
+	6.Associate the DataSource to the project
 
             {
 				authenticatedUserId : User login Id,
@@ -126,4 +125,66 @@ ML(Machine Learning) Workbench DataSource Service Developer Guide
 				DataSource  :  DataSource object
 	    }
 			
+	7.Update the Association Details of DataSourceProject
+
+            {
+				authenticatedUserId : User login Id,
+				
+				projectId  : Project Id,
+				
+				dataSourceKey : DataSource Key (DataSource Id),
+				
+				associationId : Association Id,
+				
+				DataSource  :  dataSource object
+	    }
 		
+	8.Get the list of DataSources which are associated to a project
+
+            {
+				authenticatedUserId : User login Id,
+				
+				projectId  : Project Id
+	    }
+			
+	9.Delete the Association Details of DataSourceProject
+	
+            {
+				authenticatedUserId : User login Id,
+				
+				projectId  : Project Id,
+				
+				datasourceKey : Data Source key,
+				
+				associationId : Association Id
+	    }
+			
+	10.Share Data Source to a Collaborator
+	
+            {
+				authenticatedUserId : User login Id,
+				
+				datasourceKey : Data Source key,
+				
+				Users : collaborators
+	    }
+			
+	11.Get the Shared DataSources for a User
+	
+            {
+				authenticatedUserId : User login Id
+				
+	    }
+			
+	12.Remove the User from Collaborator List
+	
+            {
+				authenticatedUserId : User login Id,
+				
+				datasourceKey : Data Source key,
+				
+				Users : collaborators
+				
+	    }
+			
+	

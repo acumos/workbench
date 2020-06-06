@@ -18,7 +18,7 @@ This repository holds projects that together comprise the Workbench User interfa
 
 Browse to your preferred directory and run below command:
 	
-	git clone https://<userId>@gerrit.acumos.org/workbench.git
+	git clone --depth 1 https://<userId>@gerrit.acumos.org/workbench.git
 
 ## Framework details
 

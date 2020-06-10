@@ -91,13 +91,13 @@ Notebook Catalog screen displays list of notebooks which are created by user. Th
   
   For Notebook Created Date
 
-	.. image:: images/notebook-sorting by created date.PNG
-	   :alt: notebook-sorting by created date image.
+	.. image:: images/notebook-sorting-by-created-date.PNG
+	   :alt: notebook-sorting-by-created-date image.
 	   
   For Notebook Name 
 	   
-	.. image:: images/notebook-sorting by name.PNG
-	   :alt: notebook-sorting by name image.
+	.. image:: images/notebook-sorting-by-name.PNG
+	   :alt: notebook-sorting-by-name image.
 
 2. **Search with Notebook metadata** 
 

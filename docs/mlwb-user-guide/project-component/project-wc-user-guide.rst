@@ -76,7 +76,6 @@ Project Catalog screen displays list of projects which are created by user. Ther
   
 	   
 	.. image:: images/project-filter.PNG
-	   :alt: project-filter image.
 
 2. **Project Sorting**
 
@@ -85,11 +84,6 @@ Project Catalog screen displays list of projects which are created by user. Ther
   For Project Created Date
   
 	.. image:: images/project-created-date.PNG
-	   :alt: project-created-date image.
-	   
-	.. image:: images/project-sorting1.PNG
-	   :alt: project-sorting1 image.
-	   
 	
   For Project Name
 	

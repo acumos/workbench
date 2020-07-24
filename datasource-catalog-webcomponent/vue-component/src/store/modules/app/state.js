@@ -1,6 +1,6 @@
 export default {
   componentUrl: null,
-  projectWikiURL: null,
+  datasourceWikiURL: null,
   msConfig: null,
   userName: null,
   authToken: null,

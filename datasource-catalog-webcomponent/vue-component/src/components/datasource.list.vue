@@ -15,13 +15,13 @@
     </div>
     <div class="flex w-full my-2" v-if="!hasDatasets">
       <CollapsableUi
-        title="Datasets"
+        title="Datasource"
         icon="database"
         :collapse-border="true"
       >
         <div class="p-5">
           <p class="py-4">
-           No Datasets, get started with ML Workbench by onboarding your first dataset.
+           No Datasources, get started with ML Workbench by onboarding your first datasource.
           </p>
           <button class="btn btn-primary" @click="editDataset()">
             Create Datasource

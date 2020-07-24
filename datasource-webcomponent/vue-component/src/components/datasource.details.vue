@@ -76,7 +76,7 @@
               rules="required"
               v-slot="{ errors, classes }"
             >
-              <select  class="form-input w-2/6"  v-model="updatedDataset.category">
+              <select  class="form-select w-2/6"  v-model="updatedDataset.category">
                 <option value="mongo" disabled>Mongo</option>
                 <option value="jdbc">MySQL</option>
                 <option value="couch">Couch</option>
@@ -103,7 +103,7 @@
               rules="required"
               v-slot="{ errors, classes }"
             >
-              <select  class="form-input w-2/6" v-model="updatedDataset.readWriteDescriptor">
+              <select  class="form-select w-2/6" v-model="updatedDataset.readWriteDescriptor">
                 <option value="all" disabled>All</option>
                 <option value="read">Read Only</option>
                 <option value="write">Write Only</option>

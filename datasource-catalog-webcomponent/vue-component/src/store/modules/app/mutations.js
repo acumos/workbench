@@ -2,8 +2,8 @@ export default {
   setComponentUrl(state, url) {
     state.componentUrl = url;
   },
-  setProjectWikiURL(state, config) {
-    state.projectWikiURL = config;
+  setDatasourceWikiURL(state, config) {
+    state.datasourceWikiURL = config;
   },
   setMsConfig(state, config) {
     state.msConfig = config;

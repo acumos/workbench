@@ -438,7 +438,7 @@ export default {
           } else {
             this.showToastMessage({
               id: "dataset-form",
-              message: `${response.data.data.statusMessage}`,
+              message: `${"Error while creating datasources, please check the details"}`,
               type: "error"
             });
           }

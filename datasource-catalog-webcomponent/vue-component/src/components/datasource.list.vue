@@ -5,7 +5,7 @@
         Create Datasource
       </button>
       <a
-        :href="datasetWikiURL"
+        :href="datasourceWikiURL"
         target="_blank"
         class="btn btn-secondary ml-2"
         title="Learn More"

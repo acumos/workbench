@@ -24,3 +24,8 @@ Version 3.0.0  8th May 2020
 =================================
 
 * ML Workbench UI - Datasource Component with integration with Datasource service (ACUMOS-4076)
+
+
+Version 3.0.1 31st July 2020 
+=================================
+* IST | Design Studio | MLWB | Data Source | On data source details screen drop down icons missing for data connector and Read write descriptor. (ACUMOS-4185) 

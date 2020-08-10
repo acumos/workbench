@@ -20,12 +20,6 @@
 ML Workbench Datasource-Catalog Web Component
 ===============================================
 
-
-Version 3.0.0 8th May 2020 
-=================================
-
-* ML Workbench UI - Datasource catalog Component with integration with Datasource service (ACUMOS-4076)
-
 Version 3.0.1 31st July 2020 
 =================================
 
@@ -34,4 +28,11 @@ Version 3.0.1 31st July 2020
 * IST | Design Studio | MLWB | Data Source | Error message is not appropriate field if filled with wrong data. (ACUMOS-4186)
 * IST | Design Studio | MLWB | Data Source | Name of data set needs to change data source on landing data source screen. (ACUMOS-4187)
 * IST | Design Studio | Acu-Compose |Model with larger no of input and output fields in signature not able to connect. (ACUMOS-4189)
+
+
+Version 3.0.0 8th May 2020 
+=================================
+
+* ML Workbench UI - Datasource catalog Component with integration with Datasource service (ACUMOS-4076)
+
 

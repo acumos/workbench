@@ -1,0 +1,10 @@
+---
+distribution_type: container
+container_release_tag: 3.0.1
+container_pull_registry: nexus3.acumos.org:10004
+container_push_registry: nexus3.acumos.org:10002
+project: workbench
+ref: e3cd2d6e7d0199461d953adead1a1b99a62a635a
+containers:
+        - name: datasource-catalog-webcomponent
+          version: 3.0.1
